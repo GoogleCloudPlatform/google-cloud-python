@@ -1,0 +1,88 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.beyondcorp_appgateways_v1",
+  "protoPackage": "google.cloud.beyondcorp.appgateways.v1",
+  "schema": "1.0",
+  "services": {
+    "AppGatewaysService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AppGatewaysServiceClient",
+          "rpcs": {
+            "CreateAppGateway": {
+              "methods": [
+                "create_app_gateway"
+              ]
+            },
+            "DeleteAppGateway": {
+              "methods": [
+                "delete_app_gateway"
+              ]
+            },
+            "GetAppGateway": {
+              "methods": [
+                "get_app_gateway"
+              ]
+            },
+            "ListAppGateways": {
+              "methods": [
+                "list_app_gateways"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AppGatewaysServiceAsyncClient",
+          "rpcs": {
+            "CreateAppGateway": {
+              "methods": [
+                "create_app_gateway"
+              ]
+            },
+            "DeleteAppGateway": {
+              "methods": [
+                "delete_app_gateway"
+              ]
+            },
+            "GetAppGateway": {
+              "methods": [
+                "get_app_gateway"
+              ]
+            },
+            "ListAppGateways": {
+              "methods": [
+                "list_app_gateways"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AppGatewaysServiceClient",
+          "rpcs": {
+            "CreateAppGateway": {
+              "methods": [
+                "create_app_gateway"
+              ]
+            },
+            "DeleteAppGateway": {
+              "methods": [
+                "delete_app_gateway"
+              ]
+            },
+            "GetAppGateway": {
+              "methods": [
+                "get_app_gateway"
+              ]
+            },
+            "ListAppGateways": {
+              "methods": [
+                "list_app_gateways"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

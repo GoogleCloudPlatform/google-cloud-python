@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+# This constraints file is required for unit tests.
+# List all library dependencies and extras in this file.
+google-api-core
+pandas
+proto-plus
+grpc-google-iam-v1
+google-cloud-bigquery
+google-cloud-documentai
+google-cloud-storage
+numpy
+pikepdf
+numba>=0.63.0b1

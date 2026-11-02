@@ -1,0 +1,78 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.ftp_v1",
+  "protoPackage": "google.cloud.ftp.v1",
+  "schema": "1.0",
+  "services": {
+    "CloudFtp": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CloudFtpClient",
+          "rpcs": {
+            "CreateServer": {
+              "methods": [
+                "create_server"
+              ]
+            },
+            "CreateUser": {
+              "methods": [
+                "create_user"
+              ]
+            },
+            "DeleteServer": {
+              "methods": [
+                "delete_server"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "delete_user"
+              ]
+            },
+            "GetServer": {
+              "methods": [
+                "get_server"
+              ]
+            },
+            "GetUser": {
+              "methods": [
+                "get_user"
+              ]
+            },
+            "ListServers": {
+              "methods": [
+                "list_servers"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "list_users"
+              ]
+            },
+            "StartServer": {
+              "methods": [
+                "start_server"
+              ]
+            },
+            "StopServer": {
+              "methods": [
+                "stop_server"
+              ]
+            },
+            "UpdateServer": {
+              "methods": [
+                "update_server"
+              ]
+            },
+            "UpdateUser": {
+              "methods": [
+                "update_user"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

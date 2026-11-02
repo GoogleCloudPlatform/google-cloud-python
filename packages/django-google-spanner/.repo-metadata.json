@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://googleapis.dev/python/django-google-spanner/latest",
+    "distribution_name": "django-google-spanner",
+    "language": "python",
+    "library_type": "INTEGRATION",
+    "name": "django-google-spanner",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

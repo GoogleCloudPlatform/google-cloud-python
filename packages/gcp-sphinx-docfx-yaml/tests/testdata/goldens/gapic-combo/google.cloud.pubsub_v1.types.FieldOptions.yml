@@ -1,0 +1,25 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.cloud.pubsub_v1.types.FieldOptions.EditionDefault
+  class: google.cloud.pubsub_v1.types.FieldOptions
+  fullName: google.cloud.pubsub_v1.types.FieldOptions
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: FieldOptions
+  source:
+    id: FieldOptions
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.FieldOptions` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.FieldOptions
+references:
+- fullName: google.cloud.pubsub_v1.types.FieldOptions.EditionDefault
+  isExternal: false
+  name: EditionDefault
+  parent: google.cloud.pubsub_v1.types.FieldOptions
+  uid: google.cloud.pubsub_v1.types.FieldOptions.EditionDefault

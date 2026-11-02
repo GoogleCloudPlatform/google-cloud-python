@@ -1,0 +1,10 @@
+google-api-core==2.25.0
+google-auth==2.14.1
+google-cloud-appengine-logging==1.6.1
+google-cloud-audit-log==0.3.2
+google-cloud-core==2.0.0
+grpc-google-iam-v1==0.14.2
+grpcio==1.59.0
+opentelemetry-api==1.16.0
+proto-plus==1.26.1
+protobuf==6.33.5

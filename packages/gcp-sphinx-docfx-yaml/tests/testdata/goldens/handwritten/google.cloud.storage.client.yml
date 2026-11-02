@@ -1,0 +1,28 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: client
+  source:
+    id: client
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 0
+  summary: 'Client for interacting with the Google Cloud Storage API.
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google.cloud.storage.client
+references:
+- fullName: google.cloud.storage.client.Client
+  isExternal: false
+  name: Client
+  parent: google.cloud.storage.client
+  uid: google.cloud.storage.client.Client

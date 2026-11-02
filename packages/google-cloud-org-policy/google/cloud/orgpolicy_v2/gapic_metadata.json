@@ -1,0 +1,208 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.orgpolicy_v2",
+  "protoPackage": "google.cloud.orgpolicy.v2",
+  "schema": "1.0",
+  "services": {
+    "OrgPolicy": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "OrgPolicyClient",
+          "rpcs": {
+            "CreateCustomConstraint": {
+              "methods": [
+                "create_custom_constraint"
+              ]
+            },
+            "CreatePolicy": {
+              "methods": [
+                "create_policy"
+              ]
+            },
+            "DeleteCustomConstraint": {
+              "methods": [
+                "delete_custom_constraint"
+              ]
+            },
+            "DeletePolicy": {
+              "methods": [
+                "delete_policy"
+              ]
+            },
+            "GetCustomConstraint": {
+              "methods": [
+                "get_custom_constraint"
+              ]
+            },
+            "GetEffectivePolicy": {
+              "methods": [
+                "get_effective_policy"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "ListConstraints": {
+              "methods": [
+                "list_constraints"
+              ]
+            },
+            "ListCustomConstraints": {
+              "methods": [
+                "list_custom_constraints"
+              ]
+            },
+            "ListPolicies": {
+              "methods": [
+                "list_policies"
+              ]
+            },
+            "UpdateCustomConstraint": {
+              "methods": [
+                "update_custom_constraint"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "OrgPolicyAsyncClient",
+          "rpcs": {
+            "CreateCustomConstraint": {
+              "methods": [
+                "create_custom_constraint"
+              ]
+            },
+            "CreatePolicy": {
+              "methods": [
+                "create_policy"
+              ]
+            },
+            "DeleteCustomConstraint": {
+              "methods": [
+                "delete_custom_constraint"
+              ]
+            },
+            "DeletePolicy": {
+              "methods": [
+                "delete_policy"
+              ]
+            },
+            "GetCustomConstraint": {
+              "methods": [
+                "get_custom_constraint"
+              ]
+            },
+            "GetEffectivePolicy": {
+              "methods": [
+                "get_effective_policy"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "ListConstraints": {
+              "methods": [
+                "list_constraints"
+              ]
+            },
+            "ListCustomConstraints": {
+              "methods": [
+                "list_custom_constraints"
+              ]
+            },
+            "ListPolicies": {
+              "methods": [
+                "list_policies"
+              ]
+            },
+            "UpdateCustomConstraint": {
+              "methods": [
+                "update_custom_constraint"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "OrgPolicyClient",
+          "rpcs": {
+            "CreateCustomConstraint": {
+              "methods": [
+                "create_custom_constraint"
+              ]
+            },
+            "CreatePolicy": {
+              "methods": [
+                "create_policy"
+              ]
+            },
+            "DeleteCustomConstraint": {
+              "methods": [
+                "delete_custom_constraint"
+              ]
+            },
+            "DeletePolicy": {
+              "methods": [
+                "delete_policy"
+              ]
+            },
+            "GetCustomConstraint": {
+              "methods": [
+                "get_custom_constraint"
+              ]
+            },
+            "GetEffectivePolicy": {
+              "methods": [
+                "get_effective_policy"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "ListConstraints": {
+              "methods": [
+                "list_constraints"
+              ]
+            },
+            "ListCustomConstraints": {
+              "methods": [
+                "list_custom_constraints"
+              ]
+            },
+            "ListPolicies": {
+              "methods": [
+                "list_policies"
+              ]
+            },
+            "UpdateCustomConstraint": {
+              "methods": [
+                "update_custom_constraint"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

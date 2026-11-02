@@ -1,0 +1,2502 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.bigquery.biglake.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-bigquery-biglake",
+    "version": "0.8.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.create_catalog",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.CreateCatalog",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "CreateCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.CreateCatalogRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "catalog",
+            "type": "google.cloud.bigquery_biglake_v1.types.Catalog"
+          },
+          {
+            "name": "catalog_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Catalog",
+        "shortName": "create_catalog"
+      },
+      "description": "Sample for CreateCatalog",
+      "file": "biglake_v1_generated_metastore_service_create_catalog_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_CreateCatalog_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_create_catalog_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.create_catalog",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.CreateCatalog",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "CreateCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.CreateCatalogRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "catalog",
+            "type": "google.cloud.bigquery_biglake_v1.types.Catalog"
+          },
+          {
+            "name": "catalog_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Catalog",
+        "shortName": "create_catalog"
+      },
+      "description": "Sample for CreateCatalog",
+      "file": "biglake_v1_generated_metastore_service_create_catalog_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_CreateCatalog_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_create_catalog_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.create_database",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.CreateDatabase",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "CreateDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.CreateDatabaseRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "database",
+            "type": "google.cloud.bigquery_biglake_v1.types.Database"
+          },
+          {
+            "name": "database_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Database",
+        "shortName": "create_database"
+      },
+      "description": "Sample for CreateDatabase",
+      "file": "biglake_v1_generated_metastore_service_create_database_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_CreateDatabase_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_create_database_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.create_database",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.CreateDatabase",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "CreateDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.CreateDatabaseRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "database",
+            "type": "google.cloud.bigquery_biglake_v1.types.Database"
+          },
+          {
+            "name": "database_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Database",
+        "shortName": "create_database"
+      },
+      "description": "Sample for CreateDatabase",
+      "file": "biglake_v1_generated_metastore_service_create_database_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_CreateDatabase_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_create_database_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.create_table",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.CreateTable",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "CreateTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.CreateTableRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "table",
+            "type": "google.cloud.bigquery_biglake_v1.types.Table"
+          },
+          {
+            "name": "table_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Table",
+        "shortName": "create_table"
+      },
+      "description": "Sample for CreateTable",
+      "file": "biglake_v1_generated_metastore_service_create_table_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_CreateTable_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_create_table_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.create_table",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.CreateTable",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "CreateTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.CreateTableRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "table",
+            "type": "google.cloud.bigquery_biglake_v1.types.Table"
+          },
+          {
+            "name": "table_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Table",
+        "shortName": "create_table"
+      },
+      "description": "Sample for CreateTable",
+      "file": "biglake_v1_generated_metastore_service_create_table_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_CreateTable_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_create_table_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.delete_catalog",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.DeleteCatalog",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "DeleteCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.DeleteCatalogRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Catalog",
+        "shortName": "delete_catalog"
+      },
+      "description": "Sample for DeleteCatalog",
+      "file": "biglake_v1_generated_metastore_service_delete_catalog_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_DeleteCatalog_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_delete_catalog_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.delete_catalog",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.DeleteCatalog",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "DeleteCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.DeleteCatalogRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Catalog",
+        "shortName": "delete_catalog"
+      },
+      "description": "Sample for DeleteCatalog",
+      "file": "biglake_v1_generated_metastore_service_delete_catalog_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_DeleteCatalog_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_delete_catalog_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.delete_database",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.DeleteDatabase",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "DeleteDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.DeleteDatabaseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Database",
+        "shortName": "delete_database"
+      },
+      "description": "Sample for DeleteDatabase",
+      "file": "biglake_v1_generated_metastore_service_delete_database_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_DeleteDatabase_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_delete_database_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.delete_database",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.DeleteDatabase",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "DeleteDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.DeleteDatabaseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Database",
+        "shortName": "delete_database"
+      },
+      "description": "Sample for DeleteDatabase",
+      "file": "biglake_v1_generated_metastore_service_delete_database_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_DeleteDatabase_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_delete_database_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.delete_table",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.DeleteTable",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "DeleteTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.DeleteTableRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Table",
+        "shortName": "delete_table"
+      },
+      "description": "Sample for DeleteTable",
+      "file": "biglake_v1_generated_metastore_service_delete_table_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_DeleteTable_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_delete_table_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.delete_table",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.DeleteTable",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "DeleteTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.DeleteTableRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Table",
+        "shortName": "delete_table"
+      },
+      "description": "Sample for DeleteTable",
+      "file": "biglake_v1_generated_metastore_service_delete_table_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_DeleteTable_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_delete_table_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.get_catalog",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.GetCatalog",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "GetCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.GetCatalogRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Catalog",
+        "shortName": "get_catalog"
+      },
+      "description": "Sample for GetCatalog",
+      "file": "biglake_v1_generated_metastore_service_get_catalog_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_GetCatalog_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_get_catalog_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.get_catalog",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.GetCatalog",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "GetCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.GetCatalogRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Catalog",
+        "shortName": "get_catalog"
+      },
+      "description": "Sample for GetCatalog",
+      "file": "biglake_v1_generated_metastore_service_get_catalog_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_GetCatalog_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_get_catalog_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.get_database",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.GetDatabase",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "GetDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.GetDatabaseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Database",
+        "shortName": "get_database"
+      },
+      "description": "Sample for GetDatabase",
+      "file": "biglake_v1_generated_metastore_service_get_database_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_GetDatabase_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_get_database_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.get_database",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.GetDatabase",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "GetDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.GetDatabaseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Database",
+        "shortName": "get_database"
+      },
+      "description": "Sample for GetDatabase",
+      "file": "biglake_v1_generated_metastore_service_get_database_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_GetDatabase_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_get_database_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.get_table",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.GetTable",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "GetTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.GetTableRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Table",
+        "shortName": "get_table"
+      },
+      "description": "Sample for GetTable",
+      "file": "biglake_v1_generated_metastore_service_get_table_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_GetTable_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_get_table_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.get_table",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.GetTable",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "GetTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.GetTableRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Table",
+        "shortName": "get_table"
+      },
+      "description": "Sample for GetTable",
+      "file": "biglake_v1_generated_metastore_service_get_table_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_GetTable_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_get_table_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.list_catalogs",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.ListCatalogs",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "ListCatalogs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.ListCatalogsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.services.metastore_service.pagers.ListCatalogsAsyncPager",
+        "shortName": "list_catalogs"
+      },
+      "description": "Sample for ListCatalogs",
+      "file": "biglake_v1_generated_metastore_service_list_catalogs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_ListCatalogs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_list_catalogs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.list_catalogs",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.ListCatalogs",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "ListCatalogs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.ListCatalogsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.services.metastore_service.pagers.ListCatalogsPager",
+        "shortName": "list_catalogs"
+      },
+      "description": "Sample for ListCatalogs",
+      "file": "biglake_v1_generated_metastore_service_list_catalogs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_ListCatalogs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_list_catalogs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.list_databases",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.ListDatabases",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "ListDatabases"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.ListDatabasesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.services.metastore_service.pagers.ListDatabasesAsyncPager",
+        "shortName": "list_databases"
+      },
+      "description": "Sample for ListDatabases",
+      "file": "biglake_v1_generated_metastore_service_list_databases_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_ListDatabases_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_list_databases_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.list_databases",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.ListDatabases",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "ListDatabases"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.ListDatabasesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.services.metastore_service.pagers.ListDatabasesPager",
+        "shortName": "list_databases"
+      },
+      "description": "Sample for ListDatabases",
+      "file": "biglake_v1_generated_metastore_service_list_databases_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_ListDatabases_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_list_databases_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.list_tables",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.ListTables",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "ListTables"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.ListTablesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.services.metastore_service.pagers.ListTablesAsyncPager",
+        "shortName": "list_tables"
+      },
+      "description": "Sample for ListTables",
+      "file": "biglake_v1_generated_metastore_service_list_tables_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_ListTables_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_list_tables_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.list_tables",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.ListTables",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "ListTables"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.ListTablesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.services.metastore_service.pagers.ListTablesPager",
+        "shortName": "list_tables"
+      },
+      "description": "Sample for ListTables",
+      "file": "biglake_v1_generated_metastore_service_list_tables_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_ListTables_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_list_tables_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.rename_table",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.RenameTable",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "RenameTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.RenameTableRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "new_name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Table",
+        "shortName": "rename_table"
+      },
+      "description": "Sample for RenameTable",
+      "file": "biglake_v1_generated_metastore_service_rename_table_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_RenameTable_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_rename_table_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.rename_table",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.RenameTable",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "RenameTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.RenameTableRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "new_name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Table",
+        "shortName": "rename_table"
+      },
+      "description": "Sample for RenameTable",
+      "file": "biglake_v1_generated_metastore_service_rename_table_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_RenameTable_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_rename_table_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.update_database",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.UpdateDatabase",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "UpdateDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.UpdateDatabaseRequest"
+          },
+          {
+            "name": "database",
+            "type": "google.cloud.bigquery_biglake_v1.types.Database"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Database",
+        "shortName": "update_database"
+      },
+      "description": "Sample for UpdateDatabase",
+      "file": "biglake_v1_generated_metastore_service_update_database_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_UpdateDatabase_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_update_database_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.update_database",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.UpdateDatabase",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "UpdateDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.UpdateDatabaseRequest"
+          },
+          {
+            "name": "database",
+            "type": "google.cloud.bigquery_biglake_v1.types.Database"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Database",
+        "shortName": "update_database"
+      },
+      "description": "Sample for UpdateDatabase",
+      "file": "biglake_v1_generated_metastore_service_update_database_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_UpdateDatabase_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_update_database_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient",
+          "shortName": "MetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceAsyncClient.update_table",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.UpdateTable",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "UpdateTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.UpdateTableRequest"
+          },
+          {
+            "name": "table",
+            "type": "google.cloud.bigquery_biglake_v1.types.Table"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Table",
+        "shortName": "update_table"
+      },
+      "description": "Sample for UpdateTable",
+      "file": "biglake_v1_generated_metastore_service_update_table_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_UpdateTable_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_update_table_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient",
+          "shortName": "MetastoreServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_biglake_v1.MetastoreServiceClient.update_table",
+        "method": {
+          "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService.UpdateTable",
+          "service": {
+            "fullName": "google.cloud.bigquery.biglake.v1.MetastoreService",
+            "shortName": "MetastoreService"
+          },
+          "shortName": "UpdateTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_biglake_v1.types.UpdateTableRequest"
+          },
+          {
+            "name": "table",
+            "type": "google.cloud.bigquery_biglake_v1.types.Table"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_biglake_v1.types.Table",
+        "shortName": "update_table"
+      },
+      "description": "Sample for UpdateTable",
+      "file": "biglake_v1_generated_metastore_service_update_table_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1_generated_MetastoreService_UpdateTable_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1_generated_metastore_service_update_table_sync.py"
+    }
+  ]
+}

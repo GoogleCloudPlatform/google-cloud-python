@@ -1,0 +1,148 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.gkehub_v1beta1",
+  "protoPackage": "google.cloud.gkehub.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "GkeHubMembershipService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "GkeHubMembershipServiceClient",
+          "rpcs": {
+            "CreateMembership": {
+              "methods": [
+                "create_membership"
+              ]
+            },
+            "DeleteMembership": {
+              "methods": [
+                "delete_membership"
+              ]
+            },
+            "GenerateConnectManifest": {
+              "methods": [
+                "generate_connect_manifest"
+              ]
+            },
+            "GenerateExclusivityManifest": {
+              "methods": [
+                "generate_exclusivity_manifest"
+              ]
+            },
+            "GetMembership": {
+              "methods": [
+                "get_membership"
+              ]
+            },
+            "ListMemberships": {
+              "methods": [
+                "list_memberships"
+              ]
+            },
+            "UpdateMembership": {
+              "methods": [
+                "update_membership"
+              ]
+            },
+            "ValidateExclusivity": {
+              "methods": [
+                "validate_exclusivity"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "GkeHubMembershipServiceAsyncClient",
+          "rpcs": {
+            "CreateMembership": {
+              "methods": [
+                "create_membership"
+              ]
+            },
+            "DeleteMembership": {
+              "methods": [
+                "delete_membership"
+              ]
+            },
+            "GenerateConnectManifest": {
+              "methods": [
+                "generate_connect_manifest"
+              ]
+            },
+            "GenerateExclusivityManifest": {
+              "methods": [
+                "generate_exclusivity_manifest"
+              ]
+            },
+            "GetMembership": {
+              "methods": [
+                "get_membership"
+              ]
+            },
+            "ListMemberships": {
+              "methods": [
+                "list_memberships"
+              ]
+            },
+            "UpdateMembership": {
+              "methods": [
+                "update_membership"
+              ]
+            },
+            "ValidateExclusivity": {
+              "methods": [
+                "validate_exclusivity"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "GkeHubMembershipServiceClient",
+          "rpcs": {
+            "CreateMembership": {
+              "methods": [
+                "create_membership"
+              ]
+            },
+            "DeleteMembership": {
+              "methods": [
+                "delete_membership"
+              ]
+            },
+            "GenerateConnectManifest": {
+              "methods": [
+                "generate_connect_manifest"
+              ]
+            },
+            "GenerateExclusivityManifest": {
+              "methods": [
+                "generate_exclusivity_manifest"
+              ]
+            },
+            "GetMembership": {
+              "methods": [
+                "get_membership"
+              ]
+            },
+            "ListMemberships": {
+              "methods": [
+                "list_memberships"
+              ]
+            },
+            "UpdateMembership": {
+              "methods": [
+                "update_membership"
+              ]
+            },
+            "ValidateExclusivity": {
+              "methods": [
+                "validate_exclusivity"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

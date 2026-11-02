@@ -1,0 +1,16 @@
+{
+    "api_description": "Manages the execution of large numbers of distributed requests.",
+    "api_id": "cloudtasks.googleapis.com",
+    "api_shortname": "cloudtasks",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/cloudtasks/latest",
+    "default_version": "v2",
+    "distribution_name": "google-cloud-tasks",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5433985",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "cloudtasks",
+    "name_pretty": "Cloud Tasks",
+    "product_documentation": "https://cloud.google.com/tasks/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

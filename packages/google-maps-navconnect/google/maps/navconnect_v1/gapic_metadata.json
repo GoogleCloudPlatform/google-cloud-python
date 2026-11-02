@@ -1,0 +1,58 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.maps.navconnect_v1",
+  "protoPackage": "google.maps.navconnect.v1",
+  "schema": "1.0",
+  "services": {
+    "NavConnectService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "NavConnectServiceClient",
+          "rpcs": {
+            "CreateTrip": {
+              "methods": [
+                "create_trip"
+              ]
+            },
+            "GetTrip": {
+              "methods": [
+                "get_trip"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "NavConnectServiceAsyncClient",
+          "rpcs": {
+            "CreateTrip": {
+              "methods": [
+                "create_trip"
+              ]
+            },
+            "GetTrip": {
+              "methods": [
+                "get_trip"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "NavConnectServiceClient",
+          "rpcs": {
+            "CreateTrip": {
+              "methods": [
+                "create_trip"
+              ]
+            },
+            "GetTrip": {
+              "methods": [
+                "get_trip"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "api_description": "Google Distributed Cloud Edge is a fully managed product that brings Google Cloud infrastructure and services closer to where data is being generated and consumed.",
+    "api_id": "edgecontainer.googleapis.com",
+    "api_shortname": "edgecontainer",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/edgecontainer/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-edgecontainer",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "edgecontainer",
+    "name_pretty": "Distributed Cloud Edge Container",
+    "product_documentation": "https://cloud.google.com/distributed-cloud/edge",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

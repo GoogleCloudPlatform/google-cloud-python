@@ -1,0 +1,58 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.servicecontrol_v2",
+  "protoPackage": "google.api.servicecontrol.v2",
+  "schema": "1.0",
+  "services": {
+    "ServiceController": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ServiceControllerClient",
+          "rpcs": {
+            "Check": {
+              "methods": [
+                "check"
+              ]
+            },
+            "Report": {
+              "methods": [
+                "report"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ServiceControllerAsyncClient",
+          "rpcs": {
+            "Check": {
+              "methods": [
+                "check"
+              ]
+            },
+            "Report": {
+              "methods": [
+                "report"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ServiceControllerClient",
+          "rpcs": {
+            "Check": {
+              "methods": [
+                "check"
+              ]
+            },
+            "Report": {
+              "methods": [
+                "report"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

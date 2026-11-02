@@ -1,0 +1,16 @@
+{
+    "api_description": "The Google Health API lets you view and manage health and fitness metrics\nand measurement data.",
+    "api_id": "health.googleapis.com",
+    "api_shortname": "health",
+    "client_documentation": "https://googleapis.dev/python/google-devicesandservices-health/latest",
+    "default_version": "v4",
+    "distribution_name": "google-devicesandservices-health",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1914241",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-devicesandservices-health",
+    "name_pretty": "Google Health",
+    "product_documentation": "https://developers.google.com/health/api",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

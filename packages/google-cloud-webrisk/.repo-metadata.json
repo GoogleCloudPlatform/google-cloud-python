@@ -1,0 +1,15 @@
+{
+    "api_description": "Web Risk is an enterprise security product that lets your client applications check URLs against Google's constantly updated lists of unsafe web resources.",
+    "api_id": "webrisk.googleapis.com",
+    "api_shortname": "webrisk",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/webrisk/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-webrisk",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "webrisk",
+    "name_pretty": "Web Risk",
+    "product_documentation": "https://cloud.google.com/web-risk/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,13 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "Python 3",
+	"build": {
+		// Sets the run context to one level up instead of the .devcontainer folder.
+		"args": { "VARIANT": "3.10" },
+		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+		"dockerfile": "Dockerfile"
+	},
+
+	"postCreateCommand": "bash .devcontainer/postCreate.sh"
+}

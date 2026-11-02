@@ -1,0 +1,42 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The subscription from which messages should be\n   pulled.\
+      \ Format is\n   <code>projects/{project}/subscriptions/{sub}</code>."
+    id: subscription
+    var_type: str
+  - description: "Optional. If this field set to true, the system will respond\n \
+      \  immediately even if it there are no messages available to\n   return in the\
+      \ <code>Pull</code> response. Otherwise, the system may\n   wait (for a bounded\
+      \ amount of time) until at least one\n   message is available, rather than returning\
+      \ no messages.\n   Warning: setting this field to <code>true</code> is discouraged\n\
+      \   because it adversely impacts the performance of <code>Pull</code>\n   operations.\
+      \ We recommend that users do not set this field."
+    id: return_immediately
+    var_type: bool
+  - description: "Required. The maximum number of messages to\n   return for this\
+      \ request. Must be a positive\n   integer. The Pub/Sub system may return fewer\n\
+      \   than the number specified."
+    id: max_messages
+    var_type: int
+  children: []
+  class: google.cloud.pubsub_v1.types.PullRequest
+  fullName: google.cloud.pubsub_v1.types.PullRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: PullRequest
+  source:
+    id: PullRequest
+    path: null
+    startLine: null
+  summary: 'Request for the `Pull` method.
+
+    '
+  syntax:
+    content: PullRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.PullRequest
+references: []

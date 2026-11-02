@@ -1,0 +1,15 @@
+{
+    "api_description": "Exchange data and analytics assets securely and efficiently.",
+    "api_id": "analyticshub.googleapis.com",
+    "api_shortname": "analyticshub",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/analyticshub/latest",
+    "default_version": "v1beta1",
+    "distribution_name": "google-cloud-bigquery-data-exchange",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "analyticshub",
+    "name_pretty": "Analytics Hub",
+    "product_documentation": "https://cloud.google.com/bigquery/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

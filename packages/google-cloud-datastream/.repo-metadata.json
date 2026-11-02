@@ -1,0 +1,15 @@
+{
+    "api_description": "Datastream is a serverless and easy-to-use change data capture (CDC) and replication service that lets you synchronize data reliably, and with minimal latency.",
+    "api_id": "datastream.googleapis.com",
+    "api_shortname": "datastream",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/datastream/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-datastream",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "datastream",
+    "name_pretty": "Datastream",
+    "product_documentation": "https://cloud.google.com/datastream/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

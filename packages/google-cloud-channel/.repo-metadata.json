@@ -1,0 +1,15 @@
+{
+    "api_description": "The Cloud Channel API enables Google Cloud partners to have a single\nunified resale platform and APIs across all of Google Cloud including GCP,\nWorkspace, Maps and Chrome.",
+    "api_id": "cloudchannel.googleapis.com",
+    "api_shortname": "cloudchannel",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/cloudchannel/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-channel",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "cloudchannel",
+    "name_pretty": "Cloud Channel",
+    "product_documentation": "https://cloud.google.com/channel/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,27 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children: []
+  class: google.cloud.pubsub_v1.types.DetachSubscriptionResponse
+  fullName: google.cloud.pubsub_v1.types.DetachSubscriptionResponse
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: DetachSubscriptionResponse
+  source:
+    id: DetachSubscriptionResponse
+    path: null
+    startLine: null
+  summary: 'Response for the DetachSubscription method.
+
+    Reserved for future use.
+
+    '
+  syntax:
+    content: DetachSubscriptionResponse(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.DetachSubscriptionResponse
+references: []

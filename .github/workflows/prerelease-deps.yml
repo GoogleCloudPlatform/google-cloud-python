@@ -1,0 +1,188 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: prerelease-deps
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/prerelease-deps.yml'
+      - 'ci/**'
+  schedule:
+    # Run daily at midnight UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+env:
+  PACKAGE_DIRS: packages
+  NOX_DEFAULT_VENV_BACKEND: "virtualenv"
+  UV_PRERELEASE: "allow"
+
+jobs:
+  prerelease:
+    runs-on: ubuntu-26.04
+    strategy:
+      matrix:
+        python: ["3.15"]
+    name: Nightly Pre-release Dependency Issue Reporter (${{ matrix.python }})
+    env:
+      PY_VERSION: ${{ matrix.python }}
+      FAILURE_LOG_DIR: "/tmp/test_failures"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        # Use a fetch-depth of 2 to avoid error `fatal: origin/main...HEAD: no merge base`
+        # See https://github.com/googleapis/google-cloud-python/issues/12013
+        # and https://github.com/actions/checkout#checkout-head.
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: ${{ env.PY_VERSION }}
+          allow-prereleases: true
+
+      - name: Cache pip wheels (including compiled source builds)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/pip
+          # Save a fresh cache snapshot for each run so newly compiled wheels are persisted
+          key: ${{ runner.os }}-pip-prerelease-${{ env.PY_VERSION }}-${{ github.run_id }}
+          # Restore the most recent cache from previous runs for this Python version
+          restore-keys: |
+            ${{ runner.os }}-pip-prerelease-${{ env.PY_VERSION }}-
+
+      - name: Install nox
+        run: |
+          pip install nox
+
+      - name: Get handwritten packages to test
+        id: get-packages
+        env:
+          BUILD_TYPE: continuous
+          TEST_ALL_PACKAGES: "true"
+          HANDWRITTEN_ONLY: "true"
+        run: |
+          python3 ci/get_package_shards.py
+
+      - name: Run prerelease_deps across handwritten packages
+        id: run-tests
+        # Do not fail the job when pre-release tests fail; instead, report via GitHub issue below.
+        continue-on-error: true
+        env:
+          BUILD_TYPE: continuous
+          TEST_TYPE: prerelease
+          PACKAGE_LIST: ${{ steps.get-packages.outputs.packages }}
+          NOXFORCEPYTHON: ${{ env.PY_VERSION }}
+          CONTINUE_ON_ERROR: "true"
+          PARALLEL_WORKERS: "1"
+        run: |
+          ci/run_conditional_tests.sh
+
+      - name: Prepare issue body on failure
+        if: ${{ steps.run-tests.outcome == 'failure' }}
+        id: issue-body
+        run: |
+          shopt -s nullglob
+          log_files=("${FAILURE_LOG_DIR}"/*.log.txt)
+          if [ ${#log_files[@]} -gt 0 ]; then
+            COUNT=${#log_files[@]}
+            PKG_LIST=""
+            DETAILS=""
+            TRUNCATED_NOTE=""
+            for log_file in "${log_files[@]}"; do
+              pkg=$(basename "$log_file" .log.txt)
+              pip_file="${FAILURE_LOG_DIR}/${pkg}.pip.txt"
+              log_tail=$(cat "$log_file" 2>/dev/null || echo "Unavailable")
+              pip_list=$(cat "$pip_file" 2>/dev/null || echo "No dependencies installed (failed during build)")
+              PKG_LIST="${PKG_LIST}- \`${pkg}\`"$'\n'
+
+              entry=$(cat <<EOF
+          <details>
+          <summary><code>${pkg}</code></summary>
+
+          **Test Failure Output (last 50 lines):**
+          \`\`\`text
+          ${log_tail}
+          \`\`\`
+
+          <details>
+          <summary>Installed Dependencies (<code>pip list</code>)</summary>
+
+          \`\`\`text
+          ${pip_list}
+          \`\`\`
+          </details>
+          </details>
+          EOF
+              )
+              if [ $(( ${#DETAILS} + ${#entry} )) -le 48000 ]; then
+                DETAILS="${DETAILS}"$'\n'"${entry}"$'\n'
+              elif [ -z "${TRUNCATED_NOTE}" ]; then
+                TRUNCATED_NOTE=$'\n\n_Note: Detailed logs for remaining packages were omitted to fit GitHub issue length limits. Please check the workflow run logs for full details._'
+              fi
+            done
+          else
+            COUNT="unknown"
+            PKG_LIST="- (Workflow failed outside package test execution)"
+            DETAILS=""
+            TRUNCATED_NOTE=""
+          fi
+
+          echo "::warning title=Pre-release Dependency Failures::Detected pre-release test failures in ${COUNT} package(s). See job summary or GitHub issues for details."
+
+          {
+            echo "### ⚠️ Pre-release Dependency Failures (${COUNT} packages)"
+            echo ""
+            echo "The pre-release check detected failures on Python \`${PY_VERSION}\`:"
+            echo ""
+            printf "%s" "${PKG_LIST}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          {
+            echo "body<<EOF_ISSUE_BODY"
+            echo "The [pre-release check](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}) failed for **${COUNT}** handwritten package(s) on Python \`${PY_VERSION}\`."
+            echo ""
+            echo "### Failed Packages"
+            printf "%s" "${PKG_LIST}"
+            echo ""
+            echo "- **Python Version:** \`${PY_VERSION}\`"
+            echo "- **Workflow Run:** [${GITHUB_RUN_ID}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+            echo ""
+            echo "### Failure Details"
+            echo "${DETAILS}${TRUNCATED_NOTE}"
+            echo "EOF_ISSUE_BODY"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create issue on failure
+        # Only file an issue from the nightly schedule or a manual dispatch, never from a
+        # pull request. PRs that touch `ci/**` or this workflow trigger the check for
+        # validation purposes only; filing a `priority: p1` issue from them would duplicate
+        # the nightly report. The job summary written above still surfaces PR failures.
+        if: ${{ steps.run-tests.outcome == 'failure' && github.event_name != 'pull_request' && github.repository == 'googleapis/google-cloud-python' }}
+        uses: googleapis/librarian/.github/actions/create-issue-on-failure@bb2ee61752bd0f5387195b54c509e4d01a52b41d
+        with:
+          title: "prerelease_deps check failed"
+          labels: "priority: p1,nightly"
+          body: ${{ steps.issue-body.outputs.body }}

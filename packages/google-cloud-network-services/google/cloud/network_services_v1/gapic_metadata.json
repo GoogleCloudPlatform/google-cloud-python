@@ -1,0 +1,1292 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.network_services_v1",
+  "protoPackage": "google.cloud.networkservices.v1",
+  "schema": "1.0",
+  "services": {
+    "DepService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DepServiceClient",
+          "rpcs": {
+            "CreateAuthzExtension": {
+              "methods": [
+                "create_authz_extension"
+              ]
+            },
+            "CreateLbEdgeExtension": {
+              "methods": [
+                "create_lb_edge_extension"
+              ]
+            },
+            "CreateLbRouteExtension": {
+              "methods": [
+                "create_lb_route_extension"
+              ]
+            },
+            "CreateLbTrafficExtension": {
+              "methods": [
+                "create_lb_traffic_extension"
+              ]
+            },
+            "DeleteAuthzExtension": {
+              "methods": [
+                "delete_authz_extension"
+              ]
+            },
+            "DeleteLbEdgeExtension": {
+              "methods": [
+                "delete_lb_edge_extension"
+              ]
+            },
+            "DeleteLbRouteExtension": {
+              "methods": [
+                "delete_lb_route_extension"
+              ]
+            },
+            "DeleteLbTrafficExtension": {
+              "methods": [
+                "delete_lb_traffic_extension"
+              ]
+            },
+            "GetAuthzExtension": {
+              "methods": [
+                "get_authz_extension"
+              ]
+            },
+            "GetLbEdgeExtension": {
+              "methods": [
+                "get_lb_edge_extension"
+              ]
+            },
+            "GetLbRouteExtension": {
+              "methods": [
+                "get_lb_route_extension"
+              ]
+            },
+            "GetLbTrafficExtension": {
+              "methods": [
+                "get_lb_traffic_extension"
+              ]
+            },
+            "ListAuthzExtensions": {
+              "methods": [
+                "list_authz_extensions"
+              ]
+            },
+            "ListLbEdgeExtensions": {
+              "methods": [
+                "list_lb_edge_extensions"
+              ]
+            },
+            "ListLbRouteExtensions": {
+              "methods": [
+                "list_lb_route_extensions"
+              ]
+            },
+            "ListLbTrafficExtensions": {
+              "methods": [
+                "list_lb_traffic_extensions"
+              ]
+            },
+            "UpdateAuthzExtension": {
+              "methods": [
+                "update_authz_extension"
+              ]
+            },
+            "UpdateLbEdgeExtension": {
+              "methods": [
+                "update_lb_edge_extension"
+              ]
+            },
+            "UpdateLbRouteExtension": {
+              "methods": [
+                "update_lb_route_extension"
+              ]
+            },
+            "UpdateLbTrafficExtension": {
+              "methods": [
+                "update_lb_traffic_extension"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DepServiceAsyncClient",
+          "rpcs": {
+            "CreateAuthzExtension": {
+              "methods": [
+                "create_authz_extension"
+              ]
+            },
+            "CreateLbEdgeExtension": {
+              "methods": [
+                "create_lb_edge_extension"
+              ]
+            },
+            "CreateLbRouteExtension": {
+              "methods": [
+                "create_lb_route_extension"
+              ]
+            },
+            "CreateLbTrafficExtension": {
+              "methods": [
+                "create_lb_traffic_extension"
+              ]
+            },
+            "DeleteAuthzExtension": {
+              "methods": [
+                "delete_authz_extension"
+              ]
+            },
+            "DeleteLbEdgeExtension": {
+              "methods": [
+                "delete_lb_edge_extension"
+              ]
+            },
+            "DeleteLbRouteExtension": {
+              "methods": [
+                "delete_lb_route_extension"
+              ]
+            },
+            "DeleteLbTrafficExtension": {
+              "methods": [
+                "delete_lb_traffic_extension"
+              ]
+            },
+            "GetAuthzExtension": {
+              "methods": [
+                "get_authz_extension"
+              ]
+            },
+            "GetLbEdgeExtension": {
+              "methods": [
+                "get_lb_edge_extension"
+              ]
+            },
+            "GetLbRouteExtension": {
+              "methods": [
+                "get_lb_route_extension"
+              ]
+            },
+            "GetLbTrafficExtension": {
+              "methods": [
+                "get_lb_traffic_extension"
+              ]
+            },
+            "ListAuthzExtensions": {
+              "methods": [
+                "list_authz_extensions"
+              ]
+            },
+            "ListLbEdgeExtensions": {
+              "methods": [
+                "list_lb_edge_extensions"
+              ]
+            },
+            "ListLbRouteExtensions": {
+              "methods": [
+                "list_lb_route_extensions"
+              ]
+            },
+            "ListLbTrafficExtensions": {
+              "methods": [
+                "list_lb_traffic_extensions"
+              ]
+            },
+            "UpdateAuthzExtension": {
+              "methods": [
+                "update_authz_extension"
+              ]
+            },
+            "UpdateLbEdgeExtension": {
+              "methods": [
+                "update_lb_edge_extension"
+              ]
+            },
+            "UpdateLbRouteExtension": {
+              "methods": [
+                "update_lb_route_extension"
+              ]
+            },
+            "UpdateLbTrafficExtension": {
+              "methods": [
+                "update_lb_traffic_extension"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DepServiceClient",
+          "rpcs": {
+            "CreateAuthzExtension": {
+              "methods": [
+                "create_authz_extension"
+              ]
+            },
+            "CreateLbEdgeExtension": {
+              "methods": [
+                "create_lb_edge_extension"
+              ]
+            },
+            "CreateLbRouteExtension": {
+              "methods": [
+                "create_lb_route_extension"
+              ]
+            },
+            "CreateLbTrafficExtension": {
+              "methods": [
+                "create_lb_traffic_extension"
+              ]
+            },
+            "DeleteAuthzExtension": {
+              "methods": [
+                "delete_authz_extension"
+              ]
+            },
+            "DeleteLbEdgeExtension": {
+              "methods": [
+                "delete_lb_edge_extension"
+              ]
+            },
+            "DeleteLbRouteExtension": {
+              "methods": [
+                "delete_lb_route_extension"
+              ]
+            },
+            "DeleteLbTrafficExtension": {
+              "methods": [
+                "delete_lb_traffic_extension"
+              ]
+            },
+            "GetAuthzExtension": {
+              "methods": [
+                "get_authz_extension"
+              ]
+            },
+            "GetLbEdgeExtension": {
+              "methods": [
+                "get_lb_edge_extension"
+              ]
+            },
+            "GetLbRouteExtension": {
+              "methods": [
+                "get_lb_route_extension"
+              ]
+            },
+            "GetLbTrafficExtension": {
+              "methods": [
+                "get_lb_traffic_extension"
+              ]
+            },
+            "ListAuthzExtensions": {
+              "methods": [
+                "list_authz_extensions"
+              ]
+            },
+            "ListLbEdgeExtensions": {
+              "methods": [
+                "list_lb_edge_extensions"
+              ]
+            },
+            "ListLbRouteExtensions": {
+              "methods": [
+                "list_lb_route_extensions"
+              ]
+            },
+            "ListLbTrafficExtensions": {
+              "methods": [
+                "list_lb_traffic_extensions"
+              ]
+            },
+            "UpdateAuthzExtension": {
+              "methods": [
+                "update_authz_extension"
+              ]
+            },
+            "UpdateLbEdgeExtension": {
+              "methods": [
+                "update_lb_edge_extension"
+              ]
+            },
+            "UpdateLbRouteExtension": {
+              "methods": [
+                "update_lb_route_extension"
+              ]
+            },
+            "UpdateLbTrafficExtension": {
+              "methods": [
+                "update_lb_traffic_extension"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NetworkServices": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "NetworkServicesClient",
+          "rpcs": {
+            "CreateAgentGateway": {
+              "methods": [
+                "create_agent_gateway"
+              ]
+            },
+            "CreateEndpointPolicy": {
+              "methods": [
+                "create_endpoint_policy"
+              ]
+            },
+            "CreateGateway": {
+              "methods": [
+                "create_gateway"
+              ]
+            },
+            "CreateGrpcRoute": {
+              "methods": [
+                "create_grpc_route"
+              ]
+            },
+            "CreateHttpRoute": {
+              "methods": [
+                "create_http_route"
+              ]
+            },
+            "CreateMesh": {
+              "methods": [
+                "create_mesh"
+              ]
+            },
+            "CreateServiceBinding": {
+              "methods": [
+                "create_service_binding"
+              ]
+            },
+            "CreateServiceLbPolicy": {
+              "methods": [
+                "create_service_lb_policy"
+              ]
+            },
+            "CreateTcpRoute": {
+              "methods": [
+                "create_tcp_route"
+              ]
+            },
+            "CreateTlsRoute": {
+              "methods": [
+                "create_tls_route"
+              ]
+            },
+            "CreateWasmPlugin": {
+              "methods": [
+                "create_wasm_plugin"
+              ]
+            },
+            "CreateWasmPluginVersion": {
+              "methods": [
+                "create_wasm_plugin_version"
+              ]
+            },
+            "DeleteAgentGateway": {
+              "methods": [
+                "delete_agent_gateway"
+              ]
+            },
+            "DeleteEndpointPolicy": {
+              "methods": [
+                "delete_endpoint_policy"
+              ]
+            },
+            "DeleteGateway": {
+              "methods": [
+                "delete_gateway"
+              ]
+            },
+            "DeleteGrpcRoute": {
+              "methods": [
+                "delete_grpc_route"
+              ]
+            },
+            "DeleteHttpRoute": {
+              "methods": [
+                "delete_http_route"
+              ]
+            },
+            "DeleteMesh": {
+              "methods": [
+                "delete_mesh"
+              ]
+            },
+            "DeleteServiceBinding": {
+              "methods": [
+                "delete_service_binding"
+              ]
+            },
+            "DeleteServiceLbPolicy": {
+              "methods": [
+                "delete_service_lb_policy"
+              ]
+            },
+            "DeleteTcpRoute": {
+              "methods": [
+                "delete_tcp_route"
+              ]
+            },
+            "DeleteTlsRoute": {
+              "methods": [
+                "delete_tls_route"
+              ]
+            },
+            "DeleteWasmPlugin": {
+              "methods": [
+                "delete_wasm_plugin"
+              ]
+            },
+            "DeleteWasmPluginVersion": {
+              "methods": [
+                "delete_wasm_plugin_version"
+              ]
+            },
+            "GetAgentGateway": {
+              "methods": [
+                "get_agent_gateway"
+              ]
+            },
+            "GetEndpointPolicy": {
+              "methods": [
+                "get_endpoint_policy"
+              ]
+            },
+            "GetGateway": {
+              "methods": [
+                "get_gateway"
+              ]
+            },
+            "GetGatewayRouteView": {
+              "methods": [
+                "get_gateway_route_view"
+              ]
+            },
+            "GetGrpcRoute": {
+              "methods": [
+                "get_grpc_route"
+              ]
+            },
+            "GetHttpRoute": {
+              "methods": [
+                "get_http_route"
+              ]
+            },
+            "GetMesh": {
+              "methods": [
+                "get_mesh"
+              ]
+            },
+            "GetMeshRouteView": {
+              "methods": [
+                "get_mesh_route_view"
+              ]
+            },
+            "GetServiceBinding": {
+              "methods": [
+                "get_service_binding"
+              ]
+            },
+            "GetServiceLbPolicy": {
+              "methods": [
+                "get_service_lb_policy"
+              ]
+            },
+            "GetTcpRoute": {
+              "methods": [
+                "get_tcp_route"
+              ]
+            },
+            "GetTlsRoute": {
+              "methods": [
+                "get_tls_route"
+              ]
+            },
+            "GetWasmPlugin": {
+              "methods": [
+                "get_wasm_plugin"
+              ]
+            },
+            "GetWasmPluginVersion": {
+              "methods": [
+                "get_wasm_plugin_version"
+              ]
+            },
+            "ListAgentGateways": {
+              "methods": [
+                "list_agent_gateways"
+              ]
+            },
+            "ListEndpointPolicies": {
+              "methods": [
+                "list_endpoint_policies"
+              ]
+            },
+            "ListGatewayRouteViews": {
+              "methods": [
+                "list_gateway_route_views"
+              ]
+            },
+            "ListGateways": {
+              "methods": [
+                "list_gateways"
+              ]
+            },
+            "ListGrpcRoutes": {
+              "methods": [
+                "list_grpc_routes"
+              ]
+            },
+            "ListHttpRoutes": {
+              "methods": [
+                "list_http_routes"
+              ]
+            },
+            "ListMeshRouteViews": {
+              "methods": [
+                "list_mesh_route_views"
+              ]
+            },
+            "ListMeshes": {
+              "methods": [
+                "list_meshes"
+              ]
+            },
+            "ListServiceBindings": {
+              "methods": [
+                "list_service_bindings"
+              ]
+            },
+            "ListServiceLbPolicies": {
+              "methods": [
+                "list_service_lb_policies"
+              ]
+            },
+            "ListTcpRoutes": {
+              "methods": [
+                "list_tcp_routes"
+              ]
+            },
+            "ListTlsRoutes": {
+              "methods": [
+                "list_tls_routes"
+              ]
+            },
+            "ListWasmPluginVersions": {
+              "methods": [
+                "list_wasm_plugin_versions"
+              ]
+            },
+            "ListWasmPlugins": {
+              "methods": [
+                "list_wasm_plugins"
+              ]
+            },
+            "UpdateAgentGateway": {
+              "methods": [
+                "update_agent_gateway"
+              ]
+            },
+            "UpdateEndpointPolicy": {
+              "methods": [
+                "update_endpoint_policy"
+              ]
+            },
+            "UpdateGateway": {
+              "methods": [
+                "update_gateway"
+              ]
+            },
+            "UpdateGrpcRoute": {
+              "methods": [
+                "update_grpc_route"
+              ]
+            },
+            "UpdateHttpRoute": {
+              "methods": [
+                "update_http_route"
+              ]
+            },
+            "UpdateMesh": {
+              "methods": [
+                "update_mesh"
+              ]
+            },
+            "UpdateServiceBinding": {
+              "methods": [
+                "update_service_binding"
+              ]
+            },
+            "UpdateServiceLbPolicy": {
+              "methods": [
+                "update_service_lb_policy"
+              ]
+            },
+            "UpdateTcpRoute": {
+              "methods": [
+                "update_tcp_route"
+              ]
+            },
+            "UpdateTlsRoute": {
+              "methods": [
+                "update_tls_route"
+              ]
+            },
+            "UpdateWasmPlugin": {
+              "methods": [
+                "update_wasm_plugin"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "NetworkServicesAsyncClient",
+          "rpcs": {
+            "CreateAgentGateway": {
+              "methods": [
+                "create_agent_gateway"
+              ]
+            },
+            "CreateEndpointPolicy": {
+              "methods": [
+                "create_endpoint_policy"
+              ]
+            },
+            "CreateGateway": {
+              "methods": [
+                "create_gateway"
+              ]
+            },
+            "CreateGrpcRoute": {
+              "methods": [
+                "create_grpc_route"
+              ]
+            },
+            "CreateHttpRoute": {
+              "methods": [
+                "create_http_route"
+              ]
+            },
+            "CreateMesh": {
+              "methods": [
+                "create_mesh"
+              ]
+            },
+            "CreateServiceBinding": {
+              "methods": [
+                "create_service_binding"
+              ]
+            },
+            "CreateServiceLbPolicy": {
+              "methods": [
+                "create_service_lb_policy"
+              ]
+            },
+            "CreateTcpRoute": {
+              "methods": [
+                "create_tcp_route"
+              ]
+            },
+            "CreateTlsRoute": {
+              "methods": [
+                "create_tls_route"
+              ]
+            },
+            "CreateWasmPlugin": {
+              "methods": [
+                "create_wasm_plugin"
+              ]
+            },
+            "CreateWasmPluginVersion": {
+              "methods": [
+                "create_wasm_plugin_version"
+              ]
+            },
+            "DeleteAgentGateway": {
+              "methods": [
+                "delete_agent_gateway"
+              ]
+            },
+            "DeleteEndpointPolicy": {
+              "methods": [
+                "delete_endpoint_policy"
+              ]
+            },
+            "DeleteGateway": {
+              "methods": [
+                "delete_gateway"
+              ]
+            },
+            "DeleteGrpcRoute": {
+              "methods": [
+                "delete_grpc_route"
+              ]
+            },
+            "DeleteHttpRoute": {
+              "methods": [
+                "delete_http_route"
+              ]
+            },
+            "DeleteMesh": {
+              "methods": [
+                "delete_mesh"
+              ]
+            },
+            "DeleteServiceBinding": {
+              "methods": [
+                "delete_service_binding"
+              ]
+            },
+            "DeleteServiceLbPolicy": {
+              "methods": [
+                "delete_service_lb_policy"
+              ]
+            },
+            "DeleteTcpRoute": {
+              "methods": [
+                "delete_tcp_route"
+              ]
+            },
+            "DeleteTlsRoute": {
+              "methods": [
+                "delete_tls_route"
+              ]
+            },
+            "DeleteWasmPlugin": {
+              "methods": [
+                "delete_wasm_plugin"
+              ]
+            },
+            "DeleteWasmPluginVersion": {
+              "methods": [
+                "delete_wasm_plugin_version"
+              ]
+            },
+            "GetAgentGateway": {
+              "methods": [
+                "get_agent_gateway"
+              ]
+            },
+            "GetEndpointPolicy": {
+              "methods": [
+                "get_endpoint_policy"
+              ]
+            },
+            "GetGateway": {
+              "methods": [
+                "get_gateway"
+              ]
+            },
+            "GetGatewayRouteView": {
+              "methods": [
+                "get_gateway_route_view"
+              ]
+            },
+            "GetGrpcRoute": {
+              "methods": [
+                "get_grpc_route"
+              ]
+            },
+            "GetHttpRoute": {
+              "methods": [
+                "get_http_route"
+              ]
+            },
+            "GetMesh": {
+              "methods": [
+                "get_mesh"
+              ]
+            },
+            "GetMeshRouteView": {
+              "methods": [
+                "get_mesh_route_view"
+              ]
+            },
+            "GetServiceBinding": {
+              "methods": [
+                "get_service_binding"
+              ]
+            },
+            "GetServiceLbPolicy": {
+              "methods": [
+                "get_service_lb_policy"
+              ]
+            },
+            "GetTcpRoute": {
+              "methods": [
+                "get_tcp_route"
+              ]
+            },
+            "GetTlsRoute": {
+              "methods": [
+                "get_tls_route"
+              ]
+            },
+            "GetWasmPlugin": {
+              "methods": [
+                "get_wasm_plugin"
+              ]
+            },
+            "GetWasmPluginVersion": {
+              "methods": [
+                "get_wasm_plugin_version"
+              ]
+            },
+            "ListAgentGateways": {
+              "methods": [
+                "list_agent_gateways"
+              ]
+            },
+            "ListEndpointPolicies": {
+              "methods": [
+                "list_endpoint_policies"
+              ]
+            },
+            "ListGatewayRouteViews": {
+              "methods": [
+                "list_gateway_route_views"
+              ]
+            },
+            "ListGateways": {
+              "methods": [
+                "list_gateways"
+              ]
+            },
+            "ListGrpcRoutes": {
+              "methods": [
+                "list_grpc_routes"
+              ]
+            },
+            "ListHttpRoutes": {
+              "methods": [
+                "list_http_routes"
+              ]
+            },
+            "ListMeshRouteViews": {
+              "methods": [
+                "list_mesh_route_views"
+              ]
+            },
+            "ListMeshes": {
+              "methods": [
+                "list_meshes"
+              ]
+            },
+            "ListServiceBindings": {
+              "methods": [
+                "list_service_bindings"
+              ]
+            },
+            "ListServiceLbPolicies": {
+              "methods": [
+                "list_service_lb_policies"
+              ]
+            },
+            "ListTcpRoutes": {
+              "methods": [
+                "list_tcp_routes"
+              ]
+            },
+            "ListTlsRoutes": {
+              "methods": [
+                "list_tls_routes"
+              ]
+            },
+            "ListWasmPluginVersions": {
+              "methods": [
+                "list_wasm_plugin_versions"
+              ]
+            },
+            "ListWasmPlugins": {
+              "methods": [
+                "list_wasm_plugins"
+              ]
+            },
+            "UpdateAgentGateway": {
+              "methods": [
+                "update_agent_gateway"
+              ]
+            },
+            "UpdateEndpointPolicy": {
+              "methods": [
+                "update_endpoint_policy"
+              ]
+            },
+            "UpdateGateway": {
+              "methods": [
+                "update_gateway"
+              ]
+            },
+            "UpdateGrpcRoute": {
+              "methods": [
+                "update_grpc_route"
+              ]
+            },
+            "UpdateHttpRoute": {
+              "methods": [
+                "update_http_route"
+              ]
+            },
+            "UpdateMesh": {
+              "methods": [
+                "update_mesh"
+              ]
+            },
+            "UpdateServiceBinding": {
+              "methods": [
+                "update_service_binding"
+              ]
+            },
+            "UpdateServiceLbPolicy": {
+              "methods": [
+                "update_service_lb_policy"
+              ]
+            },
+            "UpdateTcpRoute": {
+              "methods": [
+                "update_tcp_route"
+              ]
+            },
+            "UpdateTlsRoute": {
+              "methods": [
+                "update_tls_route"
+              ]
+            },
+            "UpdateWasmPlugin": {
+              "methods": [
+                "update_wasm_plugin"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "NetworkServicesClient",
+          "rpcs": {
+            "CreateAgentGateway": {
+              "methods": [
+                "create_agent_gateway"
+              ]
+            },
+            "CreateEndpointPolicy": {
+              "methods": [
+                "create_endpoint_policy"
+              ]
+            },
+            "CreateGateway": {
+              "methods": [
+                "create_gateway"
+              ]
+            },
+            "CreateGrpcRoute": {
+              "methods": [
+                "create_grpc_route"
+              ]
+            },
+            "CreateHttpRoute": {
+              "methods": [
+                "create_http_route"
+              ]
+            },
+            "CreateMesh": {
+              "methods": [
+                "create_mesh"
+              ]
+            },
+            "CreateServiceBinding": {
+              "methods": [
+                "create_service_binding"
+              ]
+            },
+            "CreateServiceLbPolicy": {
+              "methods": [
+                "create_service_lb_policy"
+              ]
+            },
+            "CreateTcpRoute": {
+              "methods": [
+                "create_tcp_route"
+              ]
+            },
+            "CreateTlsRoute": {
+              "methods": [
+                "create_tls_route"
+              ]
+            },
+            "CreateWasmPlugin": {
+              "methods": [
+                "create_wasm_plugin"
+              ]
+            },
+            "CreateWasmPluginVersion": {
+              "methods": [
+                "create_wasm_plugin_version"
+              ]
+            },
+            "DeleteAgentGateway": {
+              "methods": [
+                "delete_agent_gateway"
+              ]
+            },
+            "DeleteEndpointPolicy": {
+              "methods": [
+                "delete_endpoint_policy"
+              ]
+            },
+            "DeleteGateway": {
+              "methods": [
+                "delete_gateway"
+              ]
+            },
+            "DeleteGrpcRoute": {
+              "methods": [
+                "delete_grpc_route"
+              ]
+            },
+            "DeleteHttpRoute": {
+              "methods": [
+                "delete_http_route"
+              ]
+            },
+            "DeleteMesh": {
+              "methods": [
+                "delete_mesh"
+              ]
+            },
+            "DeleteServiceBinding": {
+              "methods": [
+                "delete_service_binding"
+              ]
+            },
+            "DeleteServiceLbPolicy": {
+              "methods": [
+                "delete_service_lb_policy"
+              ]
+            },
+            "DeleteTcpRoute": {
+              "methods": [
+                "delete_tcp_route"
+              ]
+            },
+            "DeleteTlsRoute": {
+              "methods": [
+                "delete_tls_route"
+              ]
+            },
+            "DeleteWasmPlugin": {
+              "methods": [
+                "delete_wasm_plugin"
+              ]
+            },
+            "DeleteWasmPluginVersion": {
+              "methods": [
+                "delete_wasm_plugin_version"
+              ]
+            },
+            "GetAgentGateway": {
+              "methods": [
+                "get_agent_gateway"
+              ]
+            },
+            "GetEndpointPolicy": {
+              "methods": [
+                "get_endpoint_policy"
+              ]
+            },
+            "GetGateway": {
+              "methods": [
+                "get_gateway"
+              ]
+            },
+            "GetGatewayRouteView": {
+              "methods": [
+                "get_gateway_route_view"
+              ]
+            },
+            "GetGrpcRoute": {
+              "methods": [
+                "get_grpc_route"
+              ]
+            },
+            "GetHttpRoute": {
+              "methods": [
+                "get_http_route"
+              ]
+            },
+            "GetMesh": {
+              "methods": [
+                "get_mesh"
+              ]
+            },
+            "GetMeshRouteView": {
+              "methods": [
+                "get_mesh_route_view"
+              ]
+            },
+            "GetServiceBinding": {
+              "methods": [
+                "get_service_binding"
+              ]
+            },
+            "GetServiceLbPolicy": {
+              "methods": [
+                "get_service_lb_policy"
+              ]
+            },
+            "GetTcpRoute": {
+              "methods": [
+                "get_tcp_route"
+              ]
+            },
+            "GetTlsRoute": {
+              "methods": [
+                "get_tls_route"
+              ]
+            },
+            "GetWasmPlugin": {
+              "methods": [
+                "get_wasm_plugin"
+              ]
+            },
+            "GetWasmPluginVersion": {
+              "methods": [
+                "get_wasm_plugin_version"
+              ]
+            },
+            "ListAgentGateways": {
+              "methods": [
+                "list_agent_gateways"
+              ]
+            },
+            "ListEndpointPolicies": {
+              "methods": [
+                "list_endpoint_policies"
+              ]
+            },
+            "ListGatewayRouteViews": {
+              "methods": [
+                "list_gateway_route_views"
+              ]
+            },
+            "ListGateways": {
+              "methods": [
+                "list_gateways"
+              ]
+            },
+            "ListGrpcRoutes": {
+              "methods": [
+                "list_grpc_routes"
+              ]
+            },
+            "ListHttpRoutes": {
+              "methods": [
+                "list_http_routes"
+              ]
+            },
+            "ListMeshRouteViews": {
+              "methods": [
+                "list_mesh_route_views"
+              ]
+            },
+            "ListMeshes": {
+              "methods": [
+                "list_meshes"
+              ]
+            },
+            "ListServiceBindings": {
+              "methods": [
+                "list_service_bindings"
+              ]
+            },
+            "ListServiceLbPolicies": {
+              "methods": [
+                "list_service_lb_policies"
+              ]
+            },
+            "ListTcpRoutes": {
+              "methods": [
+                "list_tcp_routes"
+              ]
+            },
+            "ListTlsRoutes": {
+              "methods": [
+                "list_tls_routes"
+              ]
+            },
+            "ListWasmPluginVersions": {
+              "methods": [
+                "list_wasm_plugin_versions"
+              ]
+            },
+            "ListWasmPlugins": {
+              "methods": [
+                "list_wasm_plugins"
+              ]
+            },
+            "UpdateAgentGateway": {
+              "methods": [
+                "update_agent_gateway"
+              ]
+            },
+            "UpdateEndpointPolicy": {
+              "methods": [
+                "update_endpoint_policy"
+              ]
+            },
+            "UpdateGateway": {
+              "methods": [
+                "update_gateway"
+              ]
+            },
+            "UpdateGrpcRoute": {
+              "methods": [
+                "update_grpc_route"
+              ]
+            },
+            "UpdateHttpRoute": {
+              "methods": [
+                "update_http_route"
+              ]
+            },
+            "UpdateMesh": {
+              "methods": [
+                "update_mesh"
+              ]
+            },
+            "UpdateServiceBinding": {
+              "methods": [
+                "update_service_binding"
+              ]
+            },
+            "UpdateServiceLbPolicy": {
+              "methods": [
+                "update_service_lb_policy"
+              ]
+            },
+            "UpdateTcpRoute": {
+              "methods": [
+                "update_tcp_route"
+              ]
+            },
+            "UpdateTlsRoute": {
+              "methods": [
+                "update_tls_route"
+              ]
+            },
+            "UpdateWasmPlugin": {
+              "methods": [
+                "update_wasm_plugin"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

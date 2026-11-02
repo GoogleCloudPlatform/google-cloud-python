@@ -1,0 +1,1552 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.memcache.v1beta2",
+        "version": "v1beta2"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-memcache",
+    "version": "1.17.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient",
+          "shortName": "CloudMemcacheAsyncClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient.apply_parameters",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.ApplyParameters",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "ApplyParameters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.ApplyParametersRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "node_ids",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "apply_all",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "apply_parameters"
+      },
+      "description": "Sample for ApplyParameters",
+      "file": "memcache_v1beta2_generated_cloud_memcache_apply_parameters_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_ApplyParameters_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_apply_parameters_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient",
+          "shortName": "CloudMemcacheClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient.apply_parameters",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.ApplyParameters",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "ApplyParameters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.ApplyParametersRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "node_ids",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "apply_all",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "apply_parameters"
+      },
+      "description": "Sample for ApplyParameters",
+      "file": "memcache_v1beta2_generated_cloud_memcache_apply_parameters_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_ApplyParameters_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_apply_parameters_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient",
+          "shortName": "CloudMemcacheAsyncClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient.apply_software_update",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.ApplySoftwareUpdate",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "ApplySoftwareUpdate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.ApplySoftwareUpdateRequest"
+          },
+          {
+            "name": "instance",
+            "type": "str"
+          },
+          {
+            "name": "node_ids",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "apply_all",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "apply_software_update"
+      },
+      "description": "Sample for ApplySoftwareUpdate",
+      "file": "memcache_v1beta2_generated_cloud_memcache_apply_software_update_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_ApplySoftwareUpdate_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_apply_software_update_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient",
+          "shortName": "CloudMemcacheClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient.apply_software_update",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.ApplySoftwareUpdate",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "ApplySoftwareUpdate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.ApplySoftwareUpdateRequest"
+          },
+          {
+            "name": "instance",
+            "type": "str"
+          },
+          {
+            "name": "node_ids",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "apply_all",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "apply_software_update"
+      },
+      "description": "Sample for ApplySoftwareUpdate",
+      "file": "memcache_v1beta2_generated_cloud_memcache_apply_software_update_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_ApplySoftwareUpdate_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_apply_software_update_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient",
+          "shortName": "CloudMemcacheAsyncClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient.create_instance",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.CreateInstance",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "CreateInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.CreateInstanceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "instance_id",
+            "type": "str"
+          },
+          {
+            "name": "resource",
+            "type": "google.cloud.memcache_v1beta2.types.Instance"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_instance"
+      },
+      "description": "Sample for CreateInstance",
+      "file": "memcache_v1beta2_generated_cloud_memcache_create_instance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_CreateInstance_async",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_create_instance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient",
+          "shortName": "CloudMemcacheClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient.create_instance",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.CreateInstance",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "CreateInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.CreateInstanceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "instance_id",
+            "type": "str"
+          },
+          {
+            "name": "resource",
+            "type": "google.cloud.memcache_v1beta2.types.Instance"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_instance"
+      },
+      "description": "Sample for CreateInstance",
+      "file": "memcache_v1beta2_generated_cloud_memcache_create_instance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_CreateInstance_sync",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_create_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient",
+          "shortName": "CloudMemcacheAsyncClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient.delete_instance",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.DeleteInstance",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "DeleteInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.DeleteInstanceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_instance"
+      },
+      "description": "Sample for DeleteInstance",
+      "file": "memcache_v1beta2_generated_cloud_memcache_delete_instance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_DeleteInstance_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_delete_instance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient",
+          "shortName": "CloudMemcacheClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient.delete_instance",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.DeleteInstance",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "DeleteInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.DeleteInstanceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_instance"
+      },
+      "description": "Sample for DeleteInstance",
+      "file": "memcache_v1beta2_generated_cloud_memcache_delete_instance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_DeleteInstance_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_delete_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient",
+          "shortName": "CloudMemcacheAsyncClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient.get_instance",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.GetInstance",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "GetInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.GetInstanceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memcache_v1beta2.types.Instance",
+        "shortName": "get_instance"
+      },
+      "description": "Sample for GetInstance",
+      "file": "memcache_v1beta2_generated_cloud_memcache_get_instance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_GetInstance_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_get_instance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient",
+          "shortName": "CloudMemcacheClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient.get_instance",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.GetInstance",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "GetInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.GetInstanceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memcache_v1beta2.types.Instance",
+        "shortName": "get_instance"
+      },
+      "description": "Sample for GetInstance",
+      "file": "memcache_v1beta2_generated_cloud_memcache_get_instance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_GetInstance_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_get_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient",
+          "shortName": "CloudMemcacheAsyncClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient.list_instances",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.ListInstances",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "ListInstances"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.ListInstancesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memcache_v1beta2.services.cloud_memcache.pagers.ListInstancesAsyncPager",
+        "shortName": "list_instances"
+      },
+      "description": "Sample for ListInstances",
+      "file": "memcache_v1beta2_generated_cloud_memcache_list_instances_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_ListInstances_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_list_instances_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient",
+          "shortName": "CloudMemcacheClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient.list_instances",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.ListInstances",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "ListInstances"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.ListInstancesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memcache_v1beta2.services.cloud_memcache.pagers.ListInstancesPager",
+        "shortName": "list_instances"
+      },
+      "description": "Sample for ListInstances",
+      "file": "memcache_v1beta2_generated_cloud_memcache_list_instances_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_ListInstances_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_list_instances_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient",
+          "shortName": "CloudMemcacheAsyncClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient.reschedule_maintenance",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.RescheduleMaintenance",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "RescheduleMaintenance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.RescheduleMaintenanceRequest"
+          },
+          {
+            "name": "instance",
+            "type": "str"
+          },
+          {
+            "name": "reschedule_type",
+            "type": "google.cloud.memcache_v1beta2.types.RescheduleMaintenanceRequest.RescheduleType"
+          },
+          {
+            "name": "schedule_time",
+            "type": "google.protobuf.timestamp_pb2.Timestamp"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "reschedule_maintenance"
+      },
+      "description": "Sample for RescheduleMaintenance",
+      "file": "memcache_v1beta2_generated_cloud_memcache_reschedule_maintenance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_RescheduleMaintenance_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_reschedule_maintenance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient",
+          "shortName": "CloudMemcacheClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient.reschedule_maintenance",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.RescheduleMaintenance",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "RescheduleMaintenance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.RescheduleMaintenanceRequest"
+          },
+          {
+            "name": "instance",
+            "type": "str"
+          },
+          {
+            "name": "reschedule_type",
+            "type": "google.cloud.memcache_v1beta2.types.RescheduleMaintenanceRequest.RescheduleType"
+          },
+          {
+            "name": "schedule_time",
+            "type": "google.protobuf.timestamp_pb2.Timestamp"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "reschedule_maintenance"
+      },
+      "description": "Sample for RescheduleMaintenance",
+      "file": "memcache_v1beta2_generated_cloud_memcache_reschedule_maintenance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_RescheduleMaintenance_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_reschedule_maintenance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient",
+          "shortName": "CloudMemcacheAsyncClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient.update_instance",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.UpdateInstance",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "UpdateInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.UpdateInstanceRequest"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "resource",
+            "type": "google.cloud.memcache_v1beta2.types.Instance"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_instance"
+      },
+      "description": "Sample for UpdateInstance",
+      "file": "memcache_v1beta2_generated_cloud_memcache_update_instance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_UpdateInstance_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_update_instance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient",
+          "shortName": "CloudMemcacheClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient.update_instance",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.UpdateInstance",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "UpdateInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.UpdateInstanceRequest"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "resource",
+            "type": "google.cloud.memcache_v1beta2.types.Instance"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_instance"
+      },
+      "description": "Sample for UpdateInstance",
+      "file": "memcache_v1beta2_generated_cloud_memcache_update_instance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_UpdateInstance_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_update_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient",
+          "shortName": "CloudMemcacheAsyncClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheAsyncClient.update_parameters",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.UpdateParameters",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "UpdateParameters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.UpdateParametersRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "parameters",
+            "type": "google.cloud.memcache_v1beta2.types.MemcacheParameters"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_parameters"
+      },
+      "description": "Sample for UpdateParameters",
+      "file": "memcache_v1beta2_generated_cloud_memcache_update_parameters_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_UpdateParameters_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_update_parameters_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient",
+          "shortName": "CloudMemcacheClient"
+        },
+        "fullName": "google.cloud.memcache_v1beta2.CloudMemcacheClient.update_parameters",
+        "method": {
+          "fullName": "google.cloud.memcache.v1beta2.CloudMemcache.UpdateParameters",
+          "service": {
+            "fullName": "google.cloud.memcache.v1beta2.CloudMemcache",
+            "shortName": "CloudMemcache"
+          },
+          "shortName": "UpdateParameters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memcache_v1beta2.types.UpdateParametersRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "parameters",
+            "type": "google.cloud.memcache_v1beta2.types.MemcacheParameters"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_parameters"
+      },
+      "description": "Sample for UpdateParameters",
+      "file": "memcache_v1beta2_generated_cloud_memcache_update_parameters_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memcache_v1beta2_generated_CloudMemcache_UpdateParameters_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memcache_v1beta2_generated_cloud_memcache_update_parameters_sync.py"
+    }
+  ]
+}

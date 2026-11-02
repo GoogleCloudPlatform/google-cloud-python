@@ -1,0 +1,16 @@
+{
+    "api_description": "The Connect Gateway service allows connectivity from external parties to\nconnected Kubernetes clusters.",
+    "api_id": "connectgateway.googleapis.com",
+    "api_shortname": "connectgateway",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/connectgateway/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-gke-connect-gateway",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1618911",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "connectgateway",
+    "name_pretty": "Connect Gateway",
+    "product_documentation": "https://cloud.google.com/kubernetes-engine/enterprise/multicluster-management/gateway",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

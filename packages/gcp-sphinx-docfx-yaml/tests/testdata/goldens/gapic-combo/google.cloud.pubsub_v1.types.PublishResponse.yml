@@ -1,0 +1,29 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "The server-assigned ID of each published\n   message, in the same\
+      \ order as the messages in\n   the request. IDs are guaranteed to be unique\n\
+      \   within the topic."
+    id: message_ids
+    var_type: Sequence[str]
+  children: []
+  class: google.cloud.pubsub_v1.types.PublishResponse
+  fullName: google.cloud.pubsub_v1.types.PublishResponse
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: PublishResponse
+  source:
+    id: PublishResponse
+    path: null
+    startLine: null
+  summary: 'Response for the `Publish` method.
+
+    '
+  syntax:
+    content: PublishResponse(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.PublishResponse
+references: []

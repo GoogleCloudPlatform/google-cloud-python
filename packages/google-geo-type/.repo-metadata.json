@@ -1,0 +1,15 @@
+{
+    "api_description": "Defines common types for Google Geo APIs.",
+    "api_id": "type.geo.googleapis.com",
+    "api_shortname": "type",
+    "client_documentation": "https://googleapis.dev/python/geotype/latest",
+    "default_version": "apiVersion",
+    "distribution_name": "google-geo-type",
+    "language": "python",
+    "library_type": "OTHER",
+    "name": "geotype",
+    "name_pretty": "Common Geo Types",
+    "product_documentation": "https://mapsplatform.google.com/maps-products",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

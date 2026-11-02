@@ -1,0 +1,133 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.productregistry_v1",
+  "protoPackage": "google.cloud.productregistry.v1",
+  "schema": "1.0",
+  "services": {
+    "CloudProductRegistryReadService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudProductRegistryReadServiceClient",
+          "rpcs": {
+            "GetLogicalProduct": {
+              "methods": [
+                "get_logical_product"
+              ]
+            },
+            "GetLogicalProductVariant": {
+              "methods": [
+                "get_logical_product_variant"
+              ]
+            },
+            "GetProductSuite": {
+              "methods": [
+                "get_product_suite"
+              ]
+            },
+            "ListLogicalProductVariants": {
+              "methods": [
+                "list_logical_product_variants"
+              ]
+            },
+            "ListLogicalProducts": {
+              "methods": [
+                "list_logical_products"
+              ]
+            },
+            "ListProductSuites": {
+              "methods": [
+                "list_product_suites"
+              ]
+            },
+            "LookupEntity": {
+              "methods": [
+                "lookup_entity"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudProductRegistryReadServiceAsyncClient",
+          "rpcs": {
+            "GetLogicalProduct": {
+              "methods": [
+                "get_logical_product"
+              ]
+            },
+            "GetLogicalProductVariant": {
+              "methods": [
+                "get_logical_product_variant"
+              ]
+            },
+            "GetProductSuite": {
+              "methods": [
+                "get_product_suite"
+              ]
+            },
+            "ListLogicalProductVariants": {
+              "methods": [
+                "list_logical_product_variants"
+              ]
+            },
+            "ListLogicalProducts": {
+              "methods": [
+                "list_logical_products"
+              ]
+            },
+            "ListProductSuites": {
+              "methods": [
+                "list_product_suites"
+              ]
+            },
+            "LookupEntity": {
+              "methods": [
+                "lookup_entity"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudProductRegistryReadServiceClient",
+          "rpcs": {
+            "GetLogicalProduct": {
+              "methods": [
+                "get_logical_product"
+              ]
+            },
+            "GetLogicalProductVariant": {
+              "methods": [
+                "get_logical_product_variant"
+              ]
+            },
+            "GetProductSuite": {
+              "methods": [
+                "get_product_suite"
+              ]
+            },
+            "ListLogicalProductVariants": {
+              "methods": [
+                "list_logical_product_variants"
+              ]
+            },
+            "ListLogicalProducts": {
+              "methods": [
+                "list_logical_products"
+              ]
+            },
+            "ListProductSuites": {
+              "methods": [
+                "list_product_suites"
+              ]
+            },
+            "LookupEntity": {
+              "methods": [
+                "lookup_entity"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

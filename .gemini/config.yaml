@@ -1,0 +1,11 @@
+# Configure the behavior of the gemini code assist bot.
+# More info:
+# https://developers.google.com/gemini-code-assist/docs/customize-gemini-behavior-github
+have_fun: false
+code_review:
+  pull_request_opened:
+    help: false
+    code_review: true
+    include_drafts: true
+ignore_patterns:
+  - "packages/**/services/**/client.py"

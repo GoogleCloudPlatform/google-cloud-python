@@ -1,0 +1,25 @@
+{
+    "DocumentType": "ScannedPDF",
+    "NoOfPages": 1,
+    "page_height":1000,
+    "page_width":1000,
+    "Entities": {
+        "BusinessName": {
+          "Text": "411 I.T. Group",
+          "normalizedText":"normalized 411 I.T. Group",
+          "id":0,
+          "bBox": [
+              392,
+              116,
+              558,
+              116,
+              558,
+              145,
+              392,
+              145
+          ],
+          "page": "0",
+          "confidence": 0.9997831
+      }
+    }
+  }

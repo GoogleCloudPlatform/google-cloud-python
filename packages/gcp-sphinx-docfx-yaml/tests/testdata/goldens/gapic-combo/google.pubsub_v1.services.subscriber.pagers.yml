@@ -1,0 +1,42 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.pubsub_v1.services.subscriber.pagers.ListSnapshotsAsyncPager
+  - google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+  - google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsAsyncPager
+  - google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsPager
+  fullName: google.pubsub_v1.services.subscriber.pagers
+  langs:
+  - python
+  module: google.pubsub_v1.services.subscriber.pagers
+  name: subscriber.pagers
+  source:
+    id: pagers
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/pagers.py
+    startLine: 0
+  summary: API documentation for `pubsub_v1.services.subscriber.pagers` module.
+  syntax: {}
+  type: module
+  uid: google.pubsub_v1.services.subscriber.pagers
+references:
+- fullName: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsAsyncPager
+  isExternal: false
+  name: ListSnapshotsAsyncPager
+  parent: google.pubsub_v1.services.subscriber.pagers
+  uid: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsAsyncPager
+- fullName: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+  isExternal: false
+  name: ListSnapshotsPager
+  parent: google.pubsub_v1.services.subscriber.pagers
+  uid: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+- fullName: google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsAsyncPager
+  isExternal: false
+  name: ListSubscriptionsAsyncPager
+  parent: google.pubsub_v1.services.subscriber.pagers
+  uid: google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsAsyncPager
+- fullName: google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsPager
+  isExternal: false
+  name: ListSubscriptionsPager
+  parent: google.pubsub_v1.services.subscriber.pagers
+  uid: google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsPager

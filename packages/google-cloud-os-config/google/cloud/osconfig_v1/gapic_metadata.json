@@ -1,0 +1,407 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.osconfig_v1",
+  "protoPackage": "google.cloud.osconfig.v1",
+  "schema": "1.0",
+  "services": {
+    "OsConfigService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "OsConfigServiceClient",
+          "rpcs": {
+            "CancelPatchJob": {
+              "methods": [
+                "cancel_patch_job"
+              ]
+            },
+            "CreatePatchDeployment": {
+              "methods": [
+                "create_patch_deployment"
+              ]
+            },
+            "DeletePatchDeployment": {
+              "methods": [
+                "delete_patch_deployment"
+              ]
+            },
+            "ExecutePatchJob": {
+              "methods": [
+                "execute_patch_job"
+              ]
+            },
+            "GetPatchDeployment": {
+              "methods": [
+                "get_patch_deployment"
+              ]
+            },
+            "GetPatchJob": {
+              "methods": [
+                "get_patch_job"
+              ]
+            },
+            "ListPatchDeployments": {
+              "methods": [
+                "list_patch_deployments"
+              ]
+            },
+            "ListPatchJobInstanceDetails": {
+              "methods": [
+                "list_patch_job_instance_details"
+              ]
+            },
+            "ListPatchJobs": {
+              "methods": [
+                "list_patch_jobs"
+              ]
+            },
+            "PausePatchDeployment": {
+              "methods": [
+                "pause_patch_deployment"
+              ]
+            },
+            "ResumePatchDeployment": {
+              "methods": [
+                "resume_patch_deployment"
+              ]
+            },
+            "UpdatePatchDeployment": {
+              "methods": [
+                "update_patch_deployment"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "OsConfigServiceAsyncClient",
+          "rpcs": {
+            "CancelPatchJob": {
+              "methods": [
+                "cancel_patch_job"
+              ]
+            },
+            "CreatePatchDeployment": {
+              "methods": [
+                "create_patch_deployment"
+              ]
+            },
+            "DeletePatchDeployment": {
+              "methods": [
+                "delete_patch_deployment"
+              ]
+            },
+            "ExecutePatchJob": {
+              "methods": [
+                "execute_patch_job"
+              ]
+            },
+            "GetPatchDeployment": {
+              "methods": [
+                "get_patch_deployment"
+              ]
+            },
+            "GetPatchJob": {
+              "methods": [
+                "get_patch_job"
+              ]
+            },
+            "ListPatchDeployments": {
+              "methods": [
+                "list_patch_deployments"
+              ]
+            },
+            "ListPatchJobInstanceDetails": {
+              "methods": [
+                "list_patch_job_instance_details"
+              ]
+            },
+            "ListPatchJobs": {
+              "methods": [
+                "list_patch_jobs"
+              ]
+            },
+            "PausePatchDeployment": {
+              "methods": [
+                "pause_patch_deployment"
+              ]
+            },
+            "ResumePatchDeployment": {
+              "methods": [
+                "resume_patch_deployment"
+              ]
+            },
+            "UpdatePatchDeployment": {
+              "methods": [
+                "update_patch_deployment"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "OsConfigServiceClient",
+          "rpcs": {
+            "CancelPatchJob": {
+              "methods": [
+                "cancel_patch_job"
+              ]
+            },
+            "CreatePatchDeployment": {
+              "methods": [
+                "create_patch_deployment"
+              ]
+            },
+            "DeletePatchDeployment": {
+              "methods": [
+                "delete_patch_deployment"
+              ]
+            },
+            "ExecutePatchJob": {
+              "methods": [
+                "execute_patch_job"
+              ]
+            },
+            "GetPatchDeployment": {
+              "methods": [
+                "get_patch_deployment"
+              ]
+            },
+            "GetPatchJob": {
+              "methods": [
+                "get_patch_job"
+              ]
+            },
+            "ListPatchDeployments": {
+              "methods": [
+                "list_patch_deployments"
+              ]
+            },
+            "ListPatchJobInstanceDetails": {
+              "methods": [
+                "list_patch_job_instance_details"
+              ]
+            },
+            "ListPatchJobs": {
+              "methods": [
+                "list_patch_jobs"
+              ]
+            },
+            "PausePatchDeployment": {
+              "methods": [
+                "pause_patch_deployment"
+              ]
+            },
+            "ResumePatchDeployment": {
+              "methods": [
+                "resume_patch_deployment"
+              ]
+            },
+            "UpdatePatchDeployment": {
+              "methods": [
+                "update_patch_deployment"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "OsConfigZonalService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "OsConfigZonalServiceClient",
+          "rpcs": {
+            "CreateOSPolicyAssignment": {
+              "methods": [
+                "create_os_policy_assignment"
+              ]
+            },
+            "DeleteOSPolicyAssignment": {
+              "methods": [
+                "delete_os_policy_assignment"
+              ]
+            },
+            "GetInventory": {
+              "methods": [
+                "get_inventory"
+              ]
+            },
+            "GetOSPolicyAssignment": {
+              "methods": [
+                "get_os_policy_assignment"
+              ]
+            },
+            "GetOSPolicyAssignmentReport": {
+              "methods": [
+                "get_os_policy_assignment_report"
+              ]
+            },
+            "GetVulnerabilityReport": {
+              "methods": [
+                "get_vulnerability_report"
+              ]
+            },
+            "ListInventories": {
+              "methods": [
+                "list_inventories"
+              ]
+            },
+            "ListOSPolicyAssignmentReports": {
+              "methods": [
+                "list_os_policy_assignment_reports"
+              ]
+            },
+            "ListOSPolicyAssignmentRevisions": {
+              "methods": [
+                "list_os_policy_assignment_revisions"
+              ]
+            },
+            "ListOSPolicyAssignments": {
+              "methods": [
+                "list_os_policy_assignments"
+              ]
+            },
+            "ListVulnerabilityReports": {
+              "methods": [
+                "list_vulnerability_reports"
+              ]
+            },
+            "UpdateOSPolicyAssignment": {
+              "methods": [
+                "update_os_policy_assignment"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "OsConfigZonalServiceAsyncClient",
+          "rpcs": {
+            "CreateOSPolicyAssignment": {
+              "methods": [
+                "create_os_policy_assignment"
+              ]
+            },
+            "DeleteOSPolicyAssignment": {
+              "methods": [
+                "delete_os_policy_assignment"
+              ]
+            },
+            "GetInventory": {
+              "methods": [
+                "get_inventory"
+              ]
+            },
+            "GetOSPolicyAssignment": {
+              "methods": [
+                "get_os_policy_assignment"
+              ]
+            },
+            "GetOSPolicyAssignmentReport": {
+              "methods": [
+                "get_os_policy_assignment_report"
+              ]
+            },
+            "GetVulnerabilityReport": {
+              "methods": [
+                "get_vulnerability_report"
+              ]
+            },
+            "ListInventories": {
+              "methods": [
+                "list_inventories"
+              ]
+            },
+            "ListOSPolicyAssignmentReports": {
+              "methods": [
+                "list_os_policy_assignment_reports"
+              ]
+            },
+            "ListOSPolicyAssignmentRevisions": {
+              "methods": [
+                "list_os_policy_assignment_revisions"
+              ]
+            },
+            "ListOSPolicyAssignments": {
+              "methods": [
+                "list_os_policy_assignments"
+              ]
+            },
+            "ListVulnerabilityReports": {
+              "methods": [
+                "list_vulnerability_reports"
+              ]
+            },
+            "UpdateOSPolicyAssignment": {
+              "methods": [
+                "update_os_policy_assignment"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "OsConfigZonalServiceClient",
+          "rpcs": {
+            "CreateOSPolicyAssignment": {
+              "methods": [
+                "create_os_policy_assignment"
+              ]
+            },
+            "DeleteOSPolicyAssignment": {
+              "methods": [
+                "delete_os_policy_assignment"
+              ]
+            },
+            "GetInventory": {
+              "methods": [
+                "get_inventory"
+              ]
+            },
+            "GetOSPolicyAssignment": {
+              "methods": [
+                "get_os_policy_assignment"
+              ]
+            },
+            "GetOSPolicyAssignmentReport": {
+              "methods": [
+                "get_os_policy_assignment_report"
+              ]
+            },
+            "GetVulnerabilityReport": {
+              "methods": [
+                "get_vulnerability_report"
+              ]
+            },
+            "ListInventories": {
+              "methods": [
+                "list_inventories"
+              ]
+            },
+            "ListOSPolicyAssignmentReports": {
+              "methods": [
+                "list_os_policy_assignment_reports"
+              ]
+            },
+            "ListOSPolicyAssignmentRevisions": {
+              "methods": [
+                "list_os_policy_assignment_revisions"
+              ]
+            },
+            "ListOSPolicyAssignments": {
+              "methods": [
+                "list_os_policy_assignments"
+              ]
+            },
+            "ListVulnerabilityReports": {
+              "methods": [
+                "list_vulnerability_reports"
+              ]
+            },
+            "UpdateOSPolicyAssignment": {
+              "methods": [
+                "update_os_policy_assignment"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

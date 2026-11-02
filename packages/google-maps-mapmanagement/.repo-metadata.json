@@ -1,0 +1,16 @@
+{
+    "api_description": "The Map Management API is a RESTful service that accepts HTTP requests for\nmap styling data through a variety of methods. It returns formatted\nconfiguration data about map styling resources so that you can\nprogrammatically manage your Cloud-based map styles.",
+    "api_id": "mapmanagement.googleapis.com",
+    "api_shortname": "mapmanagement",
+    "client_documentation": "https://googleapis.dev/python/google-maps-mapmanagement/latest",
+    "default_version": "v2beta",
+    "distribution_name": "google-maps-mapmanagement",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=188871\u0026template=788907",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-maps-mapmanagement",
+    "name_pretty": "Map Management",
+    "product_documentation": "https://developers.google.com/maps/documentation/mapmanagement/overview",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

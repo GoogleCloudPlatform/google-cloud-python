@@ -1,0 +1,3279 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.tasks.v2",
+        "version": "v2"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-tasks",
+    "version": "2.26.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.batch_create_tasks",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.BatchCreateTasks",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "BatchCreateTasks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.BatchCreateTasksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "requests",
+            "type": "MutableSequence[google.cloud.tasks_v2.types.CreateTaskRequest]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "batch_create_tasks"
+      },
+      "description": "Sample for BatchCreateTasks",
+      "file": "cloudtasks_v2_generated_cloud_tasks_batch_create_tasks_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_BatchCreateTasks_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_batch_create_tasks_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.batch_create_tasks",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.BatchCreateTasks",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "BatchCreateTasks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.BatchCreateTasksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "requests",
+            "type": "MutableSequence[google.cloud.tasks_v2.types.CreateTaskRequest]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "batch_create_tasks"
+      },
+      "description": "Sample for BatchCreateTasks",
+      "file": "cloudtasks_v2_generated_cloud_tasks_batch_create_tasks_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_BatchCreateTasks_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_batch_create_tasks_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.batch_delete_tasks",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.BatchDeleteTasks",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "BatchDeleteTasks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.BatchDeleteTasksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "names",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "batch_delete_tasks"
+      },
+      "description": "Sample for BatchDeleteTasks",
+      "file": "cloudtasks_v2_generated_cloud_tasks_batch_delete_tasks_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_BatchDeleteTasks_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_batch_delete_tasks_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.batch_delete_tasks",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.BatchDeleteTasks",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "BatchDeleteTasks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.BatchDeleteTasksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "names",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "batch_delete_tasks"
+      },
+      "description": "Sample for BatchDeleteTasks",
+      "file": "cloudtasks_v2_generated_cloud_tasks_batch_delete_tasks_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_BatchDeleteTasks_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_batch_delete_tasks_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.create_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.CreateQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "CreateQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.CreateQueueRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "queue",
+            "type": "google.cloud.tasks_v2.types.Queue"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "create_queue"
+      },
+      "description": "Sample for CreateQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_create_queue_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_CreateQueue_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_create_queue_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.create_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.CreateQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "CreateQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.CreateQueueRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "queue",
+            "type": "google.cloud.tasks_v2.types.Queue"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "create_queue"
+      },
+      "description": "Sample for CreateQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_create_queue_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_CreateQueue_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_create_queue_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.create_task",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.CreateTask",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "CreateTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.CreateTaskRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "task",
+            "type": "google.cloud.tasks_v2.types.Task"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Task",
+        "shortName": "create_task"
+      },
+      "description": "Sample for CreateTask",
+      "file": "cloudtasks_v2_generated_cloud_tasks_create_task_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_CreateTask_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_create_task_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.create_task",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.CreateTask",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "CreateTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.CreateTaskRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "task",
+            "type": "google.cloud.tasks_v2.types.Task"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Task",
+        "shortName": "create_task"
+      },
+      "description": "Sample for CreateTask",
+      "file": "cloudtasks_v2_generated_cloud_tasks_create_task_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_CreateTask_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_create_task_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.delete_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.DeleteQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "DeleteQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.DeleteQueueRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_queue"
+      },
+      "description": "Sample for DeleteQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_delete_queue_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_DeleteQueue_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_delete_queue_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.delete_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.DeleteQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "DeleteQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.DeleteQueueRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_queue"
+      },
+      "description": "Sample for DeleteQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_delete_queue_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_DeleteQueue_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_delete_queue_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.delete_task",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.DeleteTask",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "DeleteTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.DeleteTaskRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_task"
+      },
+      "description": "Sample for DeleteTask",
+      "file": "cloudtasks_v2_generated_cloud_tasks_delete_task_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_DeleteTask_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_delete_task_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.delete_task",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.DeleteTask",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "DeleteTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.DeleteTaskRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_task"
+      },
+      "description": "Sample for DeleteTask",
+      "file": "cloudtasks_v2_generated_cloud_tasks_delete_task_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_DeleteTask_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_delete_task_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.get_cmek_config",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.GetCmekConfig",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "GetCmekConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.GetCmekConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.CmekConfig",
+        "shortName": "get_cmek_config"
+      },
+      "description": "Sample for GetCmekConfig",
+      "file": "cloudtasks_v2_generated_cloud_tasks_get_cmek_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_GetCmekConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_get_cmek_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.get_cmek_config",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.GetCmekConfig",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "GetCmekConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.GetCmekConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.CmekConfig",
+        "shortName": "get_cmek_config"
+      },
+      "description": "Sample for GetCmekConfig",
+      "file": "cloudtasks_v2_generated_cloud_tasks_get_cmek_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_GetCmekConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_get_cmek_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.get_iam_policy",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.GetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "cloudtasks_v2_generated_cloud_tasks_get_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_GetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_get_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.get_iam_policy",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.GetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "cloudtasks_v2_generated_cloud_tasks_get_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_GetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_get_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.get_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.GetQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "GetQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.GetQueueRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "get_queue"
+      },
+      "description": "Sample for GetQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_get_queue_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_GetQueue_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_get_queue_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.get_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.GetQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "GetQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.GetQueueRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "get_queue"
+      },
+      "description": "Sample for GetQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_get_queue_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_GetQueue_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_get_queue_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.get_task",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.GetTask",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "GetTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.GetTaskRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Task",
+        "shortName": "get_task"
+      },
+      "description": "Sample for GetTask",
+      "file": "cloudtasks_v2_generated_cloud_tasks_get_task_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_GetTask_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_get_task_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.get_task",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.GetTask",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "GetTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.GetTaskRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Task",
+        "shortName": "get_task"
+      },
+      "description": "Sample for GetTask",
+      "file": "cloudtasks_v2_generated_cloud_tasks_get_task_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_GetTask_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_get_task_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.list_queues",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.ListQueues",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "ListQueues"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.ListQueuesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.services.cloud_tasks.pagers.ListQueuesAsyncPager",
+        "shortName": "list_queues"
+      },
+      "description": "Sample for ListQueues",
+      "file": "cloudtasks_v2_generated_cloud_tasks_list_queues_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_ListQueues_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_list_queues_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.list_queues",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.ListQueues",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "ListQueues"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.ListQueuesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.services.cloud_tasks.pagers.ListQueuesPager",
+        "shortName": "list_queues"
+      },
+      "description": "Sample for ListQueues",
+      "file": "cloudtasks_v2_generated_cloud_tasks_list_queues_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_ListQueues_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_list_queues_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.list_tasks",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.ListTasks",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "ListTasks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.ListTasksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.services.cloud_tasks.pagers.ListTasksAsyncPager",
+        "shortName": "list_tasks"
+      },
+      "description": "Sample for ListTasks",
+      "file": "cloudtasks_v2_generated_cloud_tasks_list_tasks_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_ListTasks_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_list_tasks_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.list_tasks",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.ListTasks",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "ListTasks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.ListTasksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.services.cloud_tasks.pagers.ListTasksPager",
+        "shortName": "list_tasks"
+      },
+      "description": "Sample for ListTasks",
+      "file": "cloudtasks_v2_generated_cloud_tasks_list_tasks_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_ListTasks_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_list_tasks_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.pause_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.PauseQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "PauseQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.PauseQueueRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "pause_queue"
+      },
+      "description": "Sample for PauseQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_pause_queue_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_PauseQueue_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_pause_queue_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.pause_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.PauseQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "PauseQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.PauseQueueRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "pause_queue"
+      },
+      "description": "Sample for PauseQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_pause_queue_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_PauseQueue_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_pause_queue_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.purge_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.PurgeQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "PurgeQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.PurgeQueueRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "purge_queue"
+      },
+      "description": "Sample for PurgeQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_purge_queue_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_PurgeQueue_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_purge_queue_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.purge_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.PurgeQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "PurgeQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.PurgeQueueRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "purge_queue"
+      },
+      "description": "Sample for PurgeQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_purge_queue_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_PurgeQueue_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_purge_queue_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.resume_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.ResumeQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "ResumeQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.ResumeQueueRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "resume_queue"
+      },
+      "description": "Sample for ResumeQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_resume_queue_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_ResumeQueue_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_resume_queue_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.resume_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.ResumeQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "ResumeQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.ResumeQueueRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "resume_queue"
+      },
+      "description": "Sample for ResumeQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_resume_queue_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_ResumeQueue_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_resume_queue_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.run_task",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.RunTask",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "RunTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.RunTaskRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Task",
+        "shortName": "run_task"
+      },
+      "description": "Sample for RunTask",
+      "file": "cloudtasks_v2_generated_cloud_tasks_run_task_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_RunTask_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_run_task_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.run_task",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.RunTask",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "RunTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.RunTaskRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Task",
+        "shortName": "run_task"
+      },
+      "description": "Sample for RunTask",
+      "file": "cloudtasks_v2_generated_cloud_tasks_run_task_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_RunTask_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_run_task_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.set_iam_policy",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.SetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "cloudtasks_v2_generated_cloud_tasks_set_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_SetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_set_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.set_iam_policy",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.SetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "cloudtasks_v2_generated_cloud_tasks_set_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_SetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_set_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.TestIamPermissions",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "permissions",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "cloudtasks_v2_generated_cloud_tasks_test_iam_permissions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_TestIamPermissions_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_test_iam_permissions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.TestIamPermissions",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "permissions",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "cloudtasks_v2_generated_cloud_tasks_test_iam_permissions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_TestIamPermissions_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_test_iam_permissions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.update_cmek_config",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.UpdateCmekConfig",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "UpdateCmekConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.UpdateCmekConfigRequest"
+          },
+          {
+            "name": "cmek_config",
+            "type": "google.cloud.tasks_v2.types.CmekConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.CmekConfig",
+        "shortName": "update_cmek_config"
+      },
+      "description": "Sample for UpdateCmekConfig",
+      "file": "cloudtasks_v2_generated_cloud_tasks_update_cmek_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_UpdateCmekConfig_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_update_cmek_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.update_cmek_config",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.UpdateCmekConfig",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "UpdateCmekConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.UpdateCmekConfigRequest"
+          },
+          {
+            "name": "cmek_config",
+            "type": "google.cloud.tasks_v2.types.CmekConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.CmekConfig",
+        "shortName": "update_cmek_config"
+      },
+      "description": "Sample for UpdateCmekConfig",
+      "file": "cloudtasks_v2_generated_cloud_tasks_update_cmek_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_UpdateCmekConfig_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_update_cmek_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient",
+          "shortName": "CloudTasksAsyncClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksAsyncClient.update_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.UpdateQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "UpdateQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.UpdateQueueRequest"
+          },
+          {
+            "name": "queue",
+            "type": "google.cloud.tasks_v2.types.Queue"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "update_queue"
+      },
+      "description": "Sample for UpdateQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_update_queue_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_UpdateQueue_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_update_queue_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tasks_v2.CloudTasksClient",
+          "shortName": "CloudTasksClient"
+        },
+        "fullName": "google.cloud.tasks_v2.CloudTasksClient.update_queue",
+        "method": {
+          "fullName": "google.cloud.tasks.v2.CloudTasks.UpdateQueue",
+          "service": {
+            "fullName": "google.cloud.tasks.v2.CloudTasks",
+            "shortName": "CloudTasks"
+          },
+          "shortName": "UpdateQueue"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tasks_v2.types.UpdateQueueRequest"
+          },
+          {
+            "name": "queue",
+            "type": "google.cloud.tasks_v2.types.Queue"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tasks_v2.types.Queue",
+        "shortName": "update_queue"
+      },
+      "description": "Sample for UpdateQueue",
+      "file": "cloudtasks_v2_generated_cloud_tasks_update_queue_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudtasks_v2_generated_CloudTasks_UpdateQueue_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudtasks_v2_generated_cloud_tasks_update_queue_sync.py"
+    }
+  ]
+}

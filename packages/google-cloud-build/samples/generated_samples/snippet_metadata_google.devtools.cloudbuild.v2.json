@@ -1,0 +1,2309 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.devtools.cloudbuild.v2",
+        "version": "v2"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-build",
+    "version": "3.42.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.batch_create_repositories",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.BatchCreateRepositories",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "BatchCreateRepositories"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.BatchCreateRepositoriesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "requests",
+            "type": "MutableSequence[google.cloud.devtools.cloudbuild_v2.types.CreateRepositoryRequest]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "batch_create_repositories"
+      },
+      "description": "Sample for BatchCreateRepositories",
+      "file": "cloudbuild_v2_generated_repository_manager_batch_create_repositories_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_BatchCreateRepositories_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_batch_create_repositories_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.batch_create_repositories",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.BatchCreateRepositories",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "BatchCreateRepositories"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.BatchCreateRepositoriesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "requests",
+            "type": "MutableSequence[google.cloud.devtools.cloudbuild_v2.types.CreateRepositoryRequest]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "batch_create_repositories"
+      },
+      "description": "Sample for BatchCreateRepositories",
+      "file": "cloudbuild_v2_generated_repository_manager_batch_create_repositories_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_BatchCreateRepositories_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_batch_create_repositories_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.create_connection",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.CreateConnection",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "CreateConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.CreateConnectionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "connection",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.Connection"
+          },
+          {
+            "name": "connection_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_connection"
+      },
+      "description": "Sample for CreateConnection",
+      "file": "cloudbuild_v2_generated_repository_manager_create_connection_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_CreateConnection_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_create_connection_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.create_connection",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.CreateConnection",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "CreateConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.CreateConnectionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "connection",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.Connection"
+          },
+          {
+            "name": "connection_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_connection"
+      },
+      "description": "Sample for CreateConnection",
+      "file": "cloudbuild_v2_generated_repository_manager_create_connection_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_CreateConnection_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_create_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.create_repository",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.CreateRepository",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "CreateRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.CreateRepositoryRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "repository",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.Repository"
+          },
+          {
+            "name": "repository_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_repository"
+      },
+      "description": "Sample for CreateRepository",
+      "file": "cloudbuild_v2_generated_repository_manager_create_repository_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_CreateRepository_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_create_repository_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.create_repository",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.CreateRepository",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "CreateRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.CreateRepositoryRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "repository",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.Repository"
+          },
+          {
+            "name": "repository_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_repository"
+      },
+      "description": "Sample for CreateRepository",
+      "file": "cloudbuild_v2_generated_repository_manager_create_repository_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_CreateRepository_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_create_repository_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.delete_connection",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.DeleteConnection",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "DeleteConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.DeleteConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_connection"
+      },
+      "description": "Sample for DeleteConnection",
+      "file": "cloudbuild_v2_generated_repository_manager_delete_connection_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_DeleteConnection_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_delete_connection_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.delete_connection",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.DeleteConnection",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "DeleteConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.DeleteConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_connection"
+      },
+      "description": "Sample for DeleteConnection",
+      "file": "cloudbuild_v2_generated_repository_manager_delete_connection_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_DeleteConnection_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_delete_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.delete_repository",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.DeleteRepository",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "DeleteRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.DeleteRepositoryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_repository"
+      },
+      "description": "Sample for DeleteRepository",
+      "file": "cloudbuild_v2_generated_repository_manager_delete_repository_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_DeleteRepository_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_delete_repository_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.delete_repository",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.DeleteRepository",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "DeleteRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.DeleteRepositoryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_repository"
+      },
+      "description": "Sample for DeleteRepository",
+      "file": "cloudbuild_v2_generated_repository_manager_delete_repository_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_DeleteRepository_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_delete_repository_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.fetch_git_refs",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.FetchGitRefs",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "FetchGitRefs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.FetchGitRefsRequest"
+          },
+          {
+            "name": "repository",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.types.FetchGitRefsResponse",
+        "shortName": "fetch_git_refs"
+      },
+      "description": "Sample for FetchGitRefs",
+      "file": "cloudbuild_v2_generated_repository_manager_fetch_git_refs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_FetchGitRefs_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_fetch_git_refs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.fetch_git_refs",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.FetchGitRefs",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "FetchGitRefs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.FetchGitRefsRequest"
+          },
+          {
+            "name": "repository",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.types.FetchGitRefsResponse",
+        "shortName": "fetch_git_refs"
+      },
+      "description": "Sample for FetchGitRefs",
+      "file": "cloudbuild_v2_generated_repository_manager_fetch_git_refs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_FetchGitRefs_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_fetch_git_refs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.fetch_linkable_repositories",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.FetchLinkableRepositories",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "FetchLinkableRepositories"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.FetchLinkableRepositoriesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.services.repository_manager.pagers.FetchLinkableRepositoriesAsyncPager",
+        "shortName": "fetch_linkable_repositories"
+      },
+      "description": "Sample for FetchLinkableRepositories",
+      "file": "cloudbuild_v2_generated_repository_manager_fetch_linkable_repositories_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_FetchLinkableRepositories_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_fetch_linkable_repositories_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.fetch_linkable_repositories",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.FetchLinkableRepositories",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "FetchLinkableRepositories"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.FetchLinkableRepositoriesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.services.repository_manager.pagers.FetchLinkableRepositoriesPager",
+        "shortName": "fetch_linkable_repositories"
+      },
+      "description": "Sample for FetchLinkableRepositories",
+      "file": "cloudbuild_v2_generated_repository_manager_fetch_linkable_repositories_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_FetchLinkableRepositories_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_fetch_linkable_repositories_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.fetch_read_token",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.FetchReadToken",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "FetchReadToken"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.FetchReadTokenRequest"
+          },
+          {
+            "name": "repository",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.types.FetchReadTokenResponse",
+        "shortName": "fetch_read_token"
+      },
+      "description": "Sample for FetchReadToken",
+      "file": "cloudbuild_v2_generated_repository_manager_fetch_read_token_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_FetchReadToken_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_fetch_read_token_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.fetch_read_token",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.FetchReadToken",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "FetchReadToken"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.FetchReadTokenRequest"
+          },
+          {
+            "name": "repository",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.types.FetchReadTokenResponse",
+        "shortName": "fetch_read_token"
+      },
+      "description": "Sample for FetchReadToken",
+      "file": "cloudbuild_v2_generated_repository_manager_fetch_read_token_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_FetchReadToken_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_fetch_read_token_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.fetch_read_write_token",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.FetchReadWriteToken",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "FetchReadWriteToken"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.FetchReadWriteTokenRequest"
+          },
+          {
+            "name": "repository",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.types.FetchReadWriteTokenResponse",
+        "shortName": "fetch_read_write_token"
+      },
+      "description": "Sample for FetchReadWriteToken",
+      "file": "cloudbuild_v2_generated_repository_manager_fetch_read_write_token_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_FetchReadWriteToken_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_fetch_read_write_token_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.fetch_read_write_token",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.FetchReadWriteToken",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "FetchReadWriteToken"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.FetchReadWriteTokenRequest"
+          },
+          {
+            "name": "repository",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.types.FetchReadWriteTokenResponse",
+        "shortName": "fetch_read_write_token"
+      },
+      "description": "Sample for FetchReadWriteToken",
+      "file": "cloudbuild_v2_generated_repository_manager_fetch_read_write_token_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_FetchReadWriteToken_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_fetch_read_write_token_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.get_connection",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.GetConnection",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "GetConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.GetConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.types.Connection",
+        "shortName": "get_connection"
+      },
+      "description": "Sample for GetConnection",
+      "file": "cloudbuild_v2_generated_repository_manager_get_connection_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_GetConnection_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_get_connection_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.get_connection",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.GetConnection",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "GetConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.GetConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.types.Connection",
+        "shortName": "get_connection"
+      },
+      "description": "Sample for GetConnection",
+      "file": "cloudbuild_v2_generated_repository_manager_get_connection_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_GetConnection_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_get_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.get_repository",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.GetRepository",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "GetRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.GetRepositoryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.types.Repository",
+        "shortName": "get_repository"
+      },
+      "description": "Sample for GetRepository",
+      "file": "cloudbuild_v2_generated_repository_manager_get_repository_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_GetRepository_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_get_repository_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.get_repository",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.GetRepository",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "GetRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.GetRepositoryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.types.Repository",
+        "shortName": "get_repository"
+      },
+      "description": "Sample for GetRepository",
+      "file": "cloudbuild_v2_generated_repository_manager_get_repository_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_GetRepository_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_get_repository_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.list_connections",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.ListConnections",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "ListConnections"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.ListConnectionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.services.repository_manager.pagers.ListConnectionsAsyncPager",
+        "shortName": "list_connections"
+      },
+      "description": "Sample for ListConnections",
+      "file": "cloudbuild_v2_generated_repository_manager_list_connections_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_ListConnections_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_list_connections_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.list_connections",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.ListConnections",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "ListConnections"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.ListConnectionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.services.repository_manager.pagers.ListConnectionsPager",
+        "shortName": "list_connections"
+      },
+      "description": "Sample for ListConnections",
+      "file": "cloudbuild_v2_generated_repository_manager_list_connections_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_ListConnections_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_list_connections_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.list_repositories",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.ListRepositories",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "ListRepositories"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.ListRepositoriesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.services.repository_manager.pagers.ListRepositoriesAsyncPager",
+        "shortName": "list_repositories"
+      },
+      "description": "Sample for ListRepositories",
+      "file": "cloudbuild_v2_generated_repository_manager_list_repositories_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_ListRepositories_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_list_repositories_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.list_repositories",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.ListRepositories",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "ListRepositories"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.ListRepositoriesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v2.services.repository_manager.pagers.ListRepositoriesPager",
+        "shortName": "list_repositories"
+      },
+      "description": "Sample for ListRepositories",
+      "file": "cloudbuild_v2_generated_repository_manager_list_repositories_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_ListRepositories_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_list_repositories_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient",
+          "shortName": "RepositoryManagerAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerAsyncClient.update_connection",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.UpdateConnection",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "UpdateConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.UpdateConnectionRequest"
+          },
+          {
+            "name": "connection",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.Connection"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_connection"
+      },
+      "description": "Sample for UpdateConnection",
+      "file": "cloudbuild_v2_generated_repository_manager_update_connection_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_UpdateConnection_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_update_connection_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient",
+          "shortName": "RepositoryManagerClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v2.RepositoryManagerClient.update_connection",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v2.RepositoryManager.UpdateConnection",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v2.RepositoryManager",
+            "shortName": "RepositoryManager"
+          },
+          "shortName": "UpdateConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.UpdateConnectionRequest"
+          },
+          {
+            "name": "connection",
+            "type": "google.cloud.devtools.cloudbuild_v2.types.Connection"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_connection"
+      },
+      "description": "Sample for UpdateConnection",
+      "file": "cloudbuild_v2_generated_repository_manager_update_connection_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v2_generated_RepositoryManager_UpdateConnection_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v2_generated_repository_manager_update_connection_sync.py"
+    }
+  ]
+}

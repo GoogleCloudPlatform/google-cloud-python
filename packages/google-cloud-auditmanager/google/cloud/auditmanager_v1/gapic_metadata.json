@@ -1,0 +1,208 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.auditmanager_v1",
+  "protoPackage": "google.cloud.auditmanager.v1",
+  "schema": "1.0",
+  "services": {
+    "AuditManager": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AuditManagerClient",
+          "rpcs": {
+            "CreateAuditSchedule": {
+              "methods": [
+                "create_audit_schedule"
+              ]
+            },
+            "EnrollResource": {
+              "methods": [
+                "enroll_resource"
+              ]
+            },
+            "GenerateAuditReport": {
+              "methods": [
+                "generate_audit_report"
+              ]
+            },
+            "GenerateAuditScopeReport": {
+              "methods": [
+                "generate_audit_scope_report"
+              ]
+            },
+            "GetAuditReport": {
+              "methods": [
+                "get_audit_report"
+              ]
+            },
+            "GetAuditSchedule": {
+              "methods": [
+                "get_audit_schedule"
+              ]
+            },
+            "GetResourceEnrollmentStatus": {
+              "methods": [
+                "get_resource_enrollment_status"
+              ]
+            },
+            "ListAuditReports": {
+              "methods": [
+                "list_audit_reports"
+              ]
+            },
+            "ListAuditSchedules": {
+              "methods": [
+                "list_audit_schedules"
+              ]
+            },
+            "ListControls": {
+              "methods": [
+                "list_controls"
+              ]
+            },
+            "ListResourceEnrollmentStatuses": {
+              "methods": [
+                "list_resource_enrollment_statuses"
+              ]
+            },
+            "UpdateAuditSchedule": {
+              "methods": [
+                "update_audit_schedule"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AuditManagerAsyncClient",
+          "rpcs": {
+            "CreateAuditSchedule": {
+              "methods": [
+                "create_audit_schedule"
+              ]
+            },
+            "EnrollResource": {
+              "methods": [
+                "enroll_resource"
+              ]
+            },
+            "GenerateAuditReport": {
+              "methods": [
+                "generate_audit_report"
+              ]
+            },
+            "GenerateAuditScopeReport": {
+              "methods": [
+                "generate_audit_scope_report"
+              ]
+            },
+            "GetAuditReport": {
+              "methods": [
+                "get_audit_report"
+              ]
+            },
+            "GetAuditSchedule": {
+              "methods": [
+                "get_audit_schedule"
+              ]
+            },
+            "GetResourceEnrollmentStatus": {
+              "methods": [
+                "get_resource_enrollment_status"
+              ]
+            },
+            "ListAuditReports": {
+              "methods": [
+                "list_audit_reports"
+              ]
+            },
+            "ListAuditSchedules": {
+              "methods": [
+                "list_audit_schedules"
+              ]
+            },
+            "ListControls": {
+              "methods": [
+                "list_controls"
+              ]
+            },
+            "ListResourceEnrollmentStatuses": {
+              "methods": [
+                "list_resource_enrollment_statuses"
+              ]
+            },
+            "UpdateAuditSchedule": {
+              "methods": [
+                "update_audit_schedule"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AuditManagerClient",
+          "rpcs": {
+            "CreateAuditSchedule": {
+              "methods": [
+                "create_audit_schedule"
+              ]
+            },
+            "EnrollResource": {
+              "methods": [
+                "enroll_resource"
+              ]
+            },
+            "GenerateAuditReport": {
+              "methods": [
+                "generate_audit_report"
+              ]
+            },
+            "GenerateAuditScopeReport": {
+              "methods": [
+                "generate_audit_scope_report"
+              ]
+            },
+            "GetAuditReport": {
+              "methods": [
+                "get_audit_report"
+              ]
+            },
+            "GetAuditSchedule": {
+              "methods": [
+                "get_audit_schedule"
+              ]
+            },
+            "GetResourceEnrollmentStatus": {
+              "methods": [
+                "get_resource_enrollment_status"
+              ]
+            },
+            "ListAuditReports": {
+              "methods": [
+                "list_audit_reports"
+              ]
+            },
+            "ListAuditSchedules": {
+              "methods": [
+                "list_audit_schedules"
+              ]
+            },
+            "ListControls": {
+              "methods": [
+                "list_controls"
+              ]
+            },
+            "ListResourceEnrollmentStatuses": {
+              "methods": [
+                "list_resource_enrollment_statuses"
+              ]
+            },
+            "UpdateAuditSchedule": {
+              "methods": [
+                "update_audit_schedule"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

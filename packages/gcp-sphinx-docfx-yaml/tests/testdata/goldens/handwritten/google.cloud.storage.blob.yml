@@ -1,0 +1,28 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: blob
+  source:
+    id: blob
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 0
+  summary: 'Create / interact with Google Cloud Storage blobs.
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google.cloud.storage.blob
+references:
+- fullName: google.cloud.storage.blob.Blob
+  isExternal: false
+  name: Blob
+  parent: google.cloud.storage.blob
+  uid: google.cloud.storage.blob.Blob

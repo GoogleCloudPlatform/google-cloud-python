@@ -1,0 +1,179 @@
+{
+    "metadata": {
+      "configId": "Basic",
+      "snippetName": "Custom Class Creation",
+      "snippetDescription": "Shows how to create a custom class"
+    },
+    "rpc": {
+      "protoPackage": "google.cloud.speech",
+      "apiVersion": [
+        "v1"
+      ],
+      "serviceName": "Adaptation",
+      "rpcName": "CreateCustomClass"
+    },
+    "signature": {
+      "snippetMethodName": "create_custom_class",
+      "returnType": {
+        "messageType": {
+          "messageFullName": "google.cloud.speech.v1.CustomClass"
+        }
+      },
+      "syncPreference": "PREFER_ASYNC",
+      "parameters": [
+        {
+          "type": {
+            "scalarType": "TYPE_STRING"
+          },
+          "name": "parent",
+          "value": {
+            "stringValue": "projects/[PROJECT]/locations/us"
+          },
+          "description": "The custom class parent element"
+        },
+        {
+          "type": {
+            "scalarType": "TYPE_STRING"
+          },
+          "name": "custom_class_id",
+          "value": {
+            "stringValue": "passengerships"
+          },
+          "description": "The id for the custom class"
+        }
+      ]
+    },
+    "snippet": {
+      "serviceClientInitialization": {
+        "customServiceEndpoint": {
+          "schema": "HTTPS",
+          "host": "speech.googleapis.com",
+          "region": "us"
+        }
+      },
+      "standard": {
+        "requestInitialization": {
+          "requestValue": {
+            "complexValue": {
+              "properties": {
+                "parent": {
+                  "nameValue": {
+                    "name": "parent"
+                  }
+                },
+                "custom_class_id": {
+                  "nameValue": {
+                    "name": "custom_class_id"
+                  }
+                },
+                "custom_class": {
+                  "complexValue": {
+                    "properties": {
+                      "items": {
+                        "listValue": {
+                          "values": [
+                            {
+                              "stringValue": "Titanic"
+                            },
+                            {
+                              "stringValue": "RMS Queen Mary"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "requestName": "create_custom_class_request"
+        },
+        "call": {
+          "preCall": [
+            {
+              "standardOutput": {
+                "value": {
+                  "stringValue": "Calling the CreateCustomClass operation."
+                }
+              }
+            }
+          ]
+        },
+        "responseHandling": {
+          "responseName": "created_custom_class"
+        }
+      },
+      "finalStatements": [
+        {
+          "standardOutput": {
+            "value": {
+              "stringValue": "A Custom Class with the following name has been created."
+            }
+          }
+        },
+        {
+          "standardOutput": {
+            "value": {
+              "nameValue": {
+                "name": "created_custom_class",
+                "path": ["name"]
+              }
+            }
+          }
+        },
+        {
+          "standardOutput": {
+            "value": {
+              "stringValue": "The Custom class contains the following items."
+            }
+          }
+        },
+        {
+          "iteration": {
+            "repeatedIteration": {
+              "repeatedElements": {
+                "type": {
+                  "repeatedType": {
+                    "elementType": {
+                      "messageType": {
+                        "messageFullName": "google.cloud.speech.v1.CustomClass.ClassItem"
+                      }
+                    }
+                  }
+                },
+                "name": "items_list",
+                "value": {
+                  "nameValue": {
+                    "name": "created_custom_class",
+                    "path": ["items"]
+                  }
+                }
+              },
+              "currentName": "item"
+            },
+            "statements": [
+              {
+                "standardOutput": {
+                  "value": {
+                    "nameValue": {
+                      "name": "item"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "return": {
+            "result": {
+              "nameValue": {
+                "name": "created_custom_class"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }

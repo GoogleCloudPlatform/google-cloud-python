@@ -1,0 +1,25 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children: []
+  class: google.cloud.pubsub_v1.types.LimitExceededBehavior
+  fullName: google.cloud.pubsub_v1.types.LimitExceededBehavior
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: LimitExceededBehavior
+  source:
+    id: LimitExceededBehavior
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/types.py
+    startLine: 87
+  summary: 'The possible actions when exceeding the publish flow control limits.
+
+
+    '
+  syntax:
+    content: LimitExceededBehavior(value)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.LimitExceededBehavior
+references: []

@@ -1,0 +1,15 @@
+{
+    "api_description": "Public API for Google Cloud AI Data Labeling Service.",
+    "api_id": "datalabeling.googleapis.com",
+    "api_shortname": "datalabeling",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/datalabeling/latest",
+    "default_version": "v1beta1",
+    "distribution_name": "google-cloud-datalabeling",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "datalabeling",
+    "name_pretty": "Data Labeling",
+    "product_documentation": "https://cloud.google.com/data-labeling/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

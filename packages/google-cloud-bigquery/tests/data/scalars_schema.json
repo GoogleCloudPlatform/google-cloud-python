@@ -1,0 +1,72 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "bool_col",
+    "type": "BOOLEAN"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "bignumeric_col",
+    "type": "BIGNUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "bytes_col",
+    "type": "BYTES"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "date_col",
+    "type": "DATE"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "datetime_col",
+    "type": "DATETIME"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "float64_col",
+    "type": "FLOAT"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "geography_col",
+    "type": "GEOGRAPHY"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "int64_col",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "interval_col",
+    "type": "INTERVAL"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "numeric_col",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "REQUIRED",
+    "name": "rowindex",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "string_col",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "time_col",
+    "type": "TIME"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "timestamp_col",
+    "type": "TIMESTAMP"
+  }
+]

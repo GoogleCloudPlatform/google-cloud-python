@@ -1,0 +1,403 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.container_v1beta1",
+  "protoPackage": "google.container.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "ClusterManager": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ClusterManagerClient",
+          "rpcs": {
+            "CancelOperation": {
+              "methods": [
+                "cancel_operation"
+              ]
+            },
+            "CheckAutopilotCompatibility": {
+              "methods": [
+                "check_autopilot_compatibility"
+              ]
+            },
+            "CompleteControlPlaneUpgrade": {
+              "methods": [
+                "complete_control_plane_upgrade"
+              ]
+            },
+            "CompleteIPRotation": {
+              "methods": [
+                "complete_ip_rotation"
+              ]
+            },
+            "CompleteNodePoolUpgrade": {
+              "methods": [
+                "complete_node_pool_upgrade"
+              ]
+            },
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "CreateNodePool": {
+              "methods": [
+                "create_node_pool"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteNodePool": {
+              "methods": [
+                "delete_node_pool"
+              ]
+            },
+            "FetchClusterUpgradeInfo": {
+              "methods": [
+                "fetch_cluster_upgrade_info"
+              ]
+            },
+            "FetchNodePoolUpgradeInfo": {
+              "methods": [
+                "fetch_node_pool_upgrade_info"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetJSONWebKeys": {
+              "methods": [
+                "get_json_web_keys"
+              ]
+            },
+            "GetNodePool": {
+              "methods": [
+                "get_node_pool"
+              ]
+            },
+            "GetOperation": {
+              "methods": [
+                "get_operation"
+              ]
+            },
+            "GetServerConfig": {
+              "methods": [
+                "get_server_config"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListLocations": {
+              "methods": [
+                "list_locations"
+              ]
+            },
+            "ListNodePools": {
+              "methods": [
+                "list_node_pools"
+              ]
+            },
+            "ListOperations": {
+              "methods": [
+                "list_operations"
+              ]
+            },
+            "ListUsableSubnetworks": {
+              "methods": [
+                "list_usable_subnetworks"
+              ]
+            },
+            "RollbackNodePoolUpgrade": {
+              "methods": [
+                "rollback_node_pool_upgrade"
+              ]
+            },
+            "SetAddonsConfig": {
+              "methods": [
+                "set_addons_config"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "SetLegacyAbac": {
+              "methods": [
+                "set_legacy_abac"
+              ]
+            },
+            "SetLocations": {
+              "methods": [
+                "set_locations"
+              ]
+            },
+            "SetLoggingService": {
+              "methods": [
+                "set_logging_service"
+              ]
+            },
+            "SetMaintenancePolicy": {
+              "methods": [
+                "set_maintenance_policy"
+              ]
+            },
+            "SetMasterAuth": {
+              "methods": [
+                "set_master_auth"
+              ]
+            },
+            "SetMonitoringService": {
+              "methods": [
+                "set_monitoring_service"
+              ]
+            },
+            "SetNetworkPolicy": {
+              "methods": [
+                "set_network_policy"
+              ]
+            },
+            "SetNodePoolAutoscaling": {
+              "methods": [
+                "set_node_pool_autoscaling"
+              ]
+            },
+            "SetNodePoolManagement": {
+              "methods": [
+                "set_node_pool_management"
+              ]
+            },
+            "SetNodePoolSize": {
+              "methods": [
+                "set_node_pool_size"
+              ]
+            },
+            "StartIPRotation": {
+              "methods": [
+                "start_ip_rotation"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            },
+            "UpdateMaster": {
+              "methods": [
+                "update_master"
+              ]
+            },
+            "UpdateNodePool": {
+              "methods": [
+                "update_node_pool"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ClusterManagerAsyncClient",
+          "rpcs": {
+            "CancelOperation": {
+              "methods": [
+                "cancel_operation"
+              ]
+            },
+            "CheckAutopilotCompatibility": {
+              "methods": [
+                "check_autopilot_compatibility"
+              ]
+            },
+            "CompleteControlPlaneUpgrade": {
+              "methods": [
+                "complete_control_plane_upgrade"
+              ]
+            },
+            "CompleteIPRotation": {
+              "methods": [
+                "complete_ip_rotation"
+              ]
+            },
+            "CompleteNodePoolUpgrade": {
+              "methods": [
+                "complete_node_pool_upgrade"
+              ]
+            },
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "CreateNodePool": {
+              "methods": [
+                "create_node_pool"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteNodePool": {
+              "methods": [
+                "delete_node_pool"
+              ]
+            },
+            "FetchClusterUpgradeInfo": {
+              "methods": [
+                "fetch_cluster_upgrade_info"
+              ]
+            },
+            "FetchNodePoolUpgradeInfo": {
+              "methods": [
+                "fetch_node_pool_upgrade_info"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetJSONWebKeys": {
+              "methods": [
+                "get_json_web_keys"
+              ]
+            },
+            "GetNodePool": {
+              "methods": [
+                "get_node_pool"
+              ]
+            },
+            "GetOperation": {
+              "methods": [
+                "get_operation"
+              ]
+            },
+            "GetServerConfig": {
+              "methods": [
+                "get_server_config"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListLocations": {
+              "methods": [
+                "list_locations"
+              ]
+            },
+            "ListNodePools": {
+              "methods": [
+                "list_node_pools"
+              ]
+            },
+            "ListOperations": {
+              "methods": [
+                "list_operations"
+              ]
+            },
+            "ListUsableSubnetworks": {
+              "methods": [
+                "list_usable_subnetworks"
+              ]
+            },
+            "RollbackNodePoolUpgrade": {
+              "methods": [
+                "rollback_node_pool_upgrade"
+              ]
+            },
+            "SetAddonsConfig": {
+              "methods": [
+                "set_addons_config"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "SetLegacyAbac": {
+              "methods": [
+                "set_legacy_abac"
+              ]
+            },
+            "SetLocations": {
+              "methods": [
+                "set_locations"
+              ]
+            },
+            "SetLoggingService": {
+              "methods": [
+                "set_logging_service"
+              ]
+            },
+            "SetMaintenancePolicy": {
+              "methods": [
+                "set_maintenance_policy"
+              ]
+            },
+            "SetMasterAuth": {
+              "methods": [
+                "set_master_auth"
+              ]
+            },
+            "SetMonitoringService": {
+              "methods": [
+                "set_monitoring_service"
+              ]
+            },
+            "SetNetworkPolicy": {
+              "methods": [
+                "set_network_policy"
+              ]
+            },
+            "SetNodePoolAutoscaling": {
+              "methods": [
+                "set_node_pool_autoscaling"
+              ]
+            },
+            "SetNodePoolManagement": {
+              "methods": [
+                "set_node_pool_management"
+              ]
+            },
+            "SetNodePoolSize": {
+              "methods": [
+                "set_node_pool_size"
+              ]
+            },
+            "StartIPRotation": {
+              "methods": [
+                "start_ip_rotation"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            },
+            "UpdateMaster": {
+              "methods": [
+                "update_master"
+              ]
+            },
+            "UpdateNodePool": {
+              "methods": [
+                "update_node_pool"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

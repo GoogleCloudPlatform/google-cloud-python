@@ -1,0 +1,647 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.saasplatform_saasservicemgmt_v1beta1",
+  "protoPackage": "google.cloud.saasplatform.saasservicemgmt.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "SaasDeployments": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SaasDeploymentsClient",
+          "rpcs": {
+            "CreateRelease": {
+              "methods": [
+                "create_release"
+              ]
+            },
+            "CreateSaas": {
+              "methods": [
+                "create_saas"
+              ]
+            },
+            "CreateTenant": {
+              "methods": [
+                "create_tenant"
+              ]
+            },
+            "CreateUnit": {
+              "methods": [
+                "create_unit"
+              ]
+            },
+            "CreateUnitKind": {
+              "methods": [
+                "create_unit_kind"
+              ]
+            },
+            "CreateUnitOperation": {
+              "methods": [
+                "create_unit_operation"
+              ]
+            },
+            "DeleteRelease": {
+              "methods": [
+                "delete_release"
+              ]
+            },
+            "DeleteSaas": {
+              "methods": [
+                "delete_saas"
+              ]
+            },
+            "DeleteTenant": {
+              "methods": [
+                "delete_tenant"
+              ]
+            },
+            "DeleteUnit": {
+              "methods": [
+                "delete_unit"
+              ]
+            },
+            "DeleteUnitKind": {
+              "methods": [
+                "delete_unit_kind"
+              ]
+            },
+            "DeleteUnitOperation": {
+              "methods": [
+                "delete_unit_operation"
+              ]
+            },
+            "GetRelease": {
+              "methods": [
+                "get_release"
+              ]
+            },
+            "GetSaas": {
+              "methods": [
+                "get_saas"
+              ]
+            },
+            "GetTenant": {
+              "methods": [
+                "get_tenant"
+              ]
+            },
+            "GetUnit": {
+              "methods": [
+                "get_unit"
+              ]
+            },
+            "GetUnitKind": {
+              "methods": [
+                "get_unit_kind"
+              ]
+            },
+            "GetUnitOperation": {
+              "methods": [
+                "get_unit_operation"
+              ]
+            },
+            "ListReleases": {
+              "methods": [
+                "list_releases"
+              ]
+            },
+            "ListSaas": {
+              "methods": [
+                "list_saas"
+              ]
+            },
+            "ListTenants": {
+              "methods": [
+                "list_tenants"
+              ]
+            },
+            "ListUnitKinds": {
+              "methods": [
+                "list_unit_kinds"
+              ]
+            },
+            "ListUnitOperations": {
+              "methods": [
+                "list_unit_operations"
+              ]
+            },
+            "ListUnits": {
+              "methods": [
+                "list_units"
+              ]
+            },
+            "UpdateRelease": {
+              "methods": [
+                "update_release"
+              ]
+            },
+            "UpdateSaas": {
+              "methods": [
+                "update_saas"
+              ]
+            },
+            "UpdateTenant": {
+              "methods": [
+                "update_tenant"
+              ]
+            },
+            "UpdateUnit": {
+              "methods": [
+                "update_unit"
+              ]
+            },
+            "UpdateUnitKind": {
+              "methods": [
+                "update_unit_kind"
+              ]
+            },
+            "UpdateUnitOperation": {
+              "methods": [
+                "update_unit_operation"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SaasDeploymentsAsyncClient",
+          "rpcs": {
+            "CreateRelease": {
+              "methods": [
+                "create_release"
+              ]
+            },
+            "CreateSaas": {
+              "methods": [
+                "create_saas"
+              ]
+            },
+            "CreateTenant": {
+              "methods": [
+                "create_tenant"
+              ]
+            },
+            "CreateUnit": {
+              "methods": [
+                "create_unit"
+              ]
+            },
+            "CreateUnitKind": {
+              "methods": [
+                "create_unit_kind"
+              ]
+            },
+            "CreateUnitOperation": {
+              "methods": [
+                "create_unit_operation"
+              ]
+            },
+            "DeleteRelease": {
+              "methods": [
+                "delete_release"
+              ]
+            },
+            "DeleteSaas": {
+              "methods": [
+                "delete_saas"
+              ]
+            },
+            "DeleteTenant": {
+              "methods": [
+                "delete_tenant"
+              ]
+            },
+            "DeleteUnit": {
+              "methods": [
+                "delete_unit"
+              ]
+            },
+            "DeleteUnitKind": {
+              "methods": [
+                "delete_unit_kind"
+              ]
+            },
+            "DeleteUnitOperation": {
+              "methods": [
+                "delete_unit_operation"
+              ]
+            },
+            "GetRelease": {
+              "methods": [
+                "get_release"
+              ]
+            },
+            "GetSaas": {
+              "methods": [
+                "get_saas"
+              ]
+            },
+            "GetTenant": {
+              "methods": [
+                "get_tenant"
+              ]
+            },
+            "GetUnit": {
+              "methods": [
+                "get_unit"
+              ]
+            },
+            "GetUnitKind": {
+              "methods": [
+                "get_unit_kind"
+              ]
+            },
+            "GetUnitOperation": {
+              "methods": [
+                "get_unit_operation"
+              ]
+            },
+            "ListReleases": {
+              "methods": [
+                "list_releases"
+              ]
+            },
+            "ListSaas": {
+              "methods": [
+                "list_saas"
+              ]
+            },
+            "ListTenants": {
+              "methods": [
+                "list_tenants"
+              ]
+            },
+            "ListUnitKinds": {
+              "methods": [
+                "list_unit_kinds"
+              ]
+            },
+            "ListUnitOperations": {
+              "methods": [
+                "list_unit_operations"
+              ]
+            },
+            "ListUnits": {
+              "methods": [
+                "list_units"
+              ]
+            },
+            "UpdateRelease": {
+              "methods": [
+                "update_release"
+              ]
+            },
+            "UpdateSaas": {
+              "methods": [
+                "update_saas"
+              ]
+            },
+            "UpdateTenant": {
+              "methods": [
+                "update_tenant"
+              ]
+            },
+            "UpdateUnit": {
+              "methods": [
+                "update_unit"
+              ]
+            },
+            "UpdateUnitKind": {
+              "methods": [
+                "update_unit_kind"
+              ]
+            },
+            "UpdateUnitOperation": {
+              "methods": [
+                "update_unit_operation"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SaasDeploymentsClient",
+          "rpcs": {
+            "CreateRelease": {
+              "methods": [
+                "create_release"
+              ]
+            },
+            "CreateSaas": {
+              "methods": [
+                "create_saas"
+              ]
+            },
+            "CreateTenant": {
+              "methods": [
+                "create_tenant"
+              ]
+            },
+            "CreateUnit": {
+              "methods": [
+                "create_unit"
+              ]
+            },
+            "CreateUnitKind": {
+              "methods": [
+                "create_unit_kind"
+              ]
+            },
+            "CreateUnitOperation": {
+              "methods": [
+                "create_unit_operation"
+              ]
+            },
+            "DeleteRelease": {
+              "methods": [
+                "delete_release"
+              ]
+            },
+            "DeleteSaas": {
+              "methods": [
+                "delete_saas"
+              ]
+            },
+            "DeleteTenant": {
+              "methods": [
+                "delete_tenant"
+              ]
+            },
+            "DeleteUnit": {
+              "methods": [
+                "delete_unit"
+              ]
+            },
+            "DeleteUnitKind": {
+              "methods": [
+                "delete_unit_kind"
+              ]
+            },
+            "DeleteUnitOperation": {
+              "methods": [
+                "delete_unit_operation"
+              ]
+            },
+            "GetRelease": {
+              "methods": [
+                "get_release"
+              ]
+            },
+            "GetSaas": {
+              "methods": [
+                "get_saas"
+              ]
+            },
+            "GetTenant": {
+              "methods": [
+                "get_tenant"
+              ]
+            },
+            "GetUnit": {
+              "methods": [
+                "get_unit"
+              ]
+            },
+            "GetUnitKind": {
+              "methods": [
+                "get_unit_kind"
+              ]
+            },
+            "GetUnitOperation": {
+              "methods": [
+                "get_unit_operation"
+              ]
+            },
+            "ListReleases": {
+              "methods": [
+                "list_releases"
+              ]
+            },
+            "ListSaas": {
+              "methods": [
+                "list_saas"
+              ]
+            },
+            "ListTenants": {
+              "methods": [
+                "list_tenants"
+              ]
+            },
+            "ListUnitKinds": {
+              "methods": [
+                "list_unit_kinds"
+              ]
+            },
+            "ListUnitOperations": {
+              "methods": [
+                "list_unit_operations"
+              ]
+            },
+            "ListUnits": {
+              "methods": [
+                "list_units"
+              ]
+            },
+            "UpdateRelease": {
+              "methods": [
+                "update_release"
+              ]
+            },
+            "UpdateSaas": {
+              "methods": [
+                "update_saas"
+              ]
+            },
+            "UpdateTenant": {
+              "methods": [
+                "update_tenant"
+              ]
+            },
+            "UpdateUnit": {
+              "methods": [
+                "update_unit"
+              ]
+            },
+            "UpdateUnitKind": {
+              "methods": [
+                "update_unit_kind"
+              ]
+            },
+            "UpdateUnitOperation": {
+              "methods": [
+                "update_unit_operation"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SaasRollouts": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SaasRolloutsClient",
+          "rpcs": {
+            "CreateRollout": {
+              "methods": [
+                "create_rollout"
+              ]
+            },
+            "CreateRolloutKind": {
+              "methods": [
+                "create_rollout_kind"
+              ]
+            },
+            "DeleteRollout": {
+              "methods": [
+                "delete_rollout"
+              ]
+            },
+            "DeleteRolloutKind": {
+              "methods": [
+                "delete_rollout_kind"
+              ]
+            },
+            "GetRollout": {
+              "methods": [
+                "get_rollout"
+              ]
+            },
+            "GetRolloutKind": {
+              "methods": [
+                "get_rollout_kind"
+              ]
+            },
+            "ListRolloutKinds": {
+              "methods": [
+                "list_rollout_kinds"
+              ]
+            },
+            "ListRollouts": {
+              "methods": [
+                "list_rollouts"
+              ]
+            },
+            "UpdateRollout": {
+              "methods": [
+                "update_rollout"
+              ]
+            },
+            "UpdateRolloutKind": {
+              "methods": [
+                "update_rollout_kind"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SaasRolloutsAsyncClient",
+          "rpcs": {
+            "CreateRollout": {
+              "methods": [
+                "create_rollout"
+              ]
+            },
+            "CreateRolloutKind": {
+              "methods": [
+                "create_rollout_kind"
+              ]
+            },
+            "DeleteRollout": {
+              "methods": [
+                "delete_rollout"
+              ]
+            },
+            "DeleteRolloutKind": {
+              "methods": [
+                "delete_rollout_kind"
+              ]
+            },
+            "GetRollout": {
+              "methods": [
+                "get_rollout"
+              ]
+            },
+            "GetRolloutKind": {
+              "methods": [
+                "get_rollout_kind"
+              ]
+            },
+            "ListRolloutKinds": {
+              "methods": [
+                "list_rollout_kinds"
+              ]
+            },
+            "ListRollouts": {
+              "methods": [
+                "list_rollouts"
+              ]
+            },
+            "UpdateRollout": {
+              "methods": [
+                "update_rollout"
+              ]
+            },
+            "UpdateRolloutKind": {
+              "methods": [
+                "update_rollout_kind"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SaasRolloutsClient",
+          "rpcs": {
+            "CreateRollout": {
+              "methods": [
+                "create_rollout"
+              ]
+            },
+            "CreateRolloutKind": {
+              "methods": [
+                "create_rollout_kind"
+              ]
+            },
+            "DeleteRollout": {
+              "methods": [
+                "delete_rollout"
+              ]
+            },
+            "DeleteRolloutKind": {
+              "methods": [
+                "delete_rollout_kind"
+              ]
+            },
+            "GetRollout": {
+              "methods": [
+                "get_rollout"
+              ]
+            },
+            "GetRolloutKind": {
+              "methods": [
+                "get_rollout_kind"
+              ]
+            },
+            "ListRolloutKinds": {
+              "methods": [
+                "list_rollout_kinds"
+              ]
+            },
+            "ListRollouts": {
+              "methods": [
+                "list_rollouts"
+              ]
+            },
+            "UpdateRollout": {
+              "methods": [
+                "update_rollout"
+              ]
+            },
+            "UpdateRolloutKind": {
+              "methods": [
+                "update_rollout_kind"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

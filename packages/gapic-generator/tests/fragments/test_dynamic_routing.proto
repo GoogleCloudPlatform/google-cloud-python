@@ -1,0 +1,205 @@
+// Copyright (C) 2022  Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.fragment;
+
+import "google/api/client.proto";
+import "google/api/annotations.proto";
+import "google/api/routing.proto";
+
+service ServiceNoHeaders {
+    option (google.api.default_host) = "routingheaders.example.com";
+
+    rpc Plain(Request) returns(Response);
+}
+
+service ServiceImplicitHeaders {
+    option (google.api.default_host) = "routingheaders.example.com";
+
+    rpc Plain(Request) returns(Response) {
+        option (google.api.http) = {
+            get: "/v2/{table_name=projects/*/instances/*/tables/*}:plain"
+        };
+    }
+
+    rpc WithSubMessage(Request) returns(Response) {
+        option (google.api.http) = {
+            get: "/v2/{resource.resource_name=projects/*/instances/*/tables/*}:withSubMessage"
+        };
+    }
+
+    rpc WithMultipleLevels(Request) returns(Response) {
+        option (google.api.http) = {
+            get: "/v2/{resource.inner.inner_name=projects/*/instances/*/tables/*}:withMultipleLevels"
+        };
+    }
+
+    rpc ClientStreaming(stream Request) returns(Response) {
+        option (google.api.http) = {
+            post: "/v2/{table_name=projects/*/instances/*/tables/*}:clientStreaming"
+            body: "*"
+        };
+    }
+
+    rpc BidiStreaming(stream Request) returns(stream Response) {
+        option (google.api.http) = {
+            post: "/v2/{table_name=projects/*/instances/*/tables/*}:bidiStreaming"
+            body: "*"
+        };
+    }
+}
+
+service ServiceExplicitHeaders {
+    option (google.api.default_host) = "routingheaders.example.com";
+    
+    rpc PlainNoTemplate(Request) returns(Response) {
+        option (google.api.http) = {
+            get: "/v2/{table_name=projects/*/instances/*/tables/*}:sampleRowKeys"
+        };
+        option (google.api.routing) = {
+            routing_parameters {
+                field: "table_name"
+            }
+        };
+    }
+
+    rpc PlainFullField(Request) returns(Response) {
+        option (google.api.http) = {
+            get: "/v2/{table_name=projects/*/instances/*/tables/*}:sampleRowKeys"
+        };
+        option (google.api.routing) = {
+            routing_parameters {
+                field: "table_name"
+                path_template: "{table_name=projects/*/instances/*/tables/*}"
+            }
+        };
+    }
+
+    rpc PlainExtract(Request) returns(Response) {
+        option (google.api.http) = {
+            get: "/v2/{table_name=projects/*/instances/*/tables/*}:sampleRowKeys"
+        };
+        option (google.api.routing) = {
+            routing_parameters {
+                field: "table_name"
+                path_template: "projects/*/instances/*/{table_name=tables/*}"
+            }
+        };
+    }
+
+    rpc Complex(Request) returns(Response) {
+        option (google.api.http) = {
+            get: "/v2/{table_name=projects/*/instances/*/tables/*}:sampleRowKeys"
+        };
+        option (google.api.routing) = {
+            routing_parameters {
+                field: "table_name"
+                path_template: "{project_id=projects/*}/instances/*/tables/*"
+            }
+            routing_parameters {
+                field: "table_name"
+                path_template: "projects/*/{instance_id=instances/*}/tables/*"
+            }
+            routing_parameters {
+                field: "table_name"
+                path_template: "projects/*/instances/*/{table_id=tables/*}"
+            }
+            routing_parameters {
+                field: "table_name"
+                path_template: "{table_name=projects/*/instances/*/tables/*}"
+            }
+            routing_parameters {
+                field: "table_name"
+                path_template: "{table_name=projects/*/instances/*/tables/*/aliases/**}"
+            }
+            routing_parameters {
+                field: "app_profile_id"
+            }
+            routing_parameters {
+                field: "app_profile_id"
+                path_template: "{app_profile_id_renamed=**}"
+            }
+        };
+    }
+
+    rpc WithSubMessage(Request) returns(Response) {
+        option (google.api.http) = {
+            get: "/v2/{resource.resource_name=projects/*/instances/*/tables/*}:withSubMessage"
+        };
+        option (google.api.routing) = {
+            routing_parameters {
+                field: "resource.resource_name"
+                path_template: "{table_name=projects/*/instances/*/tables/*}"
+            }
+            routing_parameters {
+                field: "app_profile_id"
+            }
+        };
+    }
+
+    rpc ClientStreaming(stream Request) returns(Response) {
+        option (google.api.http) = {
+            post: "/v2/{table_name=projects/*/instances/*/tables/*}:clientStreaming"
+            body: "*"
+        };
+        option (google.api.routing) = {
+            routing_parameters {
+                field: "table_name"
+            }
+        };
+    }
+
+    rpc BidiStreaming(stream Request) returns(stream Response) {
+        option (google.api.http) = {
+            post: "/v2/{table_name=projects/*/instances/*/tables/*}:bidiStreaming"
+            body: "*"
+        };
+        option (google.api.routing) = {
+            routing_parameters {
+                field: "table_name"
+            }
+        };
+    }
+}
+
+message Request {
+    // The name of the Table
+    // Values can be of the following formats:
+    // - `projects/<project>/tables/<table>`
+    // - `projects/<project>/instances/<instance>/tables/<table>`
+    // - `region/<region>/zones/<zone>/tables/<table>`
+    string table_name = 1;
+
+    // This value specifies routing for replication.
+    // It can be in the following formats:
+    // - profiles/<profile_id>
+    // - a legacy profile_id that can be any string
+    string app_profile_id = 2;
+
+    RequestResource resource = 3;
+}
+
+message RequestResource {
+    string resource_name = 1;
+    InnerResource inner = 2;
+}
+
+message InnerResource {
+    string inner_name = 1;
+}
+
+message Response {
+}

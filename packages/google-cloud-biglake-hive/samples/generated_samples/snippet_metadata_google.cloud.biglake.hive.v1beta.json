@@ -1,0 +1,3291 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.biglake.hive.v1beta",
+        "version": "v1beta"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-biglake-hive",
+    "version": "0.3.5"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.batch_create_partitions",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.BatchCreatePartitions",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "BatchCreatePartitions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.BatchCreatePartitionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.BatchCreatePartitionsResponse",
+        "shortName": "batch_create_partitions"
+      },
+      "description": "Sample for BatchCreatePartitions",
+      "file": "biglake_v1beta_generated_hive_metastore_service_batch_create_partitions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_BatchCreatePartitions_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_batch_create_partitions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.batch_create_partitions",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.BatchCreatePartitions",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "BatchCreatePartitions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.BatchCreatePartitionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.BatchCreatePartitionsResponse",
+        "shortName": "batch_create_partitions"
+      },
+      "description": "Sample for BatchCreatePartitions",
+      "file": "biglake_v1beta_generated_hive_metastore_service_batch_create_partitions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_BatchCreatePartitions_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_batch_create_partitions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.batch_delete_partitions",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.BatchDeletePartitions",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "BatchDeletePartitions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.BatchDeletePartitionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "batch_delete_partitions"
+      },
+      "description": "Sample for BatchDeletePartitions",
+      "file": "biglake_v1beta_generated_hive_metastore_service_batch_delete_partitions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_BatchDeletePartitions_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_batch_delete_partitions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.batch_delete_partitions",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.BatchDeletePartitions",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "BatchDeletePartitions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.BatchDeletePartitionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "batch_delete_partitions"
+      },
+      "description": "Sample for BatchDeletePartitions",
+      "file": "biglake_v1beta_generated_hive_metastore_service_batch_delete_partitions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_BatchDeletePartitions_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_batch_delete_partitions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.batch_update_partitions",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.BatchUpdatePartitions",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "BatchUpdatePartitions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.BatchUpdatePartitionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.BatchUpdatePartitionsResponse",
+        "shortName": "batch_update_partitions"
+      },
+      "description": "Sample for BatchUpdatePartitions",
+      "file": "biglake_v1beta_generated_hive_metastore_service_batch_update_partitions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_BatchUpdatePartitions_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_batch_update_partitions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.batch_update_partitions",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.BatchUpdatePartitions",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "BatchUpdatePartitions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.BatchUpdatePartitionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.BatchUpdatePartitionsResponse",
+        "shortName": "batch_update_partitions"
+      },
+      "description": "Sample for BatchUpdatePartitions",
+      "file": "biglake_v1beta_generated_hive_metastore_service_batch_update_partitions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_BatchUpdatePartitions_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_batch_update_partitions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.create_hive_catalog",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.CreateHiveCatalog",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "CreateHiveCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.CreateHiveCatalogRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "hive_catalog",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveCatalog"
+          },
+          {
+            "name": "hive_catalog_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveCatalog",
+        "shortName": "create_hive_catalog"
+      },
+      "description": "Sample for CreateHiveCatalog",
+      "file": "biglake_v1beta_generated_hive_metastore_service_create_hive_catalog_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_CreateHiveCatalog_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_create_hive_catalog_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.create_hive_catalog",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.CreateHiveCatalog",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "CreateHiveCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.CreateHiveCatalogRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "hive_catalog",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveCatalog"
+          },
+          {
+            "name": "hive_catalog_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveCatalog",
+        "shortName": "create_hive_catalog"
+      },
+      "description": "Sample for CreateHiveCatalog",
+      "file": "biglake_v1beta_generated_hive_metastore_service_create_hive_catalog_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_CreateHiveCatalog_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_create_hive_catalog_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.create_hive_database",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.CreateHiveDatabase",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "CreateHiveDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.CreateHiveDatabaseRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "hive_database",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveDatabase"
+          },
+          {
+            "name": "hive_database_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveDatabase",
+        "shortName": "create_hive_database"
+      },
+      "description": "Sample for CreateHiveDatabase",
+      "file": "biglake_v1beta_generated_hive_metastore_service_create_hive_database_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_CreateHiveDatabase_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_create_hive_database_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.create_hive_database",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.CreateHiveDatabase",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "CreateHiveDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.CreateHiveDatabaseRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "hive_database",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveDatabase"
+          },
+          {
+            "name": "hive_database_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveDatabase",
+        "shortName": "create_hive_database"
+      },
+      "description": "Sample for CreateHiveDatabase",
+      "file": "biglake_v1beta_generated_hive_metastore_service_create_hive_database_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_CreateHiveDatabase_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_create_hive_database_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.create_hive_table",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.CreateHiveTable",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "CreateHiveTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.CreateHiveTableRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "hive_table",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveTable"
+          },
+          {
+            "name": "hive_table_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveTable",
+        "shortName": "create_hive_table"
+      },
+      "description": "Sample for CreateHiveTable",
+      "file": "biglake_v1beta_generated_hive_metastore_service_create_hive_table_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_CreateHiveTable_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_create_hive_table_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.create_hive_table",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.CreateHiveTable",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "CreateHiveTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.CreateHiveTableRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "hive_table",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveTable"
+          },
+          {
+            "name": "hive_table_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveTable",
+        "shortName": "create_hive_table"
+      },
+      "description": "Sample for CreateHiveTable",
+      "file": "biglake_v1beta_generated_hive_metastore_service_create_hive_table_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_CreateHiveTable_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_create_hive_table_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.delete_hive_catalog",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.DeleteHiveCatalog",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "DeleteHiveCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.DeleteHiveCatalogRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_hive_catalog"
+      },
+      "description": "Sample for DeleteHiveCatalog",
+      "file": "biglake_v1beta_generated_hive_metastore_service_delete_hive_catalog_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_DeleteHiveCatalog_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_delete_hive_catalog_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.delete_hive_catalog",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.DeleteHiveCatalog",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "DeleteHiveCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.DeleteHiveCatalogRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_hive_catalog"
+      },
+      "description": "Sample for DeleteHiveCatalog",
+      "file": "biglake_v1beta_generated_hive_metastore_service_delete_hive_catalog_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_DeleteHiveCatalog_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_delete_hive_catalog_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.delete_hive_database",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.DeleteHiveDatabase",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "DeleteHiveDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.DeleteHiveDatabaseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_hive_database"
+      },
+      "description": "Sample for DeleteHiveDatabase",
+      "file": "biglake_v1beta_generated_hive_metastore_service_delete_hive_database_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_DeleteHiveDatabase_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_delete_hive_database_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.delete_hive_database",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.DeleteHiveDatabase",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "DeleteHiveDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.DeleteHiveDatabaseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_hive_database"
+      },
+      "description": "Sample for DeleteHiveDatabase",
+      "file": "biglake_v1beta_generated_hive_metastore_service_delete_hive_database_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_DeleteHiveDatabase_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_delete_hive_database_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.delete_hive_table",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.DeleteHiveTable",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "DeleteHiveTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.DeleteHiveTableRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_hive_table"
+      },
+      "description": "Sample for DeleteHiveTable",
+      "file": "biglake_v1beta_generated_hive_metastore_service_delete_hive_table_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_DeleteHiveTable_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_delete_hive_table_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.delete_hive_table",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.DeleteHiveTable",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "DeleteHiveTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.DeleteHiveTableRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_hive_table"
+      },
+      "description": "Sample for DeleteHiveTable",
+      "file": "biglake_v1beta_generated_hive_metastore_service_delete_hive_table_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_DeleteHiveTable_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_delete_hive_table_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.failover_hive_catalog",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.FailoverHiveCatalog",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "FailoverHiveCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.FailoverHiveCatalogRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "primary_replica",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.FailoverHiveCatalogResponse",
+        "shortName": "failover_hive_catalog"
+      },
+      "description": "Sample for FailoverHiveCatalog",
+      "file": "biglake_v1beta_generated_hive_metastore_service_failover_hive_catalog_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_FailoverHiveCatalog_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_failover_hive_catalog_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.failover_hive_catalog",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.FailoverHiveCatalog",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "FailoverHiveCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.FailoverHiveCatalogRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "primary_replica",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.FailoverHiveCatalogResponse",
+        "shortName": "failover_hive_catalog"
+      },
+      "description": "Sample for FailoverHiveCatalog",
+      "file": "biglake_v1beta_generated_hive_metastore_service_failover_hive_catalog_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_FailoverHiveCatalog_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_failover_hive_catalog_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.get_hive_catalog",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.GetHiveCatalog",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "GetHiveCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.GetHiveCatalogRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveCatalog",
+        "shortName": "get_hive_catalog"
+      },
+      "description": "Sample for GetHiveCatalog",
+      "file": "biglake_v1beta_generated_hive_metastore_service_get_hive_catalog_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_GetHiveCatalog_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_get_hive_catalog_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.get_hive_catalog",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.GetHiveCatalog",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "GetHiveCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.GetHiveCatalogRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveCatalog",
+        "shortName": "get_hive_catalog"
+      },
+      "description": "Sample for GetHiveCatalog",
+      "file": "biglake_v1beta_generated_hive_metastore_service_get_hive_catalog_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_GetHiveCatalog_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_get_hive_catalog_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.get_hive_database",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.GetHiveDatabase",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "GetHiveDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.GetHiveDatabaseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveDatabase",
+        "shortName": "get_hive_database"
+      },
+      "description": "Sample for GetHiveDatabase",
+      "file": "biglake_v1beta_generated_hive_metastore_service_get_hive_database_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_GetHiveDatabase_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_get_hive_database_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.get_hive_database",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.GetHiveDatabase",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "GetHiveDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.GetHiveDatabaseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveDatabase",
+        "shortName": "get_hive_database"
+      },
+      "description": "Sample for GetHiveDatabase",
+      "file": "biglake_v1beta_generated_hive_metastore_service_get_hive_database_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_GetHiveDatabase_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_get_hive_database_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.get_hive_table",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.GetHiveTable",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "GetHiveTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.GetHiveTableRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveTable",
+        "shortName": "get_hive_table"
+      },
+      "description": "Sample for GetHiveTable",
+      "file": "biglake_v1beta_generated_hive_metastore_service_get_hive_table_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_GetHiveTable_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_get_hive_table_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.get_hive_table",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.GetHiveTable",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "GetHiveTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.GetHiveTableRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveTable",
+        "shortName": "get_hive_table"
+      },
+      "description": "Sample for GetHiveTable",
+      "file": "biglake_v1beta_generated_hive_metastore_service_get_hive_table_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_GetHiveTable_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_get_hive_table_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.list_hive_catalogs",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.ListHiveCatalogs",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "ListHiveCatalogs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.ListHiveCatalogsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.services.hive_metastore_service.pagers.ListHiveCatalogsAsyncPager",
+        "shortName": "list_hive_catalogs"
+      },
+      "description": "Sample for ListHiveCatalogs",
+      "file": "biglake_v1beta_generated_hive_metastore_service_list_hive_catalogs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_ListHiveCatalogs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_list_hive_catalogs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.list_hive_catalogs",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.ListHiveCatalogs",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "ListHiveCatalogs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.ListHiveCatalogsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.services.hive_metastore_service.pagers.ListHiveCatalogsPager",
+        "shortName": "list_hive_catalogs"
+      },
+      "description": "Sample for ListHiveCatalogs",
+      "file": "biglake_v1beta_generated_hive_metastore_service_list_hive_catalogs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_ListHiveCatalogs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_list_hive_catalogs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.list_hive_databases",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.ListHiveDatabases",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "ListHiveDatabases"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.ListHiveDatabasesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.services.hive_metastore_service.pagers.ListHiveDatabasesAsyncPager",
+        "shortName": "list_hive_databases"
+      },
+      "description": "Sample for ListHiveDatabases",
+      "file": "biglake_v1beta_generated_hive_metastore_service_list_hive_databases_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_ListHiveDatabases_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_list_hive_databases_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.list_hive_databases",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.ListHiveDatabases",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "ListHiveDatabases"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.ListHiveDatabasesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.services.hive_metastore_service.pagers.ListHiveDatabasesPager",
+        "shortName": "list_hive_databases"
+      },
+      "description": "Sample for ListHiveDatabases",
+      "file": "biglake_v1beta_generated_hive_metastore_service_list_hive_databases_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_ListHiveDatabases_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_list_hive_databases_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.list_hive_tables",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.ListHiveTables",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "ListHiveTables"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.ListHiveTablesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.services.hive_metastore_service.pagers.ListHiveTablesAsyncPager",
+        "shortName": "list_hive_tables"
+      },
+      "description": "Sample for ListHiveTables",
+      "file": "biglake_v1beta_generated_hive_metastore_service_list_hive_tables_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_ListHiveTables_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_list_hive_tables_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.list_hive_tables",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.ListHiveTables",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "ListHiveTables"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.ListHiveTablesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.services.hive_metastore_service.pagers.ListHiveTablesPager",
+        "shortName": "list_hive_tables"
+      },
+      "description": "Sample for ListHiveTables",
+      "file": "biglake_v1beta_generated_hive_metastore_service_list_hive_tables_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_ListHiveTables_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_list_hive_tables_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.list_partitions",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.ListPartitions",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "ListPartitions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.ListPartitionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.biglake_hive_v1beta.types.ListPartitionsResponse]",
+        "shortName": "list_partitions"
+      },
+      "description": "Sample for ListPartitions",
+      "file": "biglake_v1beta_generated_hive_metastore_service_list_partitions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_ListPartitions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_list_partitions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.list_partitions",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.ListPartitions",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "ListPartitions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.ListPartitionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.biglake_hive_v1beta.types.ListPartitionsResponse]",
+        "shortName": "list_partitions"
+      },
+      "description": "Sample for ListPartitions",
+      "file": "biglake_v1beta_generated_hive_metastore_service_list_partitions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_ListPartitions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_list_partitions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.update_hive_catalog",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.UpdateHiveCatalog",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "UpdateHiveCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.UpdateHiveCatalogRequest"
+          },
+          {
+            "name": "hive_catalog",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveCatalog"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveCatalog",
+        "shortName": "update_hive_catalog"
+      },
+      "description": "Sample for UpdateHiveCatalog",
+      "file": "biglake_v1beta_generated_hive_metastore_service_update_hive_catalog_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_UpdateHiveCatalog_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_update_hive_catalog_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.update_hive_catalog",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.UpdateHiveCatalog",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "UpdateHiveCatalog"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.UpdateHiveCatalogRequest"
+          },
+          {
+            "name": "hive_catalog",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveCatalog"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveCatalog",
+        "shortName": "update_hive_catalog"
+      },
+      "description": "Sample for UpdateHiveCatalog",
+      "file": "biglake_v1beta_generated_hive_metastore_service_update_hive_catalog_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_UpdateHiveCatalog_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_update_hive_catalog_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.update_hive_database",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.UpdateHiveDatabase",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "UpdateHiveDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.UpdateHiveDatabaseRequest"
+          },
+          {
+            "name": "hive_database",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveDatabase"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveDatabase",
+        "shortName": "update_hive_database"
+      },
+      "description": "Sample for UpdateHiveDatabase",
+      "file": "biglake_v1beta_generated_hive_metastore_service_update_hive_database_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_UpdateHiveDatabase_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_update_hive_database_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.update_hive_database",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.UpdateHiveDatabase",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "UpdateHiveDatabase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.UpdateHiveDatabaseRequest"
+          },
+          {
+            "name": "hive_database",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveDatabase"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveDatabase",
+        "shortName": "update_hive_database"
+      },
+      "description": "Sample for UpdateHiveDatabase",
+      "file": "biglake_v1beta_generated_hive_metastore_service_update_hive_database_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_UpdateHiveDatabase_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_update_hive_database_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient",
+          "shortName": "HiveMetastoreServiceAsyncClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceAsyncClient.update_hive_table",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.UpdateHiveTable",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "UpdateHiveTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.UpdateHiveTableRequest"
+          },
+          {
+            "name": "hive_table",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveTable"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveTable",
+        "shortName": "update_hive_table"
+      },
+      "description": "Sample for UpdateHiveTable",
+      "file": "biglake_v1beta_generated_hive_metastore_service_update_hive_table_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_UpdateHiveTable_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_update_hive_table_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient",
+          "shortName": "HiveMetastoreServiceClient"
+        },
+        "fullName": "google.cloud.biglake_hive_v1beta.HiveMetastoreServiceClient.update_hive_table",
+        "method": {
+          "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService.UpdateHiveTable",
+          "service": {
+            "fullName": "google.cloud.biglake.hive.v1beta.HiveMetastoreService",
+            "shortName": "HiveMetastoreService"
+          },
+          "shortName": "UpdateHiveTable"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.biglake_hive_v1beta.types.UpdateHiveTableRequest"
+          },
+          {
+            "name": "hive_table",
+            "type": "google.cloud.biglake_hive_v1beta.types.HiveTable"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.biglake_hive_v1beta.types.HiveTable",
+        "shortName": "update_hive_table"
+      },
+      "description": "Sample for UpdateHiveTable",
+      "file": "biglake_v1beta_generated_hive_metastore_service_update_hive_table_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "biglake_v1beta_generated_HiveMetastoreService_UpdateHiveTable_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "biglake_v1beta_generated_hive_metastore_service_update_hive_table_sync.py"
+    }
+  ]
+}

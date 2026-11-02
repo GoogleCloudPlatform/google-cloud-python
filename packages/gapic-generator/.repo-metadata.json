@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://googleapis.dev/python/gapic-generator/latest",
+    "distribution_name": "gapic-generator",
+    "language": "python",
+    "library_type": "CORE",
+    "name": "gapic-generator",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

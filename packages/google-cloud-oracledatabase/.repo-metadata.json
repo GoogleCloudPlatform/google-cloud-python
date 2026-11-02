@@ -1,0 +1,16 @@
+{
+    "api_description": "The Oracle Database@Google Cloud API provides a set of APIs to manage\nOracle database services, such as Exadata and Autonomous Databases.",
+    "api_id": "oracledatabase.googleapis.com",
+    "api_shortname": "oracledatabase",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-oracledatabase/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-oracledatabase",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1492565",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-oracledatabase",
+    "name_pretty": "Oracle Database@Google Cloud",
+    "product_documentation": "https://cloud.google.com/oracle/database/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

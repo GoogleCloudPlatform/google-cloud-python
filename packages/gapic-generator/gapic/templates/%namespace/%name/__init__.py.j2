@@ -1,0 +1,74 @@
+{% extends '_base.py.j2' %}
+{% block content %}
+
+{% set package_path = api.naming.module_namespace|join('.') + "." + api.naming.module_name %}
+from {{package_path}} import gapic_version as package_version
+
+__version__ = package_version.__version__
+
+{#  Import subpackages. -#}
+{% for subpackage in api.subpackages|dictsort %}
+from {% if api.naming.module_namespace %}{{ api.naming.module_namespace|join('.') }}.{% endif %}
+    {{- api.naming.versioned_module_name }} import {{ subpackage }}
+{% endfor %}
+
+{#  Import services for this package. #}
+{% for service in api.services.values()|sort(attribute='name')
+        if service.meta.address.subpackage == api.subpackage_view %}
+from {% if api.naming.module_namespace %}{{ api.naming.module_namespace|join('.') }}.{% endif %}
+    {{- api.naming.versioned_module_name }}.services.{{ service.name|snake_case }}.client import {{ service.client_name }}
+{% if 'grpc' in opts.transport %}
+from {% if api.naming.module_namespace %}{{ api.naming.module_namespace|join('.') }}.{% endif %}
+    {{- api.naming.versioned_module_name }}.services.{{ service.name|snake_case }}.async_client import {{ service.async_client_name }}
+{% endif %}
+{% endfor %}
+
+{#  Import messages and enums from each proto.
+    It is safe to import all of the messages into the same namespace here,
+    because protocol buffers itself enforces selector uniqueness within
+    a proto package.
+#}
+{#  Import messages from each proto.
+    It is safe to import all of the messages into the same namespace here,
+    because protocol buffers itself enforces selector uniqueness within
+    a proto package.
+  #}
+{% for proto in api.protos.values()|sort(attribute='module_name')
+        if proto.meta.address.subpackage == api.subpackage_view %}
+  {% for message in proto.messages.values()|sort(attribute='name') %}
+from {% if api.naming.module_namespace %}{{ api.naming.module_namespace|join('.') }}.{% endif %}
+    {{- api.naming.versioned_module_name }}.types.{{ proto.module_name }} import {{ message.name }}
+{% endfor %}
+{% for enum in proto.enums.values()|sort(attribute='name') %}
+from {% if api.naming.module_namespace %}{{ api.naming.module_namespace|join('.') }}.{% endif %}
+    {{- api.naming.versioned_module_name }}.types.{{ proto.module_name }} import {{ enum.name }}
+{% endfor %}{% endfor %}
+{#  Define __all__.
+    This requires the full set of imported names, so we iterate over
+    them again.
+#}
+
+__all__ = (
+{%- filter indent %}
+{% for subpackage, _ in api.subpackages|dictsort %}
+'{{ subpackage }}',
+{% endfor %}
+{% for service in api.services.values()|sort(attribute='name')
+   if service.meta.address.subpackage == api.subpackage_view %}
+'{{ service.client_name }}',
+    {% if 'grpc' in opts.transport %}
+'{{ service.async_client_name }}',
+    {% endif %}
+{% endfor %}
+{% for proto in api.protos.values()|sort(attribute='module_name')
+   if proto.meta.address.subpackage == api.subpackage_view %}
+{% for message in proto.messages.values()|sort(attribute='name') %}
+'{{ message.name }}',
+{% endfor %}
+{% for enum in proto.enums.values()|sort(attribute='name')
+   if proto.meta.address.subpackage == api.subpackage_view %}
+'{{ enum.name }}',
+{% endfor %}{% endfor %}
+{% endfilter %}
+)
+{% endblock %}

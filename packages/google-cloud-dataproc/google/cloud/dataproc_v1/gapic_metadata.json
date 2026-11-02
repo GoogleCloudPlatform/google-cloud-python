@@ -1,0 +1,821 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.dataproc_v1",
+  "protoPackage": "google.cloud.dataproc.v1",
+  "schema": "1.0",
+  "services": {
+    "AutoscalingPolicyService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AutoscalingPolicyServiceClient",
+          "rpcs": {
+            "CreateAutoscalingPolicy": {
+              "methods": [
+                "create_autoscaling_policy"
+              ]
+            },
+            "DeleteAutoscalingPolicy": {
+              "methods": [
+                "delete_autoscaling_policy"
+              ]
+            },
+            "GetAutoscalingPolicy": {
+              "methods": [
+                "get_autoscaling_policy"
+              ]
+            },
+            "ListAutoscalingPolicies": {
+              "methods": [
+                "list_autoscaling_policies"
+              ]
+            },
+            "UpdateAutoscalingPolicy": {
+              "methods": [
+                "update_autoscaling_policy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AutoscalingPolicyServiceAsyncClient",
+          "rpcs": {
+            "CreateAutoscalingPolicy": {
+              "methods": [
+                "create_autoscaling_policy"
+              ]
+            },
+            "DeleteAutoscalingPolicy": {
+              "methods": [
+                "delete_autoscaling_policy"
+              ]
+            },
+            "GetAutoscalingPolicy": {
+              "methods": [
+                "get_autoscaling_policy"
+              ]
+            },
+            "ListAutoscalingPolicies": {
+              "methods": [
+                "list_autoscaling_policies"
+              ]
+            },
+            "UpdateAutoscalingPolicy": {
+              "methods": [
+                "update_autoscaling_policy"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AutoscalingPolicyServiceClient",
+          "rpcs": {
+            "CreateAutoscalingPolicy": {
+              "methods": [
+                "create_autoscaling_policy"
+              ]
+            },
+            "DeleteAutoscalingPolicy": {
+              "methods": [
+                "delete_autoscaling_policy"
+              ]
+            },
+            "GetAutoscalingPolicy": {
+              "methods": [
+                "get_autoscaling_policy"
+              ]
+            },
+            "ListAutoscalingPolicies": {
+              "methods": [
+                "list_autoscaling_policies"
+              ]
+            },
+            "UpdateAutoscalingPolicy": {
+              "methods": [
+                "update_autoscaling_policy"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "BatchController": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "BatchControllerClient",
+          "rpcs": {
+            "CreateBatch": {
+              "methods": [
+                "create_batch"
+              ]
+            },
+            "DeleteBatch": {
+              "methods": [
+                "delete_batch"
+              ]
+            },
+            "GetBatch": {
+              "methods": [
+                "get_batch"
+              ]
+            },
+            "ListBatches": {
+              "methods": [
+                "list_batches"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "BatchControllerAsyncClient",
+          "rpcs": {
+            "CreateBatch": {
+              "methods": [
+                "create_batch"
+              ]
+            },
+            "DeleteBatch": {
+              "methods": [
+                "delete_batch"
+              ]
+            },
+            "GetBatch": {
+              "methods": [
+                "get_batch"
+              ]
+            },
+            "ListBatches": {
+              "methods": [
+                "list_batches"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "BatchControllerClient",
+          "rpcs": {
+            "CreateBatch": {
+              "methods": [
+                "create_batch"
+              ]
+            },
+            "DeleteBatch": {
+              "methods": [
+                "delete_batch"
+              ]
+            },
+            "GetBatch": {
+              "methods": [
+                "get_batch"
+              ]
+            },
+            "ListBatches": {
+              "methods": [
+                "list_batches"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ClusterController": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ClusterControllerClient",
+          "rpcs": {
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DiagnoseCluster": {
+              "methods": [
+                "diagnose_cluster"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "StartCluster": {
+              "methods": [
+                "start_cluster"
+              ]
+            },
+            "StopCluster": {
+              "methods": [
+                "stop_cluster"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ClusterControllerAsyncClient",
+          "rpcs": {
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DiagnoseCluster": {
+              "methods": [
+                "diagnose_cluster"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "StartCluster": {
+              "methods": [
+                "start_cluster"
+              ]
+            },
+            "StopCluster": {
+              "methods": [
+                "stop_cluster"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ClusterControllerClient",
+          "rpcs": {
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DiagnoseCluster": {
+              "methods": [
+                "diagnose_cluster"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "StartCluster": {
+              "methods": [
+                "start_cluster"
+              ]
+            },
+            "StopCluster": {
+              "methods": [
+                "stop_cluster"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "JobController": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "JobControllerClient",
+          "rpcs": {
+            "CancelJob": {
+              "methods": [
+                "cancel_job"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "SubmitJob": {
+              "methods": [
+                "submit_job"
+              ]
+            },
+            "SubmitJobAsOperation": {
+              "methods": [
+                "submit_job_as_operation"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "JobControllerAsyncClient",
+          "rpcs": {
+            "CancelJob": {
+              "methods": [
+                "cancel_job"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "SubmitJob": {
+              "methods": [
+                "submit_job"
+              ]
+            },
+            "SubmitJobAsOperation": {
+              "methods": [
+                "submit_job_as_operation"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "JobControllerClient",
+          "rpcs": {
+            "CancelJob": {
+              "methods": [
+                "cancel_job"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "SubmitJob": {
+              "methods": [
+                "submit_job"
+              ]
+            },
+            "SubmitJobAsOperation": {
+              "methods": [
+                "submit_job_as_operation"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NodeGroupController": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "NodeGroupControllerClient",
+          "rpcs": {
+            "CreateNodeGroup": {
+              "methods": [
+                "create_node_group"
+              ]
+            },
+            "GetNodeGroup": {
+              "methods": [
+                "get_node_group"
+              ]
+            },
+            "ResizeNodeGroup": {
+              "methods": [
+                "resize_node_group"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "NodeGroupControllerAsyncClient",
+          "rpcs": {
+            "CreateNodeGroup": {
+              "methods": [
+                "create_node_group"
+              ]
+            },
+            "GetNodeGroup": {
+              "methods": [
+                "get_node_group"
+              ]
+            },
+            "ResizeNodeGroup": {
+              "methods": [
+                "resize_node_group"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "NodeGroupControllerClient",
+          "rpcs": {
+            "CreateNodeGroup": {
+              "methods": [
+                "create_node_group"
+              ]
+            },
+            "GetNodeGroup": {
+              "methods": [
+                "get_node_group"
+              ]
+            },
+            "ResizeNodeGroup": {
+              "methods": [
+                "resize_node_group"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SessionController": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SessionControllerClient",
+          "rpcs": {
+            "CreateSession": {
+              "methods": [
+                "create_session"
+              ]
+            },
+            "DeleteSession": {
+              "methods": [
+                "delete_session"
+              ]
+            },
+            "GetSession": {
+              "methods": [
+                "get_session"
+              ]
+            },
+            "ListSessions": {
+              "methods": [
+                "list_sessions"
+              ]
+            },
+            "TerminateSession": {
+              "methods": [
+                "terminate_session"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SessionControllerAsyncClient",
+          "rpcs": {
+            "CreateSession": {
+              "methods": [
+                "create_session"
+              ]
+            },
+            "DeleteSession": {
+              "methods": [
+                "delete_session"
+              ]
+            },
+            "GetSession": {
+              "methods": [
+                "get_session"
+              ]
+            },
+            "ListSessions": {
+              "methods": [
+                "list_sessions"
+              ]
+            },
+            "TerminateSession": {
+              "methods": [
+                "terminate_session"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SessionControllerClient",
+          "rpcs": {
+            "CreateSession": {
+              "methods": [
+                "create_session"
+              ]
+            },
+            "DeleteSession": {
+              "methods": [
+                "delete_session"
+              ]
+            },
+            "GetSession": {
+              "methods": [
+                "get_session"
+              ]
+            },
+            "ListSessions": {
+              "methods": [
+                "list_sessions"
+              ]
+            },
+            "TerminateSession": {
+              "methods": [
+                "terminate_session"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SessionTemplateController": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SessionTemplateControllerClient",
+          "rpcs": {
+            "CreateSessionTemplate": {
+              "methods": [
+                "create_session_template"
+              ]
+            },
+            "DeleteSessionTemplate": {
+              "methods": [
+                "delete_session_template"
+              ]
+            },
+            "GetSessionTemplate": {
+              "methods": [
+                "get_session_template"
+              ]
+            },
+            "ListSessionTemplates": {
+              "methods": [
+                "list_session_templates"
+              ]
+            },
+            "UpdateSessionTemplate": {
+              "methods": [
+                "update_session_template"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SessionTemplateControllerAsyncClient",
+          "rpcs": {
+            "CreateSessionTemplate": {
+              "methods": [
+                "create_session_template"
+              ]
+            },
+            "DeleteSessionTemplate": {
+              "methods": [
+                "delete_session_template"
+              ]
+            },
+            "GetSessionTemplate": {
+              "methods": [
+                "get_session_template"
+              ]
+            },
+            "ListSessionTemplates": {
+              "methods": [
+                "list_session_templates"
+              ]
+            },
+            "UpdateSessionTemplate": {
+              "methods": [
+                "update_session_template"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SessionTemplateControllerClient",
+          "rpcs": {
+            "CreateSessionTemplate": {
+              "methods": [
+                "create_session_template"
+              ]
+            },
+            "DeleteSessionTemplate": {
+              "methods": [
+                "delete_session_template"
+              ]
+            },
+            "GetSessionTemplate": {
+              "methods": [
+                "get_session_template"
+              ]
+            },
+            "ListSessionTemplates": {
+              "methods": [
+                "list_session_templates"
+              ]
+            },
+            "UpdateSessionTemplate": {
+              "methods": [
+                "update_session_template"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "WorkflowTemplateService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WorkflowTemplateServiceClient",
+          "rpcs": {
+            "CreateWorkflowTemplate": {
+              "methods": [
+                "create_workflow_template"
+              ]
+            },
+            "DeleteWorkflowTemplate": {
+              "methods": [
+                "delete_workflow_template"
+              ]
+            },
+            "GetWorkflowTemplate": {
+              "methods": [
+                "get_workflow_template"
+              ]
+            },
+            "InstantiateInlineWorkflowTemplate": {
+              "methods": [
+                "instantiate_inline_workflow_template"
+              ]
+            },
+            "InstantiateWorkflowTemplate": {
+              "methods": [
+                "instantiate_workflow_template"
+              ]
+            },
+            "ListWorkflowTemplates": {
+              "methods": [
+                "list_workflow_templates"
+              ]
+            },
+            "UpdateWorkflowTemplate": {
+              "methods": [
+                "update_workflow_template"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "WorkflowTemplateServiceAsyncClient",
+          "rpcs": {
+            "CreateWorkflowTemplate": {
+              "methods": [
+                "create_workflow_template"
+              ]
+            },
+            "DeleteWorkflowTemplate": {
+              "methods": [
+                "delete_workflow_template"
+              ]
+            },
+            "GetWorkflowTemplate": {
+              "methods": [
+                "get_workflow_template"
+              ]
+            },
+            "InstantiateInlineWorkflowTemplate": {
+              "methods": [
+                "instantiate_inline_workflow_template"
+              ]
+            },
+            "InstantiateWorkflowTemplate": {
+              "methods": [
+                "instantiate_workflow_template"
+              ]
+            },
+            "ListWorkflowTemplates": {
+              "methods": [
+                "list_workflow_templates"
+              ]
+            },
+            "UpdateWorkflowTemplate": {
+              "methods": [
+                "update_workflow_template"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "WorkflowTemplateServiceClient",
+          "rpcs": {
+            "CreateWorkflowTemplate": {
+              "methods": [
+                "create_workflow_template"
+              ]
+            },
+            "DeleteWorkflowTemplate": {
+              "methods": [
+                "delete_workflow_template"
+              ]
+            },
+            "GetWorkflowTemplate": {
+              "methods": [
+                "get_workflow_template"
+              ]
+            },
+            "InstantiateInlineWorkflowTemplate": {
+              "methods": [
+                "instantiate_inline_workflow_template"
+              ]
+            },
+            "InstantiateWorkflowTemplate": {
+              "methods": [
+                "instantiate_workflow_template"
+              ]
+            },
+            "ListWorkflowTemplates": {
+              "methods": [
+                "list_workflow_templates"
+              ]
+            },
+            "UpdateWorkflowTemplate": {
+              "methods": [
+                "update_workflow_template"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

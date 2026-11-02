@@ -1,0 +1,103 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.shell_v1",
+  "protoPackage": "google.cloud.shell.v1",
+  "schema": "1.0",
+  "services": {
+    "CloudShellService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudShellServiceClient",
+          "rpcs": {
+            "AddPublicKey": {
+              "methods": [
+                "add_public_key"
+              ]
+            },
+            "AuthorizeEnvironment": {
+              "methods": [
+                "authorize_environment"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "RemovePublicKey": {
+              "methods": [
+                "remove_public_key"
+              ]
+            },
+            "StartEnvironment": {
+              "methods": [
+                "start_environment"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudShellServiceAsyncClient",
+          "rpcs": {
+            "AddPublicKey": {
+              "methods": [
+                "add_public_key"
+              ]
+            },
+            "AuthorizeEnvironment": {
+              "methods": [
+                "authorize_environment"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "RemovePublicKey": {
+              "methods": [
+                "remove_public_key"
+              ]
+            },
+            "StartEnvironment": {
+              "methods": [
+                "start_environment"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudShellServiceClient",
+          "rpcs": {
+            "AddPublicKey": {
+              "methods": [
+                "add_public_key"
+              ]
+            },
+            "AuthorizeEnvironment": {
+              "methods": [
+                "authorize_environment"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "RemovePublicKey": {
+              "methods": [
+                "remove_public_key"
+              ]
+            },
+            "StartEnvironment": {
+              "methods": [
+                "start_environment"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

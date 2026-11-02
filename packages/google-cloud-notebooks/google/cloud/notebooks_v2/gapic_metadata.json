@@ -1,0 +1,208 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.notebooks_v2",
+  "protoPackage": "google.cloud.notebooks.v2",
+  "schema": "1.0",
+  "services": {
+    "NotebookService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "NotebookServiceClient",
+          "rpcs": {
+            "CheckInstanceUpgradability": {
+              "methods": [
+                "check_instance_upgradability"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DiagnoseInstance": {
+              "methods": [
+                "diagnose_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ResetInstance": {
+              "methods": [
+                "reset_instance"
+              ]
+            },
+            "RollbackInstance": {
+              "methods": [
+                "rollback_instance"
+              ]
+            },
+            "StartInstance": {
+              "methods": [
+                "start_instance"
+              ]
+            },
+            "StopInstance": {
+              "methods": [
+                "stop_instance"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpgradeInstance": {
+              "methods": [
+                "upgrade_instance"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "NotebookServiceAsyncClient",
+          "rpcs": {
+            "CheckInstanceUpgradability": {
+              "methods": [
+                "check_instance_upgradability"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DiagnoseInstance": {
+              "methods": [
+                "diagnose_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ResetInstance": {
+              "methods": [
+                "reset_instance"
+              ]
+            },
+            "RollbackInstance": {
+              "methods": [
+                "rollback_instance"
+              ]
+            },
+            "StartInstance": {
+              "methods": [
+                "start_instance"
+              ]
+            },
+            "StopInstance": {
+              "methods": [
+                "stop_instance"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpgradeInstance": {
+              "methods": [
+                "upgrade_instance"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "NotebookServiceClient",
+          "rpcs": {
+            "CheckInstanceUpgradability": {
+              "methods": [
+                "check_instance_upgradability"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DiagnoseInstance": {
+              "methods": [
+                "diagnose_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ResetInstance": {
+              "methods": [
+                "reset_instance"
+              ]
+            },
+            "RollbackInstance": {
+              "methods": [
+                "rollback_instance"
+              ]
+            },
+            "StartInstance": {
+              "methods": [
+                "start_instance"
+              ]
+            },
+            "StopInstance": {
+              "methods": [
+                "stop_instance"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpgradeInstance": {
+              "methods": [
+                "upgrade_instance"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

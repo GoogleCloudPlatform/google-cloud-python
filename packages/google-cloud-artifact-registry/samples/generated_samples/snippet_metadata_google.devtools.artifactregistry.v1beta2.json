@@ -1,0 +1,4050 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.devtools.artifactregistry.v1beta2",
+        "version": "v1beta2"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-artifact-registry",
+    "version": "1.23.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.create_repository",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.CreateRepository",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "CreateRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.CreateRepositoryRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "repository",
+            "type": "google.cloud.artifactregistry_v1beta2.types.Repository"
+          },
+          {
+            "name": "repository_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_repository"
+      },
+      "description": "Sample for CreateRepository",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_create_repository_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_CreateRepository_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_create_repository_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.create_repository",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.CreateRepository",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "CreateRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.CreateRepositoryRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "repository",
+            "type": "google.cloud.artifactregistry_v1beta2.types.Repository"
+          },
+          {
+            "name": "repository_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_repository"
+      },
+      "description": "Sample for CreateRepository",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_create_repository_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_CreateRepository_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_create_repository_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.create_tag",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.CreateTag",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "CreateTag"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.CreateTagRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "tag",
+            "type": "google.cloud.artifactregistry_v1beta2.types.Tag"
+          },
+          {
+            "name": "tag_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Tag",
+        "shortName": "create_tag"
+      },
+      "description": "Sample for CreateTag",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_create_tag_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_CreateTag_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_create_tag_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.create_tag",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.CreateTag",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "CreateTag"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.CreateTagRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "tag",
+            "type": "google.cloud.artifactregistry_v1beta2.types.Tag"
+          },
+          {
+            "name": "tag_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Tag",
+        "shortName": "create_tag"
+      },
+      "description": "Sample for CreateTag",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_create_tag_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_CreateTag_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_create_tag_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.delete_package",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.DeletePackage",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "DeletePackage"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.DeletePackageRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_package"
+      },
+      "description": "Sample for DeletePackage",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_delete_package_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_DeletePackage_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_delete_package_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.delete_package",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.DeletePackage",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "DeletePackage"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.DeletePackageRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_package"
+      },
+      "description": "Sample for DeletePackage",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_delete_package_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_DeletePackage_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_delete_package_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.delete_repository",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.DeleteRepository",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "DeleteRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.DeleteRepositoryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_repository"
+      },
+      "description": "Sample for DeleteRepository",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_delete_repository_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_DeleteRepository_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_delete_repository_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.delete_repository",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.DeleteRepository",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "DeleteRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.DeleteRepositoryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_repository"
+      },
+      "description": "Sample for DeleteRepository",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_delete_repository_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_DeleteRepository_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_delete_repository_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.delete_tag",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.DeleteTag",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "DeleteTag"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.DeleteTagRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_tag"
+      },
+      "description": "Sample for DeleteTag",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_delete_tag_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_DeleteTag_async",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_delete_tag_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.delete_tag",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.DeleteTag",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "DeleteTag"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.DeleteTagRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_tag"
+      },
+      "description": "Sample for DeleteTag",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_delete_tag_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_DeleteTag_sync",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_delete_tag_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.delete_version",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.DeleteVersion",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "DeleteVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.DeleteVersionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_version"
+      },
+      "description": "Sample for DeleteVersion",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_delete_version_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_DeleteVersion_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_delete_version_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.delete_version",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.DeleteVersion",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "DeleteVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.DeleteVersionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_version"
+      },
+      "description": "Sample for DeleteVersion",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_delete_version_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_DeleteVersion_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_delete_version_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.get_file",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetFile",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetFile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetFileRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.File",
+        "shortName": "get_file"
+      },
+      "description": "Sample for GetFile",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_file_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetFile_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_file_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.get_file",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetFile",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetFile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetFileRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.File",
+        "shortName": "get_file"
+      },
+      "description": "Sample for GetFile",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_file_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetFile_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_file_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.get_iam_policy",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetIamPolicy",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.get_iam_policy",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetIamPolicy",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.get_package",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetPackage",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetPackage"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetPackageRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Package",
+        "shortName": "get_package"
+      },
+      "description": "Sample for GetPackage",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_package_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetPackage_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_package_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.get_package",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetPackage",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetPackage"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetPackageRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Package",
+        "shortName": "get_package"
+      },
+      "description": "Sample for GetPackage",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_package_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetPackage_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_package_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.get_project_settings",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetProjectSettings",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetProjectSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetProjectSettingsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.ProjectSettings",
+        "shortName": "get_project_settings"
+      },
+      "description": "Sample for GetProjectSettings",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_project_settings_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetProjectSettings_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_project_settings_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.get_project_settings",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetProjectSettings",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetProjectSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetProjectSettingsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.ProjectSettings",
+        "shortName": "get_project_settings"
+      },
+      "description": "Sample for GetProjectSettings",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_project_settings_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetProjectSettings_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_project_settings_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.get_repository",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetRepository",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetRepositoryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Repository",
+        "shortName": "get_repository"
+      },
+      "description": "Sample for GetRepository",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_repository_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetRepository_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_repository_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.get_repository",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetRepository",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetRepositoryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Repository",
+        "shortName": "get_repository"
+      },
+      "description": "Sample for GetRepository",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_repository_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetRepository_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_repository_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.get_tag",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetTag",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetTag"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetTagRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Tag",
+        "shortName": "get_tag"
+      },
+      "description": "Sample for GetTag",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_tag_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetTag_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_tag_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.get_tag",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetTag",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetTag"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetTagRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Tag",
+        "shortName": "get_tag"
+      },
+      "description": "Sample for GetTag",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_tag_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetTag_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_tag_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.get_version",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetVersion",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetVersionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Version",
+        "shortName": "get_version"
+      },
+      "description": "Sample for GetVersion",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_version_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetVersion_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_version_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.get_version",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.GetVersion",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "GetVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.GetVersionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Version",
+        "shortName": "get_version"
+      },
+      "description": "Sample for GetVersion",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_get_version_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_GetVersion_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_get_version_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.import_apt_artifacts",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ImportAptArtifacts",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ImportAptArtifacts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ImportAptArtifactsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "import_apt_artifacts"
+      },
+      "description": "Sample for ImportAptArtifacts",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_import_apt_artifacts_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ImportAptArtifacts_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_import_apt_artifacts_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.import_apt_artifacts",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ImportAptArtifacts",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ImportAptArtifacts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ImportAptArtifactsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "import_apt_artifacts"
+      },
+      "description": "Sample for ImportAptArtifacts",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_import_apt_artifacts_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ImportAptArtifacts_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_import_apt_artifacts_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.import_yum_artifacts",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ImportYumArtifacts",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ImportYumArtifacts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ImportYumArtifactsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "import_yum_artifacts"
+      },
+      "description": "Sample for ImportYumArtifacts",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_import_yum_artifacts_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ImportYumArtifacts_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_import_yum_artifacts_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.import_yum_artifacts",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ImportYumArtifacts",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ImportYumArtifacts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ImportYumArtifactsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "import_yum_artifacts"
+      },
+      "description": "Sample for ImportYumArtifacts",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_import_yum_artifacts_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ImportYumArtifacts_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_import_yum_artifacts_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.list_files",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ListFiles",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ListFiles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ListFilesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.services.artifact_registry.pagers.ListFilesAsyncPager",
+        "shortName": "list_files"
+      },
+      "description": "Sample for ListFiles",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_list_files_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ListFiles_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_list_files_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.list_files",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ListFiles",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ListFiles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ListFilesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.services.artifact_registry.pagers.ListFilesPager",
+        "shortName": "list_files"
+      },
+      "description": "Sample for ListFiles",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_list_files_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ListFiles_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_list_files_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.list_packages",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ListPackages",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ListPackages"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ListPackagesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.services.artifact_registry.pagers.ListPackagesAsyncPager",
+        "shortName": "list_packages"
+      },
+      "description": "Sample for ListPackages",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_list_packages_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ListPackages_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_list_packages_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.list_packages",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ListPackages",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ListPackages"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ListPackagesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.services.artifact_registry.pagers.ListPackagesPager",
+        "shortName": "list_packages"
+      },
+      "description": "Sample for ListPackages",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_list_packages_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ListPackages_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_list_packages_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.list_repositories",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ListRepositories",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ListRepositories"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ListRepositoriesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.services.artifact_registry.pagers.ListRepositoriesAsyncPager",
+        "shortName": "list_repositories"
+      },
+      "description": "Sample for ListRepositories",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_list_repositories_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ListRepositories_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_list_repositories_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.list_repositories",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ListRepositories",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ListRepositories"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ListRepositoriesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.services.artifact_registry.pagers.ListRepositoriesPager",
+        "shortName": "list_repositories"
+      },
+      "description": "Sample for ListRepositories",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_list_repositories_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ListRepositories_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_list_repositories_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.list_tags",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ListTags",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ListTags"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ListTagsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.services.artifact_registry.pagers.ListTagsAsyncPager",
+        "shortName": "list_tags"
+      },
+      "description": "Sample for ListTags",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_list_tags_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ListTags_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_list_tags_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.list_tags",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ListTags",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ListTags"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ListTagsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.services.artifact_registry.pagers.ListTagsPager",
+        "shortName": "list_tags"
+      },
+      "description": "Sample for ListTags",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_list_tags_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ListTags_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_list_tags_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.list_versions",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ListVersions",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ListVersions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ListVersionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.services.artifact_registry.pagers.ListVersionsAsyncPager",
+        "shortName": "list_versions"
+      },
+      "description": "Sample for ListVersions",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_list_versions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ListVersions_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_list_versions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.list_versions",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.ListVersions",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "ListVersions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ListVersionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.services.artifact_registry.pagers.ListVersionsPager",
+        "shortName": "list_versions"
+      },
+      "description": "Sample for ListVersions",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_list_versions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_ListVersions_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_list_versions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.set_iam_policy",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.SetIamPolicy",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_set_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_SetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_set_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.set_iam_policy",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.SetIamPolicy",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_set_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_SetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_set_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.TestIamPermissions",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_test_iam_permissions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_TestIamPermissions_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_test_iam_permissions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.TestIamPermissions",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_test_iam_permissions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_TestIamPermissions_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_test_iam_permissions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.update_project_settings",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.UpdateProjectSettings",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "UpdateProjectSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.UpdateProjectSettingsRequest"
+          },
+          {
+            "name": "project_settings",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ProjectSettings"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.ProjectSettings",
+        "shortName": "update_project_settings"
+      },
+      "description": "Sample for UpdateProjectSettings",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_update_project_settings_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_UpdateProjectSettings_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_update_project_settings_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.update_project_settings",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.UpdateProjectSettings",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "UpdateProjectSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.UpdateProjectSettingsRequest"
+          },
+          {
+            "name": "project_settings",
+            "type": "google.cloud.artifactregistry_v1beta2.types.ProjectSettings"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.ProjectSettings",
+        "shortName": "update_project_settings"
+      },
+      "description": "Sample for UpdateProjectSettings",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_update_project_settings_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_UpdateProjectSettings_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_update_project_settings_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.update_repository",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.UpdateRepository",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "UpdateRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.UpdateRepositoryRequest"
+          },
+          {
+            "name": "repository",
+            "type": "google.cloud.artifactregistry_v1beta2.types.Repository"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Repository",
+        "shortName": "update_repository"
+      },
+      "description": "Sample for UpdateRepository",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_update_repository_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_UpdateRepository_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_update_repository_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.update_repository",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.UpdateRepository",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "UpdateRepository"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.UpdateRepositoryRequest"
+          },
+          {
+            "name": "repository",
+            "type": "google.cloud.artifactregistry_v1beta2.types.Repository"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Repository",
+        "shortName": "update_repository"
+      },
+      "description": "Sample for UpdateRepository",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_update_repository_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_UpdateRepository_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_update_repository_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient",
+          "shortName": "ArtifactRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryAsyncClient.update_tag",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.UpdateTag",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "UpdateTag"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.UpdateTagRequest"
+          },
+          {
+            "name": "tag",
+            "type": "google.cloud.artifactregistry_v1beta2.types.Tag"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Tag",
+        "shortName": "update_tag"
+      },
+      "description": "Sample for UpdateTag",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_update_tag_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_UpdateTag_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_update_tag_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient",
+          "shortName": "ArtifactRegistryClient"
+        },
+        "fullName": "google.cloud.artifactregistry_v1beta2.ArtifactRegistryClient.update_tag",
+        "method": {
+          "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry.UpdateTag",
+          "service": {
+            "fullName": "google.devtools.artifactregistry.v1beta2.ArtifactRegistry",
+            "shortName": "ArtifactRegistry"
+          },
+          "shortName": "UpdateTag"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.artifactregistry_v1beta2.types.UpdateTagRequest"
+          },
+          {
+            "name": "tag",
+            "type": "google.cloud.artifactregistry_v1beta2.types.Tag"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.artifactregistry_v1beta2.types.Tag",
+        "shortName": "update_tag"
+      },
+      "description": "Sample for UpdateTag",
+      "file": "artifactregistry_v1beta2_generated_artifact_registry_update_tag_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "artifactregistry_v1beta2_generated_ArtifactRegistry_UpdateTag_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "artifactregistry_v1beta2_generated_artifact_registry_update_tag_sync.py"
+    }
+  ]
+}

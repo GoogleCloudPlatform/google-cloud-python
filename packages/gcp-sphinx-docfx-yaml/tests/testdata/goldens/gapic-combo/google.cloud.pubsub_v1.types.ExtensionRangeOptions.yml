@@ -1,0 +1,25 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.cloud.pubsub_v1.types.ExtensionRangeOptions.Declaration
+  class: google.cloud.pubsub_v1.types.ExtensionRangeOptions
+  fullName: google.cloud.pubsub_v1.types.ExtensionRangeOptions
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ExtensionRangeOptions
+  source:
+    id: ExtensionRangeOptions
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.ExtensionRangeOptions` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.ExtensionRangeOptions
+references:
+- fullName: google.cloud.pubsub_v1.types.ExtensionRangeOptions.Declaration
+  isExternal: false
+  name: Declaration
+  parent: google.cloud.pubsub_v1.types.ExtensionRangeOptions
+  uid: google.cloud.pubsub_v1.types.ExtensionRangeOptions.Declaration

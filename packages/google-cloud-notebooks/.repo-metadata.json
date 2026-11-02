@@ -1,0 +1,16 @@
+{
+    "api_description": "Notebooks API is used to manage notebook resources in Google Cloud.",
+    "api_id": "notebooks.googleapis.com",
+    "api_shortname": "notebooks",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/notebooks/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-notebooks",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1392625",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "notebooks",
+    "name_pretty": "Notebooks",
+    "product_documentation": "https://cloud.google.com/vertex-ai/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

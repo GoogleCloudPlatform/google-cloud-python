@@ -1,0 +1,107 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_issueresolution_v1",
+  "protoPackage": "google.shopping.merchant.issueresolution.v1",
+  "schema": "1.0",
+  "services": {
+    "AggregateProductStatusesService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AggregateProductStatusesServiceClient",
+          "rpcs": {
+            "ListAggregateProductStatuses": {
+              "methods": [
+                "list_aggregate_product_statuses"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AggregateProductStatusesServiceAsyncClient",
+          "rpcs": {
+            "ListAggregateProductStatuses": {
+              "methods": [
+                "list_aggregate_product_statuses"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AggregateProductStatusesServiceClient",
+          "rpcs": {
+            "ListAggregateProductStatuses": {
+              "methods": [
+                "list_aggregate_product_statuses"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "IssueResolutionService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "IssueResolutionServiceClient",
+          "rpcs": {
+            "RenderAccountIssues": {
+              "methods": [
+                "render_account_issues"
+              ]
+            },
+            "RenderProductIssues": {
+              "methods": [
+                "render_product_issues"
+              ]
+            },
+            "TriggerAction": {
+              "methods": [
+                "trigger_action"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "IssueResolutionServiceAsyncClient",
+          "rpcs": {
+            "RenderAccountIssues": {
+              "methods": [
+                "render_account_issues"
+              ]
+            },
+            "RenderProductIssues": {
+              "methods": [
+                "render_product_issues"
+              ]
+            },
+            "TriggerAction": {
+              "methods": [
+                "trigger_action"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "IssueResolutionServiceClient",
+          "rpcs": {
+            "RenderAccountIssues": {
+              "methods": [
+                "render_account_issues"
+              ]
+            },
+            "RenderProductIssues": {
+              "methods": [
+                "render_product_issues"
+              ]
+            },
+            "TriggerAction": {
+              "methods": [
+                "trigger_action"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

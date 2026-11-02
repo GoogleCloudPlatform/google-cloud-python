@@ -1,0 +1,2501 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.dialogflow_v2",
+  "protoPackage": "google.cloud.dialogflow.v2",
+  "schema": "1.0",
+  "services": {
+    "Agents": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AgentsClient",
+          "rpcs": {
+            "DeleteAgent": {
+              "methods": [
+                "delete_agent"
+              ]
+            },
+            "ExportAgent": {
+              "methods": [
+                "export_agent"
+              ]
+            },
+            "GetAgent": {
+              "methods": [
+                "get_agent"
+              ]
+            },
+            "GetValidationResult": {
+              "methods": [
+                "get_validation_result"
+              ]
+            },
+            "ImportAgent": {
+              "methods": [
+                "import_agent"
+              ]
+            },
+            "RestoreAgent": {
+              "methods": [
+                "restore_agent"
+              ]
+            },
+            "SearchAgents": {
+              "methods": [
+                "search_agents"
+              ]
+            },
+            "SetAgent": {
+              "methods": [
+                "set_agent"
+              ]
+            },
+            "TrainAgent": {
+              "methods": [
+                "train_agent"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AgentsAsyncClient",
+          "rpcs": {
+            "DeleteAgent": {
+              "methods": [
+                "delete_agent"
+              ]
+            },
+            "ExportAgent": {
+              "methods": [
+                "export_agent"
+              ]
+            },
+            "GetAgent": {
+              "methods": [
+                "get_agent"
+              ]
+            },
+            "GetValidationResult": {
+              "methods": [
+                "get_validation_result"
+              ]
+            },
+            "ImportAgent": {
+              "methods": [
+                "import_agent"
+              ]
+            },
+            "RestoreAgent": {
+              "methods": [
+                "restore_agent"
+              ]
+            },
+            "SearchAgents": {
+              "methods": [
+                "search_agents"
+              ]
+            },
+            "SetAgent": {
+              "methods": [
+                "set_agent"
+              ]
+            },
+            "TrainAgent": {
+              "methods": [
+                "train_agent"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AgentsClient",
+          "rpcs": {
+            "DeleteAgent": {
+              "methods": [
+                "delete_agent"
+              ]
+            },
+            "ExportAgent": {
+              "methods": [
+                "export_agent"
+              ]
+            },
+            "GetAgent": {
+              "methods": [
+                "get_agent"
+              ]
+            },
+            "GetValidationResult": {
+              "methods": [
+                "get_validation_result"
+              ]
+            },
+            "ImportAgent": {
+              "methods": [
+                "import_agent"
+              ]
+            },
+            "RestoreAgent": {
+              "methods": [
+                "restore_agent"
+              ]
+            },
+            "SearchAgents": {
+              "methods": [
+                "search_agents"
+              ]
+            },
+            "SetAgent": {
+              "methods": [
+                "set_agent"
+              ]
+            },
+            "TrainAgent": {
+              "methods": [
+                "train_agent"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "AnswerRecords": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AnswerRecordsClient",
+          "rpcs": {
+            "ListAnswerRecords": {
+              "methods": [
+                "list_answer_records"
+              ]
+            },
+            "UpdateAnswerRecord": {
+              "methods": [
+                "update_answer_record"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AnswerRecordsAsyncClient",
+          "rpcs": {
+            "ListAnswerRecords": {
+              "methods": [
+                "list_answer_records"
+              ]
+            },
+            "UpdateAnswerRecord": {
+              "methods": [
+                "update_answer_record"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AnswerRecordsClient",
+          "rpcs": {
+            "ListAnswerRecords": {
+              "methods": [
+                "list_answer_records"
+              ]
+            },
+            "UpdateAnswerRecord": {
+              "methods": [
+                "update_answer_record"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CompanionAgents": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CompanionAgentsClient",
+          "rpcs": {
+            "CreateCompanionAgent": {
+              "methods": [
+                "create_companion_agent"
+              ]
+            },
+            "DeleteCompanionAgent": {
+              "methods": [
+                "delete_companion_agent"
+              ]
+            },
+            "GetCompanionAgent": {
+              "methods": [
+                "get_companion_agent"
+              ]
+            },
+            "ListCompanionAgents": {
+              "methods": [
+                "list_companion_agents"
+              ]
+            },
+            "UpdateCompanionAgent": {
+              "methods": [
+                "update_companion_agent"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CompanionAgentsAsyncClient",
+          "rpcs": {
+            "CreateCompanionAgent": {
+              "methods": [
+                "create_companion_agent"
+              ]
+            },
+            "DeleteCompanionAgent": {
+              "methods": [
+                "delete_companion_agent"
+              ]
+            },
+            "GetCompanionAgent": {
+              "methods": [
+                "get_companion_agent"
+              ]
+            },
+            "ListCompanionAgents": {
+              "methods": [
+                "list_companion_agents"
+              ]
+            },
+            "UpdateCompanionAgent": {
+              "methods": [
+                "update_companion_agent"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CompanionAgentsClient",
+          "rpcs": {
+            "CreateCompanionAgent": {
+              "methods": [
+                "create_companion_agent"
+              ]
+            },
+            "DeleteCompanionAgent": {
+              "methods": [
+                "delete_companion_agent"
+              ]
+            },
+            "GetCompanionAgent": {
+              "methods": [
+                "get_companion_agent"
+              ]
+            },
+            "ListCompanionAgents": {
+              "methods": [
+                "list_companion_agents"
+              ]
+            },
+            "UpdateCompanionAgent": {
+              "methods": [
+                "update_companion_agent"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Contexts": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ContextsClient",
+          "rpcs": {
+            "CreateContext": {
+              "methods": [
+                "create_context"
+              ]
+            },
+            "DeleteAllContexts": {
+              "methods": [
+                "delete_all_contexts"
+              ]
+            },
+            "DeleteContext": {
+              "methods": [
+                "delete_context"
+              ]
+            },
+            "GetContext": {
+              "methods": [
+                "get_context"
+              ]
+            },
+            "ListContexts": {
+              "methods": [
+                "list_contexts"
+              ]
+            },
+            "UpdateContext": {
+              "methods": [
+                "update_context"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ContextsAsyncClient",
+          "rpcs": {
+            "CreateContext": {
+              "methods": [
+                "create_context"
+              ]
+            },
+            "DeleteAllContexts": {
+              "methods": [
+                "delete_all_contexts"
+              ]
+            },
+            "DeleteContext": {
+              "methods": [
+                "delete_context"
+              ]
+            },
+            "GetContext": {
+              "methods": [
+                "get_context"
+              ]
+            },
+            "ListContexts": {
+              "methods": [
+                "list_contexts"
+              ]
+            },
+            "UpdateContext": {
+              "methods": [
+                "update_context"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ContextsClient",
+          "rpcs": {
+            "CreateContext": {
+              "methods": [
+                "create_context"
+              ]
+            },
+            "DeleteAllContexts": {
+              "methods": [
+                "delete_all_contexts"
+              ]
+            },
+            "DeleteContext": {
+              "methods": [
+                "delete_context"
+              ]
+            },
+            "GetContext": {
+              "methods": [
+                "get_context"
+              ]
+            },
+            "ListContexts": {
+              "methods": [
+                "list_contexts"
+              ]
+            },
+            "UpdateContext": {
+              "methods": [
+                "update_context"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ConversationDatasets": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ConversationDatasetsClient",
+          "rpcs": {
+            "CreateConversationDataset": {
+              "methods": [
+                "create_conversation_dataset"
+              ]
+            },
+            "DeleteConversationDataset": {
+              "methods": [
+                "delete_conversation_dataset"
+              ]
+            },
+            "GetConversationDataset": {
+              "methods": [
+                "get_conversation_dataset"
+              ]
+            },
+            "ImportConversationData": {
+              "methods": [
+                "import_conversation_data"
+              ]
+            },
+            "ListConversationDatasets": {
+              "methods": [
+                "list_conversation_datasets"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ConversationDatasetsAsyncClient",
+          "rpcs": {
+            "CreateConversationDataset": {
+              "methods": [
+                "create_conversation_dataset"
+              ]
+            },
+            "DeleteConversationDataset": {
+              "methods": [
+                "delete_conversation_dataset"
+              ]
+            },
+            "GetConversationDataset": {
+              "methods": [
+                "get_conversation_dataset"
+              ]
+            },
+            "ImportConversationData": {
+              "methods": [
+                "import_conversation_data"
+              ]
+            },
+            "ListConversationDatasets": {
+              "methods": [
+                "list_conversation_datasets"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ConversationDatasetsClient",
+          "rpcs": {
+            "CreateConversationDataset": {
+              "methods": [
+                "create_conversation_dataset"
+              ]
+            },
+            "DeleteConversationDataset": {
+              "methods": [
+                "delete_conversation_dataset"
+              ]
+            },
+            "GetConversationDataset": {
+              "methods": [
+                "get_conversation_dataset"
+              ]
+            },
+            "ImportConversationData": {
+              "methods": [
+                "import_conversation_data"
+              ]
+            },
+            "ListConversationDatasets": {
+              "methods": [
+                "list_conversation_datasets"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ConversationModels": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ConversationModelsClient",
+          "rpcs": {
+            "CreateConversationModel": {
+              "methods": [
+                "create_conversation_model"
+              ]
+            },
+            "CreateConversationModelEvaluation": {
+              "methods": [
+                "create_conversation_model_evaluation"
+              ]
+            },
+            "DeleteConversationModel": {
+              "methods": [
+                "delete_conversation_model"
+              ]
+            },
+            "DeployConversationModel": {
+              "methods": [
+                "deploy_conversation_model"
+              ]
+            },
+            "GetConversationModel": {
+              "methods": [
+                "get_conversation_model"
+              ]
+            },
+            "GetConversationModelEvaluation": {
+              "methods": [
+                "get_conversation_model_evaluation"
+              ]
+            },
+            "ListConversationModelEvaluations": {
+              "methods": [
+                "list_conversation_model_evaluations"
+              ]
+            },
+            "ListConversationModels": {
+              "methods": [
+                "list_conversation_models"
+              ]
+            },
+            "UndeployConversationModel": {
+              "methods": [
+                "undeploy_conversation_model"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ConversationModelsAsyncClient",
+          "rpcs": {
+            "CreateConversationModel": {
+              "methods": [
+                "create_conversation_model"
+              ]
+            },
+            "CreateConversationModelEvaluation": {
+              "methods": [
+                "create_conversation_model_evaluation"
+              ]
+            },
+            "DeleteConversationModel": {
+              "methods": [
+                "delete_conversation_model"
+              ]
+            },
+            "DeployConversationModel": {
+              "methods": [
+                "deploy_conversation_model"
+              ]
+            },
+            "GetConversationModel": {
+              "methods": [
+                "get_conversation_model"
+              ]
+            },
+            "GetConversationModelEvaluation": {
+              "methods": [
+                "get_conversation_model_evaluation"
+              ]
+            },
+            "ListConversationModelEvaluations": {
+              "methods": [
+                "list_conversation_model_evaluations"
+              ]
+            },
+            "ListConversationModels": {
+              "methods": [
+                "list_conversation_models"
+              ]
+            },
+            "UndeployConversationModel": {
+              "methods": [
+                "undeploy_conversation_model"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ConversationModelsClient",
+          "rpcs": {
+            "CreateConversationModel": {
+              "methods": [
+                "create_conversation_model"
+              ]
+            },
+            "CreateConversationModelEvaluation": {
+              "methods": [
+                "create_conversation_model_evaluation"
+              ]
+            },
+            "DeleteConversationModel": {
+              "methods": [
+                "delete_conversation_model"
+              ]
+            },
+            "DeployConversationModel": {
+              "methods": [
+                "deploy_conversation_model"
+              ]
+            },
+            "GetConversationModel": {
+              "methods": [
+                "get_conversation_model"
+              ]
+            },
+            "GetConversationModelEvaluation": {
+              "methods": [
+                "get_conversation_model_evaluation"
+              ]
+            },
+            "ListConversationModelEvaluations": {
+              "methods": [
+                "list_conversation_model_evaluations"
+              ]
+            },
+            "ListConversationModels": {
+              "methods": [
+                "list_conversation_models"
+              ]
+            },
+            "UndeployConversationModel": {
+              "methods": [
+                "undeploy_conversation_model"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ConversationProfiles": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ConversationProfilesClient",
+          "rpcs": {
+            "ClearSuggestionFeatureConfig": {
+              "methods": [
+                "clear_suggestion_feature_config"
+              ]
+            },
+            "CreateConversationProfile": {
+              "methods": [
+                "create_conversation_profile"
+              ]
+            },
+            "DeleteConversationProfile": {
+              "methods": [
+                "delete_conversation_profile"
+              ]
+            },
+            "GetConversationProfile": {
+              "methods": [
+                "get_conversation_profile"
+              ]
+            },
+            "ListConversationProfiles": {
+              "methods": [
+                "list_conversation_profiles"
+              ]
+            },
+            "SetSuggestionFeatureConfig": {
+              "methods": [
+                "set_suggestion_feature_config"
+              ]
+            },
+            "UpdateConversationProfile": {
+              "methods": [
+                "update_conversation_profile"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ConversationProfilesAsyncClient",
+          "rpcs": {
+            "ClearSuggestionFeatureConfig": {
+              "methods": [
+                "clear_suggestion_feature_config"
+              ]
+            },
+            "CreateConversationProfile": {
+              "methods": [
+                "create_conversation_profile"
+              ]
+            },
+            "DeleteConversationProfile": {
+              "methods": [
+                "delete_conversation_profile"
+              ]
+            },
+            "GetConversationProfile": {
+              "methods": [
+                "get_conversation_profile"
+              ]
+            },
+            "ListConversationProfiles": {
+              "methods": [
+                "list_conversation_profiles"
+              ]
+            },
+            "SetSuggestionFeatureConfig": {
+              "methods": [
+                "set_suggestion_feature_config"
+              ]
+            },
+            "UpdateConversationProfile": {
+              "methods": [
+                "update_conversation_profile"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ConversationProfilesClient",
+          "rpcs": {
+            "ClearSuggestionFeatureConfig": {
+              "methods": [
+                "clear_suggestion_feature_config"
+              ]
+            },
+            "CreateConversationProfile": {
+              "methods": [
+                "create_conversation_profile"
+              ]
+            },
+            "DeleteConversationProfile": {
+              "methods": [
+                "delete_conversation_profile"
+              ]
+            },
+            "GetConversationProfile": {
+              "methods": [
+                "get_conversation_profile"
+              ]
+            },
+            "ListConversationProfiles": {
+              "methods": [
+                "list_conversation_profiles"
+              ]
+            },
+            "SetSuggestionFeatureConfig": {
+              "methods": [
+                "set_suggestion_feature_config"
+              ]
+            },
+            "UpdateConversationProfile": {
+              "methods": [
+                "update_conversation_profile"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Conversations": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ConversationsClient",
+          "rpcs": {
+            "CompleteConversation": {
+              "methods": [
+                "complete_conversation"
+              ]
+            },
+            "CreateConversation": {
+              "methods": [
+                "create_conversation"
+              ]
+            },
+            "GenerateStatelessSuggestion": {
+              "methods": [
+                "generate_stateless_suggestion"
+              ]
+            },
+            "GenerateStatelessSummary": {
+              "methods": [
+                "generate_stateless_summary"
+              ]
+            },
+            "GenerateSuggestions": {
+              "methods": [
+                "generate_suggestions"
+              ]
+            },
+            "GetConversation": {
+              "methods": [
+                "get_conversation"
+              ]
+            },
+            "IngestContextReferences": {
+              "methods": [
+                "ingest_context_references"
+              ]
+            },
+            "ListConversations": {
+              "methods": [
+                "list_conversations"
+              ]
+            },
+            "ListMessages": {
+              "methods": [
+                "list_messages"
+              ]
+            },
+            "SearchKnowledge": {
+              "methods": [
+                "search_knowledge"
+              ]
+            },
+            "SuggestConversationSummary": {
+              "methods": [
+                "suggest_conversation_summary"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ConversationsAsyncClient",
+          "rpcs": {
+            "CompleteConversation": {
+              "methods": [
+                "complete_conversation"
+              ]
+            },
+            "CreateConversation": {
+              "methods": [
+                "create_conversation"
+              ]
+            },
+            "GenerateStatelessSuggestion": {
+              "methods": [
+                "generate_stateless_suggestion"
+              ]
+            },
+            "GenerateStatelessSummary": {
+              "methods": [
+                "generate_stateless_summary"
+              ]
+            },
+            "GenerateSuggestions": {
+              "methods": [
+                "generate_suggestions"
+              ]
+            },
+            "GetConversation": {
+              "methods": [
+                "get_conversation"
+              ]
+            },
+            "IngestContextReferences": {
+              "methods": [
+                "ingest_context_references"
+              ]
+            },
+            "ListConversations": {
+              "methods": [
+                "list_conversations"
+              ]
+            },
+            "ListMessages": {
+              "methods": [
+                "list_messages"
+              ]
+            },
+            "SearchKnowledge": {
+              "methods": [
+                "search_knowledge"
+              ]
+            },
+            "SuggestConversationSummary": {
+              "methods": [
+                "suggest_conversation_summary"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ConversationsClient",
+          "rpcs": {
+            "CompleteConversation": {
+              "methods": [
+                "complete_conversation"
+              ]
+            },
+            "CreateConversation": {
+              "methods": [
+                "create_conversation"
+              ]
+            },
+            "GenerateStatelessSuggestion": {
+              "methods": [
+                "generate_stateless_suggestion"
+              ]
+            },
+            "GenerateStatelessSummary": {
+              "methods": [
+                "generate_stateless_summary"
+              ]
+            },
+            "GenerateSuggestions": {
+              "methods": [
+                "generate_suggestions"
+              ]
+            },
+            "GetConversation": {
+              "methods": [
+                "get_conversation"
+              ]
+            },
+            "IngestContextReferences": {
+              "methods": [
+                "ingest_context_references"
+              ]
+            },
+            "ListConversations": {
+              "methods": [
+                "list_conversations"
+              ]
+            },
+            "ListMessages": {
+              "methods": [
+                "list_messages"
+              ]
+            },
+            "SearchKnowledge": {
+              "methods": [
+                "search_knowledge"
+              ]
+            },
+            "SuggestConversationSummary": {
+              "methods": [
+                "suggest_conversation_summary"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Documents": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DocumentsClient",
+          "rpcs": {
+            "CreateDocument": {
+              "methods": [
+                "create_document"
+              ]
+            },
+            "DeleteDocument": {
+              "methods": [
+                "delete_document"
+              ]
+            },
+            "ExportDocument": {
+              "methods": [
+                "export_document"
+              ]
+            },
+            "GetDocument": {
+              "methods": [
+                "get_document"
+              ]
+            },
+            "ImportDocuments": {
+              "methods": [
+                "import_documents"
+              ]
+            },
+            "ListDocuments": {
+              "methods": [
+                "list_documents"
+              ]
+            },
+            "ReloadDocument": {
+              "methods": [
+                "reload_document"
+              ]
+            },
+            "UpdateDocument": {
+              "methods": [
+                "update_document"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DocumentsAsyncClient",
+          "rpcs": {
+            "CreateDocument": {
+              "methods": [
+                "create_document"
+              ]
+            },
+            "DeleteDocument": {
+              "methods": [
+                "delete_document"
+              ]
+            },
+            "ExportDocument": {
+              "methods": [
+                "export_document"
+              ]
+            },
+            "GetDocument": {
+              "methods": [
+                "get_document"
+              ]
+            },
+            "ImportDocuments": {
+              "methods": [
+                "import_documents"
+              ]
+            },
+            "ListDocuments": {
+              "methods": [
+                "list_documents"
+              ]
+            },
+            "ReloadDocument": {
+              "methods": [
+                "reload_document"
+              ]
+            },
+            "UpdateDocument": {
+              "methods": [
+                "update_document"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DocumentsClient",
+          "rpcs": {
+            "CreateDocument": {
+              "methods": [
+                "create_document"
+              ]
+            },
+            "DeleteDocument": {
+              "methods": [
+                "delete_document"
+              ]
+            },
+            "ExportDocument": {
+              "methods": [
+                "export_document"
+              ]
+            },
+            "GetDocument": {
+              "methods": [
+                "get_document"
+              ]
+            },
+            "ImportDocuments": {
+              "methods": [
+                "import_documents"
+              ]
+            },
+            "ListDocuments": {
+              "methods": [
+                "list_documents"
+              ]
+            },
+            "ReloadDocument": {
+              "methods": [
+                "reload_document"
+              ]
+            },
+            "UpdateDocument": {
+              "methods": [
+                "update_document"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "EncryptionSpecService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "EncryptionSpecServiceClient",
+          "rpcs": {
+            "GetEncryptionSpec": {
+              "methods": [
+                "get_encryption_spec"
+              ]
+            },
+            "InitializeEncryptionSpec": {
+              "methods": [
+                "initialize_encryption_spec"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "EncryptionSpecServiceAsyncClient",
+          "rpcs": {
+            "GetEncryptionSpec": {
+              "methods": [
+                "get_encryption_spec"
+              ]
+            },
+            "InitializeEncryptionSpec": {
+              "methods": [
+                "initialize_encryption_spec"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "EncryptionSpecServiceClient",
+          "rpcs": {
+            "GetEncryptionSpec": {
+              "methods": [
+                "get_encryption_spec"
+              ]
+            },
+            "InitializeEncryptionSpec": {
+              "methods": [
+                "initialize_encryption_spec"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "EntityTypes": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "EntityTypesClient",
+          "rpcs": {
+            "BatchCreateEntities": {
+              "methods": [
+                "batch_create_entities"
+              ]
+            },
+            "BatchDeleteEntities": {
+              "methods": [
+                "batch_delete_entities"
+              ]
+            },
+            "BatchDeleteEntityTypes": {
+              "methods": [
+                "batch_delete_entity_types"
+              ]
+            },
+            "BatchUpdateEntities": {
+              "methods": [
+                "batch_update_entities"
+              ]
+            },
+            "BatchUpdateEntityTypes": {
+              "methods": [
+                "batch_update_entity_types"
+              ]
+            },
+            "CreateEntityType": {
+              "methods": [
+                "create_entity_type"
+              ]
+            },
+            "DeleteEntityType": {
+              "methods": [
+                "delete_entity_type"
+              ]
+            },
+            "GetEntityType": {
+              "methods": [
+                "get_entity_type"
+              ]
+            },
+            "ListEntityTypes": {
+              "methods": [
+                "list_entity_types"
+              ]
+            },
+            "UpdateEntityType": {
+              "methods": [
+                "update_entity_type"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "EntityTypesAsyncClient",
+          "rpcs": {
+            "BatchCreateEntities": {
+              "methods": [
+                "batch_create_entities"
+              ]
+            },
+            "BatchDeleteEntities": {
+              "methods": [
+                "batch_delete_entities"
+              ]
+            },
+            "BatchDeleteEntityTypes": {
+              "methods": [
+                "batch_delete_entity_types"
+              ]
+            },
+            "BatchUpdateEntities": {
+              "methods": [
+                "batch_update_entities"
+              ]
+            },
+            "BatchUpdateEntityTypes": {
+              "methods": [
+                "batch_update_entity_types"
+              ]
+            },
+            "CreateEntityType": {
+              "methods": [
+                "create_entity_type"
+              ]
+            },
+            "DeleteEntityType": {
+              "methods": [
+                "delete_entity_type"
+              ]
+            },
+            "GetEntityType": {
+              "methods": [
+                "get_entity_type"
+              ]
+            },
+            "ListEntityTypes": {
+              "methods": [
+                "list_entity_types"
+              ]
+            },
+            "UpdateEntityType": {
+              "methods": [
+                "update_entity_type"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "EntityTypesClient",
+          "rpcs": {
+            "BatchCreateEntities": {
+              "methods": [
+                "batch_create_entities"
+              ]
+            },
+            "BatchDeleteEntities": {
+              "methods": [
+                "batch_delete_entities"
+              ]
+            },
+            "BatchDeleteEntityTypes": {
+              "methods": [
+                "batch_delete_entity_types"
+              ]
+            },
+            "BatchUpdateEntities": {
+              "methods": [
+                "batch_update_entities"
+              ]
+            },
+            "BatchUpdateEntityTypes": {
+              "methods": [
+                "batch_update_entity_types"
+              ]
+            },
+            "CreateEntityType": {
+              "methods": [
+                "create_entity_type"
+              ]
+            },
+            "DeleteEntityType": {
+              "methods": [
+                "delete_entity_type"
+              ]
+            },
+            "GetEntityType": {
+              "methods": [
+                "get_entity_type"
+              ]
+            },
+            "ListEntityTypes": {
+              "methods": [
+                "list_entity_types"
+              ]
+            },
+            "UpdateEntityType": {
+              "methods": [
+                "update_entity_type"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Environments": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "EnvironmentsClient",
+          "rpcs": {
+            "CreateEnvironment": {
+              "methods": [
+                "create_environment"
+              ]
+            },
+            "DeleteEnvironment": {
+              "methods": [
+                "delete_environment"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "GetEnvironmentHistory": {
+              "methods": [
+                "get_environment_history"
+              ]
+            },
+            "ListEnvironments": {
+              "methods": [
+                "list_environments"
+              ]
+            },
+            "UpdateEnvironment": {
+              "methods": [
+                "update_environment"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "EnvironmentsAsyncClient",
+          "rpcs": {
+            "CreateEnvironment": {
+              "methods": [
+                "create_environment"
+              ]
+            },
+            "DeleteEnvironment": {
+              "methods": [
+                "delete_environment"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "GetEnvironmentHistory": {
+              "methods": [
+                "get_environment_history"
+              ]
+            },
+            "ListEnvironments": {
+              "methods": [
+                "list_environments"
+              ]
+            },
+            "UpdateEnvironment": {
+              "methods": [
+                "update_environment"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "EnvironmentsClient",
+          "rpcs": {
+            "CreateEnvironment": {
+              "methods": [
+                "create_environment"
+              ]
+            },
+            "DeleteEnvironment": {
+              "methods": [
+                "delete_environment"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "GetEnvironmentHistory": {
+              "methods": [
+                "get_environment_history"
+              ]
+            },
+            "ListEnvironments": {
+              "methods": [
+                "list_environments"
+              ]
+            },
+            "UpdateEnvironment": {
+              "methods": [
+                "update_environment"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Fulfillments": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "FulfillmentsClient",
+          "rpcs": {
+            "GetFulfillment": {
+              "methods": [
+                "get_fulfillment"
+              ]
+            },
+            "UpdateFulfillment": {
+              "methods": [
+                "update_fulfillment"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "FulfillmentsAsyncClient",
+          "rpcs": {
+            "GetFulfillment": {
+              "methods": [
+                "get_fulfillment"
+              ]
+            },
+            "UpdateFulfillment": {
+              "methods": [
+                "update_fulfillment"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "FulfillmentsClient",
+          "rpcs": {
+            "GetFulfillment": {
+              "methods": [
+                "get_fulfillment"
+              ]
+            },
+            "UpdateFulfillment": {
+              "methods": [
+                "update_fulfillment"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GeneratorEvaluations": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "GeneratorEvaluationsClient",
+          "rpcs": {
+            "CreateGeneratorEvaluation": {
+              "methods": [
+                "create_generator_evaluation"
+              ]
+            },
+            "DeleteGeneratorEvaluation": {
+              "methods": [
+                "delete_generator_evaluation"
+              ]
+            },
+            "GetGeneratorEvaluation": {
+              "methods": [
+                "get_generator_evaluation"
+              ]
+            },
+            "ListGeneratorEvaluations": {
+              "methods": [
+                "list_generator_evaluations"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "GeneratorEvaluationsAsyncClient",
+          "rpcs": {
+            "CreateGeneratorEvaluation": {
+              "methods": [
+                "create_generator_evaluation"
+              ]
+            },
+            "DeleteGeneratorEvaluation": {
+              "methods": [
+                "delete_generator_evaluation"
+              ]
+            },
+            "GetGeneratorEvaluation": {
+              "methods": [
+                "get_generator_evaluation"
+              ]
+            },
+            "ListGeneratorEvaluations": {
+              "methods": [
+                "list_generator_evaluations"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "GeneratorEvaluationsClient",
+          "rpcs": {
+            "CreateGeneratorEvaluation": {
+              "methods": [
+                "create_generator_evaluation"
+              ]
+            },
+            "DeleteGeneratorEvaluation": {
+              "methods": [
+                "delete_generator_evaluation"
+              ]
+            },
+            "GetGeneratorEvaluation": {
+              "methods": [
+                "get_generator_evaluation"
+              ]
+            },
+            "ListGeneratorEvaluations": {
+              "methods": [
+                "list_generator_evaluations"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Generators": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "GeneratorsClient",
+          "rpcs": {
+            "CreateGenerator": {
+              "methods": [
+                "create_generator"
+              ]
+            },
+            "DeleteGenerator": {
+              "methods": [
+                "delete_generator"
+              ]
+            },
+            "GetGenerator": {
+              "methods": [
+                "get_generator"
+              ]
+            },
+            "ListGenerators": {
+              "methods": [
+                "list_generators"
+              ]
+            },
+            "UpdateGenerator": {
+              "methods": [
+                "update_generator"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "GeneratorsAsyncClient",
+          "rpcs": {
+            "CreateGenerator": {
+              "methods": [
+                "create_generator"
+              ]
+            },
+            "DeleteGenerator": {
+              "methods": [
+                "delete_generator"
+              ]
+            },
+            "GetGenerator": {
+              "methods": [
+                "get_generator"
+              ]
+            },
+            "ListGenerators": {
+              "methods": [
+                "list_generators"
+              ]
+            },
+            "UpdateGenerator": {
+              "methods": [
+                "update_generator"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "GeneratorsClient",
+          "rpcs": {
+            "CreateGenerator": {
+              "methods": [
+                "create_generator"
+              ]
+            },
+            "DeleteGenerator": {
+              "methods": [
+                "delete_generator"
+              ]
+            },
+            "GetGenerator": {
+              "methods": [
+                "get_generator"
+              ]
+            },
+            "ListGenerators": {
+              "methods": [
+                "list_generators"
+              ]
+            },
+            "UpdateGenerator": {
+              "methods": [
+                "update_generator"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Intents": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "IntentsClient",
+          "rpcs": {
+            "BatchDeleteIntents": {
+              "methods": [
+                "batch_delete_intents"
+              ]
+            },
+            "BatchUpdateIntents": {
+              "methods": [
+                "batch_update_intents"
+              ]
+            },
+            "CreateIntent": {
+              "methods": [
+                "create_intent"
+              ]
+            },
+            "DeleteIntent": {
+              "methods": [
+                "delete_intent"
+              ]
+            },
+            "GetIntent": {
+              "methods": [
+                "get_intent"
+              ]
+            },
+            "ListIntents": {
+              "methods": [
+                "list_intents"
+              ]
+            },
+            "UpdateIntent": {
+              "methods": [
+                "update_intent"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "IntentsAsyncClient",
+          "rpcs": {
+            "BatchDeleteIntents": {
+              "methods": [
+                "batch_delete_intents"
+              ]
+            },
+            "BatchUpdateIntents": {
+              "methods": [
+                "batch_update_intents"
+              ]
+            },
+            "CreateIntent": {
+              "methods": [
+                "create_intent"
+              ]
+            },
+            "DeleteIntent": {
+              "methods": [
+                "delete_intent"
+              ]
+            },
+            "GetIntent": {
+              "methods": [
+                "get_intent"
+              ]
+            },
+            "ListIntents": {
+              "methods": [
+                "list_intents"
+              ]
+            },
+            "UpdateIntent": {
+              "methods": [
+                "update_intent"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "IntentsClient",
+          "rpcs": {
+            "BatchDeleteIntents": {
+              "methods": [
+                "batch_delete_intents"
+              ]
+            },
+            "BatchUpdateIntents": {
+              "methods": [
+                "batch_update_intents"
+              ]
+            },
+            "CreateIntent": {
+              "methods": [
+                "create_intent"
+              ]
+            },
+            "DeleteIntent": {
+              "methods": [
+                "delete_intent"
+              ]
+            },
+            "GetIntent": {
+              "methods": [
+                "get_intent"
+              ]
+            },
+            "ListIntents": {
+              "methods": [
+                "list_intents"
+              ]
+            },
+            "UpdateIntent": {
+              "methods": [
+                "update_intent"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "KnowledgeBases": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "KnowledgeBasesClient",
+          "rpcs": {
+            "CreateKnowledgeBase": {
+              "methods": [
+                "create_knowledge_base"
+              ]
+            },
+            "DeleteKnowledgeBase": {
+              "methods": [
+                "delete_knowledge_base"
+              ]
+            },
+            "GetKnowledgeBase": {
+              "methods": [
+                "get_knowledge_base"
+              ]
+            },
+            "ListKnowledgeBases": {
+              "methods": [
+                "list_knowledge_bases"
+              ]
+            },
+            "UpdateKnowledgeBase": {
+              "methods": [
+                "update_knowledge_base"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "KnowledgeBasesAsyncClient",
+          "rpcs": {
+            "CreateKnowledgeBase": {
+              "methods": [
+                "create_knowledge_base"
+              ]
+            },
+            "DeleteKnowledgeBase": {
+              "methods": [
+                "delete_knowledge_base"
+              ]
+            },
+            "GetKnowledgeBase": {
+              "methods": [
+                "get_knowledge_base"
+              ]
+            },
+            "ListKnowledgeBases": {
+              "methods": [
+                "list_knowledge_bases"
+              ]
+            },
+            "UpdateKnowledgeBase": {
+              "methods": [
+                "update_knowledge_base"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "KnowledgeBasesClient",
+          "rpcs": {
+            "CreateKnowledgeBase": {
+              "methods": [
+                "create_knowledge_base"
+              ]
+            },
+            "DeleteKnowledgeBase": {
+              "methods": [
+                "delete_knowledge_base"
+              ]
+            },
+            "GetKnowledgeBase": {
+              "methods": [
+                "get_knowledge_base"
+              ]
+            },
+            "ListKnowledgeBases": {
+              "methods": [
+                "list_knowledge_bases"
+              ]
+            },
+            "UpdateKnowledgeBase": {
+              "methods": [
+                "update_knowledge_base"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Participants": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ParticipantsClient",
+          "rpcs": {
+            "AnalyzeContent": {
+              "methods": [
+                "analyze_content"
+              ]
+            },
+            "BidiStreamingAnalyzeContent": {
+              "methods": [
+                "bidi_streaming_analyze_content"
+              ]
+            },
+            "CreateParticipant": {
+              "methods": [
+                "create_participant"
+              ]
+            },
+            "GetParticipant": {
+              "methods": [
+                "get_participant"
+              ]
+            },
+            "ListParticipants": {
+              "methods": [
+                "list_participants"
+              ]
+            },
+            "StreamingAnalyzeContent": {
+              "methods": [
+                "streaming_analyze_content"
+              ]
+            },
+            "StreamingReactiveCompanionSuggestions": {
+              "methods": [
+                "streaming_reactive_companion_suggestions"
+              ]
+            },
+            "SuggestArticles": {
+              "methods": [
+                "suggest_articles"
+              ]
+            },
+            "SuggestFaqAnswers": {
+              "methods": [
+                "suggest_faq_answers"
+              ]
+            },
+            "SuggestKnowledgeAssist": {
+              "methods": [
+                "suggest_knowledge_assist"
+              ]
+            },
+            "SuggestSmartReplies": {
+              "methods": [
+                "suggest_smart_replies"
+              ]
+            },
+            "UpdateParticipant": {
+              "methods": [
+                "update_participant"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ParticipantsAsyncClient",
+          "rpcs": {
+            "AnalyzeContent": {
+              "methods": [
+                "analyze_content"
+              ]
+            },
+            "BidiStreamingAnalyzeContent": {
+              "methods": [
+                "bidi_streaming_analyze_content"
+              ]
+            },
+            "CreateParticipant": {
+              "methods": [
+                "create_participant"
+              ]
+            },
+            "GetParticipant": {
+              "methods": [
+                "get_participant"
+              ]
+            },
+            "ListParticipants": {
+              "methods": [
+                "list_participants"
+              ]
+            },
+            "StreamingAnalyzeContent": {
+              "methods": [
+                "streaming_analyze_content"
+              ]
+            },
+            "StreamingReactiveCompanionSuggestions": {
+              "methods": [
+                "streaming_reactive_companion_suggestions"
+              ]
+            },
+            "SuggestArticles": {
+              "methods": [
+                "suggest_articles"
+              ]
+            },
+            "SuggestFaqAnswers": {
+              "methods": [
+                "suggest_faq_answers"
+              ]
+            },
+            "SuggestKnowledgeAssist": {
+              "methods": [
+                "suggest_knowledge_assist"
+              ]
+            },
+            "SuggestSmartReplies": {
+              "methods": [
+                "suggest_smart_replies"
+              ]
+            },
+            "UpdateParticipant": {
+              "methods": [
+                "update_participant"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ParticipantsClient",
+          "rpcs": {
+            "AnalyzeContent": {
+              "methods": [
+                "analyze_content"
+              ]
+            },
+            "BidiStreamingAnalyzeContent": {
+              "methods": [
+                "bidi_streaming_analyze_content"
+              ]
+            },
+            "CreateParticipant": {
+              "methods": [
+                "create_participant"
+              ]
+            },
+            "GetParticipant": {
+              "methods": [
+                "get_participant"
+              ]
+            },
+            "ListParticipants": {
+              "methods": [
+                "list_participants"
+              ]
+            },
+            "StreamingAnalyzeContent": {
+              "methods": [
+                "streaming_analyze_content"
+              ]
+            },
+            "StreamingReactiveCompanionSuggestions": {
+              "methods": [
+                "streaming_reactive_companion_suggestions"
+              ]
+            },
+            "SuggestArticles": {
+              "methods": [
+                "suggest_articles"
+              ]
+            },
+            "SuggestFaqAnswers": {
+              "methods": [
+                "suggest_faq_answers"
+              ]
+            },
+            "SuggestKnowledgeAssist": {
+              "methods": [
+                "suggest_knowledge_assist"
+              ]
+            },
+            "SuggestSmartReplies": {
+              "methods": [
+                "suggest_smart_replies"
+              ]
+            },
+            "UpdateParticipant": {
+              "methods": [
+                "update_participant"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SessionEntityTypes": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SessionEntityTypesClient",
+          "rpcs": {
+            "CreateSessionEntityType": {
+              "methods": [
+                "create_session_entity_type"
+              ]
+            },
+            "DeleteSessionEntityType": {
+              "methods": [
+                "delete_session_entity_type"
+              ]
+            },
+            "GetSessionEntityType": {
+              "methods": [
+                "get_session_entity_type"
+              ]
+            },
+            "ListSessionEntityTypes": {
+              "methods": [
+                "list_session_entity_types"
+              ]
+            },
+            "UpdateSessionEntityType": {
+              "methods": [
+                "update_session_entity_type"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SessionEntityTypesAsyncClient",
+          "rpcs": {
+            "CreateSessionEntityType": {
+              "methods": [
+                "create_session_entity_type"
+              ]
+            },
+            "DeleteSessionEntityType": {
+              "methods": [
+                "delete_session_entity_type"
+              ]
+            },
+            "GetSessionEntityType": {
+              "methods": [
+                "get_session_entity_type"
+              ]
+            },
+            "ListSessionEntityTypes": {
+              "methods": [
+                "list_session_entity_types"
+              ]
+            },
+            "UpdateSessionEntityType": {
+              "methods": [
+                "update_session_entity_type"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SessionEntityTypesClient",
+          "rpcs": {
+            "CreateSessionEntityType": {
+              "methods": [
+                "create_session_entity_type"
+              ]
+            },
+            "DeleteSessionEntityType": {
+              "methods": [
+                "delete_session_entity_type"
+              ]
+            },
+            "GetSessionEntityType": {
+              "methods": [
+                "get_session_entity_type"
+              ]
+            },
+            "ListSessionEntityTypes": {
+              "methods": [
+                "list_session_entity_types"
+              ]
+            },
+            "UpdateSessionEntityType": {
+              "methods": [
+                "update_session_entity_type"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Sessions": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SessionsClient",
+          "rpcs": {
+            "DetectIntent": {
+              "methods": [
+                "detect_intent"
+              ]
+            },
+            "StreamingDetectIntent": {
+              "methods": [
+                "streaming_detect_intent"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SessionsAsyncClient",
+          "rpcs": {
+            "DetectIntent": {
+              "methods": [
+                "detect_intent"
+              ]
+            },
+            "StreamingDetectIntent": {
+              "methods": [
+                "streaming_detect_intent"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SessionsClient",
+          "rpcs": {
+            "DetectIntent": {
+              "methods": [
+                "detect_intent"
+              ]
+            },
+            "StreamingDetectIntent": {
+              "methods": [
+                "streaming_detect_intent"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SipTrunks": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SipTrunksClient",
+          "rpcs": {
+            "CreateSipTrunk": {
+              "methods": [
+                "create_sip_trunk"
+              ]
+            },
+            "DeleteSipTrunk": {
+              "methods": [
+                "delete_sip_trunk"
+              ]
+            },
+            "GetSipTrunk": {
+              "methods": [
+                "get_sip_trunk"
+              ]
+            },
+            "ListSipTrunks": {
+              "methods": [
+                "list_sip_trunks"
+              ]
+            },
+            "UpdateSipTrunk": {
+              "methods": [
+                "update_sip_trunk"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SipTrunksAsyncClient",
+          "rpcs": {
+            "CreateSipTrunk": {
+              "methods": [
+                "create_sip_trunk"
+              ]
+            },
+            "DeleteSipTrunk": {
+              "methods": [
+                "delete_sip_trunk"
+              ]
+            },
+            "GetSipTrunk": {
+              "methods": [
+                "get_sip_trunk"
+              ]
+            },
+            "ListSipTrunks": {
+              "methods": [
+                "list_sip_trunks"
+              ]
+            },
+            "UpdateSipTrunk": {
+              "methods": [
+                "update_sip_trunk"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SipTrunksClient",
+          "rpcs": {
+            "CreateSipTrunk": {
+              "methods": [
+                "create_sip_trunk"
+              ]
+            },
+            "DeleteSipTrunk": {
+              "methods": [
+                "delete_sip_trunk"
+              ]
+            },
+            "GetSipTrunk": {
+              "methods": [
+                "get_sip_trunk"
+              ]
+            },
+            "ListSipTrunks": {
+              "methods": [
+                "list_sip_trunks"
+              ]
+            },
+            "UpdateSipTrunk": {
+              "methods": [
+                "update_sip_trunk"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Tools": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ToolsClient",
+          "rpcs": {
+            "CreateTool": {
+              "methods": [
+                "create_tool"
+              ]
+            },
+            "DeleteTool": {
+              "methods": [
+                "delete_tool"
+              ]
+            },
+            "GetTool": {
+              "methods": [
+                "get_tool"
+              ]
+            },
+            "ListTools": {
+              "methods": [
+                "list_tools"
+              ]
+            },
+            "UpdateTool": {
+              "methods": [
+                "update_tool"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ToolsAsyncClient",
+          "rpcs": {
+            "CreateTool": {
+              "methods": [
+                "create_tool"
+              ]
+            },
+            "DeleteTool": {
+              "methods": [
+                "delete_tool"
+              ]
+            },
+            "GetTool": {
+              "methods": [
+                "get_tool"
+              ]
+            },
+            "ListTools": {
+              "methods": [
+                "list_tools"
+              ]
+            },
+            "UpdateTool": {
+              "methods": [
+                "update_tool"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ToolsClient",
+          "rpcs": {
+            "CreateTool": {
+              "methods": [
+                "create_tool"
+              ]
+            },
+            "DeleteTool": {
+              "methods": [
+                "delete_tool"
+              ]
+            },
+            "GetTool": {
+              "methods": [
+                "get_tool"
+              ]
+            },
+            "ListTools": {
+              "methods": [
+                "list_tools"
+              ]
+            },
+            "UpdateTool": {
+              "methods": [
+                "update_tool"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Versions": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "VersionsClient",
+          "rpcs": {
+            "CreateVersion": {
+              "methods": [
+                "create_version"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "UpdateVersion": {
+              "methods": [
+                "update_version"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "VersionsAsyncClient",
+          "rpcs": {
+            "CreateVersion": {
+              "methods": [
+                "create_version"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "UpdateVersion": {
+              "methods": [
+                "update_version"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "VersionsClient",
+          "rpcs": {
+            "CreateVersion": {
+              "methods": [
+                "create_version"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "UpdateVersion": {
+              "methods": [
+                "update_version"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

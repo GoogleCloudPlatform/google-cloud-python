@@ -1,0 +1,16 @@
+{
+    "api_description": "Cloud SQL Admin API",
+    "api_id": "sqladmin.googleapis.com",
+    "api_shortname": "sqladmin",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-sql/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-sql",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=65246\u0026template=1161103",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-sql",
+    "name_pretty": "Cloud SQL Admin",
+    "product_documentation": "https://cloud.google.com/sql/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

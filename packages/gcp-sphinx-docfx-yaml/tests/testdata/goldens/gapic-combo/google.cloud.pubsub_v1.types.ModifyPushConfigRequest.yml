@@ -1,0 +1,35 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the subscription. Format is\n   <code>projects/{project}/subscriptions/{sub}</code>."
+    id: subscription
+    var_type: str
+  - description: "Required. The push configuration for future deliveries.\n   \n \
+      \  An empty <code>pushConfig</code> indicates that the Pub/Sub system\n   should\
+      \ stop pushing messages from the given subscription and\n   allow messages to\
+      \ be pulled and acknowledged - effectively\n   pausing the subscription if <code>Pull</code>\
+      \ or <code>StreamingPull</code> is\n   not called."
+    id: push_config
+    var_type: google.pubsub_v1.types.PushConfig
+  children: []
+  class: google.cloud.pubsub_v1.types.ModifyPushConfigRequest
+  fullName: google.cloud.pubsub_v1.types.ModifyPushConfigRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ModifyPushConfigRequest
+  source:
+    id: ModifyPushConfigRequest
+    path: null
+    startLine: null
+  summary: 'Request for the ModifyPushConfig method.
+
+    '
+  syntax:
+    content: ModifyPushConfigRequest(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ModifyPushConfigRequest
+references: []

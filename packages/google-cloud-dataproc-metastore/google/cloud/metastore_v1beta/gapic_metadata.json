@@ -1,0 +1,407 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.metastore_v1beta",
+  "protoPackage": "google.cloud.metastore.v1beta",
+  "schema": "1.0",
+  "services": {
+    "DataprocMetastore": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataprocMetastoreClient",
+          "rpcs": {
+            "AlterMetadataResourceLocation": {
+              "methods": [
+                "alter_metadata_resource_location"
+              ]
+            },
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateMetadataImport": {
+              "methods": [
+                "create_metadata_import"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "ExportMetadata": {
+              "methods": [
+                "export_metadata"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetMetadataImport": {
+              "methods": [
+                "get_metadata_import"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListMetadataImports": {
+              "methods": [
+                "list_metadata_imports"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "MoveTableToDatabase": {
+              "methods": [
+                "move_table_to_database"
+              ]
+            },
+            "QueryMetadata": {
+              "methods": [
+                "query_metadata"
+              ]
+            },
+            "RemoveIamPolicy": {
+              "methods": [
+                "remove_iam_policy"
+              ]
+            },
+            "RestoreService": {
+              "methods": [
+                "restore_service"
+              ]
+            },
+            "UpdateMetadataImport": {
+              "methods": [
+                "update_metadata_import"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataprocMetastoreAsyncClient",
+          "rpcs": {
+            "AlterMetadataResourceLocation": {
+              "methods": [
+                "alter_metadata_resource_location"
+              ]
+            },
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateMetadataImport": {
+              "methods": [
+                "create_metadata_import"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "ExportMetadata": {
+              "methods": [
+                "export_metadata"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetMetadataImport": {
+              "methods": [
+                "get_metadata_import"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListMetadataImports": {
+              "methods": [
+                "list_metadata_imports"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "MoveTableToDatabase": {
+              "methods": [
+                "move_table_to_database"
+              ]
+            },
+            "QueryMetadata": {
+              "methods": [
+                "query_metadata"
+              ]
+            },
+            "RemoveIamPolicy": {
+              "methods": [
+                "remove_iam_policy"
+              ]
+            },
+            "RestoreService": {
+              "methods": [
+                "restore_service"
+              ]
+            },
+            "UpdateMetadataImport": {
+              "methods": [
+                "update_metadata_import"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataprocMetastoreClient",
+          "rpcs": {
+            "AlterMetadataResourceLocation": {
+              "methods": [
+                "alter_metadata_resource_location"
+              ]
+            },
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateMetadataImport": {
+              "methods": [
+                "create_metadata_import"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "ExportMetadata": {
+              "methods": [
+                "export_metadata"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetMetadataImport": {
+              "methods": [
+                "get_metadata_import"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListMetadataImports": {
+              "methods": [
+                "list_metadata_imports"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "MoveTableToDatabase": {
+              "methods": [
+                "move_table_to_database"
+              ]
+            },
+            "QueryMetadata": {
+              "methods": [
+                "query_metadata"
+              ]
+            },
+            "RemoveIamPolicy": {
+              "methods": [
+                "remove_iam_policy"
+              ]
+            },
+            "RestoreService": {
+              "methods": [
+                "restore_service"
+              ]
+            },
+            "UpdateMetadataImport": {
+              "methods": [
+                "update_metadata_import"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DataprocMetastoreFederation": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataprocMetastoreFederationClient",
+          "rpcs": {
+            "CreateFederation": {
+              "methods": [
+                "create_federation"
+              ]
+            },
+            "DeleteFederation": {
+              "methods": [
+                "delete_federation"
+              ]
+            },
+            "GetFederation": {
+              "methods": [
+                "get_federation"
+              ]
+            },
+            "ListFederations": {
+              "methods": [
+                "list_federations"
+              ]
+            },
+            "UpdateFederation": {
+              "methods": [
+                "update_federation"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataprocMetastoreFederationAsyncClient",
+          "rpcs": {
+            "CreateFederation": {
+              "methods": [
+                "create_federation"
+              ]
+            },
+            "DeleteFederation": {
+              "methods": [
+                "delete_federation"
+              ]
+            },
+            "GetFederation": {
+              "methods": [
+                "get_federation"
+              ]
+            },
+            "ListFederations": {
+              "methods": [
+                "list_federations"
+              ]
+            },
+            "UpdateFederation": {
+              "methods": [
+                "update_federation"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataprocMetastoreFederationClient",
+          "rpcs": {
+            "CreateFederation": {
+              "methods": [
+                "create_federation"
+              ]
+            },
+            "DeleteFederation": {
+              "methods": [
+                "delete_federation"
+              ]
+            },
+            "GetFederation": {
+              "methods": [
+                "get_federation"
+              ]
+            },
+            "ListFederations": {
+              "methods": [
+                "list_federations"
+              ]
+            },
+            "UpdateFederation": {
+              "methods": [
+                "update_federation"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

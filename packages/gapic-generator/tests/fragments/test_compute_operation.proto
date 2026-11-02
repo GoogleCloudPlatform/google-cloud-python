@@ -1,0 +1,108 @@
+// Copyright (C) 2023  Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.fragment;
+
+import "google/api/annotations.proto";
+import "google/cloud/extended_operations.proto";
+import "google/protobuf/struct.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+
+
+message GetRegionOperationRequest {
+  // Name of the Operations resource to return.
+  string operation = 52090215 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_response_field) = "name"
+  ];
+
+  // Project ID for this request.
+  string project = 227560217 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the region for this request.
+  string region = 138946292 [(google.api.field_behavior) = REQUIRED];
+}
+
+// A request message for Addresses.Insert. See the method description for details.
+message InsertAddressRequest {
+  // The body resource for this request
+  Address address_resource = 483888121;
+
+  // Project ID for this request.
+  string project = 227560217;
+
+  // Name of the region for this request.
+  string region = 138946292;
+
+}
+
+message Address {
+  // The static IP address represented by this resource.
+  optional string address = 462920692;
+}
+
+message Operation {
+  
+  // [Output Only] The status of the operation, which can be one of the following: `PENDING`, `RUNNING`, or `DONE`.
+  enum Status {
+    DONE = 0;
+  }
+
+  // [Output Only] Name of the operation.
+  optional string name = 3373707 [(google.cloud.operation_field) = NAME];
+
+  // [Output Only] If the operation fails, this field contains the HTTP error message that was returned, such as `NOT FOUND`.
+  optional string http_error_message = 202521945 [(google.cloud.operation_field) = ERROR_MESSAGE];
+
+  // [Output Only] If the operation fails, this field contains the HTTP error status code that was returned. For example, a `404` means the resource was not found.
+  optional int32 http_error_status_code = 312345196 [(google.cloud.operation_field) = ERROR_CODE];
+
+  // [Output Only] The status of the operation, which can be one of the following: `PENDING`, `RUNNING`, or `DONE`.
+  optional Status status = 181260274 [(google.cloud.operation_field) = STATUS];
+}
+
+// The RegionOperations API.
+service RegionOperations {
+  option (google.api.default_host) =
+    "compute.googleapis.com";
+
+  // Retrieves the specified region-specific Operations resource.
+  rpc Get(GetRegionOperationRequest) returns (Operation) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/regions/{region}/operations/{operation}"
+    };
+    option (google.api.method_signature) = "project,region,operation";
+    option (google.cloud.operation_polling_method) = true;
+  }
+}
+
+// The Addresses API.
+service Addresses {
+  option (google.api.default_host) =
+    "compute.googleapis.com";
+
+  // Creates an address resource in the specified project by using the data included in the request.
+  rpc Insert(InsertAddressRequest) returns (Operation) {
+    option (google.api.http) = {
+      body: "address_resource"
+      post: "/compute/v1/projects/{project}/regions/{region}/addresses"
+    };
+    option (google.api.method_signature) = "project,region,address_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+}
+

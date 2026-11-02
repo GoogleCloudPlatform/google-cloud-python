@@ -1,0 +1,148 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.video.transcoder_v1",
+  "protoPackage": "google.cloud.video.transcoder.v1",
+  "schema": "1.0",
+  "services": {
+    "TranscoderService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "TranscoderServiceClient",
+          "rpcs": {
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "CreateJobTemplate": {
+              "methods": [
+                "create_job_template"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "DeleteJobTemplate": {
+              "methods": [
+                "delete_job_template"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "GetJobTemplate": {
+              "methods": [
+                "get_job_template"
+              ]
+            },
+            "ListJobTemplates": {
+              "methods": [
+                "list_job_templates"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "TranscoderServiceAsyncClient",
+          "rpcs": {
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "CreateJobTemplate": {
+              "methods": [
+                "create_job_template"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "DeleteJobTemplate": {
+              "methods": [
+                "delete_job_template"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "GetJobTemplate": {
+              "methods": [
+                "get_job_template"
+              ]
+            },
+            "ListJobTemplates": {
+              "methods": [
+                "list_job_templates"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "TranscoderServiceClient",
+          "rpcs": {
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "CreateJobTemplate": {
+              "methods": [
+                "create_job_template"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "DeleteJobTemplate": {
+              "methods": [
+                "delete_job_template"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "GetJobTemplate": {
+              "methods": [
+                "get_job_template"
+              ]
+            },
+            "ListJobTemplates": {
+              "methods": [
+                "list_job_templates"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

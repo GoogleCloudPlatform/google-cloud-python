@@ -1,0 +1,73 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.bigquery_storage_v1beta",
+  "protoPackage": "google.cloud.bigquery.storage.v1beta",
+  "schema": "1.0",
+  "services": {
+    "MetastorePartitionService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MetastorePartitionServiceClient",
+          "rpcs": {
+            "BatchCreateMetastorePartitions": {
+              "methods": [
+                "batch_create_metastore_partitions"
+              ]
+            },
+            "BatchDeleteMetastorePartitions": {
+              "methods": [
+                "batch_delete_metastore_partitions"
+              ]
+            },
+            "BatchUpdateMetastorePartitions": {
+              "methods": [
+                "batch_update_metastore_partitions"
+              ]
+            },
+            "ListMetastorePartitions": {
+              "methods": [
+                "list_metastore_partitions"
+              ]
+            },
+            "StreamMetastorePartitions": {
+              "methods": [
+                "stream_metastore_partitions"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MetastorePartitionServiceAsyncClient",
+          "rpcs": {
+            "BatchCreateMetastorePartitions": {
+              "methods": [
+                "batch_create_metastore_partitions"
+              ]
+            },
+            "BatchDeleteMetastorePartitions": {
+              "methods": [
+                "batch_delete_metastore_partitions"
+              ]
+            },
+            "BatchUpdateMetastorePartitions": {
+              "methods": [
+                "batch_update_metastore_partitions"
+              ]
+            },
+            "ListMetastorePartitions": {
+              "methods": [
+                "list_metastore_partitions"
+              ]
+            },
+            "StreamMetastorePartitions": {
+              "methods": [
+                "stream_metastore_partitions"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

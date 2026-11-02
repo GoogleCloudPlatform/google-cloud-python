@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://googleapis.dev/python/proto-plus/latest",
+    "distribution_name": "proto-plus",
+    "language": "python",
+    "library_type": "CORE",
+    "name": "proto-plus",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,93 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.bigquery_migration_v2",
+  "protoPackage": "google.cloud.bigquery.migration.v2",
+  "schema": "1.0",
+  "services": {
+    "MigrationService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MigrationServiceClient",
+          "rpcs": {
+            "CreateMigrationWorkflow": {
+              "methods": [
+                "create_migration_workflow"
+              ]
+            },
+            "DeleteMigrationWorkflow": {
+              "methods": [
+                "delete_migration_workflow"
+              ]
+            },
+            "GetMigrationSubtask": {
+              "methods": [
+                "get_migration_subtask"
+              ]
+            },
+            "GetMigrationWorkflow": {
+              "methods": [
+                "get_migration_workflow"
+              ]
+            },
+            "ListMigrationSubtasks": {
+              "methods": [
+                "list_migration_subtasks"
+              ]
+            },
+            "ListMigrationWorkflows": {
+              "methods": [
+                "list_migration_workflows"
+              ]
+            },
+            "StartMigrationWorkflow": {
+              "methods": [
+                "start_migration_workflow"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MigrationServiceAsyncClient",
+          "rpcs": {
+            "CreateMigrationWorkflow": {
+              "methods": [
+                "create_migration_workflow"
+              ]
+            },
+            "DeleteMigrationWorkflow": {
+              "methods": [
+                "delete_migration_workflow"
+              ]
+            },
+            "GetMigrationSubtask": {
+              "methods": [
+                "get_migration_subtask"
+              ]
+            },
+            "GetMigrationWorkflow": {
+              "methods": [
+                "get_migration_workflow"
+              ]
+            },
+            "ListMigrationSubtasks": {
+              "methods": [
+                "list_migration_subtasks"
+              ]
+            },
+            "ListMigrationWorkflows": {
+              "methods": [
+                "list_migration_workflows"
+              ]
+            },
+            "StartMigrationWorkflow": {
+              "methods": [
+                "start_migration_workflow"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "api_description": "The Developer Knowledge API provides access to Google's developer knowledge.",
+    "api_id": "developerknowledge.googleapis.com",
+    "api_shortname": "developerknowledge",
+    "client_documentation": "https://googleapis.dev/python/google-developer-knowledge/latest",
+    "default_version": "v1",
+    "distribution_name": "google-developer-knowledge",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=190865\u0026template=1161103",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-developer-knowledge",
+    "name_pretty": "Developer Knowledge",
+    "product_documentation": "https://developers.google.com/knowledge",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

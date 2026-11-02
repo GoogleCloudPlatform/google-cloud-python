@@ -1,0 +1,16 @@
+{
+    "api_description": "Stores sensitive data such as API keys, passwords, and certificates.\nProvides convenience while improving security.",
+    "api_id": "secretmanager.googleapis.com",
+    "api_shortname": "secretmanager",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/secretmanager/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-secret-manager",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=784854\u0026template=1380926",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "secretmanager",
+    "name_pretty": "Secret Manager",
+    "product_documentation": "https://cloud.google.com/secret-manager/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

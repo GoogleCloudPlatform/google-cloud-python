@@ -1,0 +1,55 @@
+data:
+  dml_delete_coll:
+    doc1: { score: 10 }
+    doc2: { score: 60 }
+  dml_update_coll:
+    doc1: { status: "pending", score: 50 }
+
+tests:
+  - description: "Basic DML delete"
+    pipeline:
+      - Collection: dml_delete_coll
+      - Where: 
+          FunctionExpression.less_than:
+            - Field: score
+            - Constant: 50
+      - Delete:
+    assert_end_state:
+      dml_delete_coll/doc1: null
+      dml_delete_coll/doc2: { score: 60 }
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /dml_delete_coll
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: score
+              - integerValue: '50'
+              name: less_than
+          name: where
+        - name: delete
+
+  - description: "Basic DML update"
+    pipeline:
+      - Collection: dml_update_coll
+      - Update:
+          - AliasedExpression:
+              - Constant: "active"
+              - "status"
+    assert_end_state:
+      dml_update_coll/doc1: { status: "active", score: 50 }
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /dml_update_coll
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                status:
+                  stringValue: active
+          name: update

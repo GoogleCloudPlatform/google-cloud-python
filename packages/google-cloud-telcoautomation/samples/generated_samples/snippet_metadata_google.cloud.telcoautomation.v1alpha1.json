@@ -1,0 +1,5911 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.telcoautomation.v1alpha1",
+        "version": "v1alpha1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-telcoautomation",
+    "version": "0.5.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.apply_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ApplyDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ApplyDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ApplyDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Deployment",
+        "shortName": "apply_deployment"
+      },
+      "description": "Sample for ApplyDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_apply_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ApplyDeployment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_apply_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.apply_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ApplyDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ApplyDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ApplyDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Deployment",
+        "shortName": "apply_deployment"
+      },
+      "description": "Sample for ApplyDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_apply_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ApplyDeployment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_apply_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.apply_hydrated_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ApplyHydratedDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ApplyHydratedDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ApplyHydratedDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.HydratedDeployment",
+        "shortName": "apply_hydrated_deployment"
+      },
+      "description": "Sample for ApplyHydratedDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_apply_hydrated_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ApplyHydratedDeployment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_apply_hydrated_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.apply_hydrated_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ApplyHydratedDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ApplyHydratedDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ApplyHydratedDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.HydratedDeployment",
+        "shortName": "apply_hydrated_deployment"
+      },
+      "description": "Sample for ApplyHydratedDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_apply_hydrated_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ApplyHydratedDeployment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_apply_hydrated_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.approve_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ApproveBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ApproveBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ApproveBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "approve_blueprint"
+      },
+      "description": "Sample for ApproveBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_approve_blueprint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ApproveBlueprint_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_approve_blueprint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.approve_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ApproveBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ApproveBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ApproveBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "approve_blueprint"
+      },
+      "description": "Sample for ApproveBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_approve_blueprint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ApproveBlueprint_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_approve_blueprint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.compute_deployment_status",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ComputeDeploymentStatus",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ComputeDeploymentStatus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ComputeDeploymentStatusRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.ComputeDeploymentStatusResponse",
+        "shortName": "compute_deployment_status"
+      },
+      "description": "Sample for ComputeDeploymentStatus",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_compute_deployment_status_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ComputeDeploymentStatus_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_compute_deployment_status_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.compute_deployment_status",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ComputeDeploymentStatus",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ComputeDeploymentStatus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ComputeDeploymentStatusRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.ComputeDeploymentStatusResponse",
+        "shortName": "compute_deployment_status"
+      },
+      "description": "Sample for ComputeDeploymentStatus",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_compute_deployment_status_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ComputeDeploymentStatus_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_compute_deployment_status_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.create_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.CreateBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "CreateBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.CreateBlueprintRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "blueprint",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.Blueprint"
+          },
+          {
+            "name": "blueprint_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "create_blueprint"
+      },
+      "description": "Sample for CreateBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_create_blueprint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_CreateBlueprint_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_create_blueprint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.create_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.CreateBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "CreateBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.CreateBlueprintRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "blueprint",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.Blueprint"
+          },
+          {
+            "name": "blueprint_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "create_blueprint"
+      },
+      "description": "Sample for CreateBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_create_blueprint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_CreateBlueprint_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_create_blueprint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.create_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.CreateDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "CreateDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.CreateDeploymentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.Deployment"
+          },
+          {
+            "name": "deployment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Deployment",
+        "shortName": "create_deployment"
+      },
+      "description": "Sample for CreateDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_create_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_CreateDeployment_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_create_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.create_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.CreateDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "CreateDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.CreateDeploymentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.Deployment"
+          },
+          {
+            "name": "deployment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Deployment",
+        "shortName": "create_deployment"
+      },
+      "description": "Sample for CreateDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_create_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_CreateDeployment_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_create_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.create_edge_slm",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.CreateEdgeSlm",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "CreateEdgeSlm"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.CreateEdgeSlmRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "edge_slm",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.EdgeSlm"
+          },
+          {
+            "name": "edge_slm_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_edge_slm"
+      },
+      "description": "Sample for CreateEdgeSlm",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_create_edge_slm_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_CreateEdgeSlm_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_create_edge_slm_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.create_edge_slm",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.CreateEdgeSlm",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "CreateEdgeSlm"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.CreateEdgeSlmRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "edge_slm",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.EdgeSlm"
+          },
+          {
+            "name": "edge_slm_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_edge_slm"
+      },
+      "description": "Sample for CreateEdgeSlm",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_create_edge_slm_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_CreateEdgeSlm_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_create_edge_slm_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.create_orchestration_cluster",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.CreateOrchestrationCluster",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "CreateOrchestrationCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.CreateOrchestrationClusterRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "orchestration_cluster",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.OrchestrationCluster"
+          },
+          {
+            "name": "orchestration_cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_orchestration_cluster"
+      },
+      "description": "Sample for CreateOrchestrationCluster",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_create_orchestration_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_CreateOrchestrationCluster_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_create_orchestration_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.create_orchestration_cluster",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.CreateOrchestrationCluster",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "CreateOrchestrationCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.CreateOrchestrationClusterRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "orchestration_cluster",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.OrchestrationCluster"
+          },
+          {
+            "name": "orchestration_cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_orchestration_cluster"
+      },
+      "description": "Sample for CreateOrchestrationCluster",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_create_orchestration_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_CreateOrchestrationCluster_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_create_orchestration_cluster_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.delete_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.DeleteBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "DeleteBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.DeleteBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_blueprint"
+      },
+      "description": "Sample for DeleteBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_delete_blueprint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_DeleteBlueprint_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_delete_blueprint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.delete_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.DeleteBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "DeleteBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.DeleteBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_blueprint"
+      },
+      "description": "Sample for DeleteBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_delete_blueprint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_DeleteBlueprint_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_delete_blueprint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.delete_edge_slm",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.DeleteEdgeSlm",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "DeleteEdgeSlm"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.DeleteEdgeSlmRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_edge_slm"
+      },
+      "description": "Sample for DeleteEdgeSlm",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_delete_edge_slm_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_DeleteEdgeSlm_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_delete_edge_slm_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.delete_edge_slm",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.DeleteEdgeSlm",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "DeleteEdgeSlm"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.DeleteEdgeSlmRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_edge_slm"
+      },
+      "description": "Sample for DeleteEdgeSlm",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_delete_edge_slm_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_DeleteEdgeSlm_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_delete_edge_slm_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.delete_orchestration_cluster",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.DeleteOrchestrationCluster",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "DeleteOrchestrationCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.DeleteOrchestrationClusterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_orchestration_cluster"
+      },
+      "description": "Sample for DeleteOrchestrationCluster",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_delete_orchestration_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_DeleteOrchestrationCluster_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_delete_orchestration_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.delete_orchestration_cluster",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.DeleteOrchestrationCluster",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "DeleteOrchestrationCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.DeleteOrchestrationClusterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_orchestration_cluster"
+      },
+      "description": "Sample for DeleteOrchestrationCluster",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_delete_orchestration_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_DeleteOrchestrationCluster_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_delete_orchestration_cluster_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.discard_blueprint_changes",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.DiscardBlueprintChanges",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "DiscardBlueprintChanges"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.DiscardBlueprintChangesRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.DiscardBlueprintChangesResponse",
+        "shortName": "discard_blueprint_changes"
+      },
+      "description": "Sample for DiscardBlueprintChanges",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_discard_blueprint_changes_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_DiscardBlueprintChanges_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_discard_blueprint_changes_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.discard_blueprint_changes",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.DiscardBlueprintChanges",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "DiscardBlueprintChanges"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.DiscardBlueprintChangesRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.DiscardBlueprintChangesResponse",
+        "shortName": "discard_blueprint_changes"
+      },
+      "description": "Sample for DiscardBlueprintChanges",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_discard_blueprint_changes_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_DiscardBlueprintChanges_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_discard_blueprint_changes_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.discard_deployment_changes",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.DiscardDeploymentChanges",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "DiscardDeploymentChanges"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.DiscardDeploymentChangesRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.DiscardDeploymentChangesResponse",
+        "shortName": "discard_deployment_changes"
+      },
+      "description": "Sample for DiscardDeploymentChanges",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_discard_deployment_changes_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_DiscardDeploymentChanges_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_discard_deployment_changes_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.discard_deployment_changes",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.DiscardDeploymentChanges",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "DiscardDeploymentChanges"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.DiscardDeploymentChangesRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.DiscardDeploymentChangesResponse",
+        "shortName": "discard_deployment_changes"
+      },
+      "description": "Sample for DiscardDeploymentChanges",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_discard_deployment_changes_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_DiscardDeploymentChanges_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_discard_deployment_changes_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.get_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "get_blueprint"
+      },
+      "description": "Sample for GetBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_blueprint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetBlueprint_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_blueprint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.get_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "get_blueprint"
+      },
+      "description": "Sample for GetBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_blueprint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetBlueprint_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_blueprint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.get_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Deployment",
+        "shortName": "get_deployment"
+      },
+      "description": "Sample for GetDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetDeployment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.get_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Deployment",
+        "shortName": "get_deployment"
+      },
+      "description": "Sample for GetDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetDeployment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.get_edge_slm",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetEdgeSlm",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetEdgeSlm"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetEdgeSlmRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.EdgeSlm",
+        "shortName": "get_edge_slm"
+      },
+      "description": "Sample for GetEdgeSlm",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_edge_slm_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetEdgeSlm_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_edge_slm_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.get_edge_slm",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetEdgeSlm",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetEdgeSlm"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetEdgeSlmRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.EdgeSlm",
+        "shortName": "get_edge_slm"
+      },
+      "description": "Sample for GetEdgeSlm",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_edge_slm_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetEdgeSlm_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_edge_slm_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.get_hydrated_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetHydratedDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetHydratedDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetHydratedDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.HydratedDeployment",
+        "shortName": "get_hydrated_deployment"
+      },
+      "description": "Sample for GetHydratedDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_hydrated_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetHydratedDeployment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_hydrated_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.get_hydrated_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetHydratedDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetHydratedDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetHydratedDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.HydratedDeployment",
+        "shortName": "get_hydrated_deployment"
+      },
+      "description": "Sample for GetHydratedDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_hydrated_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetHydratedDeployment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_hydrated_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.get_orchestration_cluster",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetOrchestrationCluster",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetOrchestrationCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetOrchestrationClusterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.OrchestrationCluster",
+        "shortName": "get_orchestration_cluster"
+      },
+      "description": "Sample for GetOrchestrationCluster",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_orchestration_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetOrchestrationCluster_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_orchestration_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.get_orchestration_cluster",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetOrchestrationCluster",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetOrchestrationCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetOrchestrationClusterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.OrchestrationCluster",
+        "shortName": "get_orchestration_cluster"
+      },
+      "description": "Sample for GetOrchestrationCluster",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_orchestration_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetOrchestrationCluster_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_orchestration_cluster_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.get_public_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetPublicBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetPublicBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetPublicBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.PublicBlueprint",
+        "shortName": "get_public_blueprint"
+      },
+      "description": "Sample for GetPublicBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_public_blueprint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetPublicBlueprint_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_public_blueprint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.get_public_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.GetPublicBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "GetPublicBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.GetPublicBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.PublicBlueprint",
+        "shortName": "get_public_blueprint"
+      },
+      "description": "Sample for GetPublicBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_get_public_blueprint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_GetPublicBlueprint_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_get_public_blueprint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.list_blueprint_revisions",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListBlueprintRevisions",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListBlueprintRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListBlueprintRevisionsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListBlueprintRevisionsAsyncPager",
+        "shortName": "list_blueprint_revisions"
+      },
+      "description": "Sample for ListBlueprintRevisions",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_blueprint_revisions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListBlueprintRevisions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_blueprint_revisions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.list_blueprint_revisions",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListBlueprintRevisions",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListBlueprintRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListBlueprintRevisionsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListBlueprintRevisionsPager",
+        "shortName": "list_blueprint_revisions"
+      },
+      "description": "Sample for ListBlueprintRevisions",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_blueprint_revisions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListBlueprintRevisions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_blueprint_revisions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.list_blueprints",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListBlueprints",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListBlueprints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListBlueprintsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListBlueprintsAsyncPager",
+        "shortName": "list_blueprints"
+      },
+      "description": "Sample for ListBlueprints",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_blueprints_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListBlueprints_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_blueprints_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.list_blueprints",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListBlueprints",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListBlueprints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListBlueprintsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListBlueprintsPager",
+        "shortName": "list_blueprints"
+      },
+      "description": "Sample for ListBlueprints",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_blueprints_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListBlueprints_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_blueprints_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.list_deployment_revisions",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListDeploymentRevisions",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListDeploymentRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListDeploymentRevisionsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListDeploymentRevisionsAsyncPager",
+        "shortName": "list_deployment_revisions"
+      },
+      "description": "Sample for ListDeploymentRevisions",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_deployment_revisions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListDeploymentRevisions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_deployment_revisions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.list_deployment_revisions",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListDeploymentRevisions",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListDeploymentRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListDeploymentRevisionsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListDeploymentRevisionsPager",
+        "shortName": "list_deployment_revisions"
+      },
+      "description": "Sample for ListDeploymentRevisions",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_deployment_revisions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListDeploymentRevisions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_deployment_revisions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.list_deployments",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListDeployments",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListDeploymentsAsyncPager",
+        "shortName": "list_deployments"
+      },
+      "description": "Sample for ListDeployments",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_deployments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListDeployments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_deployments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.list_deployments",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListDeployments",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListDeploymentsPager",
+        "shortName": "list_deployments"
+      },
+      "description": "Sample for ListDeployments",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_deployments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListDeployments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_deployments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.list_edge_slms",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListEdgeSlms",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListEdgeSlms"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListEdgeSlmsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListEdgeSlmsAsyncPager",
+        "shortName": "list_edge_slms"
+      },
+      "description": "Sample for ListEdgeSlms",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_edge_slms_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListEdgeSlms_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_edge_slms_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.list_edge_slms",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListEdgeSlms",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListEdgeSlms"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListEdgeSlmsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListEdgeSlmsPager",
+        "shortName": "list_edge_slms"
+      },
+      "description": "Sample for ListEdgeSlms",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_edge_slms_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListEdgeSlms_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_edge_slms_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.list_hydrated_deployments",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListHydratedDeployments",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListHydratedDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListHydratedDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListHydratedDeploymentsAsyncPager",
+        "shortName": "list_hydrated_deployments"
+      },
+      "description": "Sample for ListHydratedDeployments",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_hydrated_deployments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListHydratedDeployments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_hydrated_deployments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.list_hydrated_deployments",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListHydratedDeployments",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListHydratedDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListHydratedDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListHydratedDeploymentsPager",
+        "shortName": "list_hydrated_deployments"
+      },
+      "description": "Sample for ListHydratedDeployments",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_hydrated_deployments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListHydratedDeployments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_hydrated_deployments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.list_orchestration_clusters",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListOrchestrationClusters",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListOrchestrationClusters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListOrchestrationClustersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListOrchestrationClustersAsyncPager",
+        "shortName": "list_orchestration_clusters"
+      },
+      "description": "Sample for ListOrchestrationClusters",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_orchestration_clusters_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListOrchestrationClusters_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_orchestration_clusters_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.list_orchestration_clusters",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListOrchestrationClusters",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListOrchestrationClusters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListOrchestrationClustersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListOrchestrationClustersPager",
+        "shortName": "list_orchestration_clusters"
+      },
+      "description": "Sample for ListOrchestrationClusters",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_orchestration_clusters_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListOrchestrationClusters_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_orchestration_clusters_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.list_public_blueprints",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListPublicBlueprints",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListPublicBlueprints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListPublicBlueprintsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListPublicBlueprintsAsyncPager",
+        "shortName": "list_public_blueprints"
+      },
+      "description": "Sample for ListPublicBlueprints",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_public_blueprints_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListPublicBlueprints_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_public_blueprints_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.list_public_blueprints",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ListPublicBlueprints",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ListPublicBlueprints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ListPublicBlueprintsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.ListPublicBlueprintsPager",
+        "shortName": "list_public_blueprints"
+      },
+      "description": "Sample for ListPublicBlueprints",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_list_public_blueprints_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ListPublicBlueprints_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_list_public_blueprints_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.propose_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ProposeBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ProposeBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ProposeBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "propose_blueprint"
+      },
+      "description": "Sample for ProposeBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_propose_blueprint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ProposeBlueprint_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_propose_blueprint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.propose_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.ProposeBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "ProposeBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.ProposeBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "propose_blueprint"
+      },
+      "description": "Sample for ProposeBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_propose_blueprint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_ProposeBlueprint_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_propose_blueprint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.reject_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.RejectBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "RejectBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.RejectBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "reject_blueprint"
+      },
+      "description": "Sample for RejectBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_reject_blueprint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_RejectBlueprint_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_reject_blueprint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.reject_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.RejectBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "RejectBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.RejectBlueprintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "reject_blueprint"
+      },
+      "description": "Sample for RejectBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_reject_blueprint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_RejectBlueprint_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_reject_blueprint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.remove_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.RemoveDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "RemoveDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.RemoveDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "remove_deployment"
+      },
+      "description": "Sample for RemoveDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_remove_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_RemoveDeployment_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_remove_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.remove_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.RemoveDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "RemoveDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.RemoveDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "remove_deployment"
+      },
+      "description": "Sample for RemoveDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_remove_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_RemoveDeployment_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_remove_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.rollback_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.RollbackDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "RollbackDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.RollbackDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "revision_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Deployment",
+        "shortName": "rollback_deployment"
+      },
+      "description": "Sample for RollbackDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_rollback_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_RollbackDeployment_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_rollback_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.rollback_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.RollbackDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "RollbackDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.RollbackDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "revision_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Deployment",
+        "shortName": "rollback_deployment"
+      },
+      "description": "Sample for RollbackDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_rollback_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_RollbackDeployment_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_rollback_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.search_blueprint_revisions",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.SearchBlueprintRevisions",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "SearchBlueprintRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.SearchBlueprintRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "query",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.SearchBlueprintRevisionsAsyncPager",
+        "shortName": "search_blueprint_revisions"
+      },
+      "description": "Sample for SearchBlueprintRevisions",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_search_blueprint_revisions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_SearchBlueprintRevisions_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_search_blueprint_revisions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.search_blueprint_revisions",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.SearchBlueprintRevisions",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "SearchBlueprintRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.SearchBlueprintRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "query",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.SearchBlueprintRevisionsPager",
+        "shortName": "search_blueprint_revisions"
+      },
+      "description": "Sample for SearchBlueprintRevisions",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_search_blueprint_revisions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_SearchBlueprintRevisions_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_search_blueprint_revisions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.search_deployment_revisions",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.SearchDeploymentRevisions",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "SearchDeploymentRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.SearchDeploymentRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "query",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.SearchDeploymentRevisionsAsyncPager",
+        "shortName": "search_deployment_revisions"
+      },
+      "description": "Sample for SearchDeploymentRevisions",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_search_deployment_revisions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_SearchDeploymentRevisions_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_search_deployment_revisions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.search_deployment_revisions",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.SearchDeploymentRevisions",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "SearchDeploymentRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.SearchDeploymentRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "query",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.services.telco_automation.pagers.SearchDeploymentRevisionsPager",
+        "shortName": "search_deployment_revisions"
+      },
+      "description": "Sample for SearchDeploymentRevisions",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_search_deployment_revisions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_SearchDeploymentRevisions_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_search_deployment_revisions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.update_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.UpdateBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "UpdateBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.UpdateBlueprintRequest"
+          },
+          {
+            "name": "blueprint",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.Blueprint"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "update_blueprint"
+      },
+      "description": "Sample for UpdateBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_update_blueprint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_UpdateBlueprint_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_update_blueprint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.update_blueprint",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.UpdateBlueprint",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "UpdateBlueprint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.UpdateBlueprintRequest"
+          },
+          {
+            "name": "blueprint",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.Blueprint"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Blueprint",
+        "shortName": "update_blueprint"
+      },
+      "description": "Sample for UpdateBlueprint",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_update_blueprint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_UpdateBlueprint_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_update_blueprint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.update_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.UpdateDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "UpdateDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.UpdateDeploymentRequest"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.Deployment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Deployment",
+        "shortName": "update_deployment"
+      },
+      "description": "Sample for UpdateDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_update_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_UpdateDeployment_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_update_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.update_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.UpdateDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "UpdateDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.UpdateDeploymentRequest"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.Deployment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.Deployment",
+        "shortName": "update_deployment"
+      },
+      "description": "Sample for UpdateDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_update_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_UpdateDeployment_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_update_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient",
+          "shortName": "TelcoAutomationAsyncClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationAsyncClient.update_hydrated_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.UpdateHydratedDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "UpdateHydratedDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.UpdateHydratedDeploymentRequest"
+          },
+          {
+            "name": "hydrated_deployment",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.HydratedDeployment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.HydratedDeployment",
+        "shortName": "update_hydrated_deployment"
+      },
+      "description": "Sample for UpdateHydratedDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_update_hydrated_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_UpdateHydratedDeployment_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_update_hydrated_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient",
+          "shortName": "TelcoAutomationClient"
+        },
+        "fullName": "google.cloud.telcoautomation_v1alpha1.TelcoAutomationClient.update_hydrated_deployment",
+        "method": {
+          "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation.UpdateHydratedDeployment",
+          "service": {
+            "fullName": "google.cloud.telcoautomation.v1alpha1.TelcoAutomation",
+            "shortName": "TelcoAutomation"
+          },
+          "shortName": "UpdateHydratedDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.UpdateHydratedDeploymentRequest"
+          },
+          {
+            "name": "hydrated_deployment",
+            "type": "google.cloud.telcoautomation_v1alpha1.types.HydratedDeployment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.telcoautomation_v1alpha1.types.HydratedDeployment",
+        "shortName": "update_hydrated_deployment"
+      },
+      "description": "Sample for UpdateHydratedDeployment",
+      "file": "telcoautomation_v1alpha1_generated_telco_automation_update_hydrated_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "telcoautomation_v1alpha1_generated_TelcoAutomation_UpdateHydratedDeployment_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "telcoautomation_v1alpha1_generated_telco_automation_update_hydrated_deployment_sync.py"
+    }
+  ]
+}

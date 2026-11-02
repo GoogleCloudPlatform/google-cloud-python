@@ -1,0 +1,16 @@
+{
+    "api_description": "Management API for Security Command Center, a built-in security and risk\nmanagement solution for Google Cloud. Use this API to programmatically\nupdate the settings and configuration of Security Command Center.",
+    "api_id": "securitycentermanagement.googleapis.com",
+    "api_shortname": "securitycentermanagement",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-securitycentermanagement/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-securitycentermanagement",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=709980",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-securitycentermanagement",
+    "name_pretty": "Security Command Center Management",
+    "product_documentation": "https://cloud.google.com/security-command-center/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,15 @@
+{
+    "api_description": "This API converts video files into formats suitable for consumer\ndistribution.",
+    "api_id": "transcoder.googleapis.com",
+    "api_shortname": "transcoder",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/transcoder/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-video-transcoder",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "transcoder",
+    "name_pretty": "Transcoder",
+    "product_documentation": "https://cloud.google.com/transcoder",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

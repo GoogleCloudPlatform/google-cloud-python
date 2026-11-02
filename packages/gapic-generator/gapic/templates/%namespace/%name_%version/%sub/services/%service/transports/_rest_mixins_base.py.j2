@@ -1,0 +1,29 @@
+{#
+ # Copyright (C) 2024  Google LLC
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #     http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+
+{% import "%namespace/%name_%version/%sub/services/%service/_shared_macros.j2" as shared_macros %}
+    
+    {% if "rest" in opts.transport %}
+
+    {% for name, sig in api.mixin_api_signatures.items() %}
+    class _Base{{ name }}:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        {{ shared_macros.http_options_method(api.mixin_http_options["{}".format(name)])|indent(8)}}
+
+    {% endfor %}
+    {% endif %} {# rest in opts.transport #}

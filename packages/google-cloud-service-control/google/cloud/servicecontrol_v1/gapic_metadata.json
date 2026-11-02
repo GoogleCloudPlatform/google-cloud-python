@@ -1,0 +1,92 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.servicecontrol_v1",
+  "protoPackage": "google.api.servicecontrol.v1",
+  "schema": "1.0",
+  "services": {
+    "QuotaController": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "QuotaControllerClient",
+          "rpcs": {
+            "AllocateQuota": {
+              "methods": [
+                "allocate_quota"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "QuotaControllerAsyncClient",
+          "rpcs": {
+            "AllocateQuota": {
+              "methods": [
+                "allocate_quota"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "QuotaControllerClient",
+          "rpcs": {
+            "AllocateQuota": {
+              "methods": [
+                "allocate_quota"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ServiceController": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ServiceControllerClient",
+          "rpcs": {
+            "Check": {
+              "methods": [
+                "check"
+              ]
+            },
+            "Report": {
+              "methods": [
+                "report"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ServiceControllerAsyncClient",
+          "rpcs": {
+            "Check": {
+              "methods": [
+                "check"
+              ]
+            },
+            "Report": {
+              "methods": [
+                "report"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ServiceControllerClient",
+          "rpcs": {
+            "Check": {
+              "methods": [
+                "check"
+              ]
+            },
+            "Report": {
+              "methods": [
+                "report"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,347 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.network_security_v1beta1",
+  "protoPackage": "google.cloud.networksecurity.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "DnsThreatDetectorService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DnsThreatDetectorServiceClient",
+          "rpcs": {
+            "CreateDnsThreatDetector": {
+              "methods": [
+                "create_dns_threat_detector"
+              ]
+            },
+            "DeleteDnsThreatDetector": {
+              "methods": [
+                "delete_dns_threat_detector"
+              ]
+            },
+            "GetDnsThreatDetector": {
+              "methods": [
+                "get_dns_threat_detector"
+              ]
+            },
+            "ListDnsThreatDetectors": {
+              "methods": [
+                "list_dns_threat_detectors"
+              ]
+            },
+            "UpdateDnsThreatDetector": {
+              "methods": [
+                "update_dns_threat_detector"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DnsThreatDetectorServiceAsyncClient",
+          "rpcs": {
+            "CreateDnsThreatDetector": {
+              "methods": [
+                "create_dns_threat_detector"
+              ]
+            },
+            "DeleteDnsThreatDetector": {
+              "methods": [
+                "delete_dns_threat_detector"
+              ]
+            },
+            "GetDnsThreatDetector": {
+              "methods": [
+                "get_dns_threat_detector"
+              ]
+            },
+            "ListDnsThreatDetectors": {
+              "methods": [
+                "list_dns_threat_detectors"
+              ]
+            },
+            "UpdateDnsThreatDetector": {
+              "methods": [
+                "update_dns_threat_detector"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DnsThreatDetectorServiceClient",
+          "rpcs": {
+            "CreateDnsThreatDetector": {
+              "methods": [
+                "create_dns_threat_detector"
+              ]
+            },
+            "DeleteDnsThreatDetector": {
+              "methods": [
+                "delete_dns_threat_detector"
+              ]
+            },
+            "GetDnsThreatDetector": {
+              "methods": [
+                "get_dns_threat_detector"
+              ]
+            },
+            "ListDnsThreatDetectors": {
+              "methods": [
+                "list_dns_threat_detectors"
+              ]
+            },
+            "UpdateDnsThreatDetector": {
+              "methods": [
+                "update_dns_threat_detector"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NetworkSecurity": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "NetworkSecurityClient",
+          "rpcs": {
+            "CreateAuthorizationPolicy": {
+              "methods": [
+                "create_authorization_policy"
+              ]
+            },
+            "CreateClientTlsPolicy": {
+              "methods": [
+                "create_client_tls_policy"
+              ]
+            },
+            "CreateServerTlsPolicy": {
+              "methods": [
+                "create_server_tls_policy"
+              ]
+            },
+            "DeleteAuthorizationPolicy": {
+              "methods": [
+                "delete_authorization_policy"
+              ]
+            },
+            "DeleteClientTlsPolicy": {
+              "methods": [
+                "delete_client_tls_policy"
+              ]
+            },
+            "DeleteServerTlsPolicy": {
+              "methods": [
+                "delete_server_tls_policy"
+              ]
+            },
+            "GetAuthorizationPolicy": {
+              "methods": [
+                "get_authorization_policy"
+              ]
+            },
+            "GetClientTlsPolicy": {
+              "methods": [
+                "get_client_tls_policy"
+              ]
+            },
+            "GetServerTlsPolicy": {
+              "methods": [
+                "get_server_tls_policy"
+              ]
+            },
+            "ListAuthorizationPolicies": {
+              "methods": [
+                "list_authorization_policies"
+              ]
+            },
+            "ListClientTlsPolicies": {
+              "methods": [
+                "list_client_tls_policies"
+              ]
+            },
+            "ListServerTlsPolicies": {
+              "methods": [
+                "list_server_tls_policies"
+              ]
+            },
+            "UpdateAuthorizationPolicy": {
+              "methods": [
+                "update_authorization_policy"
+              ]
+            },
+            "UpdateClientTlsPolicy": {
+              "methods": [
+                "update_client_tls_policy"
+              ]
+            },
+            "UpdateServerTlsPolicy": {
+              "methods": [
+                "update_server_tls_policy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "NetworkSecurityAsyncClient",
+          "rpcs": {
+            "CreateAuthorizationPolicy": {
+              "methods": [
+                "create_authorization_policy"
+              ]
+            },
+            "CreateClientTlsPolicy": {
+              "methods": [
+                "create_client_tls_policy"
+              ]
+            },
+            "CreateServerTlsPolicy": {
+              "methods": [
+                "create_server_tls_policy"
+              ]
+            },
+            "DeleteAuthorizationPolicy": {
+              "methods": [
+                "delete_authorization_policy"
+              ]
+            },
+            "DeleteClientTlsPolicy": {
+              "methods": [
+                "delete_client_tls_policy"
+              ]
+            },
+            "DeleteServerTlsPolicy": {
+              "methods": [
+                "delete_server_tls_policy"
+              ]
+            },
+            "GetAuthorizationPolicy": {
+              "methods": [
+                "get_authorization_policy"
+              ]
+            },
+            "GetClientTlsPolicy": {
+              "methods": [
+                "get_client_tls_policy"
+              ]
+            },
+            "GetServerTlsPolicy": {
+              "methods": [
+                "get_server_tls_policy"
+              ]
+            },
+            "ListAuthorizationPolicies": {
+              "methods": [
+                "list_authorization_policies"
+              ]
+            },
+            "ListClientTlsPolicies": {
+              "methods": [
+                "list_client_tls_policies"
+              ]
+            },
+            "ListServerTlsPolicies": {
+              "methods": [
+                "list_server_tls_policies"
+              ]
+            },
+            "UpdateAuthorizationPolicy": {
+              "methods": [
+                "update_authorization_policy"
+              ]
+            },
+            "UpdateClientTlsPolicy": {
+              "methods": [
+                "update_client_tls_policy"
+              ]
+            },
+            "UpdateServerTlsPolicy": {
+              "methods": [
+                "update_server_tls_policy"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "NetworkSecurityClient",
+          "rpcs": {
+            "CreateAuthorizationPolicy": {
+              "methods": [
+                "create_authorization_policy"
+              ]
+            },
+            "CreateClientTlsPolicy": {
+              "methods": [
+                "create_client_tls_policy"
+              ]
+            },
+            "CreateServerTlsPolicy": {
+              "methods": [
+                "create_server_tls_policy"
+              ]
+            },
+            "DeleteAuthorizationPolicy": {
+              "methods": [
+                "delete_authorization_policy"
+              ]
+            },
+            "DeleteClientTlsPolicy": {
+              "methods": [
+                "delete_client_tls_policy"
+              ]
+            },
+            "DeleteServerTlsPolicy": {
+              "methods": [
+                "delete_server_tls_policy"
+              ]
+            },
+            "GetAuthorizationPolicy": {
+              "methods": [
+                "get_authorization_policy"
+              ]
+            },
+            "GetClientTlsPolicy": {
+              "methods": [
+                "get_client_tls_policy"
+              ]
+            },
+            "GetServerTlsPolicy": {
+              "methods": [
+                "get_server_tls_policy"
+              ]
+            },
+            "ListAuthorizationPolicies": {
+              "methods": [
+                "list_authorization_policies"
+              ]
+            },
+            "ListClientTlsPolicies": {
+              "methods": [
+                "list_client_tls_policies"
+              ]
+            },
+            "ListServerTlsPolicies": {
+              "methods": [
+                "list_server_tls_policies"
+              ]
+            },
+            "UpdateAuthorizationPolicy": {
+              "methods": [
+                "update_authorization_policy"
+              ]
+            },
+            "UpdateClientTlsPolicy": {
+              "methods": [
+                "update_client_tls_policy"
+              ]
+            },
+            "UpdateServerTlsPolicy": {
+              "methods": [
+                "update_server_tls_policy"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

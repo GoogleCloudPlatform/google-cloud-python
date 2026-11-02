@@ -1,0 +1,15 @@
+{
+    "api_description": "Provisions and manages developers' App Engine applications.",
+    "api_id": "appengine.googleapis.com",
+    "api_shortname": "appengine",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/appengine/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-appengine-admin",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "appengine",
+    "name_pretty": "App Engine Admin",
+    "product_documentation": "https://cloud.google.com/appengine/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

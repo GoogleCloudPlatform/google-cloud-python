@@ -1,0 +1,166 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the subscription. It must have the\n   format\n\
+      \   <code>\"projects/{project}/subscriptions/{subscription}\"</code>.\n   <code>{subscription}</code>\
+      \ must start with a letter, and contain\n   only letters (<code>[A-Za-z]</code>),\
+      \ numbers (<code>[0-9]</code>), dashes\n   (<code>-</code>), underscores (<code>_</code>),\
+      \ periods (<code>.</code>), tildes\n   (<pre></pre>), plus (`<code>+</code><code>)\
+      \ or percent signs (</code><code>%</code>`). It must be\n   between 3 and 255\
+      \ characters in length, and it must not\n   start with <code>\"goog\"</code>."
+    id: name
+    var_type: str
+  - description: "Required. The name of the topic from which this subscription\n \
+      \  is receiving messages. Format is\n   <code>projects/{project}/topics/{topic}</code>.\
+      \ The value of this\n   field will be <code>_deleted-topic_</code> if the topic\
+      \ has been\n   deleted."
+    id: topic
+    var_type: str
+  - description: "If push delivery is used with this subscription, this field\n  \
+      \ is used to configure it. Either <code>pushConfig</code> or\n   <code>bigQueryConfig</code>\
+      \ can be set, but not both. If both are\n   empty, then the subscriber will\
+      \ pull and ack messages using\n   API methods."
+    id: push_config
+    var_type: google.pubsub_v1.types.PushConfig
+  - description: "If delivery to BigQuery is used with this subscription, this\n \
+      \  field is used to configure it. Either <code>pushConfig</code> or\n   <code>bigQueryConfig</code>\
+      \ can be set, but not both. If both are\n   empty, then the subscriber will\
+      \ pull and ack messages using\n   API methods."
+    id: bigquery_config
+    var_type: google.pubsub_v1.types.BigQueryConfig
+  - description: "The approximate amount of time (on a best-effort basis)\n   Pub/Sub\
+      \ waits for the subscriber to acknowledge receipt\n   before resending the message.\
+      \ In the interval after the\n   message is delivered and before it is acknowledged,\
+      \ it is\n   considered to be outstanding. During that time period, the\n   message\
+      \ will not be redelivered (on a best-effort basis).\n   \n   For pull subscriptions,\
+      \ this value is used as the initial\n   value for the ack deadline. To override\
+      \ this value for a\n   given message, call <code>ModifyAckDeadline</code> with\
+      \ the\n   corresponding <code>ack_id</code> if using non-streaming pull or send\n\
+      \   the <code>ack_id</code> in a <code>StreamingModifyAckDeadlineRequest</code>\
+      \ if\n   using streaming pull. The minimum custom deadline you can\n   specify\
+      \ is 10 seconds. The maximum custom deadline you can\n   specify is 600 seconds\
+      \ (10 minutes). If this parameter is 0,\n   a default value of 10 seconds is\
+      \ used.\n   \n   For push delivery, this value is also used to set the\n   request\
+      \ timeout for the call to the push endpoint.\n   \n   If the subscriber never\
+      \ acknowledges the message, the\n   Pub/Sub system will eventually redeliver\
+      \ the message."
+    id: ack_deadline_seconds
+    var_type: int
+  - description: "Indicates whether to retain acknowledged messages. If true,\n  \
+      \ then messages are not expunged from the subscription's\n   backlog, even if\
+      \ they are acknowledged, until they fall out\n   of the <code>message_retention_duration</code>\
+      \ window. This must be\n   true if you would like to [<code>Seek</code> to a\
+      \ timestamp]\n   (https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time)\n\
+      \   in the past to replay previously-acknowledged messages."
+    id: retain_acked_messages
+    var_type: bool
+  - description: "How long to retain unacknowledged messages in the\n   subscription's\
+      \ backlog, from the moment a message is\n   published. If <code>retain_acked_messages</code>\
+      \ is true, then this\n   also configures the retention of acknowledged messages,\
+      \ and\n   thus configures how far back in time a <code>Seek</code> can be done.\n\
+      \   Defaults to 7 days. Cannot be more than 7 days or less than\n   10 minutes."
+    id: message_retention_duration
+    var_type: google.protobuf.duration_pb2.Duration
+  - description: "See <a\n   href=\"https://cloud.google.com/pubsub/docs/labels\"\
+      >\n   Creating and managing labels</a>."
+    id: labels
+    var_type: Mapping[str, str]
+  - description: "If true, messages published with the same <code>ordering_key</code>\n\
+      \   in <code>PubsubMessage</code> will be delivered to the subscribers in\n\
+      \   the order in which they are received by the Pub/Sub system.\n   Otherwise,\
+      \ they may be delivered in any order."
+    id: enable_message_ordering
+    var_type: bool
+  - description: "A policy that specifies the conditions for this\n   subscription's\
+      \ expiration. A subscription is considered\n   active as long as any connected\
+      \ subscriber is successfully\n   consuming messages from the subscription or\
+      \ is issuing\n   operations on the subscription. If <code>expiration_policy</code>\
+      \ is\n   not set, a *default policy* with <code>ttl</code> of 31 days will be\n\
+      \   used. The minimum allowed value for\n   <code>expiration_policy.ttl</code>\
+      \ is 1 day."
+    id: expiration_policy
+    var_type: google.pubsub_v1.types.ExpirationPolicy
+  - description: "An expression written in the Pub/Sub `filter\n   language <https://cloud.google.com/pubsub/docs/filtering>`__.\n\
+      \   If non-empty, then only <code>PubsubMessage</code>\\ s whose\n   <code>attributes</code>\
+      \ field matches the filter are delivered on\n   this subscription. If empty,\
+      \ then no messages are filtered\n   out."
+    id: filter
+    var_type: str
+  - description: "A policy that specifies the conditions for dead lettering\n   messages\
+      \ in this subscription. If dead_letter_policy is not\n   set, dead lettering\
+      \ is disabled.\n   \n   The Cloud Pub/Sub service account associated with this\n\
+      \   subscriptions's parent project (i.e.,\n   service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com)\n\
+      \   must have permission to Acknowledge() messages on this\n   subscription."
+    id: dead_letter_policy
+    var_type: google.pubsub_v1.types.DeadLetterPolicy
+  - description: "A policy that specifies how Pub/Sub retries\n   message delivery\
+      \ for this subscription.\n   \n   If not set, the default retry policy is applied.\n\
+      \   This generally implies that messages will be\n   retried as soon as possible\
+      \ for healthy\n   subscribers. RetryPolicy will be triggered on\n   NACKs or\
+      \ acknowledgement deadline exceeded\n   events for a given message."
+    id: retry_policy
+    var_type: google.pubsub_v1.types.RetryPolicy
+  - description: "Indicates whether the subscription is detached from its\n   topic.\
+      \ Detached subscriptions don't receive messages from\n   their topic and don't\
+      \ retain any backlog. <code>Pull</code> and\n   <code>StreamingPull</code> requests\
+      \ will return FAILED_PRECONDITION.\n   If the subscription is a push subscription,\
+      \ pushes to the\n   endpoint will not be made."
+    id: detached
+    var_type: bool
+  - description: "If true, Pub/Sub provides the following guarantees for the\n   delivery\
+      \ of a message with a given value of <code>message_id</code>\n   on this subscription:\n\
+      \   \n   -  The message sent to a subscriber is guaranteed not to be\n     \
+      \ resent before the message's acknowledgement deadline\n      expires.\n   -\
+      \  An acknowledged message will not be resent to a\n      subscriber.\n   \n\
+      \   Note that subscribers may still receive multiple copies of a\n   message\
+      \ when <code>enable_exactly_once_delivery</code> is true if the\n   message\
+      \ was published multiple times by a publisher client.\n   These copies are considered\
+      \ distinct by Pub/Sub and have\n   distinct <code>message_id</code> values."
+    id: enable_exactly_once_delivery
+    var_type: bool
+  - description: "Output only. Indicates the minimum duration for which a\n   message\
+      \ is retained after it is published to the\n   subscription's topic. If this\
+      \ field is set, messages\n   published to the subscription's topic in the last\n\
+      \   <code>topic_message_retention_duration</code> are always available to\n\
+      \   subscribers. See the <code>message_retention_duration</code> field in\n\
+      \   <code>Topic</code>. This field is set only in responses from the\n   server;\
+      \ it is ignored if it is set in any requests."
+    id: topic_message_retention_duration
+    var_type: google.protobuf.duration_pb2.Duration
+  - description: "Output only. An output-only field indicating\n   whether or not\
+      \ the subscription can receive\n   messages."
+    id: state
+    var_type: google.pubsub_v1.types.Subscription.State
+  children:
+  - google.cloud.pubsub_v1.types.Subscription.LabelsEntry
+  - google.cloud.pubsub_v1.types.Subscription.State
+  class: google.cloud.pubsub_v1.types.Subscription
+  fullName: google.cloud.pubsub_v1.types.Subscription
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: Subscription
+  source:
+    id: Subscription
+    path: null
+    startLine: null
+  summary: 'A subscription resource.
+
+    '
+  syntax:
+    content: Subscription(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.Subscription
+references:
+- fullName: google.cloud.pubsub_v1.types.Subscription.LabelsEntry
+  isExternal: false
+  name: LabelsEntry
+  parent: google.cloud.pubsub_v1.types.Subscription
+  uid: google.cloud.pubsub_v1.types.Subscription.LabelsEntry
+- fullName: google.cloud.pubsub_v1.types.Subscription.State
+  isExternal: false
+  name: State
+  parent: google.cloud.pubsub_v1.types.Subscription
+  uid: google.cloud.pubsub_v1.types.Subscription.State

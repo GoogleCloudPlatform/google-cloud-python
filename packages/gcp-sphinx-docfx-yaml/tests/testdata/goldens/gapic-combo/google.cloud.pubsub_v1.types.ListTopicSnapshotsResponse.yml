@@ -1,0 +1,33 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "The names of the snapshots that match the\n   request."
+    id: snapshots
+    var_type: Sequence[str]
+  - description: "If not empty, indicates that there may be more snapshots\n   that\
+      \ match the request; this value should be passed in a new\n   <code>ListTopicSnapshotsRequest</code>\
+      \ to get more snapshots."
+    id: next_page_token
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.ListTopicSnapshotsResponse
+  fullName: google.cloud.pubsub_v1.types.ListTopicSnapshotsResponse
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ListTopicSnapshotsResponse
+  source:
+    id: ListTopicSnapshotsResponse
+    path: null
+    startLine: null
+  summary: 'Response for the `ListTopicSnapshots` method.
+
+    '
+  syntax:
+    content: ListTopicSnapshotsResponse(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ListTopicSnapshotsResponse
+references: []

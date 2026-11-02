@@ -1,0 +1,598 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.financialservices_v1",
+  "protoPackage": "google.cloud.financialservices.v1",
+  "schema": "1.0",
+  "services": {
+    "AML": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AMLClient",
+          "rpcs": {
+            "CreateBacktestResult": {
+              "methods": [
+                "create_backtest_result"
+              ]
+            },
+            "CreateDataset": {
+              "methods": [
+                "create_dataset"
+              ]
+            },
+            "CreateEngineConfig": {
+              "methods": [
+                "create_engine_config"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "CreateModel": {
+              "methods": [
+                "create_model"
+              ]
+            },
+            "CreatePredictionResult": {
+              "methods": [
+                "create_prediction_result"
+              ]
+            },
+            "DeleteBacktestResult": {
+              "methods": [
+                "delete_backtest_result"
+              ]
+            },
+            "DeleteDataset": {
+              "methods": [
+                "delete_dataset"
+              ]
+            },
+            "DeleteEngineConfig": {
+              "methods": [
+                "delete_engine_config"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteModel": {
+              "methods": [
+                "delete_model"
+              ]
+            },
+            "DeletePredictionResult": {
+              "methods": [
+                "delete_prediction_result"
+              ]
+            },
+            "ExportBacktestResultMetadata": {
+              "methods": [
+                "export_backtest_result_metadata"
+              ]
+            },
+            "ExportEngineConfigMetadata": {
+              "methods": [
+                "export_engine_config_metadata"
+              ]
+            },
+            "ExportModelMetadata": {
+              "methods": [
+                "export_model_metadata"
+              ]
+            },
+            "ExportPredictionResultMetadata": {
+              "methods": [
+                "export_prediction_result_metadata"
+              ]
+            },
+            "ExportRegisteredParties": {
+              "methods": [
+                "export_registered_parties"
+              ]
+            },
+            "GetBacktestResult": {
+              "methods": [
+                "get_backtest_result"
+              ]
+            },
+            "GetDataset": {
+              "methods": [
+                "get_dataset"
+              ]
+            },
+            "GetEngineConfig": {
+              "methods": [
+                "get_engine_config"
+              ]
+            },
+            "GetEngineVersion": {
+              "methods": [
+                "get_engine_version"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetModel": {
+              "methods": [
+                "get_model"
+              ]
+            },
+            "GetPredictionResult": {
+              "methods": [
+                "get_prediction_result"
+              ]
+            },
+            "ImportRegisteredParties": {
+              "methods": [
+                "import_registered_parties"
+              ]
+            },
+            "ListBacktestResults": {
+              "methods": [
+                "list_backtest_results"
+              ]
+            },
+            "ListDatasets": {
+              "methods": [
+                "list_datasets"
+              ]
+            },
+            "ListEngineConfigs": {
+              "methods": [
+                "list_engine_configs"
+              ]
+            },
+            "ListEngineVersions": {
+              "methods": [
+                "list_engine_versions"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListModels": {
+              "methods": [
+                "list_models"
+              ]
+            },
+            "ListPredictionResults": {
+              "methods": [
+                "list_prediction_results"
+              ]
+            },
+            "UpdateBacktestResult": {
+              "methods": [
+                "update_backtest_result"
+              ]
+            },
+            "UpdateDataset": {
+              "methods": [
+                "update_dataset"
+              ]
+            },
+            "UpdateEngineConfig": {
+              "methods": [
+                "update_engine_config"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateModel": {
+              "methods": [
+                "update_model"
+              ]
+            },
+            "UpdatePredictionResult": {
+              "methods": [
+                "update_prediction_result"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AMLAsyncClient",
+          "rpcs": {
+            "CreateBacktestResult": {
+              "methods": [
+                "create_backtest_result"
+              ]
+            },
+            "CreateDataset": {
+              "methods": [
+                "create_dataset"
+              ]
+            },
+            "CreateEngineConfig": {
+              "methods": [
+                "create_engine_config"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "CreateModel": {
+              "methods": [
+                "create_model"
+              ]
+            },
+            "CreatePredictionResult": {
+              "methods": [
+                "create_prediction_result"
+              ]
+            },
+            "DeleteBacktestResult": {
+              "methods": [
+                "delete_backtest_result"
+              ]
+            },
+            "DeleteDataset": {
+              "methods": [
+                "delete_dataset"
+              ]
+            },
+            "DeleteEngineConfig": {
+              "methods": [
+                "delete_engine_config"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteModel": {
+              "methods": [
+                "delete_model"
+              ]
+            },
+            "DeletePredictionResult": {
+              "methods": [
+                "delete_prediction_result"
+              ]
+            },
+            "ExportBacktestResultMetadata": {
+              "methods": [
+                "export_backtest_result_metadata"
+              ]
+            },
+            "ExportEngineConfigMetadata": {
+              "methods": [
+                "export_engine_config_metadata"
+              ]
+            },
+            "ExportModelMetadata": {
+              "methods": [
+                "export_model_metadata"
+              ]
+            },
+            "ExportPredictionResultMetadata": {
+              "methods": [
+                "export_prediction_result_metadata"
+              ]
+            },
+            "ExportRegisteredParties": {
+              "methods": [
+                "export_registered_parties"
+              ]
+            },
+            "GetBacktestResult": {
+              "methods": [
+                "get_backtest_result"
+              ]
+            },
+            "GetDataset": {
+              "methods": [
+                "get_dataset"
+              ]
+            },
+            "GetEngineConfig": {
+              "methods": [
+                "get_engine_config"
+              ]
+            },
+            "GetEngineVersion": {
+              "methods": [
+                "get_engine_version"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetModel": {
+              "methods": [
+                "get_model"
+              ]
+            },
+            "GetPredictionResult": {
+              "methods": [
+                "get_prediction_result"
+              ]
+            },
+            "ImportRegisteredParties": {
+              "methods": [
+                "import_registered_parties"
+              ]
+            },
+            "ListBacktestResults": {
+              "methods": [
+                "list_backtest_results"
+              ]
+            },
+            "ListDatasets": {
+              "methods": [
+                "list_datasets"
+              ]
+            },
+            "ListEngineConfigs": {
+              "methods": [
+                "list_engine_configs"
+              ]
+            },
+            "ListEngineVersions": {
+              "methods": [
+                "list_engine_versions"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListModels": {
+              "methods": [
+                "list_models"
+              ]
+            },
+            "ListPredictionResults": {
+              "methods": [
+                "list_prediction_results"
+              ]
+            },
+            "UpdateBacktestResult": {
+              "methods": [
+                "update_backtest_result"
+              ]
+            },
+            "UpdateDataset": {
+              "methods": [
+                "update_dataset"
+              ]
+            },
+            "UpdateEngineConfig": {
+              "methods": [
+                "update_engine_config"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateModel": {
+              "methods": [
+                "update_model"
+              ]
+            },
+            "UpdatePredictionResult": {
+              "methods": [
+                "update_prediction_result"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AMLClient",
+          "rpcs": {
+            "CreateBacktestResult": {
+              "methods": [
+                "create_backtest_result"
+              ]
+            },
+            "CreateDataset": {
+              "methods": [
+                "create_dataset"
+              ]
+            },
+            "CreateEngineConfig": {
+              "methods": [
+                "create_engine_config"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "CreateModel": {
+              "methods": [
+                "create_model"
+              ]
+            },
+            "CreatePredictionResult": {
+              "methods": [
+                "create_prediction_result"
+              ]
+            },
+            "DeleteBacktestResult": {
+              "methods": [
+                "delete_backtest_result"
+              ]
+            },
+            "DeleteDataset": {
+              "methods": [
+                "delete_dataset"
+              ]
+            },
+            "DeleteEngineConfig": {
+              "methods": [
+                "delete_engine_config"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteModel": {
+              "methods": [
+                "delete_model"
+              ]
+            },
+            "DeletePredictionResult": {
+              "methods": [
+                "delete_prediction_result"
+              ]
+            },
+            "ExportBacktestResultMetadata": {
+              "methods": [
+                "export_backtest_result_metadata"
+              ]
+            },
+            "ExportEngineConfigMetadata": {
+              "methods": [
+                "export_engine_config_metadata"
+              ]
+            },
+            "ExportModelMetadata": {
+              "methods": [
+                "export_model_metadata"
+              ]
+            },
+            "ExportPredictionResultMetadata": {
+              "methods": [
+                "export_prediction_result_metadata"
+              ]
+            },
+            "ExportRegisteredParties": {
+              "methods": [
+                "export_registered_parties"
+              ]
+            },
+            "GetBacktestResult": {
+              "methods": [
+                "get_backtest_result"
+              ]
+            },
+            "GetDataset": {
+              "methods": [
+                "get_dataset"
+              ]
+            },
+            "GetEngineConfig": {
+              "methods": [
+                "get_engine_config"
+              ]
+            },
+            "GetEngineVersion": {
+              "methods": [
+                "get_engine_version"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetModel": {
+              "methods": [
+                "get_model"
+              ]
+            },
+            "GetPredictionResult": {
+              "methods": [
+                "get_prediction_result"
+              ]
+            },
+            "ImportRegisteredParties": {
+              "methods": [
+                "import_registered_parties"
+              ]
+            },
+            "ListBacktestResults": {
+              "methods": [
+                "list_backtest_results"
+              ]
+            },
+            "ListDatasets": {
+              "methods": [
+                "list_datasets"
+              ]
+            },
+            "ListEngineConfigs": {
+              "methods": [
+                "list_engine_configs"
+              ]
+            },
+            "ListEngineVersions": {
+              "methods": [
+                "list_engine_versions"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListModels": {
+              "methods": [
+                "list_models"
+              ]
+            },
+            "ListPredictionResults": {
+              "methods": [
+                "list_prediction_results"
+              ]
+            },
+            "UpdateBacktestResult": {
+              "methods": [
+                "update_backtest_result"
+              ]
+            },
+            "UpdateDataset": {
+              "methods": [
+                "update_dataset"
+              ]
+            },
+            "UpdateEngineConfig": {
+              "methods": [
+                "update_engine_config"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateModel": {
+              "methods": [
+                "update_model"
+              ]
+            },
+            "UpdatePredictionResult": {
+              "methods": [
+                "update_prediction_result"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

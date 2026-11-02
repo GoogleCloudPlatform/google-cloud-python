@@ -1,0 +1,974 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+description: Integrate Google Cloud Bigtable Handwritten code
+url: https://github.com/googleapis/gapic-generator-python/issues/123
+replacements:
+  - paths: [
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_create_app_profile_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_create_app_profile_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_create_cluster_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_create_cluster_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_create_instance_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_create_instance_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_create_logical_view_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_create_logical_view_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_create_materialized_view_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_create_materialized_view_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_app_profile_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_app_profile_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_cluster_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_cluster_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_iam_policy_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_iam_policy_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_instance_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_instance_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_logical_view_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_logical_view_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_materialized_view_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_get_materialized_view_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_app_profiles_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_app_profiles_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_clusters_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_clusters_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_hot_tablets_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_hot_tablets_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_instances_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_instances_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_logical_views_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_logical_views_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_materialized_views_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_list_materialized_views_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_partial_update_cluster_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_partial_update_cluster_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_partial_update_instance_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_partial_update_instance_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_set_iam_policy_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_set_iam_policy_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_test_iam_permissions_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_test_iam_permissions_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_update_app_profile_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_update_app_profile_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_update_cluster_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_update_cluster_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_update_instance_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_update_instance_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_update_logical_view_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_update_logical_view_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_update_materialized_view_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_instance_admin_update_materialized_view_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_check_consistency_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_check_consistency_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_copy_backup_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_copy_backup_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_create_authorized_view_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_create_authorized_view_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_create_backup_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_create_backup_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_create_schema_bundle_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_create_schema_bundle_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_create_table_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_create_table_from_snapshot_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_create_table_from_snapshot_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_create_table_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_delete_authorized_view_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_delete_authorized_view_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_delete_backup_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_delete_backup_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_delete_schema_bundle_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_delete_schema_bundle_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_delete_snapshot_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_delete_snapshot_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_delete_table_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_delete_table_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_drop_row_range_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_drop_row_range_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_generate_consistency_token_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_generate_consistency_token_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_authorized_view_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_authorized_view_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_backup_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_backup_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_iam_policy_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_iam_policy_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_schema_bundle_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_schema_bundle_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_snapshot_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_snapshot_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_table_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_get_table_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_list_authorized_views_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_list_authorized_views_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_list_backups_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_list_backups_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_list_schema_bundles_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_list_schema_bundles_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_list_snapshots_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_list_snapshots_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_list_tables_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_list_tables_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_modify_column_families_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_modify_column_families_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_restore_table_async_internal.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_restore_table_sync_internal.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_set_iam_policy_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_set_iam_policy_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_snapshot_table_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_snapshot_table_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_test_iam_permissions_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_test_iam_permissions_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_undelete_table_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_undelete_table_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_update_authorized_view_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_update_authorized_view_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_update_backup_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_update_backup_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_update_schema_bundle_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_update_schema_bundle_sync.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_update_table_async.py,
+      packages/google-cloud-bigtable/samples/generated_samples/bigtableadmin_v2_generated_bigtable_table_admin_update_table_sync.py,
+      packages/google-cloud-bigtable/google/cloud/bigtable_admin_v2/services/bigtable_instance_admin/client.py,
+      packages/google-cloud-bigtable/google/cloud/bigtable_admin_v2/services/bigtable_instance_admin/async_client.py,
+      packages/google-cloud-bigtable/google/cloud/bigtable_admin_v2/services/bigtable_table_admin/client.py,
+      packages/google-cloud-bigtable/google/cloud/bigtable_admin_v2/services/bigtable_table_admin/async_client.py,
+    ]
+    before: "client = bigtable_admin_v2.BaseBigtable"
+    after: "client = bigtable_admin_v2.Bigtable"
+    count: 140
+  - paths: [
+      packages/google-cloud-bigtable/tests/unit/gapic/bigtable_v2/test_bigtable.py
+    ]
+    before: |
+      assert \(\n\s*gapic_v1\.routing_header\.to_grpc_metadata\(expected_headers\) in kw\["metadata"\]\n.*
+    after: |
+      # assert the expected headers are present, in any order
+              routing_string = next(
+                  iter([m[1] for m in kw["metadata"] if m[0] == "x-goog-request-params"])
+              )
+              assert all([f"{k}={v}" in routing_string for k, v in expected_headers.items()])
+    count: 78
+  - paths: [
+      packages/google-cloud-bigtable/tests/unit/gapic/bigtable_v2/test_bigtable.py
+    ]
+    before: |
+      expected_headers = \{"name": "projects/sample1/instances/sample2"\}
+    after: |
+      expected_headers = {
+                  "name": "projects/sample1/instances/sample2",
+                  "app_profile_id": "",
+              }
+    count: 15
+  - paths: [
+      packages/google-cloud-bigtable/tests/unit/gapic/bigtable_v2/test_bigtable.py
+    ]
+    before: |
+      expected_headers = {
+                  "table_name": "projects/sample1/instances/sample2/tables/sample3"
+              }
+    after: |
+      expected_headers = {
+                  "table_name": "projects/sample1/instances/sample2/tables/sample3",
+                  "app_profile_id": "",
+              }
+    count: 36
+  - paths: [
+      packages/google-cloud-bigtable/setup.py,
+    ]
+    before: extras = \{\}
+    after: |
+      extras = {
+          "libcst": "libcst >= 0.2.5",
+      }
+    count: 1
+  # Note: Updated following https://github.com/googleapis/google-cloud-python/pull/16760
+  - paths: [
+      packages/google-cloud-bigtable/setup.py,
+    ]
+    before: |
+      "protobuf >= 6.33.5, < 8.0.0",
+      \]
+    after: |
+      "protobuf >= 6.33.5, < 8.0.0",
+          "google-cloud-monitoring >= 2.0.0, <3.0.0dev",
+          "google-cloud-core >= 2.0.0, <3.0.0",
+          "grpc-google-iam-v1 >= 0.14.2, <1.0.0",
+          "google-crc32c>=1.6.0, <2.0.0",
+          "opentelemetry-api >= 1.0.0, <2.0.0dev",
+          "opentelemetry-sdk >= 1.0.0, <2.0.0dev",
+      ]
+    count: 1
+  - paths: [
+      packages/google-cloud-bigtable/testing/constraints-3.10.txt,
+    ]
+    before: |
+        google-api-core==2.28.0
+        google-auth==2.14.1
+    after: |
+        google-api-core==2.28.0
+        google-cloud-core==2.0.0
+        grpc-google-iam-v1==0.14.2
+        google-crc32c==1.6.0
+        google-auth==2.14.1
+    count: 1
+  - paths: [
+      packages/google-cloud-bigtable/google/cloud/bigtable_v2/services/bigtable/async_client.py,
+      packages/google-cloud-bigtable/google/cloud/bigtable_v2/services/bigtable/client.py,
+    ]
+    before: |
+      if request.app_profile_id:
+    after: |
+      if True:  # always attach app_profile_id, even if empty string
+    count: 18
+  - paths: [
+      packages/google-cloud-bigtable/google/cloud/bigtable_admin_v2/types/table.py
+    ]
+    before: |
+      from google.cloud.bigtable_admin_v2.types import types\n
+      __protobuf__ = proto.module\(
+    after: |
+      from google.cloud.bigtable_admin_v2.types import types
+      from google.cloud.bigtable_admin_v2.utils import oneof_message
+
+      __protobuf__ = proto.module(
+    count: 1
+  - paths: [
+      packages/google-cloud-bigtable/google/cloud/bigtable_admin_v2/types/table.py
+    ]
+    before: |
+      class GcRule\(proto.Message\):
+    after: |
+      class GcRule(oneof_message.OneofMessage):
+    count: 1
+  - paths: [
+      packages/google-cloud-bigtable/google/cloud/bigtable_admin_v2/__init__.py
+    ]
+    before: |
+      "UpdateTableRequest",\n\)\n
+      api_core.check_python_version\("google.cloud.bigtable_admin_v2"\)
+    after: |
+      "UpdateTableRequest",
+      )
+
+      from .overlay import *  # noqa: F403
+
+      __all__ += overlay.__all__  # noqa: F405
+
+      api_core.check_python_version("google.cloud.bigtable_admin_v2")
+    count: 1
+  - paths: [
+      packages/google-cloud-bigtable/google/cloud/bigtable_admin/__init__.py
+    ]
+    before: '"Type",\n\)\n\Z'
+    after: |
+      "Type",
+      )
+
+      import google.cloud.bigtable_admin_v2.overlay  # noqa: F401
+      from google.cloud.bigtable_admin_v2.overlay import *  # noqa: F401, F403
+
+      __all__ += google.cloud.bigtable_admin_v2.overlay.__all__
+    count: 1
+  - paths: [
+      packages/google-cloud-bigtable/google/cloud/bigtable/__init__.py
+    ]
+    before: |
+      from google.cloud.bigtable import gapic_version as package_version
+      [\s\S]*"Type",
+      \)
+    after: |
+      """Google Cloud Bigtable API package."""
+
+      from google.cloud.bigtable import gapic_version as package_version
+      from google.cloud.bigtable.client import Client
+
+      __version__: str
+
+      __version__ = package_version.__version__
+
+      __all__ = ["__version__", "Client"]
+    count: 1
+  - paths: [
+      "packages/google-cloud-bigtable/docs/conf.py",
+    ]
+    before: |
+      exclude_patterns = \[
+      \    "_build",
+    after: |
+      exclude_patterns = [
+          "bigtable_v2/**",
+          "bigtable_admin_v2/**",
+          "_build",
+    count: 1
+  - paths: [
+      packages/google-cloud-bigtable/docs/index.rst
+    ]
+    before: |
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          bigtable_admin_v2/services_
+          bigtable_admin_v2/types_
+    after: |
+      Client Types
+      -------------
+      .. toctree::
+         :maxdepth: 3
+
+         data_client/data_client_usage
+         classic_client/usage
+         admin_client/admin_client_usage
+    count: 1
+  - paths: [
+      packages/google-cloud-bigtable/README.rst
+    ]
+    before: |
+      .. _Product Documentation:  https://cloud.google.com/bigtable/docs\n
+      Quick Start
+    after: |
+      .. _Product Documentation:  https://cloud.google.com/bigtable/docs
+
+
+      Async Data Client
+      -------------------------
+
+      :code:`v2.23.0` includes a release of the new :code:`BigtableDataClientAsync` client, accessible at the import path
+      :code:`google.cloud.bigtable.data`.
+
+      The new client brings a simplified API and increased performance using asyncio.
+      The new client is focused on the data API (i.e. reading and writing Bigtable data), with admin operations
+      remaining exclusively in the existing synchronous client.
+
+      Feedback and bug reports are welcome at cbt-python-client-v3-feedback@google.com,
+      or through the Github `issue tracker`_.
+
+
+          .. note::
+
+              It is generally not recommended to use the async client in an otherwise synchronous codebase. To make use of asyncio's
+              performance benefits, the codebase should be designed to be async from the ground up.
+
+
+      .. _issue tracker: https://github.com/googleapis/google-cloud-python/issues
+
+
+      Quick Start
+    count: 1
+    # Note: noxfile.py is heavily customized so we clobber the whole file. 
+  - paths: [
+      packages/google-cloud-bigtable/noxfile.py
+    ]
+    before: |
+      import os
+      [\s\S]*?Run all tests with core dependencies installed from source
+    after: |
+      import os
+      import pathlib
+      import re
+      import shutil
+      import warnings
+      from typing import Dict, List
+
+      import nox
+
+      RUFF_VERSION = "ruff==0.14.14"
+      LINT_PATHS = ["google", "samples", "tests", "noxfile.py", "setup.py"]
+
+      DEFAULT_PYTHON_VERSION = "3.14"
+
+      ALL_PYTHON = [
+          "3.10",
+          "3.11",
+          "3.12",
+          "3.13",
+          "3.14",
+          "3.15",
+      ]
+
+      UNIT_TEST_STANDARD_DEPENDENCIES = [
+          "mock",
+          "asyncmock",
+          "pytest",
+          "pytest-cov",
+          "pytest-asyncio",
+          RUFF_VERSION,
+      ]
+      UNIT_TEST_EXTERNAL_DEPENDENCIES: List[str] = []
+      UNIT_TEST_LOCAL_DEPENDENCIES: List[str] = []
+      UNIT_TEST_DEPENDENCIES: List[str] = []
+      UNIT_TEST_EXTRAS: List[str] = []
+      UNIT_TEST_EXTRAS_BY_PYTHON: Dict[str, List[str]] = {}
+
+      SYSTEM_TEST_PYTHON_VERSIONS: List[str] = ["3.10", "3.14"]
+      SYSTEM_TEST_STANDARD_DEPENDENCIES: List[str] = [
+          "mock",
+          "pytest",
+          "google-cloud-testutils",
+      ]
+      SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List[str] = [
+          "pytest-asyncio>=0.26.0",
+          "pytest-order==1.3.0",
+          RUFF_VERSION,
+          "pyyaml==6.0.2",
+      ]
+      SYSTEM_TEST_LOCAL_DEPENDENCIES: List[str] = []
+      SYSTEM_TEST_DEPENDENCIES: List[str] = []
+      SYSTEM_TEST_EXTRAS: List[str] = []
+      SYSTEM_TEST_EXTRAS_BY_PYTHON: Dict[str, List[str]] = {}
+
+      CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
+      # Path to the centralized mypy configuration file at the repository root.
+      # Search upwards to support running nox from both monorepo packages and integration test goldens.
+      MYPY_CONFIG_FILE = next(
+          (
+              str(p / "mypy.ini")
+              for p in CURRENT_DIRECTORY.parents
+              if (p / "mypy.ini").exists()
+          ),
+          str(CURRENT_DIRECTORY.parent.parent / "mypy.ini"),
+      )
+
+      # 'docfx' is excluded since it only needs to run in 'docs-presubmit'
+      nox.options.sessions = [
+          "unit-3.10",
+          "unit-3.11",
+          "unit-3.12",
+          "unit-3.13",
+          "unit-3.14",
+          "system_emulated",
+          "system",
+          "mypy",
+          "cover",
+          "lint",
+          "lint_setup_py",
+          "blacken",
+          "docs",
+          "format",
+      ]
+
+      # Error if a python version is missing
+      nox.options.error_on_missing_interpreters = True
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      def lint(session):
+          """Run linters.
+
+          Returns a failure if the linters find linting errors or sufficiently
+          serious code quality issues.
+          """
+          session.install("flake8", RUFF_VERSION)
+
+          # 1. Check imports
+          session.run(
+              "ruff",
+              "check",
+              "--select",
+              "I",
+              f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+              "--line-length=88",
+              *LINT_PATHS,
+          )
+
+          # 2. Check formatting
+          session.run(
+              "ruff",
+              "format",
+              "--check",
+              f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+              "--line-length=88",
+              *LINT_PATHS,
+          )
+
+          session.run("flake8", "google", "tests")
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      def blacken(session):
+          """(Deprecated) Legacy session. Please use 'nox -s format'."""
+          session.log(
+              "WARNING: The 'blacken' session is deprecated and will be removed in a future release. Please use 'nox -s format' in the future."
+          )
+
+          # Just run the ruff formatter (keeping legacy behavior of only formatting, not sorting imports)
+          session.install(RUFF_VERSION)
+          session.run(
+              "ruff",
+              "format",
+              f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+              "--line-length=88",
+              *LINT_PATHS,
+          )
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      def format(session):
+          """
+          Run ruff to sort imports and format code.
+          """
+          # 1. Install ruff (skipped automatically if you run with --no-venv)
+          session.install(RUFF_VERSION)
+
+          # 2. Run Ruff to fix imports
+          # check --select I: Enables strict import sorting
+          # --fix: Applies the changes automatically
+          session.run(
+              "ruff",
+              "check",
+              "--select",
+              "I",
+              "--fix",
+              f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+              "--line-length=88",  # Standard Black line length
+              *LINT_PATHS,
+          )
+
+          # 3. Run Ruff to format code
+          session.run(
+              "ruff",
+              "format",
+              f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+              "--line-length=88",  # Standard Black line length
+              *LINT_PATHS,
+          )
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      def mypy(session):
+          """Verify type hints are mypy compatible."""
+          session.install("-e", ".")
+          # TODO(https://github.com/googleapis/google-cloud-python/issues/16984):
+          # Update to the latest version of mypy
+          session.install(
+              "mypy<2.0.0",
+              "types-setuptools",
+              "types-protobuf",
+              "types-mock",
+              "types-requests",
+          )
+          session.install("google-cloud-testutils")
+          session.run(
+              "mypy",
+              f"--config-file={MYPY_CONFIG_FILE}",
+              "-p",
+              "google.cloud.bigtable.data",
+          )
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      def lint_setup_py(session):
+          """Verify that setup.py is valid (including RST check)."""
+          session.install("setuptools", "docutils", "pygments")
+          session.run("python", "setup.py", "check", "--restructuredtext", "--strict")
+
+
+      def install_unittest_dependencies(session, *constraints):
+          standard_deps = UNIT_TEST_STANDARD_DEPENDENCIES + UNIT_TEST_DEPENDENCIES
+          session.install(*standard_deps, *constraints)
+
+          if UNIT_TEST_EXTERNAL_DEPENDENCIES:
+              warnings.warn(
+                  "'unit_test_external_dependencies' is deprecated. Instead, please "
+                  "use 'unit_test_dependencies' or 'unit_test_local_dependencies'.",
+                  DeprecationWarning,
+              )
+              session.install(*UNIT_TEST_EXTERNAL_DEPENDENCIES, *constraints)
+
+          if UNIT_TEST_LOCAL_DEPENDENCIES:
+              session.install(*UNIT_TEST_LOCAL_DEPENDENCIES, *constraints)
+
+          if UNIT_TEST_EXTRAS_BY_PYTHON:
+              extras = UNIT_TEST_EXTRAS_BY_PYTHON.get(session.python, [])
+          elif UNIT_TEST_EXTRAS:
+              extras = UNIT_TEST_EXTRAS
+          else:
+              extras = []
+
+          if extras:
+              session.install("-e", f".[{','.join(extras)}]", *constraints)
+          else:
+              session.install("-e", ".", *constraints)
+
+
+      @nox.session(python=ALL_PYTHON)
+      @nox.parametrize(
+          "protobuf_implementation",
+          ["python", "upb"],
+      )
+      def unit(session, protobuf_implementation):
+          # Install all test dependencies, then install this package in-place.
+
+          constraints_path = str(
+              CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+          )
+          install_unittest_dependencies(session, "-c", constraints_path)
+
+          # Run py.test against the unit tests.
+          session.run(
+              "py.test",
+              "--quiet",
+              f"--junitxml=unit_{session.python}_sponge_log.xml",
+              "--cov=google",
+              "--cov=tests/unit",
+              "--cov-append",
+              "--cov-config=.coveragerc",
+              "--cov-report=",
+              "--cov-fail-under=0",
+              os.path.join("tests", "unit"),
+              *session.posargs,
+              env={
+                  "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": protobuf_implementation,
+              },
+          )
+
+
+      def install_systemtest_dependencies(session, *constraints):
+          session.install("--pre", "grpcio")
+
+          session.install(*SYSTEM_TEST_STANDARD_DEPENDENCIES, *constraints)
+
+          if SYSTEM_TEST_EXTERNAL_DEPENDENCIES:
+              session.install(*SYSTEM_TEST_EXTERNAL_DEPENDENCIES, *constraints)
+
+          if SYSTEM_TEST_LOCAL_DEPENDENCIES:
+              session.install("-e", *SYSTEM_TEST_LOCAL_DEPENDENCIES, *constraints)
+
+          if SYSTEM_TEST_DEPENDENCIES:
+              session.install("-e", *SYSTEM_TEST_DEPENDENCIES, *constraints)
+
+          if SYSTEM_TEST_EXTRAS_BY_PYTHON:
+              extras = SYSTEM_TEST_EXTRAS_BY_PYTHON.get(session.python, [])
+          elif SYSTEM_TEST_EXTRAS:
+              extras = SYSTEM_TEST_EXTRAS
+          else:
+              extras = []
+
+          if extras:
+              session.install("-e", f".[{','.join(extras)}]", *constraints)
+          else:
+              session.install("-e", ".", *constraints)
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      def system_emulated(session):
+          import signal
+          import subprocess
+
+          try:
+              subprocess.call(["gcloud", "--version"])
+          except OSError:
+              session.skip("gcloud not found but required for emulator support")
+
+          # Currently, CI/CD doesn't have beta component of gcloud.
+          subprocess.call(["gcloud", "components", "install", "beta", "bigtable"])
+
+          hostport = "localhost:8789"
+          session.env["BIGTABLE_EMULATOR_HOST"] = hostport
+          session.env["GOOGLE_CLOUD_PROJECT"] = "emulated-test-project"
+
+          p = subprocess.Popen(
+              ["gcloud", "beta", "emulators", "bigtable", "start", "--host-port", hostport]
+          )
+
+          try:
+              system_default(session)
+          finally:
+              # Stop Emulator
+              os.killpg(os.getpgid(p.pid), signal.SIGKILL)
+
+
+      # Run the system/emulator/samples tests
+      @nox.session(py="3.12")
+      @nox.parametrize(
+          "test_type",
+          ["system_default", "system_emulated", "samples"],
+      )
+      def system(session, test_type):
+          """Run the system/emulator/samples tests."""
+          # system, emulator, and sample tests
+          test_map = {
+              "system_default": system_default,
+              "system_emulated": system_emulated,
+              "samples": samples,
+          }
+          test_map[test_type](session)
+
+
+      def system_default(session):
+          """Run the system test suite."""
+          constraints_path = str(
+              CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+          )
+          system_test_path = os.path.join("tests", "system.py")
+          system_test_folder_path = os.path.join("tests", "system")
+
+          # Check the value of `RUN_SYSTEM_TESTS` env var. It defaults to true.
+          if os.environ.get("RUN_SYSTEM_TESTS", "true") == "false":
+              session.skip("RUN_SYSTEM_TESTS is set to false, skipping")
+          # Install pyopenssl for mTLS testing.
+          if os.environ.get("GOOGLE_API_USE_CLIENT_CERTIFICATE", "false") == "true":
+              session.install("pyopenssl")
+
+          system_test_exists = os.path.exists(system_test_path)
+          system_test_folder_exists = os.path.exists(system_test_folder_path)
+          # Sanity check: only run tests if found.
+          if not system_test_exists and not system_test_folder_exists:
+              session.skip("System tests were not found")
+
+          install_systemtest_dependencies(session, "-c", constraints_path)
+
+          # Run py.test against the system tests.
+          if system_test_exists:
+              session.run(
+                  "py.test",
+                  "--quiet",
+                  f"--junitxml=system_{session.python}_sponge_log.xml",
+                  system_test_path,
+                  *session.posargs,
+              )
+          if system_test_folder_exists:
+              session.run(
+                  "py.test",
+                  "--quiet",
+                  f"--junitxml=system_{session.python}_sponge_log.xml",
+                  system_test_folder_path,
+                  *session.posargs,
+              )
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      def samples(session):
+          """Run the sample test suite."""
+          req_files = [
+              str(p.relative_to(CURRENT_DIRECTORY))
+              for p in sorted(CURRENT_DIRECTORY.glob("samples/**/requirements.txt"))
+              if "beam" not in p.parts
+          ]
+          req_args = [arg for req_file in req_files for arg in ("-r", req_file)]
+          session.install(
+              "google-cloud-testutils",
+              "mock",
+              "pytest",
+              "pytest-asyncio",
+              *req_args,
+          )
+          # Install the library from this checkout last so the samples exercise the
+          # code at HEAD rather than a released version. The samples' requirements.txt
+          # files intentionally leave google-cloud-bigtable unpinned for this reason.
+          session.install("-e", ".")
+
+          has_target = any(not arg.startswith("-") for arg in session.posargs)
+          target_paths = [] if has_target else [os.path.join("samples")]
+          session.run(
+              "py.test",
+              "--quiet",
+              f"--junitxml=samples_{session.python}_sponge_log.xml",
+              "--ignore=samples/legacy_client/beam",
+              *target_paths,
+              *session.posargs,
+          )
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      def cover(session):
+          """Run the final coverage report.
+
+          This outputs the coverage report aggregating coverage from the unit
+          test runs (not system test runs), and then erases coverage data.
+          """
+          session.install("coverage", "pytest-cov")
+          session.run("coverage", "report", "--show-missing", "--fail-under=99")
+
+          session.run("coverage", "erase")
+
+
+      @nox.session(python="3.10")
+      def docs(session):
+          """Build the docs for this library."""
+
+          session.install("-e", ".")
+          session.install(
+              # We need to pin to specific versions of the `sphinxcontrib-*` packages
+              # which still support sphinx 4.x.
+              # See https://github.com/googleapis/sphinx-docfx-yaml/issues/344
+              # and https://github.com/googleapis/sphinx-docfx-yaml/issues/345.
+              "sphinxcontrib-applehelp==1.0.4",
+              "sphinxcontrib-devhelp==1.0.2",
+              "sphinxcontrib-htmlhelp==2.0.1",
+              "sphinxcontrib-qthelp==1.0.3",
+              "sphinxcontrib-serializinghtml==1.1.5",
+              "sphinx==4.5.0",
+              "alabaster",
+              "recommonmark",
+          )
+
+          shutil.rmtree(os.path.join("docs", "_build"), ignore_errors=True)
+          session.run(
+              "sphinx-build",
+              "-W",  # warnings as errors
+              "-T",  # show full traceback on exception
+              "-N",  # no colors
+              "-b",
+              "html",
+              "-d",
+              os.path.join("docs", "_build", "doctrees", ""),
+              os.path.join("docs", ""),
+              os.path.join("docs", "_build", "html", ""),
+          )
+
+
+      @nox.session(python="3.10")
+      def docfx(session):
+          """Build the docfx yaml files for this library."""
+
+          session.install("-e", ".")
+          session.install(
+              # We need to pin to specific versions of the `sphinxcontrib-*` packages
+              # which still support sphinx 4.x.
+              # See https://github.com/googleapis/sphinx-docfx-yaml/issues/344
+              # and https://github.com/googleapis/sphinx-docfx-yaml/issues/345.
+              "sphinxcontrib-applehelp==1.0.4",
+              "sphinxcontrib-devhelp==1.0.2",
+              "sphinxcontrib-htmlhelp==2.0.1",
+              "sphinxcontrib-qthelp==1.0.3",
+              "sphinxcontrib-serializinghtml==1.1.5",
+              "gcp-sphinx-docfx-yaml",
+              "alabaster",
+              "recommonmark",
+          )
+
+          shutil.rmtree(os.path.join("docs", "_build"), ignore_errors=True)
+          session.run(
+              "sphinx-build",
+              "-T",  # show full traceback on exception
+              "-N",  # no colors
+              "-D",
+              (
+                  "extensions=sphinx.ext.autodoc,"
+                  "sphinx.ext.autosummary,"
+                  "docfx_yaml.extension,"
+                  "sphinx.ext.intersphinx,"
+                  "sphinx.ext.coverage,"
+                  "sphinx.ext.napoleon,"
+                  "sphinx.ext.todo,"
+                  "sphinx.ext.viewcode,"
+                  "recommonmark"
+              ),
+              "-b",
+              "html",
+              "-d",
+              os.path.join("docs", "_build", "doctrees", ""),
+              os.path.join("docs", ""),
+              os.path.join("docs", "_build", "html", ""),
+          )
+          # Customization: Add extra sections to the table of contents for the Classic vs Async clients
+          session.install("pyyaml")
+          session.run("python", "docs/scripts/patch_devsite_toc.py")
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      @nox.parametrize(
+          "protobuf_implementation",
+          ["python", "upb"],
+      )
+      def prerelease_deps(session, protobuf_implementation):
+          """Run all tests with prerelease versions of dependencies installed."""
+
+          # Install all dependencies
+          session.install("-e", ".[all, tests, tracing]")
+          unit_deps_all = UNIT_TEST_STANDARD_DEPENDENCIES + UNIT_TEST_EXTERNAL_DEPENDENCIES
+          session.install(*unit_deps_all)
+          system_deps_all = (
+              SYSTEM_TEST_STANDARD_DEPENDENCIES + SYSTEM_TEST_EXTERNAL_DEPENDENCIES
+          )
+          session.install(*system_deps_all)
+
+          # Because we test minimum dependency versions on the minimum Python
+          # version, the first version we test with in the unit tests sessions has a
+          # constraints file containing all dependencies and extras.
+          with open(
+              CURRENT_DIRECTORY / "testing" / f"constraints-{ALL_PYTHON[0]}.txt",
+              encoding="utf-8",
+          ) as constraints_file:
+              constraints_text = constraints_file.read()
+
+          # Ignore leading whitespace and comment lines.
+          constraints_deps = [
+              match.group(1)
+              for match in re.finditer(
+                  r"^\\s*(\\S+)(?===\\S+)", constraints_text, flags=re.MULTILINE
+              )
+          ]
+
+          session.install(*constraints_deps)
+
+          prerel_deps = [
+              "protobuf",
+              # dependency of grpc
+              "six",
+              "grpc-google-iam-v1",
+              "googleapis-common-protos",
+              "grpcio",
+              "grpcio-status",
+              "google-api-core",
+              "google-auth",
+              "proto-plus",
+              "google-cloud-testutils",
+              # dependencies of google-cloud-testutils"
+              "click",
+          ]
+
+          for dep in prerel_deps:
+              session.install("--pre", "--no-deps", "--upgrade", dep)
+
+          # Remaining dependencies
+          other_deps = [
+              "requests",
+              "cryptography",
+          ]
+          session.install(*other_deps)
+
+          # Print out prerelease package versions
+          session.run(
+              "python", "-c", "import google.protobuf; print(google.protobuf.__version__)"
+          )
+          session.run("python", "-c", "import grpc; print(grpc.__version__)")
+          session.run("python", "-c", "import google.auth; print(google.auth.__version__)")
+
+          session.run(
+              "py.test",
+              "tests/unit",
+              env={
+                  "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": protobuf_implementation,
+              },
+          )
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      def generate_sync(session):
+          """
+          Re-generate sync files for the library from CrossSync-annotated async source
+          """
+          session.install(RUFF_VERSION)
+          session.run("python", ".cross_sync/generate.py", ".")
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      @nox.parametrize(
+          "protobuf_implementation",
+          ["python", "upb"],
+      )
+      def core_deps_from_source(session, protobuf_implementation):
+          """Run all tests with core dependencies installed from source,
+    count: 1

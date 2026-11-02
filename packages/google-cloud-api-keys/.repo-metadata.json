@@ -1,0 +1,15 @@
+{
+    "api_description": "Manages the API keys associated with developer projects.",
+    "api_id": "apikeys.googleapis.com",
+    "api_shortname": "apikeys",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/apikeys/latest",
+    "default_version": "v2",
+    "distribution_name": "google-cloud-api-keys",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "apikeys",
+    "name_pretty": "API Keys",
+    "product_documentation": "https://cloud.google.com/api-keys/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,433 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.managedkafka_schemaregistry_v1",
+  "protoPackage": "google.cloud.managedkafka.schemaregistry.v1",
+  "schema": "1.0",
+  "services": {
+    "ManagedSchemaRegistry": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ManagedSchemaRegistryClient",
+          "rpcs": {
+            "CheckCompatibility": {
+              "methods": [
+                "check_compatibility"
+              ]
+            },
+            "CreateSchemaRegistry": {
+              "methods": [
+                "create_schema_registry"
+              ]
+            },
+            "CreateVersion": {
+              "methods": [
+                "create_version"
+              ]
+            },
+            "DeleteSchemaConfig": {
+              "methods": [
+                "delete_schema_config"
+              ]
+            },
+            "DeleteSchemaMode": {
+              "methods": [
+                "delete_schema_mode"
+              ]
+            },
+            "DeleteSchemaRegistry": {
+              "methods": [
+                "delete_schema_registry"
+              ]
+            },
+            "DeleteSubject": {
+              "methods": [
+                "delete_subject"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "GetContext": {
+              "methods": [
+                "get_context"
+              ]
+            },
+            "GetRawSchema": {
+              "methods": [
+                "get_raw_schema"
+              ]
+            },
+            "GetRawSchemaVersion": {
+              "methods": [
+                "get_raw_schema_version"
+              ]
+            },
+            "GetSchema": {
+              "methods": [
+                "get_schema"
+              ]
+            },
+            "GetSchemaConfig": {
+              "methods": [
+                "get_schema_config"
+              ]
+            },
+            "GetSchemaMode": {
+              "methods": [
+                "get_schema_mode"
+              ]
+            },
+            "GetSchemaRegistry": {
+              "methods": [
+                "get_schema_registry"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ListContexts": {
+              "methods": [
+                "list_contexts"
+              ]
+            },
+            "ListReferencedSchemas": {
+              "methods": [
+                "list_referenced_schemas"
+              ]
+            },
+            "ListSchemaRegistries": {
+              "methods": [
+                "list_schema_registries"
+              ]
+            },
+            "ListSchemaTypes": {
+              "methods": [
+                "list_schema_types"
+              ]
+            },
+            "ListSchemaVersions": {
+              "methods": [
+                "list_schema_versions"
+              ]
+            },
+            "ListSubjects": {
+              "methods": [
+                "list_subjects"
+              ]
+            },
+            "ListSubjectsBySchemaId": {
+              "methods": [
+                "list_subjects_by_schema_id"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "LookupVersion": {
+              "methods": [
+                "lookup_version"
+              ]
+            },
+            "UpdateSchemaConfig": {
+              "methods": [
+                "update_schema_config"
+              ]
+            },
+            "UpdateSchemaMode": {
+              "methods": [
+                "update_schema_mode"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ManagedSchemaRegistryAsyncClient",
+          "rpcs": {
+            "CheckCompatibility": {
+              "methods": [
+                "check_compatibility"
+              ]
+            },
+            "CreateSchemaRegistry": {
+              "methods": [
+                "create_schema_registry"
+              ]
+            },
+            "CreateVersion": {
+              "methods": [
+                "create_version"
+              ]
+            },
+            "DeleteSchemaConfig": {
+              "methods": [
+                "delete_schema_config"
+              ]
+            },
+            "DeleteSchemaMode": {
+              "methods": [
+                "delete_schema_mode"
+              ]
+            },
+            "DeleteSchemaRegistry": {
+              "methods": [
+                "delete_schema_registry"
+              ]
+            },
+            "DeleteSubject": {
+              "methods": [
+                "delete_subject"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "GetContext": {
+              "methods": [
+                "get_context"
+              ]
+            },
+            "GetRawSchema": {
+              "methods": [
+                "get_raw_schema"
+              ]
+            },
+            "GetRawSchemaVersion": {
+              "methods": [
+                "get_raw_schema_version"
+              ]
+            },
+            "GetSchema": {
+              "methods": [
+                "get_schema"
+              ]
+            },
+            "GetSchemaConfig": {
+              "methods": [
+                "get_schema_config"
+              ]
+            },
+            "GetSchemaMode": {
+              "methods": [
+                "get_schema_mode"
+              ]
+            },
+            "GetSchemaRegistry": {
+              "methods": [
+                "get_schema_registry"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ListContexts": {
+              "methods": [
+                "list_contexts"
+              ]
+            },
+            "ListReferencedSchemas": {
+              "methods": [
+                "list_referenced_schemas"
+              ]
+            },
+            "ListSchemaRegistries": {
+              "methods": [
+                "list_schema_registries"
+              ]
+            },
+            "ListSchemaTypes": {
+              "methods": [
+                "list_schema_types"
+              ]
+            },
+            "ListSchemaVersions": {
+              "methods": [
+                "list_schema_versions"
+              ]
+            },
+            "ListSubjects": {
+              "methods": [
+                "list_subjects"
+              ]
+            },
+            "ListSubjectsBySchemaId": {
+              "methods": [
+                "list_subjects_by_schema_id"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "LookupVersion": {
+              "methods": [
+                "lookup_version"
+              ]
+            },
+            "UpdateSchemaConfig": {
+              "methods": [
+                "update_schema_config"
+              ]
+            },
+            "UpdateSchemaMode": {
+              "methods": [
+                "update_schema_mode"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ManagedSchemaRegistryClient",
+          "rpcs": {
+            "CheckCompatibility": {
+              "methods": [
+                "check_compatibility"
+              ]
+            },
+            "CreateSchemaRegistry": {
+              "methods": [
+                "create_schema_registry"
+              ]
+            },
+            "CreateVersion": {
+              "methods": [
+                "create_version"
+              ]
+            },
+            "DeleteSchemaConfig": {
+              "methods": [
+                "delete_schema_config"
+              ]
+            },
+            "DeleteSchemaMode": {
+              "methods": [
+                "delete_schema_mode"
+              ]
+            },
+            "DeleteSchemaRegistry": {
+              "methods": [
+                "delete_schema_registry"
+              ]
+            },
+            "DeleteSubject": {
+              "methods": [
+                "delete_subject"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "GetContext": {
+              "methods": [
+                "get_context"
+              ]
+            },
+            "GetRawSchema": {
+              "methods": [
+                "get_raw_schema"
+              ]
+            },
+            "GetRawSchemaVersion": {
+              "methods": [
+                "get_raw_schema_version"
+              ]
+            },
+            "GetSchema": {
+              "methods": [
+                "get_schema"
+              ]
+            },
+            "GetSchemaConfig": {
+              "methods": [
+                "get_schema_config"
+              ]
+            },
+            "GetSchemaMode": {
+              "methods": [
+                "get_schema_mode"
+              ]
+            },
+            "GetSchemaRegistry": {
+              "methods": [
+                "get_schema_registry"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ListContexts": {
+              "methods": [
+                "list_contexts"
+              ]
+            },
+            "ListReferencedSchemas": {
+              "methods": [
+                "list_referenced_schemas"
+              ]
+            },
+            "ListSchemaRegistries": {
+              "methods": [
+                "list_schema_registries"
+              ]
+            },
+            "ListSchemaTypes": {
+              "methods": [
+                "list_schema_types"
+              ]
+            },
+            "ListSchemaVersions": {
+              "methods": [
+                "list_schema_versions"
+              ]
+            },
+            "ListSubjects": {
+              "methods": [
+                "list_subjects"
+              ]
+            },
+            "ListSubjectsBySchemaId": {
+              "methods": [
+                "list_subjects_by_schema_id"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "LookupVersion": {
+              "methods": [
+                "lookup_version"
+              ]
+            },
+            "UpdateSchemaConfig": {
+              "methods": [
+                "update_schema_config"
+              ]
+            },
+            "UpdateSchemaMode": {
+              "methods": [
+                "update_schema_mode"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

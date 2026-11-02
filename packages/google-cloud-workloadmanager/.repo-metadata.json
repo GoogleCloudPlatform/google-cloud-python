@@ -1,0 +1,16 @@
+{
+    "api_description": "Workload Manager is a service that provides tooling for enterprise\nworkloads to automate the deployment and validation of your workloads\nagainst best practices and recommendations.",
+    "api_id": "workloadmanager.googleapis.com",
+    "api_shortname": "workloadmanager",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-workloadmanager/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-workloadmanager",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1631482\u0026template=0",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-workloadmanager",
+    "name_pretty": "Workload Manager",
+    "product_documentation": "https://docs.cloud.google.com/workload-manager/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

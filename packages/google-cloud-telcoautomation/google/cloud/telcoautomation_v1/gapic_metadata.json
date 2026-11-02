@@ -1,0 +1,568 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.telcoautomation_v1",
+  "protoPackage": "google.cloud.telcoautomation.v1",
+  "schema": "1.0",
+  "services": {
+    "TelcoAutomation": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "TelcoAutomationClient",
+          "rpcs": {
+            "ApplyDeployment": {
+              "methods": [
+                "apply_deployment"
+              ]
+            },
+            "ApplyHydratedDeployment": {
+              "methods": [
+                "apply_hydrated_deployment"
+              ]
+            },
+            "ApproveBlueprint": {
+              "methods": [
+                "approve_blueprint"
+              ]
+            },
+            "ComputeDeploymentStatus": {
+              "methods": [
+                "compute_deployment_status"
+              ]
+            },
+            "CreateBlueprint": {
+              "methods": [
+                "create_blueprint"
+              ]
+            },
+            "CreateDeployment": {
+              "methods": [
+                "create_deployment"
+              ]
+            },
+            "CreateEdgeSlm": {
+              "methods": [
+                "create_edge_slm"
+              ]
+            },
+            "CreateOrchestrationCluster": {
+              "methods": [
+                "create_orchestration_cluster"
+              ]
+            },
+            "DeleteBlueprint": {
+              "methods": [
+                "delete_blueprint"
+              ]
+            },
+            "DeleteEdgeSlm": {
+              "methods": [
+                "delete_edge_slm"
+              ]
+            },
+            "DeleteOrchestrationCluster": {
+              "methods": [
+                "delete_orchestration_cluster"
+              ]
+            },
+            "DiscardBlueprintChanges": {
+              "methods": [
+                "discard_blueprint_changes"
+              ]
+            },
+            "DiscardDeploymentChanges": {
+              "methods": [
+                "discard_deployment_changes"
+              ]
+            },
+            "GetBlueprint": {
+              "methods": [
+                "get_blueprint"
+              ]
+            },
+            "GetDeployment": {
+              "methods": [
+                "get_deployment"
+              ]
+            },
+            "GetEdgeSlm": {
+              "methods": [
+                "get_edge_slm"
+              ]
+            },
+            "GetHydratedDeployment": {
+              "methods": [
+                "get_hydrated_deployment"
+              ]
+            },
+            "GetOrchestrationCluster": {
+              "methods": [
+                "get_orchestration_cluster"
+              ]
+            },
+            "GetPublicBlueprint": {
+              "methods": [
+                "get_public_blueprint"
+              ]
+            },
+            "ListBlueprintRevisions": {
+              "methods": [
+                "list_blueprint_revisions"
+              ]
+            },
+            "ListBlueprints": {
+              "methods": [
+                "list_blueprints"
+              ]
+            },
+            "ListDeploymentRevisions": {
+              "methods": [
+                "list_deployment_revisions"
+              ]
+            },
+            "ListDeployments": {
+              "methods": [
+                "list_deployments"
+              ]
+            },
+            "ListEdgeSlms": {
+              "methods": [
+                "list_edge_slms"
+              ]
+            },
+            "ListHydratedDeployments": {
+              "methods": [
+                "list_hydrated_deployments"
+              ]
+            },
+            "ListOrchestrationClusters": {
+              "methods": [
+                "list_orchestration_clusters"
+              ]
+            },
+            "ListPublicBlueprints": {
+              "methods": [
+                "list_public_blueprints"
+              ]
+            },
+            "ProposeBlueprint": {
+              "methods": [
+                "propose_blueprint"
+              ]
+            },
+            "RejectBlueprint": {
+              "methods": [
+                "reject_blueprint"
+              ]
+            },
+            "RemoveDeployment": {
+              "methods": [
+                "remove_deployment"
+              ]
+            },
+            "RollbackDeployment": {
+              "methods": [
+                "rollback_deployment"
+              ]
+            },
+            "SearchBlueprintRevisions": {
+              "methods": [
+                "search_blueprint_revisions"
+              ]
+            },
+            "SearchDeploymentRevisions": {
+              "methods": [
+                "search_deployment_revisions"
+              ]
+            },
+            "UpdateBlueprint": {
+              "methods": [
+                "update_blueprint"
+              ]
+            },
+            "UpdateDeployment": {
+              "methods": [
+                "update_deployment"
+              ]
+            },
+            "UpdateHydratedDeployment": {
+              "methods": [
+                "update_hydrated_deployment"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "TelcoAutomationAsyncClient",
+          "rpcs": {
+            "ApplyDeployment": {
+              "methods": [
+                "apply_deployment"
+              ]
+            },
+            "ApplyHydratedDeployment": {
+              "methods": [
+                "apply_hydrated_deployment"
+              ]
+            },
+            "ApproveBlueprint": {
+              "methods": [
+                "approve_blueprint"
+              ]
+            },
+            "ComputeDeploymentStatus": {
+              "methods": [
+                "compute_deployment_status"
+              ]
+            },
+            "CreateBlueprint": {
+              "methods": [
+                "create_blueprint"
+              ]
+            },
+            "CreateDeployment": {
+              "methods": [
+                "create_deployment"
+              ]
+            },
+            "CreateEdgeSlm": {
+              "methods": [
+                "create_edge_slm"
+              ]
+            },
+            "CreateOrchestrationCluster": {
+              "methods": [
+                "create_orchestration_cluster"
+              ]
+            },
+            "DeleteBlueprint": {
+              "methods": [
+                "delete_blueprint"
+              ]
+            },
+            "DeleteEdgeSlm": {
+              "methods": [
+                "delete_edge_slm"
+              ]
+            },
+            "DeleteOrchestrationCluster": {
+              "methods": [
+                "delete_orchestration_cluster"
+              ]
+            },
+            "DiscardBlueprintChanges": {
+              "methods": [
+                "discard_blueprint_changes"
+              ]
+            },
+            "DiscardDeploymentChanges": {
+              "methods": [
+                "discard_deployment_changes"
+              ]
+            },
+            "GetBlueprint": {
+              "methods": [
+                "get_blueprint"
+              ]
+            },
+            "GetDeployment": {
+              "methods": [
+                "get_deployment"
+              ]
+            },
+            "GetEdgeSlm": {
+              "methods": [
+                "get_edge_slm"
+              ]
+            },
+            "GetHydratedDeployment": {
+              "methods": [
+                "get_hydrated_deployment"
+              ]
+            },
+            "GetOrchestrationCluster": {
+              "methods": [
+                "get_orchestration_cluster"
+              ]
+            },
+            "GetPublicBlueprint": {
+              "methods": [
+                "get_public_blueprint"
+              ]
+            },
+            "ListBlueprintRevisions": {
+              "methods": [
+                "list_blueprint_revisions"
+              ]
+            },
+            "ListBlueprints": {
+              "methods": [
+                "list_blueprints"
+              ]
+            },
+            "ListDeploymentRevisions": {
+              "methods": [
+                "list_deployment_revisions"
+              ]
+            },
+            "ListDeployments": {
+              "methods": [
+                "list_deployments"
+              ]
+            },
+            "ListEdgeSlms": {
+              "methods": [
+                "list_edge_slms"
+              ]
+            },
+            "ListHydratedDeployments": {
+              "methods": [
+                "list_hydrated_deployments"
+              ]
+            },
+            "ListOrchestrationClusters": {
+              "methods": [
+                "list_orchestration_clusters"
+              ]
+            },
+            "ListPublicBlueprints": {
+              "methods": [
+                "list_public_blueprints"
+              ]
+            },
+            "ProposeBlueprint": {
+              "methods": [
+                "propose_blueprint"
+              ]
+            },
+            "RejectBlueprint": {
+              "methods": [
+                "reject_blueprint"
+              ]
+            },
+            "RemoveDeployment": {
+              "methods": [
+                "remove_deployment"
+              ]
+            },
+            "RollbackDeployment": {
+              "methods": [
+                "rollback_deployment"
+              ]
+            },
+            "SearchBlueprintRevisions": {
+              "methods": [
+                "search_blueprint_revisions"
+              ]
+            },
+            "SearchDeploymentRevisions": {
+              "methods": [
+                "search_deployment_revisions"
+              ]
+            },
+            "UpdateBlueprint": {
+              "methods": [
+                "update_blueprint"
+              ]
+            },
+            "UpdateDeployment": {
+              "methods": [
+                "update_deployment"
+              ]
+            },
+            "UpdateHydratedDeployment": {
+              "methods": [
+                "update_hydrated_deployment"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "TelcoAutomationClient",
+          "rpcs": {
+            "ApplyDeployment": {
+              "methods": [
+                "apply_deployment"
+              ]
+            },
+            "ApplyHydratedDeployment": {
+              "methods": [
+                "apply_hydrated_deployment"
+              ]
+            },
+            "ApproveBlueprint": {
+              "methods": [
+                "approve_blueprint"
+              ]
+            },
+            "ComputeDeploymentStatus": {
+              "methods": [
+                "compute_deployment_status"
+              ]
+            },
+            "CreateBlueprint": {
+              "methods": [
+                "create_blueprint"
+              ]
+            },
+            "CreateDeployment": {
+              "methods": [
+                "create_deployment"
+              ]
+            },
+            "CreateEdgeSlm": {
+              "methods": [
+                "create_edge_slm"
+              ]
+            },
+            "CreateOrchestrationCluster": {
+              "methods": [
+                "create_orchestration_cluster"
+              ]
+            },
+            "DeleteBlueprint": {
+              "methods": [
+                "delete_blueprint"
+              ]
+            },
+            "DeleteEdgeSlm": {
+              "methods": [
+                "delete_edge_slm"
+              ]
+            },
+            "DeleteOrchestrationCluster": {
+              "methods": [
+                "delete_orchestration_cluster"
+              ]
+            },
+            "DiscardBlueprintChanges": {
+              "methods": [
+                "discard_blueprint_changes"
+              ]
+            },
+            "DiscardDeploymentChanges": {
+              "methods": [
+                "discard_deployment_changes"
+              ]
+            },
+            "GetBlueprint": {
+              "methods": [
+                "get_blueprint"
+              ]
+            },
+            "GetDeployment": {
+              "methods": [
+                "get_deployment"
+              ]
+            },
+            "GetEdgeSlm": {
+              "methods": [
+                "get_edge_slm"
+              ]
+            },
+            "GetHydratedDeployment": {
+              "methods": [
+                "get_hydrated_deployment"
+              ]
+            },
+            "GetOrchestrationCluster": {
+              "methods": [
+                "get_orchestration_cluster"
+              ]
+            },
+            "GetPublicBlueprint": {
+              "methods": [
+                "get_public_blueprint"
+              ]
+            },
+            "ListBlueprintRevisions": {
+              "methods": [
+                "list_blueprint_revisions"
+              ]
+            },
+            "ListBlueprints": {
+              "methods": [
+                "list_blueprints"
+              ]
+            },
+            "ListDeploymentRevisions": {
+              "methods": [
+                "list_deployment_revisions"
+              ]
+            },
+            "ListDeployments": {
+              "methods": [
+                "list_deployments"
+              ]
+            },
+            "ListEdgeSlms": {
+              "methods": [
+                "list_edge_slms"
+              ]
+            },
+            "ListHydratedDeployments": {
+              "methods": [
+                "list_hydrated_deployments"
+              ]
+            },
+            "ListOrchestrationClusters": {
+              "methods": [
+                "list_orchestration_clusters"
+              ]
+            },
+            "ListPublicBlueprints": {
+              "methods": [
+                "list_public_blueprints"
+              ]
+            },
+            "ProposeBlueprint": {
+              "methods": [
+                "propose_blueprint"
+              ]
+            },
+            "RejectBlueprint": {
+              "methods": [
+                "reject_blueprint"
+              ]
+            },
+            "RemoveDeployment": {
+              "methods": [
+                "remove_deployment"
+              ]
+            },
+            "RollbackDeployment": {
+              "methods": [
+                "rollback_deployment"
+              ]
+            },
+            "SearchBlueprintRevisions": {
+              "methods": [
+                "search_blueprint_revisions"
+              ]
+            },
+            "SearchDeploymentRevisions": {
+              "methods": [
+                "search_deployment_revisions"
+              ]
+            },
+            "UpdateBlueprint": {
+              "methods": [
+                "update_blueprint"
+              ]
+            },
+            "UpdateDeployment": {
+              "methods": [
+                "update_deployment"
+              ]
+            },
+            "UpdateHydratedDeployment": {
+              "methods": [
+                "update_hydrated_deployment"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

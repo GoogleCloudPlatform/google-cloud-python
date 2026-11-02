@@ -1,0 +1,617 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.alloydb_v1",
+  "protoPackage": "google.cloud.alloydb.v1",
+  "schema": "1.0",
+  "services": {
+    "AlloyDBAdmin": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AlloyDBAdminClient",
+          "rpcs": {
+            "BatchCreateInstances": {
+              "methods": [
+                "batch_create_instances"
+              ]
+            },
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "CreateSecondaryCluster": {
+              "methods": [
+                "create_secondary_cluster"
+              ]
+            },
+            "CreateSecondaryInstance": {
+              "methods": [
+                "create_secondary_instance"
+              ]
+            },
+            "CreateUser": {
+              "methods": [
+                "create_user"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "delete_user"
+              ]
+            },
+            "ExecuteSql": {
+              "methods": [
+                "execute_sql"
+              ]
+            },
+            "ExportCluster": {
+              "methods": [
+                "export_cluster"
+              ]
+            },
+            "FailoverInstance": {
+              "methods": [
+                "failover_instance"
+              ]
+            },
+            "GenerateClientCertificate": {
+              "methods": [
+                "generate_client_certificate"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetConnectionInfo": {
+              "methods": [
+                "get_connection_info"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetUser": {
+              "methods": [
+                "get_user"
+              ]
+            },
+            "ImportCluster": {
+              "methods": [
+                "import_cluster"
+              ]
+            },
+            "InjectFault": {
+              "methods": [
+                "inject_fault"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListDatabases": {
+              "methods": [
+                "list_databases"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListSupportedDatabaseFlags": {
+              "methods": [
+                "list_supported_database_flags"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "list_users"
+              ]
+            },
+            "PromoteCluster": {
+              "methods": [
+                "promote_cluster"
+              ]
+            },
+            "RestartInstance": {
+              "methods": [
+                "restart_instance"
+              ]
+            },
+            "RestoreCluster": {
+              "methods": [
+                "restore_cluster"
+              ]
+            },
+            "SwitchoverCluster": {
+              "methods": [
+                "switchover_cluster"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateUser": {
+              "methods": [
+                "update_user"
+              ]
+            },
+            "UpgradeCluster": {
+              "methods": [
+                "upgrade_cluster"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AlloyDBAdminAsyncClient",
+          "rpcs": {
+            "BatchCreateInstances": {
+              "methods": [
+                "batch_create_instances"
+              ]
+            },
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "CreateSecondaryCluster": {
+              "methods": [
+                "create_secondary_cluster"
+              ]
+            },
+            "CreateSecondaryInstance": {
+              "methods": [
+                "create_secondary_instance"
+              ]
+            },
+            "CreateUser": {
+              "methods": [
+                "create_user"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "delete_user"
+              ]
+            },
+            "ExecuteSql": {
+              "methods": [
+                "execute_sql"
+              ]
+            },
+            "ExportCluster": {
+              "methods": [
+                "export_cluster"
+              ]
+            },
+            "FailoverInstance": {
+              "methods": [
+                "failover_instance"
+              ]
+            },
+            "GenerateClientCertificate": {
+              "methods": [
+                "generate_client_certificate"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetConnectionInfo": {
+              "methods": [
+                "get_connection_info"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetUser": {
+              "methods": [
+                "get_user"
+              ]
+            },
+            "ImportCluster": {
+              "methods": [
+                "import_cluster"
+              ]
+            },
+            "InjectFault": {
+              "methods": [
+                "inject_fault"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListDatabases": {
+              "methods": [
+                "list_databases"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListSupportedDatabaseFlags": {
+              "methods": [
+                "list_supported_database_flags"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "list_users"
+              ]
+            },
+            "PromoteCluster": {
+              "methods": [
+                "promote_cluster"
+              ]
+            },
+            "RestartInstance": {
+              "methods": [
+                "restart_instance"
+              ]
+            },
+            "RestoreCluster": {
+              "methods": [
+                "restore_cluster"
+              ]
+            },
+            "SwitchoverCluster": {
+              "methods": [
+                "switchover_cluster"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateUser": {
+              "methods": [
+                "update_user"
+              ]
+            },
+            "UpgradeCluster": {
+              "methods": [
+                "upgrade_cluster"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AlloyDBAdminClient",
+          "rpcs": {
+            "BatchCreateInstances": {
+              "methods": [
+                "batch_create_instances"
+              ]
+            },
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "CreateSecondaryCluster": {
+              "methods": [
+                "create_secondary_cluster"
+              ]
+            },
+            "CreateSecondaryInstance": {
+              "methods": [
+                "create_secondary_instance"
+              ]
+            },
+            "CreateUser": {
+              "methods": [
+                "create_user"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "delete_user"
+              ]
+            },
+            "ExecuteSql": {
+              "methods": [
+                "execute_sql"
+              ]
+            },
+            "ExportCluster": {
+              "methods": [
+                "export_cluster"
+              ]
+            },
+            "FailoverInstance": {
+              "methods": [
+                "failover_instance"
+              ]
+            },
+            "GenerateClientCertificate": {
+              "methods": [
+                "generate_client_certificate"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetConnectionInfo": {
+              "methods": [
+                "get_connection_info"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetUser": {
+              "methods": [
+                "get_user"
+              ]
+            },
+            "ImportCluster": {
+              "methods": [
+                "import_cluster"
+              ]
+            },
+            "InjectFault": {
+              "methods": [
+                "inject_fault"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListDatabases": {
+              "methods": [
+                "list_databases"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListSupportedDatabaseFlags": {
+              "methods": [
+                "list_supported_database_flags"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "list_users"
+              ]
+            },
+            "PromoteCluster": {
+              "methods": [
+                "promote_cluster"
+              ]
+            },
+            "RestartInstance": {
+              "methods": [
+                "restart_instance"
+              ]
+            },
+            "RestoreCluster": {
+              "methods": [
+                "restore_cluster"
+              ]
+            },
+            "SwitchoverCluster": {
+              "methods": [
+                "switchover_cluster"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateUser": {
+              "methods": [
+                "update_user"
+              ]
+            },
+            "UpgradeCluster": {
+              "methods": [
+                "upgrade_cluster"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "AlloyDBCSQLAdmin": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AlloyDBCSQLAdminClient",
+          "rpcs": {
+            "RestoreFromCloudSQL": {
+              "methods": [
+                "restore_from_cloud_sql"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AlloyDBCSQLAdminAsyncClient",
+          "rpcs": {
+            "RestoreFromCloudSQL": {
+              "methods": [
+                "restore_from_cloud_sql"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AlloyDBCSQLAdminClient",
+          "rpcs": {
+            "RestoreFromCloudSQL": {
+              "methods": [
+                "restore_from_cloud_sql"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

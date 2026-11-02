@@ -1,0 +1,18 @@
+# This constraints file is used to check that lower bounds
+# are correct in setup.py
+# List *all* library dependencies and extras in this file.
+# Pin the version to the lower bound.
+#
+# e.g., if setup.py has "foo >= 1.14.0, < 2.0.0dev",
+# Then this file should have foo==1.14.0
+pyasn1-modules==0.2.1
+setuptools==40.3.0
+cryptography==38.0.3
+aiohttp==3.8.0
+requests==2.30.0
+pyjwt==2.0
+grpcio==1.59.0
+urllib3==1.26.15
+packaging==20.0
+rsa==4.0.0
+pyu2f==0.1.5 # reauth extra

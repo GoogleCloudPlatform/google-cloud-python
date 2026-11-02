@@ -1,0 +1,36 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the project in which to list topics.\n   Format\
+      \ is <code>projects/{project-id}</code>."
+    id: project
+    var_type: str
+  - description: Maximum number of topics to return.
+    id: page_size
+    var_type: int
+  - description: "The value returned by the last <code>ListTopicsResponse</code>;\n\
+      \   indicates that this is a continuation of a prior\n   <code>ListTopics</code>\
+      \ call, and that the system should return the\n   next page of data."
+    id: page_token
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.ListTopicsRequest
+  fullName: google.cloud.pubsub_v1.types.ListTopicsRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ListTopicsRequest
+  source:
+    id: ListTopicsRequest
+    path: null
+    startLine: null
+  summary: 'Request for the `ListTopics` method.
+
+    '
+  syntax:
+    content: ListTopicsRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ListTopicsRequest
+references: []

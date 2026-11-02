@@ -1,0 +1,2816 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.lustre.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-lustre",
+    "version": "0.4.3"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.create_directory_policy",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.CreateDirectoryPolicy",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "CreateDirectoryPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.CreateDirectoryPolicyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "directory_policy",
+            "type": "google.cloud.lustre_v1.types.DirectoryPolicy"
+          },
+          {
+            "name": "directory_policy_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_directory_policy"
+      },
+      "description": "Sample for CreateDirectoryPolicy",
+      "file": "lustre_v1_generated_lustre_create_directory_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_CreateDirectoryPolicy_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_create_directory_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.create_directory_policy",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.CreateDirectoryPolicy",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "CreateDirectoryPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.CreateDirectoryPolicyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "directory_policy",
+            "type": "google.cloud.lustre_v1.types.DirectoryPolicy"
+          },
+          {
+            "name": "directory_policy_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_directory_policy"
+      },
+      "description": "Sample for CreateDirectoryPolicy",
+      "file": "lustre_v1_generated_lustre_create_directory_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_CreateDirectoryPolicy_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_create_directory_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.create_instance",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.CreateInstance",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "CreateInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.CreateInstanceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "instance",
+            "type": "google.cloud.lustre_v1.types.Instance"
+          },
+          {
+            "name": "instance_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_instance"
+      },
+      "description": "Sample for CreateInstance",
+      "file": "lustre_v1_generated_lustre_create_instance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_CreateInstance_async",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_create_instance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.create_instance",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.CreateInstance",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "CreateInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.CreateInstanceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "instance",
+            "type": "google.cloud.lustre_v1.types.Instance"
+          },
+          {
+            "name": "instance_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_instance"
+      },
+      "description": "Sample for CreateInstance",
+      "file": "lustre_v1_generated_lustre_create_instance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_CreateInstance_sync",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_create_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.create_mirror",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.CreateMirror",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "CreateMirror"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.CreateMirrorRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "mirror",
+            "type": "google.cloud.lustre_v1.types.Mirror"
+          },
+          {
+            "name": "mirror_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_mirror"
+      },
+      "description": "Sample for CreateMirror",
+      "file": "lustre_v1_generated_lustre_create_mirror_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_CreateMirror_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_create_mirror_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.create_mirror",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.CreateMirror",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "CreateMirror"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.CreateMirrorRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "mirror",
+            "type": "google.cloud.lustre_v1.types.Mirror"
+          },
+          {
+            "name": "mirror_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_mirror"
+      },
+      "description": "Sample for CreateMirror",
+      "file": "lustre_v1_generated_lustre_create_mirror_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_CreateMirror_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_create_mirror_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.delete_directory_policy",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.DeleteDirectoryPolicy",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "DeleteDirectoryPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.DeleteDirectoryPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_directory_policy"
+      },
+      "description": "Sample for DeleteDirectoryPolicy",
+      "file": "lustre_v1_generated_lustre_delete_directory_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_DeleteDirectoryPolicy_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_delete_directory_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.delete_directory_policy",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.DeleteDirectoryPolicy",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "DeleteDirectoryPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.DeleteDirectoryPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_directory_policy"
+      },
+      "description": "Sample for DeleteDirectoryPolicy",
+      "file": "lustre_v1_generated_lustre_delete_directory_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_DeleteDirectoryPolicy_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_delete_directory_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.delete_instance",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.DeleteInstance",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "DeleteInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.DeleteInstanceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_instance"
+      },
+      "description": "Sample for DeleteInstance",
+      "file": "lustre_v1_generated_lustre_delete_instance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_DeleteInstance_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_delete_instance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.delete_instance",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.DeleteInstance",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "DeleteInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.DeleteInstanceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_instance"
+      },
+      "description": "Sample for DeleteInstance",
+      "file": "lustre_v1_generated_lustre_delete_instance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_DeleteInstance_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_delete_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.delete_mirror",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.DeleteMirror",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "DeleteMirror"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.DeleteMirrorRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_mirror"
+      },
+      "description": "Sample for DeleteMirror",
+      "file": "lustre_v1_generated_lustre_delete_mirror_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_DeleteMirror_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_delete_mirror_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.delete_mirror",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.DeleteMirror",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "DeleteMirror"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.DeleteMirrorRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_mirror"
+      },
+      "description": "Sample for DeleteMirror",
+      "file": "lustre_v1_generated_lustre_delete_mirror_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_DeleteMirror_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_delete_mirror_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.export_data",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.ExportData",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "ExportData"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.ExportDataRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "export_data"
+      },
+      "description": "Sample for ExportData",
+      "file": "lustre_v1_generated_lustre_export_data_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_ExportData_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_export_data_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.export_data",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.ExportData",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "ExportData"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.ExportDataRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "export_data"
+      },
+      "description": "Sample for ExportData",
+      "file": "lustre_v1_generated_lustre_export_data_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_ExportData_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_export_data_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.get_directory_policy",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.GetDirectoryPolicy",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "GetDirectoryPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.GetDirectoryPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.types.DirectoryPolicy",
+        "shortName": "get_directory_policy"
+      },
+      "description": "Sample for GetDirectoryPolicy",
+      "file": "lustre_v1_generated_lustre_get_directory_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_GetDirectoryPolicy_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_get_directory_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.get_directory_policy",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.GetDirectoryPolicy",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "GetDirectoryPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.GetDirectoryPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.types.DirectoryPolicy",
+        "shortName": "get_directory_policy"
+      },
+      "description": "Sample for GetDirectoryPolicy",
+      "file": "lustre_v1_generated_lustre_get_directory_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_GetDirectoryPolicy_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_get_directory_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.get_instance",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.GetInstance",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "GetInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.GetInstanceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.types.Instance",
+        "shortName": "get_instance"
+      },
+      "description": "Sample for GetInstance",
+      "file": "lustre_v1_generated_lustre_get_instance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_GetInstance_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_get_instance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.get_instance",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.GetInstance",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "GetInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.GetInstanceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.types.Instance",
+        "shortName": "get_instance"
+      },
+      "description": "Sample for GetInstance",
+      "file": "lustre_v1_generated_lustre_get_instance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_GetInstance_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_get_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.get_mirror",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.GetMirror",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "GetMirror"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.GetMirrorRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.types.Mirror",
+        "shortName": "get_mirror"
+      },
+      "description": "Sample for GetMirror",
+      "file": "lustre_v1_generated_lustre_get_mirror_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_GetMirror_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_get_mirror_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.get_mirror",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.GetMirror",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "GetMirror"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.GetMirrorRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.types.Mirror",
+        "shortName": "get_mirror"
+      },
+      "description": "Sample for GetMirror",
+      "file": "lustre_v1_generated_lustre_get_mirror_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_GetMirror_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_get_mirror_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.import_data",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.ImportData",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "ImportData"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.ImportDataRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "import_data"
+      },
+      "description": "Sample for ImportData",
+      "file": "lustre_v1_generated_lustre_import_data_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_ImportData_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_import_data_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.import_data",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.ImportData",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "ImportData"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.ImportDataRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "import_data"
+      },
+      "description": "Sample for ImportData",
+      "file": "lustre_v1_generated_lustre_import_data_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_ImportData_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_import_data_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.list_directory_policies",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.ListDirectoryPolicies",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "ListDirectoryPolicies"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.ListDirectoryPoliciesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.services.lustre.pagers.ListDirectoryPoliciesAsyncPager",
+        "shortName": "list_directory_policies"
+      },
+      "description": "Sample for ListDirectoryPolicies",
+      "file": "lustre_v1_generated_lustre_list_directory_policies_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_ListDirectoryPolicies_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_list_directory_policies_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.list_directory_policies",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.ListDirectoryPolicies",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "ListDirectoryPolicies"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.ListDirectoryPoliciesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.services.lustre.pagers.ListDirectoryPoliciesPager",
+        "shortName": "list_directory_policies"
+      },
+      "description": "Sample for ListDirectoryPolicies",
+      "file": "lustre_v1_generated_lustre_list_directory_policies_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_ListDirectoryPolicies_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_list_directory_policies_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.list_instances",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.ListInstances",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "ListInstances"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.ListInstancesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.services.lustre.pagers.ListInstancesAsyncPager",
+        "shortName": "list_instances"
+      },
+      "description": "Sample for ListInstances",
+      "file": "lustre_v1_generated_lustre_list_instances_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_ListInstances_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_list_instances_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.list_instances",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.ListInstances",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "ListInstances"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.ListInstancesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.services.lustre.pagers.ListInstancesPager",
+        "shortName": "list_instances"
+      },
+      "description": "Sample for ListInstances",
+      "file": "lustre_v1_generated_lustre_list_instances_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_ListInstances_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_list_instances_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.list_mirrors",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.ListMirrors",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "ListMirrors"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.ListMirrorsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.services.lustre.pagers.ListMirrorsAsyncPager",
+        "shortName": "list_mirrors"
+      },
+      "description": "Sample for ListMirrors",
+      "file": "lustre_v1_generated_lustre_list_mirrors_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_ListMirrors_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_list_mirrors_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.list_mirrors",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.ListMirrors",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "ListMirrors"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.ListMirrorsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.lustre_v1.services.lustre.pagers.ListMirrorsPager",
+        "shortName": "list_mirrors"
+      },
+      "description": "Sample for ListMirrors",
+      "file": "lustre_v1_generated_lustre_list_mirrors_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_ListMirrors_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_list_mirrors_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.reschedule_maintenance",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.RescheduleMaintenance",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "RescheduleMaintenance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.RescheduleMaintenanceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "reschedule",
+            "type": "google.cloud.lustre_v1.types.RescheduleMaintenanceRequest.Reschedule"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "reschedule_maintenance"
+      },
+      "description": "Sample for RescheduleMaintenance",
+      "file": "lustre_v1_generated_lustre_reschedule_maintenance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_RescheduleMaintenance_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_reschedule_maintenance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.reschedule_maintenance",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.RescheduleMaintenance",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "RescheduleMaintenance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.RescheduleMaintenanceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "reschedule",
+            "type": "google.cloud.lustre_v1.types.RescheduleMaintenanceRequest.Reschedule"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "reschedule_maintenance"
+      },
+      "description": "Sample for RescheduleMaintenance",
+      "file": "lustre_v1_generated_lustre_reschedule_maintenance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_RescheduleMaintenance_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_reschedule_maintenance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.update_instance",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.UpdateInstance",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "UpdateInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.UpdateInstanceRequest"
+          },
+          {
+            "name": "instance",
+            "type": "google.cloud.lustre_v1.types.Instance"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_instance"
+      },
+      "description": "Sample for UpdateInstance",
+      "file": "lustre_v1_generated_lustre_update_instance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_UpdateInstance_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_update_instance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.update_instance",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.UpdateInstance",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "UpdateInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.UpdateInstanceRequest"
+          },
+          {
+            "name": "instance",
+            "type": "google.cloud.lustre_v1.types.Instance"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_instance"
+      },
+      "description": "Sample for UpdateInstance",
+      "file": "lustre_v1_generated_lustre_update_instance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_UpdateInstance_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_update_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreAsyncClient",
+          "shortName": "LustreAsyncClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreAsyncClient.update_mirror",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.UpdateMirror",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "UpdateMirror"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.UpdateMirrorRequest"
+          },
+          {
+            "name": "mirror",
+            "type": "google.cloud.lustre_v1.types.Mirror"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_mirror"
+      },
+      "description": "Sample for UpdateMirror",
+      "file": "lustre_v1_generated_lustre_update_mirror_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_UpdateMirror_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_update_mirror_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.lustre_v1.LustreClient",
+          "shortName": "LustreClient"
+        },
+        "fullName": "google.cloud.lustre_v1.LustreClient.update_mirror",
+        "method": {
+          "fullName": "google.cloud.lustre.v1.Lustre.UpdateMirror",
+          "service": {
+            "fullName": "google.cloud.lustre.v1.Lustre",
+            "shortName": "Lustre"
+          },
+          "shortName": "UpdateMirror"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.lustre_v1.types.UpdateMirrorRequest"
+          },
+          {
+            "name": "mirror",
+            "type": "google.cloud.lustre_v1.types.Mirror"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_mirror"
+      },
+      "description": "Sample for UpdateMirror",
+      "file": "lustre_v1_generated_lustre_update_mirror_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "lustre_v1_generated_Lustre_UpdateMirror_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "lustre_v1_generated_lustre_update_mirror_sync.py"
+    }
+  ]
+}

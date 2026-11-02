@@ -1,0 +1,11 @@
+[flake8]
+import-order-style=google
+# Note: this forces all google imports to be in the third group. See
+# https://github.com/PyCQA/flake8-import-order/issues/111
+application-import-names=google
+ignore = E203, E266, E501, W503
+exclude =
+  __pycache__,
+  .git,
+  *.pyc,
+  conf.py

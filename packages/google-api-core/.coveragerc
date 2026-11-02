@@ -1,0 +1,18 @@
+[run]
+branch = True
+
+[report]
+fail_under = 100
+show_missing = True
+omit =
+    tests/*
+    */tests/*
+exclude_lines =
+    # Re-enable the standard pragma
+    pragma: NO COVER
+    # Ignore debug-only repr
+    def __repr__
+    # Ignore abstract methods
+    raise NotImplementedError
+    # Ignore coverage for code specific to static type checkers
+    TYPE_CHECKING

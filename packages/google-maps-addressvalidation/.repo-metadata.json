@@ -1,0 +1,15 @@
+{
+    "api_description": "The Address Validation API allows developers to verify the accuracy of\naddresses. Given an address, it returns information about the correctness\nof the components of the parsed address, a geocode, and a verdict on the\ndeliverability of the parsed address.",
+    "api_id": "addressvalidation.googleapis.com",
+    "api_shortname": "addressvalidation",
+    "client_documentation": "https://googleapis.dev/python/addressvalidation/latest",
+    "default_version": "v1",
+    "distribution_name": "google-maps-addressvalidation",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "addressvalidation",
+    "name_pretty": "Address Validation",
+    "product_documentation": "https://mapsplatform.google.com/maps-products/address-validation/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

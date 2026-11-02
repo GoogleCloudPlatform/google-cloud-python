@@ -1,0 +1,25 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children: []
+  class: google.cloud.storage.acl.DefaultObjectACL
+  fullName: google.cloud.storage.acl.DefaultObjectACL
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: DefaultObjectACL
+  source:
+    id: DefaultObjectACL
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 714
+  summary: 'A class representing the default object ACL for a bucket.
+
+
+    '
+  syntax:
+    content: DefaultObjectACL(bucket)
+    parameters: []
+  type: class
+  uid: google.cloud.storage.acl.DefaultObjectACL
+references: []

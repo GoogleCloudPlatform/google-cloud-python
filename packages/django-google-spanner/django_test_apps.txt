@@ -1,0 +1,9 @@
+admin_filters
+admin_utils
+custom_lookups
+extra_regress
+expressions_case
+model_regress
+modeladmin
+proxy_models
+serializers

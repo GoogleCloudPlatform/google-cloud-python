@@ -1,0 +1,542 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.developerconnect_v1",
+  "protoPackage": "google.cloud.developerconnect.v1",
+  "schema": "1.0",
+  "services": {
+    "DeveloperConnect": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DeveloperConnectClient",
+          "rpcs": {
+            "CreateAccountConnector": {
+              "methods": [
+                "create_account_connector"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreateGitRepositoryLink": {
+              "methods": [
+                "create_git_repository_link"
+              ]
+            },
+            "DeleteAccountConnector": {
+              "methods": [
+                "delete_account_connector"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeleteGitRepositoryLink": {
+              "methods": [
+                "delete_git_repository_link"
+              ]
+            },
+            "DeleteSelf": {
+              "methods": [
+                "delete_self"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "delete_user"
+              ]
+            },
+            "FetchAccessToken": {
+              "methods": [
+                "fetch_access_token"
+              ]
+            },
+            "FetchGitHubInstallations": {
+              "methods": [
+                "fetch_git_hub_installations"
+              ]
+            },
+            "FetchGitRefs": {
+              "methods": [
+                "fetch_git_refs"
+              ]
+            },
+            "FetchLinkableGitRepositories": {
+              "methods": [
+                "fetch_linkable_git_repositories"
+              ]
+            },
+            "FetchReadToken": {
+              "methods": [
+                "fetch_read_token"
+              ]
+            },
+            "FetchReadWriteToken": {
+              "methods": [
+                "fetch_read_write_token"
+              ]
+            },
+            "FetchSelf": {
+              "methods": [
+                "fetch_self"
+              ]
+            },
+            "FinishOAuth": {
+              "methods": [
+                "finish_o_auth"
+              ]
+            },
+            "GetAccountConnector": {
+              "methods": [
+                "get_account_connector"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetGitRepositoryLink": {
+              "methods": [
+                "get_git_repository_link"
+              ]
+            },
+            "ListAccountConnectors": {
+              "methods": [
+                "list_account_connectors"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListGitRepositoryLinks": {
+              "methods": [
+                "list_git_repository_links"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "list_users"
+              ]
+            },
+            "StartOAuth": {
+              "methods": [
+                "start_o_auth"
+              ]
+            },
+            "UpdateAccountConnector": {
+              "methods": [
+                "update_account_connector"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DeveloperConnectAsyncClient",
+          "rpcs": {
+            "CreateAccountConnector": {
+              "methods": [
+                "create_account_connector"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreateGitRepositoryLink": {
+              "methods": [
+                "create_git_repository_link"
+              ]
+            },
+            "DeleteAccountConnector": {
+              "methods": [
+                "delete_account_connector"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeleteGitRepositoryLink": {
+              "methods": [
+                "delete_git_repository_link"
+              ]
+            },
+            "DeleteSelf": {
+              "methods": [
+                "delete_self"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "delete_user"
+              ]
+            },
+            "FetchAccessToken": {
+              "methods": [
+                "fetch_access_token"
+              ]
+            },
+            "FetchGitHubInstallations": {
+              "methods": [
+                "fetch_git_hub_installations"
+              ]
+            },
+            "FetchGitRefs": {
+              "methods": [
+                "fetch_git_refs"
+              ]
+            },
+            "FetchLinkableGitRepositories": {
+              "methods": [
+                "fetch_linkable_git_repositories"
+              ]
+            },
+            "FetchReadToken": {
+              "methods": [
+                "fetch_read_token"
+              ]
+            },
+            "FetchReadWriteToken": {
+              "methods": [
+                "fetch_read_write_token"
+              ]
+            },
+            "FetchSelf": {
+              "methods": [
+                "fetch_self"
+              ]
+            },
+            "FinishOAuth": {
+              "methods": [
+                "finish_o_auth"
+              ]
+            },
+            "GetAccountConnector": {
+              "methods": [
+                "get_account_connector"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetGitRepositoryLink": {
+              "methods": [
+                "get_git_repository_link"
+              ]
+            },
+            "ListAccountConnectors": {
+              "methods": [
+                "list_account_connectors"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListGitRepositoryLinks": {
+              "methods": [
+                "list_git_repository_links"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "list_users"
+              ]
+            },
+            "StartOAuth": {
+              "methods": [
+                "start_o_auth"
+              ]
+            },
+            "UpdateAccountConnector": {
+              "methods": [
+                "update_account_connector"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DeveloperConnectClient",
+          "rpcs": {
+            "CreateAccountConnector": {
+              "methods": [
+                "create_account_connector"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreateGitRepositoryLink": {
+              "methods": [
+                "create_git_repository_link"
+              ]
+            },
+            "DeleteAccountConnector": {
+              "methods": [
+                "delete_account_connector"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeleteGitRepositoryLink": {
+              "methods": [
+                "delete_git_repository_link"
+              ]
+            },
+            "DeleteSelf": {
+              "methods": [
+                "delete_self"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "delete_user"
+              ]
+            },
+            "FetchAccessToken": {
+              "methods": [
+                "fetch_access_token"
+              ]
+            },
+            "FetchGitHubInstallations": {
+              "methods": [
+                "fetch_git_hub_installations"
+              ]
+            },
+            "FetchGitRefs": {
+              "methods": [
+                "fetch_git_refs"
+              ]
+            },
+            "FetchLinkableGitRepositories": {
+              "methods": [
+                "fetch_linkable_git_repositories"
+              ]
+            },
+            "FetchReadToken": {
+              "methods": [
+                "fetch_read_token"
+              ]
+            },
+            "FetchReadWriteToken": {
+              "methods": [
+                "fetch_read_write_token"
+              ]
+            },
+            "FetchSelf": {
+              "methods": [
+                "fetch_self"
+              ]
+            },
+            "FinishOAuth": {
+              "methods": [
+                "finish_o_auth"
+              ]
+            },
+            "GetAccountConnector": {
+              "methods": [
+                "get_account_connector"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetGitRepositoryLink": {
+              "methods": [
+                "get_git_repository_link"
+              ]
+            },
+            "ListAccountConnectors": {
+              "methods": [
+                "list_account_connectors"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListGitRepositoryLinks": {
+              "methods": [
+                "list_git_repository_links"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "list_users"
+              ]
+            },
+            "StartOAuth": {
+              "methods": [
+                "start_o_auth"
+              ]
+            },
+            "UpdateAccountConnector": {
+              "methods": [
+                "update_account_connector"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InsightsConfigService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "InsightsConfigServiceClient",
+          "rpcs": {
+            "CreateInsightsConfig": {
+              "methods": [
+                "create_insights_config"
+              ]
+            },
+            "DeleteInsightsConfig": {
+              "methods": [
+                "delete_insights_config"
+              ]
+            },
+            "GetDeploymentEvent": {
+              "methods": [
+                "get_deployment_event"
+              ]
+            },
+            "GetInsightsConfig": {
+              "methods": [
+                "get_insights_config"
+              ]
+            },
+            "ListDeploymentEvents": {
+              "methods": [
+                "list_deployment_events"
+              ]
+            },
+            "ListInsightsConfigs": {
+              "methods": [
+                "list_insights_configs"
+              ]
+            },
+            "UpdateInsightsConfig": {
+              "methods": [
+                "update_insights_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "InsightsConfigServiceAsyncClient",
+          "rpcs": {
+            "CreateInsightsConfig": {
+              "methods": [
+                "create_insights_config"
+              ]
+            },
+            "DeleteInsightsConfig": {
+              "methods": [
+                "delete_insights_config"
+              ]
+            },
+            "GetDeploymentEvent": {
+              "methods": [
+                "get_deployment_event"
+              ]
+            },
+            "GetInsightsConfig": {
+              "methods": [
+                "get_insights_config"
+              ]
+            },
+            "ListDeploymentEvents": {
+              "methods": [
+                "list_deployment_events"
+              ]
+            },
+            "ListInsightsConfigs": {
+              "methods": [
+                "list_insights_configs"
+              ]
+            },
+            "UpdateInsightsConfig": {
+              "methods": [
+                "update_insights_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "InsightsConfigServiceClient",
+          "rpcs": {
+            "CreateInsightsConfig": {
+              "methods": [
+                "create_insights_config"
+              ]
+            },
+            "DeleteInsightsConfig": {
+              "methods": [
+                "delete_insights_config"
+              ]
+            },
+            "GetDeploymentEvent": {
+              "methods": [
+                "get_deployment_event"
+              ]
+            },
+            "GetInsightsConfig": {
+              "methods": [
+                "get_insights_config"
+              ]
+            },
+            "ListDeploymentEvents": {
+              "methods": [
+                "list_deployment_events"
+              ]
+            },
+            "ListInsightsConfigs": {
+              "methods": [
+                "list_insights_configs"
+              ]
+            },
+            "UpdateInsightsConfig": {
+              "methods": [
+                "update_insights_config"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

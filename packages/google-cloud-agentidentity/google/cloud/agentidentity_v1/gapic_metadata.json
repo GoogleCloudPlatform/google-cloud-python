@@ -1,0 +1,268 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.agentidentity_v1",
+  "protoPackage": "google.cloud.agentidentity.v1",
+  "schema": "1.0",
+  "services": {
+    "AuthProviderService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AuthProviderServiceClient",
+          "rpcs": {
+            "CreateAuthProvider": {
+              "methods": [
+                "create_auth_provider"
+              ]
+            },
+            "DeleteAuthProvider": {
+              "methods": [
+                "delete_auth_provider"
+              ]
+            },
+            "DeleteAuthorization": {
+              "methods": [
+                "delete_authorization"
+              ]
+            },
+            "DisableAuthProvider": {
+              "methods": [
+                "disable_auth_provider"
+              ]
+            },
+            "EnableAuthProvider": {
+              "methods": [
+                "enable_auth_provider"
+              ]
+            },
+            "GetAccessSummary": {
+              "methods": [
+                "get_access_summary"
+              ]
+            },
+            "GetAuthProvider": {
+              "methods": [
+                "get_auth_provider"
+              ]
+            },
+            "GetAuthorization": {
+              "methods": [
+                "get_authorization"
+              ]
+            },
+            "ListAccessSummaries": {
+              "methods": [
+                "list_access_summaries"
+              ]
+            },
+            "ListAuthProviders": {
+              "methods": [
+                "list_auth_providers"
+              ]
+            },
+            "ListAuthorizations": {
+              "methods": [
+                "list_authorizations"
+              ]
+            },
+            "QueryAuthProviders": {
+              "methods": [
+                "query_auth_providers"
+              ]
+            },
+            "QueryWorkloads": {
+              "methods": [
+                "query_workloads"
+              ]
+            },
+            "RevokeAuthorization": {
+              "methods": [
+                "revoke_authorization"
+              ]
+            },
+            "UndeleteAuthProvider": {
+              "methods": [
+                "undelete_auth_provider"
+              ]
+            },
+            "UpdateAuthProvider": {
+              "methods": [
+                "update_auth_provider"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AuthProviderServiceAsyncClient",
+          "rpcs": {
+            "CreateAuthProvider": {
+              "methods": [
+                "create_auth_provider"
+              ]
+            },
+            "DeleteAuthProvider": {
+              "methods": [
+                "delete_auth_provider"
+              ]
+            },
+            "DeleteAuthorization": {
+              "methods": [
+                "delete_authorization"
+              ]
+            },
+            "DisableAuthProvider": {
+              "methods": [
+                "disable_auth_provider"
+              ]
+            },
+            "EnableAuthProvider": {
+              "methods": [
+                "enable_auth_provider"
+              ]
+            },
+            "GetAccessSummary": {
+              "methods": [
+                "get_access_summary"
+              ]
+            },
+            "GetAuthProvider": {
+              "methods": [
+                "get_auth_provider"
+              ]
+            },
+            "GetAuthorization": {
+              "methods": [
+                "get_authorization"
+              ]
+            },
+            "ListAccessSummaries": {
+              "methods": [
+                "list_access_summaries"
+              ]
+            },
+            "ListAuthProviders": {
+              "methods": [
+                "list_auth_providers"
+              ]
+            },
+            "ListAuthorizations": {
+              "methods": [
+                "list_authorizations"
+              ]
+            },
+            "QueryAuthProviders": {
+              "methods": [
+                "query_auth_providers"
+              ]
+            },
+            "QueryWorkloads": {
+              "methods": [
+                "query_workloads"
+              ]
+            },
+            "RevokeAuthorization": {
+              "methods": [
+                "revoke_authorization"
+              ]
+            },
+            "UndeleteAuthProvider": {
+              "methods": [
+                "undelete_auth_provider"
+              ]
+            },
+            "UpdateAuthProvider": {
+              "methods": [
+                "update_auth_provider"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AuthProviderServiceClient",
+          "rpcs": {
+            "CreateAuthProvider": {
+              "methods": [
+                "create_auth_provider"
+              ]
+            },
+            "DeleteAuthProvider": {
+              "methods": [
+                "delete_auth_provider"
+              ]
+            },
+            "DeleteAuthorization": {
+              "methods": [
+                "delete_authorization"
+              ]
+            },
+            "DisableAuthProvider": {
+              "methods": [
+                "disable_auth_provider"
+              ]
+            },
+            "EnableAuthProvider": {
+              "methods": [
+                "enable_auth_provider"
+              ]
+            },
+            "GetAccessSummary": {
+              "methods": [
+                "get_access_summary"
+              ]
+            },
+            "GetAuthProvider": {
+              "methods": [
+                "get_auth_provider"
+              ]
+            },
+            "GetAuthorization": {
+              "methods": [
+                "get_authorization"
+              ]
+            },
+            "ListAccessSummaries": {
+              "methods": [
+                "list_access_summaries"
+              ]
+            },
+            "ListAuthProviders": {
+              "methods": [
+                "list_auth_providers"
+              ]
+            },
+            "ListAuthorizations": {
+              "methods": [
+                "list_authorizations"
+              ]
+            },
+            "QueryAuthProviders": {
+              "methods": [
+                "query_auth_providers"
+              ]
+            },
+            "QueryWorkloads": {
+              "methods": [
+                "query_workloads"
+              ]
+            },
+            "RevokeAuthorization": {
+              "methods": [
+                "revoke_authorization"
+              ]
+            },
+            "UndeleteAuthProvider": {
+              "methods": [
+                "undelete_auth_provider"
+              ]
+            },
+            "UpdateAuthProvider": {
+              "methods": [
+                "update_auth_provider"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

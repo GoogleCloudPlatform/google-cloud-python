@@ -1,0 +1,58 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.agentidentitycredentials_v1beta",
+  "protoPackage": "google.cloud.agentidentitycredentials.v1beta",
+  "schema": "1.0",
+  "services": {
+    "AuthProviderCredentialsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AuthProviderCredentialsServiceClient",
+          "rpcs": {
+            "FinalizeCredentials": {
+              "methods": [
+                "finalize_credentials"
+              ]
+            },
+            "RetrieveCredentials": {
+              "methods": [
+                "retrieve_credentials"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AuthProviderCredentialsServiceAsyncClient",
+          "rpcs": {
+            "FinalizeCredentials": {
+              "methods": [
+                "finalize_credentials"
+              ]
+            },
+            "RetrieveCredentials": {
+              "methods": [
+                "retrieve_credentials"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AuthProviderCredentialsServiceClient",
+          "rpcs": {
+            "FinalizeCredentials": {
+              "methods": [
+                "finalize_credentials"
+              ]
+            },
+            "RetrieveCredentials": {
+              "methods": [
+                "retrieve_credentials"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

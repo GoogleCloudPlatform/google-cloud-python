@@ -1,0 +1,358 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.documentai_v1",
+  "protoPackage": "google.cloud.documentai.v1",
+  "schema": "1.0",
+  "services": {
+    "DocumentProcessorService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DocumentProcessorServiceClient",
+          "rpcs": {
+            "BatchProcessDocuments": {
+              "methods": [
+                "batch_process_documents"
+              ]
+            },
+            "CreateProcessor": {
+              "methods": [
+                "create_processor"
+              ]
+            },
+            "DeleteProcessor": {
+              "methods": [
+                "delete_processor"
+              ]
+            },
+            "DeleteProcessorVersion": {
+              "methods": [
+                "delete_processor_version"
+              ]
+            },
+            "DeployProcessorVersion": {
+              "methods": [
+                "deploy_processor_version"
+              ]
+            },
+            "DisableProcessor": {
+              "methods": [
+                "disable_processor"
+              ]
+            },
+            "EnableProcessor": {
+              "methods": [
+                "enable_processor"
+              ]
+            },
+            "EvaluateProcessorVersion": {
+              "methods": [
+                "evaluate_processor_version"
+              ]
+            },
+            "FetchProcessorTypes": {
+              "methods": [
+                "fetch_processor_types"
+              ]
+            },
+            "GetEvaluation": {
+              "methods": [
+                "get_evaluation"
+              ]
+            },
+            "GetProcessor": {
+              "methods": [
+                "get_processor"
+              ]
+            },
+            "GetProcessorType": {
+              "methods": [
+                "get_processor_type"
+              ]
+            },
+            "GetProcessorVersion": {
+              "methods": [
+                "get_processor_version"
+              ]
+            },
+            "ListEvaluations": {
+              "methods": [
+                "list_evaluations"
+              ]
+            },
+            "ListProcessorTypes": {
+              "methods": [
+                "list_processor_types"
+              ]
+            },
+            "ListProcessorVersions": {
+              "methods": [
+                "list_processor_versions"
+              ]
+            },
+            "ListProcessors": {
+              "methods": [
+                "list_processors"
+              ]
+            },
+            "ProcessDocument": {
+              "methods": [
+                "process_document"
+              ]
+            },
+            "ReviewDocument": {
+              "methods": [
+                "review_document"
+              ]
+            },
+            "SetDefaultProcessorVersion": {
+              "methods": [
+                "set_default_processor_version"
+              ]
+            },
+            "TrainProcessorVersion": {
+              "methods": [
+                "train_processor_version"
+              ]
+            },
+            "UndeployProcessorVersion": {
+              "methods": [
+                "undeploy_processor_version"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DocumentProcessorServiceAsyncClient",
+          "rpcs": {
+            "BatchProcessDocuments": {
+              "methods": [
+                "batch_process_documents"
+              ]
+            },
+            "CreateProcessor": {
+              "methods": [
+                "create_processor"
+              ]
+            },
+            "DeleteProcessor": {
+              "methods": [
+                "delete_processor"
+              ]
+            },
+            "DeleteProcessorVersion": {
+              "methods": [
+                "delete_processor_version"
+              ]
+            },
+            "DeployProcessorVersion": {
+              "methods": [
+                "deploy_processor_version"
+              ]
+            },
+            "DisableProcessor": {
+              "methods": [
+                "disable_processor"
+              ]
+            },
+            "EnableProcessor": {
+              "methods": [
+                "enable_processor"
+              ]
+            },
+            "EvaluateProcessorVersion": {
+              "methods": [
+                "evaluate_processor_version"
+              ]
+            },
+            "FetchProcessorTypes": {
+              "methods": [
+                "fetch_processor_types"
+              ]
+            },
+            "GetEvaluation": {
+              "methods": [
+                "get_evaluation"
+              ]
+            },
+            "GetProcessor": {
+              "methods": [
+                "get_processor"
+              ]
+            },
+            "GetProcessorType": {
+              "methods": [
+                "get_processor_type"
+              ]
+            },
+            "GetProcessorVersion": {
+              "methods": [
+                "get_processor_version"
+              ]
+            },
+            "ListEvaluations": {
+              "methods": [
+                "list_evaluations"
+              ]
+            },
+            "ListProcessorTypes": {
+              "methods": [
+                "list_processor_types"
+              ]
+            },
+            "ListProcessorVersions": {
+              "methods": [
+                "list_processor_versions"
+              ]
+            },
+            "ListProcessors": {
+              "methods": [
+                "list_processors"
+              ]
+            },
+            "ProcessDocument": {
+              "methods": [
+                "process_document"
+              ]
+            },
+            "ReviewDocument": {
+              "methods": [
+                "review_document"
+              ]
+            },
+            "SetDefaultProcessorVersion": {
+              "methods": [
+                "set_default_processor_version"
+              ]
+            },
+            "TrainProcessorVersion": {
+              "methods": [
+                "train_processor_version"
+              ]
+            },
+            "UndeployProcessorVersion": {
+              "methods": [
+                "undeploy_processor_version"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DocumentProcessorServiceClient",
+          "rpcs": {
+            "BatchProcessDocuments": {
+              "methods": [
+                "batch_process_documents"
+              ]
+            },
+            "CreateProcessor": {
+              "methods": [
+                "create_processor"
+              ]
+            },
+            "DeleteProcessor": {
+              "methods": [
+                "delete_processor"
+              ]
+            },
+            "DeleteProcessorVersion": {
+              "methods": [
+                "delete_processor_version"
+              ]
+            },
+            "DeployProcessorVersion": {
+              "methods": [
+                "deploy_processor_version"
+              ]
+            },
+            "DisableProcessor": {
+              "methods": [
+                "disable_processor"
+              ]
+            },
+            "EnableProcessor": {
+              "methods": [
+                "enable_processor"
+              ]
+            },
+            "EvaluateProcessorVersion": {
+              "methods": [
+                "evaluate_processor_version"
+              ]
+            },
+            "FetchProcessorTypes": {
+              "methods": [
+                "fetch_processor_types"
+              ]
+            },
+            "GetEvaluation": {
+              "methods": [
+                "get_evaluation"
+              ]
+            },
+            "GetProcessor": {
+              "methods": [
+                "get_processor"
+              ]
+            },
+            "GetProcessorType": {
+              "methods": [
+                "get_processor_type"
+              ]
+            },
+            "GetProcessorVersion": {
+              "methods": [
+                "get_processor_version"
+              ]
+            },
+            "ListEvaluations": {
+              "methods": [
+                "list_evaluations"
+              ]
+            },
+            "ListProcessorTypes": {
+              "methods": [
+                "list_processor_types"
+              ]
+            },
+            "ListProcessorVersions": {
+              "methods": [
+                "list_processor_versions"
+              ]
+            },
+            "ListProcessors": {
+              "methods": [
+                "list_processors"
+              ]
+            },
+            "ProcessDocument": {
+              "methods": [
+                "process_document"
+              ]
+            },
+            "ReviewDocument": {
+              "methods": [
+                "review_document"
+              ]
+            },
+            "SetDefaultProcessorVersion": {
+              "methods": [
+                "set_default_processor_version"
+              ]
+            },
+            "TrainProcessorVersion": {
+              "methods": [
+                "train_processor_version"
+              ]
+            },
+            "UndeployProcessorVersion": {
+              "methods": [
+                "undeploy_processor_version"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

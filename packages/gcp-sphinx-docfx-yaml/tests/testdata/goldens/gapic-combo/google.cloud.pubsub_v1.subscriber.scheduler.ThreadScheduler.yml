@@ -1,0 +1,116 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.queue
+  - google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.schedule
+  - google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.shutdown
+  class: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+  fullName: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.scheduler
+  name: ThreadScheduler
+  source:
+    id: ThreadScheduler
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/scheduler.py
+    startLine: 89
+  summary: "A thread pool-based scheduler. It must not be shared across\n   SubscriberClients.\n\
+    \nThis scheduler is useful in typical I/O-bound message processing.\n"
+  syntax:
+    content: "ThreadScheduler(\n    executor: typing.Optional[concurrent.futures.thread.ThreadPoolExecutor]\
+      \ = None,\n)"
+    parameters:
+    - defaultValue: None
+      description: An optional executor to use. If not specified, a default one will
+        be created.
+      id: executor
+      var_type: typing.Optional[concurrent.futures.thread.ThreadPoolExecutor]
+  type: class
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+- &id001
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+  fullName: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.queue
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.scheduler
+  name: queue
+  source:
+    id: queue
+    path: null
+    startLine: null
+  summary: 'Queue: A thread-safe queue used for communication between callbacks
+
+    and the scheduling thread.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.queue
+- *id001
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+  fullName: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.schedule
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.scheduler
+  name: schedule
+  source:
+    id: schedule
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/scheduler.py
+    startLine: 116
+  summary: 'Schedule the callback to be called asynchronously in a thread pool.
+
+    '
+  syntax:
+    content: 'schedule(callback: typing.Callable, *args, **kwargs) -> None'
+    parameters:
+    - description: The function to call.
+      id: callback
+      var_type: Callable
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.schedule
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+  fullName: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.shutdown
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.scheduler
+  name: shutdown
+  source:
+    id: shutdown
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/scheduler.py
+    startLine: 136
+  summary: 'Shut down the scheduler and immediately end all pending callbacks.
+
+    '
+  syntax:
+    content: "shutdown(\n    await_msg_callbacks: bool = False,\n) -> typing.List[pubsub_v1.subscriber.message.Message]"
+    parameters:
+    - defaultValue: 'False'
+      description: If <code>True</code>, the method will block until all currently
+        executing executor threads are done processing. If <code>False</code> (default),
+        the method will not wait for the currently running threads to complete.
+      id: await_msg_callbacks
+      var_type: bool
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.shutdown
+references:
+- fullName: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.queue
+  isExternal: false
+  name: queue
+  parent: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.queue
+- fullName: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.schedule
+  isExternal: false
+  name: schedule
+  parent: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.schedule
+- fullName: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.shutdown
+  isExternal: false
+  name: shutdown
+  parent: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler.shutdown

@@ -1,0 +1,16 @@
+{
+    "api_description": "Attestation verifier for Confidential Space.",
+    "api_id": "confidentialcomputing.googleapis.com",
+    "api_shortname": "confidentialcomputing",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/confidentialcomputing/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-confidentialcomputing",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1134314\u0026template=1640550",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "confidentialcomputing",
+    "name_pretty": "Confidential Computing",
+    "product_documentation": "https://cloud.google.com/confidential-computing",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

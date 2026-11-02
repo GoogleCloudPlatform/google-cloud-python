@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.policytroubleshooter_iam_v3",
+  "protoPackage": "google.cloud.policytroubleshooter.iam.v3",
+  "schema": "1.0",
+  "services": {
+    "PolicyTroubleshooter": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PolicyTroubleshooterClient",
+          "rpcs": {
+            "TroubleshootIamPolicy": {
+              "methods": [
+                "troubleshoot_iam_policy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "PolicyTroubleshooterAsyncClient",
+          "rpcs": {
+            "TroubleshootIamPolicy": {
+              "methods": [
+                "troubleshoot_iam_policy"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "PolicyTroubleshooterClient",
+          "rpcs": {
+            "TroubleshootIamPolicy": {
+              "methods": [
+                "troubleshoot_iam_policy"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

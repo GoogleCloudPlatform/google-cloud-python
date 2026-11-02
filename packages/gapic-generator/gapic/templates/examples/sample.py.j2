@@ -1,0 +1,49 @@
+{#
+ # Copyright (C) 2019  Google LLC
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #     http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ #}
+{% extends "_base.py.j2" %}
+
+{% block content %}
+
+{# Input parameters: sample #}
+{#                   callingForm #}
+{% import "examples/feature_fragments.j2" as frags %}
+{{ frags.sample_header(sample, calling_form) }}
+
+# [START {{ sample.id }}]
+{% include "examples/_generated_sample_comment.j2" %}
+
+{# python code is responsible for all transformations: all we do here is render #}
+{% for import_statement in imports %}
+{{ import_statement }}
+{% endfor %}
+
+
+{# also need calling form #}
+{% if sample.get("is_resumable_upload") %}
+{{ frags.render_resumable_upload_samples(sample, calling_form, calling_form_enum) }}
+{% else %}
+{% if sample.transport == "grpc-async" %}async {% endif %}def sample_{{ sample.rpc|snake_case|trim }}({{ frags.print_input_params(sample.request)|trim }}):
+    {{ frags.render_client_setup(sample.module_name, sample.client_name)|indent }}
+    {{ frags.render_request_setup(sample.request, sample.request_module_name, sample.request_type, calling_form, calling_form_enum)|indent }}
+    {% with method_call = frags.render_method_call(sample, calling_form, calling_form_enum, sample.transport) %}
+    {{ frags.render_calling_form(method_call, calling_form, calling_form_enum, sample.transport, sample.response, sample)|indent -}}
+    {% endwith %}
+{% endif %}
+
+# [END {{ sample.id }}]
+{# TODO: Enable main block (or decide to remove main block from python sample) #}
+{# {{ frags.render_main_block(sample, sample.request) }} #}
+{% endblock %}

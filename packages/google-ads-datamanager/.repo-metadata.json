@@ -1,0 +1,16 @@
+{
+    "api_description": "A unified ingestion API for data partners, agencies and advertisers to\nconnect first-party data across Google advertising products.",
+    "api_id": "datamanager.googleapis.com",
+    "api_shortname": "datamanager",
+    "client_documentation": "https://googleapis.dev/python/google-ads-datamanager/latest",
+    "default_version": "v1",
+    "distribution_name": "google-ads-datamanager",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1812065",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-ads-datamanager",
+    "name_pretty": "Data Manager",
+    "product_documentation": "https://developers.google.com/data-manager",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

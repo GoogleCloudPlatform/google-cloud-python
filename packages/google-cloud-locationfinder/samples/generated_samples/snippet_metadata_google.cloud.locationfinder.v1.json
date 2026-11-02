@@ -1,0 +1,514 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.locationfinder.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-locationfinder",
+    "version": "0.4.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderAsyncClient",
+          "shortName": "CloudLocationFinderAsyncClient"
+        },
+        "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderAsyncClient.get_cloud_location",
+        "method": {
+          "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder.GetCloudLocation",
+          "service": {
+            "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder",
+            "shortName": "CloudLocationFinder"
+          },
+          "shortName": "GetCloudLocation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.locationfinder_v1.types.GetCloudLocationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.locationfinder_v1.types.CloudLocation",
+        "shortName": "get_cloud_location"
+      },
+      "description": "Sample for GetCloudLocation",
+      "file": "cloudlocationfinder_v1_generated_cloud_location_finder_get_cloud_location_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudlocationfinder_v1_generated_CloudLocationFinder_GetCloudLocation_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudlocationfinder_v1_generated_cloud_location_finder_get_cloud_location_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderClient",
+          "shortName": "CloudLocationFinderClient"
+        },
+        "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderClient.get_cloud_location",
+        "method": {
+          "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder.GetCloudLocation",
+          "service": {
+            "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder",
+            "shortName": "CloudLocationFinder"
+          },
+          "shortName": "GetCloudLocation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.locationfinder_v1.types.GetCloudLocationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.locationfinder_v1.types.CloudLocation",
+        "shortName": "get_cloud_location"
+      },
+      "description": "Sample for GetCloudLocation",
+      "file": "cloudlocationfinder_v1_generated_cloud_location_finder_get_cloud_location_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudlocationfinder_v1_generated_CloudLocationFinder_GetCloudLocation_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudlocationfinder_v1_generated_cloud_location_finder_get_cloud_location_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderAsyncClient",
+          "shortName": "CloudLocationFinderAsyncClient"
+        },
+        "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderAsyncClient.list_cloud_locations",
+        "method": {
+          "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder.ListCloudLocations",
+          "service": {
+            "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder",
+            "shortName": "CloudLocationFinder"
+          },
+          "shortName": "ListCloudLocations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.locationfinder_v1.types.ListCloudLocationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.locationfinder_v1.services.cloud_location_finder.pagers.ListCloudLocationsAsyncPager",
+        "shortName": "list_cloud_locations"
+      },
+      "description": "Sample for ListCloudLocations",
+      "file": "cloudlocationfinder_v1_generated_cloud_location_finder_list_cloud_locations_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudlocationfinder_v1_generated_CloudLocationFinder_ListCloudLocations_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudlocationfinder_v1_generated_cloud_location_finder_list_cloud_locations_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderClient",
+          "shortName": "CloudLocationFinderClient"
+        },
+        "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderClient.list_cloud_locations",
+        "method": {
+          "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder.ListCloudLocations",
+          "service": {
+            "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder",
+            "shortName": "CloudLocationFinder"
+          },
+          "shortName": "ListCloudLocations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.locationfinder_v1.types.ListCloudLocationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.locationfinder_v1.services.cloud_location_finder.pagers.ListCloudLocationsPager",
+        "shortName": "list_cloud_locations"
+      },
+      "description": "Sample for ListCloudLocations",
+      "file": "cloudlocationfinder_v1_generated_cloud_location_finder_list_cloud_locations_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudlocationfinder_v1_generated_CloudLocationFinder_ListCloudLocations_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudlocationfinder_v1_generated_cloud_location_finder_list_cloud_locations_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderAsyncClient",
+          "shortName": "CloudLocationFinderAsyncClient"
+        },
+        "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderAsyncClient.search_cloud_locations",
+        "method": {
+          "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder.SearchCloudLocations",
+          "service": {
+            "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder",
+            "shortName": "CloudLocationFinder"
+          },
+          "shortName": "SearchCloudLocations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.locationfinder_v1.types.SearchCloudLocationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "source_cloud_location",
+            "type": "str"
+          },
+          {
+            "name": "query",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.locationfinder_v1.services.cloud_location_finder.pagers.SearchCloudLocationsAsyncPager",
+        "shortName": "search_cloud_locations"
+      },
+      "description": "Sample for SearchCloudLocations",
+      "file": "cloudlocationfinder_v1_generated_cloud_location_finder_search_cloud_locations_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudlocationfinder_v1_generated_CloudLocationFinder_SearchCloudLocations_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudlocationfinder_v1_generated_cloud_location_finder_search_cloud_locations_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderClient",
+          "shortName": "CloudLocationFinderClient"
+        },
+        "fullName": "google.cloud.locationfinder_v1.CloudLocationFinderClient.search_cloud_locations",
+        "method": {
+          "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder.SearchCloudLocations",
+          "service": {
+            "fullName": "google.cloud.locationfinder.v1.CloudLocationFinder",
+            "shortName": "CloudLocationFinder"
+          },
+          "shortName": "SearchCloudLocations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.locationfinder_v1.types.SearchCloudLocationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "source_cloud_location",
+            "type": "str"
+          },
+          {
+            "name": "query",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.locationfinder_v1.services.cloud_location_finder.pagers.SearchCloudLocationsPager",
+        "shortName": "search_cloud_locations"
+      },
+      "description": "Sample for SearchCloudLocations",
+      "file": "cloudlocationfinder_v1_generated_cloud_location_finder_search_cloud_locations_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudlocationfinder_v1_generated_CloudLocationFinder_SearchCloudLocations_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudlocationfinder_v1_generated_cloud_location_finder_search_cloud_locations_sync.py"
+    }
+  ]
+}

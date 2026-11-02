@@ -1,0 +1,2253 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.privilegedaccessmanager.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-privilegedaccessmanager",
+    "version": "0.4.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.approve_grant",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.ApproveGrant",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "ApproveGrant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.ApproveGrantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.Grant",
+        "shortName": "approve_grant"
+      },
+      "description": "Sample for ApproveGrant",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_approve_grant_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_ApproveGrant_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_approve_grant_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.approve_grant",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.ApproveGrant",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "ApproveGrant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.ApproveGrantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.Grant",
+        "shortName": "approve_grant"
+      },
+      "description": "Sample for ApproveGrant",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_approve_grant_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_ApproveGrant_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_approve_grant_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.check_onboarding_status",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.CheckOnboardingStatus",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "CheckOnboardingStatus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.CheckOnboardingStatusRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.CheckOnboardingStatusResponse",
+        "shortName": "check_onboarding_status"
+      },
+      "description": "Sample for CheckOnboardingStatus",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_check_onboarding_status_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_CheckOnboardingStatus_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_check_onboarding_status_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.check_onboarding_status",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.CheckOnboardingStatus",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "CheckOnboardingStatus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.CheckOnboardingStatusRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.CheckOnboardingStatusResponse",
+        "shortName": "check_onboarding_status"
+      },
+      "description": "Sample for CheckOnboardingStatus",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_check_onboarding_status_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_CheckOnboardingStatus_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_check_onboarding_status_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.create_entitlement",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.CreateEntitlement",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "CreateEntitlement"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.CreateEntitlementRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "entitlement",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.Entitlement"
+          },
+          {
+            "name": "entitlement_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_entitlement"
+      },
+      "description": "Sample for CreateEntitlement",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_create_entitlement_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_CreateEntitlement_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_create_entitlement_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.create_entitlement",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.CreateEntitlement",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "CreateEntitlement"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.CreateEntitlementRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "entitlement",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.Entitlement"
+          },
+          {
+            "name": "entitlement_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_entitlement"
+      },
+      "description": "Sample for CreateEntitlement",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_create_entitlement_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_CreateEntitlement_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_create_entitlement_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.create_grant",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.CreateGrant",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "CreateGrant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.CreateGrantRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "grant",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.Grant"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.Grant",
+        "shortName": "create_grant"
+      },
+      "description": "Sample for CreateGrant",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_create_grant_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_CreateGrant_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_create_grant_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.create_grant",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.CreateGrant",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "CreateGrant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.CreateGrantRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "grant",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.Grant"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.Grant",
+        "shortName": "create_grant"
+      },
+      "description": "Sample for CreateGrant",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_create_grant_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_CreateGrant_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_create_grant_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.delete_entitlement",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.DeleteEntitlement",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "DeleteEntitlement"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.DeleteEntitlementRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_entitlement"
+      },
+      "description": "Sample for DeleteEntitlement",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_delete_entitlement_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_DeleteEntitlement_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_delete_entitlement_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.delete_entitlement",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.DeleteEntitlement",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "DeleteEntitlement"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.DeleteEntitlementRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_entitlement"
+      },
+      "description": "Sample for DeleteEntitlement",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_delete_entitlement_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_DeleteEntitlement_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_delete_entitlement_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.deny_grant",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.DenyGrant",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "DenyGrant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.DenyGrantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.Grant",
+        "shortName": "deny_grant"
+      },
+      "description": "Sample for DenyGrant",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_deny_grant_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_DenyGrant_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_deny_grant_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.deny_grant",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.DenyGrant",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "DenyGrant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.DenyGrantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.Grant",
+        "shortName": "deny_grant"
+      },
+      "description": "Sample for DenyGrant",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_deny_grant_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_DenyGrant_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_deny_grant_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.get_entitlement",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.GetEntitlement",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "GetEntitlement"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.GetEntitlementRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.Entitlement",
+        "shortName": "get_entitlement"
+      },
+      "description": "Sample for GetEntitlement",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_get_entitlement_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_GetEntitlement_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_get_entitlement_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.get_entitlement",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.GetEntitlement",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "GetEntitlement"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.GetEntitlementRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.Entitlement",
+        "shortName": "get_entitlement"
+      },
+      "description": "Sample for GetEntitlement",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_get_entitlement_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_GetEntitlement_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_get_entitlement_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.get_grant",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.GetGrant",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "GetGrant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.GetGrantRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.Grant",
+        "shortName": "get_grant"
+      },
+      "description": "Sample for GetGrant",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_get_grant_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_GetGrant_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_get_grant_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.get_grant",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.GetGrant",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "GetGrant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.GetGrantRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.types.Grant",
+        "shortName": "get_grant"
+      },
+      "description": "Sample for GetGrant",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_get_grant_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_GetGrant_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_get_grant_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.list_entitlements",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.ListEntitlements",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "ListEntitlements"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.ListEntitlementsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.services.privileged_access_manager.pagers.ListEntitlementsAsyncPager",
+        "shortName": "list_entitlements"
+      },
+      "description": "Sample for ListEntitlements",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_list_entitlements_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_ListEntitlements_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_list_entitlements_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.list_entitlements",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.ListEntitlements",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "ListEntitlements"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.ListEntitlementsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.services.privileged_access_manager.pagers.ListEntitlementsPager",
+        "shortName": "list_entitlements"
+      },
+      "description": "Sample for ListEntitlements",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_list_entitlements_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_ListEntitlements_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_list_entitlements_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.list_grants",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.ListGrants",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "ListGrants"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.ListGrantsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.services.privileged_access_manager.pagers.ListGrantsAsyncPager",
+        "shortName": "list_grants"
+      },
+      "description": "Sample for ListGrants",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_list_grants_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_ListGrants_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_list_grants_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.list_grants",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.ListGrants",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "ListGrants"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.ListGrantsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.services.privileged_access_manager.pagers.ListGrantsPager",
+        "shortName": "list_grants"
+      },
+      "description": "Sample for ListGrants",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_list_grants_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_ListGrants_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_list_grants_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.revoke_grant",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.RevokeGrant",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "RevokeGrant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.RevokeGrantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "revoke_grant"
+      },
+      "description": "Sample for RevokeGrant",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_revoke_grant_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_RevokeGrant_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_revoke_grant_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.revoke_grant",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.RevokeGrant",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "RevokeGrant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.RevokeGrantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "revoke_grant"
+      },
+      "description": "Sample for RevokeGrant",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_revoke_grant_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_RevokeGrant_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_revoke_grant_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.search_entitlements",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.SearchEntitlements",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "SearchEntitlements"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.SearchEntitlementsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.services.privileged_access_manager.pagers.SearchEntitlementsAsyncPager",
+        "shortName": "search_entitlements"
+      },
+      "description": "Sample for SearchEntitlements",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_search_entitlements_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_SearchEntitlements_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_search_entitlements_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.search_entitlements",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.SearchEntitlements",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "SearchEntitlements"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.SearchEntitlementsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.services.privileged_access_manager.pagers.SearchEntitlementsPager",
+        "shortName": "search_entitlements"
+      },
+      "description": "Sample for SearchEntitlements",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_search_entitlements_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_SearchEntitlements_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_search_entitlements_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.search_grants",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.SearchGrants",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "SearchGrants"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.SearchGrantsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.services.privileged_access_manager.pagers.SearchGrantsAsyncPager",
+        "shortName": "search_grants"
+      },
+      "description": "Sample for SearchGrants",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_search_grants_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_SearchGrants_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_search_grants_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.search_grants",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.SearchGrants",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "SearchGrants"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.SearchGrantsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.privilegedaccessmanager_v1.services.privileged_access_manager.pagers.SearchGrantsPager",
+        "shortName": "search_grants"
+      },
+      "description": "Sample for SearchGrants",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_search_grants_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_SearchGrants_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_search_grants_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient",
+          "shortName": "PrivilegedAccessManagerAsyncClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerAsyncClient.update_entitlement",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.UpdateEntitlement",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "UpdateEntitlement"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.UpdateEntitlementRequest"
+          },
+          {
+            "name": "entitlement",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.Entitlement"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_entitlement"
+      },
+      "description": "Sample for UpdateEntitlement",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_update_entitlement_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_UpdateEntitlement_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_update_entitlement_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient",
+          "shortName": "PrivilegedAccessManagerClient"
+        },
+        "fullName": "google.cloud.privilegedaccessmanager_v1.PrivilegedAccessManagerClient.update_entitlement",
+        "method": {
+          "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager.UpdateEntitlement",
+          "service": {
+            "fullName": "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+            "shortName": "PrivilegedAccessManager"
+          },
+          "shortName": "UpdateEntitlement"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.UpdateEntitlementRequest"
+          },
+          {
+            "name": "entitlement",
+            "type": "google.cloud.privilegedaccessmanager_v1.types.Entitlement"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_entitlement"
+      },
+      "description": "Sample for UpdateEntitlement",
+      "file": "privilegedaccessmanager_v1_generated_privileged_access_manager_update_entitlement_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privilegedaccessmanager_v1_generated_PrivilegedAccessManager_UpdateEntitlement_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privilegedaccessmanager_v1_generated_privileged_access_manager_update_entitlement_sync.py"
+    }
+  ]
+}

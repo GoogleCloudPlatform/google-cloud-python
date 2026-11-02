@@ -1,0 +1,163 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.bigquery_datapolicies_v1",
+  "protoPackage": "google.cloud.bigquery.datapolicies.v1",
+  "schema": "1.0",
+  "services": {
+    "DataPolicyService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataPolicyServiceClient",
+          "rpcs": {
+            "CreateDataPolicy": {
+              "methods": [
+                "create_data_policy"
+              ]
+            },
+            "DeleteDataPolicy": {
+              "methods": [
+                "delete_data_policy"
+              ]
+            },
+            "GetDataPolicy": {
+              "methods": [
+                "get_data_policy"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "ListDataPolicies": {
+              "methods": [
+                "list_data_policies"
+              ]
+            },
+            "RenameDataPolicy": {
+              "methods": [
+                "rename_data_policy"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateDataPolicy": {
+              "methods": [
+                "update_data_policy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataPolicyServiceAsyncClient",
+          "rpcs": {
+            "CreateDataPolicy": {
+              "methods": [
+                "create_data_policy"
+              ]
+            },
+            "DeleteDataPolicy": {
+              "methods": [
+                "delete_data_policy"
+              ]
+            },
+            "GetDataPolicy": {
+              "methods": [
+                "get_data_policy"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "ListDataPolicies": {
+              "methods": [
+                "list_data_policies"
+              ]
+            },
+            "RenameDataPolicy": {
+              "methods": [
+                "rename_data_policy"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateDataPolicy": {
+              "methods": [
+                "update_data_policy"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataPolicyServiceClient",
+          "rpcs": {
+            "CreateDataPolicy": {
+              "methods": [
+                "create_data_policy"
+              ]
+            },
+            "DeleteDataPolicy": {
+              "methods": [
+                "delete_data_policy"
+              ]
+            },
+            "GetDataPolicy": {
+              "methods": [
+                "get_data_policy"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "ListDataPolicies": {
+              "methods": [
+                "list_data_policies"
+              ]
+            },
+            "RenameDataPolicy": {
+              "methods": [
+                "rename_data_policy"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateDataPolicy": {
+              "methods": [
+                "update_data_policy"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

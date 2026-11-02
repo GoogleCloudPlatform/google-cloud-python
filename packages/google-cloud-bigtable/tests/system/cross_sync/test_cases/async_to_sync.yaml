@@ -1,0 +1,76 @@
+tests:
+  - description: "async for loop fn"
+    before: |
+      async def func_name():
+        async for i in range(10):
+            await routine()
+        return 42
+    transformers: [AsyncToSync]
+    after: |
+      def func_name():
+        for i in range(10):
+            routine()
+        return 42
+
+  - description: "async with statement"
+    before: |
+      async def func_name():
+        async with context_manager() as cm:
+            await do_something(cm)
+    transformers: [AsyncToSync]
+    after: |
+      def func_name():
+        with context_manager() as cm:
+            do_something(cm)
+
+  - description: "async function definition"
+    before: |
+      async def async_function(param1, param2):
+        result = await some_coroutine()
+        return result
+    transformers: [AsyncToSync]
+    after: |
+      def async_function(param1, param2):
+        result = some_coroutine()
+        return result
+
+  - description: "list comprehension with async for"
+    before: |
+      async def func_name():
+        result = [x async for x in aiter() if await predicate(x)]
+    transformers: [AsyncToSync]
+    after: |
+      def func_name():
+        result = [x for x in aiter() if predicate(x)]
+
+  - description: "multiple async features in one function"
+    before: |
+      async def complex_function():
+        async with resource_manager() as res:
+          async for item in res.items():
+            if await check(item):
+              yield await process(item)
+    transformers: [AsyncToSync]
+    after: |
+      def complex_function():
+        with resource_manager() as res:
+          for item in res.items():
+            if check(item):
+              yield process(item)
+
+  - description: "nested async constructs"
+    before: |
+      async def nested_async():
+        async with outer_context():
+          async for x in outer_iter():
+            async with inner_context(x):
+              async for y in inner_iter(x):
+                await process(x, y)
+    transformers: [AsyncToSync]
+    after: |
+      def nested_async():
+        with outer_context():
+          for x in outer_iter():
+            with inner_context(x):
+              for y in inner_iter(x):
+                process(x, y)

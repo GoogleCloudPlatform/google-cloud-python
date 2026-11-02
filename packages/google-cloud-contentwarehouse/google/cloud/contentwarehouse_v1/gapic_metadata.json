@@ -1,0 +1,543 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.contentwarehouse_v1",
+  "protoPackage": "google.cloud.contentwarehouse.v1",
+  "schema": "1.0",
+  "services": {
+    "DocumentLinkService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DocumentLinkServiceClient",
+          "rpcs": {
+            "CreateDocumentLink": {
+              "methods": [
+                "create_document_link"
+              ]
+            },
+            "DeleteDocumentLink": {
+              "methods": [
+                "delete_document_link"
+              ]
+            },
+            "ListLinkedSources": {
+              "methods": [
+                "list_linked_sources"
+              ]
+            },
+            "ListLinkedTargets": {
+              "methods": [
+                "list_linked_targets"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DocumentLinkServiceAsyncClient",
+          "rpcs": {
+            "CreateDocumentLink": {
+              "methods": [
+                "create_document_link"
+              ]
+            },
+            "DeleteDocumentLink": {
+              "methods": [
+                "delete_document_link"
+              ]
+            },
+            "ListLinkedSources": {
+              "methods": [
+                "list_linked_sources"
+              ]
+            },
+            "ListLinkedTargets": {
+              "methods": [
+                "list_linked_targets"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DocumentLinkServiceClient",
+          "rpcs": {
+            "CreateDocumentLink": {
+              "methods": [
+                "create_document_link"
+              ]
+            },
+            "DeleteDocumentLink": {
+              "methods": [
+                "delete_document_link"
+              ]
+            },
+            "ListLinkedSources": {
+              "methods": [
+                "list_linked_sources"
+              ]
+            },
+            "ListLinkedTargets": {
+              "methods": [
+                "list_linked_targets"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DocumentSchemaService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DocumentSchemaServiceClient",
+          "rpcs": {
+            "CreateDocumentSchema": {
+              "methods": [
+                "create_document_schema"
+              ]
+            },
+            "DeleteDocumentSchema": {
+              "methods": [
+                "delete_document_schema"
+              ]
+            },
+            "GetDocumentSchema": {
+              "methods": [
+                "get_document_schema"
+              ]
+            },
+            "ListDocumentSchemas": {
+              "methods": [
+                "list_document_schemas"
+              ]
+            },
+            "UpdateDocumentSchema": {
+              "methods": [
+                "update_document_schema"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DocumentSchemaServiceAsyncClient",
+          "rpcs": {
+            "CreateDocumentSchema": {
+              "methods": [
+                "create_document_schema"
+              ]
+            },
+            "DeleteDocumentSchema": {
+              "methods": [
+                "delete_document_schema"
+              ]
+            },
+            "GetDocumentSchema": {
+              "methods": [
+                "get_document_schema"
+              ]
+            },
+            "ListDocumentSchemas": {
+              "methods": [
+                "list_document_schemas"
+              ]
+            },
+            "UpdateDocumentSchema": {
+              "methods": [
+                "update_document_schema"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DocumentSchemaServiceClient",
+          "rpcs": {
+            "CreateDocumentSchema": {
+              "methods": [
+                "create_document_schema"
+              ]
+            },
+            "DeleteDocumentSchema": {
+              "methods": [
+                "delete_document_schema"
+              ]
+            },
+            "GetDocumentSchema": {
+              "methods": [
+                "get_document_schema"
+              ]
+            },
+            "ListDocumentSchemas": {
+              "methods": [
+                "list_document_schemas"
+              ]
+            },
+            "UpdateDocumentSchema": {
+              "methods": [
+                "update_document_schema"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DocumentService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DocumentServiceClient",
+          "rpcs": {
+            "CreateDocument": {
+              "methods": [
+                "create_document"
+              ]
+            },
+            "DeleteDocument": {
+              "methods": [
+                "delete_document"
+              ]
+            },
+            "FetchAcl": {
+              "methods": [
+                "fetch_acl"
+              ]
+            },
+            "GetDocument": {
+              "methods": [
+                "get_document"
+              ]
+            },
+            "LockDocument": {
+              "methods": [
+                "lock_document"
+              ]
+            },
+            "SearchDocuments": {
+              "methods": [
+                "search_documents"
+              ]
+            },
+            "SetAcl": {
+              "methods": [
+                "set_acl"
+              ]
+            },
+            "UpdateDocument": {
+              "methods": [
+                "update_document"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DocumentServiceAsyncClient",
+          "rpcs": {
+            "CreateDocument": {
+              "methods": [
+                "create_document"
+              ]
+            },
+            "DeleteDocument": {
+              "methods": [
+                "delete_document"
+              ]
+            },
+            "FetchAcl": {
+              "methods": [
+                "fetch_acl"
+              ]
+            },
+            "GetDocument": {
+              "methods": [
+                "get_document"
+              ]
+            },
+            "LockDocument": {
+              "methods": [
+                "lock_document"
+              ]
+            },
+            "SearchDocuments": {
+              "methods": [
+                "search_documents"
+              ]
+            },
+            "SetAcl": {
+              "methods": [
+                "set_acl"
+              ]
+            },
+            "UpdateDocument": {
+              "methods": [
+                "update_document"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DocumentServiceClient",
+          "rpcs": {
+            "CreateDocument": {
+              "methods": [
+                "create_document"
+              ]
+            },
+            "DeleteDocument": {
+              "methods": [
+                "delete_document"
+              ]
+            },
+            "FetchAcl": {
+              "methods": [
+                "fetch_acl"
+              ]
+            },
+            "GetDocument": {
+              "methods": [
+                "get_document"
+              ]
+            },
+            "LockDocument": {
+              "methods": [
+                "lock_document"
+              ]
+            },
+            "SearchDocuments": {
+              "methods": [
+                "search_documents"
+              ]
+            },
+            "SetAcl": {
+              "methods": [
+                "set_acl"
+              ]
+            },
+            "UpdateDocument": {
+              "methods": [
+                "update_document"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PipelineService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PipelineServiceClient",
+          "rpcs": {
+            "RunPipeline": {
+              "methods": [
+                "run_pipeline"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "PipelineServiceAsyncClient",
+          "rpcs": {
+            "RunPipeline": {
+              "methods": [
+                "run_pipeline"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "PipelineServiceClient",
+          "rpcs": {
+            "RunPipeline": {
+              "methods": [
+                "run_pipeline"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RuleSetService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "RuleSetServiceClient",
+          "rpcs": {
+            "CreateRuleSet": {
+              "methods": [
+                "create_rule_set"
+              ]
+            },
+            "DeleteRuleSet": {
+              "methods": [
+                "delete_rule_set"
+              ]
+            },
+            "GetRuleSet": {
+              "methods": [
+                "get_rule_set"
+              ]
+            },
+            "ListRuleSets": {
+              "methods": [
+                "list_rule_sets"
+              ]
+            },
+            "UpdateRuleSet": {
+              "methods": [
+                "update_rule_set"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "RuleSetServiceAsyncClient",
+          "rpcs": {
+            "CreateRuleSet": {
+              "methods": [
+                "create_rule_set"
+              ]
+            },
+            "DeleteRuleSet": {
+              "methods": [
+                "delete_rule_set"
+              ]
+            },
+            "GetRuleSet": {
+              "methods": [
+                "get_rule_set"
+              ]
+            },
+            "ListRuleSets": {
+              "methods": [
+                "list_rule_sets"
+              ]
+            },
+            "UpdateRuleSet": {
+              "methods": [
+                "update_rule_set"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "RuleSetServiceClient",
+          "rpcs": {
+            "CreateRuleSet": {
+              "methods": [
+                "create_rule_set"
+              ]
+            },
+            "DeleteRuleSet": {
+              "methods": [
+                "delete_rule_set"
+              ]
+            },
+            "GetRuleSet": {
+              "methods": [
+                "get_rule_set"
+              ]
+            },
+            "ListRuleSets": {
+              "methods": [
+                "list_rule_sets"
+              ]
+            },
+            "UpdateRuleSet": {
+              "methods": [
+                "update_rule_set"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SynonymSetService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SynonymSetServiceClient",
+          "rpcs": {
+            "CreateSynonymSet": {
+              "methods": [
+                "create_synonym_set"
+              ]
+            },
+            "DeleteSynonymSet": {
+              "methods": [
+                "delete_synonym_set"
+              ]
+            },
+            "GetSynonymSet": {
+              "methods": [
+                "get_synonym_set"
+              ]
+            },
+            "ListSynonymSets": {
+              "methods": [
+                "list_synonym_sets"
+              ]
+            },
+            "UpdateSynonymSet": {
+              "methods": [
+                "update_synonym_set"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SynonymSetServiceAsyncClient",
+          "rpcs": {
+            "CreateSynonymSet": {
+              "methods": [
+                "create_synonym_set"
+              ]
+            },
+            "DeleteSynonymSet": {
+              "methods": [
+                "delete_synonym_set"
+              ]
+            },
+            "GetSynonymSet": {
+              "methods": [
+                "get_synonym_set"
+              ]
+            },
+            "ListSynonymSets": {
+              "methods": [
+                "list_synonym_sets"
+              ]
+            },
+            "UpdateSynonymSet": {
+              "methods": [
+                "update_synonym_set"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SynonymSetServiceClient",
+          "rpcs": {
+            "CreateSynonymSet": {
+              "methods": [
+                "create_synonym_set"
+              ]
+            },
+            "DeleteSynonymSet": {
+              "methods": [
+                "delete_synonym_set"
+              ]
+            },
+            "GetSynonymSet": {
+              "methods": [
+                "get_synonym_set"
+              ]
+            },
+            "ListSynonymSets": {
+              "methods": [
+                "list_synonym_sets"
+              ]
+            },
+            "UpdateSynonymSet": {
+              "methods": [
+                "update_synonym_set"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "api_description": "A managed, cloud-native solution to move data in and out of Google Cloud by\nusing SSH File Transfer Protocol (SFTP).",
+    "api_id": "ftp.googleapis.com",
+    "api_shortname": "ftp",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-ftp/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-ftp",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1088719",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-ftp",
+    "name_pretty": "Cloud FTP",
+    "product_documentation": "https://docs.cloud.google.com/cloud-ftp",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

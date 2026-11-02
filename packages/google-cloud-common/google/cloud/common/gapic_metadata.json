@@ -1,0 +1,7 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.common",
+  "protoPackage": "google.cloud.common",
+  "schema": "1.0"
+}

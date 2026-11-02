@@ -1,0 +1,42 @@
+name: librarian tidy
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tidy-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: changes
+        with:
+          filters: |
+            librarian:
+              - 'librarian.yaml'
+
+      -  uses: googleapis/librarian@bb2ee61752bd0f5387195b54c509e4d01a52b41d
+
+      - name: Run librarian tidy
+        if: steps.changes.outputs.librarian == 'true'
+        run: librarian tidy
+
+      - name: Check for diff
+        if: steps.changes.outputs.librarian == 'true'
+        run: |
+          if ! git diff --exit-code; then
+            V=$(go run github.com/googleapis/librarian/cmd/librarian@latest config get version)
+            echo "librarian.yaml is not tidy. Please run:"
+            echo ""
+            echo "  go run github.com/googleapis/librarian/cmd/librarian@${V} tidy"
+            echo ""
+            echo "to tidy librarian.yaml and commit the changes."
+            exit 1
+          fi
+

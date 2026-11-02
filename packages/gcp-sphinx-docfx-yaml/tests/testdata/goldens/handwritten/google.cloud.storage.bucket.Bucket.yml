@@ -1,0 +1,2994 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.bucket.Bucket
+  - google.cloud.storage.bucket.Bucket.STORAGE_CLASSES
+  - google.cloud.storage.bucket.Bucket.acl
+  - google.cloud.storage.bucket.Bucket.add_lifecycle_abort_incomplete_multipart_upload_rule
+  - google.cloud.storage.bucket.Bucket.add_lifecycle_delete_rule
+  - google.cloud.storage.bucket.Bucket.add_lifecycle_set_storage_class_rule
+  - google.cloud.storage.bucket.Bucket.blob
+  - google.cloud.storage.bucket.Bucket.clear_lifecyle_rules
+  - google.cloud.storage.bucket.Bucket.client
+  - google.cloud.storage.bucket.Bucket.configure_website
+  - google.cloud.storage.bucket.Bucket.copy_blob
+  - google.cloud.storage.bucket.Bucket.cors
+  - google.cloud.storage.bucket.Bucket.create
+  - google.cloud.storage.bucket.Bucket.data_locations
+  - google.cloud.storage.bucket.Bucket.default_event_based_hold
+  - google.cloud.storage.bucket.Bucket.default_kms_key_name
+  - google.cloud.storage.bucket.Bucket.default_object_acl
+  - google.cloud.storage.bucket.Bucket.delete
+  - google.cloud.storage.bucket.Bucket.delete_blob
+  - google.cloud.storage.bucket.Bucket.delete_blobs
+  - google.cloud.storage.bucket.Bucket.disable_logging
+  - google.cloud.storage.bucket.Bucket.disable_website
+  - google.cloud.storage.bucket.Bucket.enable_logging
+  - google.cloud.storage.bucket.Bucket.etag
+  - google.cloud.storage.bucket.Bucket.exists
+  - google.cloud.storage.bucket.Bucket.from_string
+  - google.cloud.storage.bucket.Bucket.generate_signed_url
+  - google.cloud.storage.bucket.Bucket.generate_upload_policy
+  - google.cloud.storage.bucket.Bucket.get_blob
+  - google.cloud.storage.bucket.Bucket.get_iam_policy
+  - google.cloud.storage.bucket.Bucket.get_logging
+  - google.cloud.storage.bucket.Bucket.get_notification
+  - google.cloud.storage.bucket.Bucket.iam_configuration
+  - google.cloud.storage.bucket.Bucket.id
+  - google.cloud.storage.bucket.Bucket.labels
+  - google.cloud.storage.bucket.Bucket.lifecycle_rules
+  - google.cloud.storage.bucket.Bucket.list_blobs
+  - google.cloud.storage.bucket.Bucket.list_notifications
+  - google.cloud.storage.bucket.Bucket.location
+  - google.cloud.storage.bucket.Bucket.location_type
+  - google.cloud.storage.bucket.Bucket.lock_retention_policy
+  - google.cloud.storage.bucket.Bucket.make_private
+  - google.cloud.storage.bucket.Bucket.make_public
+  - google.cloud.storage.bucket.Bucket.metageneration
+  - google.cloud.storage.bucket.Bucket.notification
+  - google.cloud.storage.bucket.Bucket.owner
+  - google.cloud.storage.bucket.Bucket.patch
+  - google.cloud.storage.bucket.Bucket.path
+  - google.cloud.storage.bucket.Bucket.path_helper
+  - google.cloud.storage.bucket.Bucket.project_number
+  - google.cloud.storage.bucket.Bucket.reload
+  - google.cloud.storage.bucket.Bucket.rename_blob
+  - google.cloud.storage.bucket.Bucket.requester_pays
+  - google.cloud.storage.bucket.Bucket.retention_period
+  - google.cloud.storage.bucket.Bucket.retention_policy_effective_time
+  - google.cloud.storage.bucket.Bucket.retention_policy_locked
+  - google.cloud.storage.bucket.Bucket.rpo
+  - google.cloud.storage.bucket.Bucket.self_link
+  - google.cloud.storage.bucket.Bucket.set_iam_policy
+  - google.cloud.storage.bucket.Bucket.storage_class
+  - google.cloud.storage.bucket.Bucket.test_iam_permissions
+  - google.cloud.storage.bucket.Bucket.time_created
+  - google.cloud.storage.bucket.Bucket.update
+  - google.cloud.storage.bucket.Bucket.user_project
+  - google.cloud.storage.bucket.Bucket.versioning_enabled
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: Bucket
+  source:
+    id: Bucket
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 615
+  summary: 'A class representing a Bucket on Cloud Storage.
+
+    '
+  syntax:
+    content: Bucket(client, name=None, user_project=None)
+    parameters:
+    - description: A client which holds credentials and project configuration for
+        the bucket (which requires a project).
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: The name of the bucket. Bucket names must start and end with a
+        number or letter.
+      id: name
+      var_type: str
+    - description: (Optional) the project ID to be billed for API requests made via
+        this instance.
+      id: user_project
+      var_type: str
+  type: class
+  uid: google.cloud.storage.bucket.Bucket
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: Bucket
+  source:
+    id: Bucket
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 615
+  summary: "property `name`\n    Get the bucket's name.\n\n"
+  syntax:
+    content: Bucket(client, name=None, user_project=None)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.Bucket
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.STORAGE_CLASSES
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: STORAGE_CLASSES
+  source:
+    id: STORAGE_CLASSES
+    path: null
+    startLine: null
+  summary: 'Allowed values for `storage_class`.
+
+
+    Default value is `STANDARD_STORAGE_CLASS`.
+
+
+    See
+
+    https://cloud.google.com/storage/docs/json_api/v1/buckets#storageClass
+
+    https://cloud.google.com/storage/docs/storage-classes
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.storage.bucket.Bucket.STORAGE_CLASSES
+- &id001
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.acl
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: acl
+  source:
+    id: acl
+    path: null
+    startLine: null
+  summary: 'Create our ACL on demand.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.acl
+- *id001
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.add_lifecycle_abort_incomplete_multipart_upload_rule
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: add_lifecycle_abort_incomplete_multipart_upload_rule
+  source:
+    id: add_lifecycle_abort_incomplete_multipart_upload_rule
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2317
+  summary: 'Add a "abort incomplete multipart upload" rule to lifecycle rules.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    The "age" lifecycle condition is the only supported condition
+
+    for this rule.
+
+    </aside>
+
+    This defines a [lifecycle configuration](https://cloud.google.com/storage/docs/lifecycle),
+
+    which is set on the bucket. For the general format of a lifecycle configuration,
+    see the
+
+    [bucket resource representation for JSON](https://cloud.google.com/storage/docs/json_api/v1/buckets).
+
+    '
+  syntax:
+    content: add_lifecycle_abort_incomplete_multipart_upload_rule(**kw)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.add_lifecycle_abort_incomplete_multipart_upload_rule
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.add_lifecycle_delete_rule
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: add_lifecycle_delete_rule
+  source:
+    id: add_lifecycle_delete_rule
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2285
+  summary: 'Add a "delete" rule to lifecycle rules configured for this bucket.
+
+
+    This defines a [lifecycle configuration](https://cloud.google.com/storage/docs/lifecycle),
+
+    which is set on the bucket. For the general format of a lifecycle configuration,
+    see the
+
+    [bucket resource representation for JSON](https://cloud.google.com/storage/docs/json_api/v1/buckets).
+
+    See also a [code sample](https://cloud.google.com/storage/docs/samples/storage-enable-bucket-lifecycle-management#storage_enable_bucket_lifecycle_management-python).
+
+    '
+  syntax:
+    content: add_lifecycle_delete_rule(**kw)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.add_lifecycle_delete_rule
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.add_lifecycle_set_storage_class_rule
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: add_lifecycle_set_storage_class_rule
+  source:
+    id: add_lifecycle_set_storage_class_rule
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2300
+  summary: 'Add a "set storage class" rule to lifecycle rules.
+
+
+    This defines a [lifecycle configuration](https://cloud.google.com/storage/docs/lifecycle),
+
+    which is set on the bucket. For the general format of a lifecycle configuration,
+    see the
+
+    [bucket resource representation for JSON](https://cloud.google.com/storage/docs/json_api/v1/buckets).
+
+    '
+  syntax:
+    content: add_lifecycle_set_storage_class_rule(storage_class, **kw)
+    parameters:
+    - description: new storage class to assign to matching items.
+      id: storage_class
+      var_type: str, one of <code>STORAGE_CLASSES</code>.
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.add_lifecycle_set_storage_class_rule
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.blob
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: blob
+  source:
+    id: blob
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 758
+  summary: 'Factory constructor for blob object.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    This will not make an HTTP request; it simply instantiates
+
+    a blob object owned by this bucket.
+
+    </aside>'
+  syntax:
+    content: "blob(\n    blob_name, chunk_size=None, encryption_key=None, kms_key_name=None,\
+      \ generation=None\n)"
+    parameters:
+    - description: The name of the blob to be instantiated.
+      id: blob_name
+      var_type: str
+    - description: The size of a chunk of data whenever iterating (in bytes). This
+        must be a multiple of 256 KB per the API specification.
+      id: chunk_size
+      var_type: int
+    - description: (Optional) 32 byte encryption key for customer-supplied encryption.
+      id: encryption_key
+      var_type: bytes
+    - description: (Optional) Resource name of KMS key used to encrypt blob's content.
+      id: kms_key_name
+      var_type: str
+    - description: (Optional) If present, selects a specific revision of this object.
+      id: generation
+      var_type: long
+    returns:
+    - description: The blob object created.
+      var_type: <xref uid="google.cloud.storage.blob.Blob">Blob</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.blob
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.clear_lifecyle_rules
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: clear_lifecyle_rules
+  source:
+    id: clear_lifecyle_rules
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2277
+  summary: "Clear lifecycle rules configured for this bucket.\n\nSee https://cloud.google.com/storage/docs/lifecycle\
+    \ and\n     https://cloud.google.com/storage/docs/json_api/v1/buckets\n\n"
+  syntax:
+    content: clear_lifecyle_rules()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.clear_lifecyle_rules
+- &id002
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.client
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: client
+  source:
+    id: client
+    path: null
+    startLine: null
+  summary: 'The client bound to this bucket.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.client
+- *id002
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.configure_website
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: configure_website
+  source:
+    id: configure_website
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2663
+  summary: 'Configure website-related properties.
+
+
+    See https://cloud.google.com/storage/docs/static-website
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    This configures the bucket''s website-related properties,controlling how
+
+    the service behaves when accessing bucket contents as a web site.
+
+    See [tutorials](https://cloud.google.com/storage/docs/hosting-static-website)
+    and
+
+    [code samples](https://cloud.google.com/storage/docs/samples/storage-define-bucket-website-configuration#storage_define_bucket_website_configuration-python)
+
+    for more information.
+
+    </aside>'
+  syntax:
+    content: configure_website(main_page_suffix=None, not_found_page=None)
+    parameters:
+    - description: The page to use as the main page of a directory. Typically something
+        like index.html.
+      id: main_page_suffix
+      var_type: str
+    - description: The file to use when a page isn't found.
+      id: not_found_page
+      var_type: str
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.configure_website
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.copy_blob
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: copy_blob
+  source:
+    id: copy_blob
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1771
+  summary: 'Copy the given blob to the given bucket, optionally with a new name.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+
+    See [API reference docs](https://cloud.google.com/storage/docs/json_api/v1/objects/copy)
+
+    and a [code sample](https://cloud.google.com/storage/docs/samples/storage-copy-file#storage_copy_file-python).
+
+    '
+  syntax:
+    content: copy_blob(blob, destination_bucket, new_name=None, client=None, preserve_acl=True,
+      source_generation=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, if_source_generation_match=None,
+      if_source_generation_not_match=None, if_source_metageneration_match=None, if_source_metageneration_not_match=None,
+      timeout=60, retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: The blob to be copied.
+      id: blob
+      var_type: <xref uid="google.cloud.storage.blob.Blob">Blob</xref>
+    - description: The bucket into which the blob should be copied.
+      id: destination_bucket
+      var_type: <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref>
+    - description: (Optional) The new name for the copied file.
+      id: new_name
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: 'DEPRECATED. This argument is not functional! (Optional) Copies
+        ACL from old blob to new blob. Default: True.'
+      id: preserve_acl
+      var_type: bool
+    - description: (Optional) The generation of the blob to be copied.
+      id: source_generation
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-match</code> Note
+        that the generation to be matched is that of the <code>destination</code>
+        blob.
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+        Note that the generation to be matched is that of the <code>destination</code>
+        blob.
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+        Note that the metageneration to be matched is that of the <code>destination</code>
+        blob.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+        Note that the metageneration to be matched is that of the <code>destination</code>
+        blob.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's generation matches the given value.
+      id: if_source_generation_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's generation does not match the given value.
+      id: if_source_generation_not_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's current metageneration matches the given value.
+      id: if_source_metageneration_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's current metageneration does not match the given value.
+      id: if_source_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: The new Blob.
+      var_type: <xref uid="google.cloud.storage.blob.Blob">Blob</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.copy_blob
+- &id003
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.cors
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: cors
+  source:
+    id: cors
+    path: null
+    startLine: null
+  summary: "Retrieve or set CORS policies configured for this bucket.\n\nSee http://www.w3.org/TR/cors/\
+    \ and\n     https://cloud.google.com/storage/docs/json_api/v1/buckets\n\n<aside\
+    \ class=\"note\">\n<b>Note:</b>\nThe getter for this property returns a list which\
+    \ contains\n*copies* of the bucket's CORS policy mappings.  Mutating the list\n\
+    or one of its dicts has no effect unless you then re-assign the\ndict via the\
+    \ setter.  E.g.:\n>>> policies = bucket.cors\n>>> policies.append({'origin': '/foo',\
+    \ ...})\n>>> policies[1]['maxAgeSeconds'] = 3600\n>>> del policies[0]\n>>> bucket.cors\
+    \ = policies\n>>> bucket.update()\n</aside>"
+  syntax:
+    returns:
+    - description: A sequence of mappings describing each CORS policy.
+      var_type: list of dictionaries
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.cors
+- *id003
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.create
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: create
+  source:
+    id: create
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 915
+  summary: 'DEPRECATED. Creates current bucket.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    Direct use of this method is deprecated. Use `Client.create_bucket()` instead.
+
+    </aside>
+
+    If the bucket already exists, will raise
+
+    xref_Conflict.
+
+
+    This implements "storage.buckets.insert".
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: create(client=None, project=None, location=None, predefined_acl=None,
+      predefined_default_object_acl=None, timeout=60, retry=<google.api_core.retry.Retry
+      object>)
+    exceptions:
+    - description: if <code>project</code> is None and client's <code>project</code>
+        is also None.
+      var_type: ValueError
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) The project under which the bucket is to be created.
+        If not passed, uses the project set on the client.
+      id: project
+      var_type: str
+    - description: (Optional) The location of the bucket. If not passed, the default
+        location, US, will be used. See https://cloud.google.com/storage/docs/bucket-locations
+      id: location
+      var_type: str
+    - description: '(Optional) Name of predefined ACL to apply to bucket. See: https://cloud.google.com/storage/docs/access-control/lists#predefined-acl'
+      id: predefined_acl
+      var_type: str
+    - description: '(Optional) Name of predefined ACL to apply to bucket''s objects.
+        See: https://cloud.google.com/storage/docs/access-control/lists#predefined-acl'
+      id: predefined_default_object_acl
+      var_type: str
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.create
+- &id004
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.data_locations
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: data_locations
+  source:
+    id: data_locations
+    path: null
+    startLine: null
+  summary: 'Retrieve the list of regional locations for custom dual-region buckets.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/buckets and
+
+    https://cloud.google.com/storage/docs/locations
+
+
+    Returns `None` if the property has not been set before creation,
+
+    if the bucket''s resource has not been loaded from the server,
+
+    or if the bucket is not a dual-regions bucket.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.data_locations
+- *id004
+- &id005
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.default_event_based_hold
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: default_event_based_hold
+  source:
+    id: default_event_based_hold
+    path: null
+    startLine: null
+  summary: 'Scalar property getter.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.default_event_based_hold
+- *id005
+- &id006
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.default_kms_key_name
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: default_kms_key_name
+  source:
+    id: default_kms_key_name
+    path: null
+    startLine: null
+  summary: 'Retrieve / set default KMS encryption key for objects in the bucket.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/buckets
+
+
+    :setter: Set default KMS encryption key for items in this bucket.
+
+    :getter: Get default KMS encryption key for items in this bucket.
+
+    '
+  syntax:
+    returns:
+    - description: Default KMS encryption key, or <code>None</code> if not set.
+      var_type: str
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.default_kms_key_name
+- *id006
+- &id007
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.default_object_acl
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: default_object_acl
+  source:
+    id: default_object_acl
+    path: null
+    startLine: null
+  summary: 'Create our defaultObjectACL on demand.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.default_object_acl
+- *id007
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.delete
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: delete
+  source:
+    id: delete
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1475
+  summary: 'Delete this bucket.
+
+
+    The bucket **must** be empty in order to submit a delete request. If
+
+    `force=True` is passed, this will first attempt to delete all the
+
+    objects / blobs in the bucket (i.e. try to empty the bucket).
+
+
+    If the bucket doesn''t exist, this will raise
+
+    xref_NotFound. If the bucket is not empty
+
+    (and `force=False`), will raise xref_Conflict.
+
+
+    If `force=True` and the bucket contains more than 256 objects / blobs
+
+    this will cowardly refuse to delete the objects (or the bucket). This
+
+    is to prevent accidental bucket deletion and to prevent extremely long
+
+    runtime of this method.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: delete(force=False, client=None, if_metageneration_match=None, if_metageneration_not_match=None,
+      timeout=60, retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: if <code>force</code> is <code>True</code> and the bucket contains
+        more than 256 objects / blobs.
+      var_type: '`ValueError'
+    parameters:
+    - description: If True, empties the bucket's objects then deletes it.
+      id: force
+      var_type: bool
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration matches the given value.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration does not match the given value.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.delete
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.delete_blob
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: delete_blob
+  source:
+    id: delete_blob
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1578
+  summary: 'Deletes a blob from the current bucket.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: delete_blob(blob_name, client=None, generation=None, if_generation_match=None,
+      if_generation_not_match=None, if_metageneration_match=None, if_metageneration_not_match=None,
+      timeout=60, retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    exceptions:
+    - description: Raises a NotFound if the blob isn't found. To suppress the exception,
+        use <code>delete_blobs</code> by passing a no-op <code>on_error</code> callback.
+      var_type: <xref uid="google.cloud.exceptions.NotFound">NotFound</xref
+    parameters:
+    - description: A blob name to delete.
+      id: blob_name
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) If present, permanently deletes a specific revision
+        of this object.
+      id: generation
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.delete_blob
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.delete_blobs
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: delete_blobs
+  source:
+    id: delete_blobs
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1658
+  summary: 'Deletes a list of blobs from the current bucket.
+
+
+    Uses `delete_blob` to delete each individual blob.
+
+
+    By default, any generation information in the list of blobs is ignored, and the
+
+    live versions of all blobs are deleted. Set `preserve_generation` to True
+
+    if blob generation should instead be propagated from the list of blobs.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: delete_blobs(blobs, on_error=None, client=None, preserve_generation=False,
+      timeout=60, if_generation_match=None, if_generation_not_match=None, if_metageneration_match=None,
+      if_metageneration_not_match=None, retry=<google.cloud.storage.retry.ConditionalRetryPolicy
+      object>)
+    exceptions:
+    - description: (if <code>on_error</code> is not passed).
+      var_type: <xref uid="google.cloud.exceptions.NotFound">NotFound</xref
+    parameters:
+    - description: A list of <xref uid="google.cloud.storage.blob.Blob">Blob</xref>-s
+        or blob names to delete.
+      id: blobs
+      var_type: list
+    - description: '(Optional) Takes single argument: <code>blob</code>. Called once
+        for each blob raising <xref uid="google.cloud.exceptions.NotFound">NotFound</xref>;
+        otherwise, the exception is propagated.'
+      id: on_error
+      var_type: callable
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: '(Optional) Deletes only the generation specified on the blob object,
+        instead of the live version, if set to True. Only :class:<xref uid="google.cloud.storage.blob.Blob">Blob</xref>
+        objects can have their generation set in this way. Default: False.'
+      id: preserve_generation
+      var_type: bool
+    - description: (Optional) See :ref:<code>using-if-generation-match</code> Note
+        that the length of the list must match the length of The list must match <code>blobs</code>
+        item-to-item.
+      id: if_generation_match
+      var_type: list of long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+        The list must match <code>blobs</code> item-to-item.
+      id: if_generation_not_match
+      var_type: list of long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+        The list must match <code>blobs</code> item-to-item.
+      id: if_metageneration_match
+      var_type: list of long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+        The list must match <code>blobs</code> item-to-item.
+      id: if_metageneration_not_match
+      var_type: list of long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.delete_blobs
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.disable_logging
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: disable_logging
+  source:
+    id: disable_logging
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2427
+  summary: 'Disable access logging for this bucket.
+
+
+    See https://cloud.google.com/storage/docs/access-logs#disabling
+
+
+    '
+  syntax:
+    content: disable_logging()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.disable_logging
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.disable_website
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: disable_website
+  source:
+    id: disable_website
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2686
+  summary: 'Disable the website configuration for this bucket.
+
+
+    This is really just a shortcut for setting the website-related
+
+    attributes to `None`.
+
+
+    '
+  syntax:
+    content: disable_website()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.disable_website
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.enable_logging
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: enable_logging
+  source:
+    id: enable_logging
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2413
+  summary: 'Enable access logging for this bucket.
+
+
+    See https://cloud.google.com/storage/docs/access-logs
+
+    '
+  syntax:
+    content: enable_logging(bucket_name, object_prefix="")
+    parameters:
+    - description: name of bucket in which to store access logs
+      id: bucket_name
+      var_type: str
+    - description: prefix for access log filenames
+      id: object_prefix
+      var_type: str
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.enable_logging
+- &id008
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.etag
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: etag
+  source:
+    id: etag
+    path: null
+    startLine: null
+  summary: "Retrieve the ETag for the bucket.\n\nSee https://tools.ietf.org/html/rfc2616#section-3.11\
+    \ and\n     https://cloud.google.com/storage/docs/json_api/v1/buckets\n"
+  syntax:
+    returns:
+    - description: The bucket etag or <code>None</code> if the bucket's resource has
+        not been loaded from the server.
+      var_type: str or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.etag
+- *id008
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.exists
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: exists
+  source:
+    id: exists
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 831
+  summary: 'Determines whether or not this bucket exists.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: exists(client=None, timeout=60, if_etag_match=None, if_etag_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, retry=<google.api_core.retry.Retry
+      object>)
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) Make the operation conditional on whether the bucket's
+        current ETag matches the given value.
+      id: if_etag_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) Make the operation conditional on whether the bucket's
+        current ETag does not match the given value.
+      id: if_etag_not_match
+      var_type: Union[str, Set[str]])
+    - description: (Optional) Make the operation conditional on whether the bucket's
+        current metageneration matches the given value.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) Make the operation conditional on whether the bucket's
+        current metageneration does not match the given value.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: True if the bucket exists in Cloud Storage.
+      var_type: bool
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.exists
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.from_string
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: from_string
+  source:
+    id: from_string
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 729
+  summary: 'Get a constructor for bucket object by URI.
+
+
+    ```python
+
+    from google.cloud import storage
+
+    from google.cloud.storage.bucket import Bucket
+
+    client = storage.Client()
+
+    bucket = Bucket.from_string("gs://bucket", client=client)
+
+    ```
+
+    '
+  syntax:
+    content: from_string(uri, client=None)
+    parameters:
+    - description: The bucket uri pass to get bucket object.
+      id: uri
+      var_type: str
+    - description: (Optional) The client to use. Application code should *always*
+        pass <code>client</code>.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    returns:
+    - description: The bucket object created.
+      var_type: <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.from_string
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.generate_signed_url
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: generate_signed_url
+  source:
+    id: generate_signed_url
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 3156
+  summary: 'Generates a signed URL for this bucket.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    If you are on Google Compute Engine, you can''t generate a signed
+
+    URL using GCE service account. If you''d like to be able to generate
+
+    a signed URL from GCE, you can use a standard service account from a
+
+    JSON file rather than a GCE service account.
+
+    </aside>
+
+    If `bucket_bound_hostname` is set as an argument of `api_access_endpoint`,
+
+    `https` works only if using a `CDN`.
+
+    '
+  syntax:
+    content: "generate_signed_url(\n    expiration=None,\n    api_access_endpoint=\"\
+      https://storage.googleapis.com\",\n    method=\"GET\",\n    headers=None,\n\
+      \    query_parameters=None,\n    client=None,\n    credentials=None,\n    version=None,\n\
+      \    virtual_hosted_style=False,\n    bucket_bound_hostname=None,\n    scheme=\"\
+      http\",\n)"
+    exceptions:
+    - description: when version is invalid.
+      var_type: '`ValueError'
+    - description: when expiration is not a valid type.
+      var_type: '`TypeError'
+    - description: if credentials is not an instance of <code>google.auth.credentials.Signing</code>.
+      var_type: '`AttributeError'
+    parameters:
+    - description: Point in time when the signed URL should expire. If a <code>datetime</code>
+        instance is passed without an explicit <code>tzinfo</code> set, it will be
+        assumed to be <code>UTC</code>.
+      id: expiration
+      var_type: Union[Integer, datetime.datetime, datetime.timedelta]
+    - description: (Optional) URI base.
+      id: api_access_endpoint
+      var_type: str
+    - description: The HTTP verb that will be used when requesting the URL.
+      id: method
+      var_type: str
+    - description: '(Optional) Additional HTTP headers to be included as part of the
+        signed URLs. See: https://cloud.google.com/storage/docs/xml-api/reference-headers
+        Requests using the signed URL *must* pass the specified header (name and value)
+        with each request for the URL.'
+      id: headers
+      var_type: dict
+    - description: '(Optional) Additional query parameters to be included as part
+        of the signed URLs. See: https://cloud.google.com/storage/docs/xml-api/reference-headers#query'
+      id: query_parameters
+      var_type: dict
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: The authorization credentials to attach to requests. These credentials
+        identify this application to the service. If none are specified, the client
+        will attempt to ascertain the credentials from the environment.
+      id: credentials
+      var_type: <code>google.auth.credentials.Credentials</code> or <code>NoneType</code>
+    - description: (Optional) The version of signed credential to create. Must be
+        one of 'v2' 'v4'.
+      id: version
+      var_type: str
+    - description: (Optional) If true, then construct the URL relative the bucket's
+        virtual hostname, e.g., '<bucket-name>.storage.googleapis.com'.
+      id: virtual_hosted_style
+      var_type: bool
+    - description: '(Optional) If pass, then construct the URL relative to the bucket-bound
+        hostname. Value cane be a bare or with scheme, e.g., ''example.com'' or ''http://example.com''.
+        See: https://cloud.google.com/storage/docs/request-endpoints#cname'
+      id: bucket_bound_hostname
+      var_type: str
+    - description: (Optional) If <code>bucket_bound_hostname</code> is passed as a
+        bare hostname, use this value as the scheme. <code>https</code> will work
+        only when using a CDN. Defaults to <code>"http"</code>.
+      id: scheme
+      var_type: str
+    returns:
+    - description: A signed URL you can use to access the resource until expiration.
+      var_type: str
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.generate_signed_url
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.generate_upload_policy
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: generate_upload_policy
+  source:
+    id: generate_upload_policy
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 3049
+  summary: 'Create a signed upload policy for uploading objects.
+
+
+    This method generates and signs a policy document. You can use
+
+    [`policy documents`](https://cloud.google.com/storage/docs/xml-api/post-object-forms)
+
+    to allow visitors to a website to upload files to
+
+    Google Cloud Storage without giving them direct write access.
+
+    See a [code sample](https://cloud.google.com/storage/docs/xml-api/post-object-forms#python).
+
+    '
+  syntax:
+    content: generate_upload_policy(conditions, expiration=None, client=None)
+    parameters:
+    - description: (Optional) Expiration in UTC. If not specified, the policy will
+        expire in 1 hour.
+      id: expiration
+      var_type: datetime
+    - description: A list of conditions as described in the <code>policy documents</code>
+        documentation.
+      id: conditions
+      var_type: list
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    returns:
+    - description: A dictionary of (form field name, form field value) of form fields
+        that should be added to your HTML upload form in order to attach the signature.
+      var_type: dict
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.generate_upload_policy
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.get_blob
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: get_blob
+  source:
+    id: get_blob
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1180
+  summary: 'Get a blob object by name.
+
+
+    See a [code sample](https://cloud.google.com/storage/docs/samples/storage-get-metadata#storage_get_metadata-python)
+
+    on how to retrieve metadata of an object.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: get_blob(blob_name, client=None, encryption_key=None, generation=None,
+      if_etag_match=None, if_etag_not_match=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      retry=<google.api_core.retry.Retry object>, **kwargs)
+    parameters:
+    - description: The name of the blob to retrieve.
+      id: blob_name
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) 32 byte encryption key for customer-supplied encryption.
+        See https://cloud.google.com/storage/docs/encryption#customer-supplied.
+      id: encryption_key
+      var_type: bytes
+    - description: (Optional) If present, selects a specific revision of this object.
+      id: generation
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-etag-match</code>
+      id: if_etag_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-etag-not-match</code>
+      id: if_etag_not_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: The blob object if it exists, otherwise None.
+      var_type: <xref uid="google.cloud.storage.blob.Blob">Blob</xref> or None
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.get_blob
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.get_iam_policy
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: get_iam_policy
+  source:
+    id: get_iam_policy
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2694
+  summary: 'Retrieve the IAM policy for the bucket.
+
+
+    See [API reference docs](https://cloud.google.com/storage/docs/json_api/v1/buckets/getIamPolicy)
+
+    and a [code sample](https://cloud.google.com/storage/docs/samples/storage-view-bucket-iam-members#storage_view_bucket_iam_members-python).
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: get_iam_policy(client=None, requested_policy_version=None, timeout=60,
+      retry=<google.api_core.retry.Retry object>)
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) The version of IAM policies to request. If a policy
+        with a condition is requested without setting this, the server will return
+        an error. This must be set to a value of 3 to retrieve IAM policies containing
+        conditions. This is to prevent client code that isn't aware of IAM conditions
+        from interpreting and modifying policies incorrectly. The service might return
+        a policy with version lower than the one that was requested, based on the
+        feature syntax in the policy fetched.
+      id: requested_policy_version
+      var_type: int or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: the policy instance, based on the resource returned from the <code>getIamPolicy</code>
+        API request.
+      var_type: <code>google.api_core.iam.Policy</code>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.get_iam_policy
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.get_logging
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: get_logging
+  source:
+    id: get_logging
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2401
+  summary: 'Return info about access logging for this bucket.
+
+
+    See https://cloud.google.com/storage/docs/access-logs#status
+
+    '
+  syntax:
+    content: get_logging()
+    parameters: []
+    returns:
+    - description: a dict w/ keys, <code>logBucket</code> and <code>logObjectPrefix</code>
+        (if logging is enabled), or None (if not).
+      var_type: dict or None
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.get_logging
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.get_notification
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: get_notification
+  source:
+    id: get_notification
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1438
+  summary: 'Get Pub / Sub notification for this bucket.
+
+
+    See [API reference docs](https://cloud.google.com/storage/docs/json_api/v1/notifications/get)
+
+    and a [code sample](https://cloud.google.com/storage/docs/samples/storage-print-pubsub-bucket-notification#storage_print_pubsub_bucket_notification-python).
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: get_notification(notification_id, client=None, timeout=60, retry=<google.api_core.retry.Retry
+      object>)
+    parameters:
+    - description: The notification id to retrieve the notification configuration.
+      id: notification_id
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: notification instance.
+      var_type: <code>.BucketNotification</code>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.get_notification
+- &id009
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.iam_configuration
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: iam_configuration
+  source:
+    id: iam_configuration
+    path: null
+    startLine: null
+  summary: 'Retrieve IAM configuration for this bucket.
+
+    '
+  syntax:
+    returns:
+    - description: an instance for managing the bucket's IAM configuration.
+      var_type: <code>IAMConfiguration</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.iam_configuration
+- *id009
+- &id010
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.id
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: id
+  source:
+    id: id
+    path: null
+    startLine: null
+  summary: 'Retrieve the ID for the bucket.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/buckets
+
+    '
+  syntax:
+    returns:
+    - description: The ID of the bucket or <code>None</code> if the bucket's resource
+        has not been loaded from the server.
+      var_type: str or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.id
+- *id010
+- &id011
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.labels
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: labels
+  source:
+    id: labels
+    path: null
+    startLine: null
+  summary: 'Retrieve or set labels assigned to this bucket.
+
+
+    See
+
+    https://cloud.google.com/storage/docs/json_api/v1/buckets#labels
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    The getter for this property returns a dict which is a *copy*
+
+    of the bucket''s labels.  Mutating that dict has no effect unless
+
+    you then re-assign the dict via the setter.  E.g.:
+
+    >>> labels = bucket.labels
+
+    >>> labels[''new_key''] = ''some-label''
+
+    >>> del labels[''old_key'']
+
+    >>> bucket.labels = labels
+
+    >>> bucket.update()
+
+    </aside>'
+  syntax:
+    returns:
+    - description: Name-value pairs (string->string) labelling the bucket.
+      var_type: <code>dict</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.labels
+- *id011
+- &id012
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.lifecycle_rules
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: lifecycle_rules
+  source:
+    id: lifecycle_rules
+    path: null
+    startLine: null
+  summary: "Retrieve or set lifecycle rules configured for this bucket.\n\nSee https://cloud.google.com/storage/docs/lifecycle\
+    \ and\n     https://cloud.google.com/storage/docs/json_api/v1/buckets\n\n<aside\
+    \ class=\"note\">\n<b>Note:</b>\nThe getter for this property returns a generator\
+    \ which yields\n*copies* of the bucket's lifecycle rules mappings.  Mutating the\n\
+    output dicts has no effect unless you then re-assign the dict via\nthe setter.\
+    \  E.g.:\n>>> rules = list(bucket.lifecycle_rules)\n>>> rules.append({'origin':\
+    \ '/foo', ...})\n>>> rules[1]['rule']['action']['type'] = 'Delete'\n>>> del rules[0]\n\
+    >>> bucket.lifecycle_rules = rules\n>>> bucket.update()\n</aside>"
+  syntax:
+    returns:
+    - description: A sequence of mappings describing each lifecycle rule.
+      var_type: generator(dict)
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.lifecycle_rules
+- *id012
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.list_blobs
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: list_blobs
+  source:
+    id: list_blobs
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1287
+  summary: 'DEPRECATED. Return an iterator used to find blobs in the bucket.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    Direct use of this method is deprecated. Use `Client.list_blobs` instead.
+
+    </aside>
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: list_blobs(max_results=None, page_token=None, prefix=None, delimiter=None,
+      start_offset=None, end_offset=None, include_trailing_delimiter=None, versions=None,
+      projection='noAcl', fields=None, client=None, timeout=60, retry=<google.api_core.retry.Retry
+      object>)
+    parameters:
+    - description: (Optional) The maximum number of blobs to return.
+      id: max_results
+      var_type: int
+    - description: '(Optional) If present, return the next batch of blobs, using the
+        value, which must correspond to the <code>nextPageToken</code> value returned
+        in the previous response. Deprecated: use the <code>pages</code> property
+        of the returned iterator instead of manually passing the token.'
+      id: page_token
+      var_type: str
+    - description: (Optional) Prefix used to filter blobs.
+      id: prefix
+      var_type: str
+    - description: (Optional) Delimiter, used with <code>prefix</code> to emulate
+        hierarchy.
+      id: delimiter
+      var_type: str
+    - description: (Optional) Filter results to objects whose names are lexicographically
+        equal to or after <code>startOffset</code>. If <code>endOffset</code> is also
+        set, the objects listed will have names between <code>startOffset</code> (inclusive)
+        and <code>endOffset</code> (exclusive).
+      id: start_offset
+      var_type: str
+    - description: (Optional) Filter results to objects whose names are lexicographically
+        before <code>endOffset</code>. If <code>startOffset</code> is also set, the
+        objects listed will have names between <code>startOffset</code> (inclusive)
+        and <code>endOffset</code> (exclusive).
+      id: end_offset
+      var_type: str
+    - description: (Optional) If true, objects that end in exactly one instance of
+        <code>delimiter</code> will have their metadata included in <code>items</code>
+        in addition to <code>prefixes</code>.
+      id: include_trailing_delimiter
+      var_type: boolean
+    - description: (Optional) Whether object versions should be returned as separate
+        blobs.
+      id: versions
+      var_type: bool
+    - description: (Optional) If used, must be 'full' or 'noAcl'. Defaults to <code>'noAcl'</code>.
+        Specifies the set of properties to return.
+      id: projection
+      var_type: str
+    - description: '(Optional) Selector specifying which fields to include in a partial
+        response. Must be a list of fields. For example to get a partial response
+        with just the next page token and the name and language of each blob returned:
+        <code>''items(name,contentLanguage),nextPageToken''</code>. See: https://cloud.google.com/storage/docs/json_api/v1/parameters#fields'
+      id: fields
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: Iterator of all <xref uid="google.cloud.storage.blob.Blob">Blob</xref>
+        in this bucket matching the arguments.
+      var_type: <code>google.api_core.page_iterator.Iterator</code>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.list_blobs
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.list_notifications
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: list_notifications
+  source:
+    id: list_notifications
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1401
+  summary: 'List Pub / Sub notifications for this bucket.
+
+
+    See:
+
+    https://cloud.google.com/storage/docs/json_api/v1/notifications/list
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: list_notifications(client=None, timeout=60, retry=<google.api_core.retry.Retry
+      object>)
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: notification instances
+      var_type: list of <code>.BucketNotification</code>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.list_notifications
+- &id013
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.location
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: location
+  source:
+    id: location
+    path: null
+    startLine: null
+  summary: 'Retrieve location configured for this bucket.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/buckets and
+
+    https://cloud.google.com/storage/docs/locations
+
+
+    Returns `None` if the property has not been set before creation,
+
+    or if the bucket''s resource has not been loaded from the server.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.location
+- *id013
+- &id014
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.location_type
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: location_type
+  source:
+    id: location_type
+    path: null
+    startLine: null
+  summary: 'Retrieve the location type for the bucket.
+
+
+    See https://cloud.google.com/storage/docs/storage-classes
+
+
+    :getter: Gets the the location type for this bucket.
+
+    '
+  syntax:
+    returns:
+    - description: If set, one of <xref uid="google.cloud.storage.constants.MULTI_REGION_LOCATION_TYPE">MULTI_REGION_LOCATION_TYPE</xref>,
+        <xref uid="google.cloud.storage.constants.REGION_LOCATION_TYPE">REGION_LOCATION_TYPE</xref>,
+        or <xref uid="google.cloud.storage.constants.DUAL_REGION_LOCATION_TYPE">DUAL_REGION_LOCATION_TYPE</xref>,
+        else <code>None</code>.
+      var_type: str or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.location_type
+- *id014
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.lock_retention_policy
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: lock_retention_policy
+  source:
+    id: lock_retention_policy
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 3103
+  summary: 'Lock the bucket''s retention policy.
+
+    '
+  syntax:
+    content: lock_retention_policy(client=None, timeout=60, retry=<google.api_core.retry.Retry
+      object>)
+    exceptions:
+    - description: if the bucket has no metageneration (i.e., new or never reloaded);
+        if the bucket has no retention policy assigned; if the bucket's retention
+        policy is already locked.
+      var_type: ValueError
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.lock_retention_policy
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.make_private
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: make_private
+  source:
+    id: make_private
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2956
+  summary: 'Update bucket''s ACL, revoking read access for anonymous users.
+
+    '
+  syntax:
+    content: make_private(recursive=False, future=False, client=None, timeout=60,
+      if_metageneration_match=None, if_metageneration_not_match=None, retry=<google.cloud.storage.retry.ConditionalRetryPolicy
+      object>)
+    exceptions:
+    - description: If <code>recursive</code> is True, and the bucket contains more
+        than 256 blobs. This is to prevent extremely long runtime of this method.
+        For such buckets, iterate over the blobs returned by <code>list_blobs</code>
+        and call <xref uid="google.cloud.storage.blob.Blob.make_private">make_private</xref>
+        for each blob.
+      var_type: ValueError
+    parameters:
+    - description: If True, this will make all blobs inside the bucket private as
+        well.
+      id: recursive
+      var_type: bool
+    - description: If True, this will make all objects created in the future private
+        as well.
+      id: future
+      var_type: bool
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration matches the given value.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration does not match the given value.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.make_private
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.make_public
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: make_public
+  source:
+    id: make_public
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2859
+  summary: 'Update bucket''s ACL, granting read access to anonymous users.
+
+    '
+  syntax:
+    content: make_public(recursive=False, future=False, client=None, timeout=60, if_metageneration_match=None,
+      if_metageneration_not_match=None, retry=<google.cloud.storage.retry.ConditionalRetryPolicy
+      object>)
+    exceptions:
+    - description: If <code>recursive</code> is True, and the bucket contains more
+        than 256 blobs. This is to prevent extremely long runtime of this method.
+        For such buckets, iterate over the blobs returned by <code>list_blobs</code>
+        and call <xref uid="google.cloud.storage.blob.Blob.make_public">make_public</xref>
+        for each blob.
+      var_type: ValueError
+    parameters:
+    - description: If True, this will make all blobs inside the bucket public as well.
+      id: recursive
+      var_type: bool
+    - description: If True, this will make all objects created in the future public
+        as well.
+      id: future
+      var_type: bool
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration matches the given value.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration does not match the given value.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.make_public
+- &id015
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.metageneration
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: metageneration
+  source:
+    id: metageneration
+    path: null
+    startLine: null
+  summary: 'Retrieve the metageneration for the bucket.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/buckets
+
+    '
+  syntax:
+    returns:
+    - description: The metageneration of the bucket or <code>None</code> if the bucket's
+        resource has not been loaded from the server.
+      var_type: int or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.metageneration
+- *id015
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.notification
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: notification
+  source:
+    id: notification
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 804
+  summary: 'Factory:  create a notification resource for the bucket.
+
+
+    See: `.BucketNotification` for parameters.
+
+    '
+  syntax:
+    content: "notification(\n    topic_name=None,\n    topic_project=None,\n    custom_attributes=None,\n\
+      \    event_types=None,\n    blob_name_prefix=None,\n    payload_format=\"NONE\"\
+      ,\n    notification_id=None,\n)"
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.notification
+- &id016
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.owner
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: owner
+  source:
+    id: owner
+    path: null
+    startLine: null
+  summary: 'Retrieve info about the owner of the bucket.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/buckets
+
+    '
+  syntax:
+    returns:
+    - description: Mapping of owner's role/ID. Returns <code>None</code> if the bucket's
+        resource has not been loaded from the server.
+      var_type: dict or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.owner
+- *id016
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.patch
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: patch
+  source:
+    id: patch
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1097
+  summary: 'Sends all changed properties in a PATCH request.
+
+
+    Updates the `_properties` with the response from the backend.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: patch(client=None, timeout=60, if_metageneration_match=None, if_metageneration_not_match=None,
+      retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: the client to use. If not passed, falls back to the <code>client</code>
+        stored on the current object.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration matches the given value.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration does not match the given value.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.patch
+- &id017
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.path
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: path
+  source:
+    id: path
+    path: null
+    startLine: null
+  summary: 'The URL path to this bucket.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.path
+- *id017
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.path_helper
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: path_helper
+  source:
+    id: path_helper
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1160
+  summary: 'Relative URL path for a bucket.
+
+    '
+  syntax:
+    content: path_helper(bucket_name)
+    parameters:
+    - description: The bucket name in the path.
+      id: bucket_name
+      var_type: str
+    returns:
+    - description: The relative URL path for <code>bucket_name</code>.
+      var_type: str
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.path_helper
+- &id018
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.project_number
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: project_number
+  source:
+    id: project_number
+    path: null
+    startLine: null
+  summary: 'Retrieve the number of the project to which the bucket is assigned.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/buckets
+
+    '
+  syntax:
+    returns:
+    - description: The project number that owns the bucket or <code>None</code> if
+        the bucket's resource has not been loaded from the server.
+      var_type: int or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.project_number
+- *id018
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.reload
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: reload
+  source:
+    id: reload
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1036
+  summary: 'Reload properties from Cloud Storage.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: reload(client=None, projection='noAcl', timeout=60, if_etag_match=None,
+      if_etag_not_match=None, if_metageneration_match=None, if_metageneration_not_match=None,
+      retry=<google.api_core.retry.Retry object>)
+    parameters:
+    - description: the client to use. If not passed, falls back to the <code>client</code>
+        stored on the current object.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) If used, must be 'full' or 'noAcl'. Defaults to <code>'noAcl'</code>.
+        Specifies the set of properties to return.
+      id: projection
+      var_type: str
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) Make the operation conditional on whether the bucket's
+        current ETag matches the given value.
+      id: if_etag_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) Make the operation conditional on whether the bucket's
+        current ETag does not match the given value.
+      id: if_etag_not_match
+      var_type: Union[str, Set[str]])
+    - description: (Optional) Make the operation conditional on whether the bucket's
+        current metageneration matches the given value.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) Make the operation conditional on whether the bucket's
+        current metageneration does not match the given value.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.reload
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.rename_blob
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: rename_blob
+  source:
+    id: rename_blob
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 1918
+  summary: 'Rename the given blob using copy and delete operations.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+
+    Effectively, copies blob to the same bucket with a new name, then
+
+    deletes the blob.
+
+
+    <aside class="warning">
+
+    <b>Warning:</b>
+
+    This method will first duplicate the data and then delete the
+
+    old blob.  This means that with very large objects renaming
+
+    could be a very (temporarily) costly or a very slow operation.
+
+    If you need more control over the copy and deletion, instead
+
+    use `<xref uid="google.cloud.storage.blob.Blob">google.cloud.storage.blob.Blob</xref>.copy_to`
+    and
+
+    `<xref uid="google.cloud.storage.blob.Blob.delete">google.cloud.storage.blob.Blob.delete</xref>`
+    directly.
+
+    </aside>'
+  syntax:
+    content: rename_blob(blob, new_name, client=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, if_source_generation_match=None,
+      if_source_generation_not_match=None, if_source_metageneration_match=None, if_source_metageneration_not_match=None,
+      timeout=60, retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: The blob to be renamed.
+      id: blob
+      var_type: <xref uid="google.cloud.storage.blob.Blob">Blob</xref>
+    - description: The new name for this blob.
+      id: new_name
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) See :ref:<code>using-if-generation-match</code> Note
+        that the generation to be matched is that of the <code>destination</code>
+        blob.
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+        Note that the generation to be matched is that of the <code>destination</code>
+        blob.
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+        Note that the metageneration to be matched is that of the <code>destination</code>
+        blob.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+        Note that the metageneration to be matched is that of the <code>destination</code>
+        blob.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's generation matches the given value. Also used in the (implied) delete
+        request.
+      id: if_source_generation_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's generation does not match the given value. Also used in the (implied)
+        delete request.
+      id: if_source_generation_not_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's current metageneration matches the given value. Also used in the
+        (implied) delete request.
+      id: if_source_metageneration_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's current metageneration does not match the given value. Also used
+        in the (implied) delete request.
+      id: if_source_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: The newly-renamed blob.
+      var_type: <code>Blob</code>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.rename_blob
+- &id019
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.requester_pays
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: requester_pays
+  source:
+    id: requester_pays
+    path: null
+    startLine: null
+  summary: 'Does the requester pay for API requests for this bucket?
+
+
+    See https://cloud.google.com/storage/docs/requester-pays for
+
+    details.
+
+
+    :setter: Update whether requester pays for this bucket.
+
+    :getter: Query whether requester pays for this bucket.
+
+    '
+  syntax:
+    returns:
+    - description: True if requester pays for API requests for the bucket, else False.
+      var_type: bool
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.requester_pays
+- *id019
+- &id020
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.retention_period
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: retention_period
+  source:
+    id: retention_period
+    path: null
+    startLine: null
+  summary: 'Retrieve or set the retention period for items in the bucket.
+
+    '
+  syntax:
+    returns:
+    - description: number of seconds to retain items after upload or release from
+        event-based lock, or <code>None</code> if the property is not set locally.
+      var_type: int or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.retention_period
+- *id020
+- &id021
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.retention_policy_effective_time
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: retention_policy_effective_time
+  source:
+    id: retention_policy_effective_time
+    path: null
+    startLine: null
+  summary: 'Retrieve the effective time of the bucket''s retention policy.
+
+    '
+  syntax:
+    returns:
+    - description: point-in time at which the bucket's retention policy is effective,
+        or <code>None</code> if the property is not set locally.
+      var_type: datetime.datetime or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.retention_policy_effective_time
+- *id021
+- &id022
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.retention_policy_locked
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: retention_policy_locked
+  source:
+    id: retention_policy_locked
+    path: null
+    startLine: null
+  summary: 'Retrieve whthere the bucket''s retention policy is locked.
+
+    '
+  syntax:
+    returns:
+    - description: True if the bucket's policy is locked, or else False if the policy
+        is not locked, or the property is not set locally.
+      var_type: bool
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.retention_policy_locked
+- *id022
+- &id023
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.rpo
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: rpo
+  source:
+    id: rpo
+    path: null
+    startLine: null
+  summary: 'Get the RPO (Recovery Point Objective) of this bucket
+
+
+    See: https://cloud.google.com/storage/docs/managing-turbo-replication
+
+
+    "ASYNC_TURBO" or "DEFAULT"
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.rpo
+- *id023
+- &id024
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.self_link
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: self_link
+  source:
+    id: self_link
+    path: null
+    startLine: null
+  summary: 'Retrieve the URI for the bucket.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/buckets
+
+    '
+  syntax:
+    returns:
+    - description: The self link for the bucket or <code>None</code> if the bucket's
+        resource has not been loaded from the server.
+      var_type: str or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.self_link
+- *id024
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.set_iam_policy
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: set_iam_policy
+  source:
+    id: set_iam_policy
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2756
+  summary: 'Update the IAM policy for the bucket.
+
+
+    See
+
+    https://cloud.google.com/storage/docs/json_api/v1/buckets/setIamPolicy
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: set_iam_policy(policy, client=None, timeout=60, retry=<google.cloud.storage.retry.ConditionalRetryPolicy
+      object>)
+    parameters:
+    - description: policy instance used to update bucket's IAM policy.
+      id: policy
+      var_type: <code>google.api_core.iam.Policy</code>
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: the policy instance, based on the resource returned from the <code>setIamPolicy</code>
+        API request.
+      var_type: <code>google.api_core.iam.Policy</code>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.set_iam_policy
+- &id025
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.storage_class
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: storage_class
+  source:
+    id: storage_class
+    path: null
+    startLine: null
+  summary: 'Retrieve or set the storage class for the bucket.
+
+
+    See https://cloud.google.com/storage/docs/storage-classes
+
+
+    :setter: Set the storage class for this bucket.
+
+    :getter: Gets the the storage class for this bucket.
+
+    '
+  syntax:
+    returns:
+    - description: If set, one of <xref uid="google.cloud.storage.constants.NEARLINE_STORAGE_CLASS">NEARLINE_STORAGE_CLASS</xref>,
+        <xref uid="google.cloud.storage.constants.COLDLINE_STORAGE_CLASS">COLDLINE_STORAGE_CLASS</xref>,
+        <xref uid="google.cloud.storage.constants.ARCHIVE_STORAGE_CLASS">ARCHIVE_STORAGE_CLASS</xref>,
+        <xref uid="google.cloud.storage.constants.STANDARD_STORAGE_CLASS">STANDARD_STORAGE_CLASS</xref>,
+        <xref uid="google.cloud.storage.constants.MULTI_REGIONAL_LEGACY_STORAGE_CLASS">MULTI_REGIONAL_LEGACY_STORAGE_CLASS</xref>,
+        <xref uid="google.cloud.storage.constants.REGIONAL_LEGACY_STORAGE_CLASS">REGIONAL_LEGACY_STORAGE_CLASS</xref>,
+        or <xref uid="google.cloud.storage.constants.DURABLE_REDUCED_AVAILABILITY_LEGACY_STORAGE_CLASS">DURABLE_REDUCED_AVAILABILITY_LEGACY_STORAGE_CLASS</xref>,
+        else <code>None</code>.
+      var_type: str or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.storage_class
+- *id025
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.test_iam_permissions
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: test_iam_permissions
+  source:
+    id: test_iam_permissions
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 2812
+  summary: 'API call:  test permissions
+
+
+    See
+
+    https://cloud.google.com/storage/docs/json_api/v1/buckets/testIamPermissions
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: test_iam_permissions(permissions, client=None, timeout=60, retry=<google.api_core.retry.Retry
+      object>)
+    parameters:
+    - description: the permissions to check
+      id: permissions
+      var_type: list of string
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: the permissions returned by the <code>testIamPermissions</code>
+        API request.
+      var_type: list of string
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.test_iam_permissions
+- &id026
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.time_created
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: time_created
+  source:
+    id: time_created
+    path: null
+    startLine: null
+  summary: 'Retrieve the timestamp at which the bucket was created.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/buckets
+
+    '
+  syntax:
+    returns:
+    - description: Datetime object parsed from RFC3339 valid timestamp, or <code>None</code>
+        if the bucket's resource has not been loaded from the server.
+      var_type: <code>datetime.datetime</code> or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.time_created
+- *id026
+- attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.update
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: update
+  source:
+    id: update
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 992
+  summary: 'Sends all properties in a PUT request.
+
+
+    Updates the `_properties` with the response from the backend.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: update(client=None, timeout=60, if_metageneration_match=None, if_metageneration_not_match=None,
+      retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: the client to use. If not passed, falls back to the <code>client</code>
+        stored on the current object.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration matches the given value.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration does not match the given value.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.bucket.Bucket.update
+- &id027
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.user_project
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: user_project
+  source:
+    id: user_project
+    path: null
+    startLine: null
+  summary: 'Project ID to be billed for API requests made via this bucket.
+
+
+    If unset, API requests are billed to the bucket owner.
+
+
+    A user project is required for all operations on Requester Pays buckets.
+
+
+    See https://cloud.google.com/storage/docs/requester-pays#requirements for details.
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.user_project
+- *id027
+- &id028
+  attributes: []
+  class: google.cloud.storage.bucket.Bucket
+  fullName: google.cloud.storage.bucket.Bucket.versioning_enabled
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: versioning_enabled
+  source:
+    id: versioning_enabled
+    path: null
+    startLine: null
+  summary: 'Is versioning enabled for this bucket?
+
+
+    See  https://cloud.google.com/storage/docs/object-versioning for
+
+    details.
+
+
+    :setter: Update whether versioning is enabled for this bucket.
+
+    :getter: Query whether versioning is enabled for this bucket.
+
+    '
+  syntax:
+    returns:
+    - description: True if enabled, else False.
+      var_type: bool
+  type: property
+  uid: google.cloud.storage.bucket.Bucket.versioning_enabled
+- *id028
+references:
+- fullName: google.cloud.storage.bucket.Bucket
+  isExternal: false
+  name: Bucket
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket
+- fullName: google.cloud.storage.bucket.Bucket.STORAGE_CLASSES
+  isExternal: false
+  name: STORAGE_CLASSES
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.STORAGE_CLASSES
+- fullName: google.cloud.storage.bucket.Bucket.acl
+  isExternal: false
+  name: acl
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.acl
+- fullName: google.cloud.storage.bucket.Bucket.add_lifecycle_abort_incomplete_multipart_upload_rule
+  isExternal: false
+  name: add_lifecycle_abort_incomplete_multipart_upload_rule
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.add_lifecycle_abort_incomplete_multipart_upload_rule
+- fullName: google.cloud.storage.bucket.Bucket.add_lifecycle_delete_rule
+  isExternal: false
+  name: add_lifecycle_delete_rule
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.add_lifecycle_delete_rule
+- fullName: google.cloud.storage.bucket.Bucket.add_lifecycle_set_storage_class_rule
+  isExternal: false
+  name: add_lifecycle_set_storage_class_rule
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.add_lifecycle_set_storage_class_rule
+- fullName: google.cloud.storage.bucket.Bucket.blob
+  isExternal: false
+  name: blob
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.blob
+- fullName: google.cloud.storage.bucket.Bucket.clear_lifecyle_rules
+  isExternal: false
+  name: clear_lifecyle_rules
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.clear_lifecyle_rules
+- fullName: google.cloud.storage.bucket.Bucket.client
+  isExternal: false
+  name: client
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.client
+- fullName: google.cloud.storage.bucket.Bucket.configure_website
+  isExternal: false
+  name: configure_website
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.configure_website
+- fullName: google.cloud.storage.bucket.Bucket.copy_blob
+  isExternal: false
+  name: copy_blob
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.copy_blob
+- fullName: google.cloud.storage.bucket.Bucket.cors
+  isExternal: false
+  name: cors
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.cors
+- fullName: google.cloud.storage.bucket.Bucket.create
+  isExternal: false
+  name: create
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.create
+- fullName: google.cloud.storage.bucket.Bucket.data_locations
+  isExternal: false
+  name: data_locations
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.data_locations
+- fullName: google.cloud.storage.bucket.Bucket.default_event_based_hold
+  isExternal: false
+  name: default_event_based_hold
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.default_event_based_hold
+- fullName: google.cloud.storage.bucket.Bucket.default_kms_key_name
+  isExternal: false
+  name: default_kms_key_name
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.default_kms_key_name
+- fullName: google.cloud.storage.bucket.Bucket.default_object_acl
+  isExternal: false
+  name: default_object_acl
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.default_object_acl
+- fullName: google.cloud.storage.bucket.Bucket.delete
+  isExternal: false
+  name: delete
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.delete
+- fullName: google.cloud.storage.bucket.Bucket.delete_blob
+  isExternal: false
+  name: delete_blob
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.delete_blob
+- fullName: google.cloud.storage.bucket.Bucket.delete_blobs
+  isExternal: false
+  name: delete_blobs
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.delete_blobs
+- fullName: google.cloud.storage.bucket.Bucket.disable_logging
+  isExternal: false
+  name: disable_logging
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.disable_logging
+- fullName: google.cloud.storage.bucket.Bucket.disable_website
+  isExternal: false
+  name: disable_website
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.disable_website
+- fullName: google.cloud.storage.bucket.Bucket.enable_logging
+  isExternal: false
+  name: enable_logging
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.enable_logging
+- fullName: google.cloud.storage.bucket.Bucket.etag
+  isExternal: false
+  name: etag
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.etag
+- fullName: google.cloud.storage.bucket.Bucket.exists
+  isExternal: false
+  name: exists
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.exists
+- fullName: google.cloud.storage.bucket.Bucket.from_string
+  isExternal: false
+  name: from_string
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.from_string
+- fullName: google.cloud.storage.bucket.Bucket.generate_signed_url
+  isExternal: false
+  name: generate_signed_url
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.generate_signed_url
+- fullName: google.cloud.storage.bucket.Bucket.generate_upload_policy
+  isExternal: false
+  name: generate_upload_policy
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.generate_upload_policy
+- fullName: google.cloud.storage.bucket.Bucket.get_blob
+  isExternal: false
+  name: get_blob
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.get_blob
+- fullName: google.cloud.storage.bucket.Bucket.get_iam_policy
+  isExternal: false
+  name: get_iam_policy
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.get_iam_policy
+- fullName: google.cloud.storage.bucket.Bucket.get_logging
+  isExternal: false
+  name: get_logging
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.get_logging
+- fullName: google.cloud.storage.bucket.Bucket.get_notification
+  isExternal: false
+  name: get_notification
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.get_notification
+- fullName: google.cloud.storage.bucket.Bucket.iam_configuration
+  isExternal: false
+  name: iam_configuration
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.iam_configuration
+- fullName: google.cloud.storage.bucket.Bucket.id
+  isExternal: false
+  name: id
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.id
+- fullName: google.cloud.storage.bucket.Bucket.labels
+  isExternal: false
+  name: labels
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.labels
+- fullName: google.cloud.storage.bucket.Bucket.lifecycle_rules
+  isExternal: false
+  name: lifecycle_rules
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.lifecycle_rules
+- fullName: google.cloud.storage.bucket.Bucket.list_blobs
+  isExternal: false
+  name: list_blobs
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.list_blobs
+- fullName: google.cloud.storage.bucket.Bucket.list_notifications
+  isExternal: false
+  name: list_notifications
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.list_notifications
+- fullName: google.cloud.storage.bucket.Bucket.location
+  isExternal: false
+  name: location
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.location
+- fullName: google.cloud.storage.bucket.Bucket.location_type
+  isExternal: false
+  name: location_type
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.location_type
+- fullName: google.cloud.storage.bucket.Bucket.lock_retention_policy
+  isExternal: false
+  name: lock_retention_policy
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.lock_retention_policy
+- fullName: google.cloud.storage.bucket.Bucket.make_private
+  isExternal: false
+  name: make_private
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.make_private
+- fullName: google.cloud.storage.bucket.Bucket.make_public
+  isExternal: false
+  name: make_public
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.make_public
+- fullName: google.cloud.storage.bucket.Bucket.metageneration
+  isExternal: false
+  name: metageneration
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.metageneration
+- fullName: google.cloud.storage.bucket.Bucket.notification
+  isExternal: false
+  name: notification
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.notification
+- fullName: google.cloud.storage.bucket.Bucket.owner
+  isExternal: false
+  name: owner
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.owner
+- fullName: google.cloud.storage.bucket.Bucket.patch
+  isExternal: false
+  name: patch
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.patch
+- fullName: google.cloud.storage.bucket.Bucket.path
+  isExternal: false
+  name: path
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.path
+- fullName: google.cloud.storage.bucket.Bucket.path_helper
+  isExternal: false
+  name: path_helper
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.path_helper
+- fullName: google.cloud.storage.bucket.Bucket.project_number
+  isExternal: false
+  name: project_number
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.project_number
+- fullName: google.cloud.storage.bucket.Bucket.reload
+  isExternal: false
+  name: reload
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.reload
+- fullName: google.cloud.storage.bucket.Bucket.rename_blob
+  isExternal: false
+  name: rename_blob
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.rename_blob
+- fullName: google.cloud.storage.bucket.Bucket.requester_pays
+  isExternal: false
+  name: requester_pays
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.requester_pays
+- fullName: google.cloud.storage.bucket.Bucket.retention_period
+  isExternal: false
+  name: retention_period
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.retention_period
+- fullName: google.cloud.storage.bucket.Bucket.retention_policy_effective_time
+  isExternal: false
+  name: retention_policy_effective_time
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.retention_policy_effective_time
+- fullName: google.cloud.storage.bucket.Bucket.retention_policy_locked
+  isExternal: false
+  name: retention_policy_locked
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.retention_policy_locked
+- fullName: google.cloud.storage.bucket.Bucket.rpo
+  isExternal: false
+  name: rpo
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.rpo
+- fullName: google.cloud.storage.bucket.Bucket.self_link
+  isExternal: false
+  name: self_link
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.self_link
+- fullName: google.cloud.storage.bucket.Bucket.set_iam_policy
+  isExternal: false
+  name: set_iam_policy
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.set_iam_policy
+- fullName: google.cloud.storage.bucket.Bucket.storage_class
+  isExternal: false
+  name: storage_class
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.storage_class
+- fullName: google.cloud.storage.bucket.Bucket.test_iam_permissions
+  isExternal: false
+  name: test_iam_permissions
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.test_iam_permissions
+- fullName: google.cloud.storage.bucket.Bucket.time_created
+  isExternal: false
+  name: time_created
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.time_created
+- fullName: google.cloud.storage.bucket.Bucket.update
+  isExternal: false
+  name: update
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.update
+- fullName: google.cloud.storage.bucket.Bucket.user_project
+  isExternal: false
+  name: user_project
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.user_project
+- fullName: google.cloud.storage.bucket.Bucket.versioning_enabled
+  isExternal: false
+  name: versioning_enabled
+  parent: google.cloud.storage.bucket.Bucket
+  uid: google.cloud.storage.bucket.Bucket.versioning_enabled

@@ -1,0 +1,16 @@
+[run]
+branch = True
+
+[report]
+show_missing = True
+# The spanner library has not had 100% coverage in the past and until such a time
+# as the unittest coverage is fixed, we need to set it at an appropriate level
+# to detect regressions in coverage but not fail due to known lack of coverage.
+fail_under = 89
+omit =
+    google/cloud/spanner_driver/__init__.py
+exclude_lines =
+    # Re-enable the standard pragma
+    pragma: NO COVER
+    # Ignore debug-only repr
+    def __repr__

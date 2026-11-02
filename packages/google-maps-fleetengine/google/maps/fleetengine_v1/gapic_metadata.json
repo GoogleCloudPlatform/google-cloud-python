@@ -1,0 +1,167 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.maps.fleetengine_v1",
+  "protoPackage": "maps.fleetengine.v1",
+  "schema": "1.0",
+  "services": {
+    "TripService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "TripServiceClient",
+          "rpcs": {
+            "CreateTrip": {
+              "methods": [
+                "create_trip"
+              ]
+            },
+            "DeleteTrip": {
+              "methods": [
+                "delete_trip"
+              ]
+            },
+            "GetTrip": {
+              "methods": [
+                "get_trip"
+              ]
+            },
+            "ReportBillableTrip": {
+              "methods": [
+                "report_billable_trip"
+              ]
+            },
+            "SearchTrips": {
+              "methods": [
+                "search_trips"
+              ]
+            },
+            "UpdateTrip": {
+              "methods": [
+                "update_trip"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "TripServiceAsyncClient",
+          "rpcs": {
+            "CreateTrip": {
+              "methods": [
+                "create_trip"
+              ]
+            },
+            "DeleteTrip": {
+              "methods": [
+                "delete_trip"
+              ]
+            },
+            "GetTrip": {
+              "methods": [
+                "get_trip"
+              ]
+            },
+            "ReportBillableTrip": {
+              "methods": [
+                "report_billable_trip"
+              ]
+            },
+            "SearchTrips": {
+              "methods": [
+                "search_trips"
+              ]
+            },
+            "UpdateTrip": {
+              "methods": [
+                "update_trip"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "VehicleService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "VehicleServiceClient",
+          "rpcs": {
+            "CreateVehicle": {
+              "methods": [
+                "create_vehicle"
+              ]
+            },
+            "DeleteVehicle": {
+              "methods": [
+                "delete_vehicle"
+              ]
+            },
+            "GetVehicle": {
+              "methods": [
+                "get_vehicle"
+              ]
+            },
+            "ListVehicles": {
+              "methods": [
+                "list_vehicles"
+              ]
+            },
+            "SearchVehicles": {
+              "methods": [
+                "search_vehicles"
+              ]
+            },
+            "UpdateVehicle": {
+              "methods": [
+                "update_vehicle"
+              ]
+            },
+            "UpdateVehicleAttributes": {
+              "methods": [
+                "update_vehicle_attributes"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "VehicleServiceAsyncClient",
+          "rpcs": {
+            "CreateVehicle": {
+              "methods": [
+                "create_vehicle"
+              ]
+            },
+            "DeleteVehicle": {
+              "methods": [
+                "delete_vehicle"
+              ]
+            },
+            "GetVehicle": {
+              "methods": [
+                "get_vehicle"
+              ]
+            },
+            "ListVehicles": {
+              "methods": [
+                "list_vehicles"
+              ]
+            },
+            "SearchVehicles": {
+              "methods": [
+                "search_vehicles"
+              ]
+            },
+            "UpdateVehicle": {
+              "methods": [
+                "update_vehicle"
+              ]
+            },
+            "UpdateVehicleAttributes": {
+              "methods": [
+                "update_vehicle_attributes"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

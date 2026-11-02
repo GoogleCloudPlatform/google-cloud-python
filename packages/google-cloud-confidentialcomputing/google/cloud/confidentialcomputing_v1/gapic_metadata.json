@@ -1,0 +1,88 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.confidentialcomputing_v1",
+  "protoPackage": "google.cloud.confidentialcomputing.v1",
+  "schema": "1.0",
+  "services": {
+    "ConfidentialComputing": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ConfidentialComputingClient",
+          "rpcs": {
+            "CreateChallenge": {
+              "methods": [
+                "create_challenge"
+              ]
+            },
+            "VerifyAttestation": {
+              "methods": [
+                "verify_attestation"
+              ]
+            },
+            "VerifyConfidentialGke": {
+              "methods": [
+                "verify_confidential_gke"
+              ]
+            },
+            "VerifyConfidentialSpace": {
+              "methods": [
+                "verify_confidential_space"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ConfidentialComputingAsyncClient",
+          "rpcs": {
+            "CreateChallenge": {
+              "methods": [
+                "create_challenge"
+              ]
+            },
+            "VerifyAttestation": {
+              "methods": [
+                "verify_attestation"
+              ]
+            },
+            "VerifyConfidentialGke": {
+              "methods": [
+                "verify_confidential_gke"
+              ]
+            },
+            "VerifyConfidentialSpace": {
+              "methods": [
+                "verify_confidential_space"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ConfidentialComputingClient",
+          "rpcs": {
+            "CreateChallenge": {
+              "methods": [
+                "create_challenge"
+              ]
+            },
+            "VerifyAttestation": {
+              "methods": [
+                "verify_attestation"
+              ]
+            },
+            "VerifyConfidentialGke": {
+              "methods": [
+                "verify_confidential_gke"
+              ]
+            },
+            "VerifyConfidentialSpace": {
+              "methods": [
+                "verify_confidential_space"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

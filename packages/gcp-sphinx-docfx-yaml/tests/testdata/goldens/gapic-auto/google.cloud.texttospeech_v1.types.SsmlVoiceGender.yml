@@ -1,0 +1,27 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children: []
+  class: google.cloud.texttospeech_v1.types.SsmlVoiceGender
+  fullName: google.cloud.texttospeech_v1.types.SsmlVoiceGender
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1.types
+  name: SsmlVoiceGender
+  source:
+    id: SsmlVoiceGender
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1/types/cloud_tts.py
+    startLine: 36
+  summary: 'Gender of the voice as described in `SSML voice
+
+    element <https://www.w3.org/TR/speech-synthesis11/#edef_voice>`__.
+
+
+    '
+  syntax:
+    content: SsmlVoiceGender(value)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1.types.SsmlVoiceGender
+references: []

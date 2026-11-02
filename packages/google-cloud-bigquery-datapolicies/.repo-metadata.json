@@ -1,0 +1,16 @@
+{
+    "api_description": "Allows users to manage BigQuery data policies.",
+    "api_id": "bigquerydatapolicy.googleapis.com",
+    "api_shortname": "bigquerydatapolicy",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/bigquerydatapolicy/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-bigquery-datapolicies",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=187149\u0026template=1162659",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "bigquerydatapolicy",
+    "name_pretty": "BigQuery Data Policy",
+    "product_documentation": "https://cloud.google.com/bigquery/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

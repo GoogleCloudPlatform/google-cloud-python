@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package examples.bigtable.music;
+
+enum Genre {
+  POP = 0;
+  JAZZ = 1;
+  FOLK = 2;
+  ROCK = 3;
+}
+
+message Singer {
+  string name = 1;
+  Genre genre = 2;
+}

@@ -1,0 +1,5 @@
+
+    {
+        "private_key": "some_key",
+        "client_email": "service-account@example.com"
+    }

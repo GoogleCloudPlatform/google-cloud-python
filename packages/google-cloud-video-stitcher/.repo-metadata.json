@@ -1,0 +1,15 @@
+{
+    "api_description": "The Video Stitcher API allows you to manipulate video content to dynamically insert ads prior to delivery to client devices.",
+    "api_id": "videostitcher.googleapis.com",
+    "api_shortname": "videostitcher",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/videostitcher/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-video-stitcher",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "videostitcher",
+    "name_pretty": "Video Stitcher",
+    "product_documentation": "https://cloud.google.com/video-stitcher",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,19 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.Empty
+  fullName: google.cloud.pubsub_v1.types.Empty
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: Empty
+  source:
+    id: Empty
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.Empty` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.Empty
+references: []

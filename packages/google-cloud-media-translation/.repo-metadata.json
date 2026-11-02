@@ -1,0 +1,15 @@
+{
+    "api_description": "The Media Translation API provides enterprise-quality translation from/to various media types.",
+    "api_id": "mediatranslation.googleapis.com",
+    "api_shortname": "mediatranslation",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/mediatranslation/latest",
+    "default_version": "v1beta1",
+    "distribution_name": "google-cloud-media-translation",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "mediatranslation",
+    "name_pretty": "Media Translation",
+    "product_documentation": "https://cloud.google.com/media-translation",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,34 @@
+[
+   {
+      "name":"client_info",
+      "uidname":"google.api_core.client_info",
+      "items":[
+         {
+            "name":"Overview",
+            "uidname":"google.api_core.client_info",
+            "uid":"google.api_core.client_info"
+         },
+         {
+            "name":"ClientInfo",
+            "uidname":"google.api_core.client_info.ClientInfo",
+            "uid":"google.api_core.client_info.ClientInfo"
+         }
+      ]
+   },
+   {
+      "name":"client_info",
+      "uidname":"google.api_core.gapic_v1.client_info",
+      "items":[
+         {
+            "name":"Overview",
+            "uidname":"google.api_core.gapic_v1.client_info",
+            "uid":"google.api_core.gapic_v1.client_info"
+         },
+         {
+            "name":"ClientInfo",
+            "uidname":"google.api_core.gapic_v1.client_info.ClientInfo",
+            "uid":"google.api_core.gapic_v1.client_info.ClientInfo"
+         }
+      ]
+   },
+]

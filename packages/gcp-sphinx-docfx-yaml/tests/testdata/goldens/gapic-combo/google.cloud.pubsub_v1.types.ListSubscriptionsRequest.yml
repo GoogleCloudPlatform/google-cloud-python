@@ -1,0 +1,37 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the project in which to list\n   subscriptions.\
+      \ Format is <code>projects/{project-id}</code>."
+    id: project
+    var_type: str
+  - description: Maximum number of subscriptions to return.
+    id: page_size
+    var_type: int
+  - description: "The value returned by the last\n   <code>ListSubscriptionsResponse</code>;\
+      \ indicates that this is a\n   continuation of a prior <code>ListSubscriptions</code>\
+      \ call, and that\n   the system should return the next page of data."
+    id: page_token
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.ListSubscriptionsRequest
+  fullName: google.cloud.pubsub_v1.types.ListSubscriptionsRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ListSubscriptionsRequest
+  source:
+    id: ListSubscriptionsRequest
+    path: null
+    startLine: null
+  summary: 'Request for the `ListSubscriptions` method.
+
+    '
+  syntax:
+    content: ListSubscriptionsRequest(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ListSubscriptionsRequest
+references: []

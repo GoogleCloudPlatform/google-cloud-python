@@ -1,0 +1,58 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Received Pub/Sub messages. This will not be\n   empty."
+    id: received_messages
+    var_type: Sequence[google.pubsub_v1.types.ReceivedMessage]
+  - description: "This field will only be set if\n   <code>enable_exactly_once_delivery</code>\
+      \ is set to <code>true</code>."
+    id: acknowledge_confirmation
+    var_type: google.pubsub_v1.types.StreamingPullResponse.AcknowledgeConfirmation
+  - description: "This field will only be set if\n   <code>enable_exactly_once_delivery</code>\
+      \ is set to <code>true</code>."
+    id: modify_ack_deadline_confirmation
+    var_type: google.pubsub_v1.types.StreamingPullResponse.ModifyAckDeadlineConfirmation
+  - description: Properties associated with this subscription.
+    id: subscription_properties
+    var_type: google.pubsub_v1.types.StreamingPullResponse.SubscriptionProperties
+  children:
+  - google.cloud.pubsub_v1.types.StreamingPullResponse.AcknowledgeConfirmation
+  - google.cloud.pubsub_v1.types.StreamingPullResponse.ModifyAckDeadlineConfirmation
+  - google.cloud.pubsub_v1.types.StreamingPullResponse.SubscriptionProperties
+  class: google.cloud.pubsub_v1.types.StreamingPullResponse
+  fullName: google.cloud.pubsub_v1.types.StreamingPullResponse
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: StreamingPullResponse
+  source:
+    id: StreamingPullResponse
+    path: null
+    startLine: null
+  summary: 'Response for the `StreamingPull` method. This response is used to
+
+    stream messages from the server to the client.
+
+    '
+  syntax:
+    content: StreamingPullResponse(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.StreamingPullResponse
+references:
+- fullName: google.cloud.pubsub_v1.types.StreamingPullResponse.AcknowledgeConfirmation
+  isExternal: false
+  name: AcknowledgeConfirmation
+  parent: google.cloud.pubsub_v1.types.StreamingPullResponse
+  uid: google.cloud.pubsub_v1.types.StreamingPullResponse.AcknowledgeConfirmation
+- fullName: google.cloud.pubsub_v1.types.StreamingPullResponse.ModifyAckDeadlineConfirmation
+  isExternal: false
+  name: ModifyAckDeadlineConfirmation
+  parent: google.cloud.pubsub_v1.types.StreamingPullResponse
+  uid: google.cloud.pubsub_v1.types.StreamingPullResponse.ModifyAckDeadlineConfirmation
+- fullName: google.cloud.pubsub_v1.types.StreamingPullResponse.SubscriptionProperties
+  isExternal: false
+  name: SubscriptionProperties
+  parent: google.cloud.pubsub_v1.types.StreamingPullResponse
+  uid: google.cloud.pubsub_v1.types.StreamingPullResponse.SubscriptionProperties

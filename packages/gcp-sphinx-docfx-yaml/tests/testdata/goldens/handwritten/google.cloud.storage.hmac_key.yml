@@ -1,0 +1,32 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: hmac_key
+  source:
+    id: hmac_key
+    path: tests/testdata/handwritten/google/cloud/storage/hmac_key.py
+    startLine: 0
+  summary: 'Configure HMAC keys that can be used to authenticate requests to Google
+    Cloud Storage.
+
+
+    See [HMAC keys documentation](https://cloud.google.com/storage/docs/authentication/hmackeys)
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google.cloud.storage.hmac_key
+references:
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata
+  isExternal: false
+  name: HMACKeyMetadata
+  parent: google.cloud.storage.hmac_key
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata

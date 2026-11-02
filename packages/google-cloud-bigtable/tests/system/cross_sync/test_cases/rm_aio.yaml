@@ -1,0 +1,109 @@
+tests:
+  - description: "remove await"
+    before: |
+        CrossSync.rm_aio(await routine())
+    transformers: [RmAioFunctions]
+    after: |
+        routine()
+  - description: "async for loop fn"
+    before: |
+      async def func_name():
+        async for i in CrossSync.rm_aio(range(10)):
+            await routine()
+        return 42
+    transformers: [RmAioFunctions]
+    after: |
+      async def func_name():
+        for i in range(10):
+            await routine()
+        return 42
+
+  - description: "async with statement"
+    before: |
+      async def func_name():
+        async with CrossSync.rm_aio(context_manager()) as cm:
+            await do_something(cm)
+    transformers: [RmAioFunctions]
+    after: |
+      async def func_name():
+        with context_manager() as cm:
+            await do_something(cm)
+
+  - description: "list comprehension with async for"
+    before: |
+      async def func_name():
+        result = CrossSync.rm_aio([x async for x in aiter() if await predicate(x)])
+    transformers: [RmAioFunctions]
+    after: |
+      async def func_name():
+        result = [x for x in aiter() if predicate(x)]
+
+  - description: "multiple async features in one call"
+    before: |
+        CrossSync.rm_aio([x async for x in aiter() if await predicate(x)] + await routine())
+    transformers: [RmAioFunctions]
+    after: |
+      [x for x in aiter() if predicate(x)] + routine()
+
+  - description: "do nothing with no CrossSync.rm_aio"
+    before: |
+      async def nested_async():
+        async with outer_context():
+          async for x in outer_iter():
+            async with inner_context(x):
+              async for y in inner_iter(x):
+                await process(x, y)
+    transformers: [RmAioFunctions]
+    after: |
+      async def nested_async():
+        async with outer_context():
+          async for x in outer_iter():
+            async with inner_context(x):
+              async for y in inner_iter(x):
+                await process(x, y)
+
+  - description: "nested async for loops with rm_aio"
+    before: |
+      async def nested_loops():
+        async for x in CrossSync.rm_aio(outer_iter()):
+          async for y in CrossSync.rm_aio(inner_iter(x)):
+            await process(x, y)
+    transformers: [RmAioFunctions]
+    after: |
+      async def nested_loops():
+        for x in outer_iter():
+          for y in inner_iter(x):
+            await process(x, y)
+
+  - description: "async generator function with rm_aio"
+    before: |
+      async def async_gen():
+        yield CrossSync.rm_aio(await async_value())
+        async for item in CrossSync.rm_aio(async_iterator()):
+          yield item
+    transformers: [RmAioFunctions]
+    after: |
+      async def async_gen():
+        yield async_value()
+        for item in async_iterator():
+          yield item
+
+  - description: "async with statement with multiple context managers"
+    before: |
+      async def multi_context():
+        async with CrossSync.rm_aio(cm1()), CrossSync.rm_aio(cm2()) as c2, CrossSync.rm_aio(cm3()) as c3:
+          await do_something(c2, c3)
+    transformers: [RmAioFunctions]
+    after: |
+      async def multi_context():
+        with cm1(), cm2() as c2, cm3() as c3:
+          await do_something(c2, c3)
+
+  - description: "async comprehension with multiple async for and if clauses"
+    before: |
+      async def complex_comprehension():
+        result = CrossSync.rm_aio([x async for x in aiter1() if await pred1(x) async for y in aiter2(x) if await pred2(y)])
+    transformers: [RmAioFunctions]
+    after: |
+      async def complex_comprehension():
+        result = [x for x in aiter1() if pred1(x) for y in aiter2(x) if pred2(y)]

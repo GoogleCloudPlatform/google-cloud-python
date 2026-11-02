@@ -1,0 +1,16 @@
+{
+    "api_description": "The Gemini API allows developers to build generative AI applications using\nGemini models. Gemini is our most capable model, built from the ground up\nto be multimodal. It can generalize and seamlessly understand, operate\nacross, and combine different types of information including language,\nimages, audio, video, and code. You can use the Gemini API for use cases\nlike reasoning across text and images, content generation, dialogue\nagents, summarization and classification systems, and more.",
+    "api_id": "generativelanguage.googleapis.com",
+    "api_shortname": "generativelanguage",
+    "client_documentation": "https://googleapis.dev/python/generativelanguage/latest",
+    "default_version": "v1beta",
+    "distribution_name": "google-ai-generativelanguage",
+    "issue_tracker": "https://github.com/google/generative-ai-python/issues/new",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "generativelanguage",
+    "name_pretty": "Generative Language",
+    "product_documentation": "https://ai.google.dev/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,15 @@
+{
+    "entity_object":"pages.1.Entities",
+    "entity": {
+        "mention_text":"Text",
+        "type_":"Type",
+        "page_number": "page",
+        "normalized_vertices":{
+            "type":"1",
+            "unit":"inch",
+            "base":"bBox",
+            "x":"x",
+            "y":"y"
+        }
+    }
+}

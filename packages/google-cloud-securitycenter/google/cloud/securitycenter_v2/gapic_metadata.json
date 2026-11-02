@@ -1,0 +1,628 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.securitycenter_v2",
+  "protoPackage": "google.cloud.securitycenter.v2",
+  "schema": "1.0",
+  "services": {
+    "SecurityCenter": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SecurityCenterClient",
+          "rpcs": {
+            "BatchCreateResourceValueConfigs": {
+              "methods": [
+                "batch_create_resource_value_configs"
+              ]
+            },
+            "BulkMuteFindings": {
+              "methods": [
+                "bulk_mute_findings"
+              ]
+            },
+            "CreateBigQueryExport": {
+              "methods": [
+                "create_big_query_export"
+              ]
+            },
+            "CreateFinding": {
+              "methods": [
+                "create_finding"
+              ]
+            },
+            "CreateMuteConfig": {
+              "methods": [
+                "create_mute_config"
+              ]
+            },
+            "CreateNotificationConfig": {
+              "methods": [
+                "create_notification_config"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "DeleteBigQueryExport": {
+              "methods": [
+                "delete_big_query_export"
+              ]
+            },
+            "DeleteMuteConfig": {
+              "methods": [
+                "delete_mute_config"
+              ]
+            },
+            "DeleteNotificationConfig": {
+              "methods": [
+                "delete_notification_config"
+              ]
+            },
+            "DeleteResourceValueConfig": {
+              "methods": [
+                "delete_resource_value_config"
+              ]
+            },
+            "GetBigQueryExport": {
+              "methods": [
+                "get_big_query_export"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetMuteConfig": {
+              "methods": [
+                "get_mute_config"
+              ]
+            },
+            "GetNotificationConfig": {
+              "methods": [
+                "get_notification_config"
+              ]
+            },
+            "GetResourceValueConfig": {
+              "methods": [
+                "get_resource_value_config"
+              ]
+            },
+            "GetSimulation": {
+              "methods": [
+                "get_simulation"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "GetValuedResource": {
+              "methods": [
+                "get_valued_resource"
+              ]
+            },
+            "GroupFindings": {
+              "methods": [
+                "group_findings"
+              ]
+            },
+            "ListAttackPaths": {
+              "methods": [
+                "list_attack_paths"
+              ]
+            },
+            "ListBigQueryExports": {
+              "methods": [
+                "list_big_query_exports"
+              ]
+            },
+            "ListFindings": {
+              "methods": [
+                "list_findings"
+              ]
+            },
+            "ListMuteConfigs": {
+              "methods": [
+                "list_mute_configs"
+              ]
+            },
+            "ListNotificationConfigs": {
+              "methods": [
+                "list_notification_configs"
+              ]
+            },
+            "ListResourceValueConfigs": {
+              "methods": [
+                "list_resource_value_configs"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "ListValuedResources": {
+              "methods": [
+                "list_valued_resources"
+              ]
+            },
+            "SetFindingState": {
+              "methods": [
+                "set_finding_state"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetMute": {
+              "methods": [
+                "set_mute"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateBigQueryExport": {
+              "methods": [
+                "update_big_query_export"
+              ]
+            },
+            "UpdateExternalSystem": {
+              "methods": [
+                "update_external_system"
+              ]
+            },
+            "UpdateFinding": {
+              "methods": [
+                "update_finding"
+              ]
+            },
+            "UpdateMuteConfig": {
+              "methods": [
+                "update_mute_config"
+              ]
+            },
+            "UpdateNotificationConfig": {
+              "methods": [
+                "update_notification_config"
+              ]
+            },
+            "UpdateResourceValueConfig": {
+              "methods": [
+                "update_resource_value_config"
+              ]
+            },
+            "UpdateSecurityMarks": {
+              "methods": [
+                "update_security_marks"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SecurityCenterAsyncClient",
+          "rpcs": {
+            "BatchCreateResourceValueConfigs": {
+              "methods": [
+                "batch_create_resource_value_configs"
+              ]
+            },
+            "BulkMuteFindings": {
+              "methods": [
+                "bulk_mute_findings"
+              ]
+            },
+            "CreateBigQueryExport": {
+              "methods": [
+                "create_big_query_export"
+              ]
+            },
+            "CreateFinding": {
+              "methods": [
+                "create_finding"
+              ]
+            },
+            "CreateMuteConfig": {
+              "methods": [
+                "create_mute_config"
+              ]
+            },
+            "CreateNotificationConfig": {
+              "methods": [
+                "create_notification_config"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "DeleteBigQueryExport": {
+              "methods": [
+                "delete_big_query_export"
+              ]
+            },
+            "DeleteMuteConfig": {
+              "methods": [
+                "delete_mute_config"
+              ]
+            },
+            "DeleteNotificationConfig": {
+              "methods": [
+                "delete_notification_config"
+              ]
+            },
+            "DeleteResourceValueConfig": {
+              "methods": [
+                "delete_resource_value_config"
+              ]
+            },
+            "GetBigQueryExport": {
+              "methods": [
+                "get_big_query_export"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetMuteConfig": {
+              "methods": [
+                "get_mute_config"
+              ]
+            },
+            "GetNotificationConfig": {
+              "methods": [
+                "get_notification_config"
+              ]
+            },
+            "GetResourceValueConfig": {
+              "methods": [
+                "get_resource_value_config"
+              ]
+            },
+            "GetSimulation": {
+              "methods": [
+                "get_simulation"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "GetValuedResource": {
+              "methods": [
+                "get_valued_resource"
+              ]
+            },
+            "GroupFindings": {
+              "methods": [
+                "group_findings"
+              ]
+            },
+            "ListAttackPaths": {
+              "methods": [
+                "list_attack_paths"
+              ]
+            },
+            "ListBigQueryExports": {
+              "methods": [
+                "list_big_query_exports"
+              ]
+            },
+            "ListFindings": {
+              "methods": [
+                "list_findings"
+              ]
+            },
+            "ListMuteConfigs": {
+              "methods": [
+                "list_mute_configs"
+              ]
+            },
+            "ListNotificationConfigs": {
+              "methods": [
+                "list_notification_configs"
+              ]
+            },
+            "ListResourceValueConfigs": {
+              "methods": [
+                "list_resource_value_configs"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "ListValuedResources": {
+              "methods": [
+                "list_valued_resources"
+              ]
+            },
+            "SetFindingState": {
+              "methods": [
+                "set_finding_state"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetMute": {
+              "methods": [
+                "set_mute"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateBigQueryExport": {
+              "methods": [
+                "update_big_query_export"
+              ]
+            },
+            "UpdateExternalSystem": {
+              "methods": [
+                "update_external_system"
+              ]
+            },
+            "UpdateFinding": {
+              "methods": [
+                "update_finding"
+              ]
+            },
+            "UpdateMuteConfig": {
+              "methods": [
+                "update_mute_config"
+              ]
+            },
+            "UpdateNotificationConfig": {
+              "methods": [
+                "update_notification_config"
+              ]
+            },
+            "UpdateResourceValueConfig": {
+              "methods": [
+                "update_resource_value_config"
+              ]
+            },
+            "UpdateSecurityMarks": {
+              "methods": [
+                "update_security_marks"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SecurityCenterClient",
+          "rpcs": {
+            "BatchCreateResourceValueConfigs": {
+              "methods": [
+                "batch_create_resource_value_configs"
+              ]
+            },
+            "BulkMuteFindings": {
+              "methods": [
+                "bulk_mute_findings"
+              ]
+            },
+            "CreateBigQueryExport": {
+              "methods": [
+                "create_big_query_export"
+              ]
+            },
+            "CreateFinding": {
+              "methods": [
+                "create_finding"
+              ]
+            },
+            "CreateMuteConfig": {
+              "methods": [
+                "create_mute_config"
+              ]
+            },
+            "CreateNotificationConfig": {
+              "methods": [
+                "create_notification_config"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "DeleteBigQueryExport": {
+              "methods": [
+                "delete_big_query_export"
+              ]
+            },
+            "DeleteMuteConfig": {
+              "methods": [
+                "delete_mute_config"
+              ]
+            },
+            "DeleteNotificationConfig": {
+              "methods": [
+                "delete_notification_config"
+              ]
+            },
+            "DeleteResourceValueConfig": {
+              "methods": [
+                "delete_resource_value_config"
+              ]
+            },
+            "GetBigQueryExport": {
+              "methods": [
+                "get_big_query_export"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetMuteConfig": {
+              "methods": [
+                "get_mute_config"
+              ]
+            },
+            "GetNotificationConfig": {
+              "methods": [
+                "get_notification_config"
+              ]
+            },
+            "GetResourceValueConfig": {
+              "methods": [
+                "get_resource_value_config"
+              ]
+            },
+            "GetSimulation": {
+              "methods": [
+                "get_simulation"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "GetValuedResource": {
+              "methods": [
+                "get_valued_resource"
+              ]
+            },
+            "GroupFindings": {
+              "methods": [
+                "group_findings"
+              ]
+            },
+            "ListAttackPaths": {
+              "methods": [
+                "list_attack_paths"
+              ]
+            },
+            "ListBigQueryExports": {
+              "methods": [
+                "list_big_query_exports"
+              ]
+            },
+            "ListFindings": {
+              "methods": [
+                "list_findings"
+              ]
+            },
+            "ListMuteConfigs": {
+              "methods": [
+                "list_mute_configs"
+              ]
+            },
+            "ListNotificationConfigs": {
+              "methods": [
+                "list_notification_configs"
+              ]
+            },
+            "ListResourceValueConfigs": {
+              "methods": [
+                "list_resource_value_configs"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "ListValuedResources": {
+              "methods": [
+                "list_valued_resources"
+              ]
+            },
+            "SetFindingState": {
+              "methods": [
+                "set_finding_state"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetMute": {
+              "methods": [
+                "set_mute"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateBigQueryExport": {
+              "methods": [
+                "update_big_query_export"
+              ]
+            },
+            "UpdateExternalSystem": {
+              "methods": [
+                "update_external_system"
+              ]
+            },
+            "UpdateFinding": {
+              "methods": [
+                "update_finding"
+              ]
+            },
+            "UpdateMuteConfig": {
+              "methods": [
+                "update_mute_config"
+              ]
+            },
+            "UpdateNotificationConfig": {
+              "methods": [
+                "update_notification_config"
+              ]
+            },
+            "UpdateResourceValueConfig": {
+              "methods": [
+                "update_resource_value_config"
+              ]
+            },
+            "UpdateSecurityMarks": {
+              "methods": [
+                "update_security_marks"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

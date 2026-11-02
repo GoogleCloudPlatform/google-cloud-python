@@ -1,0 +1,201 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.binaryauthorization_v1",
+  "protoPackage": "google.cloud.binaryauthorization.v1",
+  "schema": "1.0",
+  "services": {
+    "BinauthzManagementServiceV1": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "BinauthzManagementServiceV1Client",
+          "rpcs": {
+            "CreateAttestor": {
+              "methods": [
+                "create_attestor"
+              ]
+            },
+            "DeleteAttestor": {
+              "methods": [
+                "delete_attestor"
+              ]
+            },
+            "GetAttestor": {
+              "methods": [
+                "get_attestor"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "ListAttestors": {
+              "methods": [
+                "list_attestors"
+              ]
+            },
+            "UpdateAttestor": {
+              "methods": [
+                "update_attestor"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "BinauthzManagementServiceV1AsyncClient",
+          "rpcs": {
+            "CreateAttestor": {
+              "methods": [
+                "create_attestor"
+              ]
+            },
+            "DeleteAttestor": {
+              "methods": [
+                "delete_attestor"
+              ]
+            },
+            "GetAttestor": {
+              "methods": [
+                "get_attestor"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "ListAttestors": {
+              "methods": [
+                "list_attestors"
+              ]
+            },
+            "UpdateAttestor": {
+              "methods": [
+                "update_attestor"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "BinauthzManagementServiceV1Client",
+          "rpcs": {
+            "CreateAttestor": {
+              "methods": [
+                "create_attestor"
+              ]
+            },
+            "DeleteAttestor": {
+              "methods": [
+                "delete_attestor"
+              ]
+            },
+            "GetAttestor": {
+              "methods": [
+                "get_attestor"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "ListAttestors": {
+              "methods": [
+                "list_attestors"
+              ]
+            },
+            "UpdateAttestor": {
+              "methods": [
+                "update_attestor"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SystemPolicyV1": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SystemPolicyV1Client",
+          "rpcs": {
+            "GetSystemPolicy": {
+              "methods": [
+                "get_system_policy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SystemPolicyV1AsyncClient",
+          "rpcs": {
+            "GetSystemPolicy": {
+              "methods": [
+                "get_system_policy"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SystemPolicyV1Client",
+          "rpcs": {
+            "GetSystemPolicy": {
+              "methods": [
+                "get_system_policy"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ValidationHelperV1": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ValidationHelperV1Client",
+          "rpcs": {
+            "ValidateAttestationOccurrence": {
+              "methods": [
+                "validate_attestation_occurrence"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ValidationHelperV1AsyncClient",
+          "rpcs": {
+            "ValidateAttestationOccurrence": {
+              "methods": [
+                "validate_attestation_occurrence"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ValidationHelperV1Client",
+          "rpcs": {
+            "ValidateAttestationOccurrence": {
+              "methods": [
+                "validate_attestation_occurrence"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

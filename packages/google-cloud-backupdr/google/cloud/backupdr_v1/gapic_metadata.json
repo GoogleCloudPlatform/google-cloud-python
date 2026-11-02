@@ -1,0 +1,617 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.backupdr_v1",
+  "protoPackage": "google.cloud.backupdr.v1",
+  "schema": "1.0",
+  "services": {
+    "BackupDR": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "BackupDRClient",
+          "rpcs": {
+            "CreateBackupPlan": {
+              "methods": [
+                "create_backup_plan"
+              ]
+            },
+            "CreateBackupPlanAssociation": {
+              "methods": [
+                "create_backup_plan_association"
+              ]
+            },
+            "CreateBackupVault": {
+              "methods": [
+                "create_backup_vault"
+              ]
+            },
+            "CreateManagementServer": {
+              "methods": [
+                "create_management_server"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteBackupPlan": {
+              "methods": [
+                "delete_backup_plan"
+              ]
+            },
+            "DeleteBackupPlanAssociation": {
+              "methods": [
+                "delete_backup_plan_association"
+              ]
+            },
+            "DeleteBackupVault": {
+              "methods": [
+                "delete_backup_vault"
+              ]
+            },
+            "DeleteManagementServer": {
+              "methods": [
+                "delete_management_server"
+              ]
+            },
+            "FetchBackupPlanAssociationsForResourceType": {
+              "methods": [
+                "fetch_backup_plan_associations_for_resource_type"
+              ]
+            },
+            "FetchBackupsForResourceType": {
+              "methods": [
+                "fetch_backups_for_resource_type"
+              ]
+            },
+            "FetchDataSourceReferencesForResourceType": {
+              "methods": [
+                "fetch_data_source_references_for_resource_type"
+              ]
+            },
+            "FetchUsableBackupVaults": {
+              "methods": [
+                "fetch_usable_backup_vaults"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupPlan": {
+              "methods": [
+                "get_backup_plan"
+              ]
+            },
+            "GetBackupPlanAssociation": {
+              "methods": [
+                "get_backup_plan_association"
+              ]
+            },
+            "GetBackupPlanRevision": {
+              "methods": [
+                "get_backup_plan_revision"
+              ]
+            },
+            "GetBackupVault": {
+              "methods": [
+                "get_backup_vault"
+              ]
+            },
+            "GetDataSource": {
+              "methods": [
+                "get_data_source"
+              ]
+            },
+            "GetDataSourceReference": {
+              "methods": [
+                "get_data_source_reference"
+              ]
+            },
+            "GetManagementServer": {
+              "methods": [
+                "get_management_server"
+              ]
+            },
+            "InitializeService": {
+              "methods": [
+                "initialize_service"
+              ]
+            },
+            "ListBackupPlanAssociations": {
+              "methods": [
+                "list_backup_plan_associations"
+              ]
+            },
+            "ListBackupPlanRevisions": {
+              "methods": [
+                "list_backup_plan_revisions"
+              ]
+            },
+            "ListBackupPlans": {
+              "methods": [
+                "list_backup_plans"
+              ]
+            },
+            "ListBackupVaults": {
+              "methods": [
+                "list_backup_vaults"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListDataSourceReferences": {
+              "methods": [
+                "list_data_source_references"
+              ]
+            },
+            "ListDataSources": {
+              "methods": [
+                "list_data_sources"
+              ]
+            },
+            "ListManagementServers": {
+              "methods": [
+                "list_management_servers"
+              ]
+            },
+            "RestoreBackup": {
+              "methods": [
+                "restore_backup"
+              ]
+            },
+            "TriggerBackup": {
+              "methods": [
+                "trigger_backup"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateBackupPlan": {
+              "methods": [
+                "update_backup_plan"
+              ]
+            },
+            "UpdateBackupPlanAssociation": {
+              "methods": [
+                "update_backup_plan_association"
+              ]
+            },
+            "UpdateBackupVault": {
+              "methods": [
+                "update_backup_vault"
+              ]
+            },
+            "UpdateDataSource": {
+              "methods": [
+                "update_data_source"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "BackupDRAsyncClient",
+          "rpcs": {
+            "CreateBackupPlan": {
+              "methods": [
+                "create_backup_plan"
+              ]
+            },
+            "CreateBackupPlanAssociation": {
+              "methods": [
+                "create_backup_plan_association"
+              ]
+            },
+            "CreateBackupVault": {
+              "methods": [
+                "create_backup_vault"
+              ]
+            },
+            "CreateManagementServer": {
+              "methods": [
+                "create_management_server"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteBackupPlan": {
+              "methods": [
+                "delete_backup_plan"
+              ]
+            },
+            "DeleteBackupPlanAssociation": {
+              "methods": [
+                "delete_backup_plan_association"
+              ]
+            },
+            "DeleteBackupVault": {
+              "methods": [
+                "delete_backup_vault"
+              ]
+            },
+            "DeleteManagementServer": {
+              "methods": [
+                "delete_management_server"
+              ]
+            },
+            "FetchBackupPlanAssociationsForResourceType": {
+              "methods": [
+                "fetch_backup_plan_associations_for_resource_type"
+              ]
+            },
+            "FetchBackupsForResourceType": {
+              "methods": [
+                "fetch_backups_for_resource_type"
+              ]
+            },
+            "FetchDataSourceReferencesForResourceType": {
+              "methods": [
+                "fetch_data_source_references_for_resource_type"
+              ]
+            },
+            "FetchUsableBackupVaults": {
+              "methods": [
+                "fetch_usable_backup_vaults"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupPlan": {
+              "methods": [
+                "get_backup_plan"
+              ]
+            },
+            "GetBackupPlanAssociation": {
+              "methods": [
+                "get_backup_plan_association"
+              ]
+            },
+            "GetBackupPlanRevision": {
+              "methods": [
+                "get_backup_plan_revision"
+              ]
+            },
+            "GetBackupVault": {
+              "methods": [
+                "get_backup_vault"
+              ]
+            },
+            "GetDataSource": {
+              "methods": [
+                "get_data_source"
+              ]
+            },
+            "GetDataSourceReference": {
+              "methods": [
+                "get_data_source_reference"
+              ]
+            },
+            "GetManagementServer": {
+              "methods": [
+                "get_management_server"
+              ]
+            },
+            "InitializeService": {
+              "methods": [
+                "initialize_service"
+              ]
+            },
+            "ListBackupPlanAssociations": {
+              "methods": [
+                "list_backup_plan_associations"
+              ]
+            },
+            "ListBackupPlanRevisions": {
+              "methods": [
+                "list_backup_plan_revisions"
+              ]
+            },
+            "ListBackupPlans": {
+              "methods": [
+                "list_backup_plans"
+              ]
+            },
+            "ListBackupVaults": {
+              "methods": [
+                "list_backup_vaults"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListDataSourceReferences": {
+              "methods": [
+                "list_data_source_references"
+              ]
+            },
+            "ListDataSources": {
+              "methods": [
+                "list_data_sources"
+              ]
+            },
+            "ListManagementServers": {
+              "methods": [
+                "list_management_servers"
+              ]
+            },
+            "RestoreBackup": {
+              "methods": [
+                "restore_backup"
+              ]
+            },
+            "TriggerBackup": {
+              "methods": [
+                "trigger_backup"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateBackupPlan": {
+              "methods": [
+                "update_backup_plan"
+              ]
+            },
+            "UpdateBackupPlanAssociation": {
+              "methods": [
+                "update_backup_plan_association"
+              ]
+            },
+            "UpdateBackupVault": {
+              "methods": [
+                "update_backup_vault"
+              ]
+            },
+            "UpdateDataSource": {
+              "methods": [
+                "update_data_source"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "BackupDRClient",
+          "rpcs": {
+            "CreateBackupPlan": {
+              "methods": [
+                "create_backup_plan"
+              ]
+            },
+            "CreateBackupPlanAssociation": {
+              "methods": [
+                "create_backup_plan_association"
+              ]
+            },
+            "CreateBackupVault": {
+              "methods": [
+                "create_backup_vault"
+              ]
+            },
+            "CreateManagementServer": {
+              "methods": [
+                "create_management_server"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteBackupPlan": {
+              "methods": [
+                "delete_backup_plan"
+              ]
+            },
+            "DeleteBackupPlanAssociation": {
+              "methods": [
+                "delete_backup_plan_association"
+              ]
+            },
+            "DeleteBackupVault": {
+              "methods": [
+                "delete_backup_vault"
+              ]
+            },
+            "DeleteManagementServer": {
+              "methods": [
+                "delete_management_server"
+              ]
+            },
+            "FetchBackupPlanAssociationsForResourceType": {
+              "methods": [
+                "fetch_backup_plan_associations_for_resource_type"
+              ]
+            },
+            "FetchBackupsForResourceType": {
+              "methods": [
+                "fetch_backups_for_resource_type"
+              ]
+            },
+            "FetchDataSourceReferencesForResourceType": {
+              "methods": [
+                "fetch_data_source_references_for_resource_type"
+              ]
+            },
+            "FetchUsableBackupVaults": {
+              "methods": [
+                "fetch_usable_backup_vaults"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupPlan": {
+              "methods": [
+                "get_backup_plan"
+              ]
+            },
+            "GetBackupPlanAssociation": {
+              "methods": [
+                "get_backup_plan_association"
+              ]
+            },
+            "GetBackupPlanRevision": {
+              "methods": [
+                "get_backup_plan_revision"
+              ]
+            },
+            "GetBackupVault": {
+              "methods": [
+                "get_backup_vault"
+              ]
+            },
+            "GetDataSource": {
+              "methods": [
+                "get_data_source"
+              ]
+            },
+            "GetDataSourceReference": {
+              "methods": [
+                "get_data_source_reference"
+              ]
+            },
+            "GetManagementServer": {
+              "methods": [
+                "get_management_server"
+              ]
+            },
+            "InitializeService": {
+              "methods": [
+                "initialize_service"
+              ]
+            },
+            "ListBackupPlanAssociations": {
+              "methods": [
+                "list_backup_plan_associations"
+              ]
+            },
+            "ListBackupPlanRevisions": {
+              "methods": [
+                "list_backup_plan_revisions"
+              ]
+            },
+            "ListBackupPlans": {
+              "methods": [
+                "list_backup_plans"
+              ]
+            },
+            "ListBackupVaults": {
+              "methods": [
+                "list_backup_vaults"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListDataSourceReferences": {
+              "methods": [
+                "list_data_source_references"
+              ]
+            },
+            "ListDataSources": {
+              "methods": [
+                "list_data_sources"
+              ]
+            },
+            "ListManagementServers": {
+              "methods": [
+                "list_management_servers"
+              ]
+            },
+            "RestoreBackup": {
+              "methods": [
+                "restore_backup"
+              ]
+            },
+            "TriggerBackup": {
+              "methods": [
+                "trigger_backup"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateBackupPlan": {
+              "methods": [
+                "update_backup_plan"
+              ]
+            },
+            "UpdateBackupPlanAssociation": {
+              "methods": [
+                "update_backup_plan_association"
+              ]
+            },
+            "UpdateBackupVault": {
+              "methods": [
+                "update_backup_vault"
+              ]
+            },
+            "UpdateDataSource": {
+              "methods": [
+                "update_data_source"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "BackupDrProtectionSummary": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "BackupDrProtectionSummaryClient",
+          "rpcs": {
+            "ListResourceBackupConfigs": {
+              "methods": [
+                "list_resource_backup_configs"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "BackupDrProtectionSummaryAsyncClient",
+          "rpcs": {
+            "ListResourceBackupConfigs": {
+              "methods": [
+                "list_resource_backup_configs"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "BackupDrProtectionSummaryClient",
+          "rpcs": {
+            "ListResourceBackupConfigs": {
+              "methods": [
+                "list_resource_backup_configs"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "api_description": "Creates and manages Redis instances on the Google Cloud Platform.",
+    "api_id": "redis.googleapis.com",
+    "api_shortname": "redis",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-redis-cluster/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-redis-cluster",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1288776\u0026template=1161103",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-redis-cluster",
+    "name_pretty": "Google Cloud Memorystore for Redis",
+    "product_documentation": "https://cloud.google.com/memorystore/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

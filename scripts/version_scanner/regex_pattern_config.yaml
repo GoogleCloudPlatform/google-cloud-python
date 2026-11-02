@@ -1,0 +1,235 @@
+description: Search rules for identifying dependency versions
+
+rules:
+  # ==========================================
+  # 🐍 PYTHON RUNTIME SPECIFIC RULES
+  # ==========================================
+
+  - name: python_requires
+    description: Finds various forms of python_requires declarations.
+    applies_to: [python]
+    examples:
+      - "python_requires = '==3.7'"
+      - "python_requires = '>=3.7'"
+      - "python_requires = '>=3.7.0'"
+      - "python_requires = '<=3.7'"
+      - "python_requires = '>3.6'"
+      - "python_requires = '<3.8'"
+    rules:
+      - |
+        python_requires\s*=\s*['"]==3\.{minor}(?:\.\d+)?['"]
+      - |
+        python_requires\s*=\s*['"]>=3\.{minor}(?:\.0)?['"]
+      - |
+        python_requires\s*=\s*['"]<=3\.{minor}(?:\.0)?['"]
+      # Matches >3.6 (equivalent to >=3.7)
+      - |
+        python_requires\s*=\s*['"]>3\.{minor_minus_one}(?:\.0)?['"]
+      # Matches <3.8 (equivalent to <=3.7)
+      - |
+        python_requires\s*=\s*['"]<3\.{minor_plus_one}(?:\.0)?['"]
+
+  - name: sys_version_info
+    description: Finds sys.version_info checks in code.
+    applies_to: [python]
+    examples:
+      - "sys.version_info == (3, 7)"
+      - "sys.version_info >= (3, 7)"
+      - "sys.version_info <= (3, 7)"
+      - "sys.version_info > (3, 6)"
+      - "sys.version_info < (3, 8)"
+      - "sys.version_info.minor == 7"
+      - "sys.version_info.minor >= 7"
+      - "sys.version_info.minor <= 7"
+      - "sys.version_info.minor > 6"
+      - "sys.version_info.minor < 8"
+      - "sys.version_info[1] == 7"
+      - "sys.version_info[1] >= 7"
+      - "sys.version_info[1] <= 7"
+      - "sys.version_info[1] > 6"
+      - "sys.version_info[1] < 8"
+    rules:
+      - |
+        sys\.version_info\s*==\s*\(3,\s*{minor}\)
+      - |
+        sys\.version_info\s*>=\s*\(3,\s*{minor}\)
+      - |
+        sys\.version_info\s*<=\s*\(3,\s*{minor}\)
+      # Matches sys.version_info > (3, 6) (equivalent to >=3.7)
+      - |
+        sys\.version_info\s*>\s*\(3,\s*{minor_minus_one}\)
+      # Matches sys.version_info < (3, 8) (equivalent to <=3.7)
+      - |
+        sys\.version_info\s*<\s*\(3,\s*{minor_plus_one}\)
+      - |
+        sys\.version_info\.minor\s*==\s*{minor}(?!\d)
+      - |
+        sys\.version_info\.minor\s*>=\s*{minor}(?!\d)
+      - |
+        sys\.version_info\.minor\s*<=\s*{minor}(?!\d)
+      # Matches sys.version_info.minor > 6 (equivalent to >=7)
+      - |
+        sys\.version_info\.minor\s*>\s*{minor_minus_one}(?!\d)
+      # Matches sys.version_info.minor < 8 (equivalent to <=7)
+      - |
+        sys\.version_info\.minor\s*<\s*{minor_plus_one}(?!\d)
+      - |
+        sys\.version_info\[\s*1\s*\]\s*==\s*{minor}(?!\d)
+      - |
+        sys\.version_info\[\s*1\s*\]\s*>=\s*{minor}(?!\d)
+      - |
+        sys\.version_info\[\s*1\s*\]\s*<=\s*{minor}(?!\d)
+      # Matches sys.version_info[1] > 6 (equivalent to >=7)
+      - |
+        sys\.version_info\[\s*1\s*\]\s*>\s*{minor_minus_one}(?!\d)
+      # Matches sys.version_info[1] < 8 (equivalent to <=7)
+      - |
+        sys\.version_info\[\s*1\s*\]\s*<\s*{minor_plus_one}(?!\d)
+
+  - name: python_env_short
+    description: Finds short python environment names often used in tox or nox.
+    applies_to: [python]
+    examples:
+      - "py37"
+      - "py37-cover"
+    rules:
+      - |
+        \bpy3{minor}\b
+
+  - name: explicit_python_command
+    description: Finds explicit python commands with version.
+    applies_to: [python]
+    examples:
+      - "python3.7"
+      - "python3.7 -m pip"
+      - "Python3.7"
+    rules:
+      - |
+        python3\.{minor}(?!\d)
+
+  - name: combined_version_string
+    description: Finds combined version strings often used in class or variable names.
+    applies_to: [python]
+    examples:
+      - "Python37"
+      - "Python37DeprecationWarning"
+    rules:
+      - |
+        Python{major}{minor}(?!\d)
+
+  # ==========================================
+  # 📦 GENERIC RULES (WILL APPLY TO RUNTIMES OR PACKAGES)
+  # ==========================================
+
+  - name: explicit_version_string
+    description: Finds explicit version strings in code or configs (this may result in a lot of noise/false positives but can also catch edge cases that more specific rules do not).
+    examples:
+      - "'3.7'"
+      - '"3.7.1"'
+      - "'3.7.12'"
+      - "Python 3.7"
+    rules:
+      - |
+        \b{major}\.{minor}(\.\d+)?\b
+
+  - name: dependency_requirement
+    description: Finds standard dependency requirements (e.g., protobuf==3.7, pandas>=1.0).
+    examples:
+      - "protobuf==3.7"
+      - "protobuf >=3.7"
+      - "protobuf<= 3.7"
+      - "protobuf == 3.7"
+    rules:
+      - |
+        {name}\s*(?:==|>=|<=|~=|!=)\s*{version}(?!\d)
+
+  - name: dependency_version_constant
+    description: Finds checks against custom version constants (e.g., PROTOBUF_VERSION, PANDAS_VERSION).
+    examples:
+      - "PROTOBUF_VERSION = '3.7'"
+      - "PROTOBUF_VERSION= '3.7'"
+      - "PROTOBUF_VERSION ='3.7'"
+      - "PROTOBUF_VERSION='3.7'"
+      - 'PROTOBUF_VERSION = "3.7"'
+    rules:
+      - |
+        {name}_VERSION\s*=\s*['"]?{version}['"]?
+
+  - name: dependency_version_constant_membership
+    description: Finds checks where a version constant is checked for membership in a collection.
+    examples:
+      - 'PROTOBUF_VERSION[0:2] in ["3.", "4."]'
+      - 'PROTOBUF_VERSION[0:2] in {"3.", "4."}'
+      - 'PROTOBUF_VERSION[0:2] in ("3.", "4.")'
+    rules:
+      - |
+        {name}_VERSION(?:\[.*?\])?\s+in\s+[\(\[\{{].*?['"]?(?<!\.)\b{major}\b.*?[\)\]\}}]
+
+  - name: dependency_wildcard_assignment
+    description: Finds wildcard version specifications in code assignments or requirements.
+    examples:
+      - 'protobuf == "3.x"'
+      - 'protobuf >= "3.*"'
+    rules:
+      - |
+        {name}\s*(?:==|>=|<=|~=|!=)\s*['"]?{major}\.[x\*]['"]?
+
+  - name: dependency_wildcard_generic
+    description: Finds wildcard version specifications in comments or documentation.
+    examples:
+      - "protobuf 3.x"
+      - "protobuf 3.*"
+    rules:
+      - |
+        {name}\s+(?:version\s+)?{major}\.[x\*](?!\w)
+
+  - name: dependency_flexible_version
+    description: Finds versions with varying levels of specificity with accompanying qualifier.
+    examples:
+      - "protobuf 3."
+      - "protobuf 3.7"
+      - "protobuf 3.7."
+      - "protobuf 3.7.5"
+    rules:
+      - |
+        {name}\s+{major}\.(?!\d)
+      - |
+        {name}\s+{major}\.{minor}(?!\d)
+      - |
+        {name}\s+{major}\.{minor}\.(?!\d)
+      - |
+        {name}\s+{major}\.{minor}\.{patch}(?!\d)
+
+  - name: generic_dependency_check_call
+    description: Finds generic function or class calls checking dependency and version.
+    examples:
+      - 'DependencyConstraint("google.protobuf", minimum_fully_supported_version="3.7")'
+      - 'CheckDep("protobuf", "3.7")'
+    rules:
+      - |
+        \b[A-Za-z_]\w*\s*\([^)]*['"](?:google\.)?{name}['"][^)]*{version}[^)]*\)
+
+  - name: dependency_introspection
+    description: Finds standard package introspection methods and libraries.
+    examples:
+      - "protobuf.__version__"
+      - "importlib.metadata.version('protobuf')"
+      - "pkg_resources.get_distribution('protobuf')"
+      - "packaging.version # protobuf"
+      - "dist.metadata['Name'] == 'protobuf'"
+    rules:
+      - |
+        {name}\.__version__
+      - |
+        importlib\.metadata\.version\s*\(\s*['"]{name}['"]\s*\)
+      - |
+        pkg_resources\.get_distribution\s*\(\s*['"]{name}['"]\s*\)
+      - |
+        packaging\.version(?=.*{name})
+      - |
+        dist\.metadata\s*\[\s*['"]Name['"]\s*\]\s*==\s*['"]{name}['"]
+
+  # ==========================================
+  # 🎯 PACKAGE SPECIFIC RULES (I.E. SPECIFIC TO PROTOBUF, PANDAS, ETC)
+  # ==========================================
+  # Currently empty.

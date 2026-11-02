@@ -1,0 +1,53 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The language (and potentially also the region) of\n  \
+      \ the voice expressed as a\n   <code>BCP-47 <https://www.rfc-editor.org/rfc/bcp/bcp47.txt></code>__\n\
+      \   language tag, e.g. \"en-US\". This should not include a script\n   tag (e.g.\
+      \ use \"cmn-cn\" rather than \"cmn-Hant-cn\"), because\n   the script will be\
+      \ inferred from the input provided in the\n   SynthesisInput. The TTS service\
+      \ will use this parameter to\n   help choose an appropriate voice. Note that\
+      \ the TTS service\n   may choose a voice with a slightly different language\
+      \ code\n   than the one selected; it may substitute a different region\n   (e.g.\
+      \ using en-US rather than en-CA if there isn't a\n   Canadian voice available),\
+      \ or even a different language,\n   e.g. using \"nb\" (Norwegian Bokmal) instead\
+      \ of \"no\"\n   (Norwegian)\"."
+    id: language_code
+    var_type: str
+  - description: "The name of the voice. If not set, the service will choose a\n \
+      \  voice based on the other parameters such as language_code\n   and gender."
+    id: name
+    var_type: str
+  - description: "The preferred gender of the voice. If not set, the service\n   will\
+      \ choose a voice based on the other parameters such as\n   language_code and\
+      \ name. Note that this is only a preference,\n   not requirement; if a voice\
+      \ of the appropriate gender is not\n   available, the synthesizer should substitute\
+      \ a voice with a\n   different gender rather than failing the request."
+    id: ssml_gender
+    var_type: <xref uid="google.cloud.texttospeech_v1.types.SsmlVoiceGender">google.cloud.texttospeech_v1.types.SsmlVoiceGender</xref>
+  - description: "The configuration for a custom voice. If\n   [CustomVoiceParams.model]\
+      \ is set, the service will choose\n   the custom voice matching the specified\
+      \ configuration."
+    id: custom_voice
+    var_type: <xref uid="google.cloud.texttospeech_v1.types.CustomVoiceParams">google.cloud.texttospeech_v1.types.CustomVoiceParams</xref>
+  children: []
+  class: google.cloud.texttospeech_v1.types.VoiceSelectionParams
+  fullName: google.cloud.texttospeech_v1.types.VoiceSelectionParams
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1.types
+  name: VoiceSelectionParams
+  source:
+    id: VoiceSelectionParams
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1/types/cloud_tts.py
+    startLine: 206
+  summary: 'Description of which voice to use for a synthesis request.
+
+    '
+  syntax:
+    content: VoiceSelectionParams(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1.types.VoiceSelectionParams
+references: []

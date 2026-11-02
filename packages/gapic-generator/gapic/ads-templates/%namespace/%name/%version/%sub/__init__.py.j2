@@ -1,0 +1,30 @@
+{% extends '_base.py.j2' %}
+
+{% block content %}
+
+
+{#  Define __all__.
+    This requires the full set of imported names, so we iterate over
+    them again.
+-#}
+__all__ = (
+    {% filter sort_lines -%}
+    {% for subpackage in api.subpackages -%}
+    '{{ subpackage }}',
+    {% endfor -%}
+    {% for service in api.services.values()
+            if service.meta.address.subpackage == api.subpackage_view -%}
+    '{{ service.client_name }}',
+    {% endfor -%}
+    {% for proto in api.protos.values()
+            if proto.meta.address.subpackage == api.subpackage_view -%}
+    {% for message in proto.messages.values() -%}
+    '{{ message.name }}',
+    {% endfor -%}
+    {% for enum in proto.enums.values() -%}
+    '{{ enum.name }}',
+    {% endfor -%}
+    {% endfor -%}
+    {% endfilter -%}
+)
+{% endblock %}

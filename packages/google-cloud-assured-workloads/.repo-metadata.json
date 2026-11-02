@@ -1,0 +1,15 @@
+{
+    "api_description": "Assured Workloads lets you secure your workloads and accelerate your path to running compliant workloads on Google Cloud.",
+    "api_id": "assuredworkloads.googleapis.com",
+    "api_shortname": "assuredworkloads",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/assuredworkloads/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-assured-workloads",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "assuredworkloads",
+    "name_pretty": "Assured Workloads",
+    "product_documentation": "https://cloud.google.com/assured-workloads/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,118 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.capacityplanner_v1beta",
+  "protoPackage": "google.cloud.capacityplanner.v1beta",
+  "schema": "1.0",
+  "services": {
+    "UsageService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "UsageServiceClient",
+          "rpcs": {
+            "ExportForecasts": {
+              "methods": [
+                "export_forecasts"
+              ]
+            },
+            "ExportReservationsUsage": {
+              "methods": [
+                "export_reservations_usage"
+              ]
+            },
+            "ExportUsageHistories": {
+              "methods": [
+                "export_usage_histories"
+              ]
+            },
+            "QueryForecasts": {
+              "methods": [
+                "query_forecasts"
+              ]
+            },
+            "QueryReservations": {
+              "methods": [
+                "query_reservations"
+              ]
+            },
+            "QueryUsageHistories": {
+              "methods": [
+                "query_usage_histories"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "UsageServiceAsyncClient",
+          "rpcs": {
+            "ExportForecasts": {
+              "methods": [
+                "export_forecasts"
+              ]
+            },
+            "ExportReservationsUsage": {
+              "methods": [
+                "export_reservations_usage"
+              ]
+            },
+            "ExportUsageHistories": {
+              "methods": [
+                "export_usage_histories"
+              ]
+            },
+            "QueryForecasts": {
+              "methods": [
+                "query_forecasts"
+              ]
+            },
+            "QueryReservations": {
+              "methods": [
+                "query_reservations"
+              ]
+            },
+            "QueryUsageHistories": {
+              "methods": [
+                "query_usage_histories"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "UsageServiceClient",
+          "rpcs": {
+            "ExportForecasts": {
+              "methods": [
+                "export_forecasts"
+              ]
+            },
+            "ExportReservationsUsage": {
+              "methods": [
+                "export_reservations_usage"
+              ]
+            },
+            "ExportUsageHistories": {
+              "methods": [
+                "export_usage_histories"
+              ]
+            },
+            "QueryForecasts": {
+              "methods": [
+                "query_forecasts"
+              ]
+            },
+            "QueryReservations": {
+              "methods": [
+                "query_reservations"
+              ]
+            },
+            "QueryUsageHistories": {
+              "methods": [
+                "query_usage_histories"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

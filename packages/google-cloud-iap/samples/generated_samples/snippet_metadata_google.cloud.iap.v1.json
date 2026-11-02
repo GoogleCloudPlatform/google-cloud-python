@@ -1,0 +1,2974 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.iap.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-iap",
+    "version": "1.23.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient",
+          "shortName": "IdentityAwareProxyAdminServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient.create_tunnel_dest_group",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.CreateTunnelDestGroup",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "CreateTunnelDestGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.CreateTunnelDestGroupRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "tunnel_dest_group",
+            "type": "google.cloud.iap_v1.types.TunnelDestGroup"
+          },
+          {
+            "name": "tunnel_dest_group_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.TunnelDestGroup",
+        "shortName": "create_tunnel_dest_group"
+      },
+      "description": "Sample for CreateTunnelDestGroup",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_create_tunnel_dest_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_CreateTunnelDestGroup_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_create_tunnel_dest_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient",
+          "shortName": "IdentityAwareProxyAdminServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient.create_tunnel_dest_group",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.CreateTunnelDestGroup",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "CreateTunnelDestGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.CreateTunnelDestGroupRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "tunnel_dest_group",
+            "type": "google.cloud.iap_v1.types.TunnelDestGroup"
+          },
+          {
+            "name": "tunnel_dest_group_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.TunnelDestGroup",
+        "shortName": "create_tunnel_dest_group"
+      },
+      "description": "Sample for CreateTunnelDestGroup",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_create_tunnel_dest_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_CreateTunnelDestGroup_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_create_tunnel_dest_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient",
+          "shortName": "IdentityAwareProxyAdminServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient.delete_tunnel_dest_group",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.DeleteTunnelDestGroup",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "DeleteTunnelDestGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.DeleteTunnelDestGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_tunnel_dest_group"
+      },
+      "description": "Sample for DeleteTunnelDestGroup",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_delete_tunnel_dest_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_DeleteTunnelDestGroup_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_delete_tunnel_dest_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient",
+          "shortName": "IdentityAwareProxyAdminServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient.delete_tunnel_dest_group",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.DeleteTunnelDestGroup",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "DeleteTunnelDestGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.DeleteTunnelDestGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_tunnel_dest_group"
+      },
+      "description": "Sample for DeleteTunnelDestGroup",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_delete_tunnel_dest_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_DeleteTunnelDestGroup_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_delete_tunnel_dest_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient",
+          "shortName": "IdentityAwareProxyAdminServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient.get_iam_policy",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.GetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_get_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_GetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_get_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient",
+          "shortName": "IdentityAwareProxyAdminServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient.get_iam_policy",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.GetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_get_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_GetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_get_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient",
+          "shortName": "IdentityAwareProxyAdminServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient.get_iap_settings",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.GetIapSettings",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "GetIapSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.GetIapSettingsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.IapSettings",
+        "shortName": "get_iap_settings"
+      },
+      "description": "Sample for GetIapSettings",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_get_iap_settings_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_GetIapSettings_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_get_iap_settings_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient",
+          "shortName": "IdentityAwareProxyAdminServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient.get_iap_settings",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.GetIapSettings",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "GetIapSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.GetIapSettingsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.IapSettings",
+        "shortName": "get_iap_settings"
+      },
+      "description": "Sample for GetIapSettings",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_get_iap_settings_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_GetIapSettings_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_get_iap_settings_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient",
+          "shortName": "IdentityAwareProxyAdminServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient.get_tunnel_dest_group",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.GetTunnelDestGroup",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "GetTunnelDestGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.GetTunnelDestGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.TunnelDestGroup",
+        "shortName": "get_tunnel_dest_group"
+      },
+      "description": "Sample for GetTunnelDestGroup",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_get_tunnel_dest_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_GetTunnelDestGroup_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_get_tunnel_dest_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient",
+          "shortName": "IdentityAwareProxyAdminServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient.get_tunnel_dest_group",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.GetTunnelDestGroup",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "GetTunnelDestGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.GetTunnelDestGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.TunnelDestGroup",
+        "shortName": "get_tunnel_dest_group"
+      },
+      "description": "Sample for GetTunnelDestGroup",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_get_tunnel_dest_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_GetTunnelDestGroup_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_get_tunnel_dest_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient",
+          "shortName": "IdentityAwareProxyAdminServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient.list_tunnel_dest_groups",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.ListTunnelDestGroups",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "ListTunnelDestGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.ListTunnelDestGroupsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.services.identity_aware_proxy_admin_service.pagers.ListTunnelDestGroupsAsyncPager",
+        "shortName": "list_tunnel_dest_groups"
+      },
+      "description": "Sample for ListTunnelDestGroups",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_list_tunnel_dest_groups_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_ListTunnelDestGroups_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_list_tunnel_dest_groups_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient",
+          "shortName": "IdentityAwareProxyAdminServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient.list_tunnel_dest_groups",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.ListTunnelDestGroups",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "ListTunnelDestGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.ListTunnelDestGroupsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.services.identity_aware_proxy_admin_service.pagers.ListTunnelDestGroupsPager",
+        "shortName": "list_tunnel_dest_groups"
+      },
+      "description": "Sample for ListTunnelDestGroups",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_list_tunnel_dest_groups_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_ListTunnelDestGroups_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_list_tunnel_dest_groups_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient",
+          "shortName": "IdentityAwareProxyAdminServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient.set_iam_policy",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.SetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_set_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_SetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_set_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient",
+          "shortName": "IdentityAwareProxyAdminServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient.set_iam_policy",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.SetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_set_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_SetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_set_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient",
+          "shortName": "IdentityAwareProxyAdminServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.TestIamPermissions",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_test_iam_permissions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_TestIamPermissions_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_test_iam_permissions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient",
+          "shortName": "IdentityAwareProxyAdminServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.TestIamPermissions",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_test_iam_permissions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_TestIamPermissions_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_test_iam_permissions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient",
+          "shortName": "IdentityAwareProxyAdminServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient.update_iap_settings",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.UpdateIapSettings",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "UpdateIapSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.UpdateIapSettingsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.IapSettings",
+        "shortName": "update_iap_settings"
+      },
+      "description": "Sample for UpdateIapSettings",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_update_iap_settings_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_UpdateIapSettings_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_update_iap_settings_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient",
+          "shortName": "IdentityAwareProxyAdminServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient.update_iap_settings",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.UpdateIapSettings",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "UpdateIapSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.UpdateIapSettingsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.IapSettings",
+        "shortName": "update_iap_settings"
+      },
+      "description": "Sample for UpdateIapSettings",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_update_iap_settings_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_UpdateIapSettings_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_update_iap_settings_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient",
+          "shortName": "IdentityAwareProxyAdminServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient.update_tunnel_dest_group",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.UpdateTunnelDestGroup",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "UpdateTunnelDestGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.UpdateTunnelDestGroupRequest"
+          },
+          {
+            "name": "tunnel_dest_group",
+            "type": "google.cloud.iap_v1.types.TunnelDestGroup"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.TunnelDestGroup",
+        "shortName": "update_tunnel_dest_group"
+      },
+      "description": "Sample for UpdateTunnelDestGroup",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_update_tunnel_dest_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_UpdateTunnelDestGroup_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_update_tunnel_dest_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient",
+          "shortName": "IdentityAwareProxyAdminServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient.update_tunnel_dest_group",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.UpdateTunnelDestGroup",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "UpdateTunnelDestGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.UpdateTunnelDestGroupRequest"
+          },
+          {
+            "name": "tunnel_dest_group",
+            "type": "google.cloud.iap_v1.types.TunnelDestGroup"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.TunnelDestGroup",
+        "shortName": "update_tunnel_dest_group"
+      },
+      "description": "Sample for UpdateTunnelDestGroup",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_update_tunnel_dest_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_UpdateTunnelDestGroup_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_update_tunnel_dest_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient",
+          "shortName": "IdentityAwareProxyAdminServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceAsyncClient.validate_iap_attribute_expression",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.ValidateIapAttributeExpression",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "ValidateIapAttributeExpression"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.ValidateIapAttributeExpressionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.ValidateIapAttributeExpressionResponse",
+        "shortName": "validate_iap_attribute_expression"
+      },
+      "description": "Sample for ValidateIapAttributeExpression",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_validate_iap_attribute_expression_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_ValidateIapAttributeExpression_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_validate_iap_attribute_expression_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient",
+          "shortName": "IdentityAwareProxyAdminServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyAdminServiceClient.validate_iap_attribute_expression",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.ValidateIapAttributeExpression",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+            "shortName": "IdentityAwareProxyAdminService"
+          },
+          "shortName": "ValidateIapAttributeExpression"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.ValidateIapAttributeExpressionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.ValidateIapAttributeExpressionResponse",
+        "shortName": "validate_iap_attribute_expression"
+      },
+      "description": "Sample for ValidateIapAttributeExpression",
+      "file": "iap_v1_generated_identity_aware_proxy_admin_service_validate_iap_attribute_expression_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyAdminService_ValidateIapAttributeExpression_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_admin_service_validate_iap_attribute_expression_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient",
+          "shortName": "IdentityAwareProxyOAuthServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient.create_brand",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.CreateBrand",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "CreateBrand"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.CreateBrandRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.Brand",
+        "shortName": "create_brand"
+      },
+      "description": "Sample for CreateBrand",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_create_brand_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_CreateBrand_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_create_brand_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient",
+          "shortName": "IdentityAwareProxyOAuthServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient.create_brand",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.CreateBrand",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "CreateBrand"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.CreateBrandRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.Brand",
+        "shortName": "create_brand"
+      },
+      "description": "Sample for CreateBrand",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_create_brand_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_CreateBrand_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_create_brand_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient",
+          "shortName": "IdentityAwareProxyOAuthServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient.create_identity_aware_proxy_client",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.CreateIdentityAwareProxyClient",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "CreateIdentityAwareProxyClient"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.CreateIdentityAwareProxyClientRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.IdentityAwareProxyClient",
+        "shortName": "create_identity_aware_proxy_client"
+      },
+      "description": "Sample for CreateIdentityAwareProxyClient",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_create_identity_aware_proxy_client_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_CreateIdentityAwareProxyClient_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_create_identity_aware_proxy_client_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient",
+          "shortName": "IdentityAwareProxyOAuthServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient.create_identity_aware_proxy_client",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.CreateIdentityAwareProxyClient",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "CreateIdentityAwareProxyClient"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.CreateIdentityAwareProxyClientRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.IdentityAwareProxyClient",
+        "shortName": "create_identity_aware_proxy_client"
+      },
+      "description": "Sample for CreateIdentityAwareProxyClient",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_create_identity_aware_proxy_client_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_CreateIdentityAwareProxyClient_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_create_identity_aware_proxy_client_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient",
+          "shortName": "IdentityAwareProxyOAuthServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient.delete_identity_aware_proxy_client",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.DeleteIdentityAwareProxyClient",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "DeleteIdentityAwareProxyClient"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.DeleteIdentityAwareProxyClientRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_identity_aware_proxy_client"
+      },
+      "description": "Sample for DeleteIdentityAwareProxyClient",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_delete_identity_aware_proxy_client_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_DeleteIdentityAwareProxyClient_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_delete_identity_aware_proxy_client_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient",
+          "shortName": "IdentityAwareProxyOAuthServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient.delete_identity_aware_proxy_client",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.DeleteIdentityAwareProxyClient",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "DeleteIdentityAwareProxyClient"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.DeleteIdentityAwareProxyClientRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_identity_aware_proxy_client"
+      },
+      "description": "Sample for DeleteIdentityAwareProxyClient",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_delete_identity_aware_proxy_client_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_DeleteIdentityAwareProxyClient_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_delete_identity_aware_proxy_client_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient",
+          "shortName": "IdentityAwareProxyOAuthServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient.get_brand",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.GetBrand",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "GetBrand"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.GetBrandRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.Brand",
+        "shortName": "get_brand"
+      },
+      "description": "Sample for GetBrand",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_get_brand_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_GetBrand_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_get_brand_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient",
+          "shortName": "IdentityAwareProxyOAuthServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient.get_brand",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.GetBrand",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "GetBrand"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.GetBrandRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.Brand",
+        "shortName": "get_brand"
+      },
+      "description": "Sample for GetBrand",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_get_brand_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_GetBrand_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_get_brand_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient",
+          "shortName": "IdentityAwareProxyOAuthServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient.get_identity_aware_proxy_client",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.GetIdentityAwareProxyClient",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "GetIdentityAwareProxyClient"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.GetIdentityAwareProxyClientRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.IdentityAwareProxyClient",
+        "shortName": "get_identity_aware_proxy_client"
+      },
+      "description": "Sample for GetIdentityAwareProxyClient",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_get_identity_aware_proxy_client_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_GetIdentityAwareProxyClient_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_get_identity_aware_proxy_client_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient",
+          "shortName": "IdentityAwareProxyOAuthServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient.get_identity_aware_proxy_client",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.GetIdentityAwareProxyClient",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "GetIdentityAwareProxyClient"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.GetIdentityAwareProxyClientRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.IdentityAwareProxyClient",
+        "shortName": "get_identity_aware_proxy_client"
+      },
+      "description": "Sample for GetIdentityAwareProxyClient",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_get_identity_aware_proxy_client_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_GetIdentityAwareProxyClient_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_get_identity_aware_proxy_client_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient",
+          "shortName": "IdentityAwareProxyOAuthServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient.list_brands",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.ListBrands",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "ListBrands"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.ListBrandsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.ListBrandsResponse",
+        "shortName": "list_brands"
+      },
+      "description": "Sample for ListBrands",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_list_brands_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_ListBrands_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_list_brands_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient",
+          "shortName": "IdentityAwareProxyOAuthServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient.list_brands",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.ListBrands",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "ListBrands"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.ListBrandsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.ListBrandsResponse",
+        "shortName": "list_brands"
+      },
+      "description": "Sample for ListBrands",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_list_brands_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_ListBrands_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_list_brands_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient",
+          "shortName": "IdentityAwareProxyOAuthServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient.list_identity_aware_proxy_clients",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.ListIdentityAwareProxyClients",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "ListIdentityAwareProxyClients"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.ListIdentityAwareProxyClientsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.services.identity_aware_proxy_o_auth_service.pagers.ListIdentityAwareProxyClientsAsyncPager",
+        "shortName": "list_identity_aware_proxy_clients"
+      },
+      "description": "Sample for ListIdentityAwareProxyClients",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_list_identity_aware_proxy_clients_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_ListIdentityAwareProxyClients_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_list_identity_aware_proxy_clients_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient",
+          "shortName": "IdentityAwareProxyOAuthServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient.list_identity_aware_proxy_clients",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.ListIdentityAwareProxyClients",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "ListIdentityAwareProxyClients"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.ListIdentityAwareProxyClientsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.services.identity_aware_proxy_o_auth_service.pagers.ListIdentityAwareProxyClientsPager",
+        "shortName": "list_identity_aware_proxy_clients"
+      },
+      "description": "Sample for ListIdentityAwareProxyClients",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_list_identity_aware_proxy_clients_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_ListIdentityAwareProxyClients_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_list_identity_aware_proxy_clients_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient",
+          "shortName": "IdentityAwareProxyOAuthServiceAsyncClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceAsyncClient.reset_identity_aware_proxy_client_secret",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.ResetIdentityAwareProxyClientSecret",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "ResetIdentityAwareProxyClientSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.ResetIdentityAwareProxyClientSecretRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.IdentityAwareProxyClient",
+        "shortName": "reset_identity_aware_proxy_client_secret"
+      },
+      "description": "Sample for ResetIdentityAwareProxyClientSecret",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_reset_identity_aware_proxy_client_secret_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_ResetIdentityAwareProxyClientSecret_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_reset_identity_aware_proxy_client_secret_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient",
+          "shortName": "IdentityAwareProxyOAuthServiceClient"
+        },
+        "fullName": "google.cloud.iap_v1.IdentityAwareProxyOAuthServiceClient.reset_identity_aware_proxy_client_secret",
+        "method": {
+          "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService.ResetIdentityAwareProxyClientSecret",
+          "service": {
+            "fullName": "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
+            "shortName": "IdentityAwareProxyOAuthService"
+          },
+          "shortName": "ResetIdentityAwareProxyClientSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iap_v1.types.ResetIdentityAwareProxyClientSecretRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iap_v1.types.IdentityAwareProxyClient",
+        "shortName": "reset_identity_aware_proxy_client_secret"
+      },
+      "description": "Sample for ResetIdentityAwareProxyClientSecret",
+      "file": "iap_v1_generated_identity_aware_proxy_o_auth_service_reset_identity_aware_proxy_client_secret_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iap_v1_generated_IdentityAwareProxyOAuthService_ResetIdentityAwareProxyClientSecret_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iap_v1_generated_identity_aware_proxy_o_auth_service_reset_identity_aware_proxy_client_secret_sync.py"
+    }
+  ]
+}

@@ -1,0 +1,338 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.clear
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.copy
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.from_api_repr
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.fromkeys
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.get
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.items
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.keys
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.pop
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.popitem
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.setdefault
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.update
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.values
+  class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: LifecycleRuleAbortIncompleteMultipartUpload
+  source:
+    id: LifecycleRuleAbortIncompleteMultipartUpload
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 403
+  summary: 'Map a rule aborting incomplete multipart uploads of matching items.
+
+
+    The "age" lifecycle condition is the only supported condition for this rule.
+
+    '
+  syntax:
+    content: LifecycleRuleAbortIncompleteMultipartUpload(**kw)
+    parameters: []
+  type: class
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+- class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.clear
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: clear
+  source:
+    id: clear
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.clear`
+    method.
+  syntax:
+    content: clear()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.clear
+- class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.copy
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: copy
+  source:
+    id: copy
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.copy`
+    method.
+  syntax:
+    content: copy()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.copy
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.from_api_repr
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: from_api_repr
+  source:
+    id: from_api_repr
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 420
+  summary: 'Factory:  construct instance from resource.
+
+    '
+  syntax:
+    content: from_api_repr(resource)
+    parameters:
+    - description: mapping as returned from API call.
+      id: resource
+      var_type: dict
+    returns:
+    - description: Instance created from resource.
+      var_type: <code>LifecycleRuleAbortIncompleteMultipartUpload</code>
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.from_api_repr
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.fromkeys
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: fromkeys
+  source:
+    id: fromkeys
+    path: null
+    startLine: null
+  summary: 'Create a new dictionary with keys from iterable and values set to value.
+
+
+    '
+  syntax:
+    content: fromkeys(value=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.fromkeys
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.get
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: get
+  source:
+    id: get
+    path: null
+    startLine: null
+  summary: 'Return the value for key if key is in the dictionary, else default.
+
+
+    '
+  syntax:
+    content: get(key, default=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.get
+- class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.items
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: items
+  source:
+    id: items
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.items`
+    method.
+  syntax:
+    content: items()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.items
+- class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.keys
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: keys
+  source:
+    id: keys
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.keys`
+    method.
+  syntax:
+    content: keys()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.keys
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.pop
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: pop
+  source:
+    id: pop
+    path: null
+    startLine: null
+  summary: 'If the key is not found, return the default if given; otherwise,
+
+    raise a KeyError.
+
+
+    '
+  syntax:
+    content: pop(k[,d])
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.pop
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.popitem
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: popitem
+  source:
+    id: popitem
+    path: null
+    startLine: null
+  summary: 'Remove and return a (key, value) pair as a 2-tuple.
+
+
+    Pairs are returned in LIFO (last-in, first-out) order.
+
+    Raises KeyError if the dict is empty.
+
+
+    '
+  syntax:
+    content: popitem()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.popitem
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.setdefault
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: setdefault
+  source:
+    id: setdefault
+    path: null
+    startLine: null
+  summary: 'Insert key with a value of default if key is not in the dictionary.
+
+
+    Return the value for key if key is in the dictionary, else default.
+
+
+    '
+  syntax:
+    content: setdefault(key, default=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.setdefault
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.update
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: update
+  source:
+    id: update
+    path: null
+    startLine: null
+  summary: 'If E is present and has a .keys() method, then does:  for k in E: D[k]
+    = E[k]
+
+    If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] =
+    v
+
+    In either case, this is followed by: for k in F:  D[k] = F[k]
+
+
+    '
+  syntax:
+    content: update([E, ]**F)
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.update
+- class: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.values
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: values
+  source:
+    id: values
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.values`
+    method.
+  syntax:
+    content: values()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.values
+references:
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.clear
+  isExternal: false
+  name: clear
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.clear
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.copy
+  isExternal: false
+  name: copy
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.copy
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.from_api_repr
+  isExternal: false
+  name: from_api_repr
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.from_api_repr
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.fromkeys
+  isExternal: false
+  name: fromkeys
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.fromkeys
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.get
+  isExternal: false
+  name: get
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.get
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.items
+  isExternal: false
+  name: items
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.items
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.keys
+  isExternal: false
+  name: keys
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.keys
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.pop
+  isExternal: false
+  name: pop
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.pop
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.popitem
+  isExternal: false
+  name: popitem
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.popitem
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.setdefault
+  isExternal: false
+  name: setdefault
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.setdefault
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.update
+  isExternal: false
+  name: update
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.update
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.values
+  isExternal: false
+  name: values
+  parent: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload.values

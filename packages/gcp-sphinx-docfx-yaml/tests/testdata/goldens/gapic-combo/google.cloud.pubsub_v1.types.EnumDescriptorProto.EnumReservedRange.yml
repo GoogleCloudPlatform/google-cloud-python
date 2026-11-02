@@ -1,0 +1,20 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.EnumDescriptorProto.EnumReservedRange
+  fullName: google.cloud.pubsub_v1.types.EnumDescriptorProto.EnumReservedRange
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types.EnumDescriptorProto
+  name: EnumReservedRange
+  source:
+    id: EnumReservedRange
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.EnumDescriptorProto.EnumReservedRange`
+    class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.EnumDescriptorProto.EnumReservedRange
+references: []

@@ -1,0 +1,103 @@
+- items:
+  - href: index.md
+    name: Overview
+  - href: changelog.md
+    name: Changelog
+  - href: multiprocessing.md
+    name: Multiprocessing
+  - href: upgrading.md
+    name: 2.0.0 Migration Guide
+  - items:
+    - items:
+      - name: Overview
+        uid: google.cloud.texttospeech_v1.services.text_to_speech
+      - name: TextToSpeechAsyncClient
+        uid: google.cloud.texttospeech_v1.services.text_to_speech.TextToSpeechAsyncClient
+      - name: TextToSpeechClient
+        uid: google.cloud.texttospeech_v1.services.text_to_speech.TextToSpeechClient
+      name: text_to_speech
+      uid: google.cloud.texttospeech_v1.services.text_to_speech
+    - items:
+      - name: Overview
+        uid: google.cloud.texttospeech_v1.types
+      - name: AudioConfig
+        uid: google.cloud.texttospeech_v1.types.AudioConfig
+      - name: AudioEncoding
+        uid: google.cloud.texttospeech_v1.types.AudioEncoding
+      - items:
+        - name: Overview
+          uid: google.cloud.texttospeech_v1.types.CustomVoiceParams
+        - name: ReportedUsage
+          uid: google.cloud.texttospeech_v1.types.CustomVoiceParams.ReportedUsage
+        name: CustomVoiceParams
+        uid: google.cloud.texttospeech_v1.types.CustomVoiceParams
+      - name: ListVoicesRequest
+        uid: google.cloud.texttospeech_v1.types.ListVoicesRequest
+      - name: ListVoicesResponse
+        uid: google.cloud.texttospeech_v1.types.ListVoicesResponse
+      - name: SsmlVoiceGender
+        uid: google.cloud.texttospeech_v1.types.SsmlVoiceGender
+      - name: SynthesisInput
+        uid: google.cloud.texttospeech_v1.types.SynthesisInput
+      - name: SynthesizeSpeechRequest
+        uid: google.cloud.texttospeech_v1.types.SynthesizeSpeechRequest
+      - name: SynthesizeSpeechResponse
+        uid: google.cloud.texttospeech_v1.types.SynthesizeSpeechResponse
+      - name: Voice
+        uid: google.cloud.texttospeech_v1.types.Voice
+      - name: VoiceSelectionParams
+        uid: google.cloud.texttospeech_v1.types.VoiceSelectionParams
+      name: types
+      uid: google.cloud.texttospeech_v1.types
+    name: Texttospeech V1
+  - items:
+    - items:
+      - name: Overview
+        uid: google.cloud.texttospeech_v1beta1.services.text_to_speech
+      - name: TextToSpeechAsyncClient
+        uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechAsyncClient
+      - name: TextToSpeechClient
+        uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+      name: text_to_speech
+      uid: google.cloud.texttospeech_v1beta1.services.text_to_speech
+    - items:
+      - name: Overview
+        uid: google.cloud.texttospeech_v1beta1.types
+      - name: AudioConfig
+        uid: google.cloud.texttospeech_v1beta1.types.AudioConfig
+      - name: AudioEncoding
+        uid: google.cloud.texttospeech_v1beta1.types.AudioEncoding
+      - items:
+        - name: Overview
+          uid: google.cloud.texttospeech_v1beta1.types.CustomVoiceParams
+        - name: ReportedUsage
+          uid: google.cloud.texttospeech_v1beta1.types.CustomVoiceParams.ReportedUsage
+        name: CustomVoiceParams
+        uid: google.cloud.texttospeech_v1beta1.types.CustomVoiceParams
+      - name: ListVoicesRequest
+        uid: google.cloud.texttospeech_v1beta1.types.ListVoicesRequest
+      - name: ListVoicesResponse
+        uid: google.cloud.texttospeech_v1beta1.types.ListVoicesResponse
+      - name: SsmlVoiceGender
+        uid: google.cloud.texttospeech_v1beta1.types.SsmlVoiceGender
+      - name: SynthesisInput
+        uid: google.cloud.texttospeech_v1beta1.types.SynthesisInput
+      - items:
+        - name: Overview
+          uid: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest
+        - name: TimepointType
+          uid: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest.TimepointType
+        name: SynthesizeSpeechRequest
+        uid: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest
+      - name: SynthesizeSpeechResponse
+        uid: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechResponse
+      - name: Timepoint
+        uid: google.cloud.texttospeech_v1beta1.types.Timepoint
+      - name: Voice
+        uid: google.cloud.texttospeech_v1beta1.types.Voice
+      - name: VoiceSelectionParams
+        uid: google.cloud.texttospeech_v1beta1.types.VoiceSelectionParams
+      name: types
+      uid: google.cloud.texttospeech_v1beta1.types
+    name: Texttospeech V1beta1
+  name: google-cloud-texttospeech

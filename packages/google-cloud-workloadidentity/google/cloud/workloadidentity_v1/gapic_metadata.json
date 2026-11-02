@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.workloadidentity_v1",
+  "protoPackage": "google.cloud.workloadidentity.v1",
+  "schema": "1.0",
+  "services": {
+    "WorkloadIdentity": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WorkloadIdentityClient",
+          "rpcs": {
+            "GenerateServiceAgents": {
+              "methods": [
+                "generate_service_agents"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "WorkloadIdentityAsyncClient",
+          "rpcs": {
+            "GenerateServiceAgents": {
+              "methods": [
+                "generate_service_agents"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "WorkloadIdentityClient",
+          "rpcs": {
+            "GenerateServiceAgents": {
+              "methods": [
+                "generate_service_agents"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

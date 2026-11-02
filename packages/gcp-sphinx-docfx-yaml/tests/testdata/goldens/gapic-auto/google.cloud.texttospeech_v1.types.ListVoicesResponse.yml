@@ -1,0 +1,27 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: The list of voices.
+    id: voices
+    var_type: Sequence[<xref uid="google.cloud.texttospeech_v1.types.Voice">google.cloud.texttospeech_v1.types.Voice</xref>]
+  children: []
+  class: google.cloud.texttospeech_v1.types.ListVoicesResponse
+  fullName: google.cloud.texttospeech_v1.types.ListVoicesResponse
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1.types
+  name: ListVoicesResponse
+  source:
+    id: ListVoicesResponse
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1/types/cloud_tts.py
+    startLine: 81
+  summary: 'The message returned to the client by the `ListVoices` method.
+
+    '
+  syntax:
+    content: ListVoicesResponse(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1.types.ListVoicesResponse
+references: []

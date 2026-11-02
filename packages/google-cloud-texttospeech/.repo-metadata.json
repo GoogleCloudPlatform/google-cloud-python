@@ -1,0 +1,16 @@
+{
+    "api_description": "Synthesizes natural-sounding speech by applying powerful neural network\nmodels.",
+    "api_id": "texttospeech.googleapis.com",
+    "api_shortname": "texttospeech",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/texttospeech/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-texttospeech",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5235428",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "texttospeech",
+    "name_pretty": "Cloud Text-to-Speech",
+    "product_documentation": "https://cloud.google.com/text-to-speech",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

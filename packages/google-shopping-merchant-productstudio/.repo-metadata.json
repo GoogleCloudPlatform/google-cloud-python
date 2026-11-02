@@ -1,0 +1,16 @@
+{
+    "api_description": "Programmatically manage your Merchant Center Accounts.",
+    "api_id": "merchantapi.googleapis.com",
+    "api_shortname": "merchantapi",
+    "client_documentation": "https://googleapis.dev/python/google-shopping-merchant-productstudio/latest",
+    "default_version": "v1alpha",
+    "distribution_name": "google-shopping-merchant-productstudio",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=171084\u0026template=555201",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-shopping-merchant-productstudio",
+    "name_pretty": "Shopping Merchant Product Studio",
+    "product_documentation": "https://developers.google.com/merchant/api",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

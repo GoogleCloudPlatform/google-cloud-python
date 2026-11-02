@@ -1,0 +1,74 @@
+tests:
+  - description: "top level conditional"
+    before: |
+      if CrossSync.is_async:
+        print("async")
+      else:
+        print("sync")
+    transformers: [StripAsyncConditionalBranches]
+    after: |
+      print("sync")
+  - description: "nested conditional"
+    before: |
+      if CrossSync.is_async:
+        print("async")
+      else:
+        print("hello")
+        if CrossSync.is_async:
+          print("async")
+        else:
+          print("world")
+    transformers: [StripAsyncConditionalBranches]
+    after: |
+      print("hello")
+      print("world")
+  - description: "conditional within class"
+    before: |
+      class MyClass:
+          def my_method(self):
+              if CrossSync.is_async:
+                  return "async result"
+              else:
+                  return "sync result"
+    transformers: [StripAsyncConditionalBranches]
+    after: |
+      class MyClass:
+
+          def my_method(self):
+              return "sync result"
+  - description: "multiple branches"
+    before: |
+      if CrossSync.is_async:
+          print("async branch 1")
+      elif some_condition:
+          print("other condition")
+      elif CrossSync.is_async:
+          print("async branch 2")
+      else:
+          print("sync branch")
+    transformers: [StripAsyncConditionalBranches]
+    after: |
+      if some_condition:
+          print("other condition")
+      else:
+          print("sync branch")
+  - description: "negated conditionals"
+    before: |
+      if not CrossSync.is_async:
+          print("sync code")
+      else:
+          print("async code")
+
+    transformers: [StripAsyncConditionalBranches]
+    after: |
+      print("sync code")
+  - description: "is check"
+    before: |
+      if CrossSync.is_async is True:
+          print("async code")
+      else:
+          print("sync code")
+
+    transformers: [StripAsyncConditionalBranches]
+    after: |
+      print("sync code")

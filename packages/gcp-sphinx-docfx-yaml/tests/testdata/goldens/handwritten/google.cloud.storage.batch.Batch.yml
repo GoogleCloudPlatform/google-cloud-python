@@ -1,0 +1,81 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.batch.Batch.current
+  - google.cloud.storage.batch.Batch.finish
+  class: google.cloud.storage.batch.Batch
+  fullName: google.cloud.storage.batch.Batch
+  langs:
+  - python
+  module: google.cloud.storage.batch
+  name: Batch
+  source:
+    id: Batch
+    path: tests/testdata/handwritten/google/cloud/storage/batch.py
+    startLine: 131
+  summary: 'Proxy an underlying connection, batching up change operations.
+
+    '
+  syntax:
+    content: Batch(client)
+    parameters:
+    - description: The client to use for making connections.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+  type: class
+  uid: google.cloud.storage.batch.Batch
+- attributes: []
+  class: google.cloud.storage.batch.Batch
+  fullName: google.cloud.storage.batch.Batch.current
+  langs:
+  - python
+  module: google.cloud.storage.batch
+  name: current
+  source:
+    id: current
+    path: tests/testdata/handwritten/google/cloud/storage/batch.py
+    startLine: 275
+  summary: 'Return the topmost batch, or None.
+
+
+    '
+  syntax:
+    content: current()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.batch.Batch.current
+- attributes: []
+  class: google.cloud.storage.batch.Batch
+  fullName: google.cloud.storage.batch.Batch.finish
+  langs:
+  - python
+  module: google.cloud.storage.batch
+  name: finish
+  source:
+    id: finish
+    path: tests/testdata/handwritten/google/cloud/storage/batch.py
+    startLine: 250
+  summary: 'Submit a single `multipart/mixed` request with deferred requests.
+
+    '
+  syntax:
+    content: finish()
+    parameters: []
+    returns:
+    - description: one <code>(headers, payload)</code> tuple per deferred request.
+      var_type: list of tuples
+  type: method
+  uid: google.cloud.storage.batch.Batch.finish
+references:
+- fullName: google.cloud.storage.batch.Batch.current
+  isExternal: false
+  name: current
+  parent: google.cloud.storage.batch.Batch
+  uid: google.cloud.storage.batch.Batch.current
+- fullName: google.cloud.storage.batch.Batch.finish
+  isExternal: false
+  name: finish
+  parent: google.cloud.storage.batch.Batch
+  uid: google.cloud.storage.batch.Batch.finish

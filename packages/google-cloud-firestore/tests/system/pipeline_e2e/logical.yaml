@@ -1,0 +1,886 @@
+tests:
+  - description: whereByMultipleConditions
+    pipeline:
+      - Collection: books
+      - Where:
+          - And:
+              - FunctionExpression.greater_than:
+                  - Field: rating
+                  - Constant: 4.5
+              - FunctionExpression.equal:
+                  - Field: genre
+                  - Constant: Science Fiction
+    assert_results:
+      - title: Dune
+        author: Frank Herbert
+        genre: Science Fiction
+        published: 1965
+        rating: 4.6
+        tags:
+          - politics
+          - desert
+          - ecology
+        awards:
+          hugo: true
+          nebula: true
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: rating
+                  - doubleValue: 4.5
+                  name: greater_than
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: genre
+                  - stringValue: Science Fiction
+                  name: equal
+              name: and
+          name: where
+  - description: whereByOrCondition
+    pipeline:
+      - Collection: books
+      - Where:
+          - Or:
+              - FunctionExpression.equal:
+                  - Field: genre
+                  - Constant: Romance
+              - FunctionExpression.equal:
+                  - Field: genre
+                  - Constant: Dystopian
+      - Select:
+        - title
+      - Sort:
+          - Ordering:
+            - Field: title
+            - ASCENDING
+    assert_results:
+      - title: "1984"
+      - title: Pride and Prejudice
+      - title: The Handmaid's Tale
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: genre
+                  - stringValue: Romance
+                  name: equal
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: genre
+                  - stringValue: Dystopian
+                  name: equal
+              name: or
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                title:
+                  fieldReferenceValue: title
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+  - description: testComparisonOperators
+    pipeline:
+      - Collection: books
+      - Where:
+          - And:
+              - FunctionExpression.greater_than:
+                  - Field: rating
+                  - Constant: 4.2
+              - FunctionExpression.less_than_or_equal:
+                  - Field: rating
+                  - Constant: 4.5
+              - FunctionExpression.not_equal:
+                  - Field: genre
+                  - Constant: Science Fiction
+      - Select:
+        - rating
+        - title
+      - Sort:
+        - Ordering:
+          - title
+          - ASCENDING
+    assert_results:
+      - rating: 4.3
+        title: Crime and Punishment
+      - rating: 4.3
+        title: One Hundred Years of Solitude
+      - rating: 4.5
+        title: Pride and Prejudice
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: rating
+                  - doubleValue: 4.2
+                  name: greater_than
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: rating
+                  - doubleValue: 4.5
+                  name: less_than_or_equal
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: genre
+                  - stringValue: Science Fiction
+                  name: not_equal
+              name: and
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                rating:
+                  fieldReferenceValue: rating
+                title:
+                  fieldReferenceValue: title
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+  - description: testLogicalOperators
+    pipeline:
+      - Collection: books
+      - Where:
+          - Or:
+              - And:
+                  - FunctionExpression.greater_than:
+                      - Field: rating
+                      - Constant: 4.5
+                  - FunctionExpression.equal:
+                      - Field: genre
+                      - Constant: Science Fiction
+              - FunctionExpression.less_than:
+                  - Field: published
+                  - Constant: 1900
+      - Select:
+          - title
+      - Sort:
+        - Ordering:
+          - Field: title
+          - ASCENDING
+    assert_results:
+      - title: Crime and Punishment
+      - title: Dune
+      - title: Pride and Prejudice
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - functionValue:
+                  args:
+                  - functionValue:
+                      args:
+                      - fieldReferenceValue: rating
+                      - doubleValue: 4.5
+                      name: greater_than
+                  - functionValue:
+                      args:
+                      - fieldReferenceValue: genre
+                      - stringValue: Science Fiction
+                      name: equal
+                  name: and
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: published
+                  - integerValue: '1900'
+                  name: less_than
+              name: or
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                title:
+                  fieldReferenceValue: title
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+  - description: testIsNull
+    pipeline:
+      - Collection: errors
+      - Where:
+        - FunctionExpression.equal:
+            - Field: value
+            - null
+    assert_results:
+      - value: null
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /errors
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: value
+              - nullValue: null
+              name: equal
+          name: where
+  - description: testIsNan
+    pipeline:
+      - Collection: errors
+      - Where:
+        - FunctionExpression.equal:
+            - Field: value
+            - NaN
+    assert_count: 1
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /errors
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: value
+              - doubleValue: NaN
+              name: equal
+          name: where
+  - description: testIsAbsent
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.is_absent:
+              - Field: awards.pulitzer
+    assert_count: 9
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: awards.pulitzer
+              name: is_absent
+          name: where
+  - description: testIfAbsent
+    pipeline:
+      - Collection: books
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.if_absent:
+                - Field: awards.pulitzer
+                - Constant: false
+            - "pulitzer_award"
+        - title
+      - Where:
+          - FunctionExpression.equal:
+              - Field: pulitzer_award
+              - Constant: true
+    assert_results:
+      - pulitzer_award: true
+        title: To Kill a Mockingbird
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                pulitzer_award:
+                  functionValue:
+                    name: if_absent
+                    args:
+                    - fieldReferenceValue: awards.pulitzer
+                    - booleanValue: false
+                title:
+                  fieldReferenceValue: title
+          name: select
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: pulitzer_award
+              - booleanValue: true
+              name: equal
+          name: where
+  - description: testIsError
+    pipeline:
+      - Collection: books
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.is_error:
+                - FunctionExpression.divide:
+                    - Field: rating
+                    - Constant: "string"
+            - "is_error_result"
+      - Limit: 1
+    assert_results:
+      - is_error_result: true
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                is_error_result:
+                  functionValue:
+                    name: is_error
+                    args:
+                    - functionValue:
+                        name: divide
+                        args:
+                        - fieldReferenceValue: rating
+                        - stringValue: "string"
+          name: select
+        - args:
+          - integerValue: '1'
+          name: limit
+  - description: testIfError
+    pipeline:
+      - Collection: books
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.if_error:
+                - FunctionExpression.divide:
+                    - Field: rating
+                    - Field: genre
+                - Constant: "An error occurred"
+            - "if_error_result"
+      - Limit: 1
+    assert_results:
+      - if_error_result: "An error occurred"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                if_error_result:
+                  functionValue:
+                    name: if_error
+                    args:
+                    - functionValue:
+                        name: divide
+                        args:
+                        - fieldReferenceValue: rating
+                        - fieldReferenceValue: genre
+                    - stringValue: "An error occurred"
+          name: select
+        - args:
+          - integerValue: '1'
+          name: limit
+  - description: testLogicalMinMax
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: author
+              - Constant: Douglas Adams
+      - Select:
+          - AliasedExpression:
+              - FunctionExpression.logical_maximum:
+                  - Field: rating
+                  - Constant: 4.5
+              - "max_rating"
+          - AliasedExpression:
+              - FunctionExpression.logical_minimum:
+                  - Field: published
+                  - Constant: 1900
+              - "min_published"
+    assert_results:
+      - max_rating: 4.5
+        min_published: 1900
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: author
+              - stringValue: Douglas Adams
+              name: equal
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                min_published:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: published
+                    - integerValue: '1900'
+                    name: minimum
+                max_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    - doubleValue: 4.5
+                    name: maximum
+          name: select
+  - description: testLogicalMinMaxWithMultipleInputs
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: author
+              - Constant: Douglas Adams
+      - Select:
+          - AliasedExpression:
+              - FunctionExpression.logical_maximum:
+                  - Field: rating
+                  - Constant: 4.5
+                  - Constant: 3.0
+                  - Constant: 5.0
+              - "max_rating"
+          - AliasedExpression:
+              - FunctionExpression.logical_minimum:
+                  - Field: published
+                  - Constant: 1900
+                  - Constant: 2000
+                  - Constant: 1984
+              - "min_published"
+    assert_results:
+      - max_rating: 5.0
+        min_published: 1900
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: author
+              - stringValue: Douglas Adams
+              name: equal
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                min_published:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: published
+                    - integerValue: '1900'
+                    - integerValue: '2000'
+                    - integerValue: '1984'
+                    name: minimum
+                max_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    - doubleValue: 4.5
+                    - doubleValue: 3.0
+                    - doubleValue: 5.0
+                    name: maximum
+          name: select
+  - description: testGreaterThanOrEqual
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.greater_than_or_equal:
+              - Field: rating
+              - Constant: 4.6
+      - Select:
+        - title
+        - rating
+      - Sort:
+        - Ordering:
+          - Field: rating
+          - ASCENDING
+    assert_results:
+      - title: Dune
+        rating: 4.6
+      - title: The Lord of the Rings
+        rating: 4.7
+  - description: testInAndNotIn
+    pipeline:
+      - Collection: books
+      - Where:
+          - And:
+            - FunctionExpression.equal_any:
+                - Field: genre
+                - - Constant: Romance
+                  - Constant: Dystopian
+            - FunctionExpression.not_equal_any:
+                - Field: author
+                - - Constant: "George Orwell"
+    assert_results:
+      - title: "Pride and Prejudice"
+        author: "Jane Austen"
+        genre: "Romance"
+        published: 1813
+        rating: 4.5
+        tags:
+          - classic
+          - social commentary
+          - love
+        awards:
+          none: true
+      - title: "The Handmaid's Tale"
+        author: "Margaret Atwood"
+        genre: "Dystopian"
+        published: 1985
+        rating: 4.1
+        tags:
+          - feminism
+          - totalitarianism
+          - resistance
+        awards:
+          "arthur c. clarke": true
+          "booker prize": false
+  - description: testExists
+    pipeline:
+      - Collection: books
+      - Where:
+          - And:
+            - FunctionExpression.exists:
+              - Field: awards.pulitzer
+            - FunctionExpression.equal:
+              - Field: awards.pulitzer
+              - Constant: true
+      - Select:
+        - title
+    assert_results:
+      - title: To Kill a Mockingbird
+  - description: testXor
+    pipeline:
+      - Collection: books
+      - Where:
+          - Xor:
+            - - FunctionExpression.equal:
+                  - Field: genre
+                  - Constant: Romance
+              - FunctionExpression.greater_than:
+                  - Field: published
+                  - Constant: 1980
+      - Select:
+        - title
+        - genre
+        - published
+      - Sort:
+        - Ordering:
+          - Field: title
+          - ASCENDING
+    assert_results:
+      - title: "Pride and Prejudice"
+        genre: "Romance"
+        published: 1813
+      - title: "The Handmaid's Tale"
+        genre: "Dystopian"
+        published: 1985
+  - description: testConditional
+    pipeline:
+      - Collection: books
+      - Select:
+        - title
+        - AliasedExpression:
+            - Conditional:
+                - FunctionExpression.greater_than:
+                    - Field: published
+                    - Constant: 1950
+                - Constant: "Modern"
+                - Constant: "Classic"
+            - "era"
+      - Sort:
+        - Ordering:
+          - Field: title
+          - ASCENDING
+      - Limit: 4
+    assert_results:
+      - title: "1984"
+        era: "Classic"
+      - title: "Crime and Punishment"
+        era: "Classic"
+      - title: "Dune"
+        era: "Modern"
+      - title: "One Hundred Years of Solitude"
+        era: "Modern"
+  - description: testFieldToFieldComparison
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.greater_than:
+              - Field: published
+              - Field: rating
+      - Select:
+        - title
+    assert_count: 10 # All books were published after year 4.7
+  - description: testExistsNegative
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.exists:
+              - Field: non_existent_field
+    assert_count: 0
+  - description: testConditionalWithFields
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal_any:
+              - Field: title
+              - - Constant: "Dune"
+                - Constant: "1984"
+      - Select:
+        - title
+        - AliasedExpression:
+            - Conditional:
+                - FunctionExpression.greater_than:
+                    - Field: published
+                    - Constant: 1950
+                - Field: author
+                - Field: genre
+            - "conditional_field"
+      - Sort:
+        - Ordering:
+          - Field: title
+          - ASCENDING
+    assert_results:
+      - title: "1984"
+        conditional_field: "Dystopian"
+      - title: "Dune"
+        conditional_field: "Frank Herbert"
+  - description: testCmp
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - FunctionExpression.cmp:
+                  - Field: rating
+                  - Constant: 4.5
+              - Constant: 1
+      - Select:
+        - title
+      - Sort:
+        - Ordering:
+          - Field: title
+          - ASCENDING
+    assert_results:
+      - title: Dune
+      - title: The Lord of the Rings
+  - description: testIfNullWithNullField
+    pipeline:
+      - Collection: errors
+      - Where:
+          - FunctionExpression.equal:
+              - Field: value
+              - Constant:
+                  value: null
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.if_null:
+                - Field: value
+                - Constant: "default"
+            - "value_or_default"
+    assert_results:
+      - value_or_default: "default"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /errors
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: value
+              - nullValue: null
+              name: equal
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                value_or_default:
+                  functionValue:
+                    name: if_null
+                    args:
+                    - fieldReferenceValue: value
+                    - stringValue: default
+          name: select
+  - description: testIfNullWithNonNullField
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: title
+              - Constant: "1984"
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.if_null:
+                - Field: title
+                - Constant: "default"
+            - "value_or_default"
+    assert_results:
+      - value_or_default: "1984"
+  - description: whereByNorCondition
+    pipeline:
+      - Collection: books
+      - Where:
+          - Nor:
+              - FunctionExpression.equal:
+                  - Field: genre
+                  - Constant: Romance
+              - FunctionExpression.equal:
+                  - Field: genre
+                  - Constant: Dystopian
+              - FunctionExpression.equal:
+                  - Field: genre
+                  - Constant: Fantasy
+              - FunctionExpression.greater_than:
+                  - Field: published
+                  - Constant: 1949
+      - Select:
+        - title
+      - Sort:
+        - Ordering:
+          - Field: title
+          - ASCENDING
+    assert_results:
+      - title: "Crime and Punishment"
+      - title: "The Great Gatsby"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: genre
+                  - stringValue: Romance
+                  name: equal
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: genre
+                  - stringValue: Dystopian
+                  name: equal
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: genre
+                  - stringValue: Fantasy
+                  name: equal
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: published
+                  - integerValue: '1949'
+                  name: greater_than
+              name: nor
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                title:
+                  fieldReferenceValue: title
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+  - description: expression_between
+    pipeline:
+    - Collection: restaurants
+    - Where:
+      - FunctionExpression.between:
+        - Field: average_price_per_person
+        - Constant: 15
+        - Constant: 20
+    - Select:
+      - name
+    - Sort:
+      - Ordering:
+        - Field: name
+        - ASCENDING
+    assert_results:
+    - name: Eastside Cantina
+    - name: Peak Burgers
+    - name: The Sunny Side Up
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /restaurants
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: average_price_per_person
+                  - integerValue: '15'
+                  name: greater_than_or_equal
+              - functionValue:
+                  args:
+                  - fieldReferenceValue: average_price_per_person
+                  - integerValue: '20'
+                  name: less_than_or_equal
+              name: and
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                name:
+                  fieldReferenceValue: name
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: name
+          name: sort

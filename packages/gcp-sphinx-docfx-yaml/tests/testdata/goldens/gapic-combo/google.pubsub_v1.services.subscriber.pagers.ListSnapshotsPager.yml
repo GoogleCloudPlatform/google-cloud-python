@@ -1,0 +1,94 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+  class: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+  fullName: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+  langs:
+  - python
+  module: google.pubsub_v1.services.subscriber.pagers
+  name: ListSnapshotsPager
+  source:
+    id: ListSnapshotsPager
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/pagers.py
+    startLine: 158
+  summary: 'A pager for iterating through `list_snapshots` requests.
+
+
+    This class thinly wraps an initial
+
+    `google.pubsub_v1.types.ListSnapshotsResponse` object, and
+
+    provides an `__iter__` method to iterate through its
+
+    `snapshots` field.
+
+
+    If there are more pages, the `__iter__` method will make additional
+
+    `ListSnapshots` requests and continue to iterate
+
+    through the `snapshots` field on the
+
+    corresponding responses.
+
+
+    All the usual `google.pubsub_v1.types.ListSnapshotsResponse`
+
+    attributes are available on the pager. If multiple requests are made, only
+
+    the most recent response is retained, and thus used for attribute lookup.
+
+
+    '
+  syntax:
+    content: "ListSnapshotsPager(\n    method: typing.Callable[[...], google.cloud.pubsub_v1.types.ListSnapshotsResponse],\n\
+      \    request: google.cloud.pubsub_v1.types.ListSnapshotsRequest,\n    response:\
+      \ google.cloud.pubsub_v1.types.ListSnapshotsResponse,\n    *,\n    metadata:\
+      \ typing.Sequence[typing.Tuple[str, str]] = ()\n)"
+    parameters: []
+  type: class
+  uid: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+- attributes: []
+  class: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+  fullName: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+  langs:
+  - python
+  module: google.pubsub_v1.services.subscriber.pagers
+  name: ListSnapshotsPager
+  source:
+    id: ListSnapshotsPager
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/pagers.py
+    startLine: 158
+  summary: 'Instantiate the pager.
+
+    '
+  syntax:
+    content: "ListSnapshotsPager(\n    method: typing.Callable[[...], google.cloud.pubsub_v1.types.ListSnapshotsResponse],\n\
+      \    request: google.cloud.pubsub_v1.types.ListSnapshotsRequest,\n    response:\
+      \ google.cloud.pubsub_v1.types.ListSnapshotsResponse,\n    *,\n    metadata:\
+      \ typing.Sequence[typing.Tuple[str, str]] = ()\n)"
+    parameters:
+    - description: The method that was originally called, and which instantiated this
+        pager.
+      id: method
+      var_type: Callable
+    - description: The initial request object.
+      id: request
+      var_type: google.pubsub_v1.types.ListSnapshotsRequest
+    - description: The initial response object.
+      id: response
+      var_type: google.pubsub_v1.types.ListSnapshotsResponse
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+  type: method
+  uid: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+references:
+- fullName: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+  isExternal: false
+  name: ListSnapshotsPager
+  parent: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+  uid: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager

@@ -1,0 +1,838 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.analytics.admin_v1beta",
+  "protoPackage": "google.analytics.admin.v1beta",
+  "schema": "1.0",
+  "services": {
+    "AnalyticsAdminService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AnalyticsAdminServiceClient",
+          "rpcs": {
+            "AcknowledgeUserDataCollection": {
+              "methods": [
+                "acknowledge_user_data_collection"
+              ]
+            },
+            "ArchiveCustomDimension": {
+              "methods": [
+                "archive_custom_dimension"
+              ]
+            },
+            "ArchiveCustomMetric": {
+              "methods": [
+                "archive_custom_metric"
+              ]
+            },
+            "CreateConversionEvent": {
+              "methods": [
+                "create_conversion_event"
+              ]
+            },
+            "CreateCustomDimension": {
+              "methods": [
+                "create_custom_dimension"
+              ]
+            },
+            "CreateCustomMetric": {
+              "methods": [
+                "create_custom_metric"
+              ]
+            },
+            "CreateDataStream": {
+              "methods": [
+                "create_data_stream"
+              ]
+            },
+            "CreateFirebaseLink": {
+              "methods": [
+                "create_firebase_link"
+              ]
+            },
+            "CreateGoogleAdsLink": {
+              "methods": [
+                "create_google_ads_link"
+              ]
+            },
+            "CreateKeyEvent": {
+              "methods": [
+                "create_key_event"
+              ]
+            },
+            "CreateMeasurementProtocolSecret": {
+              "methods": [
+                "create_measurement_protocol_secret"
+              ]
+            },
+            "CreateProperty": {
+              "methods": [
+                "create_property"
+              ]
+            },
+            "DeleteAccount": {
+              "methods": [
+                "delete_account"
+              ]
+            },
+            "DeleteConversionEvent": {
+              "methods": [
+                "delete_conversion_event"
+              ]
+            },
+            "DeleteDataStream": {
+              "methods": [
+                "delete_data_stream"
+              ]
+            },
+            "DeleteFirebaseLink": {
+              "methods": [
+                "delete_firebase_link"
+              ]
+            },
+            "DeleteGoogleAdsLink": {
+              "methods": [
+                "delete_google_ads_link"
+              ]
+            },
+            "DeleteKeyEvent": {
+              "methods": [
+                "delete_key_event"
+              ]
+            },
+            "DeleteMeasurementProtocolSecret": {
+              "methods": [
+                "delete_measurement_protocol_secret"
+              ]
+            },
+            "DeleteProperty": {
+              "methods": [
+                "delete_property"
+              ]
+            },
+            "GetAccount": {
+              "methods": [
+                "get_account"
+              ]
+            },
+            "GetConversionEvent": {
+              "methods": [
+                "get_conversion_event"
+              ]
+            },
+            "GetCustomDimension": {
+              "methods": [
+                "get_custom_dimension"
+              ]
+            },
+            "GetCustomMetric": {
+              "methods": [
+                "get_custom_metric"
+              ]
+            },
+            "GetDataRetentionSettings": {
+              "methods": [
+                "get_data_retention_settings"
+              ]
+            },
+            "GetDataSharingSettings": {
+              "methods": [
+                "get_data_sharing_settings"
+              ]
+            },
+            "GetDataStream": {
+              "methods": [
+                "get_data_stream"
+              ]
+            },
+            "GetKeyEvent": {
+              "methods": [
+                "get_key_event"
+              ]
+            },
+            "GetMeasurementProtocolSecret": {
+              "methods": [
+                "get_measurement_protocol_secret"
+              ]
+            },
+            "GetProperty": {
+              "methods": [
+                "get_property"
+              ]
+            },
+            "ListAccountSummaries": {
+              "methods": [
+                "list_account_summaries"
+              ]
+            },
+            "ListAccounts": {
+              "methods": [
+                "list_accounts"
+              ]
+            },
+            "ListConversionEvents": {
+              "methods": [
+                "list_conversion_events"
+              ]
+            },
+            "ListCustomDimensions": {
+              "methods": [
+                "list_custom_dimensions"
+              ]
+            },
+            "ListCustomMetrics": {
+              "methods": [
+                "list_custom_metrics"
+              ]
+            },
+            "ListDataStreams": {
+              "methods": [
+                "list_data_streams"
+              ]
+            },
+            "ListFirebaseLinks": {
+              "methods": [
+                "list_firebase_links"
+              ]
+            },
+            "ListGoogleAdsLinks": {
+              "methods": [
+                "list_google_ads_links"
+              ]
+            },
+            "ListKeyEvents": {
+              "methods": [
+                "list_key_events"
+              ]
+            },
+            "ListMeasurementProtocolSecrets": {
+              "methods": [
+                "list_measurement_protocol_secrets"
+              ]
+            },
+            "ListProperties": {
+              "methods": [
+                "list_properties"
+              ]
+            },
+            "ProvisionAccountTicket": {
+              "methods": [
+                "provision_account_ticket"
+              ]
+            },
+            "RunAccessReport": {
+              "methods": [
+                "run_access_report"
+              ]
+            },
+            "SearchChangeHistoryEvents": {
+              "methods": [
+                "search_change_history_events"
+              ]
+            },
+            "UpdateAccount": {
+              "methods": [
+                "update_account"
+              ]
+            },
+            "UpdateConversionEvent": {
+              "methods": [
+                "update_conversion_event"
+              ]
+            },
+            "UpdateCustomDimension": {
+              "methods": [
+                "update_custom_dimension"
+              ]
+            },
+            "UpdateCustomMetric": {
+              "methods": [
+                "update_custom_metric"
+              ]
+            },
+            "UpdateDataRetentionSettings": {
+              "methods": [
+                "update_data_retention_settings"
+              ]
+            },
+            "UpdateDataStream": {
+              "methods": [
+                "update_data_stream"
+              ]
+            },
+            "UpdateGoogleAdsLink": {
+              "methods": [
+                "update_google_ads_link"
+              ]
+            },
+            "UpdateKeyEvent": {
+              "methods": [
+                "update_key_event"
+              ]
+            },
+            "UpdateMeasurementProtocolSecret": {
+              "methods": [
+                "update_measurement_protocol_secret"
+              ]
+            },
+            "UpdateProperty": {
+              "methods": [
+                "update_property"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AnalyticsAdminServiceAsyncClient",
+          "rpcs": {
+            "AcknowledgeUserDataCollection": {
+              "methods": [
+                "acknowledge_user_data_collection"
+              ]
+            },
+            "ArchiveCustomDimension": {
+              "methods": [
+                "archive_custom_dimension"
+              ]
+            },
+            "ArchiveCustomMetric": {
+              "methods": [
+                "archive_custom_metric"
+              ]
+            },
+            "CreateConversionEvent": {
+              "methods": [
+                "create_conversion_event"
+              ]
+            },
+            "CreateCustomDimension": {
+              "methods": [
+                "create_custom_dimension"
+              ]
+            },
+            "CreateCustomMetric": {
+              "methods": [
+                "create_custom_metric"
+              ]
+            },
+            "CreateDataStream": {
+              "methods": [
+                "create_data_stream"
+              ]
+            },
+            "CreateFirebaseLink": {
+              "methods": [
+                "create_firebase_link"
+              ]
+            },
+            "CreateGoogleAdsLink": {
+              "methods": [
+                "create_google_ads_link"
+              ]
+            },
+            "CreateKeyEvent": {
+              "methods": [
+                "create_key_event"
+              ]
+            },
+            "CreateMeasurementProtocolSecret": {
+              "methods": [
+                "create_measurement_protocol_secret"
+              ]
+            },
+            "CreateProperty": {
+              "methods": [
+                "create_property"
+              ]
+            },
+            "DeleteAccount": {
+              "methods": [
+                "delete_account"
+              ]
+            },
+            "DeleteConversionEvent": {
+              "methods": [
+                "delete_conversion_event"
+              ]
+            },
+            "DeleteDataStream": {
+              "methods": [
+                "delete_data_stream"
+              ]
+            },
+            "DeleteFirebaseLink": {
+              "methods": [
+                "delete_firebase_link"
+              ]
+            },
+            "DeleteGoogleAdsLink": {
+              "methods": [
+                "delete_google_ads_link"
+              ]
+            },
+            "DeleteKeyEvent": {
+              "methods": [
+                "delete_key_event"
+              ]
+            },
+            "DeleteMeasurementProtocolSecret": {
+              "methods": [
+                "delete_measurement_protocol_secret"
+              ]
+            },
+            "DeleteProperty": {
+              "methods": [
+                "delete_property"
+              ]
+            },
+            "GetAccount": {
+              "methods": [
+                "get_account"
+              ]
+            },
+            "GetConversionEvent": {
+              "methods": [
+                "get_conversion_event"
+              ]
+            },
+            "GetCustomDimension": {
+              "methods": [
+                "get_custom_dimension"
+              ]
+            },
+            "GetCustomMetric": {
+              "methods": [
+                "get_custom_metric"
+              ]
+            },
+            "GetDataRetentionSettings": {
+              "methods": [
+                "get_data_retention_settings"
+              ]
+            },
+            "GetDataSharingSettings": {
+              "methods": [
+                "get_data_sharing_settings"
+              ]
+            },
+            "GetDataStream": {
+              "methods": [
+                "get_data_stream"
+              ]
+            },
+            "GetKeyEvent": {
+              "methods": [
+                "get_key_event"
+              ]
+            },
+            "GetMeasurementProtocolSecret": {
+              "methods": [
+                "get_measurement_protocol_secret"
+              ]
+            },
+            "GetProperty": {
+              "methods": [
+                "get_property"
+              ]
+            },
+            "ListAccountSummaries": {
+              "methods": [
+                "list_account_summaries"
+              ]
+            },
+            "ListAccounts": {
+              "methods": [
+                "list_accounts"
+              ]
+            },
+            "ListConversionEvents": {
+              "methods": [
+                "list_conversion_events"
+              ]
+            },
+            "ListCustomDimensions": {
+              "methods": [
+                "list_custom_dimensions"
+              ]
+            },
+            "ListCustomMetrics": {
+              "methods": [
+                "list_custom_metrics"
+              ]
+            },
+            "ListDataStreams": {
+              "methods": [
+                "list_data_streams"
+              ]
+            },
+            "ListFirebaseLinks": {
+              "methods": [
+                "list_firebase_links"
+              ]
+            },
+            "ListGoogleAdsLinks": {
+              "methods": [
+                "list_google_ads_links"
+              ]
+            },
+            "ListKeyEvents": {
+              "methods": [
+                "list_key_events"
+              ]
+            },
+            "ListMeasurementProtocolSecrets": {
+              "methods": [
+                "list_measurement_protocol_secrets"
+              ]
+            },
+            "ListProperties": {
+              "methods": [
+                "list_properties"
+              ]
+            },
+            "ProvisionAccountTicket": {
+              "methods": [
+                "provision_account_ticket"
+              ]
+            },
+            "RunAccessReport": {
+              "methods": [
+                "run_access_report"
+              ]
+            },
+            "SearchChangeHistoryEvents": {
+              "methods": [
+                "search_change_history_events"
+              ]
+            },
+            "UpdateAccount": {
+              "methods": [
+                "update_account"
+              ]
+            },
+            "UpdateConversionEvent": {
+              "methods": [
+                "update_conversion_event"
+              ]
+            },
+            "UpdateCustomDimension": {
+              "methods": [
+                "update_custom_dimension"
+              ]
+            },
+            "UpdateCustomMetric": {
+              "methods": [
+                "update_custom_metric"
+              ]
+            },
+            "UpdateDataRetentionSettings": {
+              "methods": [
+                "update_data_retention_settings"
+              ]
+            },
+            "UpdateDataStream": {
+              "methods": [
+                "update_data_stream"
+              ]
+            },
+            "UpdateGoogleAdsLink": {
+              "methods": [
+                "update_google_ads_link"
+              ]
+            },
+            "UpdateKeyEvent": {
+              "methods": [
+                "update_key_event"
+              ]
+            },
+            "UpdateMeasurementProtocolSecret": {
+              "methods": [
+                "update_measurement_protocol_secret"
+              ]
+            },
+            "UpdateProperty": {
+              "methods": [
+                "update_property"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AnalyticsAdminServiceClient",
+          "rpcs": {
+            "AcknowledgeUserDataCollection": {
+              "methods": [
+                "acknowledge_user_data_collection"
+              ]
+            },
+            "ArchiveCustomDimension": {
+              "methods": [
+                "archive_custom_dimension"
+              ]
+            },
+            "ArchiveCustomMetric": {
+              "methods": [
+                "archive_custom_metric"
+              ]
+            },
+            "CreateConversionEvent": {
+              "methods": [
+                "create_conversion_event"
+              ]
+            },
+            "CreateCustomDimension": {
+              "methods": [
+                "create_custom_dimension"
+              ]
+            },
+            "CreateCustomMetric": {
+              "methods": [
+                "create_custom_metric"
+              ]
+            },
+            "CreateDataStream": {
+              "methods": [
+                "create_data_stream"
+              ]
+            },
+            "CreateFirebaseLink": {
+              "methods": [
+                "create_firebase_link"
+              ]
+            },
+            "CreateGoogleAdsLink": {
+              "methods": [
+                "create_google_ads_link"
+              ]
+            },
+            "CreateKeyEvent": {
+              "methods": [
+                "create_key_event"
+              ]
+            },
+            "CreateMeasurementProtocolSecret": {
+              "methods": [
+                "create_measurement_protocol_secret"
+              ]
+            },
+            "CreateProperty": {
+              "methods": [
+                "create_property"
+              ]
+            },
+            "DeleteAccount": {
+              "methods": [
+                "delete_account"
+              ]
+            },
+            "DeleteConversionEvent": {
+              "methods": [
+                "delete_conversion_event"
+              ]
+            },
+            "DeleteDataStream": {
+              "methods": [
+                "delete_data_stream"
+              ]
+            },
+            "DeleteFirebaseLink": {
+              "methods": [
+                "delete_firebase_link"
+              ]
+            },
+            "DeleteGoogleAdsLink": {
+              "methods": [
+                "delete_google_ads_link"
+              ]
+            },
+            "DeleteKeyEvent": {
+              "methods": [
+                "delete_key_event"
+              ]
+            },
+            "DeleteMeasurementProtocolSecret": {
+              "methods": [
+                "delete_measurement_protocol_secret"
+              ]
+            },
+            "DeleteProperty": {
+              "methods": [
+                "delete_property"
+              ]
+            },
+            "GetAccount": {
+              "methods": [
+                "get_account"
+              ]
+            },
+            "GetConversionEvent": {
+              "methods": [
+                "get_conversion_event"
+              ]
+            },
+            "GetCustomDimension": {
+              "methods": [
+                "get_custom_dimension"
+              ]
+            },
+            "GetCustomMetric": {
+              "methods": [
+                "get_custom_metric"
+              ]
+            },
+            "GetDataRetentionSettings": {
+              "methods": [
+                "get_data_retention_settings"
+              ]
+            },
+            "GetDataSharingSettings": {
+              "methods": [
+                "get_data_sharing_settings"
+              ]
+            },
+            "GetDataStream": {
+              "methods": [
+                "get_data_stream"
+              ]
+            },
+            "GetKeyEvent": {
+              "methods": [
+                "get_key_event"
+              ]
+            },
+            "GetMeasurementProtocolSecret": {
+              "methods": [
+                "get_measurement_protocol_secret"
+              ]
+            },
+            "GetProperty": {
+              "methods": [
+                "get_property"
+              ]
+            },
+            "ListAccountSummaries": {
+              "methods": [
+                "list_account_summaries"
+              ]
+            },
+            "ListAccounts": {
+              "methods": [
+                "list_accounts"
+              ]
+            },
+            "ListConversionEvents": {
+              "methods": [
+                "list_conversion_events"
+              ]
+            },
+            "ListCustomDimensions": {
+              "methods": [
+                "list_custom_dimensions"
+              ]
+            },
+            "ListCustomMetrics": {
+              "methods": [
+                "list_custom_metrics"
+              ]
+            },
+            "ListDataStreams": {
+              "methods": [
+                "list_data_streams"
+              ]
+            },
+            "ListFirebaseLinks": {
+              "methods": [
+                "list_firebase_links"
+              ]
+            },
+            "ListGoogleAdsLinks": {
+              "methods": [
+                "list_google_ads_links"
+              ]
+            },
+            "ListKeyEvents": {
+              "methods": [
+                "list_key_events"
+              ]
+            },
+            "ListMeasurementProtocolSecrets": {
+              "methods": [
+                "list_measurement_protocol_secrets"
+              ]
+            },
+            "ListProperties": {
+              "methods": [
+                "list_properties"
+              ]
+            },
+            "ProvisionAccountTicket": {
+              "methods": [
+                "provision_account_ticket"
+              ]
+            },
+            "RunAccessReport": {
+              "methods": [
+                "run_access_report"
+              ]
+            },
+            "SearchChangeHistoryEvents": {
+              "methods": [
+                "search_change_history_events"
+              ]
+            },
+            "UpdateAccount": {
+              "methods": [
+                "update_account"
+              ]
+            },
+            "UpdateConversionEvent": {
+              "methods": [
+                "update_conversion_event"
+              ]
+            },
+            "UpdateCustomDimension": {
+              "methods": [
+                "update_custom_dimension"
+              ]
+            },
+            "UpdateCustomMetric": {
+              "methods": [
+                "update_custom_metric"
+              ]
+            },
+            "UpdateDataRetentionSettings": {
+              "methods": [
+                "update_data_retention_settings"
+              ]
+            },
+            "UpdateDataStream": {
+              "methods": [
+                "update_data_stream"
+              ]
+            },
+            "UpdateGoogleAdsLink": {
+              "methods": [
+                "update_google_ads_link"
+              ]
+            },
+            "UpdateKeyEvent": {
+              "methods": [
+                "update_key_event"
+              ]
+            },
+            "UpdateMeasurementProtocolSecret": {
+              "methods": [
+                "update_measurement_protocol_secret"
+              ]
+            },
+            "UpdateProperty": {
+              "methods": [
+                "update_property"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

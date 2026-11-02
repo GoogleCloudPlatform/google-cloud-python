@@ -1,0 +1,35 @@
+{% macro sphinx_imports() -%}
+import logging
+from typing import Any
+{%- endmacro %}
+
+{% macro sphinx_setup() -%}
+class UnexpectedUnindentFilter(logging.Filter):
+    """Filter out warnings about unexpected unindentation following bullet lists."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        """Filter the log record.
+
+        Args:
+            record (logging.LogRecord): The log record.
+
+        Returns:
+            bool: False to suppress the warning, True to allow it.
+        """
+        msg = record.getMessage()
+        if "Bullet list ends without a blank line" in msg:
+            return False
+        return True
+
+
+def setup(app: Any) -> None:
+    """Setup the Sphinx application.
+
+    Args:
+        app (Any): The Sphinx application.
+    """
+    # Sphinx's logger is hierarchical. Adding a filter to the
+    # root 'sphinx' logger will catch warnings from all sub-loggers.
+    logger = logging.getLogger('sphinx')
+    logger.addFilter(UnexpectedUnindentFilter())
+{%- endmacro %}

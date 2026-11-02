@@ -1,0 +1,19 @@
+[run]
+branch = True
+
+[report]
+omit =
+    /tmp/*
+    google/cloud/__init__.py
+    google/cloud/_testing/__init__.py
+    google/cloud/environment_vars/__init__.py
+fail_under = 100
+show_missing = True
+exclude_lines =
+    # Re-enable the standard pragma
+    pragma: NO COVER
+    # Ignore debug-only repr
+    def __repr__
+    # Ignore abstract methods
+    raise NotImplementedError
+    raise NotImplementedError()

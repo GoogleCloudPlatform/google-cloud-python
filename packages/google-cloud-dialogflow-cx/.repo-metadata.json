@@ -1,0 +1,16 @@
+{
+    "api_description": "Builds conversational interfaces (for example, chatbots, and voice-powered\napps and devices).",
+    "api_id": "dialogflow.googleapis.com",
+    "api_shortname": "dialogflow",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/dialogflow-cx/latest",
+    "default_version": "v3",
+    "distribution_name": "google-cloud-dialogflow-cx",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5300385",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "dialogflow-cx",
+    "name_pretty": "Dialogflow",
+    "product_documentation": "https://cloud.google.com/dialogflow/cx/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

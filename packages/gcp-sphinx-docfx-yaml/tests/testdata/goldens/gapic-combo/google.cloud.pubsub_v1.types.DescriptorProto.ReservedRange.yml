@@ -1,0 +1,19 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.DescriptorProto.ReservedRange
+  fullName: google.cloud.pubsub_v1.types.DescriptorProto.ReservedRange
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types.DescriptorProto
+  name: ReservedRange
+  source:
+    id: ReservedRange
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.DescriptorProto.ReservedRange` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.DescriptorProto.ReservedRange
+references: []

@@ -1,0 +1,2 @@
+# IMPORTANT: When Python 3.10 support is dropped, update these to
+# match the minimums in setup.py.

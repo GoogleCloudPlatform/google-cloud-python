@@ -1,0 +1,19 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.AuditConfigDelta
+  fullName: google.cloud.pubsub_v1.types.AuditConfigDelta
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: AuditConfigDelta
+  source:
+    id: AuditConfigDelta
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.AuditConfigDelta` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.AuditConfigDelta
+references: []

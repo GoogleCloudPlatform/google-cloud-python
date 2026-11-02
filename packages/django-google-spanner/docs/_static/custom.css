@@ -1,0 +1,9 @@
+div#python2-eol {
+	border-color: red;
+	border-width: medium;
+} 
+
+/* Ensure minimum width for 'Parameters' / 'Returns' column */
+dl.field-list > dt {
+    min-width: 100px
+}

@@ -1,0 +1,1 @@
+../examples/healthchecks/README.md

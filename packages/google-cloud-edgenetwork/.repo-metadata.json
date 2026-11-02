@@ -1,0 +1,16 @@
+{
+    "api_description": "Network management API for Distributed Cloud Edge.",
+    "api_id": "edgenetwork.googleapis.com",
+    "api_shortname": "edgenetwork",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-edgenetwork/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-edgenetwork",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=187192\u0026template=1162689",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-edgenetwork",
+    "name_pretty": "Distributed Cloud Edge Network",
+    "product_documentation": "https://cloud.google.com/distributed-cloud/edge/latest/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

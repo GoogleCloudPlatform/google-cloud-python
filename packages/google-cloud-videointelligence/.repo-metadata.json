@@ -1,0 +1,16 @@
+{
+    "api_description": "Detects objects, explicit content, and scene changes in videos. It also\nspecifies the region for annotation and transcribes speech to text.\nSupports both asynchronous API and streaming API.",
+    "api_id": "videointelligence.googleapis.com",
+    "api_shortname": "videointelligence",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/videointelligence/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-videointelligence",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5084810",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "videointelligence",
+    "name_pretty": "Cloud Video Intelligence",
+    "product_documentation": "https://cloud.google.com/video-intelligence/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

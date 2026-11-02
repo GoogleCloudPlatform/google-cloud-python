@@ -1,0 +1,16 @@
+{
+    "api_description": "The Vector Search API provides a fully-managed, highly performant, and\nscalable vector database designed to power next-generation search,\nrecommendation, and generative AI applications. It allows you to store,\nindex, and query your data and its corresponding vector embeddings through\na simple, intuitive interface. With Vector Search, you can define custom\nschemas for your data, insert objects with associated metadata,\nautomatically generate embeddings from your data, and perform fast\napproximate nearest neighbor (ANN) searches to find semantically similar\nitems at scale.",
+    "api_id": "vectorsearch.googleapis.com",
+    "api_shortname": "vectorsearch",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-vectorsearch/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-vectorsearch",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1899904",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-vectorsearch",
+    "name_pretty": "Vector Search",
+    "product_documentation": "https://docs.cloud.google.com/vertex-ai/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

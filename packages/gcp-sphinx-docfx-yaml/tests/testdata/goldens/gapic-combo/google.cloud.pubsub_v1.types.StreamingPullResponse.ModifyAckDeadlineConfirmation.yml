@@ -1,0 +1,34 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: Successfully processed acknowledgement IDs.
+    id: ack_ids
+    var_type: Sequence[str]
+  - description: "List of acknowledgement IDs that were\n   malformed or whose acknowledgement\
+      \ deadline has\n   expired."
+    id: invalid_ack_ids
+    var_type: Sequence[str]
+  children: []
+  class: google.cloud.pubsub_v1.types.StreamingPullResponse.ModifyAckDeadlineConfirmation
+  fullName: google.cloud.pubsub_v1.types.StreamingPullResponse.ModifyAckDeadlineConfirmation
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types.StreamingPullResponse
+  name: ModifyAckDeadlineConfirmation
+  source:
+    id: ModifyAckDeadlineConfirmation
+    path: tests/testdata/gapic-combo/google/pubsub_v1/types/pubsub.py
+    startLine: 1538
+  summary: 'Acknowledgement IDs sent in one or more previous requests to
+
+    modify the deadline for a specific message.
+
+    '
+  syntax:
+    content: "ModifyAckDeadlineConfirmation(\n    mapping=None, *, ignore_unknown_fields=False,\
+      \ **kwargs\n)"
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.StreamingPullResponse.ModifyAckDeadlineConfirmation
+references: []

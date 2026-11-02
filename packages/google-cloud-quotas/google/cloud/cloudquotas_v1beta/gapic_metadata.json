@@ -1,0 +1,167 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.cloudquotas_v1beta",
+  "protoPackage": "google.api.cloudquotas.v1beta",
+  "schema": "1.0",
+  "services": {
+    "CloudQuotas": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudQuotasClient",
+          "rpcs": {
+            "CreateQuotaPreference": {
+              "methods": [
+                "create_quota_preference"
+              ]
+            },
+            "GetQuotaInfo": {
+              "methods": [
+                "get_quota_info"
+              ]
+            },
+            "GetQuotaPreference": {
+              "methods": [
+                "get_quota_preference"
+              ]
+            },
+            "ListQuotaInfos": {
+              "methods": [
+                "list_quota_infos"
+              ]
+            },
+            "ListQuotaPreferences": {
+              "methods": [
+                "list_quota_preferences"
+              ]
+            },
+            "UpdateQuotaPreference": {
+              "methods": [
+                "update_quota_preference"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudQuotasAsyncClient",
+          "rpcs": {
+            "CreateQuotaPreference": {
+              "methods": [
+                "create_quota_preference"
+              ]
+            },
+            "GetQuotaInfo": {
+              "methods": [
+                "get_quota_info"
+              ]
+            },
+            "GetQuotaPreference": {
+              "methods": [
+                "get_quota_preference"
+              ]
+            },
+            "ListQuotaInfos": {
+              "methods": [
+                "list_quota_infos"
+              ]
+            },
+            "ListQuotaPreferences": {
+              "methods": [
+                "list_quota_preferences"
+              ]
+            },
+            "UpdateQuotaPreference": {
+              "methods": [
+                "update_quota_preference"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudQuotasClient",
+          "rpcs": {
+            "CreateQuotaPreference": {
+              "methods": [
+                "create_quota_preference"
+              ]
+            },
+            "GetQuotaInfo": {
+              "methods": [
+                "get_quota_info"
+              ]
+            },
+            "GetQuotaPreference": {
+              "methods": [
+                "get_quota_preference"
+              ]
+            },
+            "ListQuotaInfos": {
+              "methods": [
+                "list_quota_infos"
+              ]
+            },
+            "ListQuotaPreferences": {
+              "methods": [
+                "list_quota_preferences"
+              ]
+            },
+            "UpdateQuotaPreference": {
+              "methods": [
+                "update_quota_preference"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "QuotaAdjusterSettingsManager": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "QuotaAdjusterSettingsManagerClient",
+          "rpcs": {
+            "GetQuotaAdjusterSettings": {
+              "methods": [
+                "get_quota_adjuster_settings"
+              ]
+            },
+            "UpdateQuotaAdjusterSettings": {
+              "methods": [
+                "update_quota_adjuster_settings"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "QuotaAdjusterSettingsManagerAsyncClient",
+          "rpcs": {
+            "GetQuotaAdjusterSettings": {
+              "methods": [
+                "get_quota_adjuster_settings"
+              ]
+            },
+            "UpdateQuotaAdjusterSettings": {
+              "methods": [
+                "update_quota_adjuster_settings"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "QuotaAdjusterSettingsManagerClient",
+          "rpcs": {
+            "GetQuotaAdjusterSettings": {
+              "methods": [
+                "get_quota_adjuster_settings"
+              ]
+            },
+            "UpdateQuotaAdjusterSettings": {
+              "methods": [
+                "update_quota_adjuster_settings"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,255 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+description: Grafeas client is unique and requires customizations as described in PR 8186 below
+url: https://github.com/googleapis/gapic-generator-python/issues/1830
+replacements:
+  - paths: [
+      packages/grafeas/grafeas/grafeas_v1/services/grafeas/async_client.py
+    ]
+    # Use backslashes to preserve leading spaces
+    before: |
+      [ \t]*# Copy defaults from the synchronous client for use here\.
+      [\s\S]*?_DEFAULT_UNIVERSE = GrafeasClient\._DEFAULT_UNIVERSE[ \t]*\n
+    after: ""
+    count: 1
+  - paths: [
+      packages/grafeas/grafeas/grafeas_v1/services/grafeas/client.py
+    ]
+    # Use backslashes to preserve leading spaces
+    before: |
+      [ \t]*# Note: DEFAULT_ENDPOINT is deprecated\. Use _DEFAULT_ENDPOINT_TEMPLATE instead\.
+      [\s\S]*?_DEFAULT_UNIVERSE = "googleapis\.com"[ \t]*\n
+    after: ""
+    count: 1
+  - paths: [
+      packages/grafeas/grafeas/grafeas_v1/services/grafeas/async_client.py
+    ]
+    # Use backslashes to preserve leading spaces
+    before: |
+      [ \t]*@classmethod
+      \s+def from_service_account_file\([\s\S]*?return GrafeasClient\.get_mtls_endpoint_and_cert_source\(client_options\)\s+# type: ignore[ \t]*\n
+    after: ""
+    count: 1
+  - paths: [
+      packages/grafeas/grafeas/grafeas_v1/services/grafeas/client.py,
+    ]
+    # Use backslashes to preserve leading spaces
+    before: |
+      [ \t]*@classmethod
+      \s+def from_service_account_file\([\s\S]*?from_service_account_json = from_service_account_file[ \t]*\n
+    after: ""
+    count: 1
+  - paths: [
+      packages/grafeas/tests/unit/gapic/grafeas_v1/test_grafeas.py,
+    ]
+    before: |
+      \)\n\n\n@pytest\.mark\.parametrize\(
+          "client_class,transport_class",
+      [\s\S]*?def test_api_key_credentials\(client_class, transport_class\):
+      [\s\S]*?api_audience=None,
+      \s+\)
+    after: ")\n"
+    count: 1
+  - paths: [
+      packages/grafeas/tests/unit/gapic/grafeas_v1/test_grafeas.py,
+    ]
+    # Use backslashes to preserve leading spaces
+    before: |
+      def test_client_with_default_client_info\(\):
+      [\s\S]*?transport_class = GrafeasClient\.get_transport_class\(\)
+      [\s\S]*?prep\.assert_called_once_with\(client_info\)\n\n
+    after: ""
+    count: 1
+  - paths: [
+      packages/grafeas/tests/unit/gapic/grafeas_v1/test_grafeas.py,
+    ]
+    before: |
+      @pytest\.mark\.parametrize\(
+          "transport_name",
+      [\s\S]*?def test_grafeas_host_no_port\(transport_name\):
+      [\s\S]*?def test_grafeas_host_with_port\(transport_name\):
+      [\s\S]*?def test_grafeas_client_transport_session_collision\(transport_name\):
+      [\s\S]*?assert session1 != session2\n\n
+    after: ""
+    count: 1
+  - paths: [
+      packages/grafeas/tests/unit/gapic/grafeas_v1/test_grafeas.py,
+    ]
+    before: |
+      def test_grafeas_base_transport_error\(\):
+      [\s\S]*?credentials_file="credentials\.json",
+      \s+\)\n\n
+    after: ""
+    count: 1
+  - paths: [
+      packages/grafeas/tests/unit/gapic/grafeas_v1/test_grafeas.py,
+    ]
+    before: |
+      def test_credentials_transport_error\(\):
+      [\s\S]*?client_options={"scopes": \["1", "2"\]},
+      \s+transport=transport,
+      \s+\)\n\n
+    after: ""
+    count: 1
+  - paths: [
+        packages/grafeas/tests/unit/gapic/grafeas_v1/test_grafeas.py,
+      ]
+    before: |
+      # If default endpoint is localhost, then default mtls endpoint will be the same\.
+      [\s\S]*?\("grpc\.max_receive_message_length", -1\),
+      \s+\],
+      \s+\)\n\n
+    after: |
+      @pytest.fixture(autouse=True)
+      def set_event_loop():
+          try:
+              asyncio.get_running_loop()
+              yield
+          except RuntimeError:
+              loop = asyncio.new_event_loop()
+              asyncio.set_event_loop(loop)
+              try:
+                  yield
+              finally:
+                  loop.close()
+                  asyncio.set_event_loop(None)
+    count: 1      
+  - paths: [
+      packages/grafeas/grafeas/grafeas_v1/services/grafeas/transports/base.py,
+      packages/grafeas/grafeas/grafeas_v1/services/grafeas/transports/grpc_asyncio.py,
+      packages/grafeas/grafeas/grafeas_v1/services/grafeas/transports/grpc.py,
+      packages/grafeas/grafeas/grafeas_v1/services/grafeas/transports/rest.py,
+      packages/grafeas/tests/unit/gapic/grafeas_v1/test_grafeas.py,
+    ]
+    before: "containeranalysis.googleapis.com"
+    after: ""
+    count: 12
+  - paths: [
+      packages/grafeas/grafeas/grafeas_v1/services/grafeas/client.py,
+    ]
+    before: |
+      \}\n
+      \    @classmethod
+      \    def get_mtls_endpoint_and_cert_source\(
+      [\s\S]*?return self._universe_domain\n
+    after: "}"
+    count: 1
+  - paths: [
+      packages/grafeas/grafeas/grafeas_v1/services/grafeas/client.py
+    ]
+    # Use backslashes to preserve leading spaces
+    before: |
+      \    def __init__\(
+      \        self,
+      \        \*,
+      \        credentials: Optional\[ga_credentials.Credentials\] = None,
+      [\s\S]*?"credentialsType": None,
+      \s+\},
+      \s+\)
+    after: |
+      \n
+          def __init__(
+              self,
+              *,
+              transport: Optional[Union[str, GrafeasTransport]] = None,
+              credentials: Optional[ga_credentials.Credentials] = None,
+          ) -> None:
+              """Instantiate the grafeas client.
+
+              Args:
+                  transport (Optional[Union[str, ~.GrafeasTransport]]): The
+                      transport to use.
+                  credentials (Optional[google.auth.credentials.Credentials]): The
+                      authorization credentials to attach to requests. These
+                      credentials identify the application to the service; if none
+                      are specified, the client will attempt to ascertain the
+                      credentials from the environment.
+
+              Raises:
+                  google.auth.exceptions.MutualTLSChannelError: If mutual TLS transport
+                      creation failed for any reason.
+              """
+
+              if isinstance(transport, GrafeasTransport):
+                  self._transport = transport
+              else:
+                  Transport = GrafeasClient.get_transport_class(transport)
+                  self._transport = Transport(credentials=credentials)
+    count: 1
+  - paths: [
+      packages/grafeas/grafeas/grafeas_v1/services/grafeas/async_client.py
+    ]
+    before: |
+      GrafeasClient\.get_transport_class\n
+      \    def __init__\(
+      [\s\S]*?self\._client = GrafeasClient\(
+      [\s\S]*?client_info=client_info,
+      \s+\)
+    after: |
+      GrafeasClient.get_transport_class\n
+          def __init__(
+              self,
+              *,
+              transport: Union[str, GrafeasTransport] = "grpc_asyncio",
+              credentials: Optional[ga_credentials.Credentials] = None,
+          ) -> None:
+              """Instantiate the grafeas client.
+      
+              Args:
+                  transport (Union[str, ~.GrafeasTransport]): The
+                      transport to use.
+                  credentials (Optional[google.auth.credentials.Credentials]): The
+                      authorization credentials to attach to requests. These
+                      credentials identify the application to the service; if none
+                      are specified, the client will attempt to ascertain the
+                      credentials from the environment.
+      
+              Raises:
+                  google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
+                      creation failed for any reason.
+              """
+      
+              self._client = GrafeasClient(
+                  transport=transport,
+                  credentials=credentials,
+              )
+    count: 1
+  - paths: [
+        packages/grafeas/grafeas/grafeas_v1/services/grafeas/client.py
+    ]
+    # Use backslashes to preserve leading spaces
+    before: |
+      \        # Validate the universe domain.
+      \        self._validate_universe_domain\(\)\n
+    after: ""
+    count: 14
+  - paths: [
+        packages/grafeas/grafeas/grafeas_v1/services/grafeas/async_client.py
+    ]
+    # Use backslashes to preserve leading spaces
+    before: |
+      \        # Validate the universe domain.
+      \        self._client._validate_universe_domain\(\)\n
+    after: ""
+    count: 14
+  - paths: [
+        packages/grafeas/grafeas/grafeas_v1/services/grafeas/async_client.py
+    ]
+    # Use backslashes to preserve leading spaces
+    before: |
+      \    @property
+      \    def api_endpoint\(self\) -> str:
+      [\s\S]*?return self\._client\._universe_domain\n
+    after: ""
+    count: 1

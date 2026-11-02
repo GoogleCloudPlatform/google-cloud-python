@@ -1,0 +1,50 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. User-provided name for this snapshot. If the name\n  \
+      \ is not provided in the request, the server will assign a\n   random name for\
+      \ this snapshot on the same project as the\n   subscription. Note that for REST\
+      \ API requests, you must\n   specify a name. See the resource name rules. Format\
+      \ is\n   <code>projects/{project}/snapshots/{snap}</code>."
+    id: name
+    var_type: str
+  - description: "Required. The subscription whose backlog the snapshot\n   retains.\
+      \ Specifically, the created snapshot is guaranteed to\n   retain: (a) The existing\
+      \ backlog on the subscription. More\n   precisely, this is defined as the messages\
+      \ in the\n   subscription's backlog that are unacknowledged upon the\n   successful\
+      \ completion of the <code>CreateSnapshot</code> request; as\n   well as: (b)\
+      \ Any messages published to the subscription's\n   topic following the successful\
+      \ completion of the\n   CreateSnapshot request. Format is\n   <code>projects/{project}/subscriptions/{sub}</code>."
+    id: subscription
+    var_type: str
+  - description: "See <a\n   href=\"https://cloud.google.com/pubsub/docs/labels\"\
+      >\n   Creating and managing labels</a>."
+    id: labels
+    var_type: Mapping[str, str]
+  children:
+  - google.cloud.pubsub_v1.types.CreateSnapshotRequest.LabelsEntry
+  class: google.cloud.pubsub_v1.types.CreateSnapshotRequest
+  fullName: google.cloud.pubsub_v1.types.CreateSnapshotRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: CreateSnapshotRequest
+  source:
+    id: CreateSnapshotRequest
+    path: null
+    startLine: null
+  summary: 'Request for the `CreateSnapshot` method.
+
+    '
+  syntax:
+    content: CreateSnapshotRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.CreateSnapshotRequest
+references:
+- fullName: google.cloud.pubsub_v1.types.CreateSnapshotRequest.LabelsEntry
+  isExternal: false
+  name: LabelsEntry
+  parent: google.cloud.pubsub_v1.types.CreateSnapshotRequest
+  uid: google.cloud.pubsub_v1.types.CreateSnapshotRequest.LabelsEntry

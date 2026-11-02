@@ -1,0 +1,255 @@
+{"tests": [
+  {
+    "result": {"value": [[
+      true,
+      "abc",
+      "100",
+      1.1,
+      "YWJj",
+      [
+        "abc",
+        "def",
+        null,
+        "ghi"
+      ],
+      [
+        ["abc"],
+        ["def"],
+        ["ghi"]
+      ]
+    ]]},
+    "chunks": ["{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"BOOL\"\n        }\n      }, {\n        \"name\": \"f2\",\n        \"type\": {\n          \"code\": \"STRING\"\n        }\n      }, {\n        \"name\": \"f3\",\n        \"type\": {\n          \"code\": \"INT64\"\n        }\n      }, {\n        \"name\": \"f4\",\n        \"type\": {\n          \"code\": \"FLOAT64\"\n        }\n      }, {\n        \"name\": \"f5\",\n        \"type\": {\n          \"code\": \"BYTES\"\n        }\n      }, {\n        \"name\": \"f6\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRING\"\n          }\n        }\n      }, {\n        \"name\": \"f7\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRUCT\",\n            \"structType\": {\n              \"fields\": [{\n                \"name\": \"f71\",\n                \"type\": {\n                  \"code\": \"STRING\"\n                }\n              }]\n            }\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [true, \"abc\", \"100\", 1.1, \"YWJj\", [\"abc\", \"def\", null, \"ghi\"], [[\"abc\"], [\"def\"], [\"ghi\"]]]\n}"],
+    "name": "Basic Test"
+  },
+  {
+    "result": {"value": [["abcdefghi"]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"STRING\"\n        }\n      }]\n    }\n  },\n  \"values\": [\"abc\"],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [\"def\"],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [\"ghi\"]\n}"
+    ],
+    "name": "String Chunking Test"
+  },
+  {
+    "result": {"value": [[[
+      "abc",
+      "def",
+      "ghi",
+      "jkl"
+    ]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRING\"\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[\"abc\", \"d\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"ef\", \"gh\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"i\", \"jkl\"]]\n}"
+    ],
+    "name": "String Array Chunking Test"
+  },
+  {
+    "result": {"value": [[[
+      "abc",
+      "def",
+      null,
+      "ghi",
+      null,
+      "jkl"
+    ]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRING\"\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[\"abc\", \"def\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[null, \"ghi\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[null, \"jkl\"]]\n}"
+    ],
+    "name": "String Array Chunking Test With Nulls"
+  },
+  {
+    "result": {"value": [[[
+      "abc",
+      "def",
+      "ghi",
+      "jkl"
+    ]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRING\"\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[\"abc\", \"def\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"\", \"ghi\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"\", \"jkl\"]]\n}"
+    ],
+    "name": "String Array Chunking Test With Empty Strings"
+  },
+  {
+    "result": {"value": [[["abcdefghi"]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRING\"\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[\"abc\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"def\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"ghi\"]]\n}"
+    ],
+    "name": "String Array Chunking Test With One Large String"
+  },
+  {
+    "result": {"value": [[[
+      "1",
+      "23",
+      "4",
+      null,
+      5
+    ]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"INT64\"\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[\"1\", \"2\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"3\", \"4\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"\", null, \"5\"]]\n}"
+    ],
+    "name": "INT64 Array Chunking Test"
+  },
+  {
+    "result": {"value": [[[
+      1,
+      2,
+      "Infinity",
+      "-Infinity",
+      "NaN",
+      null,
+      3
+    ]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"FLOAT64\"\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[1.0, 2.0]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"Infinity\", \"-Infinity\", \"NaN\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"\", null, 3.0]]\n}"
+    ],
+    "name": "FLOAT64 Array Chunking Test"
+  },
+  {
+    "result": {"value": [[[
+      [
+        "abc",
+        "defghi"
+      ],
+      [
+        "123",
+        "456"
+      ]
+    ]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRUCT\",\n            \"structType\": {\n              \"fields\": [{\n                \"name\": \"f11\",\n                \"type\": {\n                  \"code\": \"STRING\"\n                }\n              }, {\n                \"name\": \"f12\",\n                \"type\": {\n                  \"code\": \"STRING\"\n                }\n              }]\n            }\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[[\"abc\", \"def\"]]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[[\"ghi\"], [\"123\", \"456\"]]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[[\"\"]]]\n}"
+    ],
+    "name": "Struct Array Chunking Test"
+  },
+  {
+    "result": {"value": [[[[[["abc"]]]]]]},
+    "chunks": ["{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRUCT\",\n            \"structType\": {\n              \"fields\": [{\n                \"name\": \"f11\",\n                \"type\": {\n                  \"code\": \"ARRAY\",\n                  \"arrayElementType\": {\n                    \"code\": \"STRUCT\",\n                    \"structType\": {\n                      \"fields\": [{\n                        \"name\": \"f12\",\n                        \"type\": {\n                          \"code\": \"STRING\"\n                        }\n                      }]\n                    }\n                  }\n                }\n              }]\n            }\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[[[[\"abc\"]]]]]\n}"],
+    "name": "Nested Struct Array Test"
+  },
+  {
+    "result": {"value": [[[[[
+      ["abc"],
+      ["def"]
+    ]]]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRUCT\",\n            \"structType\": {\n              \"fields\": [{\n                \"name\": \"f11\",\n                \"type\": {\n                  \"code\": \"ARRAY\",\n                  \"arrayElementType\": {\n                    \"code\": \"STRUCT\",\n                    \"structType\": {\n                      \"fields\": [{\n                        \"name\": \"f12\",\n                        \"type\": {\n                          \"code\": \"STRING\"\n                        }\n                      }]\n                    }\n                  }\n                }\n              }]\n            }\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[[[[\"ab\"]]]]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[[[[\"c\"], [\"def\"]]]]]\n}"
+    ],
+    "name": "Nested Struct Array Chunking Test"
+  },
+  {
+    "result": {"value": [
+      [
+        "1",
+        [["ab"]]
+      ],
+      [
+        "2",
+        [["c"]]
+      ]
+    ]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"STRING\"\n        }\n      }, {\n        \"name\": \"f2\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRUCT\",\n            \"structType\": {\n              \"fields\": [{\n                \"name\": \"f21\",\n                \"type\": {\n                  \"code\": \"STRING\"\n                }\n              }]\n            }\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [\"1\", [[\"a\"]]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[[\"b\"]], \"2\"],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [\"\", [[\"c\"]]]\n}"
+    ],
+    "name": "Struct Array And String Chunking Test"
+  },
+  {
+    "result": {"value": [
+      [
+        "abc",
+        "1"
+      ],
+      [
+        "def",
+        "2"
+      ]
+    ]},
+    "chunks": ["{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"STRING\"\n        }\n      }, {\n        \"name\": \"f2\",\n        \"type\": {\n          \"code\": \"INT64\"\n        }\n      }]\n    }\n  },\n  \"values\": [\"abc\", \"1\", \"def\", \"2\"]\n}"],
+    "name": "Multiple Row Single Chunk"
+  },
+  {
+    "result": {"value": [
+      [
+        "abc",
+        "1"
+      ],
+      [
+        "def",
+        "2"
+      ]
+    ]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"STRING\"\n        }\n      }, {\n        \"name\": \"f2\",\n        \"type\": {\n          \"code\": \"INT64\"\n        }\n      }]\n    }\n  },\n  \"values\": [\"ab\"],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [\"c\", \"1\", \"de\"],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [\"f\", \"2\"]\n}"
+    ],
+    "name": "Multiple Row Multiple Chunks"
+  },
+  {
+    "result": {"value": [
+      ["ab"],
+      ["c"],
+      ["d"],
+      ["ef"]
+    ]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"STRING\"\n        }\n      }]\n    }\n  },\n  \"values\": [\"a\"],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [\"b\", \"c\"]\n}",
+      "{\n  \"values\": [\"d\", \"e\"],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [\"f\"]\n}"
+    ],
+    "name": "Multiple Row Chunks/Non Chunks Interleaved"
+  },
+  {
+    "result": {"value": [[[
+      "{}",
+      "{\"color\":\"red\",\"value\":\"#f00\"}"
+    ]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"JSON\"\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[\"{}\", \"{\\\"color\\\":\\\"red\\\"\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\",\\\"value\\\":\\\"#f00\\\"}\"]],\n  \"chunkedValue\": false\n}"
+    ],
+    "name": "JSON Array Chunking Test"
+  },
+  {
+    "result": {"value": [[[
+      "1.1",
+      "2.3",
+      "4.0",
+      null,
+      "5.5"
+    ]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"NUMERIC\"\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[\"1.1\", \"2.\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"3\", \"4.0\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"\", null, \"5.5\"]]\n}"
+    ],
+    "name": "NUMERIC Array Chunking Test"
+  },
+  {
+    "result": {"value": [[[[[
+      ["abc"],
+      null,
+      ["def"]
+    ]]]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRUCT\",\n            \"structType\": {\n              \"fields\": [{\n                \"name\": \"f11\",\n                \"type\": {\n                  \"code\": \"ARRAY\",\n                  \"arrayElementType\": {\n                    \"code\": \"STRUCT\",\n                    \"structType\": {\n                      \"fields\": [{\n                        \"name\": \"f12\",\n                        \"type\": {\n                          \"code\": \"STRING\"\n                        }\n                      }]\n                    }\n                  }\n                }\n              }]\n            }\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[[[[\"abc\"], null]]]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[[[[\"def\"]]]]]\n}"
+    ],
+    "name": "Nested Struct Array Chunking Test With null"
+  }
+]}

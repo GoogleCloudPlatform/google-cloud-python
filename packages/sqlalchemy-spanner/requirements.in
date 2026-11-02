@@ -1,0 +1,13 @@
+build
+click
+packaging
+pep517
+pip-tools
+pyparsing
+tomli
+sqlalchemy
+google-cloud-spanner
+alembic
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-instrumentation

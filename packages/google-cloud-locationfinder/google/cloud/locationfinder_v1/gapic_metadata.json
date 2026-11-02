@@ -1,0 +1,73 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.locationfinder_v1",
+  "protoPackage": "google.cloud.locationfinder.v1",
+  "schema": "1.0",
+  "services": {
+    "CloudLocationFinder": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudLocationFinderClient",
+          "rpcs": {
+            "GetCloudLocation": {
+              "methods": [
+                "get_cloud_location"
+              ]
+            },
+            "ListCloudLocations": {
+              "methods": [
+                "list_cloud_locations"
+              ]
+            },
+            "SearchCloudLocations": {
+              "methods": [
+                "search_cloud_locations"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudLocationFinderAsyncClient",
+          "rpcs": {
+            "GetCloudLocation": {
+              "methods": [
+                "get_cloud_location"
+              ]
+            },
+            "ListCloudLocations": {
+              "methods": [
+                "list_cloud_locations"
+              ]
+            },
+            "SearchCloudLocations": {
+              "methods": [
+                "search_cloud_locations"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudLocationFinderClient",
+          "rpcs": {
+            "GetCloudLocation": {
+              "methods": [
+                "get_cloud_location"
+              ]
+            },
+            "ListCloudLocations": {
+              "methods": [
+                "list_cloud_locations"
+              ]
+            },
+            "SearchCloudLocations": {
+              "methods": [
+                "search_cloud_locations"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

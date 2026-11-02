@@ -1,0 +1,1110 @@
+// Copyright 2022 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.cloud.tools.snippetgen.configlanguage.v1;
+
+import "google/protobuf/descriptor.proto";
+
+option csharp_namespace = "Google.Cloud.Tools.SnippetGen.ConfigLanguage.V1";
+option php_namespace = "Google\\Cloud\\Tools\\SnippetGen\\ConfigLanguage\\V1";
+option ruby_package = "Google::Cloud::Tools::SnippetGen::ConfigLanguage::V1";
+option java_multiple_files = true;
+option java_outer_classname = "SnippetConfigLanguageProto";
+option java_package = "com.google.cloud.tools.snippetgen.configlanguage.v1";
+
+// The snippet configuration for a single snippet that will be generated across
+// all languages.
+message SnippetConfig {
+  // Metadata for the snippet configuration. Some information contained here
+  // will be included in the generated snippet own metadata.
+  SnippetConfigMetadata metadata = 1;
+
+  // The RPC this snippet is for.
+  Rpc rpc = 2;
+
+  // The generated snippet method signature.
+  SnippetSignature signature = 3;
+
+  // The actual snippet (code).
+  Snippet snippet = 4;
+}
+
+// Metadata for the snippet configuration. Some information contained here will
+// be included in the generated snippet's own metadata.
+message SnippetConfigMetadata {
+  // Whether this snippet config should be skipped for/ generation.
+  // This is useful when snippets are developed before features are released.
+  // Defaults to false.
+  bool skipped = 1;
+
+  // List of languages to skip snippet generation for.
+  // Config producers should specify here languages for which some of the
+  // capabilities required by the snippet are not supported. For instance, if a
+  // specific client option is required by the snippet, and that option is not
+  // supported by .NET client libraries, then C_SHARP should be specified here.
+  repeated GeneratorOutputLanguage skipped_languages = 2;
+
+  // The config id. This will be used to generate the region tag of the snippet.
+  // Required.
+  // The region tag format will be:
+  // [{START|END}
+  // ${apishortname}_${apiVersion}_config_${ServiceName}_${RpcName}_${config_id}_{sync|async}]
+  // - config_id must be unique for a given Service/RPC pair.
+  // - config_id must not contain the API, Service or RPC identifiers as that
+  //   will be automatically included in the region tag.
+  // - config_id may only contain letters and numbers
+  // - config_id should be PascalCased
+  // - Preferable, config_id should not exceed 50 characters, although this is
+  // not a hard requirement.
+  // - config_id may be somewhat descriptive of the snippet or just a random
+  // identifier. If it's descriptive, do not make it overly verbose, there are
+  // the human readable snippet_name and snippet_description fields for properly
+  // describing the snippet. For instance, prefer DefaultDatasetCreation to
+  // DatasetCreationUsingDefaultValuesExceptForDatasetNameWhichIsRequired.
+  string config_id = 3;
+
+  // The human readable name of the snippet.
+  // To be included in metadata and in the sample itself in the top-level
+  // description.
+  string snippet_name = 4;
+
+  // The description of the snippet.
+  // To be included in metadata and in the sample itself in the top-level
+  // description.
+  string snippet_description = 5;
+}
+
+// A programming language in which snippets are generated.
+// Note that this is different from
+// google.cloud.tools.snippetgen.snippetindex.v1.Language, i.e. language
+// specified in snippet metadata, as metadata can be written for both generated
+// and handwritten snippets. In turn, we'll always know which generators we are
+// writing snippet configs for and which are the output languages of those
+// generators.
+enum GeneratorOutputLanguage {
+  // The language has not been specified. Consumers should not see this value.
+  GENERATOR_OUTPUT_LANGUAGE_UNSPECIFIED = 0;
+  C_PLUS_PLUS = 1;
+  C_SHARP = 2;
+  GO = 3;
+  JAVA = 4;
+  JAVASCRIPT = 5;
+  PHP = 6;
+  PYTHON = 7;
+  RUBY = 8;
+}
+
+// An RPC for which a Snippet may be defined.
+message Rpc {
+  // This is identical to the protobuf package ending with a version number,
+  // after removing said version number. For instance, where the api ID is
+  // "google.cloud.translate.v3" the API name is "google.cloud.translate".
+  string proto_package = 1;
+
+  // The list of API versions for which one snippet is defined.
+  // The same RPC may exist in different versions (v1, v1beta, v2) of the API
+  // and may be covered by the same snippet config.
+  repeated string api_version = 2;
+
+  // The protobuf service name relative to the api name + version where the RPC
+  // is defined. Example: "TransalationService".
+  string service_name = 3;
+
+  // The RPC name relative to the service name.
+  string rpc_name = 4;
+}
+
+message SnippetSignature {
+  // The name for the snippet method specified in snake_case. Required.
+  string snippet_method_name = 1;
+
+  // The return type for the snippet method. Unset for methods that do not
+  // return a value or if the sample is to be generated for non statically-typed
+  // languages only.
+  Type return_type = 2;
+
+  // Synchronous preference indicator for the generated snippet.
+  SyncPreference sync_preference = 3;
+
+  // The list of parameters that the snippet will receive. May be empty if the
+  // snippet method does not receive parameters. If any, parameters should
+  // appear in generated code in the same order as they appear in this field.
+  // Note also that if parameters have assignments, some languages
+  // will represent these as default parameter values which are
+  // usually scalars.
+  repeated Statement.Declaration parameters = 4;
+
+  // Synchronous preference indicator for the generated snippet.
+  // Note that some languages only support one-off sync or async methods so this
+  // is just a preference indicator.
+  enum SyncPreference {
+    // Generate an async, sync or both snippets as per language
+    // (style, guidelines, community) preference.
+    LANGUAGE_PREFERRED = 0;
+
+    // Languages supporting async methods should generate an async snippet.
+    // Languages that do not support async methods will generate a sync snippet
+    // instead.
+    PREFER_ASYNC = 1;
+
+    // Languages supporting sync methods should generate a sync snippet.
+    // Languages that do not support sync methods will generate an async snippet
+    // instead.
+    PREFER_SYNC = 2;
+
+    // Languages that support both async and sync methods should generate both a
+    // sync and an async snippets. Note that different samples should be in
+    // different files.
+    // Languages that support only one of async and sync methods should
+    // generate the supported snippet.
+    BOTH = 3;
+  }
+}
+
+// The actual snippet (code), including client and request initialization,
+// client call and response handling.
+message Snippet {
+  // Service client initialization. Optional. If unset language-specific
+  // defaults will be applied.
+  ClientInitialization service_client_initialization = 1;
+
+  // Call configuration including request initialization and response handling.
+  // Required.
+  oneof call {
+    // A standard RPC operation.
+    Standard standard = 2;
+
+    // A paginated RPC operation.
+    Paginated paginated = 3;
+
+    // A long-running RPC operation.
+    Lro lro = 4;
+
+    // A client streaming RPC operation.
+    ClientStreaming client_streaming = 5;
+
+    // A server streaming RPC operation.
+    ServerStreaming server_streaming = 6;
+
+    // A bidirectional streaming RPC operation.
+    BidiStreaming bidi_streaming = 7;
+  }
+  // Statements to be executed before the snippet ends. For instance, some
+  // Statement.StandardOutput statements and the Statement.Return statement.
+  // May be empty. If any, statements should appear on generated code in the
+  // same order as they appear on this field.
+  repeated Statement final_statements = 8;
+
+  // Options to initialize the client with.
+  message ClientInitialization {
+    // Statements to be executed before the service client is initialized. For
+    // instance, some Statement.Declaration statements of variables to be used
+    // in service client initialization. May be empty. If any, statements will
+    // be executed in the same order as they appear on
+    // pre_request_initialization.
+    repeated Statement pre_client_initialization = 1;
+
+    // Custom endpoint to use in client initialization. Optional.
+    ServiceEndpoint custom_service_endpoint = 2;
+
+    // Different languages have different requirements for how a service
+    // endpoint should be specified, so in sample configuration the endpoint
+    // needs to be specified in parts that each language generator can then use
+    // to compose the string literal to include in the sample according to their
+    // own requirements. None of this manipulation should be included in the
+    // sample itself, where only a string literal is expected as the value for
+    // the custom endpoint.
+    message ServiceEndpoint {
+      // The schema for the service endpoint.
+      ServiceEndpointSchema schema = 1;
+
+      // The unregionalized host for the service endpoint.
+      // For instance "pubsub.googleapis.com". Required.
+      string host = 2;
+
+      // The region if this is a regional endpoint.
+      // For instance "us-east1". Optional.
+      // If present the regional host should be constructed as follows:
+      // {region}-{host}.
+      string region = 3;
+
+      // The port for the service endpoint. Optional.
+      // Languages that require a port to be specified should use the same
+      // default value as they do in library generation.
+      int32 port = 4;
+
+      // Schemas for the service endpoint.
+      enum ServiceEndpointSchema {
+        // Each language to use their own default.
+        // Languages that do not require the schema to be specified,
+        // may omit it when building the custom endpoint.
+        // Languages that require the schema to be specified should use the
+        // same default value as they do in library generation.
+        LANGUAGE_DEFAULT = 0;
+
+        // Use HTTPS for service endpoint schema.
+        HTTPS = 1;
+
+        // Use HTTP for service endpoint schema.
+        HTTP = 2;
+      }
+    }
+  }
+
+  // A standard RPC operation.
+  message Standard {
+    // Describes how to initialize the request object. Required.
+    SimpleRequestInitialization request_initialization = 1;
+
+    // Client call configuration. Optional.
+    ClientCall call = 2;
+
+    // Describes how to handle simple responses. Optional.
+    SimpleResponseHandling response_handling = 3;
+  }
+
+  // A paginated RPC operation.
+  message Paginated {
+    // Describes how to initialize the request object. This is the request
+    // object used for the initial paginated RPC call. Depending on how the
+    // response should be handled subsequent requests will be initialized either
+    // implicitly by the library or explicitly by the snippet.
+    SimpleRequestInitialization request_initialization = 1;
+
+    // Client call configuration. Optional.
+    // This configures the client call, which in turn may result in several RPC
+    // calls. How this configuration is applied to RPC calls may be language
+    // specific.
+    ClientCall paginated_call = 2;
+
+    // Describes how to handle paginated responses.
+    PaginatedResponseHandling paginated_handling = 3;
+  }
+
+  // A long-running RPC operation.
+  message Lro {
+    // Describes how to initialize the request object. Required.
+    // This describes the request to the LRO operation itself and not to polling
+    // operations.
+    SimpleRequestInitialization request_initialization = 1;
+
+    // Client call configuration. Optional.
+    // This configures the call to the LRO operation itself and not to polling
+    // operations.
+    ClientCall call = 2;
+
+    // Describes how to handle the LRO response. Required.
+    LroResponseHandling lro_handling = 3;
+  }
+
+  // A client streaming RPC operation.
+  message ClientStreaming {
+    // Client call configuration. Optional.
+    // This configures the call that initializes the stream.
+    ClientCall initialization_call = 1;
+
+    // The name of the variable to capture the client stream in, i.e. the object
+    // in which streaming requests are written. Required.
+    string client_stream_name = 2;
+
+    // Describes how to initialize the streaming request objects. Required.
+    StreamingRequestInitialization request_initialization = 3;
+
+    // Describes how to handle the response. Optional.
+    // Note that the response will be available after all the streaming requests
+    // have been written, each language should generate code accordingly.
+    SimpleResponseHandling response_handling = 4;
+  }
+
+  // A server streaming RPC operation.
+  message ServerStreaming {
+    // Describes how to initialize the request object. Required.
+    SimpleRequestInitialization request_initialization = 1;
+
+    // Client call configuration. Optional.
+    ClientCall initialization_call = 2;
+
+    // The name of the variable to capture the server stream in, i.e. the object
+    // from which streaming responses will be read. Optional if the stream is
+    // not to be read.
+    string server_stream_name = 3;
+
+    // Describes how to handle the streaming responses. Optional if the stream
+    // is not to be read.
+    StreamingResponseHandling response_handling = 4;
+  }
+
+  // A bidirectional streaming RPC operation.
+  message BidiStreaming {
+    // Client call configuration. Optional.
+    // This configures the call that initializes de stream.
+    ClientCall initialization_call = 1;
+
+    // The name of the variable to capture the client stream in, i.e. the object
+    // in which streaming requests are written. Required.
+    string client_stream_name = 2;
+
+    // Describes how to initialize the streaming request objects. Required.
+    StreamingRequestInitialization request_initialization = 3;
+
+    // The name of the variable to capture the server stream in, i.e. the object
+    // from which streaming responses will be read. Optional if the stream is
+    // not to be read.
+    string server_stream_name = 4;
+
+    // Describes how to handle the streaming responses. Optional if the stream
+    // is not to be read.
+    StreamingResponseHandling response_handling = 5;
+  }
+
+  // An actual client service call.
+  // Note: Just pre_call statements for now, but this message is included so
+  // that adding per call options later on is not a breaking change.
+  message ClientCall {
+    // Statements to be executed before the initial call to the service client
+    // method is made. Whether that results in an RPC call or not is operation
+    // type and language dependent. May be empty.
+    // If any, statements should appear in generated code in the same order as
+    // they appear on this field.
+    repeated Statement pre_call = 2;
+
+    // TODO: Add per call options, including retries, etc.
+  }
+
+  // Describes how to initialize a simple request object.
+  message SimpleRequestInitialization {
+    // Statements to be executed before the request object is initialized. For
+    // instance, some Statement.Declaration statements of variables to be used
+    // in request initialization. May be empty. If any, statements will be
+    // executed in the same order as they appear on pre_request_initialization.
+    repeated Statement pre_request_initialization = 1;
+
+    // The request value. Required.
+    // Should resolve to a type that is assignable to the request type of the
+    // RPC.
+    Expression request_value = 2;
+
+    // The name for the variable that will hold the request object.
+    // For example "request". Required.
+    string request_name = 3;
+  }
+
+  // Describes how to make requests to client streaming RPCs.
+  // An iteration is defined which makes some per-iteration
+  // Expression.NameValue availables that may be used to define
+  // streaming_request.
+  message StreamingRequestInitialization {
+    // Describes how to initialize the first streaming request. Optional for
+    // operations that do not require a specific first request.
+    SimpleRequestInitialization first_streaming_request = 1;
+
+    // The iteration to use for defining the streaming requests. Required.
+    Statement.Iteration iteration = 3;
+
+    // The streaming request that may be defined with iteration-specific
+    // variables, and will result in a sequence of requests. Required.
+    // Initialization of streaming_request should be placed, in generated code,
+    // on the inner-most iteration defined by the iteration field as iterations
+    // may be nested.
+    SimpleRequestInitialization streaming_request = 4;
+  }
+
+  // Describes how to handle a simple response object.
+  message SimpleResponseHandling {
+    // The name of the variable to capture the response in. May be unset if
+    // the RPC does not return anything or the response is not to be captured.
+    string response_name = 1;
+  }
+
+  // Describes how to handle paginated responses.
+  message PaginatedResponseHandling {
+    // The name of the variable to capture the initial client call response in.
+    // Required. Note that this will capture the object representing the lazy
+    // item sequence.
+    string response_name = 1;
+
+    // How to iterate over the items. Optional. If unset, no iterations will be
+    // performed over the paginated response.
+    oneof pagination_kind {
+      // Iterate item by item, lazily and automatically fetching pages as
+      // needed.
+      ByItem by_item = 2;
+
+      // Iterate page by page, lazily and automatically fetching pages as
+      // needed.
+      ByPage by_page = 3;
+
+      // Iterate page by page, explicitly using the next page token.
+      // This pagination mode will modify the original request by subsequently
+      // setting the next page token obtained from the previous response.
+      NextPageToken next_page_token = 4;
+    }
+
+    // Iterate item by item, lazily and automatically fetching pages as needed.
+    message ByItem {
+      // The name of the variable to capture the current item in. Required.
+      string item_name = 1;
+
+      // Statements to execute for each item. Optional.
+      repeated Statement per_item_statements = 2;
+    }
+
+    // Iterate page by page, lazily and automatically fetching pages as needed.
+    message ByPage {
+      // The name of the variable to capture the current page in. Required.
+      string page_name = 1;
+
+      // Statements to execute for each page. Optional.
+      repeated Statement per_page_statements = 2;
+
+      // By item iteration configuration within the current page. Optional.
+      ByItem by_item = 3;
+    }
+
+    // Iterate page by page, explicitly using the next page token.
+    // This pagination mode will modify the original request by subsequently
+    // setting the next page token obtained from the previous response.
+    message NextPageToken {
+      // The name of the variable to capture the next page token in. Required.
+      string next_page_token_name = 1;
+
+      // The explicit and guaranteed page size for fetched pages. Required.
+      // TODO: Double check that all languages have this modality.
+      // Otherwise, they may fallback to by page iteration.
+      Expression explicit_page_size = 2;
+
+      // Configures how to iterate over the explicitly fetched page.
+      ByPage by_page = 3;
+    }
+  }
+
+  // Describes how to handle LRO responses.
+  message LroResponseHandling {
+    // The name of the variable to capture the LRO response in. Required.
+    // This will capture the response to the LRO operation call and not to
+    // polling operations.
+    string response_name = 1;
+
+    // How to perform polling. Required.
+    PollingType polling_type = 2;
+
+    // The name of the variable to capture the polling response in. Optional if
+    // the polling result should not be captured. Should be unset if
+    // PollingType.NONE is specified.
+    string polling_response_name = 3;
+
+    // Configures the polling call. Optional. Should be unset if
+    // PollingType.NONE is specified.
+    ClientCall polling_call = 4;
+
+    enum PollingType {
+      // Poll until completion. Default value.
+      UNTIL_COMPLETION = 0;
+
+      // Poll just once.
+      ONCE = 1;
+
+      // Do not poll.
+      NONE = 2;
+    }
+  }
+
+  // Describes how to handle streaming responses.
+  message StreamingResponseHandling {
+    // The name of the variable to capture the current response in the stream.
+    // Required.
+    string current_response_name = 1;
+
+    // Statements to execute for each stream response. Optional.
+    repeated Statement per_stream_response_statements = 2;
+  }
+}
+
+// A stament that will translate into equivalent language-specific statements.
+message Statement {
+  oneof statement_type {
+    // A declaration which may be used for parameters or variables. Note that
+    // the only form of assignment supported is on declaration.
+    // Note that a declaration has scope depending on whether it's included as
+    // a top level statement in any of the snippet sections or is a nested
+    // statement.
+    Declaration declaration = 1;
+
+    // A statement to write information to sdtout.
+    StandardOutput standard_output = 2;
+
+    // A return statement.
+    Return return = 3;
+
+    // A conditional statement. One of two given sets of statements will be
+    // executed depending on the result of evaluating a given condition.
+    Conditional conditional = 4;
+
+    // An iteration statement. A given Statement set will be executed
+    // repeatedly according to the iteration definition.
+    // Each iteration type will make a per-step Expression.NameValue set
+    // available that may be used within the given Statement set.
+    Iteration iteration = 5;
+  }
+
+  // A declaration which may be used for parameters or variables.
+  // Note that the only form of assignment supported is on declaration.
+  message Declaration {
+    // The type of this declaration. Required unless the snippet is to be
+    // generated in non-statically typed languages only.
+    Type type = 1;
+
+    // The name of the variable or parameter. Required.
+    string name = 2;
+
+    // The value to assign to the variable or parameter.
+    // Optional for parameters.
+    // Required for variables as assignment outside of a declaration is not
+    // supported.
+    // Should resolve to a type that is assignable to this Declaration type.
+    Expression value = 3;
+
+    // An optional description that will be included alongside the declaration
+    // likely as a code comment.
+    string description = 4;
+  }
+
+  // A statement to write information to sdtout.
+  message StandardOutput {
+    // The value to write to sdtout.
+    // Should evaluate to a string value or resolve to a type that all languages
+    // are able to convert to string without specific code, for instance numeric
+    // values, and possibly protobuf messages as they may be converted to their
+    // JSON representation.
+    Expression value = 2;
+  }
+
+  // A return statement.
+  message Return {
+    // The value to return. Should resolve to a type that is assignable to
+    // SnippetSignature.return_type.
+    Expression result = 1;
+  }
+
+  // A conditional statement. One of two given sets of statements will be
+  // executed depending on the result of evaluating a given condition.
+  message Conditional {
+    // The condition to evaluate. Should evaluate to a bolean value.
+    Expression condition = 1;
+
+    // The set of statements to execute if condition evaluates to true.
+    // The statements should be executed in the order that they appear.
+    repeated Statement on_true = 2;
+
+    // The set of statements to execute if condition evaluates to false.
+    // The statements should be executed in the order that they appear.
+    repeated Statement on_false = 3;
+  }
+
+  // An iteration statement. A given Statement set will be executed
+  // repeatedly according to the iteration definition.
+  // Each iteration type will make a per-step Expression.NameValue set
+  // available that may be used within the given Statement set.
+  message Iteration {
+    oneof iteration_type {
+      // A numeric sequence iteration.
+      NumericSequenceIteration numeric_sequence_iteration = 1;
+
+      // An iteration over repeated elements, i.e. an iteration over a list.
+      RepeatedIteration repeated_iteration = 2;
+
+      // A map iteration.
+      MapIteration map_iteration = 3;
+
+      // A bytes sequence iteration.
+      BytesIteration bytes_iteration = 4;
+    }
+
+    // The set of statements to execute on each step of the iteration.
+    // The statements should be executed in the order that they appear.
+    // May be empty as iterations will also be used for streaming request
+    // initialization or streaming response handling.
+    repeated Statement statements = 5;
+
+    // Represents a numeric sequence iteration.
+    // A numeric sequence is defined over which to iterate making the current
+    // element of the sequence available in a variable.
+    // It's ultimately the responsibility of the user to define a finite
+    // sequence, although tooling may be provided to help.
+    message NumericSequenceIteration {
+      // Where to start the sequence at, ie. the first element of the iteration.
+      // Required.
+      // The Statement.Declaration.type should be a numeric type.
+      // The Statement.Declaration.value is required.
+      // The Statement.Declaration.name will be the name used to make the
+      // current element of the iteration available.
+      Statement.Declaration start_at = 1;
+
+      // The step to advance the sequence with. Required.
+      oneof step {
+        // An increment, which may be a positive or negative value.
+        // Should resolve to a numeric type.
+        Expression increment = 3;
+
+        // A multiplier, which may be less than or greater than 1.
+        // Should resolve to a numeric type.
+        Expression multiplier = 4;
+      }
+
+      // When to end the sequence. Required.
+      oneof end {
+        // When the current value is less than or equal to this value.
+        // Should resolve to a numeric type.
+        Expression less_than_or_equal = 7;
+
+        // When the current value is less than this value.
+        // Should resolve to a numeric type.
+        Expression less_than = 8;
+
+        // When the current value is greater than or equal to this value.
+        // Should resolve to a numeric type.
+        Expression greater_than_or_equal = 9;
+
+        // When the current value is greater than this value.
+        // Should resolve to a numeric type.
+        Expression greater_than = 10;
+
+        // After a set number of steps. Must be non-negative.
+        // Should resolve to an integer type.
+        Expression total_steps = 11;
+      }
+    }
+
+    // Represents an iteration over repeated elements.
+    // A repeated value is provided over which the iteration will occur making
+    // the current element of the sequence available in a variable.
+    message RepeatedIteration {
+      // The repeated elements to iterate over. Required.
+      // The Statement.Declaration.type should be Type.RepeatedType.
+      // The Statement.Declaration.value is required.
+      // TODO: Consider this to be a oneof Declaration or Expression.NameValue.
+      Statement.Declaration repeated_elements = 1;
+
+      // The name of the variable that will hold the value of the current
+      // element on each iteration. For example "item". Required. The type of
+      // this variable will be the same as that of the elements in
+      // repeated_elements.
+      string current_name = 2;
+
+      // TODO: Do we expose the element index as well? Optionally?
+    }
+
+    // Represents an iteration over a map.
+    // A map value is provided over which the iteration will occur making
+    // the current key and element of the map availables in variables.
+    message MapIteration {
+      // The map to iterate over. Required.
+      // The Statement.Declaration.type should be Type.MapType.
+      // The Statement.Declaration.value is required.
+      // TODO: Consider this to be a oneof Declaration or Expression.NameValue.
+      Statement.Declaration map = 1;
+
+      // The name of the variable that will hold the value of the current key
+      // on each iteration. For example "key". Required.
+      // The type of this variable will be the same as that of the keys in map.
+      string current_key_name = 2;
+
+      // The name of the variable that will hold the value associated to the
+      // current key on each iteration. For example "value". Required.
+      // The type of this variable will be the same as that of the values in
+      // map.
+      string current_value_name = 3;
+    }
+
+    // Represents an iteration over a byte sequence.
+    // A byte sequence is provided over which the iteration will occur making
+    // the current chunk of bytes available in a variable.
+    message BytesIteration {
+      // The byte sequence to iterate over. Required.
+      // The Statement.Declaration.type should be Type.BytesType.
+      // The Statement.Declaration.value is required.
+      Statement.Declaration byte_sequence = 1;
+
+      // How to split the byte sequence in chunks to iterate over.
+      oneof chunk {
+        // The size of the chunks to split the byte sequence in. The last chunk
+        // will be at most chunk_size. Must be positive.
+        // Should resolve to an integer type.
+        Expression chunk_size = 2;
+
+        // The total amount of chunks to split the byte sequence into. Note that
+        // this is only possible when the byte sequence has a known length so it
+        // might not be possible with certain streams, for instance, with
+        // network streams. Must be positive.
+        // Should resolve to an integer type.
+        Expression total_chunks = 3;
+      }
+      // The type in which the chunk will be made available.
+      Type.BytesType chunk_type = 4;
+
+      // The name of the variable that will hold the value of the current chunk
+      // on each iteration. For example "chunk". Required.
+      // Will be of type chunk_type.
+      string current_name = 5;
+    }
+  }
+}
+
+// Represents type of values. To be used, for instance, for
+// Statement.Declaration or for specifying the return type of the snippet.
+message Type {
+  oneof type_kind {
+    // Protobuf scalar types.
+    ScalarType scalar_type = 1;
+
+    // Protobuf enum types.
+    EnumType enum_type = 2;
+
+    // The bytes type
+    BytesType bytes_type = 3;
+
+    // Protobuf message types.
+    MessageType message_type = 4;
+
+    // The repeated type.
+    RepeatedType repeated_type = 5;
+
+    // The map type.
+    MapType map_type = 6;
+  }
+
+  // Represents protobuf scalar types that should be translated to the usual
+  // language-specific types.
+  // https://developers.google.com/protocol-buffers/docs/proto3#scalar
+  // This could have been FieldDescriptorProto.Type except that proto2 enums
+  // cannot be used in proto3. Also, a few of the types in
+  // FieldDescriptorsProto.Type are individually supported in SnippetGen Config.
+  // Values allowed for this type are:
+  // - Expression.default_value,
+  // - Expression.name_value as long as the identifier resolves to a type that
+  //   is assignable to this one.
+  // - Expression.number_value for the numeric FieldDescriptorProto.Type(s).
+  // - Expression.boolean_value for FieldDescriptorProto.Type.TYPE_BOOL.
+  // - Expression.string_value for FieldDescriptorProto.Type.TYPE_STRING.
+  // - Any other value that resolves to a type that is assignable to this one.
+  enum ScalarType {
+    // The scalar type has not been specified. Consumers should not see this
+    // value.
+    SCALAR_TYPE_UNDEFINED = 0;
+    TYPE_DOUBLE = 1;
+    TYPE_FLOAT = 2;
+    TYPE_INT64 = 3;
+    TYPE_UINT64 = 4;
+    TYPE_INT32 = 5;
+    TYPE_FIXED64 = 6;
+    TYPE_FIXED32 = 7;
+    TYPE_BOOL = 8;
+    TYPE_STRING = 9;
+    TYPE_UINT32 = 13;
+    TYPE_SFIXED32 = 15;
+    TYPE_SFIXED64 = 16;
+    TYPE_SINT32 = 17;
+    TYPE_SINT64 = 18;
+  }
+
+  // Represents protobuf enum types. These should be known by the
+  // microgenerators on generation time, so they'll probably be enums defined
+  // within the API being generated or one of its mixins.
+  message EnumType {
+    // The protobuf full enum name, including the protobuf package.
+    string enum_full_name = 1;
+  }
+
+  // Represents a bytes type.
+  message BytesType {
+    // The language-specific type that this bytes type should be generated as.
+    LanguageEquivalent language_equivalent = 1;
+
+    // Possible language-specific equivalents to a bytes type.
+    enum LanguageEquivalent {
+      // The same type used for representing protobuf bytes fields.
+      PROTOBUF_BYTES = 0;
+
+      // Language-specific string type, whose value will be understood as a
+      // base64 string representation of the bytes.
+      BASE64 = 1;
+
+      // Language-specific byte array type.
+      BYTE_ARRAY = 2;
+
+      // Language-specific stream type.
+      STREAM = 3;
+    }
+  }
+
+  // Represents protobuf message types. These should be known by the
+  // microgenerators at generation time, so they'll usually be well known types,
+  // messaged defined within the API being generated or one of its mixins.
+  message MessageType {
+    // The protobuf full message name, including the protobuf package.
+    string message_full_name = 1;
+  }
+
+  // Represents a repeated type.
+  message RepeatedType {
+    // The type of the elements.
+    Type element_type = 1;
+
+    // The language-specific type that this repeated type should be generated
+    // as.
+    LanguageEquivalent language_equivalent = 2;
+
+    // Possible language-specific equivalents to a repeated type.
+    enum LanguageEquivalent {
+      // The same type used for representing protobuf repeated fields.
+      PROTOBUF_REPEATED = 0;
+
+      // Language-specific array type.
+      ARRAY = 1;
+
+      // Language-specific list type.
+      LIST = 2;
+    }
+  }
+
+  // Represents a map type.
+  message MapType {
+    // The type of the keys.
+    Type key_type = 1;
+
+    // The type of the values.
+    Type value_type = 2;
+
+    // The language-specific type that this map type should be generated as.
+    LanguageEquivalent language_equivalent = 3;
+
+    // Possible language-specific equivalents to a map type.
+    enum LanguageEquivalent {
+      // The same type used for representing protobuf map fields.
+      PROTOBUF_MAP = 0;
+
+      // Language-specific dictionary or map type.
+      DICTIONARY = 1;
+    }
+  }
+}
+
+// An expression to be used, for instance, for parameter, variable and request
+// initialization.
+// On type inference:
+// - When used for parameter or variable initialization, that is, when used in a
+//   Statement.Declaration, we have Statement.Declaration.Type.
+// - When used for request initialization, we know the request type.
+// - When used to initialize other elements, like client options, etc. we will
+//   know which types may be infer on a case by case basis as specified by each
+//   of these elements documentation.
+message Expression {
+  // The literal or calculated value.
+  oneof value {
+    // The null value. Might not be accepted by all types.
+    NullValue null_value = 1;
+
+    // The default value.
+    // Note that when a value is used, type is always known/inferred. Supported
+    // types are currently protobuf scalar types and protobuf message types so
+    // all types should have a default value.
+    DefaultValue default_value = 2;
+
+    // A variable or parameter name, and possibly a path within.
+    NameValue name_value = 3;
+
+    // A number literal.
+    double number_value = 4;
+
+    // A Boolean literal.
+    bool boolean_value = 5;
+
+    // A string literal.
+    string string_value = 6;
+
+    // An enum value. The text is to be the enum value name as defined in
+    // protobuf. For instance, for a protobuf enum
+    // `enum SampleEnum { VALUE_0 = 0; VALUE_1 = 1; }`
+    // the accepted values here would be VALUE_0 and VALUE_1.
+    string enum_value = 7;
+
+    // A bytes value. This represents initialization of objects from which
+    // arbitrary byte sequences may be obtained.
+    BytesValue bytes_value = 8;
+
+    // A complex value. This represents initialization of complex objects, most
+    // likely of protobuf messages.
+    ComplexValue complex_value = 9;
+
+    // A list value. This represents initialization of collections, list, arrays
+    // and similar values.
+    RepeatedValue list_value = 10;
+
+    // A map value. This represents initialization of maps, dictionaries and
+    // similar values.
+    MapValue map_value = 11;
+
+    // A conditional value. This expression has one of two given values
+    // depending on the result of evaluating a given condition.
+    ConditionalOperator conditional_value = 12;
+
+    // TODO: We will need a resource name operator, languages that have resource
+    // name support can translate this operator to their language-specific
+    // resource name helpers and languages that don't can simply build the
+    // resource name string.
+  }
+
+  // An optional description that will be included in the snippet alongside the
+  // value, likely as a code comment.
+  string description = 13;
+
+  // The null value. Might not be accepted by all types.
+  enum NullValue {
+    // Null value.
+    NULL_VALUE = 0;
+  }
+
+  // The default value.
+  // Note that when a value is used, the type is always known/inferred.
+  // Supported types are currently protobuf scalar types and protobuf message
+  // types so all types should have a default value.
+  // For protobuf message types, the default value should be the empty message.
+  enum DefaultValue {
+    // Default value.
+    DEFAULT_VALUE = 0;
+  }
+
+  // A variable or parameter name.
+  message NameValue {
+    // The name of the variable or parameter name. Required.
+    string name = 1;
+
+    // A path within name that refers to a nested value. Optional.
+    // Note that this path must be valid across all languages, so, the following
+    // rules apply.
+    // - A path in a NameValue is only allowed if name refers to a value of
+    //   google.cloud.tools.snippetgen.configlanguage.v1.Type.MessageType, i.e.
+    //   a protobuf message.
+    // - The path segments should be named as they appear on the proto
+    //   definition and not as they are on any specific language.
+    // For instance, if the following message is defined:
+    // ```
+    // message SampleMessage  {
+    //   int one_field = 0;
+    //   SampleMessage nested_field = 1;
+    // }
+    // ```
+    // and a Declaration of
+    // - Declaration.type => SampleMessage and
+    // - Declaration.name => sample_value
+    // then possible NameValues that refer to the variable declared are:
+    // - NameValue.name => sample_value and NameValue.path => unset to reference
+    //   the value of the sample_value variable, i.e. using the variable
+    //   sample_value
+    // - NameValue.name => sample_value and NameValue.path => one_field to
+    //   reference the value of the one_field value of the message instance
+    //   stored in the sample_value variable, i.e. using the variable
+    //   sample_value.one_field.
+    // - NameValue.sample_value and NameValue.path => nested_field, one_field to
+    //   reference the one_field value of the nested_field value of the message
+    //   instance stored in the sample_value variable, i.e. using the variable
+    //   sample_value.nested_field.one_field.
+    repeated string path = 2;
+  }
+
+  // A bytes value. This represents initialization of objects from which
+  // arbitrary byte sequences may be ontained.
+  message BytesValue {
+    oneof value {
+      // A Base64 encoded string.
+      // This expression should resolve to a string value.
+      Expression base64_string = 1;
+
+      // A file stream.
+      FileStream file_stream = 2;
+    }
+
+    // A language-specific file stream.
+    message FileStream {
+      // The path of the file to build the stream from.
+      // This expression should evaluate to a string value.
+      Expression file_path = 1;
+    }
+  }
+
+  // A complex value. This represents initialization of complex objects, most
+  // likely of protobuf messages.
+  message ComplexValue {
+    // This is a simple map from message property name to Expression.
+    // - All keys in the map should correspond to top level properties of the
+    //   protobuf message.
+    // - Nested properties may be initialized thanks to the recursive nature of
+    //   ComplexValue.
+    // - Each Expression in the map should resolve to the type of the property
+    //   whose name is the associated key.
+    map<string, Expression> properties = 1;
+  }
+
+  // A list value. This represens initialization of collections, list, arrays
+  // and similar values.
+  message RepeatedValue {
+    // The values that should be used to initialize a language-specific
+    // collection, list, array or similar.
+    // - The values should be used in the same order as they appear in values,
+    //   regardless of whether the target collection type represents an ordered
+    //   collection or not.
+    // - Each Expression should resolve to a type that is assignable to the type
+    //   of the elements in the target collection.
+    repeated Expression values = 1;
+  }
+
+  // A map value. This represents initialization of maps, dictionaries and
+  // similar values.
+  // Note that we cannot use a protobuf map for the definition of MapValue
+  // because protobuf map do not accept message types as the key type.
+  message MapValue {
+    // The keys to use for initializing a language-specific map, dictionary or
+    // similar.
+    // - Each key Expression should resolve to a type that is assignable to
+    //   the key type of the target map.
+    repeated Expression keys = 1;
+
+    // The values to use for initializing a language-specific map, dictionary or
+    // similar.
+    // - Each value Expression should resolve to a type that is assignable to
+    //   the value type of the target map.
+    // - Each value should be present in the same order as the corresponding key
+    //   is in keys.
+    repeated Expression values = 2;
+  }
+
+  // A conditional value. This expression has one of two given values
+  // depending on the result of evaluating a given condition.
+  message ConditionalOperator {
+    // The condition to evaluate. Should resolve to a Boolean value.
+    Expression condition = 1;
+
+    // The value of this expression if condition evaluates to true. on_true
+    // should resolve to a type that is assignable to the target type of this
+    // expression.
+    Expression on_true = 2;
+
+    // The value of this expression if condition evaluates to false. on_false
+    // should resolve to a type that is assignable to the target type of this
+    // expression.
+    Expression on_false = 3;
+  }
+}

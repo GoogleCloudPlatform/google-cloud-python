@@ -1,0 +1,10 @@
+[
+    {
+        "mode" : "NULLABLE",
+        "name" : "range_date",
+        "type" : "RANGE",
+        "rangeElementType": {
+           "type": "DATE"
+         }
+     }
+  ]

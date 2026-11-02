@@ -1,0 +1,253 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.domains_v1",
+  "protoPackage": "google.cloud.domains.v1",
+  "schema": "1.0",
+  "services": {
+    "Domains": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DomainsClient",
+          "rpcs": {
+            "ConfigureContactSettings": {
+              "methods": [
+                "configure_contact_settings"
+              ]
+            },
+            "ConfigureDnsSettings": {
+              "methods": [
+                "configure_dns_settings"
+              ]
+            },
+            "ConfigureManagementSettings": {
+              "methods": [
+                "configure_management_settings"
+              ]
+            },
+            "DeleteRegistration": {
+              "methods": [
+                "delete_registration"
+              ]
+            },
+            "ExportRegistration": {
+              "methods": [
+                "export_registration"
+              ]
+            },
+            "GetRegistration": {
+              "methods": [
+                "get_registration"
+              ]
+            },
+            "ListRegistrations": {
+              "methods": [
+                "list_registrations"
+              ]
+            },
+            "RegisterDomain": {
+              "methods": [
+                "register_domain"
+              ]
+            },
+            "ResetAuthorizationCode": {
+              "methods": [
+                "reset_authorization_code"
+              ]
+            },
+            "RetrieveAuthorizationCode": {
+              "methods": [
+                "retrieve_authorization_code"
+              ]
+            },
+            "RetrieveRegisterParameters": {
+              "methods": [
+                "retrieve_register_parameters"
+              ]
+            },
+            "RetrieveTransferParameters": {
+              "methods": [
+                "retrieve_transfer_parameters"
+              ]
+            },
+            "SearchDomains": {
+              "methods": [
+                "search_domains"
+              ]
+            },
+            "TransferDomain": {
+              "methods": [
+                "transfer_domain"
+              ]
+            },
+            "UpdateRegistration": {
+              "methods": [
+                "update_registration"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DomainsAsyncClient",
+          "rpcs": {
+            "ConfigureContactSettings": {
+              "methods": [
+                "configure_contact_settings"
+              ]
+            },
+            "ConfigureDnsSettings": {
+              "methods": [
+                "configure_dns_settings"
+              ]
+            },
+            "ConfigureManagementSettings": {
+              "methods": [
+                "configure_management_settings"
+              ]
+            },
+            "DeleteRegistration": {
+              "methods": [
+                "delete_registration"
+              ]
+            },
+            "ExportRegistration": {
+              "methods": [
+                "export_registration"
+              ]
+            },
+            "GetRegistration": {
+              "methods": [
+                "get_registration"
+              ]
+            },
+            "ListRegistrations": {
+              "methods": [
+                "list_registrations"
+              ]
+            },
+            "RegisterDomain": {
+              "methods": [
+                "register_domain"
+              ]
+            },
+            "ResetAuthorizationCode": {
+              "methods": [
+                "reset_authorization_code"
+              ]
+            },
+            "RetrieveAuthorizationCode": {
+              "methods": [
+                "retrieve_authorization_code"
+              ]
+            },
+            "RetrieveRegisterParameters": {
+              "methods": [
+                "retrieve_register_parameters"
+              ]
+            },
+            "RetrieveTransferParameters": {
+              "methods": [
+                "retrieve_transfer_parameters"
+              ]
+            },
+            "SearchDomains": {
+              "methods": [
+                "search_domains"
+              ]
+            },
+            "TransferDomain": {
+              "methods": [
+                "transfer_domain"
+              ]
+            },
+            "UpdateRegistration": {
+              "methods": [
+                "update_registration"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DomainsClient",
+          "rpcs": {
+            "ConfigureContactSettings": {
+              "methods": [
+                "configure_contact_settings"
+              ]
+            },
+            "ConfigureDnsSettings": {
+              "methods": [
+                "configure_dns_settings"
+              ]
+            },
+            "ConfigureManagementSettings": {
+              "methods": [
+                "configure_management_settings"
+              ]
+            },
+            "DeleteRegistration": {
+              "methods": [
+                "delete_registration"
+              ]
+            },
+            "ExportRegistration": {
+              "methods": [
+                "export_registration"
+              ]
+            },
+            "GetRegistration": {
+              "methods": [
+                "get_registration"
+              ]
+            },
+            "ListRegistrations": {
+              "methods": [
+                "list_registrations"
+              ]
+            },
+            "RegisterDomain": {
+              "methods": [
+                "register_domain"
+              ]
+            },
+            "ResetAuthorizationCode": {
+              "methods": [
+                "reset_authorization_code"
+              ]
+            },
+            "RetrieveAuthorizationCode": {
+              "methods": [
+                "retrieve_authorization_code"
+              ]
+            },
+            "RetrieveRegisterParameters": {
+              "methods": [
+                "retrieve_register_parameters"
+              ]
+            },
+            "RetrieveTransferParameters": {
+              "methods": [
+                "retrieve_transfer_parameters"
+              ]
+            },
+            "SearchDomains": {
+              "methods": [
+                "search_domains"
+              ]
+            },
+            "TransferDomain": {
+              "methods": [
+                "transfer_domain"
+              ]
+            },
+            "UpdateRegistration": {
+              "methods": [
+                "update_registration"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{{ service.name }}
+{{ '-' * (18 + service.name|length) }}
+
+.. automodule:: {{ (api.naming.module_namespace + (api.naming.versioned_module_name,) + service.meta.address.subpackage)|join(".") }}.services.{{ service.name|snake_case }}
+    :members:
+    :inherited-members:
+
+{% if service.has_pagers %}
+.. automodule:: {{ (api.naming.module_namespace + (api.naming.versioned_module_name,) + service.meta.address.subpackage)|join(".") }}.services.{{ service.name|snake_case }}.pagers
+    :members:
+    :inherited-members:
+{% endif %}

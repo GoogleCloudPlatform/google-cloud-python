@@ -1,0 +1,52 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "The raw text to be synthesized.\n   \n   This field is a member\
+      \ of <code>oneof</code>_ <code>input_source</code>."
+    id: text
+    var_type: str
+  - description: "The SSML document to be synthesized. The SSML document must\n  \
+      \ be valid and well-formed. Otherwise the RPC will fail and\n   return [google.rpc.Code.INVALID_ARGUMENT][].\
+      \ For more\n   information, see\n   <code>SSML <https://cloud.google.com/text-to-speech/docs/ssml></code>__.\n\
+      \   \n   This field is a member of <code>oneof</code>_ <code>input_source</code>."
+    id: ssml
+    var_type: str
+  children: []
+  class: google.cloud.texttospeech_v1beta1.types.SynthesisInput
+  fullName: google.cloud.texttospeech_v1beta1.types.SynthesisInput
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.types
+  name: SynthesisInput
+  source:
+    id: SynthesisInput
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/types/cloud_tts.py
+    startLine: 183
+  summary: 'Contains text input to be synthesized. Either `text` or `ssml`
+
+    must be supplied. Supplying both or neither returns
+
+    [google.rpc.Code.INVALID_ARGUMENT][]. The input size is limited to
+
+    5000 characters.
+
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+
+    For each oneof, at most one member field can be set at the same time.
+
+    Setting any member of the oneof automatically clears all other
+
+    members.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    '
+  syntax:
+    content: SynthesisInput(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1beta1.types.SynthesisInput
+references: []

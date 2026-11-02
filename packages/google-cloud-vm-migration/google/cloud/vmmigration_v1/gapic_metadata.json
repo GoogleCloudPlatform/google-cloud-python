@@ -1,0 +1,958 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.vmmigration_v1",
+  "protoPackage": "google.cloud.vmmigration.v1",
+  "schema": "1.0",
+  "services": {
+    "VmMigration": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "VmMigrationClient",
+          "rpcs": {
+            "AddGroupMigration": {
+              "methods": [
+                "add_group_migration"
+              ]
+            },
+            "CancelCloneJob": {
+              "methods": [
+                "cancel_clone_job"
+              ]
+            },
+            "CancelCutoverJob": {
+              "methods": [
+                "cancel_cutover_job"
+              ]
+            },
+            "CancelDiskMigrationJob": {
+              "methods": [
+                "cancel_disk_migration_job"
+              ]
+            },
+            "CancelImageImportJob": {
+              "methods": [
+                "cancel_image_import_job"
+              ]
+            },
+            "CreateCloneJob": {
+              "methods": [
+                "create_clone_job"
+              ]
+            },
+            "CreateCutoverJob": {
+              "methods": [
+                "create_cutover_job"
+              ]
+            },
+            "CreateDatacenterConnector": {
+              "methods": [
+                "create_datacenter_connector"
+              ]
+            },
+            "CreateDiskMigrationJob": {
+              "methods": [
+                "create_disk_migration_job"
+              ]
+            },
+            "CreateGroup": {
+              "methods": [
+                "create_group"
+              ]
+            },
+            "CreateImageImport": {
+              "methods": [
+                "create_image_import"
+              ]
+            },
+            "CreateMigratingVm": {
+              "methods": [
+                "create_migrating_vm"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "CreateTargetProject": {
+              "methods": [
+                "create_target_project"
+              ]
+            },
+            "CreateUtilizationReport": {
+              "methods": [
+                "create_utilization_report"
+              ]
+            },
+            "DeleteDatacenterConnector": {
+              "methods": [
+                "delete_datacenter_connector"
+              ]
+            },
+            "DeleteDiskMigrationJob": {
+              "methods": [
+                "delete_disk_migration_job"
+              ]
+            },
+            "DeleteGroup": {
+              "methods": [
+                "delete_group"
+              ]
+            },
+            "DeleteImageImport": {
+              "methods": [
+                "delete_image_import"
+              ]
+            },
+            "DeleteMigratingVm": {
+              "methods": [
+                "delete_migrating_vm"
+              ]
+            },
+            "DeleteSource": {
+              "methods": [
+                "delete_source"
+              ]
+            },
+            "DeleteTargetProject": {
+              "methods": [
+                "delete_target_project"
+              ]
+            },
+            "DeleteUtilizationReport": {
+              "methods": [
+                "delete_utilization_report"
+              ]
+            },
+            "ExtendMigration": {
+              "methods": [
+                "extend_migration"
+              ]
+            },
+            "FetchInventory": {
+              "methods": [
+                "fetch_inventory"
+              ]
+            },
+            "FetchStorageInventory": {
+              "methods": [
+                "fetch_storage_inventory"
+              ]
+            },
+            "FinalizeMigration": {
+              "methods": [
+                "finalize_migration"
+              ]
+            },
+            "GetCloneJob": {
+              "methods": [
+                "get_clone_job"
+              ]
+            },
+            "GetCutoverJob": {
+              "methods": [
+                "get_cutover_job"
+              ]
+            },
+            "GetDatacenterConnector": {
+              "methods": [
+                "get_datacenter_connector"
+              ]
+            },
+            "GetDiskMigrationJob": {
+              "methods": [
+                "get_disk_migration_job"
+              ]
+            },
+            "GetGroup": {
+              "methods": [
+                "get_group"
+              ]
+            },
+            "GetImageImport": {
+              "methods": [
+                "get_image_import"
+              ]
+            },
+            "GetImageImportJob": {
+              "methods": [
+                "get_image_import_job"
+              ]
+            },
+            "GetMigratingVm": {
+              "methods": [
+                "get_migrating_vm"
+              ]
+            },
+            "GetReplicationCycle": {
+              "methods": [
+                "get_replication_cycle"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "GetTargetProject": {
+              "methods": [
+                "get_target_project"
+              ]
+            },
+            "GetUtilizationReport": {
+              "methods": [
+                "get_utilization_report"
+              ]
+            },
+            "ListCloneJobs": {
+              "methods": [
+                "list_clone_jobs"
+              ]
+            },
+            "ListCutoverJobs": {
+              "methods": [
+                "list_cutover_jobs"
+              ]
+            },
+            "ListDatacenterConnectors": {
+              "methods": [
+                "list_datacenter_connectors"
+              ]
+            },
+            "ListDiskMigrationJobs": {
+              "methods": [
+                "list_disk_migration_jobs"
+              ]
+            },
+            "ListGroups": {
+              "methods": [
+                "list_groups"
+              ]
+            },
+            "ListImageImportJobs": {
+              "methods": [
+                "list_image_import_jobs"
+              ]
+            },
+            "ListImageImports": {
+              "methods": [
+                "list_image_imports"
+              ]
+            },
+            "ListMigratingVms": {
+              "methods": [
+                "list_migrating_vms"
+              ]
+            },
+            "ListReplicationCycles": {
+              "methods": [
+                "list_replication_cycles"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "ListTargetProjects": {
+              "methods": [
+                "list_target_projects"
+              ]
+            },
+            "ListUtilizationReports": {
+              "methods": [
+                "list_utilization_reports"
+              ]
+            },
+            "PauseMigration": {
+              "methods": [
+                "pause_migration"
+              ]
+            },
+            "RemoveGroupMigration": {
+              "methods": [
+                "remove_group_migration"
+              ]
+            },
+            "ResumeMigration": {
+              "methods": [
+                "resume_migration"
+              ]
+            },
+            "RunDiskMigrationJob": {
+              "methods": [
+                "run_disk_migration_job"
+              ]
+            },
+            "StartMigration": {
+              "methods": [
+                "start_migration"
+              ]
+            },
+            "UpdateDiskMigrationJob": {
+              "methods": [
+                "update_disk_migration_job"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "update_group"
+              ]
+            },
+            "UpdateMigratingVm": {
+              "methods": [
+                "update_migrating_vm"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            },
+            "UpdateTargetProject": {
+              "methods": [
+                "update_target_project"
+              ]
+            },
+            "UpgradeAppliance": {
+              "methods": [
+                "upgrade_appliance"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "VmMigrationAsyncClient",
+          "rpcs": {
+            "AddGroupMigration": {
+              "methods": [
+                "add_group_migration"
+              ]
+            },
+            "CancelCloneJob": {
+              "methods": [
+                "cancel_clone_job"
+              ]
+            },
+            "CancelCutoverJob": {
+              "methods": [
+                "cancel_cutover_job"
+              ]
+            },
+            "CancelDiskMigrationJob": {
+              "methods": [
+                "cancel_disk_migration_job"
+              ]
+            },
+            "CancelImageImportJob": {
+              "methods": [
+                "cancel_image_import_job"
+              ]
+            },
+            "CreateCloneJob": {
+              "methods": [
+                "create_clone_job"
+              ]
+            },
+            "CreateCutoverJob": {
+              "methods": [
+                "create_cutover_job"
+              ]
+            },
+            "CreateDatacenterConnector": {
+              "methods": [
+                "create_datacenter_connector"
+              ]
+            },
+            "CreateDiskMigrationJob": {
+              "methods": [
+                "create_disk_migration_job"
+              ]
+            },
+            "CreateGroup": {
+              "methods": [
+                "create_group"
+              ]
+            },
+            "CreateImageImport": {
+              "methods": [
+                "create_image_import"
+              ]
+            },
+            "CreateMigratingVm": {
+              "methods": [
+                "create_migrating_vm"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "CreateTargetProject": {
+              "methods": [
+                "create_target_project"
+              ]
+            },
+            "CreateUtilizationReport": {
+              "methods": [
+                "create_utilization_report"
+              ]
+            },
+            "DeleteDatacenterConnector": {
+              "methods": [
+                "delete_datacenter_connector"
+              ]
+            },
+            "DeleteDiskMigrationJob": {
+              "methods": [
+                "delete_disk_migration_job"
+              ]
+            },
+            "DeleteGroup": {
+              "methods": [
+                "delete_group"
+              ]
+            },
+            "DeleteImageImport": {
+              "methods": [
+                "delete_image_import"
+              ]
+            },
+            "DeleteMigratingVm": {
+              "methods": [
+                "delete_migrating_vm"
+              ]
+            },
+            "DeleteSource": {
+              "methods": [
+                "delete_source"
+              ]
+            },
+            "DeleteTargetProject": {
+              "methods": [
+                "delete_target_project"
+              ]
+            },
+            "DeleteUtilizationReport": {
+              "methods": [
+                "delete_utilization_report"
+              ]
+            },
+            "ExtendMigration": {
+              "methods": [
+                "extend_migration"
+              ]
+            },
+            "FetchInventory": {
+              "methods": [
+                "fetch_inventory"
+              ]
+            },
+            "FetchStorageInventory": {
+              "methods": [
+                "fetch_storage_inventory"
+              ]
+            },
+            "FinalizeMigration": {
+              "methods": [
+                "finalize_migration"
+              ]
+            },
+            "GetCloneJob": {
+              "methods": [
+                "get_clone_job"
+              ]
+            },
+            "GetCutoverJob": {
+              "methods": [
+                "get_cutover_job"
+              ]
+            },
+            "GetDatacenterConnector": {
+              "methods": [
+                "get_datacenter_connector"
+              ]
+            },
+            "GetDiskMigrationJob": {
+              "methods": [
+                "get_disk_migration_job"
+              ]
+            },
+            "GetGroup": {
+              "methods": [
+                "get_group"
+              ]
+            },
+            "GetImageImport": {
+              "methods": [
+                "get_image_import"
+              ]
+            },
+            "GetImageImportJob": {
+              "methods": [
+                "get_image_import_job"
+              ]
+            },
+            "GetMigratingVm": {
+              "methods": [
+                "get_migrating_vm"
+              ]
+            },
+            "GetReplicationCycle": {
+              "methods": [
+                "get_replication_cycle"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "GetTargetProject": {
+              "methods": [
+                "get_target_project"
+              ]
+            },
+            "GetUtilizationReport": {
+              "methods": [
+                "get_utilization_report"
+              ]
+            },
+            "ListCloneJobs": {
+              "methods": [
+                "list_clone_jobs"
+              ]
+            },
+            "ListCutoverJobs": {
+              "methods": [
+                "list_cutover_jobs"
+              ]
+            },
+            "ListDatacenterConnectors": {
+              "methods": [
+                "list_datacenter_connectors"
+              ]
+            },
+            "ListDiskMigrationJobs": {
+              "methods": [
+                "list_disk_migration_jobs"
+              ]
+            },
+            "ListGroups": {
+              "methods": [
+                "list_groups"
+              ]
+            },
+            "ListImageImportJobs": {
+              "methods": [
+                "list_image_import_jobs"
+              ]
+            },
+            "ListImageImports": {
+              "methods": [
+                "list_image_imports"
+              ]
+            },
+            "ListMigratingVms": {
+              "methods": [
+                "list_migrating_vms"
+              ]
+            },
+            "ListReplicationCycles": {
+              "methods": [
+                "list_replication_cycles"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "ListTargetProjects": {
+              "methods": [
+                "list_target_projects"
+              ]
+            },
+            "ListUtilizationReports": {
+              "methods": [
+                "list_utilization_reports"
+              ]
+            },
+            "PauseMigration": {
+              "methods": [
+                "pause_migration"
+              ]
+            },
+            "RemoveGroupMigration": {
+              "methods": [
+                "remove_group_migration"
+              ]
+            },
+            "ResumeMigration": {
+              "methods": [
+                "resume_migration"
+              ]
+            },
+            "RunDiskMigrationJob": {
+              "methods": [
+                "run_disk_migration_job"
+              ]
+            },
+            "StartMigration": {
+              "methods": [
+                "start_migration"
+              ]
+            },
+            "UpdateDiskMigrationJob": {
+              "methods": [
+                "update_disk_migration_job"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "update_group"
+              ]
+            },
+            "UpdateMigratingVm": {
+              "methods": [
+                "update_migrating_vm"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            },
+            "UpdateTargetProject": {
+              "methods": [
+                "update_target_project"
+              ]
+            },
+            "UpgradeAppliance": {
+              "methods": [
+                "upgrade_appliance"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "VmMigrationClient",
+          "rpcs": {
+            "AddGroupMigration": {
+              "methods": [
+                "add_group_migration"
+              ]
+            },
+            "CancelCloneJob": {
+              "methods": [
+                "cancel_clone_job"
+              ]
+            },
+            "CancelCutoverJob": {
+              "methods": [
+                "cancel_cutover_job"
+              ]
+            },
+            "CancelDiskMigrationJob": {
+              "methods": [
+                "cancel_disk_migration_job"
+              ]
+            },
+            "CancelImageImportJob": {
+              "methods": [
+                "cancel_image_import_job"
+              ]
+            },
+            "CreateCloneJob": {
+              "methods": [
+                "create_clone_job"
+              ]
+            },
+            "CreateCutoverJob": {
+              "methods": [
+                "create_cutover_job"
+              ]
+            },
+            "CreateDatacenterConnector": {
+              "methods": [
+                "create_datacenter_connector"
+              ]
+            },
+            "CreateDiskMigrationJob": {
+              "methods": [
+                "create_disk_migration_job"
+              ]
+            },
+            "CreateGroup": {
+              "methods": [
+                "create_group"
+              ]
+            },
+            "CreateImageImport": {
+              "methods": [
+                "create_image_import"
+              ]
+            },
+            "CreateMigratingVm": {
+              "methods": [
+                "create_migrating_vm"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "CreateTargetProject": {
+              "methods": [
+                "create_target_project"
+              ]
+            },
+            "CreateUtilizationReport": {
+              "methods": [
+                "create_utilization_report"
+              ]
+            },
+            "DeleteDatacenterConnector": {
+              "methods": [
+                "delete_datacenter_connector"
+              ]
+            },
+            "DeleteDiskMigrationJob": {
+              "methods": [
+                "delete_disk_migration_job"
+              ]
+            },
+            "DeleteGroup": {
+              "methods": [
+                "delete_group"
+              ]
+            },
+            "DeleteImageImport": {
+              "methods": [
+                "delete_image_import"
+              ]
+            },
+            "DeleteMigratingVm": {
+              "methods": [
+                "delete_migrating_vm"
+              ]
+            },
+            "DeleteSource": {
+              "methods": [
+                "delete_source"
+              ]
+            },
+            "DeleteTargetProject": {
+              "methods": [
+                "delete_target_project"
+              ]
+            },
+            "DeleteUtilizationReport": {
+              "methods": [
+                "delete_utilization_report"
+              ]
+            },
+            "ExtendMigration": {
+              "methods": [
+                "extend_migration"
+              ]
+            },
+            "FetchInventory": {
+              "methods": [
+                "fetch_inventory"
+              ]
+            },
+            "FetchStorageInventory": {
+              "methods": [
+                "fetch_storage_inventory"
+              ]
+            },
+            "FinalizeMigration": {
+              "methods": [
+                "finalize_migration"
+              ]
+            },
+            "GetCloneJob": {
+              "methods": [
+                "get_clone_job"
+              ]
+            },
+            "GetCutoverJob": {
+              "methods": [
+                "get_cutover_job"
+              ]
+            },
+            "GetDatacenterConnector": {
+              "methods": [
+                "get_datacenter_connector"
+              ]
+            },
+            "GetDiskMigrationJob": {
+              "methods": [
+                "get_disk_migration_job"
+              ]
+            },
+            "GetGroup": {
+              "methods": [
+                "get_group"
+              ]
+            },
+            "GetImageImport": {
+              "methods": [
+                "get_image_import"
+              ]
+            },
+            "GetImageImportJob": {
+              "methods": [
+                "get_image_import_job"
+              ]
+            },
+            "GetMigratingVm": {
+              "methods": [
+                "get_migrating_vm"
+              ]
+            },
+            "GetReplicationCycle": {
+              "methods": [
+                "get_replication_cycle"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "GetTargetProject": {
+              "methods": [
+                "get_target_project"
+              ]
+            },
+            "GetUtilizationReport": {
+              "methods": [
+                "get_utilization_report"
+              ]
+            },
+            "ListCloneJobs": {
+              "methods": [
+                "list_clone_jobs"
+              ]
+            },
+            "ListCutoverJobs": {
+              "methods": [
+                "list_cutover_jobs"
+              ]
+            },
+            "ListDatacenterConnectors": {
+              "methods": [
+                "list_datacenter_connectors"
+              ]
+            },
+            "ListDiskMigrationJobs": {
+              "methods": [
+                "list_disk_migration_jobs"
+              ]
+            },
+            "ListGroups": {
+              "methods": [
+                "list_groups"
+              ]
+            },
+            "ListImageImportJobs": {
+              "methods": [
+                "list_image_import_jobs"
+              ]
+            },
+            "ListImageImports": {
+              "methods": [
+                "list_image_imports"
+              ]
+            },
+            "ListMigratingVms": {
+              "methods": [
+                "list_migrating_vms"
+              ]
+            },
+            "ListReplicationCycles": {
+              "methods": [
+                "list_replication_cycles"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "ListTargetProjects": {
+              "methods": [
+                "list_target_projects"
+              ]
+            },
+            "ListUtilizationReports": {
+              "methods": [
+                "list_utilization_reports"
+              ]
+            },
+            "PauseMigration": {
+              "methods": [
+                "pause_migration"
+              ]
+            },
+            "RemoveGroupMigration": {
+              "methods": [
+                "remove_group_migration"
+              ]
+            },
+            "ResumeMigration": {
+              "methods": [
+                "resume_migration"
+              ]
+            },
+            "RunDiskMigrationJob": {
+              "methods": [
+                "run_disk_migration_job"
+              ]
+            },
+            "StartMigration": {
+              "methods": [
+                "start_migration"
+              ]
+            },
+            "UpdateDiskMigrationJob": {
+              "methods": [
+                "update_disk_migration_job"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "update_group"
+              ]
+            },
+            "UpdateMigratingVm": {
+              "methods": [
+                "update_migrating_vm"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            },
+            "UpdateTargetProject": {
+              "methods": [
+                "update_target_project"
+              ]
+            },
+            "UpgradeAppliance": {
+              "methods": [
+                "upgrade_appliance"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

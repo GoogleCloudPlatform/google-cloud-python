@@ -1,0 +1,16 @@
+{
+    "api_description": "Manages access control for Google Cloud Platform resources.",
+    "api_id": "iam-meta-api.googleapis.com",
+    "api_shortname": "iam-meta-api",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/grpc-iam/latest",
+    "default_version": "apiVersion",
+    "distribution_name": "grpc-google-iam-v1",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559761",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "grpc-iam",
+    "name_pretty": "IAM Meta",
+    "product_documentation": "https://cloud.google.com/iam/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

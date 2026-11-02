@@ -1,0 +1,474 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.maps.solar.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-maps-solar",
+    "version": "0.6.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.solar_v1.SolarAsyncClient",
+          "shortName": "SolarAsyncClient"
+        },
+        "fullName": "google.maps.solar_v1.SolarAsyncClient.find_closest_building_insights",
+        "method": {
+          "fullName": "google.maps.solar.v1.Solar.FindClosestBuildingInsights",
+          "service": {
+            "fullName": "google.maps.solar.v1.Solar",
+            "shortName": "Solar"
+          },
+          "shortName": "FindClosestBuildingInsights"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.solar_v1.types.FindClosestBuildingInsightsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.solar_v1.types.BuildingInsights",
+        "shortName": "find_closest_building_insights"
+      },
+      "description": "Sample for FindClosestBuildingInsights",
+      "file": "solar_v1_generated_solar_find_closest_building_insights_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "solar_v1_generated_Solar_FindClosestBuildingInsights_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "solar_v1_generated_solar_find_closest_building_insights_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.solar_v1.SolarClient",
+          "shortName": "SolarClient"
+        },
+        "fullName": "google.maps.solar_v1.SolarClient.find_closest_building_insights",
+        "method": {
+          "fullName": "google.maps.solar.v1.Solar.FindClosestBuildingInsights",
+          "service": {
+            "fullName": "google.maps.solar.v1.Solar",
+            "shortName": "Solar"
+          },
+          "shortName": "FindClosestBuildingInsights"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.solar_v1.types.FindClosestBuildingInsightsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.solar_v1.types.BuildingInsights",
+        "shortName": "find_closest_building_insights"
+      },
+      "description": "Sample for FindClosestBuildingInsights",
+      "file": "solar_v1_generated_solar_find_closest_building_insights_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "solar_v1_generated_Solar_FindClosestBuildingInsights_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "solar_v1_generated_solar_find_closest_building_insights_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.solar_v1.SolarAsyncClient",
+          "shortName": "SolarAsyncClient"
+        },
+        "fullName": "google.maps.solar_v1.SolarAsyncClient.get_data_layers",
+        "method": {
+          "fullName": "google.maps.solar.v1.Solar.GetDataLayers",
+          "service": {
+            "fullName": "google.maps.solar.v1.Solar",
+            "shortName": "Solar"
+          },
+          "shortName": "GetDataLayers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.solar_v1.types.GetDataLayersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.solar_v1.types.DataLayers",
+        "shortName": "get_data_layers"
+      },
+      "description": "Sample for GetDataLayers",
+      "file": "solar_v1_generated_solar_get_data_layers_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "solar_v1_generated_Solar_GetDataLayers_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "solar_v1_generated_solar_get_data_layers_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.solar_v1.SolarClient",
+          "shortName": "SolarClient"
+        },
+        "fullName": "google.maps.solar_v1.SolarClient.get_data_layers",
+        "method": {
+          "fullName": "google.maps.solar.v1.Solar.GetDataLayers",
+          "service": {
+            "fullName": "google.maps.solar.v1.Solar",
+            "shortName": "Solar"
+          },
+          "shortName": "GetDataLayers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.solar_v1.types.GetDataLayersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.solar_v1.types.DataLayers",
+        "shortName": "get_data_layers"
+      },
+      "description": "Sample for GetDataLayers",
+      "file": "solar_v1_generated_solar_get_data_layers_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "solar_v1_generated_Solar_GetDataLayers_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "solar_v1_generated_solar_get_data_layers_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.solar_v1.SolarAsyncClient",
+          "shortName": "SolarAsyncClient"
+        },
+        "fullName": "google.maps.solar_v1.SolarAsyncClient.get_geo_tiff",
+        "method": {
+          "fullName": "google.maps.solar.v1.Solar.GetGeoTiff",
+          "service": {
+            "fullName": "google.maps.solar.v1.Solar",
+            "shortName": "Solar"
+          },
+          "shortName": "GetGeoTiff"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.solar_v1.types.GetGeoTiffRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api.httpbody_pb2.HttpBody",
+        "shortName": "get_geo_tiff"
+      },
+      "description": "Sample for GetGeoTiff",
+      "file": "solar_v1_generated_solar_get_geo_tiff_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "solar_v1_generated_Solar_GetGeoTiff_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "solar_v1_generated_solar_get_geo_tiff_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.solar_v1.SolarClient",
+          "shortName": "SolarClient"
+        },
+        "fullName": "google.maps.solar_v1.SolarClient.get_geo_tiff",
+        "method": {
+          "fullName": "google.maps.solar.v1.Solar.GetGeoTiff",
+          "service": {
+            "fullName": "google.maps.solar.v1.Solar",
+            "shortName": "Solar"
+          },
+          "shortName": "GetGeoTiff"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.solar_v1.types.GetGeoTiffRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api.httpbody_pb2.HttpBody",
+        "shortName": "get_geo_tiff"
+      },
+      "description": "Sample for GetGeoTiff",
+      "file": "solar_v1_generated_solar_get_geo_tiff_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "solar_v1_generated_Solar_GetGeoTiff_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "solar_v1_generated_solar_get_geo_tiff_sync.py"
+    }
+  ]
+}

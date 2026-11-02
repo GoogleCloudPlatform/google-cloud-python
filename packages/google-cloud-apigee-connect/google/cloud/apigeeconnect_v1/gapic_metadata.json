@@ -1,0 +1,57 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.apigeeconnect_v1",
+  "protoPackage": "google.cloud.apigeeconnect.v1",
+  "schema": "1.0",
+  "services": {
+    "ConnectionService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ConnectionServiceClient",
+          "rpcs": {
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ConnectionServiceAsyncClient",
+          "rpcs": {
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Tether": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "TetherClient",
+          "rpcs": {
+            "Egress": {
+              "methods": [
+                "egress"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "TetherAsyncClient",
+          "rpcs": {
+            "Egress": {
+              "methods": [
+                "egress"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

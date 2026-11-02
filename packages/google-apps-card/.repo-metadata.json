@@ -1,0 +1,13 @@
+{
+    "api_description": "Card interface displayed in a Google Chat message or Google Workspace Add-on.",
+    "client_documentation": "https://googleapis.dev/python/google-apps-card/latest",
+    "default_version": "v1",
+    "distribution_name": "google-apps-card",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-apps-card",
+    "name_pretty": "Google Apps Card",
+    "product_documentation": "https://developers.google.com/chat",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,167 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_reviews_v1beta",
+  "protoPackage": "google.shopping.merchant.reviews.v1beta",
+  "schema": "1.0",
+  "services": {
+    "MerchantReviewsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MerchantReviewsServiceClient",
+          "rpcs": {
+            "DeleteMerchantReview": {
+              "methods": [
+                "delete_merchant_review"
+              ]
+            },
+            "GetMerchantReview": {
+              "methods": [
+                "get_merchant_review"
+              ]
+            },
+            "InsertMerchantReview": {
+              "methods": [
+                "insert_merchant_review"
+              ]
+            },
+            "ListMerchantReviews": {
+              "methods": [
+                "list_merchant_reviews"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MerchantReviewsServiceAsyncClient",
+          "rpcs": {
+            "DeleteMerchantReview": {
+              "methods": [
+                "delete_merchant_review"
+              ]
+            },
+            "GetMerchantReview": {
+              "methods": [
+                "get_merchant_review"
+              ]
+            },
+            "InsertMerchantReview": {
+              "methods": [
+                "insert_merchant_review"
+              ]
+            },
+            "ListMerchantReviews": {
+              "methods": [
+                "list_merchant_reviews"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "MerchantReviewsServiceClient",
+          "rpcs": {
+            "DeleteMerchantReview": {
+              "methods": [
+                "delete_merchant_review"
+              ]
+            },
+            "GetMerchantReview": {
+              "methods": [
+                "get_merchant_review"
+              ]
+            },
+            "InsertMerchantReview": {
+              "methods": [
+                "insert_merchant_review"
+              ]
+            },
+            "ListMerchantReviews": {
+              "methods": [
+                "list_merchant_reviews"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ProductReviewsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ProductReviewsServiceClient",
+          "rpcs": {
+            "DeleteProductReview": {
+              "methods": [
+                "delete_product_review"
+              ]
+            },
+            "GetProductReview": {
+              "methods": [
+                "get_product_review"
+              ]
+            },
+            "InsertProductReview": {
+              "methods": [
+                "insert_product_review"
+              ]
+            },
+            "ListProductReviews": {
+              "methods": [
+                "list_product_reviews"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ProductReviewsServiceAsyncClient",
+          "rpcs": {
+            "DeleteProductReview": {
+              "methods": [
+                "delete_product_review"
+              ]
+            },
+            "GetProductReview": {
+              "methods": [
+                "get_product_review"
+              ]
+            },
+            "InsertProductReview": {
+              "methods": [
+                "insert_product_review"
+              ]
+            },
+            "ListProductReviews": {
+              "methods": [
+                "list_product_reviews"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ProductReviewsServiceClient",
+          "rpcs": {
+            "DeleteProductReview": {
+              "methods": [
+                "delete_product_review"
+              ]
+            },
+            "GetProductReview": {
+              "methods": [
+                "get_product_review"
+              ]
+            },
+            "InsertProductReview": {
+              "methods": [
+                "insert_product_review"
+              ]
+            },
+            "ListProductReviews": {
+              "methods": [
+                "list_product_reviews"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

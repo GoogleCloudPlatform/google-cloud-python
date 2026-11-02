@@ -1,0 +1,60 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: The name of the snapshot.
+    id: name
+    var_type: str
+  - description: "The name of the topic from which this\n   snapshot is retaining\
+      \ messages."
+    id: topic
+    var_type: str
+  - description: "The snapshot is guaranteed to exist up until this time. A\n   newly-created\
+      \ snapshot expires no later than 7 days from the\n   time of its creation. Its\
+      \ exact lifetime is determined at\n   creation by the existing backlog in the\
+      \ source subscription.\n   Specifically, the lifetime of the snapshot is\n \
+      \  <code>7 days - (age of oldest unacked message in the subscription)</code>.\n\
+      \   For example, consider a subscription whose oldest unacked\n   message is\
+      \ 3 days old. If a snapshot is created from this\n   subscription, the snapshot\
+      \ -- which will always capture this\n   3-day-old backlog as long as the snapshot\
+      \ exists -- will\n   expire in 4 days. The service will refuse to create a\n\
+      \   snapshot that would expire in less than 1 hour after\n   creation."
+    id: expire_time
+    var_type: google.protobuf.timestamp_pb2.Timestamp
+  - description: "See [Creating and managing labels]\n   (https://cloud.google.com/pubsub/docs/labels)."
+    id: labels
+    var_type: Mapping[str, str]
+  children:
+  - google.cloud.pubsub_v1.types.Snapshot.LabelsEntry
+  class: google.cloud.pubsub_v1.types.Snapshot
+  fullName: google.cloud.pubsub_v1.types.Snapshot
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: Snapshot
+  source:
+    id: Snapshot
+    path: null
+    startLine: null
+  summary: 'A snapshot resource. Snapshots are used in
+
+    `Seek <https://cloud.google.com/pubsub/docs/replay-overview>`__
+
+    operations, which allow you to manage message acknowledgments in
+
+    bulk. That is, you can set the acknowledgment state of messages in
+
+    an existing subscription to the state captured by a snapshot.
+
+    '
+  syntax:
+    content: Snapshot(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.Snapshot
+references:
+- fullName: google.cloud.pubsub_v1.types.Snapshot.LabelsEntry
+  isExternal: false
+  name: LabelsEntry
+  parent: google.cloud.pubsub_v1.types.Snapshot
+  uid: google.cloud.pubsub_v1.types.Snapshot.LabelsEntry

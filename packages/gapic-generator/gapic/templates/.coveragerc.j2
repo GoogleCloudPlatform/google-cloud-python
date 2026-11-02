@@ -1,0 +1,13 @@
+[run]
+branch = True
+
+[report]
+show_missing = True
+omit =
+    {{ api.naming.module_namespace|join("/") }}/{{ api.naming.module_name }}/__init__.py
+    {{ api.naming.module_namespace|join("/") }}/{{ api.naming.module_name }}/gapic_version.py
+exclude_lines =
+    # Re-enable the standard pragma
+    pragma: NO COVER
+    # Ignore debug-only repr
+    def __repr__

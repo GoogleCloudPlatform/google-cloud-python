@@ -1,0 +1,30 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechAsyncClient
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: text_to_speech
+  source:
+    id: text_to_speech
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/__init__.py
+    startLine: 0
+  summary: API documentation for `texttospeech_v1beta1.services.text_to_speech` package.
+  syntax: {}
+  type: subPackage
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech
+references:
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechAsyncClient
+  isExternal: false
+  name: TextToSpeechAsyncClient
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechAsyncClient
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  isExternal: false
+  name: TextToSpeechClient
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient

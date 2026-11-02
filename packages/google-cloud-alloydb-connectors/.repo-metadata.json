@@ -1,0 +1,16 @@
+{
+    "api_description": "AlloyDB connectors ensure a secure connection to your AlloyDB instances using IAM.",
+    "api_id": "connectors.googleapis.com",
+    "api_shortname": "alloydb",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/connectors/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-alloydb-connectors",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1194526\u0026template=1689942",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "connectors",
+    "name_pretty": "AlloyDB connectors",
+    "product_documentation": "https://cloud.google.com/alloydb/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

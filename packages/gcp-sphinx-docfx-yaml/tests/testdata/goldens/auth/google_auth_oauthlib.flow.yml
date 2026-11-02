@@ -1,0 +1,46 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google_auth_oauthlib.flow.Flow
+  - google_auth_oauthlib.flow.InstalledAppFlow
+  fullName: google_auth_oauthlib.flow
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: flow
+  source:
+    id: flow
+    path: tests/testdata/auth/google_auth_oauthlib/flow.py
+    startLine: 0
+  summary: "OAuth 2.0 Authorization Flow\n\nThis module provides integration with\
+    \ `requests-oauthlib`_ for running the\n`OAuth 2.0 Authorization Flow`_ and acquiring\
+    \ user credentials.  See\n`Using OAuth 2.0 to Access Google APIs`_ for an overview\
+    \ of OAuth 2.0\nauthorization scenarios Google APIs support.\n\nHere's an example\
+    \ of using `InstalledAppFlow`::\n\n    from google_auth_oauthlib.flow import InstalledAppFlow\n\
+    \n    # Create the flow using the client secrets file from the Google API\n  \
+    \  # Console.\n    flow = InstalledAppFlow.from_client_secrets_file(\n       \
+    \ 'client_secrets.json',\n        scopes=['profile', 'email'])\n\n    flow.run_local_server()\n\
+    \n    # You can use flow.credentials, or you can just get a requests session\n\
+    \    # using flow.authorized_session.\n    session = flow.authorized_session()\n\
+    \n    profile_info = session.get(\n        'https://www.googleapis.com/userinfo/v2/me').json()\n\
+    \n    print(profile_info)\n    # {'name': '...',  'email': '...', ...}\n\n.. _requests-oauthlib:\
+    \ http://requests-oauthlib.readthedocs.io/en/latest/\n.. _OAuth 2.0 Authorization\
+    \ Flow:\n    https://tools.ietf.org/html/rfc6749#section-1.2\n.. _Using OAuth\
+    \ 2.0 to Access Google APIs:\n    https://developers.google.com/identity/protocols/oauth2\n\
+    \n"
+  syntax: {}
+  type: module
+  uid: google_auth_oauthlib.flow
+references:
+- fullName: google_auth_oauthlib.flow.Flow
+  isExternal: false
+  name: Flow
+  parent: google_auth_oauthlib.flow
+  uid: google_auth_oauthlib.flow.Flow
+- fullName: google_auth_oauthlib.flow.InstalledAppFlow
+  isExternal: false
+  name: InstalledAppFlow
+  parent: google_auth_oauthlib.flow
+  uid: google_auth_oauthlib.flow.InstalledAppFlow

@@ -1,0 +1,557 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.channel_v1",
+  "protoPackage": "google.cloud.channel.v1",
+  "schema": "1.0",
+  "services": {
+    "CloudChannelReportsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudChannelReportsServiceClient",
+          "rpcs": {
+            "FetchReportResults": {
+              "methods": [
+                "fetch_report_results"
+              ]
+            },
+            "ListReports": {
+              "methods": [
+                "list_reports"
+              ]
+            },
+            "RunReportJob": {
+              "methods": [
+                "run_report_job"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudChannelReportsServiceAsyncClient",
+          "rpcs": {
+            "FetchReportResults": {
+              "methods": [
+                "fetch_report_results"
+              ]
+            },
+            "ListReports": {
+              "methods": [
+                "list_reports"
+              ]
+            },
+            "RunReportJob": {
+              "methods": [
+                "run_report_job"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CloudChannelService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudChannelServiceClient",
+          "rpcs": {
+            "ActivateEntitlement": {
+              "methods": [
+                "activate_entitlement"
+              ]
+            },
+            "CancelEntitlement": {
+              "methods": [
+                "cancel_entitlement"
+              ]
+            },
+            "ChangeOffer": {
+              "methods": [
+                "change_offer"
+              ]
+            },
+            "ChangeParameters": {
+              "methods": [
+                "change_parameters"
+              ]
+            },
+            "ChangeRenewalSettings": {
+              "methods": [
+                "change_renewal_settings"
+              ]
+            },
+            "CheckCloudIdentityAccountsExist": {
+              "methods": [
+                "check_cloud_identity_accounts_exist"
+              ]
+            },
+            "CreateChannelPartnerLink": {
+              "methods": [
+                "create_channel_partner_link"
+              ]
+            },
+            "CreateChannelPartnerRepricingConfig": {
+              "methods": [
+                "create_channel_partner_repricing_config"
+              ]
+            },
+            "CreateCustomer": {
+              "methods": [
+                "create_customer"
+              ]
+            },
+            "CreateCustomerRepricingConfig": {
+              "methods": [
+                "create_customer_repricing_config"
+              ]
+            },
+            "CreateEntitlement": {
+              "methods": [
+                "create_entitlement"
+              ]
+            },
+            "DeleteChannelPartnerRepricingConfig": {
+              "methods": [
+                "delete_channel_partner_repricing_config"
+              ]
+            },
+            "DeleteCustomer": {
+              "methods": [
+                "delete_customer"
+              ]
+            },
+            "DeleteCustomerRepricingConfig": {
+              "methods": [
+                "delete_customer_repricing_config"
+              ]
+            },
+            "GetChannelPartnerLink": {
+              "methods": [
+                "get_channel_partner_link"
+              ]
+            },
+            "GetChannelPartnerRepricingConfig": {
+              "methods": [
+                "get_channel_partner_repricing_config"
+              ]
+            },
+            "GetCustomer": {
+              "methods": [
+                "get_customer"
+              ]
+            },
+            "GetCustomerRepricingConfig": {
+              "methods": [
+                "get_customer_repricing_config"
+              ]
+            },
+            "GetEntitlement": {
+              "methods": [
+                "get_entitlement"
+              ]
+            },
+            "ImportCustomer": {
+              "methods": [
+                "import_customer"
+              ]
+            },
+            "ListChannelPartnerLinks": {
+              "methods": [
+                "list_channel_partner_links"
+              ]
+            },
+            "ListChannelPartnerRepricingConfigs": {
+              "methods": [
+                "list_channel_partner_repricing_configs"
+              ]
+            },
+            "ListCustomerRepricingConfigs": {
+              "methods": [
+                "list_customer_repricing_configs"
+              ]
+            },
+            "ListCustomers": {
+              "methods": [
+                "list_customers"
+              ]
+            },
+            "ListEntitlementChanges": {
+              "methods": [
+                "list_entitlement_changes"
+              ]
+            },
+            "ListEntitlements": {
+              "methods": [
+                "list_entitlements"
+              ]
+            },
+            "ListOffers": {
+              "methods": [
+                "list_offers"
+              ]
+            },
+            "ListProducts": {
+              "methods": [
+                "list_products"
+              ]
+            },
+            "ListPurchasableOffers": {
+              "methods": [
+                "list_purchasable_offers"
+              ]
+            },
+            "ListPurchasableSkus": {
+              "methods": [
+                "list_purchasable_skus"
+              ]
+            },
+            "ListSkuGroupBillableSkus": {
+              "methods": [
+                "list_sku_group_billable_skus"
+              ]
+            },
+            "ListSkuGroups": {
+              "methods": [
+                "list_sku_groups"
+              ]
+            },
+            "ListSkus": {
+              "methods": [
+                "list_skus"
+              ]
+            },
+            "ListSubscribers": {
+              "methods": [
+                "list_subscribers"
+              ]
+            },
+            "ListTransferableOffers": {
+              "methods": [
+                "list_transferable_offers"
+              ]
+            },
+            "ListTransferableSkus": {
+              "methods": [
+                "list_transferable_skus"
+              ]
+            },
+            "LookupOffer": {
+              "methods": [
+                "lookup_offer"
+              ]
+            },
+            "ProvisionCloudIdentity": {
+              "methods": [
+                "provision_cloud_identity"
+              ]
+            },
+            "QueryEligibleBillingAccounts": {
+              "methods": [
+                "query_eligible_billing_accounts"
+              ]
+            },
+            "RegisterSubscriber": {
+              "methods": [
+                "register_subscriber"
+              ]
+            },
+            "StartPaidService": {
+              "methods": [
+                "start_paid_service"
+              ]
+            },
+            "SuspendEntitlement": {
+              "methods": [
+                "suspend_entitlement"
+              ]
+            },
+            "TransferEntitlements": {
+              "methods": [
+                "transfer_entitlements"
+              ]
+            },
+            "TransferEntitlementsToGoogle": {
+              "methods": [
+                "transfer_entitlements_to_google"
+              ]
+            },
+            "UnregisterSubscriber": {
+              "methods": [
+                "unregister_subscriber"
+              ]
+            },
+            "UpdateChannelPartnerLink": {
+              "methods": [
+                "update_channel_partner_link"
+              ]
+            },
+            "UpdateChannelPartnerRepricingConfig": {
+              "methods": [
+                "update_channel_partner_repricing_config"
+              ]
+            },
+            "UpdateCustomer": {
+              "methods": [
+                "update_customer"
+              ]
+            },
+            "UpdateCustomerRepricingConfig": {
+              "methods": [
+                "update_customer_repricing_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudChannelServiceAsyncClient",
+          "rpcs": {
+            "ActivateEntitlement": {
+              "methods": [
+                "activate_entitlement"
+              ]
+            },
+            "CancelEntitlement": {
+              "methods": [
+                "cancel_entitlement"
+              ]
+            },
+            "ChangeOffer": {
+              "methods": [
+                "change_offer"
+              ]
+            },
+            "ChangeParameters": {
+              "methods": [
+                "change_parameters"
+              ]
+            },
+            "ChangeRenewalSettings": {
+              "methods": [
+                "change_renewal_settings"
+              ]
+            },
+            "CheckCloudIdentityAccountsExist": {
+              "methods": [
+                "check_cloud_identity_accounts_exist"
+              ]
+            },
+            "CreateChannelPartnerLink": {
+              "methods": [
+                "create_channel_partner_link"
+              ]
+            },
+            "CreateChannelPartnerRepricingConfig": {
+              "methods": [
+                "create_channel_partner_repricing_config"
+              ]
+            },
+            "CreateCustomer": {
+              "methods": [
+                "create_customer"
+              ]
+            },
+            "CreateCustomerRepricingConfig": {
+              "methods": [
+                "create_customer_repricing_config"
+              ]
+            },
+            "CreateEntitlement": {
+              "methods": [
+                "create_entitlement"
+              ]
+            },
+            "DeleteChannelPartnerRepricingConfig": {
+              "methods": [
+                "delete_channel_partner_repricing_config"
+              ]
+            },
+            "DeleteCustomer": {
+              "methods": [
+                "delete_customer"
+              ]
+            },
+            "DeleteCustomerRepricingConfig": {
+              "methods": [
+                "delete_customer_repricing_config"
+              ]
+            },
+            "GetChannelPartnerLink": {
+              "methods": [
+                "get_channel_partner_link"
+              ]
+            },
+            "GetChannelPartnerRepricingConfig": {
+              "methods": [
+                "get_channel_partner_repricing_config"
+              ]
+            },
+            "GetCustomer": {
+              "methods": [
+                "get_customer"
+              ]
+            },
+            "GetCustomerRepricingConfig": {
+              "methods": [
+                "get_customer_repricing_config"
+              ]
+            },
+            "GetEntitlement": {
+              "methods": [
+                "get_entitlement"
+              ]
+            },
+            "ImportCustomer": {
+              "methods": [
+                "import_customer"
+              ]
+            },
+            "ListChannelPartnerLinks": {
+              "methods": [
+                "list_channel_partner_links"
+              ]
+            },
+            "ListChannelPartnerRepricingConfigs": {
+              "methods": [
+                "list_channel_partner_repricing_configs"
+              ]
+            },
+            "ListCustomerRepricingConfigs": {
+              "methods": [
+                "list_customer_repricing_configs"
+              ]
+            },
+            "ListCustomers": {
+              "methods": [
+                "list_customers"
+              ]
+            },
+            "ListEntitlementChanges": {
+              "methods": [
+                "list_entitlement_changes"
+              ]
+            },
+            "ListEntitlements": {
+              "methods": [
+                "list_entitlements"
+              ]
+            },
+            "ListOffers": {
+              "methods": [
+                "list_offers"
+              ]
+            },
+            "ListProducts": {
+              "methods": [
+                "list_products"
+              ]
+            },
+            "ListPurchasableOffers": {
+              "methods": [
+                "list_purchasable_offers"
+              ]
+            },
+            "ListPurchasableSkus": {
+              "methods": [
+                "list_purchasable_skus"
+              ]
+            },
+            "ListSkuGroupBillableSkus": {
+              "methods": [
+                "list_sku_group_billable_skus"
+              ]
+            },
+            "ListSkuGroups": {
+              "methods": [
+                "list_sku_groups"
+              ]
+            },
+            "ListSkus": {
+              "methods": [
+                "list_skus"
+              ]
+            },
+            "ListSubscribers": {
+              "methods": [
+                "list_subscribers"
+              ]
+            },
+            "ListTransferableOffers": {
+              "methods": [
+                "list_transferable_offers"
+              ]
+            },
+            "ListTransferableSkus": {
+              "methods": [
+                "list_transferable_skus"
+              ]
+            },
+            "LookupOffer": {
+              "methods": [
+                "lookup_offer"
+              ]
+            },
+            "ProvisionCloudIdentity": {
+              "methods": [
+                "provision_cloud_identity"
+              ]
+            },
+            "QueryEligibleBillingAccounts": {
+              "methods": [
+                "query_eligible_billing_accounts"
+              ]
+            },
+            "RegisterSubscriber": {
+              "methods": [
+                "register_subscriber"
+              ]
+            },
+            "StartPaidService": {
+              "methods": [
+                "start_paid_service"
+              ]
+            },
+            "SuspendEntitlement": {
+              "methods": [
+                "suspend_entitlement"
+              ]
+            },
+            "TransferEntitlements": {
+              "methods": [
+                "transfer_entitlements"
+              ]
+            },
+            "TransferEntitlementsToGoogle": {
+              "methods": [
+                "transfer_entitlements_to_google"
+              ]
+            },
+            "UnregisterSubscriber": {
+              "methods": [
+                "unregister_subscriber"
+              ]
+            },
+            "UpdateChannelPartnerLink": {
+              "methods": [
+                "update_channel_partner_link"
+              ]
+            },
+            "UpdateChannelPartnerRepricingConfig": {
+              "methods": [
+                "update_channel_partner_repricing_config"
+              ]
+            },
+            "UpdateCustomer": {
+              "methods": [
+                "update_customer"
+              ]
+            },
+            "UpdateCustomerRepricingConfig": {
+              "methods": [
+                "update_customer_repricing_config"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

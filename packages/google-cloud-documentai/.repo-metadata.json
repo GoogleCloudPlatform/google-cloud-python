@@ -1,0 +1,16 @@
+{
+    "api_description": "Service to parse structured information from unstructured or\nsemi-structured documents using state-of-the-art Google AI such as natural\nlanguage, computer vision, translation, and AutoML.",
+    "api_id": "documentai.googleapis.com",
+    "api_shortname": "documentai",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/documentai/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-documentai",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1132231\u0026template=1639002",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "documentai",
+    "name_pretty": "Cloud Document AI",
+    "product_documentation": "https://cloud.google.com/document-ai/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

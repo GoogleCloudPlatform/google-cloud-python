@@ -1,0 +1,15 @@
+{
+    "api_id": "agentidentity.googleapis.com",
+    "api_shortname": "agentidentity",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-agentidentity/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-agentidentity",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=961386",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-agentidentity",
+    "name_pretty": "Agent Identity",
+    "product_documentation": "https://cloud.google.com/agentidentity/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

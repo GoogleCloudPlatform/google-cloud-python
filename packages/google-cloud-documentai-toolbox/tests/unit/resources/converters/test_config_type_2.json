@@ -1,0 +1,16 @@
+{
+    "entity_object":"document.entities",
+    "entity": {
+        "type_":"type",
+        "mention_text":"mentionText",
+        "normalized_vertices":{
+            "type":"2",
+            "unit":"normalized",
+            "base":"pageAnchor.pageRefs.0.boundingPoly.normalizedVertices",
+            "x":"left",
+            "y":"top",
+            "width":"width",
+            "height":"height"
+        }
+    }
+}

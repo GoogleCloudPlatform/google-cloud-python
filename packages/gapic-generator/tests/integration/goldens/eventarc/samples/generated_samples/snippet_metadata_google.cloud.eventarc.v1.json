@@ -1,0 +1,6510 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.eventarc.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-eventarc",
+    "version": "0.0.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.create_channel_connection",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateChannelConnection",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateChannelConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateChannelConnectionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "channel_connection",
+            "type": "google.cloud.eventarc_v1.types.ChannelConnection"
+          },
+          {
+            "name": "channel_connection_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_channel_connection"
+      },
+      "description": "Sample for CreateChannelConnection",
+      "file": "eventarc_v1_generated_eventarc_create_channel_connection_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateChannelConnection_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_channel_connection_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.create_channel_connection",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateChannelConnection",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateChannelConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateChannelConnectionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "channel_connection",
+            "type": "google.cloud.eventarc_v1.types.ChannelConnection"
+          },
+          {
+            "name": "channel_connection_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_channel_connection"
+      },
+      "description": "Sample for CreateChannelConnection",
+      "file": "eventarc_v1_generated_eventarc_create_channel_connection_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateChannelConnection_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_channel_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.create_channel",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateChannel",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateChannelRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "channel",
+            "type": "google.cloud.eventarc_v1.types.Channel"
+          },
+          {
+            "name": "channel_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_channel"
+      },
+      "description": "Sample for CreateChannel",
+      "file": "eventarc_v1_generated_eventarc_create_channel_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateChannel_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_channel_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.create_channel",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateChannel",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateChannelRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "channel",
+            "type": "google.cloud.eventarc_v1.types.Channel"
+          },
+          {
+            "name": "channel_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_channel"
+      },
+      "description": "Sample for CreateChannel",
+      "file": "eventarc_v1_generated_eventarc_create_channel_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateChannel_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_channel_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.create_enrollment",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateEnrollment",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateEnrollmentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "enrollment",
+            "type": "google.cloud.eventarc_v1.types.Enrollment"
+          },
+          {
+            "name": "enrollment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_enrollment"
+      },
+      "description": "Sample for CreateEnrollment",
+      "file": "eventarc_v1_generated_eventarc_create_enrollment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateEnrollment_async",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_enrollment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.create_enrollment",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateEnrollment",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateEnrollmentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "enrollment",
+            "type": "google.cloud.eventarc_v1.types.Enrollment"
+          },
+          {
+            "name": "enrollment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_enrollment"
+      },
+      "description": "Sample for CreateEnrollment",
+      "file": "eventarc_v1_generated_eventarc_create_enrollment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateEnrollment_sync",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_enrollment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.create_google_api_source",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateGoogleApiSource",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateGoogleApiSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateGoogleApiSourceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "google_api_source",
+            "type": "google.cloud.eventarc_v1.types.GoogleApiSource"
+          },
+          {
+            "name": "google_api_source_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_google_api_source"
+      },
+      "description": "Sample for CreateGoogleApiSource",
+      "file": "eventarc_v1_generated_eventarc_create_google_api_source_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateGoogleApiSource_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_google_api_source_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.create_google_api_source",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateGoogleApiSource",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateGoogleApiSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateGoogleApiSourceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "google_api_source",
+            "type": "google.cloud.eventarc_v1.types.GoogleApiSource"
+          },
+          {
+            "name": "google_api_source_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_google_api_source"
+      },
+      "description": "Sample for CreateGoogleApiSource",
+      "file": "eventarc_v1_generated_eventarc_create_google_api_source_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateGoogleApiSource_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_google_api_source_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.create_message_bus",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateMessageBus",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateMessageBus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateMessageBusRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "message_bus",
+            "type": "google.cloud.eventarc_v1.types.MessageBus"
+          },
+          {
+            "name": "message_bus_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_message_bus"
+      },
+      "description": "Sample for CreateMessageBus",
+      "file": "eventarc_v1_generated_eventarc_create_message_bus_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateMessageBus_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_message_bus_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.create_message_bus",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateMessageBus",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateMessageBus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateMessageBusRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "message_bus",
+            "type": "google.cloud.eventarc_v1.types.MessageBus"
+          },
+          {
+            "name": "message_bus_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_message_bus"
+      },
+      "description": "Sample for CreateMessageBus",
+      "file": "eventarc_v1_generated_eventarc_create_message_bus_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateMessageBus_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_message_bus_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.create_pipeline",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreatePipeline",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreatePipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreatePipelineRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "pipeline",
+            "type": "google.cloud.eventarc_v1.types.Pipeline"
+          },
+          {
+            "name": "pipeline_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_pipeline"
+      },
+      "description": "Sample for CreatePipeline",
+      "file": "eventarc_v1_generated_eventarc_create_pipeline_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreatePipeline_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_pipeline_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.create_pipeline",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreatePipeline",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreatePipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreatePipelineRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "pipeline",
+            "type": "google.cloud.eventarc_v1.types.Pipeline"
+          },
+          {
+            "name": "pipeline_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_pipeline"
+      },
+      "description": "Sample for CreatePipeline",
+      "file": "eventarc_v1_generated_eventarc_create_pipeline_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreatePipeline_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_pipeline_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.create_trigger",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateTrigger",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateTriggerRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "trigger",
+            "type": "google.cloud.eventarc_v1.types.Trigger"
+          },
+          {
+            "name": "trigger_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_trigger"
+      },
+      "description": "Sample for CreateTrigger",
+      "file": "eventarc_v1_generated_eventarc_create_trigger_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateTrigger_async",
+      "segments": [
+        {
+          "end": 64,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 64,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 61,
+          "start": 55,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 65,
+          "start": 62,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_trigger_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.create_trigger",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.CreateTrigger",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "CreateTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.CreateTriggerRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "trigger",
+            "type": "google.cloud.eventarc_v1.types.Trigger"
+          },
+          {
+            "name": "trigger_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_trigger"
+      },
+      "description": "Sample for CreateTrigger",
+      "file": "eventarc_v1_generated_eventarc_create_trigger_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_CreateTrigger_sync",
+      "segments": [
+        {
+          "end": 64,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 64,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 61,
+          "start": 55,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 65,
+          "start": 62,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_create_trigger_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.delete_channel_connection",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteChannelConnection",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteChannelConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteChannelConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_channel_connection"
+      },
+      "description": "Sample for DeleteChannelConnection",
+      "file": "eventarc_v1_generated_eventarc_delete_channel_connection_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteChannelConnection_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_channel_connection_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.delete_channel_connection",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteChannelConnection",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteChannelConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteChannelConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_channel_connection"
+      },
+      "description": "Sample for DeleteChannelConnection",
+      "file": "eventarc_v1_generated_eventarc_delete_channel_connection_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteChannelConnection_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_channel_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.delete_channel",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteChannel",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_channel"
+      },
+      "description": "Sample for DeleteChannel",
+      "file": "eventarc_v1_generated_eventarc_delete_channel_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteChannel_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_channel_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.delete_channel",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteChannel",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_channel"
+      },
+      "description": "Sample for DeleteChannel",
+      "file": "eventarc_v1_generated_eventarc_delete_channel_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteChannel_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_channel_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.delete_enrollment",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteEnrollment",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteEnrollmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_enrollment"
+      },
+      "description": "Sample for DeleteEnrollment",
+      "file": "eventarc_v1_generated_eventarc_delete_enrollment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteEnrollment_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_enrollment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.delete_enrollment",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteEnrollment",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteEnrollmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_enrollment"
+      },
+      "description": "Sample for DeleteEnrollment",
+      "file": "eventarc_v1_generated_eventarc_delete_enrollment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteEnrollment_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_enrollment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.delete_google_api_source",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteGoogleApiSource",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteGoogleApiSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteGoogleApiSourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_google_api_source"
+      },
+      "description": "Sample for DeleteGoogleApiSource",
+      "file": "eventarc_v1_generated_eventarc_delete_google_api_source_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteGoogleApiSource_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_google_api_source_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.delete_google_api_source",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteGoogleApiSource",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteGoogleApiSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteGoogleApiSourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_google_api_source"
+      },
+      "description": "Sample for DeleteGoogleApiSource",
+      "file": "eventarc_v1_generated_eventarc_delete_google_api_source_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteGoogleApiSource_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_google_api_source_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.delete_message_bus",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteMessageBus",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteMessageBus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteMessageBusRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_message_bus"
+      },
+      "description": "Sample for DeleteMessageBus",
+      "file": "eventarc_v1_generated_eventarc_delete_message_bus_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteMessageBus_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_message_bus_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.delete_message_bus",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteMessageBus",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteMessageBus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteMessageBusRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_message_bus"
+      },
+      "description": "Sample for DeleteMessageBus",
+      "file": "eventarc_v1_generated_eventarc_delete_message_bus_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteMessageBus_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_message_bus_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.delete_pipeline",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeletePipeline",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeletePipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeletePipelineRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_pipeline"
+      },
+      "description": "Sample for DeletePipeline",
+      "file": "eventarc_v1_generated_eventarc_delete_pipeline_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeletePipeline_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_pipeline_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.delete_pipeline",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeletePipeline",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeletePipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeletePipelineRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_pipeline"
+      },
+      "description": "Sample for DeletePipeline",
+      "file": "eventarc_v1_generated_eventarc_delete_pipeline_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeletePipeline_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_pipeline_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.delete_trigger",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteTrigger",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteTriggerRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "allow_missing",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_trigger"
+      },
+      "description": "Sample for DeleteTrigger",
+      "file": "eventarc_v1_generated_eventarc_delete_trigger_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteTrigger_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_trigger_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.delete_trigger",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.DeleteTrigger",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "DeleteTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.DeleteTriggerRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "allow_missing",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_trigger"
+      },
+      "description": "Sample for DeleteTrigger",
+      "file": "eventarc_v1_generated_eventarc_delete_trigger_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_DeleteTrigger_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_delete_trigger_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.get_channel_connection",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetChannelConnection",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetChannelConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetChannelConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.ChannelConnection",
+        "shortName": "get_channel_connection"
+      },
+      "description": "Sample for GetChannelConnection",
+      "file": "eventarc_v1_generated_eventarc_get_channel_connection_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetChannelConnection_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_channel_connection_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.get_channel_connection",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetChannelConnection",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetChannelConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetChannelConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.ChannelConnection",
+        "shortName": "get_channel_connection"
+      },
+      "description": "Sample for GetChannelConnection",
+      "file": "eventarc_v1_generated_eventarc_get_channel_connection_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetChannelConnection_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_channel_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.get_channel",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetChannel",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.Channel",
+        "shortName": "get_channel"
+      },
+      "description": "Sample for GetChannel",
+      "file": "eventarc_v1_generated_eventarc_get_channel_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetChannel_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_channel_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.get_channel",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetChannel",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.Channel",
+        "shortName": "get_channel"
+      },
+      "description": "Sample for GetChannel",
+      "file": "eventarc_v1_generated_eventarc_get_channel_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetChannel_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_channel_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.get_enrollment",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetEnrollment",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetEnrollmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.Enrollment",
+        "shortName": "get_enrollment"
+      },
+      "description": "Sample for GetEnrollment",
+      "file": "eventarc_v1_generated_eventarc_get_enrollment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetEnrollment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_enrollment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.get_enrollment",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetEnrollment",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetEnrollmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.Enrollment",
+        "shortName": "get_enrollment"
+      },
+      "description": "Sample for GetEnrollment",
+      "file": "eventarc_v1_generated_eventarc_get_enrollment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetEnrollment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_enrollment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.get_google_api_source",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetGoogleApiSource",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetGoogleApiSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetGoogleApiSourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.GoogleApiSource",
+        "shortName": "get_google_api_source"
+      },
+      "description": "Sample for GetGoogleApiSource",
+      "file": "eventarc_v1_generated_eventarc_get_google_api_source_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetGoogleApiSource_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_google_api_source_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.get_google_api_source",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetGoogleApiSource",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetGoogleApiSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetGoogleApiSourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.GoogleApiSource",
+        "shortName": "get_google_api_source"
+      },
+      "description": "Sample for GetGoogleApiSource",
+      "file": "eventarc_v1_generated_eventarc_get_google_api_source_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetGoogleApiSource_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_google_api_source_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.get_google_channel_config",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetGoogleChannelConfig",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetGoogleChannelConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetGoogleChannelConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.GoogleChannelConfig",
+        "shortName": "get_google_channel_config"
+      },
+      "description": "Sample for GetGoogleChannelConfig",
+      "file": "eventarc_v1_generated_eventarc_get_google_channel_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetGoogleChannelConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_google_channel_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.get_google_channel_config",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetGoogleChannelConfig",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetGoogleChannelConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetGoogleChannelConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.GoogleChannelConfig",
+        "shortName": "get_google_channel_config"
+      },
+      "description": "Sample for GetGoogleChannelConfig",
+      "file": "eventarc_v1_generated_eventarc_get_google_channel_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetGoogleChannelConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_google_channel_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.get_message_bus",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetMessageBus",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetMessageBus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetMessageBusRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.MessageBus",
+        "shortName": "get_message_bus"
+      },
+      "description": "Sample for GetMessageBus",
+      "file": "eventarc_v1_generated_eventarc_get_message_bus_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetMessageBus_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_message_bus_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.get_message_bus",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetMessageBus",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetMessageBus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetMessageBusRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.MessageBus",
+        "shortName": "get_message_bus"
+      },
+      "description": "Sample for GetMessageBus",
+      "file": "eventarc_v1_generated_eventarc_get_message_bus_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetMessageBus_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_message_bus_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.get_pipeline",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetPipeline",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetPipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetPipelineRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.Pipeline",
+        "shortName": "get_pipeline"
+      },
+      "description": "Sample for GetPipeline",
+      "file": "eventarc_v1_generated_eventarc_get_pipeline_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetPipeline_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_pipeline_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.get_pipeline",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetPipeline",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetPipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetPipelineRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.Pipeline",
+        "shortName": "get_pipeline"
+      },
+      "description": "Sample for GetPipeline",
+      "file": "eventarc_v1_generated_eventarc_get_pipeline_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetPipeline_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_pipeline_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.get_provider",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetProvider",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.Provider",
+        "shortName": "get_provider"
+      },
+      "description": "Sample for GetProvider",
+      "file": "eventarc_v1_generated_eventarc_get_provider_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetProvider_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_provider_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.get_provider",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetProvider",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.Provider",
+        "shortName": "get_provider"
+      },
+      "description": "Sample for GetProvider",
+      "file": "eventarc_v1_generated_eventarc_get_provider_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetProvider_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_provider_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.get_trigger",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetTrigger",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetTriggerRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.Trigger",
+        "shortName": "get_trigger"
+      },
+      "description": "Sample for GetTrigger",
+      "file": "eventarc_v1_generated_eventarc_get_trigger_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetTrigger_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_trigger_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.get_trigger",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.GetTrigger",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "GetTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.GetTriggerRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.Trigger",
+        "shortName": "get_trigger"
+      },
+      "description": "Sample for GetTrigger",
+      "file": "eventarc_v1_generated_eventarc_get_trigger_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_GetTrigger_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_get_trigger_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.list_channel_connections",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListChannelConnections",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListChannelConnections"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListChannelConnectionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListChannelConnectionsAsyncPager",
+        "shortName": "list_channel_connections"
+      },
+      "description": "Sample for ListChannelConnections",
+      "file": "eventarc_v1_generated_eventarc_list_channel_connections_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListChannelConnections_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_channel_connections_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.list_channel_connections",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListChannelConnections",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListChannelConnections"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListChannelConnectionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListChannelConnectionsPager",
+        "shortName": "list_channel_connections"
+      },
+      "description": "Sample for ListChannelConnections",
+      "file": "eventarc_v1_generated_eventarc_list_channel_connections_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListChannelConnections_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_channel_connections_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.list_channels",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListChannels",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListChannels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListChannelsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListChannelsAsyncPager",
+        "shortName": "list_channels"
+      },
+      "description": "Sample for ListChannels",
+      "file": "eventarc_v1_generated_eventarc_list_channels_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListChannels_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_channels_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.list_channels",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListChannels",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListChannels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListChannelsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListChannelsPager",
+        "shortName": "list_channels"
+      },
+      "description": "Sample for ListChannels",
+      "file": "eventarc_v1_generated_eventarc_list_channels_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListChannels_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_channels_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.list_enrollments",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListEnrollments",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListEnrollments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListEnrollmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListEnrollmentsAsyncPager",
+        "shortName": "list_enrollments"
+      },
+      "description": "Sample for ListEnrollments",
+      "file": "eventarc_v1_generated_eventarc_list_enrollments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListEnrollments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_enrollments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.list_enrollments",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListEnrollments",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListEnrollments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListEnrollmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListEnrollmentsPager",
+        "shortName": "list_enrollments"
+      },
+      "description": "Sample for ListEnrollments",
+      "file": "eventarc_v1_generated_eventarc_list_enrollments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListEnrollments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_enrollments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.list_google_api_sources",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListGoogleApiSources",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListGoogleApiSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListGoogleApiSourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListGoogleApiSourcesAsyncPager",
+        "shortName": "list_google_api_sources"
+      },
+      "description": "Sample for ListGoogleApiSources",
+      "file": "eventarc_v1_generated_eventarc_list_google_api_sources_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListGoogleApiSources_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_google_api_sources_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.list_google_api_sources",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListGoogleApiSources",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListGoogleApiSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListGoogleApiSourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListGoogleApiSourcesPager",
+        "shortName": "list_google_api_sources"
+      },
+      "description": "Sample for ListGoogleApiSources",
+      "file": "eventarc_v1_generated_eventarc_list_google_api_sources_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListGoogleApiSources_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_google_api_sources_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.list_message_bus_enrollments",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListMessageBusEnrollments",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListMessageBusEnrollments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListMessageBusEnrollmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListMessageBusEnrollmentsAsyncPager",
+        "shortName": "list_message_bus_enrollments"
+      },
+      "description": "Sample for ListMessageBusEnrollments",
+      "file": "eventarc_v1_generated_eventarc_list_message_bus_enrollments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListMessageBusEnrollments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_message_bus_enrollments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.list_message_bus_enrollments",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListMessageBusEnrollments",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListMessageBusEnrollments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListMessageBusEnrollmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListMessageBusEnrollmentsPager",
+        "shortName": "list_message_bus_enrollments"
+      },
+      "description": "Sample for ListMessageBusEnrollments",
+      "file": "eventarc_v1_generated_eventarc_list_message_bus_enrollments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListMessageBusEnrollments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_message_bus_enrollments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.list_message_buses",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListMessageBuses",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListMessageBuses"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListMessageBusesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListMessageBusesAsyncPager",
+        "shortName": "list_message_buses"
+      },
+      "description": "Sample for ListMessageBuses",
+      "file": "eventarc_v1_generated_eventarc_list_message_buses_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListMessageBuses_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_message_buses_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.list_message_buses",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListMessageBuses",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListMessageBuses"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListMessageBusesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListMessageBusesPager",
+        "shortName": "list_message_buses"
+      },
+      "description": "Sample for ListMessageBuses",
+      "file": "eventarc_v1_generated_eventarc_list_message_buses_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListMessageBuses_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_message_buses_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.list_pipelines",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListPipelines",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListPipelines"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListPipelinesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListPipelinesAsyncPager",
+        "shortName": "list_pipelines"
+      },
+      "description": "Sample for ListPipelines",
+      "file": "eventarc_v1_generated_eventarc_list_pipelines_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListPipelines_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_pipelines_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.list_pipelines",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListPipelines",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListPipelines"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListPipelinesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListPipelinesPager",
+        "shortName": "list_pipelines"
+      },
+      "description": "Sample for ListPipelines",
+      "file": "eventarc_v1_generated_eventarc_list_pipelines_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListPipelines_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_pipelines_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.list_providers",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListProviders",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListProviders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListProvidersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListProvidersAsyncPager",
+        "shortName": "list_providers"
+      },
+      "description": "Sample for ListProviders",
+      "file": "eventarc_v1_generated_eventarc_list_providers_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListProviders_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_providers_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.list_providers",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListProviders",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListProviders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListProvidersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListProvidersPager",
+        "shortName": "list_providers"
+      },
+      "description": "Sample for ListProviders",
+      "file": "eventarc_v1_generated_eventarc_list_providers_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListProviders_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_providers_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.list_triggers",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListTriggers",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListTriggers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListTriggersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListTriggersAsyncPager",
+        "shortName": "list_triggers"
+      },
+      "description": "Sample for ListTriggers",
+      "file": "eventarc_v1_generated_eventarc_list_triggers_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListTriggers_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_triggers_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.list_triggers",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.ListTriggers",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "ListTriggers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.ListTriggersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.services.eventarc.pagers.ListTriggersPager",
+        "shortName": "list_triggers"
+      },
+      "description": "Sample for ListTriggers",
+      "file": "eventarc_v1_generated_eventarc_list_triggers_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_ListTriggers_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_list_triggers_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.update_channel",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateChannel",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateChannelRequest"
+          },
+          {
+            "name": "channel",
+            "type": "google.cloud.eventarc_v1.types.Channel"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_channel"
+      },
+      "description": "Sample for UpdateChannel",
+      "file": "eventarc_v1_generated_eventarc_update_channel_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateChannel_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_channel_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.update_channel",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateChannel",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateChannelRequest"
+          },
+          {
+            "name": "channel",
+            "type": "google.cloud.eventarc_v1.types.Channel"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_channel"
+      },
+      "description": "Sample for UpdateChannel",
+      "file": "eventarc_v1_generated_eventarc_update_channel_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateChannel_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_channel_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.update_enrollment",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateEnrollment",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateEnrollmentRequest"
+          },
+          {
+            "name": "enrollment",
+            "type": "google.cloud.eventarc_v1.types.Enrollment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_enrollment"
+      },
+      "description": "Sample for UpdateEnrollment",
+      "file": "eventarc_v1_generated_eventarc_update_enrollment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateEnrollment_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_enrollment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.update_enrollment",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateEnrollment",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateEnrollmentRequest"
+          },
+          {
+            "name": "enrollment",
+            "type": "google.cloud.eventarc_v1.types.Enrollment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_enrollment"
+      },
+      "description": "Sample for UpdateEnrollment",
+      "file": "eventarc_v1_generated_eventarc_update_enrollment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateEnrollment_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_enrollment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.update_google_api_source",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateGoogleApiSource",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateGoogleApiSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateGoogleApiSourceRequest"
+          },
+          {
+            "name": "google_api_source",
+            "type": "google.cloud.eventarc_v1.types.GoogleApiSource"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_google_api_source"
+      },
+      "description": "Sample for UpdateGoogleApiSource",
+      "file": "eventarc_v1_generated_eventarc_update_google_api_source_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateGoogleApiSource_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_google_api_source_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.update_google_api_source",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateGoogleApiSource",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateGoogleApiSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateGoogleApiSourceRequest"
+          },
+          {
+            "name": "google_api_source",
+            "type": "google.cloud.eventarc_v1.types.GoogleApiSource"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_google_api_source"
+      },
+      "description": "Sample for UpdateGoogleApiSource",
+      "file": "eventarc_v1_generated_eventarc_update_google_api_source_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateGoogleApiSource_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_google_api_source_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.update_google_channel_config",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateGoogleChannelConfig",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateGoogleChannelConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateGoogleChannelConfigRequest"
+          },
+          {
+            "name": "google_channel_config",
+            "type": "google.cloud.eventarc_v1.types.GoogleChannelConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.GoogleChannelConfig",
+        "shortName": "update_google_channel_config"
+      },
+      "description": "Sample for UpdateGoogleChannelConfig",
+      "file": "eventarc_v1_generated_eventarc_update_google_channel_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateGoogleChannelConfig_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_google_channel_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.update_google_channel_config",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateGoogleChannelConfig",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateGoogleChannelConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateGoogleChannelConfigRequest"
+          },
+          {
+            "name": "google_channel_config",
+            "type": "google.cloud.eventarc_v1.types.GoogleChannelConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_v1.types.GoogleChannelConfig",
+        "shortName": "update_google_channel_config"
+      },
+      "description": "Sample for UpdateGoogleChannelConfig",
+      "file": "eventarc_v1_generated_eventarc_update_google_channel_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateGoogleChannelConfig_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_google_channel_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.update_message_bus",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateMessageBus",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateMessageBus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateMessageBusRequest"
+          },
+          {
+            "name": "message_bus",
+            "type": "google.cloud.eventarc_v1.types.MessageBus"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_message_bus"
+      },
+      "description": "Sample for UpdateMessageBus",
+      "file": "eventarc_v1_generated_eventarc_update_message_bus_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateMessageBus_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_message_bus_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.update_message_bus",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateMessageBus",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateMessageBus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateMessageBusRequest"
+          },
+          {
+            "name": "message_bus",
+            "type": "google.cloud.eventarc_v1.types.MessageBus"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_message_bus"
+      },
+      "description": "Sample for UpdateMessageBus",
+      "file": "eventarc_v1_generated_eventarc_update_message_bus_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateMessageBus_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_message_bus_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.update_pipeline",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdatePipeline",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdatePipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdatePipelineRequest"
+          },
+          {
+            "name": "pipeline",
+            "type": "google.cloud.eventarc_v1.types.Pipeline"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_pipeline"
+      },
+      "description": "Sample for UpdatePipeline",
+      "file": "eventarc_v1_generated_eventarc_update_pipeline_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdatePipeline_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_pipeline_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.update_pipeline",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdatePipeline",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdatePipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdatePipelineRequest"
+          },
+          {
+            "name": "pipeline",
+            "type": "google.cloud.eventarc_v1.types.Pipeline"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_pipeline"
+      },
+      "description": "Sample for UpdatePipeline",
+      "file": "eventarc_v1_generated_eventarc_update_pipeline_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdatePipeline_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_pipeline_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient",
+          "shortName": "EventarcAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcAsyncClient.update_trigger",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateTrigger",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateTriggerRequest"
+          },
+          {
+            "name": "trigger",
+            "type": "google.cloud.eventarc_v1.types.Trigger"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "allow_missing",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_trigger"
+      },
+      "description": "Sample for UpdateTrigger",
+      "file": "eventarc_v1_generated_eventarc_update_trigger_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateTrigger_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_trigger_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_v1.EventarcClient",
+          "shortName": "EventarcClient"
+        },
+        "fullName": "google.cloud.eventarc_v1.EventarcClient.update_trigger",
+        "method": {
+          "fullName": "google.cloud.eventarc.v1.Eventarc.UpdateTrigger",
+          "service": {
+            "fullName": "google.cloud.eventarc.v1.Eventarc",
+            "shortName": "Eventarc"
+          },
+          "shortName": "UpdateTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_v1.types.UpdateTriggerRequest"
+          },
+          {
+            "name": "trigger",
+            "type": "google.cloud.eventarc_v1.types.Trigger"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "allow_missing",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_trigger"
+      },
+      "description": "Sample for UpdateTrigger",
+      "file": "eventarc_v1_generated_eventarc_update_trigger_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarc_v1_generated_Eventarc_UpdateTrigger_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarc_v1_generated_eventarc_update_trigger_sync.py"
+    }
+  ]
+}

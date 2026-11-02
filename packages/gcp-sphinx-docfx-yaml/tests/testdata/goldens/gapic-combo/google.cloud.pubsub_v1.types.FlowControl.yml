@@ -1,0 +1,185 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.pubsub_v1.types.FlowControl
+  - google.cloud.pubsub_v1.types.FlowControl.max_bytes
+  - google.cloud.pubsub_v1.types.FlowControl.max_duration_per_lease_extension
+  - google.cloud.pubsub_v1.types.FlowControl.max_lease_duration
+  - google.cloud.pubsub_v1.types.FlowControl.max_messages
+  - google.cloud.pubsub_v1.types.FlowControl.min_duration_per_lease_extension
+  class: google.cloud.pubsub_v1.types.FlowControl
+  fullName: google.cloud.pubsub_v1.types.FlowControl
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: FlowControl
+  source:
+    id: FlowControl
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/types.py
+    startLine: 142
+  summary: 'The settings for controlling the rate at which messages are pulled
+
+    with an asynchronous subscription.
+
+
+    '
+  syntax:
+    content: "FlowControl(\n    max_bytes: int = 104857600,\n    max_messages: int\
+      \ = 1000,\n    max_lease_duration: float = 3600,\n    min_duration_per_lease_extension:\
+      \ float = 0,\n    max_duration_per_lease_extension: float = 0,\n)"
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.FlowControl
+- attributes: []
+  class: google.cloud.pubsub_v1.types.FlowControl
+  fullName: google.cloud.pubsub_v1.types.FlowControl
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: FlowControl
+  source:
+    id: FlowControl
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/types.py
+    startLine: 142
+  summary: 'Create new instance of FlowControl(max_bytes, max_messages, max_lease_duration,
+    min_duration_per_lease_extension, max_duration_per_lease_extension)
+
+
+    '
+  syntax:
+    content: "FlowControl(\n    max_bytes: int = 104857600,\n    max_messages: int\
+      \ = 1000,\n    max_lease_duration: float = 3600,\n    min_duration_per_lease_extension:\
+      \ float = 0,\n    max_duration_per_lease_extension: float = 0,\n)"
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.types.FlowControl
+- attributes: []
+  class: google.cloud.pubsub_v1.types.FlowControl
+  fullName: google.cloud.pubsub_v1.types.FlowControl.max_bytes
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: max_bytes
+  source:
+    id: max_bytes
+    path: null
+    startLine: null
+  summary: 'The maximum total size of received - but not yet processed - messages
+    before pausing the message stream.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.FlowControl.max_bytes
+- attributes: []
+  class: google.cloud.pubsub_v1.types.FlowControl
+  fullName: google.cloud.pubsub_v1.types.FlowControl.max_duration_per_lease_extension
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: max_duration_per_lease_extension
+  source:
+    id: max_duration_per_lease_extension
+    path: null
+    startLine: null
+  summary: 'The max amount of time in seconds for a single lease extension attempt.
+    Bounds the delay before a message redelivery if the subscriber fails to extend
+    the deadline. Must be between 10 and 600 (inclusive). Ignored if set to 0.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.FlowControl.max_duration_per_lease_extension
+- attributes: []
+  class: google.cloud.pubsub_v1.types.FlowControl
+  fullName: google.cloud.pubsub_v1.types.FlowControl.max_lease_duration
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: max_lease_duration
+  source:
+    id: max_lease_duration
+    path: null
+    startLine: null
+  summary: 'The maximum amount of time in seconds to hold a lease on a message before
+    dropping it from the lease management.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.FlowControl.max_lease_duration
+- attributes: []
+  class: google.cloud.pubsub_v1.types.FlowControl
+  fullName: google.cloud.pubsub_v1.types.FlowControl.max_messages
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: max_messages
+  source:
+    id: max_messages
+    path: null
+    startLine: null
+  summary: 'The maximum number of received - but not yet processed - messages before
+    pausing the message stream.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.FlowControl.max_messages
+- attributes: []
+  class: google.cloud.pubsub_v1.types.FlowControl
+  fullName: google.cloud.pubsub_v1.types.FlowControl.min_duration_per_lease_extension
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: min_duration_per_lease_extension
+  source:
+    id: min_duration_per_lease_extension
+    path: null
+    startLine: null
+  summary: 'The min amount of time in seconds for a single lease extension attempt.
+    Must be between 10 and 600 (inclusive). Ignored by default, but set to 60 seconds
+    if the subscription has exactly-once delivery enabled.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.FlowControl.min_duration_per_lease_extension
+references:
+- fullName: google.cloud.pubsub_v1.types.FlowControl
+  isExternal: false
+  name: FlowControl
+  parent: google.cloud.pubsub_v1.types.FlowControl
+  uid: google.cloud.pubsub_v1.types.FlowControl
+- fullName: google.cloud.pubsub_v1.types.FlowControl.max_bytes
+  isExternal: false
+  name: max_bytes
+  parent: google.cloud.pubsub_v1.types.FlowControl
+  uid: google.cloud.pubsub_v1.types.FlowControl.max_bytes
+- fullName: google.cloud.pubsub_v1.types.FlowControl.max_duration_per_lease_extension
+  isExternal: false
+  name: max_duration_per_lease_extension
+  parent: google.cloud.pubsub_v1.types.FlowControl
+  uid: google.cloud.pubsub_v1.types.FlowControl.max_duration_per_lease_extension
+- fullName: google.cloud.pubsub_v1.types.FlowControl.max_lease_duration
+  isExternal: false
+  name: max_lease_duration
+  parent: google.cloud.pubsub_v1.types.FlowControl
+  uid: google.cloud.pubsub_v1.types.FlowControl.max_lease_duration
+- fullName: google.cloud.pubsub_v1.types.FlowControl.max_messages
+  isExternal: false
+  name: max_messages
+  parent: google.cloud.pubsub_v1.types.FlowControl
+  uid: google.cloud.pubsub_v1.types.FlowControl.max_messages
+- fullName: google.cloud.pubsub_v1.types.FlowControl.min_duration_per_lease_extension
+  isExternal: false
+  name: min_duration_per_lease_extension
+  parent: google.cloud.pubsub_v1.types.FlowControl
+  uid: google.cloud.pubsub_v1.types.FlowControl.min_duration_per_lease_extension

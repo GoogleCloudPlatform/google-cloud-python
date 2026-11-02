@@ -1,0 +1,117 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.queue
+  - google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.schedule
+  - google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.shutdown
+  class: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+  fullName: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.scheduler
+  name: Scheduler
+  source:
+    id: Scheduler
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/scheduler.py
+    startLine: 32
+  summary: 'Abstract base class for schedulers.
+
+
+    Schedulers are used to schedule callbacks asynchronously.
+
+
+    '
+  syntax:
+    content: Scheduler()
+  type: class
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+- &id001
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+  fullName: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.queue
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.scheduler
+  name: queue
+  source:
+    id: queue
+    path: null
+    startLine: null
+  summary: 'Queue: A concurrency-safe queue specific to the underlying
+
+    concurrency implementation.
+
+
+    This queue is used to send messages *back* to the scheduling actor.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.queue
+- *id001
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+  fullName: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.schedule
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.scheduler
+  name: schedule
+  source:
+    id: schedule
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/scheduler.py
+    startLine: 48
+  summary: 'Schedule the callback to be called asynchronously.
+
+    '
+  syntax:
+    content: 'schedule(callback: typing.Callable, *args, **kwargs) -> None'
+    parameters:
+    - description: The function to call.
+      id: callback
+      var_type: Callable
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.schedule
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+  fullName: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.shutdown
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.scheduler
+  name: shutdown
+  source:
+    id: shutdown
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/scheduler.py
+    startLine: 62
+  summary: 'Shuts down the scheduler and immediately end all pending callbacks.
+
+    '
+  syntax:
+    content: "shutdown(\n    await_msg_callbacks: bool = False,\n) -> typing.List[pubsub_v1.subscriber.message.Message]"
+    parameters:
+    - defaultValue: 'False'
+      description: If <code>True</code>, the method will block until all currently
+        executing callbacks are done processing. If <code>False</code> (default),
+        the method will not wait for the currently running callbacks to complete.
+      id: await_msg_callbacks
+      var_type: bool
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.shutdown
+references:
+- fullName: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.queue
+  isExternal: false
+  name: queue
+  parent: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.queue
+- fullName: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.schedule
+  isExternal: false
+  name: schedule
+  parent: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.schedule
+- fullName: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.shutdown
+  isExternal: false
+  name: shutdown
+  parent: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler.shutdown

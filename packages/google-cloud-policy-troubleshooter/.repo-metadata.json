@@ -1,0 +1,16 @@
+{
+    "api_description": "Policy Troubleshooter helps you understand whether a principal can access a resource. Given a principal, a resource, and a permission, Policy Troubleshooter examines the allow policies, deny policies, and principal access boundary (PAB) policies that impact the principal's access.",
+    "api_id": "policytroubleshooter.googleapis.com",
+    "api_shortname": "policytroubleshooter",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/policytroubleshooter/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-policy-troubleshooter",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=690790\u0026template=1814512",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "policytroubleshooter",
+    "name_pretty": "Policy Troubleshooter",
+    "product_documentation": "https://cloud.google.com/policy-intelligence/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

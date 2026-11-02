@@ -1,0 +1,377 @@
+{% import "%namespace/%name_%version/%sub/services/%service/_shared_macros.j2" as shared_macros %}
+{# TODO(https://github.com/googleapis/gapic-generator-python/issues/2121): Remove the following variable (and the condition later in this file) for async rest transport once support for it is GA. #}
+{% set rest_async_io_enabled = api.all_library_settings[api.naming.proto_package].python_settings.experimental_features.rest_async_io_enabled %}
+{% extends '_base.py.j2' %}
+
+{% block content %}
+
+
+import google.auth
+try:
+    import aiohttp # type: ignore
+    from google.auth.aio.transport.sessions import AsyncAuthorizedSession # type: ignore
+    from google.api_core import rest_streaming_async # type: ignore
+    from google.api_core.operations_v1 import AsyncOperationsRestClient # type: ignore
+{# NOTE: `pragma: NO COVER` is needed since the coverage for presubmits isn't combined. #}
+{# TODO(https://github.com/googleapis/gapic-generator-python/issues/2200): Add coverage for ImportError. #}
+except ImportError as e:  # pragma: NO COVER
+    raise ImportError("`rest_asyncio` transport requires the library to be installed with the `async_rest` extra. Install the library with the `async_rest` extra using `pip install {{ api.naming.warehouse_package_name }}[async_rest]`") from e
+
+from google.auth import credentials as ga_credentials  # type: ignore
+from google.auth.aio import credentials as ga_credentials_async  # type: ignore
+
+from google.api_core import exceptions as core_exceptions
+from google.api_core import gapic_v1
+from google.api_core.client_options import ClientOptions
+{% if service.has_resumable_upload_methods %}
+import urllib.parse
+from google.api_core import resumable_transfer
+{% endif %}
+{% if service.has_lro %}
+from google.api_core import operations_v1
+{% endif %}{# service.has_lro #}
+{% if opts.add_iam_methods or api.has_iam_mixin %}
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+{% endif %}
+{% if api.has_location_mixin %}
+from google.cloud.location import locations_pb2 # type: ignore
+{% endif %}
+from google.api_core import retry_async as retries
+from google.api_core import rest_helpers
+from google.api_core import rest_streaming_async  # type: ignore
+{% set package_path = api.naming.module_namespace|join('.') + "." + api.naming.versioned_module_name %}
+from {{package_path}}._compat import transcode_request, trace_http_request
+
+import google.protobuf
+
+from google.protobuf import json_format
+{% if service.has_lro %}
+from google.api_core import operations_v1
+{% endif %}
+{% if opts.add_iam_methods or api.has_iam_mixin %}
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+{% endif %}
+{% if api.has_location_mixin %}
+from google.cloud.location import locations_pb2 # type: ignore
+{% endif %}
+
+import json  # type: ignore
+import dataclasses
+from typing import Any, Dict, List, Callable, Tuple, Optional, Sequence, Union
+
+{{ shared_macros.operations_mixin_imports(api, service, opts) }}
+
+from .rest_base import _Base{{ service.name }}RestTransport
+
+from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
+
+
+import logging
+
+try:
+    from google.api_core import client_logging  # type: ignore
+    CLIENT_LOGGING_SUPPORTED = True  # pragma: NO COVER
+except ImportError:  # pragma: NO COVER
+    CLIENT_LOGGING_SUPPORTED = False
+
+_LOGGER = logging.getLogger(__name__)
+
+try:
+    OptionalRetry = Union[retries.AsyncRetry, gapic_v1.method._MethodDefault, None]
+except AttributeError:  # pragma: NO COVER
+    OptionalRetry = Union[retries.AsyncRetry, object, None]  # type: ignore
+
+DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
+    gapic_version=BASE_DEFAULT_CLIENT_INFO.gapic_version,
+    grpc_version=None,
+    rest_version=f"google-auth@{google.auth.__version__}",
+)
+
+DEFAULT_CLIENT_INFO.protobuf_runtime_version = google.protobuf.__version__
+
+{{ shared_macros.create_interceptor_class(api, service, method, is_async=True) }}
+
+@dataclasses.dataclass
+class Async{{service.name}}RestStub:
+    _session: AsyncAuthorizedSession
+    _host: str
+    _interceptor: Async{{service.name}}RestInterceptor
+    _client_options: Optional[ClientOptions] = None
+
+class Async{{service.name}}RestTransport(_Base{{ service.name }}RestTransport):
+    """Asynchronous REST backend transport for {{ service.name }}.
+
+    {{ service.meta.doc|rst(width=72, indent=4) }}
+
+    This class defines the same methods as the primary client, so the
+    primary client can load the underlying transport implementation
+    and call it.
+
+    It sends JSON representations of protocol buffers over HTTP/1.1
+    """
+    def __init__(self,
+            *,
+            host: str{% if service.host %} = '{{ service.host }}'{% endif %},
+            credentials: Optional[Union[ga_credentials.Credentials, ga_credentials_async.Credentials]] = None,
+            client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
+            url_scheme: str = 'https',
+            interceptor: Optional[Async{{ service.name }}RestInterceptor] = None,
+            client_options: Optional[ClientOptions] = None,
+            **kwargs,
+            ) -> None:
+        """Instantiate the transport.
+
+       {% if not opts.rest_numeric_enums %}
+       NOTE: This async REST transport functionality is currently in a beta
+       state (preview). We welcome your feedback via a GitHub issue in
+       this library's repository. Thank you!
+       {% endif %}
+
+        Args:
+            host ({% if service.host %}Optional[str]{% else %}str{% endif %}):
+                {{ ' ' }}The hostname to connect to {% if service.host %}(default: '{{ service.host }}'){% endif %}.
+            credentials (Optional[Union[google.auth.credentials.Credentials, google.auth.aio.credentials.Credentials]]): The
+                authorization credentials to attach to requests. These
+                credentials identify the application to the service; if none
+                are specified, the client will attempt to ascertain the
+                credentials from the environment.
+            client_info (google.api_core.gapic_v1.client_info.ClientInfo):
+                The client info used to send a user-agent string along with
+                API requests. If ``None``, then default info will be used.
+                Generally, you only need to set this if you are developing
+                your own client library.
+            url_scheme (str): the protocol scheme for the API endpoint.  Normally
+                "https", but for testing or local servers,
+                "http" can be specified.
+            interceptor (Optional[Async{{ service.name }}RestInterceptor]): Interceptor used
+                to manipulate requests, request metadata, and responses.
+            client_options (Optional[google.api_core.client_options.ClientOptions]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
+        """
+        # Run the base constructor
+        super().__init__(
+            host=host,
+            credentials=credentials,
+            client_info=client_info,
+            always_use_jwt_access=False,
+            url_scheme=url_scheme,
+            api_audience=None,
+            client_options=client_options,
+            **kwargs,
+        )
+        {# Note: Type for creds is ignored because of incorrect type hint for creds in the client layer.
+         # TODO(https://github.com/googleapis/gapic-generator-python/issues/2177): Remove `# type: ignore` once
+         # we update the type hints for credentials to include asynchronous credentials in the client layer.
+        #}
+        self._session = AsyncAuthorizedSession(self._credentials)  # type: ignore
+        self._interceptor = interceptor or Async{{ service.name }}RestInterceptor()
+        self._prep_wrapped_messages(client_info)
+        {% if service.has_lro and rest_async_io_enabled %}
+        self._operations_client: Optional[operations_v1.AsyncOperationsRestClient] = None
+        {% endif %}
+
+
+    {{ shared_macros.prep_wrapped_messages_async_method(api, service, is_rest_asyncio=True)|indent(4) }}
+
+    {% for method in service.methods.values()|sort(attribute="name") if rest_async_io_enabled or method.is_resumable_upload %}
+    class {{ method.name|make_private }}(_Base{{ service.name }}RestTransport._Base{{method.name}}, Async{{service.name}}RestStub):
+        def __hash__(self):
+            return hash("Async{{service.name}}RestTransport.{{method.name}}")
+
+        {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2169): Implement client streaming method. #}
+        {% if method.http_options and not method.client_streaming and not method.is_resumable_upload %}
+        {% set body_spec = method.http_options[0].body %}
+        {{ shared_macros.response_method(body_spec, is_async=True, is_streaming_method=None)|indent(8) }}
+
+        {% endif %}{#  method.http_options and not method.client_streaming and not method.is_resumable_upload #}
+        async def __call__(self,
+                    request: {{method.input.ident}}, *,
+                    {% if method.is_resumable_upload %}
+                    config: Optional[resumable_transfer.ResumableUploadConfig]=None,
+                    start_retry: OptionalRetry=gapic_v1.method.DEFAULT,
+                    {% else %}
+                    retry: OptionalRetry=gapic_v1.method.DEFAULT,
+                    {% endif %}
+                    timeout: Optional[float]=None,
+                    {{ shared_macros.client_method_metadata_argument()|indent(12) }}={{ shared_macros.client_method_metadata_default_value() }},
+                    {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2169): Update return type for client streaming method. #}
+                    ){% if not method.void %} -> {% if method.is_resumable_upload %}{{method.client_output_async.ident}}{% elif not method.server_streaming %}{{method.output.ident}}{% else %}rest_streaming_async.AsyncResponseIterator{% endif %}{% endif %}:
+        {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2169): Implement client streaming method. #}
+         {% if method.http_options and not method.client_streaming %}
+            r"""Call the {{- ' ' -}}
+            {{ (method.name|snake_case).replace('_',' ')|wrap(
+                    width=70, offset=45, indent=8) }}
+            {{- ' ' -}} method over HTTP.
+
+            Args:
+                request (~.{{ method.input.ident }}):
+                    The request object.{{ ' ' }}
+                    {{- method.input.meta.doc|rst(width=72, indent=16, nl=False) }}
+                {% if method.is_resumable_upload %}
+                config (Optional[google.api_core.resumable_transfer.ResumableUploadConfig]):
+                    Optional configuration for the resumable upload session.
+                start_retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                    should be retried when initiating the resumable upload session.
+                {% else %}
+                retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                    should be retried.
+                {% endif %}
+                timeout (float): The timeout for this request.
+                {{ shared_macros.client_method_metadata_argument_doc()|indent(8) }}
+            {% if not method.void %}
+
+            Returns:
+                {% if method.is_resumable_upload %}
+                ~.{{ method.client_output_async.ident }}:
+                    {{ method.client_output_async.meta.doc|rst(width=72, indent=16) }}
+                {% else %}
+                ~.{{ method.output.ident }}:
+                    {{ method.output.meta.doc|rst(width=72, indent=16) }}
+                {% endif %}
+            {% endif %}
+            """
+            {% if method.is_resumable_upload %}
+            {{ shared_macros.rest_resumable_upload_call_method_common(method, service, True, opts.rest_numeric_enums)|indent(12) }}
+            {% else %}
+
+            {{ shared_macros.rest_call_method_common(body_spec, method.name, service, True, method.input.ident.is_proto_plus_type, opts.rest_numeric_enums)|indent(8) }}
+
+            {% if not method.void %}
+            # Return the response
+            {% if method.server_streaming %}
+            resp = rest_streaming_async.AsyncResponseIterator(response, {{method.output.ident}})
+            {% else %}
+            resp = {{method.output.ident}}()
+            {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2189): Investigate if the proto-plus conversion below is needed for a streaming response. #}
+            {% if method.output.ident.is_proto_plus_type %}
+            pb_resp = {{method.output.ident}}.pb(resp)
+            {% else %}
+            pb_resp = resp
+            {% endif %}{# if method.output.ident.is_proto_plus_type #}
+            content = await response.read()
+            json_format.Parse(content, pb_resp, ignore_unknown_fields=True)
+            {% endif %}{# if method.server_streaming #}
+            resp = await self._interceptor.post_{{ method.name|snake_case }}(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = await self._interceptor.post_{{ method.name|snake_case }}_with_metadata(resp, response_metadata)
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2389): #}
+            {# Depending how we want to log (a) receiving a streaming response vs (b) exposing the next streamed item to the user, we could possibly want to log something here #}
+            {# (a) should always happen in api-core #}
+            {# (b) could happen in api-core, or it could happen here when we iterate to the next streamed item that was previously received. #}
+            {% if not method.server_streaming %}
+                try:
+                    response_payload = {% if method.output.ident.is_proto_plus_type %}{{ method.output.ident }}.to_json(response){% else %}json_format.MessageToJson(resp){% endif %}
+
+                except:
+                    {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2283): Remove try/except once unit tests are updated. #}
+                    response_payload = None
+            {% endif %}{# if not method.server_streaming #}
+                http_response = {
+                {# Not logging response payload for server streaming here. See comment above. #}
+                {% if not method.server_streaming %}
+                    "payload": response_payload,
+                {% endif %}{# if not method.server_streaming #}
+                    "headers":  dict(response.headers),
+                    "status": "OK", # need to obtain this properly
+                }
+                _LOGGER.debug(
+                    "Received response for {{ service.meta.address.proto_package_versioned }}.{{ service.async_client_name }}.{{ method.transport_safe_name|snake_case }}",
+                    extra = {
+                        "serviceName": "{{ service.meta.address.proto }}",
+                        "rpcName": "{{ method.name }}",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+
+            return resp
+
+            {% endif %}{# method.void #}
+            {% endif %}{# method.is_resumable_upload #}
+
+         {% else %}
+                raise NotImplementedError(
+                    "Method {{ method.name }} is not available over REST transport"
+                )
+        {% endif %}{#  method.http_options and not method.client_streaming #}
+
+    {% endfor %}
+
+    {% if service.has_lro and rest_async_io_enabled %}
+
+    @property
+    def operations_client(self) -> AsyncOperationsRestClient:
+        """Create the async client designed to process long-running operations.
+
+        This property caches on the instance; repeated calls return the same
+        client.
+        """
+        # Only create a new client if we do not already have one.
+        if self._operations_client is None:
+            http_options: Dict[str, List[Dict[str, str]]] = {
+            {% for selector, rules in api.http_options.items() %}
+            {% if selector.startswith('google.longrunning.Operations') %}
+                '{{ selector }}': [
+                    {% for rule in rules %}
+                    {
+                        'method': '{{ rule.method }}',
+                        'uri': '{{ rule.uri }}',
+                        {% if rule.body %}
+                        'body': '{{ rule.body }}',
+                        {% endif %}{# rule.body #}
+                    },
+                    {% endfor %}{# rules #}
+                ],
+            {% endif %}{# selector.startswith Operations #}
+            {% endfor %}{# http_options #}
+            }
+
+            rest_transport = operations_v1.AsyncOperationsRestTransport(  # type: ignore
+                    host=self._host,
+                    # use the credentials which are saved
+                    {# Note: Type for creds is ignored because of incorrect type hint for creds in the client layer.
+                     # TODO(https://github.com/googleapis/gapic-generator-python/issues/2177): Remove `# type: ignore` once
+                     # we update the type hints for credentials to include asynchronous credentials in the client layer.
+                    #}
+                    credentials=self._credentials,  # type: ignore
+                    http_options=http_options,
+                    path_prefix="{{ service.client_package_version }}"
+            )
+
+            self._operations_client = AsyncOperationsRestClient(transport=rest_transport)
+
+        # Return the client from cache.
+        return self._operations_client
+    {% endif %}
+
+    {% for method in service.methods.values()|sort(attribute="name") if rest_async_io_enabled or method.is_resumable_upload %}
+    {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2154): Remove `type:  ignore`. #}
+    @property
+    def {{method.transport_safe_name|snake_case}}(self) -> Callable[
+            [{{method.input.ident}}],
+            {% if method.is_resumable_upload %}
+            {{method.client_output_async.ident}}]:
+            {% else %}
+            {{method.output.ident}}]:
+            {% endif %}
+        return self._{{method.name}}(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
+
+    {% endfor %}
+    {% if rest_async_io_enabled %}
+    {% for name, sig in api.mixin_api_signatures.items() %}
+    {{ shared_macros.generate_mixin_call_method(service, api, name, sig, is_async=True) | indent(4) }}
+    {% endfor %}
+    {% endif %}
+
+    @property
+    def kind(self) -> str:
+        return "rest_asyncio"
+
+    async def close(self):
+        await self._session.close()
+
+{% endblock %}

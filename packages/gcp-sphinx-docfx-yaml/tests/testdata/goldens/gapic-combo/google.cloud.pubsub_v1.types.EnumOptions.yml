@@ -1,0 +1,19 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.EnumOptions
+  fullName: google.cloud.pubsub_v1.types.EnumOptions
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: EnumOptions
+  source:
+    id: EnumOptions
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.EnumOptions` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.EnumOptions
+references: []

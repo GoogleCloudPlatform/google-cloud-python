@@ -1,0 +1,15 @@
+{
+    "api_description": "Cloud IDS (Cloud Intrusion Detection System) detects malware, spyware,\ncommand-and-control attacks, and other network-based threats. Its security\nefficacy is industry leading, built with Palo Alto Networks technologies.\nWhen you use this product, your organization name and consumption levels\nwill be shared with Palo Alto Networks.",
+    "api_id": "ids.googleapis.com",
+    "api_shortname": "ids",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/ids/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-ids",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "ids",
+    "name_pretty": "Cloud IDS",
+    "product_documentation": "https://cloud.google.com/intrusion-detection-system/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

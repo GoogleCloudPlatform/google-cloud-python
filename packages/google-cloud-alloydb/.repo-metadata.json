@@ -1,0 +1,16 @@
+{
+    "api_description": "AlloyDB for PostgreSQL is an open source-compatible database service that\nprovides a powerful option for migrating, modernizing, or building\ncommercial-grade applications. It offers full compatibility with standard\nPostgreSQL, and is more than 4x faster for transactional workloads and up\nto 100x faster for analytical queries than standard PostgreSQL in our\nperformance tests. AlloyDB for PostgreSQL offers a 99.99 percent\navailability SLA inclusive of maintenance. \u003cbr\u003e\u003cbr\u003e AlloyDB is optimized\nfor the most demanding use cases, allowing you to build new applications\nthat require high transaction throughput, large database sizes, or\nmultiple read resources; scale existing PostgreSQL workloads with no\napplication changes; and modernize legacy proprietary databases.",
+    "api_id": "alloydb.googleapis.com",
+    "api_shortname": "alloydb",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/alloydb/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-alloydb",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1194526\u0026template=1689942",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "alloydb",
+    "name_pretty": "AlloyDB",
+    "product_documentation": "https://cloud.google.com/alloydb/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

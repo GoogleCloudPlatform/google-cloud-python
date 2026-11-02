@@ -1,0 +1,16 @@
+{
+    "api_description": "Manages identity and access control for Google Cloud resources, including\nthe creation of service accounts, which you can use to authenticate to\nGoogle and make API calls. Enabling this API also enables the IAM Service\nAccount Credentials API (iamcredentials.googleapis.com). However,\ndisabling this API doesn't disable the IAM Service Account Credentials\nAPI.",
+    "api_id": "iam.googleapis.com",
+    "api_shortname": "iam",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/iam/latest",
+    "default_version": "v2",
+    "distribution_name": "google-cloud-iam",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1077618",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "iam",
+    "name_pretty": "Identity and Access Management (IAM)",
+    "product_documentation": "https://cloud.google.com/iam/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

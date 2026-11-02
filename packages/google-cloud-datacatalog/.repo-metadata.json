@@ -1,0 +1,16 @@
+{
+    "api_description": "A fully managed and highly scalable data discovery and metadata management\nservice.",
+    "api_id": "datacatalog.googleapis.com",
+    "api_shortname": "datacatalog",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/datacatalog/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-datacatalog",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=655468\u0026template=1284353",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "datacatalog",
+    "name_pretty": "Google Cloud Data Catalog",
+    "product_documentation": "https://cloud.google.com/data-catalog/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

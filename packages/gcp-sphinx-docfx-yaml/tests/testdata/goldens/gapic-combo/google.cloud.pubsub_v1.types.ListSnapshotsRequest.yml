@@ -1,0 +1,36 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the project in which to list\n   snapshots.\
+      \ Format is <code>projects/{project-id}</code>."
+    id: project
+    var_type: str
+  - description: Maximum number of snapshots to return.
+    id: page_size
+    var_type: int
+  - description: "The value returned by the last <code>ListSnapshotsResponse</code>;\n\
+      \   indicates that this is a continuation of a prior\n   <code>ListSnapshots</code>\
+      \ call, and that the system should return\n   the next page of data."
+    id: page_token
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.ListSnapshotsRequest
+  fullName: google.cloud.pubsub_v1.types.ListSnapshotsRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ListSnapshotsRequest
+  source:
+    id: ListSnapshotsRequest
+    path: null
+    startLine: null
+  summary: 'Request for the `ListSnapshots` method.
+
+    '
+  syntax:
+    content: ListSnapshotsRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ListSnapshotsRequest
+references: []

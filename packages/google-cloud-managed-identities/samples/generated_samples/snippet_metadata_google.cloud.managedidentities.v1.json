@@ -1,0 +1,1689 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.managedidentities.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-managed-identities",
+    "version": "1.17.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient",
+          "shortName": "ManagedIdentitiesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient.attach_trust",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.AttachTrust",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "AttachTrust"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.AttachTrustRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "trust",
+            "type": "google.cloud.managedidentities_v1.types.Trust"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "attach_trust"
+      },
+      "description": "Sample for AttachTrust",
+      "file": "managedidentities_v1_generated_managed_identities_service_attach_trust_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_AttachTrust_async",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_attach_trust_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient",
+          "shortName": "ManagedIdentitiesServiceClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient.attach_trust",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.AttachTrust",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "AttachTrust"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.AttachTrustRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "trust",
+            "type": "google.cloud.managedidentities_v1.types.Trust"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "attach_trust"
+      },
+      "description": "Sample for AttachTrust",
+      "file": "managedidentities_v1_generated_managed_identities_service_attach_trust_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_AttachTrust_sync",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_attach_trust_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient",
+          "shortName": "ManagedIdentitiesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient.create_microsoft_ad_domain",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.CreateMicrosoftAdDomain",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "CreateMicrosoftAdDomain"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.CreateMicrosoftAdDomainRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "domain_name",
+            "type": "str"
+          },
+          {
+            "name": "domain",
+            "type": "google.cloud.managedidentities_v1.types.Domain"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_microsoft_ad_domain"
+      },
+      "description": "Sample for CreateMicrosoftAdDomain",
+      "file": "managedidentities_v1_generated_managed_identities_service_create_microsoft_ad_domain_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_CreateMicrosoftAdDomain_async",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_create_microsoft_ad_domain_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient",
+          "shortName": "ManagedIdentitiesServiceClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient.create_microsoft_ad_domain",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.CreateMicrosoftAdDomain",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "CreateMicrosoftAdDomain"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.CreateMicrosoftAdDomainRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "domain_name",
+            "type": "str"
+          },
+          {
+            "name": "domain",
+            "type": "google.cloud.managedidentities_v1.types.Domain"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_microsoft_ad_domain"
+      },
+      "description": "Sample for CreateMicrosoftAdDomain",
+      "file": "managedidentities_v1_generated_managed_identities_service_create_microsoft_ad_domain_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_CreateMicrosoftAdDomain_sync",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_create_microsoft_ad_domain_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient",
+          "shortName": "ManagedIdentitiesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient.delete_domain",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.DeleteDomain",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "DeleteDomain"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.DeleteDomainRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_domain"
+      },
+      "description": "Sample for DeleteDomain",
+      "file": "managedidentities_v1_generated_managed_identities_service_delete_domain_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_DeleteDomain_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_delete_domain_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient",
+          "shortName": "ManagedIdentitiesServiceClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient.delete_domain",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.DeleteDomain",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "DeleteDomain"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.DeleteDomainRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_domain"
+      },
+      "description": "Sample for DeleteDomain",
+      "file": "managedidentities_v1_generated_managed_identities_service_delete_domain_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_DeleteDomain_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_delete_domain_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient",
+          "shortName": "ManagedIdentitiesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient.detach_trust",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.DetachTrust",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "DetachTrust"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.DetachTrustRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "trust",
+            "type": "google.cloud.managedidentities_v1.types.Trust"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "detach_trust"
+      },
+      "description": "Sample for DetachTrust",
+      "file": "managedidentities_v1_generated_managed_identities_service_detach_trust_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_DetachTrust_async",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_detach_trust_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient",
+          "shortName": "ManagedIdentitiesServiceClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient.detach_trust",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.DetachTrust",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "DetachTrust"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.DetachTrustRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "trust",
+            "type": "google.cloud.managedidentities_v1.types.Trust"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "detach_trust"
+      },
+      "description": "Sample for DetachTrust",
+      "file": "managedidentities_v1_generated_managed_identities_service_detach_trust_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_DetachTrust_sync",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_detach_trust_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient",
+          "shortName": "ManagedIdentitiesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient.get_domain",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.GetDomain",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "GetDomain"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.GetDomainRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.managedidentities_v1.types.Domain",
+        "shortName": "get_domain"
+      },
+      "description": "Sample for GetDomain",
+      "file": "managedidentities_v1_generated_managed_identities_service_get_domain_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_GetDomain_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_get_domain_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient",
+          "shortName": "ManagedIdentitiesServiceClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient.get_domain",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.GetDomain",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "GetDomain"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.GetDomainRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.managedidentities_v1.types.Domain",
+        "shortName": "get_domain"
+      },
+      "description": "Sample for GetDomain",
+      "file": "managedidentities_v1_generated_managed_identities_service_get_domain_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_GetDomain_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_get_domain_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient",
+          "shortName": "ManagedIdentitiesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient.list_domains",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.ListDomains",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "ListDomains"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.ListDomainsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.managedidentities_v1.services.managed_identities_service.pagers.ListDomainsAsyncPager",
+        "shortName": "list_domains"
+      },
+      "description": "Sample for ListDomains",
+      "file": "managedidentities_v1_generated_managed_identities_service_list_domains_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_ListDomains_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_list_domains_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient",
+          "shortName": "ManagedIdentitiesServiceClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient.list_domains",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.ListDomains",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "ListDomains"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.ListDomainsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.managedidentities_v1.services.managed_identities_service.pagers.ListDomainsPager",
+        "shortName": "list_domains"
+      },
+      "description": "Sample for ListDomains",
+      "file": "managedidentities_v1_generated_managed_identities_service_list_domains_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_ListDomains_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_list_domains_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient",
+          "shortName": "ManagedIdentitiesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient.reconfigure_trust",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.ReconfigureTrust",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "ReconfigureTrust"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.ReconfigureTrustRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "target_domain_name",
+            "type": "str"
+          },
+          {
+            "name": "target_dns_ip_addresses",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "reconfigure_trust"
+      },
+      "description": "Sample for ReconfigureTrust",
+      "file": "managedidentities_v1_generated_managed_identities_service_reconfigure_trust_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_ReconfigureTrust_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_reconfigure_trust_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient",
+          "shortName": "ManagedIdentitiesServiceClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient.reconfigure_trust",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.ReconfigureTrust",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "ReconfigureTrust"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.ReconfigureTrustRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "target_domain_name",
+            "type": "str"
+          },
+          {
+            "name": "target_dns_ip_addresses",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "reconfigure_trust"
+      },
+      "description": "Sample for ReconfigureTrust",
+      "file": "managedidentities_v1_generated_managed_identities_service_reconfigure_trust_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_ReconfigureTrust_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_reconfigure_trust_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient",
+          "shortName": "ManagedIdentitiesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient.reset_admin_password",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.ResetAdminPassword",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "ResetAdminPassword"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.ResetAdminPasswordRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.managedidentities_v1.types.ResetAdminPasswordResponse",
+        "shortName": "reset_admin_password"
+      },
+      "description": "Sample for ResetAdminPassword",
+      "file": "managedidentities_v1_generated_managed_identities_service_reset_admin_password_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_ResetAdminPassword_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_reset_admin_password_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient",
+          "shortName": "ManagedIdentitiesServiceClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient.reset_admin_password",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.ResetAdminPassword",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "ResetAdminPassword"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.ResetAdminPasswordRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.managedidentities_v1.types.ResetAdminPasswordResponse",
+        "shortName": "reset_admin_password"
+      },
+      "description": "Sample for ResetAdminPassword",
+      "file": "managedidentities_v1_generated_managed_identities_service_reset_admin_password_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_ResetAdminPassword_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_reset_admin_password_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient",
+          "shortName": "ManagedIdentitiesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient.update_domain",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.UpdateDomain",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "UpdateDomain"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.UpdateDomainRequest"
+          },
+          {
+            "name": "domain",
+            "type": "google.cloud.managedidentities_v1.types.Domain"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_domain"
+      },
+      "description": "Sample for UpdateDomain",
+      "file": "managedidentities_v1_generated_managed_identities_service_update_domain_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_UpdateDomain_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_update_domain_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient",
+          "shortName": "ManagedIdentitiesServiceClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient.update_domain",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.UpdateDomain",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "UpdateDomain"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.UpdateDomainRequest"
+          },
+          {
+            "name": "domain",
+            "type": "google.cloud.managedidentities_v1.types.Domain"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_domain"
+      },
+      "description": "Sample for UpdateDomain",
+      "file": "managedidentities_v1_generated_managed_identities_service_update_domain_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_UpdateDomain_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_update_domain_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient",
+          "shortName": "ManagedIdentitiesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceAsyncClient.validate_trust",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.ValidateTrust",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "ValidateTrust"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.ValidateTrustRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "trust",
+            "type": "google.cloud.managedidentities_v1.types.Trust"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "validate_trust"
+      },
+      "description": "Sample for ValidateTrust",
+      "file": "managedidentities_v1_generated_managed_identities_service_validate_trust_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_ValidateTrust_async",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_validate_trust_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient",
+          "shortName": "ManagedIdentitiesServiceClient"
+        },
+        "fullName": "google.cloud.managedidentities_v1.ManagedIdentitiesServiceClient.validate_trust",
+        "method": {
+          "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService.ValidateTrust",
+          "service": {
+            "fullName": "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+            "shortName": "ManagedIdentitiesService"
+          },
+          "shortName": "ValidateTrust"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.managedidentities_v1.types.ValidateTrustRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "trust",
+            "type": "google.cloud.managedidentities_v1.types.Trust"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "validate_trust"
+      },
+      "description": "Sample for ValidateTrust",
+      "file": "managedidentities_v1_generated_managed_identities_service_validate_trust_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "managedidentities_v1_generated_ManagedIdentitiesService_ValidateTrust_sync",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "managedidentities_v1_generated_managed_identities_service_validate_trust_sync.py"
+    }
+  ]
+}

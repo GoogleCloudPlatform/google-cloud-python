@@ -1,0 +1,223 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.websecurityscanner_v1alpha",
+  "protoPackage": "google.cloud.websecurityscanner.v1alpha",
+  "schema": "1.0",
+  "services": {
+    "WebSecurityScanner": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WebSecurityScannerClient",
+          "rpcs": {
+            "CreateScanConfig": {
+              "methods": [
+                "create_scan_config"
+              ]
+            },
+            "DeleteScanConfig": {
+              "methods": [
+                "delete_scan_config"
+              ]
+            },
+            "GetFinding": {
+              "methods": [
+                "get_finding"
+              ]
+            },
+            "GetScanConfig": {
+              "methods": [
+                "get_scan_config"
+              ]
+            },
+            "GetScanRun": {
+              "methods": [
+                "get_scan_run"
+              ]
+            },
+            "ListCrawledUrls": {
+              "methods": [
+                "list_crawled_urls"
+              ]
+            },
+            "ListFindingTypeStats": {
+              "methods": [
+                "list_finding_type_stats"
+              ]
+            },
+            "ListFindings": {
+              "methods": [
+                "list_findings"
+              ]
+            },
+            "ListScanConfigs": {
+              "methods": [
+                "list_scan_configs"
+              ]
+            },
+            "ListScanRuns": {
+              "methods": [
+                "list_scan_runs"
+              ]
+            },
+            "StartScanRun": {
+              "methods": [
+                "start_scan_run"
+              ]
+            },
+            "StopScanRun": {
+              "methods": [
+                "stop_scan_run"
+              ]
+            },
+            "UpdateScanConfig": {
+              "methods": [
+                "update_scan_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "WebSecurityScannerAsyncClient",
+          "rpcs": {
+            "CreateScanConfig": {
+              "methods": [
+                "create_scan_config"
+              ]
+            },
+            "DeleteScanConfig": {
+              "methods": [
+                "delete_scan_config"
+              ]
+            },
+            "GetFinding": {
+              "methods": [
+                "get_finding"
+              ]
+            },
+            "GetScanConfig": {
+              "methods": [
+                "get_scan_config"
+              ]
+            },
+            "GetScanRun": {
+              "methods": [
+                "get_scan_run"
+              ]
+            },
+            "ListCrawledUrls": {
+              "methods": [
+                "list_crawled_urls"
+              ]
+            },
+            "ListFindingTypeStats": {
+              "methods": [
+                "list_finding_type_stats"
+              ]
+            },
+            "ListFindings": {
+              "methods": [
+                "list_findings"
+              ]
+            },
+            "ListScanConfigs": {
+              "methods": [
+                "list_scan_configs"
+              ]
+            },
+            "ListScanRuns": {
+              "methods": [
+                "list_scan_runs"
+              ]
+            },
+            "StartScanRun": {
+              "methods": [
+                "start_scan_run"
+              ]
+            },
+            "StopScanRun": {
+              "methods": [
+                "stop_scan_run"
+              ]
+            },
+            "UpdateScanConfig": {
+              "methods": [
+                "update_scan_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "WebSecurityScannerClient",
+          "rpcs": {
+            "CreateScanConfig": {
+              "methods": [
+                "create_scan_config"
+              ]
+            },
+            "DeleteScanConfig": {
+              "methods": [
+                "delete_scan_config"
+              ]
+            },
+            "GetFinding": {
+              "methods": [
+                "get_finding"
+              ]
+            },
+            "GetScanConfig": {
+              "methods": [
+                "get_scan_config"
+              ]
+            },
+            "GetScanRun": {
+              "methods": [
+                "get_scan_run"
+              ]
+            },
+            "ListCrawledUrls": {
+              "methods": [
+                "list_crawled_urls"
+              ]
+            },
+            "ListFindingTypeStats": {
+              "methods": [
+                "list_finding_type_stats"
+              ]
+            },
+            "ListFindings": {
+              "methods": [
+                "list_findings"
+              ]
+            },
+            "ListScanConfigs": {
+              "methods": [
+                "list_scan_configs"
+              ]
+            },
+            "ListScanRuns": {
+              "methods": [
+                "list_scan_runs"
+              ]
+            },
+            "StartScanRun": {
+              "methods": [
+                "start_scan_run"
+              ]
+            },
+            "StopScanRun": {
+              "methods": [
+                "stop_scan_run"
+              ]
+            },
+            "UpdateScanConfig": {
+              "methods": [
+                "update_scan_config"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

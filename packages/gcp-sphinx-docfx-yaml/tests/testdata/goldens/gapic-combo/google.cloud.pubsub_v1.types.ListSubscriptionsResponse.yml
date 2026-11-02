@@ -1,0 +1,33 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: The subscriptions that match the request.
+    id: subscriptions
+    var_type: Sequence[google.pubsub_v1.types.Subscription]
+  - description: "If not empty, indicates that there may be more subscriptions\n \
+      \  that match the request; this value should be passed in a new\n   <code>ListSubscriptionsRequest</code>\
+      \ to get more subscriptions."
+    id: next_page_token
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.ListSubscriptionsResponse
+  fullName: google.cloud.pubsub_v1.types.ListSubscriptionsResponse
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ListSubscriptionsResponse
+  source:
+    id: ListSubscriptionsResponse
+    path: null
+    startLine: null
+  summary: 'Response for the `ListSubscriptions` method.
+
+    '
+  syntax:
+    content: ListSubscriptionsResponse(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ListSubscriptionsResponse
+references: []

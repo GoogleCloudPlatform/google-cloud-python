@@ -1,0 +1,15 @@
+{
+    "api_description": "Google Cloud Memorystore for Memcached API is used for creating and\nmanaging Memcached instances in GCP.",
+    "api_id": "memcache.googleapis.com",
+    "api_shortname": "memcache",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/memcache/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-memcache",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "memcache",
+    "name_pretty": "Cloud Memorystore for Memcached",
+    "product_documentation": "https://cloud.google.com/memorystore/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,12 @@
+{
+    "client_documentation": "https://googleapis.dev/python/google-shopping-type/latest",
+    "default_version": "apiVersion",
+    "distribution_name": "google-shopping-type",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-shopping-type",
+    "name_pretty": "Shopping Common Types",
+    "product_documentation": "https://developers.google.com/merchant/api",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

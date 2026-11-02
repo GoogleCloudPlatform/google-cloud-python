@@ -1,0 +1,168 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.maps.isochrones.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-maps-isochrones",
+    "version": "0.1.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.isochrones_v1.IsochroneServiceAsyncClient",
+          "shortName": "IsochroneServiceAsyncClient"
+        },
+        "fullName": "google.maps.isochrones_v1.IsochroneServiceAsyncClient.generate_isochrone",
+        "method": {
+          "fullName": "google.maps.isochrones.v1.IsochroneService.GenerateIsochrone",
+          "service": {
+            "fullName": "google.maps.isochrones.v1.IsochroneService",
+            "shortName": "IsochroneService"
+          },
+          "shortName": "GenerateIsochrone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.isochrones_v1.types.GenerateIsochroneRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.isochrones_v1.types.GenerateIsochroneResponse",
+        "shortName": "generate_isochrone"
+      },
+      "description": "Sample for GenerateIsochrone",
+      "file": "isochrones_v1_generated_isochrone_service_generate_isochrone_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "isochrones_v1_generated_IsochroneService_GenerateIsochrone_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "isochrones_v1_generated_isochrone_service_generate_isochrone_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.isochrones_v1.IsochroneServiceClient",
+          "shortName": "IsochroneServiceClient"
+        },
+        "fullName": "google.maps.isochrones_v1.IsochroneServiceClient.generate_isochrone",
+        "method": {
+          "fullName": "google.maps.isochrones.v1.IsochroneService.GenerateIsochrone",
+          "service": {
+            "fullName": "google.maps.isochrones.v1.IsochroneService",
+            "shortName": "IsochroneService"
+          },
+          "shortName": "GenerateIsochrone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.isochrones_v1.types.GenerateIsochroneRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.isochrones_v1.types.GenerateIsochroneResponse",
+        "shortName": "generate_isochrone"
+      },
+      "description": "Sample for GenerateIsochrone",
+      "file": "isochrones_v1_generated_isochrone_service_generate_isochrone_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "isochrones_v1_generated_IsochroneService_GenerateIsochrone_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "isochrones_v1_generated_isochrone_service_generate_isochrone_sync.py"
+    }
+  ]
+}

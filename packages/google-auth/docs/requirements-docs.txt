@@ -1,0 +1,17 @@
+cryptography
+sphinx-docstring-typing
+urllib3
+requests
+requests-oauthlib
+# We need to pin to specific versions of the `sphinxcontrib-*` packages
+# which still support sphinx 4.x.
+# See https://github.com/googleapis/sphinx-docfx-yaml/issues/344
+# and https://github.com/googleapis/sphinx-docfx-yaml/issues/345.
+sphinxcontrib-applehelp==2.0.0
+sphinxcontrib-devhelp==2.0.0
+sphinxcontrib-htmlhelp==2.1.0
+sphinxcontrib-qthelp==2.0.0
+sphinxcontrib-serializinghtml==2.0.0
+sphinx==9.2.0
+alabaster
+recommonmark

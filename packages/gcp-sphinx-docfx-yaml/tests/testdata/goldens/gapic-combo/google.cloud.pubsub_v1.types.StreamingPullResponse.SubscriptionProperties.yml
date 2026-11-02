@@ -1,0 +1,31 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "True iff exactly once delivery is enabled for\n   this subscription."
+    id: exactly_once_delivery_enabled
+    var_type: bool
+  - description: "True iff message ordering is enabled for this\n   subscription."
+    id: message_ordering_enabled
+    var_type: bool
+  children: []
+  class: google.cloud.pubsub_v1.types.StreamingPullResponse.SubscriptionProperties
+  fullName: google.cloud.pubsub_v1.types.StreamingPullResponse.SubscriptionProperties
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types.StreamingPullResponse
+  name: SubscriptionProperties
+  source:
+    id: SubscriptionProperties
+    path: tests/testdata/gapic-combo/google/pubsub_v1/types/pubsub.py
+    startLine: 1560
+  summary: 'Subscription properties sent as part of the response.
+
+    '
+  syntax:
+    content: SubscriptionProperties(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.StreamingPullResponse.SubscriptionProperties
+references: []

@@ -1,0 +1,88 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.advisorynotifications_v1",
+  "protoPackage": "google.cloud.advisorynotifications.v1",
+  "schema": "1.0",
+  "services": {
+    "AdvisoryNotificationsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AdvisoryNotificationsServiceClient",
+          "rpcs": {
+            "GetNotification": {
+              "methods": [
+                "get_notification"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "ListNotifications": {
+              "methods": [
+                "list_notifications"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AdvisoryNotificationsServiceAsyncClient",
+          "rpcs": {
+            "GetNotification": {
+              "methods": [
+                "get_notification"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "ListNotifications": {
+              "methods": [
+                "list_notifications"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AdvisoryNotificationsServiceClient",
+          "rpcs": {
+            "GetNotification": {
+              "methods": [
+                "get_notification"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "ListNotifications": {
+              "methods": [
+                "list_notifications"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

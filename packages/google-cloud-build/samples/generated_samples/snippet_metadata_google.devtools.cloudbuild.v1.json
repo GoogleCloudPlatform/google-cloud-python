@@ -1,0 +1,3244 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.devtools.cloudbuild.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-build",
+    "version": "3.42.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.approve_build",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.ApproveBuild",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "ApproveBuild"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ApproveBuildRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "approval_result",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ApprovalResult"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "approve_build"
+      },
+      "description": "Sample for ApproveBuild",
+      "file": "cloudbuild_v1_generated_cloud_build_approve_build_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_ApproveBuild_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_approve_build_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.approve_build",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.ApproveBuild",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "ApproveBuild"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ApproveBuildRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "approval_result",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ApprovalResult"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "approve_build"
+      },
+      "description": "Sample for ApproveBuild",
+      "file": "cloudbuild_v1_generated_cloud_build_approve_build_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_ApproveBuild_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_approve_build_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.cancel_build",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.CancelBuild",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "CancelBuild"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.CancelBuildRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "id",
+            "type": "str"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.Build",
+        "shortName": "cancel_build"
+      },
+      "description": "Sample for CancelBuild",
+      "file": "cloudbuild_v1_generated_cloud_build_cancel_build_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_CancelBuild_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_cancel_build_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.cancel_build",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.CancelBuild",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "CancelBuild"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.CancelBuildRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "id",
+            "type": "str"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.Build",
+        "shortName": "cancel_build"
+      },
+      "description": "Sample for CancelBuild",
+      "file": "cloudbuild_v1_generated_cloud_build_cancel_build_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_CancelBuild_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_cancel_build_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.create_build_trigger",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.CreateBuildTrigger",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "CreateBuildTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.CreateBuildTriggerRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.BuildTrigger"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.BuildTrigger",
+        "shortName": "create_build_trigger"
+      },
+      "description": "Sample for CreateBuildTrigger",
+      "file": "cloudbuild_v1_generated_cloud_build_create_build_trigger_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_CreateBuildTrigger_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_create_build_trigger_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.create_build_trigger",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.CreateBuildTrigger",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "CreateBuildTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.CreateBuildTriggerRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.BuildTrigger"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.BuildTrigger",
+        "shortName": "create_build_trigger"
+      },
+      "description": "Sample for CreateBuildTrigger",
+      "file": "cloudbuild_v1_generated_cloud_build_create_build_trigger_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_CreateBuildTrigger_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_create_build_trigger_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.create_build",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.CreateBuild",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "CreateBuild"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.CreateBuildRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "build",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.Build"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_build"
+      },
+      "description": "Sample for CreateBuild",
+      "file": "cloudbuild_v1_generated_cloud_build_create_build_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_CreateBuild_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_create_build_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.create_build",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.CreateBuild",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "CreateBuild"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.CreateBuildRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "build",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.Build"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_build"
+      },
+      "description": "Sample for CreateBuild",
+      "file": "cloudbuild_v1_generated_cloud_build_create_build_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_CreateBuild_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_create_build_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.create_worker_pool",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.CreateWorkerPool",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "CreateWorkerPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.CreateWorkerPoolRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "worker_pool",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.WorkerPool"
+          },
+          {
+            "name": "worker_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_worker_pool"
+      },
+      "description": "Sample for CreateWorkerPool",
+      "file": "cloudbuild_v1_generated_cloud_build_create_worker_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_CreateWorkerPool_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_create_worker_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.create_worker_pool",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.CreateWorkerPool",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "CreateWorkerPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.CreateWorkerPoolRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "worker_pool",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.WorkerPool"
+          },
+          {
+            "name": "worker_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_worker_pool"
+      },
+      "description": "Sample for CreateWorkerPool",
+      "file": "cloudbuild_v1_generated_cloud_build_create_worker_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_CreateWorkerPool_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_create_worker_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.delete_build_trigger",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.DeleteBuildTrigger",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "DeleteBuildTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.DeleteBuildTriggerRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger_id",
+            "type": "str"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_build_trigger"
+      },
+      "description": "Sample for DeleteBuildTrigger",
+      "file": "cloudbuild_v1_generated_cloud_build_delete_build_trigger_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_DeleteBuildTrigger_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_delete_build_trigger_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.delete_build_trigger",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.DeleteBuildTrigger",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "DeleteBuildTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.DeleteBuildTriggerRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger_id",
+            "type": "str"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_build_trigger"
+      },
+      "description": "Sample for DeleteBuildTrigger",
+      "file": "cloudbuild_v1_generated_cloud_build_delete_build_trigger_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_DeleteBuildTrigger_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_delete_build_trigger_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.delete_worker_pool",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.DeleteWorkerPool",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "DeleteWorkerPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.DeleteWorkerPoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_worker_pool"
+      },
+      "description": "Sample for DeleteWorkerPool",
+      "file": "cloudbuild_v1_generated_cloud_build_delete_worker_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_DeleteWorkerPool_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_delete_worker_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.delete_worker_pool",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.DeleteWorkerPool",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "DeleteWorkerPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.DeleteWorkerPoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_worker_pool"
+      },
+      "description": "Sample for DeleteWorkerPool",
+      "file": "cloudbuild_v1_generated_cloud_build_delete_worker_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_DeleteWorkerPool_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_delete_worker_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.get_build_trigger",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.GetBuildTrigger",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "GetBuildTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.GetBuildTriggerRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger_id",
+            "type": "str"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.BuildTrigger",
+        "shortName": "get_build_trigger"
+      },
+      "description": "Sample for GetBuildTrigger",
+      "file": "cloudbuild_v1_generated_cloud_build_get_build_trigger_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_GetBuildTrigger_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_get_build_trigger_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.get_build_trigger",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.GetBuildTrigger",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "GetBuildTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.GetBuildTriggerRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger_id",
+            "type": "str"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.BuildTrigger",
+        "shortName": "get_build_trigger"
+      },
+      "description": "Sample for GetBuildTrigger",
+      "file": "cloudbuild_v1_generated_cloud_build_get_build_trigger_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_GetBuildTrigger_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_get_build_trigger_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.get_build",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.GetBuild",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "GetBuild"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.GetBuildRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "id",
+            "type": "str"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.Build",
+        "shortName": "get_build"
+      },
+      "description": "Sample for GetBuild",
+      "file": "cloudbuild_v1_generated_cloud_build_get_build_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_GetBuild_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_get_build_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.get_build",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.GetBuild",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "GetBuild"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.GetBuildRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "id",
+            "type": "str"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.Build",
+        "shortName": "get_build"
+      },
+      "description": "Sample for GetBuild",
+      "file": "cloudbuild_v1_generated_cloud_build_get_build_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_GetBuild_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_get_build_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.get_default_service_account",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.GetDefaultServiceAccount",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "GetDefaultServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.GetDefaultServiceAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.DefaultServiceAccount",
+        "shortName": "get_default_service_account"
+      },
+      "description": "Sample for GetDefaultServiceAccount",
+      "file": "cloudbuild_v1_generated_cloud_build_get_default_service_account_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_GetDefaultServiceAccount_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_get_default_service_account_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.get_default_service_account",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.GetDefaultServiceAccount",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "GetDefaultServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.GetDefaultServiceAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.DefaultServiceAccount",
+        "shortName": "get_default_service_account"
+      },
+      "description": "Sample for GetDefaultServiceAccount",
+      "file": "cloudbuild_v1_generated_cloud_build_get_default_service_account_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_GetDefaultServiceAccount_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_get_default_service_account_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.get_worker_pool",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.GetWorkerPool",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "GetWorkerPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.GetWorkerPoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.WorkerPool",
+        "shortName": "get_worker_pool"
+      },
+      "description": "Sample for GetWorkerPool",
+      "file": "cloudbuild_v1_generated_cloud_build_get_worker_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_GetWorkerPool_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_get_worker_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.get_worker_pool",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.GetWorkerPool",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "GetWorkerPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.GetWorkerPoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.WorkerPool",
+        "shortName": "get_worker_pool"
+      },
+      "description": "Sample for GetWorkerPool",
+      "file": "cloudbuild_v1_generated_cloud_build_get_worker_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_GetWorkerPool_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_get_worker_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.list_build_triggers",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.ListBuildTriggers",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "ListBuildTriggers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ListBuildTriggersRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.services.cloud_build.pagers.ListBuildTriggersAsyncPager",
+        "shortName": "list_build_triggers"
+      },
+      "description": "Sample for ListBuildTriggers",
+      "file": "cloudbuild_v1_generated_cloud_build_list_build_triggers_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_ListBuildTriggers_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_list_build_triggers_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.list_build_triggers",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.ListBuildTriggers",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "ListBuildTriggers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ListBuildTriggersRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.services.cloud_build.pagers.ListBuildTriggersPager",
+        "shortName": "list_build_triggers"
+      },
+      "description": "Sample for ListBuildTriggers",
+      "file": "cloudbuild_v1_generated_cloud_build_list_build_triggers_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_ListBuildTriggers_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_list_build_triggers_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.list_builds",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.ListBuilds",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "ListBuilds"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ListBuildsRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.services.cloud_build.pagers.ListBuildsAsyncPager",
+        "shortName": "list_builds"
+      },
+      "description": "Sample for ListBuilds",
+      "file": "cloudbuild_v1_generated_cloud_build_list_builds_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_ListBuilds_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_list_builds_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.list_builds",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.ListBuilds",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "ListBuilds"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ListBuildsRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.services.cloud_build.pagers.ListBuildsPager",
+        "shortName": "list_builds"
+      },
+      "description": "Sample for ListBuilds",
+      "file": "cloudbuild_v1_generated_cloud_build_list_builds_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_ListBuilds_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_list_builds_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.list_worker_pools",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.ListWorkerPools",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "ListWorkerPools"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ListWorkerPoolsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.services.cloud_build.pagers.ListWorkerPoolsAsyncPager",
+        "shortName": "list_worker_pools"
+      },
+      "description": "Sample for ListWorkerPools",
+      "file": "cloudbuild_v1_generated_cloud_build_list_worker_pools_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_ListWorkerPools_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_list_worker_pools_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.list_worker_pools",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.ListWorkerPools",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "ListWorkerPools"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ListWorkerPoolsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.services.cloud_build.pagers.ListWorkerPoolsPager",
+        "shortName": "list_worker_pools"
+      },
+      "description": "Sample for ListWorkerPools",
+      "file": "cloudbuild_v1_generated_cloud_build_list_worker_pools_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_ListWorkerPools_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_list_worker_pools_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.receive_trigger_webhook",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.ReceiveTriggerWebhook",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "ReceiveTriggerWebhook"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ReceiveTriggerWebhookRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.ReceiveTriggerWebhookResponse",
+        "shortName": "receive_trigger_webhook"
+      },
+      "description": "Sample for ReceiveTriggerWebhook",
+      "file": "cloudbuild_v1_generated_cloud_build_receive_trigger_webhook_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_ReceiveTriggerWebhook_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_receive_trigger_webhook_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.receive_trigger_webhook",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.ReceiveTriggerWebhook",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "ReceiveTriggerWebhook"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.ReceiveTriggerWebhookRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.ReceiveTriggerWebhookResponse",
+        "shortName": "receive_trigger_webhook"
+      },
+      "description": "Sample for ReceiveTriggerWebhook",
+      "file": "cloudbuild_v1_generated_cloud_build_receive_trigger_webhook_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_ReceiveTriggerWebhook_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_receive_trigger_webhook_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.retry_build",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.RetryBuild",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "RetryBuild"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.RetryBuildRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "id",
+            "type": "str"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "retry_build"
+      },
+      "description": "Sample for RetryBuild",
+      "file": "cloudbuild_v1_generated_cloud_build_retry_build_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_RetryBuild_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_retry_build_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.retry_build",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.RetryBuild",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "RetryBuild"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.RetryBuildRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "id",
+            "type": "str"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "retry_build"
+      },
+      "description": "Sample for RetryBuild",
+      "file": "cloudbuild_v1_generated_cloud_build_retry_build_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_RetryBuild_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_retry_build_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.run_build_trigger",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.RunBuildTrigger",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "RunBuildTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.RunBuildTriggerRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger_id",
+            "type": "str"
+          },
+          {
+            "name": "source",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.RepoSource"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "run_build_trigger"
+      },
+      "description": "Sample for RunBuildTrigger",
+      "file": "cloudbuild_v1_generated_cloud_build_run_build_trigger_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_RunBuildTrigger_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_run_build_trigger_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.run_build_trigger",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.RunBuildTrigger",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "RunBuildTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.RunBuildTriggerRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger_id",
+            "type": "str"
+          },
+          {
+            "name": "source",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.RepoSource"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "run_build_trigger"
+      },
+      "description": "Sample for RunBuildTrigger",
+      "file": "cloudbuild_v1_generated_cloud_build_run_build_trigger_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_RunBuildTrigger_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_run_build_trigger_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.update_build_trigger",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.UpdateBuildTrigger",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "UpdateBuildTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.UpdateBuildTriggerRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.BuildTrigger"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.BuildTrigger",
+        "shortName": "update_build_trigger"
+      },
+      "description": "Sample for UpdateBuildTrigger",
+      "file": "cloudbuild_v1_generated_cloud_build_update_build_trigger_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_UpdateBuildTrigger_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_update_build_trigger_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.update_build_trigger",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.UpdateBuildTrigger",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "UpdateBuildTrigger"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.UpdateBuildTriggerRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger_id",
+            "type": "str"
+          },
+          {
+            "name": "trigger",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.BuildTrigger"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.devtools.cloudbuild_v1.types.BuildTrigger",
+        "shortName": "update_build_trigger"
+      },
+      "description": "Sample for UpdateBuildTrigger",
+      "file": "cloudbuild_v1_generated_cloud_build_update_build_trigger_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_UpdateBuildTrigger_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_update_build_trigger_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient",
+          "shortName": "CloudBuildAsyncClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildAsyncClient.update_worker_pool",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.UpdateWorkerPool",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "UpdateWorkerPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.UpdateWorkerPoolRequest"
+          },
+          {
+            "name": "worker_pool",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.WorkerPool"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_worker_pool"
+      },
+      "description": "Sample for UpdateWorkerPool",
+      "file": "cloudbuild_v1_generated_cloud_build_update_worker_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_UpdateWorkerPool_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_update_worker_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient",
+          "shortName": "CloudBuildClient"
+        },
+        "fullName": "google.cloud.devtools.cloudbuild_v1.CloudBuildClient.update_worker_pool",
+        "method": {
+          "fullName": "google.devtools.cloudbuild.v1.CloudBuild.UpdateWorkerPool",
+          "service": {
+            "fullName": "google.devtools.cloudbuild.v1.CloudBuild",
+            "shortName": "CloudBuild"
+          },
+          "shortName": "UpdateWorkerPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.UpdateWorkerPoolRequest"
+          },
+          {
+            "name": "worker_pool",
+            "type": "google.cloud.devtools.cloudbuild_v1.types.WorkerPool"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_worker_pool"
+      },
+      "description": "Sample for UpdateWorkerPool",
+      "file": "cloudbuild_v1_generated_cloud_build_update_worker_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudbuild_v1_generated_CloudBuild_UpdateWorkerPool_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudbuild_v1_generated_cloud_build_update_worker_pool_sync.py"
+    }
+  ]
+}

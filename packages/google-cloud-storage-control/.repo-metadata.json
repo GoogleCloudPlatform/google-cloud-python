@@ -1,0 +1,16 @@
+{
+    "api_description": "The Storage Control API lets you perform metadata-specific, control plane,\nand long-running operations.\n\nThe Storage Control API creates one space to perform metadata-specific,\ncontrol plane, and long-running operations apart from the Storage API.\nSeparating these operations from the Storage API improves API\nstandardization and lets you run faster releases.",
+    "api_id": "storage.googleapis.com",
+    "api_shortname": "storage",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-storage-control/latest",
+    "default_version": "v2",
+    "distribution_name": "google-cloud-storage-control",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=187243\u0026template=1162869",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-storage-control",
+    "name_pretty": "Storage Control",
+    "product_documentation": "https://cloud.google.com/storage/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

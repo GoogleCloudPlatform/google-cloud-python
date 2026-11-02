@@ -1,0 +1,118 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.workflows_v1",
+  "protoPackage": "google.cloud.workflows.v1",
+  "schema": "1.0",
+  "services": {
+    "Workflows": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WorkflowsClient",
+          "rpcs": {
+            "CreateWorkflow": {
+              "methods": [
+                "create_workflow"
+              ]
+            },
+            "DeleteWorkflow": {
+              "methods": [
+                "delete_workflow"
+              ]
+            },
+            "GetWorkflow": {
+              "methods": [
+                "get_workflow"
+              ]
+            },
+            "ListWorkflowRevisions": {
+              "methods": [
+                "list_workflow_revisions"
+              ]
+            },
+            "ListWorkflows": {
+              "methods": [
+                "list_workflows"
+              ]
+            },
+            "UpdateWorkflow": {
+              "methods": [
+                "update_workflow"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "WorkflowsAsyncClient",
+          "rpcs": {
+            "CreateWorkflow": {
+              "methods": [
+                "create_workflow"
+              ]
+            },
+            "DeleteWorkflow": {
+              "methods": [
+                "delete_workflow"
+              ]
+            },
+            "GetWorkflow": {
+              "methods": [
+                "get_workflow"
+              ]
+            },
+            "ListWorkflowRevisions": {
+              "methods": [
+                "list_workflow_revisions"
+              ]
+            },
+            "ListWorkflows": {
+              "methods": [
+                "list_workflows"
+              ]
+            },
+            "UpdateWorkflow": {
+              "methods": [
+                "update_workflow"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "WorkflowsClient",
+          "rpcs": {
+            "CreateWorkflow": {
+              "methods": [
+                "create_workflow"
+              ]
+            },
+            "DeleteWorkflow": {
+              "methods": [
+                "delete_workflow"
+              ]
+            },
+            "GetWorkflow": {
+              "methods": [
+                "get_workflow"
+              ]
+            },
+            "ListWorkflowRevisions": {
+              "methods": [
+                "list_workflow_revisions"
+              ]
+            },
+            "ListWorkflows": {
+              "methods": [
+                "list_workflows"
+              ]
+            },
+            "UpdateWorkflow": {
+              "methods": [
+                "update_workflow"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

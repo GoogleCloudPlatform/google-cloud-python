@@ -1,0 +1,173 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.bigquery_data_exchange_v1beta1",
+  "protoPackage": "google.cloud.bigquery.dataexchange.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "AnalyticsHubService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AnalyticsHubServiceClient",
+          "rpcs": {
+            "CreateDataExchange": {
+              "methods": [
+                "create_data_exchange"
+              ]
+            },
+            "CreateListing": {
+              "methods": [
+                "create_listing"
+              ]
+            },
+            "DeleteDataExchange": {
+              "methods": [
+                "delete_data_exchange"
+              ]
+            },
+            "DeleteListing": {
+              "methods": [
+                "delete_listing"
+              ]
+            },
+            "GetDataExchange": {
+              "methods": [
+                "get_data_exchange"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetListing": {
+              "methods": [
+                "get_listing"
+              ]
+            },
+            "ListDataExchanges": {
+              "methods": [
+                "list_data_exchanges"
+              ]
+            },
+            "ListListings": {
+              "methods": [
+                "list_listings"
+              ]
+            },
+            "ListOrgDataExchanges": {
+              "methods": [
+                "list_org_data_exchanges"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SubscribeListing": {
+              "methods": [
+                "subscribe_listing"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateDataExchange": {
+              "methods": [
+                "update_data_exchange"
+              ]
+            },
+            "UpdateListing": {
+              "methods": [
+                "update_listing"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AnalyticsHubServiceAsyncClient",
+          "rpcs": {
+            "CreateDataExchange": {
+              "methods": [
+                "create_data_exchange"
+              ]
+            },
+            "CreateListing": {
+              "methods": [
+                "create_listing"
+              ]
+            },
+            "DeleteDataExchange": {
+              "methods": [
+                "delete_data_exchange"
+              ]
+            },
+            "DeleteListing": {
+              "methods": [
+                "delete_listing"
+              ]
+            },
+            "GetDataExchange": {
+              "methods": [
+                "get_data_exchange"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetListing": {
+              "methods": [
+                "get_listing"
+              ]
+            },
+            "ListDataExchanges": {
+              "methods": [
+                "list_data_exchanges"
+              ]
+            },
+            "ListListings": {
+              "methods": [
+                "list_listings"
+              ]
+            },
+            "ListOrgDataExchanges": {
+              "methods": [
+                "list_org_data_exchanges"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SubscribeListing": {
+              "methods": [
+                "subscribe_listing"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateDataExchange": {
+              "methods": [
+                "update_data_exchange"
+              ]
+            },
+            "UpdateListing": {
+              "methods": [
+                "update_listing"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

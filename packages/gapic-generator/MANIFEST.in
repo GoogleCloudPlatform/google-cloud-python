@@ -1,0 +1,6 @@
+include README.rst LICENSE
+recursive-include gapic *.json *.proto
+recursive-include gapic/templates *.j2
+recursive-include tests *
+global-exclude *.py[co]
+global-exclude __pycache__

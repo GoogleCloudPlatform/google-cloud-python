@@ -1,0 +1,176 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.workloadidentity.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-workloadidentity",
+    "version": "0.1.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.workloadidentity_v1.WorkloadIdentityAsyncClient",
+          "shortName": "WorkloadIdentityAsyncClient"
+        },
+        "fullName": "google.cloud.workloadidentity_v1.WorkloadIdentityAsyncClient.generate_service_agents",
+        "method": {
+          "fullName": "google.cloud.workloadidentity.v1.WorkloadIdentity.GenerateServiceAgents",
+          "service": {
+            "fullName": "google.cloud.workloadidentity.v1.WorkloadIdentity",
+            "shortName": "WorkloadIdentity"
+          },
+          "shortName": "GenerateServiceAgents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.workloadidentity_v1.types.GenerateServiceAgentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "generate_service_agents"
+      },
+      "description": "Sample for GenerateServiceAgents",
+      "file": "workloadidentity_v1_generated_workload_identity_generate_service_agents_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workloadidentity_v1_generated_WorkloadIdentity_GenerateServiceAgents_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workloadidentity_v1_generated_workload_identity_generate_service_agents_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.workloadidentity_v1.WorkloadIdentityClient",
+          "shortName": "WorkloadIdentityClient"
+        },
+        "fullName": "google.cloud.workloadidentity_v1.WorkloadIdentityClient.generate_service_agents",
+        "method": {
+          "fullName": "google.cloud.workloadidentity.v1.WorkloadIdentity.GenerateServiceAgents",
+          "service": {
+            "fullName": "google.cloud.workloadidentity.v1.WorkloadIdentity",
+            "shortName": "WorkloadIdentity"
+          },
+          "shortName": "GenerateServiceAgents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.workloadidentity_v1.types.GenerateServiceAgentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "generate_service_agents"
+      },
+      "description": "Sample for GenerateServiceAgents",
+      "file": "workloadidentity_v1_generated_workload_identity_generate_service_agents_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workloadidentity_v1_generated_WorkloadIdentity_GenerateServiceAgents_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workloadidentity_v1_generated_workload_identity_generate_service_agents_sync.py"
+    }
+  ]
+}

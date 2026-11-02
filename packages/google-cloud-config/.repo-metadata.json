@@ -1,0 +1,16 @@
+{
+    "api_description": "Creates and manages Google Cloud Platform resources and infrastructure.",
+    "api_id": "config.googleapis.com",
+    "api_shortname": "infra-manager",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/config/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-config",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=536700",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "config",
+    "name_pretty": "Infrastructure Manager",
+    "product_documentation": "https://cloud.google.com/infrastructure-manager/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

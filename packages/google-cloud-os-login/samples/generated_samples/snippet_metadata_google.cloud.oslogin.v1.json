@@ -1,0 +1,1170 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.oslogin.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-os-login",
+    "version": "2.23.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient",
+          "shortName": "OsLoginServiceAsyncClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient.create_ssh_public_key",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.CreateSshPublicKey",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "CreateSshPublicKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.CreateSshPublicKeyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "ssh_public_key",
+            "type": "google.cloud.oslogin.common.types.SshPublicKey"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.oslogin.common.types.SshPublicKey",
+        "shortName": "create_ssh_public_key"
+      },
+      "description": "Sample for CreateSshPublicKey",
+      "file": "oslogin_v1_generated_os_login_service_create_ssh_public_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_CreateSshPublicKey_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_create_ssh_public_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient",
+          "shortName": "OsLoginServiceClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient.create_ssh_public_key",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.CreateSshPublicKey",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "CreateSshPublicKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.CreateSshPublicKeyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "ssh_public_key",
+            "type": "google.cloud.oslogin.common.types.SshPublicKey"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.oslogin.common.types.SshPublicKey",
+        "shortName": "create_ssh_public_key"
+      },
+      "description": "Sample for CreateSshPublicKey",
+      "file": "oslogin_v1_generated_os_login_service_create_ssh_public_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_CreateSshPublicKey_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_create_ssh_public_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient",
+          "shortName": "OsLoginServiceAsyncClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient.delete_posix_account",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.DeletePosixAccount",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "DeletePosixAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.DeletePosixAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_posix_account"
+      },
+      "description": "Sample for DeletePosixAccount",
+      "file": "oslogin_v1_generated_os_login_service_delete_posix_account_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_DeletePosixAccount_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_delete_posix_account_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient",
+          "shortName": "OsLoginServiceClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient.delete_posix_account",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.DeletePosixAccount",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "DeletePosixAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.DeletePosixAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_posix_account"
+      },
+      "description": "Sample for DeletePosixAccount",
+      "file": "oslogin_v1_generated_os_login_service_delete_posix_account_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_DeletePosixAccount_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_delete_posix_account_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient",
+          "shortName": "OsLoginServiceAsyncClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient.delete_ssh_public_key",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.DeleteSshPublicKey",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "DeleteSshPublicKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.DeleteSshPublicKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_ssh_public_key"
+      },
+      "description": "Sample for DeleteSshPublicKey",
+      "file": "oslogin_v1_generated_os_login_service_delete_ssh_public_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_DeleteSshPublicKey_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_delete_ssh_public_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient",
+          "shortName": "OsLoginServiceClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient.delete_ssh_public_key",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.DeleteSshPublicKey",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "DeleteSshPublicKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.DeleteSshPublicKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_ssh_public_key"
+      },
+      "description": "Sample for DeleteSshPublicKey",
+      "file": "oslogin_v1_generated_os_login_service_delete_ssh_public_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_DeleteSshPublicKey_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_delete_ssh_public_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient",
+          "shortName": "OsLoginServiceAsyncClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient.get_login_profile",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.GetLoginProfile",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "GetLoginProfile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.GetLoginProfileRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.oslogin_v1.types.LoginProfile",
+        "shortName": "get_login_profile"
+      },
+      "description": "Sample for GetLoginProfile",
+      "file": "oslogin_v1_generated_os_login_service_get_login_profile_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_GetLoginProfile_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_get_login_profile_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient",
+          "shortName": "OsLoginServiceClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient.get_login_profile",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.GetLoginProfile",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "GetLoginProfile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.GetLoginProfileRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.oslogin_v1.types.LoginProfile",
+        "shortName": "get_login_profile"
+      },
+      "description": "Sample for GetLoginProfile",
+      "file": "oslogin_v1_generated_os_login_service_get_login_profile_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_GetLoginProfile_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_get_login_profile_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient",
+          "shortName": "OsLoginServiceAsyncClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient.get_ssh_public_key",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.GetSshPublicKey",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "GetSshPublicKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.GetSshPublicKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.oslogin.common.types.SshPublicKey",
+        "shortName": "get_ssh_public_key"
+      },
+      "description": "Sample for GetSshPublicKey",
+      "file": "oslogin_v1_generated_os_login_service_get_ssh_public_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_GetSshPublicKey_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_get_ssh_public_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient",
+          "shortName": "OsLoginServiceClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient.get_ssh_public_key",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.GetSshPublicKey",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "GetSshPublicKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.GetSshPublicKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.oslogin.common.types.SshPublicKey",
+        "shortName": "get_ssh_public_key"
+      },
+      "description": "Sample for GetSshPublicKey",
+      "file": "oslogin_v1_generated_os_login_service_get_ssh_public_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_GetSshPublicKey_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_get_ssh_public_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient",
+          "shortName": "OsLoginServiceAsyncClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient.import_ssh_public_key",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.ImportSshPublicKey",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "ImportSshPublicKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.ImportSshPublicKeyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "ssh_public_key",
+            "type": "google.cloud.oslogin.common.types.SshPublicKey"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.oslogin_v1.types.ImportSshPublicKeyResponse",
+        "shortName": "import_ssh_public_key"
+      },
+      "description": "Sample for ImportSshPublicKey",
+      "file": "oslogin_v1_generated_os_login_service_import_ssh_public_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_ImportSshPublicKey_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_import_ssh_public_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient",
+          "shortName": "OsLoginServiceClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient.import_ssh_public_key",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.ImportSshPublicKey",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "ImportSshPublicKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.ImportSshPublicKeyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "ssh_public_key",
+            "type": "google.cloud.oslogin.common.types.SshPublicKey"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.oslogin_v1.types.ImportSshPublicKeyResponse",
+        "shortName": "import_ssh_public_key"
+      },
+      "description": "Sample for ImportSshPublicKey",
+      "file": "oslogin_v1_generated_os_login_service_import_ssh_public_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_ImportSshPublicKey_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_import_ssh_public_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient",
+          "shortName": "OsLoginServiceAsyncClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceAsyncClient.update_ssh_public_key",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.UpdateSshPublicKey",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "UpdateSshPublicKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.UpdateSshPublicKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "ssh_public_key",
+            "type": "google.cloud.oslogin.common.types.SshPublicKey"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.oslogin.common.types.SshPublicKey",
+        "shortName": "update_ssh_public_key"
+      },
+      "description": "Sample for UpdateSshPublicKey",
+      "file": "oslogin_v1_generated_os_login_service_update_ssh_public_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_UpdateSshPublicKey_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_update_ssh_public_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient",
+          "shortName": "OsLoginServiceClient"
+        },
+        "fullName": "google.cloud.oslogin_v1.OsLoginServiceClient.update_ssh_public_key",
+        "method": {
+          "fullName": "google.cloud.oslogin.v1.OsLoginService.UpdateSshPublicKey",
+          "service": {
+            "fullName": "google.cloud.oslogin.v1.OsLoginService",
+            "shortName": "OsLoginService"
+          },
+          "shortName": "UpdateSshPublicKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.oslogin_v1.types.UpdateSshPublicKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "ssh_public_key",
+            "type": "google.cloud.oslogin.common.types.SshPublicKey"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.oslogin.common.types.SshPublicKey",
+        "shortName": "update_ssh_public_key"
+      },
+      "description": "Sample for UpdateSshPublicKey",
+      "file": "oslogin_v1_generated_os_login_service_update_ssh_public_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "oslogin_v1_generated_OsLoginService_UpdateSshPublicKey_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "oslogin_v1_generated_os_login_service_update_ssh_public_key_sync.py"
+    }
+  ]
+}

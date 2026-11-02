@@ -1,0 +1,2104 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.shopping.css.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-shopping-css",
+    "version": "0.6.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountLabelsServiceAsyncClient",
+          "shortName": "AccountLabelsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountLabelsServiceAsyncClient.create_account_label",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountLabelsService.CreateAccountLabel",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountLabelsService",
+            "shortName": "AccountLabelsService"
+          },
+          "shortName": "CreateAccountLabel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.CreateAccountLabelRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "account_label",
+            "type": "google.shopping.css_v1.types.AccountLabel"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.AccountLabel",
+        "shortName": "create_account_label"
+      },
+      "description": "Sample for CreateAccountLabel",
+      "file": "css_v1_generated_account_labels_service_create_account_label_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountLabelsService_CreateAccountLabel_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_account_labels_service_create_account_label_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountLabelsServiceClient",
+          "shortName": "AccountLabelsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountLabelsServiceClient.create_account_label",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountLabelsService.CreateAccountLabel",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountLabelsService",
+            "shortName": "AccountLabelsService"
+          },
+          "shortName": "CreateAccountLabel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.CreateAccountLabelRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "account_label",
+            "type": "google.shopping.css_v1.types.AccountLabel"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.AccountLabel",
+        "shortName": "create_account_label"
+      },
+      "description": "Sample for CreateAccountLabel",
+      "file": "css_v1_generated_account_labels_service_create_account_label_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountLabelsService_CreateAccountLabel_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_account_labels_service_create_account_label_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountLabelsServiceAsyncClient",
+          "shortName": "AccountLabelsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountLabelsServiceAsyncClient.delete_account_label",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountLabelsService.DeleteAccountLabel",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountLabelsService",
+            "shortName": "AccountLabelsService"
+          },
+          "shortName": "DeleteAccountLabel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.DeleteAccountLabelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_account_label"
+      },
+      "description": "Sample for DeleteAccountLabel",
+      "file": "css_v1_generated_account_labels_service_delete_account_label_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountLabelsService_DeleteAccountLabel_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_account_labels_service_delete_account_label_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountLabelsServiceClient",
+          "shortName": "AccountLabelsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountLabelsServiceClient.delete_account_label",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountLabelsService.DeleteAccountLabel",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountLabelsService",
+            "shortName": "AccountLabelsService"
+          },
+          "shortName": "DeleteAccountLabel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.DeleteAccountLabelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_account_label"
+      },
+      "description": "Sample for DeleteAccountLabel",
+      "file": "css_v1_generated_account_labels_service_delete_account_label_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountLabelsService_DeleteAccountLabel_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_account_labels_service_delete_account_label_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountLabelsServiceAsyncClient",
+          "shortName": "AccountLabelsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountLabelsServiceAsyncClient.list_account_labels",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountLabelsService.ListAccountLabels",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountLabelsService",
+            "shortName": "AccountLabelsService"
+          },
+          "shortName": "ListAccountLabels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.ListAccountLabelsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.services.account_labels_service.pagers.ListAccountLabelsAsyncPager",
+        "shortName": "list_account_labels"
+      },
+      "description": "Sample for ListAccountLabels",
+      "file": "css_v1_generated_account_labels_service_list_account_labels_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountLabelsService_ListAccountLabels_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_account_labels_service_list_account_labels_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountLabelsServiceClient",
+          "shortName": "AccountLabelsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountLabelsServiceClient.list_account_labels",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountLabelsService.ListAccountLabels",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountLabelsService",
+            "shortName": "AccountLabelsService"
+          },
+          "shortName": "ListAccountLabels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.ListAccountLabelsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.services.account_labels_service.pagers.ListAccountLabelsPager",
+        "shortName": "list_account_labels"
+      },
+      "description": "Sample for ListAccountLabels",
+      "file": "css_v1_generated_account_labels_service_list_account_labels_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountLabelsService_ListAccountLabels_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_account_labels_service_list_account_labels_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountLabelsServiceAsyncClient",
+          "shortName": "AccountLabelsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountLabelsServiceAsyncClient.update_account_label",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountLabelsService.UpdateAccountLabel",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountLabelsService",
+            "shortName": "AccountLabelsService"
+          },
+          "shortName": "UpdateAccountLabel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.UpdateAccountLabelRequest"
+          },
+          {
+            "name": "account_label",
+            "type": "google.shopping.css_v1.types.AccountLabel"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.AccountLabel",
+        "shortName": "update_account_label"
+      },
+      "description": "Sample for UpdateAccountLabel",
+      "file": "css_v1_generated_account_labels_service_update_account_label_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountLabelsService_UpdateAccountLabel_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_account_labels_service_update_account_label_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountLabelsServiceClient",
+          "shortName": "AccountLabelsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountLabelsServiceClient.update_account_label",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountLabelsService.UpdateAccountLabel",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountLabelsService",
+            "shortName": "AccountLabelsService"
+          },
+          "shortName": "UpdateAccountLabel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.UpdateAccountLabelRequest"
+          },
+          {
+            "name": "account_label",
+            "type": "google.shopping.css_v1.types.AccountLabel"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.AccountLabel",
+        "shortName": "update_account_label"
+      },
+      "description": "Sample for UpdateAccountLabel",
+      "file": "css_v1_generated_account_labels_service_update_account_label_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountLabelsService_UpdateAccountLabel_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_account_labels_service_update_account_label_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountsServiceAsyncClient",
+          "shortName": "AccountsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountsServiceAsyncClient.get_account",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountsService.GetAccount",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountsService",
+            "shortName": "AccountsService"
+          },
+          "shortName": "GetAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.GetAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.Account",
+        "shortName": "get_account"
+      },
+      "description": "Sample for GetAccount",
+      "file": "css_v1_generated_accounts_service_get_account_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountsService_GetAccount_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_accounts_service_get_account_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountsServiceClient",
+          "shortName": "AccountsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountsServiceClient.get_account",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountsService.GetAccount",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountsService",
+            "shortName": "AccountsService"
+          },
+          "shortName": "GetAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.GetAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.Account",
+        "shortName": "get_account"
+      },
+      "description": "Sample for GetAccount",
+      "file": "css_v1_generated_accounts_service_get_account_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountsService_GetAccount_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_accounts_service_get_account_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountsServiceAsyncClient",
+          "shortName": "AccountsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountsServiceAsyncClient.list_child_accounts",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountsService.ListChildAccounts",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountsService",
+            "shortName": "AccountsService"
+          },
+          "shortName": "ListChildAccounts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.ListChildAccountsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.services.accounts_service.pagers.ListChildAccountsAsyncPager",
+        "shortName": "list_child_accounts"
+      },
+      "description": "Sample for ListChildAccounts",
+      "file": "css_v1_generated_accounts_service_list_child_accounts_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountsService_ListChildAccounts_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_accounts_service_list_child_accounts_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountsServiceClient",
+          "shortName": "AccountsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountsServiceClient.list_child_accounts",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountsService.ListChildAccounts",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountsService",
+            "shortName": "AccountsService"
+          },
+          "shortName": "ListChildAccounts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.ListChildAccountsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.services.accounts_service.pagers.ListChildAccountsPager",
+        "shortName": "list_child_accounts"
+      },
+      "description": "Sample for ListChildAccounts",
+      "file": "css_v1_generated_accounts_service_list_child_accounts_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountsService_ListChildAccounts_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_accounts_service_list_child_accounts_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountsServiceAsyncClient",
+          "shortName": "AccountsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountsServiceAsyncClient.update_labels",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountsService.UpdateLabels",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountsService",
+            "shortName": "AccountsService"
+          },
+          "shortName": "UpdateLabels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.UpdateAccountLabelsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.Account",
+        "shortName": "update_labels"
+      },
+      "description": "Sample for UpdateLabels",
+      "file": "css_v1_generated_accounts_service_update_labels_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountsService_UpdateLabels_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_accounts_service_update_labels_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.AccountsServiceClient",
+          "shortName": "AccountsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.AccountsServiceClient.update_labels",
+        "method": {
+          "fullName": "google.shopping.css.v1.AccountsService.UpdateLabels",
+          "service": {
+            "fullName": "google.shopping.css.v1.AccountsService",
+            "shortName": "AccountsService"
+          },
+          "shortName": "UpdateLabels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.UpdateAccountLabelsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.Account",
+        "shortName": "update_labels"
+      },
+      "description": "Sample for UpdateLabels",
+      "file": "css_v1_generated_accounts_service_update_labels_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_AccountsService_UpdateLabels_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_accounts_service_update_labels_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.CssProductInputsServiceAsyncClient",
+          "shortName": "CssProductInputsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.CssProductInputsServiceAsyncClient.delete_css_product_input",
+        "method": {
+          "fullName": "google.shopping.css.v1.CssProductInputsService.DeleteCssProductInput",
+          "service": {
+            "fullName": "google.shopping.css.v1.CssProductInputsService",
+            "shortName": "CssProductInputsService"
+          },
+          "shortName": "DeleteCssProductInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.DeleteCssProductInputRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_css_product_input"
+      },
+      "description": "Sample for DeleteCssProductInput",
+      "file": "css_v1_generated_css_product_inputs_service_delete_css_product_input_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_CssProductInputsService_DeleteCssProductInput_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_css_product_inputs_service_delete_css_product_input_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.CssProductInputsServiceClient",
+          "shortName": "CssProductInputsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.CssProductInputsServiceClient.delete_css_product_input",
+        "method": {
+          "fullName": "google.shopping.css.v1.CssProductInputsService.DeleteCssProductInput",
+          "service": {
+            "fullName": "google.shopping.css.v1.CssProductInputsService",
+            "shortName": "CssProductInputsService"
+          },
+          "shortName": "DeleteCssProductInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.DeleteCssProductInputRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_css_product_input"
+      },
+      "description": "Sample for DeleteCssProductInput",
+      "file": "css_v1_generated_css_product_inputs_service_delete_css_product_input_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_CssProductInputsService_DeleteCssProductInput_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_css_product_inputs_service_delete_css_product_input_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.CssProductInputsServiceAsyncClient",
+          "shortName": "CssProductInputsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.CssProductInputsServiceAsyncClient.insert_css_product_input",
+        "method": {
+          "fullName": "google.shopping.css.v1.CssProductInputsService.InsertCssProductInput",
+          "service": {
+            "fullName": "google.shopping.css.v1.CssProductInputsService",
+            "shortName": "CssProductInputsService"
+          },
+          "shortName": "InsertCssProductInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.InsertCssProductInputRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.CssProductInput",
+        "shortName": "insert_css_product_input"
+      },
+      "description": "Sample for InsertCssProductInput",
+      "file": "css_v1_generated_css_product_inputs_service_insert_css_product_input_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_CssProductInputsService_InsertCssProductInput_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_css_product_inputs_service_insert_css_product_input_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.CssProductInputsServiceClient",
+          "shortName": "CssProductInputsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.CssProductInputsServiceClient.insert_css_product_input",
+        "method": {
+          "fullName": "google.shopping.css.v1.CssProductInputsService.InsertCssProductInput",
+          "service": {
+            "fullName": "google.shopping.css.v1.CssProductInputsService",
+            "shortName": "CssProductInputsService"
+          },
+          "shortName": "InsertCssProductInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.InsertCssProductInputRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.CssProductInput",
+        "shortName": "insert_css_product_input"
+      },
+      "description": "Sample for InsertCssProductInput",
+      "file": "css_v1_generated_css_product_inputs_service_insert_css_product_input_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_CssProductInputsService_InsertCssProductInput_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_css_product_inputs_service_insert_css_product_input_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.CssProductInputsServiceAsyncClient",
+          "shortName": "CssProductInputsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.CssProductInputsServiceAsyncClient.update_css_product_input",
+        "method": {
+          "fullName": "google.shopping.css.v1.CssProductInputsService.UpdateCssProductInput",
+          "service": {
+            "fullName": "google.shopping.css.v1.CssProductInputsService",
+            "shortName": "CssProductInputsService"
+          },
+          "shortName": "UpdateCssProductInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.UpdateCssProductInputRequest"
+          },
+          {
+            "name": "css_product_input",
+            "type": "google.shopping.css_v1.types.CssProductInput"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.CssProductInput",
+        "shortName": "update_css_product_input"
+      },
+      "description": "Sample for UpdateCssProductInput",
+      "file": "css_v1_generated_css_product_inputs_service_update_css_product_input_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_CssProductInputsService_UpdateCssProductInput_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_css_product_inputs_service_update_css_product_input_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.CssProductInputsServiceClient",
+          "shortName": "CssProductInputsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.CssProductInputsServiceClient.update_css_product_input",
+        "method": {
+          "fullName": "google.shopping.css.v1.CssProductInputsService.UpdateCssProductInput",
+          "service": {
+            "fullName": "google.shopping.css.v1.CssProductInputsService",
+            "shortName": "CssProductInputsService"
+          },
+          "shortName": "UpdateCssProductInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.UpdateCssProductInputRequest"
+          },
+          {
+            "name": "css_product_input",
+            "type": "google.shopping.css_v1.types.CssProductInput"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.CssProductInput",
+        "shortName": "update_css_product_input"
+      },
+      "description": "Sample for UpdateCssProductInput",
+      "file": "css_v1_generated_css_product_inputs_service_update_css_product_input_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_CssProductInputsService_UpdateCssProductInput_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_css_product_inputs_service_update_css_product_input_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.CssProductsServiceAsyncClient",
+          "shortName": "CssProductsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.CssProductsServiceAsyncClient.get_css_product",
+        "method": {
+          "fullName": "google.shopping.css.v1.CssProductsService.GetCssProduct",
+          "service": {
+            "fullName": "google.shopping.css.v1.CssProductsService",
+            "shortName": "CssProductsService"
+          },
+          "shortName": "GetCssProduct"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.GetCssProductRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.CssProduct",
+        "shortName": "get_css_product"
+      },
+      "description": "Sample for GetCssProduct",
+      "file": "css_v1_generated_css_products_service_get_css_product_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_CssProductsService_GetCssProduct_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_css_products_service_get_css_product_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.CssProductsServiceClient",
+          "shortName": "CssProductsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.CssProductsServiceClient.get_css_product",
+        "method": {
+          "fullName": "google.shopping.css.v1.CssProductsService.GetCssProduct",
+          "service": {
+            "fullName": "google.shopping.css.v1.CssProductsService",
+            "shortName": "CssProductsService"
+          },
+          "shortName": "GetCssProduct"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.GetCssProductRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.types.CssProduct",
+        "shortName": "get_css_product"
+      },
+      "description": "Sample for GetCssProduct",
+      "file": "css_v1_generated_css_products_service_get_css_product_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_CssProductsService_GetCssProduct_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_css_products_service_get_css_product_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.CssProductsServiceAsyncClient",
+          "shortName": "CssProductsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.CssProductsServiceAsyncClient.list_css_products",
+        "method": {
+          "fullName": "google.shopping.css.v1.CssProductsService.ListCssProducts",
+          "service": {
+            "fullName": "google.shopping.css.v1.CssProductsService",
+            "shortName": "CssProductsService"
+          },
+          "shortName": "ListCssProducts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.ListCssProductsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.services.css_products_service.pagers.ListCssProductsAsyncPager",
+        "shortName": "list_css_products"
+      },
+      "description": "Sample for ListCssProducts",
+      "file": "css_v1_generated_css_products_service_list_css_products_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_CssProductsService_ListCssProducts_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_css_products_service_list_css_products_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.CssProductsServiceClient",
+          "shortName": "CssProductsServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.CssProductsServiceClient.list_css_products",
+        "method": {
+          "fullName": "google.shopping.css.v1.CssProductsService.ListCssProducts",
+          "service": {
+            "fullName": "google.shopping.css.v1.CssProductsService",
+            "shortName": "CssProductsService"
+          },
+          "shortName": "ListCssProducts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.ListCssProductsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.services.css_products_service.pagers.ListCssProductsPager",
+        "shortName": "list_css_products"
+      },
+      "description": "Sample for ListCssProducts",
+      "file": "css_v1_generated_css_products_service_list_css_products_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_CssProductsService_ListCssProducts_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_css_products_service_list_css_products_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.css_v1.QuotaServiceAsyncClient",
+          "shortName": "QuotaServiceAsyncClient"
+        },
+        "fullName": "google.shopping.css_v1.QuotaServiceAsyncClient.list_quota_groups",
+        "method": {
+          "fullName": "google.shopping.css.v1.QuotaService.ListQuotaGroups",
+          "service": {
+            "fullName": "google.shopping.css.v1.QuotaService",
+            "shortName": "QuotaService"
+          },
+          "shortName": "ListQuotaGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.ListQuotaGroupsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.services.quota_service.pagers.ListQuotaGroupsAsyncPager",
+        "shortName": "list_quota_groups"
+      },
+      "description": "Sample for ListQuotaGroups",
+      "file": "css_v1_generated_quota_service_list_quota_groups_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_QuotaService_ListQuotaGroups_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_quota_service_list_quota_groups_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.css_v1.QuotaServiceClient",
+          "shortName": "QuotaServiceClient"
+        },
+        "fullName": "google.shopping.css_v1.QuotaServiceClient.list_quota_groups",
+        "method": {
+          "fullName": "google.shopping.css.v1.QuotaService.ListQuotaGroups",
+          "service": {
+            "fullName": "google.shopping.css.v1.QuotaService",
+            "shortName": "QuotaService"
+          },
+          "shortName": "ListQuotaGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.css_v1.types.ListQuotaGroupsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.css_v1.services.quota_service.pagers.ListQuotaGroupsPager",
+        "shortName": "list_quota_groups"
+      },
+      "description": "Sample for ListQuotaGroups",
+      "file": "css_v1_generated_quota_service_list_quota_groups_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "css_v1_generated_QuotaService_ListQuotaGroups_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "css_v1_generated_quota_service_list_quota_groups_sync.py"
+    }
+  ]
+}

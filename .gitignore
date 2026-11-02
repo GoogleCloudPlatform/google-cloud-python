@@ -1,0 +1,74 @@
+*.py[cod]
+*.sw[op]
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+.eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+__pycache__
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.nox
+.cache
+.pytest_cache
+
+
+# Mac
+.DS_Store
+
+# JetBrains
+.idea
+
+# VS Code
+.vscode
+
+# emacs
+*~
+
+# Built documentation
+docs/_build
+**/docs/_build
+docs.metadata
+
+# Virtual environment
+env/
+venv/
+
+# Test logs
+coverage.xml
+*sponge_log.xml
+
+# System test environment variables.
+**/system_tests/local_test_setup
+**/system_tests/data
+
+# Make sure a generated file isn't accidentally committed.
+pylintrc
+pylintrc.test
+
+# Ruff cache
+.ruff_cache
+
+# Bazel (created in packages/gapic-generator)
+bazel-bin
+bazel-gapic-generator
+bazel-out
+bazel-testlogs

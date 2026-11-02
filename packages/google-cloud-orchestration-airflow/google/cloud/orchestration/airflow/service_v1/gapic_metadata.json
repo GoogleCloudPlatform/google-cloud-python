@@ -1,0 +1,422 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.orchestration.airflow.service_v1",
+  "protoPackage": "google.cloud.orchestration.airflow.service.v1",
+  "schema": "1.0",
+  "services": {
+    "Environments": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "EnvironmentsClient",
+          "rpcs": {
+            "CheckUpgrade": {
+              "methods": [
+                "check_upgrade"
+              ]
+            },
+            "CreateEnvironment": {
+              "methods": [
+                "create_environment"
+              ]
+            },
+            "CreateUserWorkloadsConfigMap": {
+              "methods": [
+                "create_user_workloads_config_map"
+              ]
+            },
+            "CreateUserWorkloadsSecret": {
+              "methods": [
+                "create_user_workloads_secret"
+              ]
+            },
+            "DatabaseFailover": {
+              "methods": [
+                "database_failover"
+              ]
+            },
+            "DeleteEnvironment": {
+              "methods": [
+                "delete_environment"
+              ]
+            },
+            "DeleteUserWorkloadsConfigMap": {
+              "methods": [
+                "delete_user_workloads_config_map"
+              ]
+            },
+            "DeleteUserWorkloadsSecret": {
+              "methods": [
+                "delete_user_workloads_secret"
+              ]
+            },
+            "ExecuteAirflowCommand": {
+              "methods": [
+                "execute_airflow_command"
+              ]
+            },
+            "FetchDatabaseProperties": {
+              "methods": [
+                "fetch_database_properties"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "GetUserWorkloadsConfigMap": {
+              "methods": [
+                "get_user_workloads_config_map"
+              ]
+            },
+            "GetUserWorkloadsSecret": {
+              "methods": [
+                "get_user_workloads_secret"
+              ]
+            },
+            "ListEnvironments": {
+              "methods": [
+                "list_environments"
+              ]
+            },
+            "ListUserWorkloadsConfigMaps": {
+              "methods": [
+                "list_user_workloads_config_maps"
+              ]
+            },
+            "ListUserWorkloadsSecrets": {
+              "methods": [
+                "list_user_workloads_secrets"
+              ]
+            },
+            "ListWorkloads": {
+              "methods": [
+                "list_workloads"
+              ]
+            },
+            "LoadSnapshot": {
+              "methods": [
+                "load_snapshot"
+              ]
+            },
+            "PollAirflowCommand": {
+              "methods": [
+                "poll_airflow_command"
+              ]
+            },
+            "SaveSnapshot": {
+              "methods": [
+                "save_snapshot"
+              ]
+            },
+            "StopAirflowCommand": {
+              "methods": [
+                "stop_airflow_command"
+              ]
+            },
+            "UpdateEnvironment": {
+              "methods": [
+                "update_environment"
+              ]
+            },
+            "UpdateUserWorkloadsConfigMap": {
+              "methods": [
+                "update_user_workloads_config_map"
+              ]
+            },
+            "UpdateUserWorkloadsSecret": {
+              "methods": [
+                "update_user_workloads_secret"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "EnvironmentsAsyncClient",
+          "rpcs": {
+            "CheckUpgrade": {
+              "methods": [
+                "check_upgrade"
+              ]
+            },
+            "CreateEnvironment": {
+              "methods": [
+                "create_environment"
+              ]
+            },
+            "CreateUserWorkloadsConfigMap": {
+              "methods": [
+                "create_user_workloads_config_map"
+              ]
+            },
+            "CreateUserWorkloadsSecret": {
+              "methods": [
+                "create_user_workloads_secret"
+              ]
+            },
+            "DatabaseFailover": {
+              "methods": [
+                "database_failover"
+              ]
+            },
+            "DeleteEnvironment": {
+              "methods": [
+                "delete_environment"
+              ]
+            },
+            "DeleteUserWorkloadsConfigMap": {
+              "methods": [
+                "delete_user_workloads_config_map"
+              ]
+            },
+            "DeleteUserWorkloadsSecret": {
+              "methods": [
+                "delete_user_workloads_secret"
+              ]
+            },
+            "ExecuteAirflowCommand": {
+              "methods": [
+                "execute_airflow_command"
+              ]
+            },
+            "FetchDatabaseProperties": {
+              "methods": [
+                "fetch_database_properties"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "GetUserWorkloadsConfigMap": {
+              "methods": [
+                "get_user_workloads_config_map"
+              ]
+            },
+            "GetUserWorkloadsSecret": {
+              "methods": [
+                "get_user_workloads_secret"
+              ]
+            },
+            "ListEnvironments": {
+              "methods": [
+                "list_environments"
+              ]
+            },
+            "ListUserWorkloadsConfigMaps": {
+              "methods": [
+                "list_user_workloads_config_maps"
+              ]
+            },
+            "ListUserWorkloadsSecrets": {
+              "methods": [
+                "list_user_workloads_secrets"
+              ]
+            },
+            "ListWorkloads": {
+              "methods": [
+                "list_workloads"
+              ]
+            },
+            "LoadSnapshot": {
+              "methods": [
+                "load_snapshot"
+              ]
+            },
+            "PollAirflowCommand": {
+              "methods": [
+                "poll_airflow_command"
+              ]
+            },
+            "SaveSnapshot": {
+              "methods": [
+                "save_snapshot"
+              ]
+            },
+            "StopAirflowCommand": {
+              "methods": [
+                "stop_airflow_command"
+              ]
+            },
+            "UpdateEnvironment": {
+              "methods": [
+                "update_environment"
+              ]
+            },
+            "UpdateUserWorkloadsConfigMap": {
+              "methods": [
+                "update_user_workloads_config_map"
+              ]
+            },
+            "UpdateUserWorkloadsSecret": {
+              "methods": [
+                "update_user_workloads_secret"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "EnvironmentsClient",
+          "rpcs": {
+            "CheckUpgrade": {
+              "methods": [
+                "check_upgrade"
+              ]
+            },
+            "CreateEnvironment": {
+              "methods": [
+                "create_environment"
+              ]
+            },
+            "CreateUserWorkloadsConfigMap": {
+              "methods": [
+                "create_user_workloads_config_map"
+              ]
+            },
+            "CreateUserWorkloadsSecret": {
+              "methods": [
+                "create_user_workloads_secret"
+              ]
+            },
+            "DatabaseFailover": {
+              "methods": [
+                "database_failover"
+              ]
+            },
+            "DeleteEnvironment": {
+              "methods": [
+                "delete_environment"
+              ]
+            },
+            "DeleteUserWorkloadsConfigMap": {
+              "methods": [
+                "delete_user_workloads_config_map"
+              ]
+            },
+            "DeleteUserWorkloadsSecret": {
+              "methods": [
+                "delete_user_workloads_secret"
+              ]
+            },
+            "ExecuteAirflowCommand": {
+              "methods": [
+                "execute_airflow_command"
+              ]
+            },
+            "FetchDatabaseProperties": {
+              "methods": [
+                "fetch_database_properties"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "GetUserWorkloadsConfigMap": {
+              "methods": [
+                "get_user_workloads_config_map"
+              ]
+            },
+            "GetUserWorkloadsSecret": {
+              "methods": [
+                "get_user_workloads_secret"
+              ]
+            },
+            "ListEnvironments": {
+              "methods": [
+                "list_environments"
+              ]
+            },
+            "ListUserWorkloadsConfigMaps": {
+              "methods": [
+                "list_user_workloads_config_maps"
+              ]
+            },
+            "ListUserWorkloadsSecrets": {
+              "methods": [
+                "list_user_workloads_secrets"
+              ]
+            },
+            "ListWorkloads": {
+              "methods": [
+                "list_workloads"
+              ]
+            },
+            "LoadSnapshot": {
+              "methods": [
+                "load_snapshot"
+              ]
+            },
+            "PollAirflowCommand": {
+              "methods": [
+                "poll_airflow_command"
+              ]
+            },
+            "SaveSnapshot": {
+              "methods": [
+                "save_snapshot"
+              ]
+            },
+            "StopAirflowCommand": {
+              "methods": [
+                "stop_airflow_command"
+              ]
+            },
+            "UpdateEnvironment": {
+              "methods": [
+                "update_environment"
+              ]
+            },
+            "UpdateUserWorkloadsConfigMap": {
+              "methods": [
+                "update_user_workloads_config_map"
+              ]
+            },
+            "UpdateUserWorkloadsSecret": {
+              "methods": [
+                "update_user_workloads_secret"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ImageVersions": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ImageVersionsClient",
+          "rpcs": {
+            "ListImageVersions": {
+              "methods": [
+                "list_image_versions"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ImageVersionsAsyncClient",
+          "rpcs": {
+            "ListImageVersions": {
+              "methods": [
+                "list_image_versions"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ImageVersionsClient",
+          "rpcs": {
+            "ListImageVersions": {
+              "methods": [
+                "list_image_versions"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

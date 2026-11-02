@@ -1,0 +1,343 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.securitycentermanagement_v1",
+  "protoPackage": "google.cloud.securitycentermanagement.v1",
+  "schema": "1.0",
+  "services": {
+    "SecurityCenterManagement": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SecurityCenterManagementClient",
+          "rpcs": {
+            "CreateEventThreatDetectionCustomModule": {
+              "methods": [
+                "create_event_threat_detection_custom_module"
+              ]
+            },
+            "CreateSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "create_security_health_analytics_custom_module"
+              ]
+            },
+            "DeleteEventThreatDetectionCustomModule": {
+              "methods": [
+                "delete_event_threat_detection_custom_module"
+              ]
+            },
+            "DeleteSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "delete_security_health_analytics_custom_module"
+              ]
+            },
+            "GetEffectiveEventThreatDetectionCustomModule": {
+              "methods": [
+                "get_effective_event_threat_detection_custom_module"
+              ]
+            },
+            "GetEffectiveSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "get_effective_security_health_analytics_custom_module"
+              ]
+            },
+            "GetEventThreatDetectionCustomModule": {
+              "methods": [
+                "get_event_threat_detection_custom_module"
+              ]
+            },
+            "GetSecurityCenterService": {
+              "methods": [
+                "get_security_center_service"
+              ]
+            },
+            "GetSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "get_security_health_analytics_custom_module"
+              ]
+            },
+            "ListDescendantEventThreatDetectionCustomModules": {
+              "methods": [
+                "list_descendant_event_threat_detection_custom_modules"
+              ]
+            },
+            "ListDescendantSecurityHealthAnalyticsCustomModules": {
+              "methods": [
+                "list_descendant_security_health_analytics_custom_modules"
+              ]
+            },
+            "ListEffectiveEventThreatDetectionCustomModules": {
+              "methods": [
+                "list_effective_event_threat_detection_custom_modules"
+              ]
+            },
+            "ListEffectiveSecurityHealthAnalyticsCustomModules": {
+              "methods": [
+                "list_effective_security_health_analytics_custom_modules"
+              ]
+            },
+            "ListEventThreatDetectionCustomModules": {
+              "methods": [
+                "list_event_threat_detection_custom_modules"
+              ]
+            },
+            "ListSecurityCenterServices": {
+              "methods": [
+                "list_security_center_services"
+              ]
+            },
+            "ListSecurityHealthAnalyticsCustomModules": {
+              "methods": [
+                "list_security_health_analytics_custom_modules"
+              ]
+            },
+            "SimulateSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "simulate_security_health_analytics_custom_module"
+              ]
+            },
+            "UpdateEventThreatDetectionCustomModule": {
+              "methods": [
+                "update_event_threat_detection_custom_module"
+              ]
+            },
+            "UpdateSecurityCenterService": {
+              "methods": [
+                "update_security_center_service"
+              ]
+            },
+            "UpdateSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "update_security_health_analytics_custom_module"
+              ]
+            },
+            "ValidateEventThreatDetectionCustomModule": {
+              "methods": [
+                "validate_event_threat_detection_custom_module"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SecurityCenterManagementAsyncClient",
+          "rpcs": {
+            "CreateEventThreatDetectionCustomModule": {
+              "methods": [
+                "create_event_threat_detection_custom_module"
+              ]
+            },
+            "CreateSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "create_security_health_analytics_custom_module"
+              ]
+            },
+            "DeleteEventThreatDetectionCustomModule": {
+              "methods": [
+                "delete_event_threat_detection_custom_module"
+              ]
+            },
+            "DeleteSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "delete_security_health_analytics_custom_module"
+              ]
+            },
+            "GetEffectiveEventThreatDetectionCustomModule": {
+              "methods": [
+                "get_effective_event_threat_detection_custom_module"
+              ]
+            },
+            "GetEffectiveSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "get_effective_security_health_analytics_custom_module"
+              ]
+            },
+            "GetEventThreatDetectionCustomModule": {
+              "methods": [
+                "get_event_threat_detection_custom_module"
+              ]
+            },
+            "GetSecurityCenterService": {
+              "methods": [
+                "get_security_center_service"
+              ]
+            },
+            "GetSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "get_security_health_analytics_custom_module"
+              ]
+            },
+            "ListDescendantEventThreatDetectionCustomModules": {
+              "methods": [
+                "list_descendant_event_threat_detection_custom_modules"
+              ]
+            },
+            "ListDescendantSecurityHealthAnalyticsCustomModules": {
+              "methods": [
+                "list_descendant_security_health_analytics_custom_modules"
+              ]
+            },
+            "ListEffectiveEventThreatDetectionCustomModules": {
+              "methods": [
+                "list_effective_event_threat_detection_custom_modules"
+              ]
+            },
+            "ListEffectiveSecurityHealthAnalyticsCustomModules": {
+              "methods": [
+                "list_effective_security_health_analytics_custom_modules"
+              ]
+            },
+            "ListEventThreatDetectionCustomModules": {
+              "methods": [
+                "list_event_threat_detection_custom_modules"
+              ]
+            },
+            "ListSecurityCenterServices": {
+              "methods": [
+                "list_security_center_services"
+              ]
+            },
+            "ListSecurityHealthAnalyticsCustomModules": {
+              "methods": [
+                "list_security_health_analytics_custom_modules"
+              ]
+            },
+            "SimulateSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "simulate_security_health_analytics_custom_module"
+              ]
+            },
+            "UpdateEventThreatDetectionCustomModule": {
+              "methods": [
+                "update_event_threat_detection_custom_module"
+              ]
+            },
+            "UpdateSecurityCenterService": {
+              "methods": [
+                "update_security_center_service"
+              ]
+            },
+            "UpdateSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "update_security_health_analytics_custom_module"
+              ]
+            },
+            "ValidateEventThreatDetectionCustomModule": {
+              "methods": [
+                "validate_event_threat_detection_custom_module"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SecurityCenterManagementClient",
+          "rpcs": {
+            "CreateEventThreatDetectionCustomModule": {
+              "methods": [
+                "create_event_threat_detection_custom_module"
+              ]
+            },
+            "CreateSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "create_security_health_analytics_custom_module"
+              ]
+            },
+            "DeleteEventThreatDetectionCustomModule": {
+              "methods": [
+                "delete_event_threat_detection_custom_module"
+              ]
+            },
+            "DeleteSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "delete_security_health_analytics_custom_module"
+              ]
+            },
+            "GetEffectiveEventThreatDetectionCustomModule": {
+              "methods": [
+                "get_effective_event_threat_detection_custom_module"
+              ]
+            },
+            "GetEffectiveSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "get_effective_security_health_analytics_custom_module"
+              ]
+            },
+            "GetEventThreatDetectionCustomModule": {
+              "methods": [
+                "get_event_threat_detection_custom_module"
+              ]
+            },
+            "GetSecurityCenterService": {
+              "methods": [
+                "get_security_center_service"
+              ]
+            },
+            "GetSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "get_security_health_analytics_custom_module"
+              ]
+            },
+            "ListDescendantEventThreatDetectionCustomModules": {
+              "methods": [
+                "list_descendant_event_threat_detection_custom_modules"
+              ]
+            },
+            "ListDescendantSecurityHealthAnalyticsCustomModules": {
+              "methods": [
+                "list_descendant_security_health_analytics_custom_modules"
+              ]
+            },
+            "ListEffectiveEventThreatDetectionCustomModules": {
+              "methods": [
+                "list_effective_event_threat_detection_custom_modules"
+              ]
+            },
+            "ListEffectiveSecurityHealthAnalyticsCustomModules": {
+              "methods": [
+                "list_effective_security_health_analytics_custom_modules"
+              ]
+            },
+            "ListEventThreatDetectionCustomModules": {
+              "methods": [
+                "list_event_threat_detection_custom_modules"
+              ]
+            },
+            "ListSecurityCenterServices": {
+              "methods": [
+                "list_security_center_services"
+              ]
+            },
+            "ListSecurityHealthAnalyticsCustomModules": {
+              "methods": [
+                "list_security_health_analytics_custom_modules"
+              ]
+            },
+            "SimulateSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "simulate_security_health_analytics_custom_module"
+              ]
+            },
+            "UpdateEventThreatDetectionCustomModule": {
+              "methods": [
+                "update_event_threat_detection_custom_module"
+              ]
+            },
+            "UpdateSecurityCenterService": {
+              "methods": [
+                "update_security_center_service"
+              ]
+            },
+            "UpdateSecurityHealthAnalyticsCustomModule": {
+              "methods": [
+                "update_security_health_analytics_custom_module"
+              ]
+            },
+            "ValidateEventThreatDetectionCustomModule": {
+              "methods": [
+                "validate_event_threat_detection_custom_module"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

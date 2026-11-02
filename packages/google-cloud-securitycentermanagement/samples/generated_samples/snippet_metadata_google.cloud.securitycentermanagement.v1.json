@@ -1,0 +1,3432 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.securitycentermanagement.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-securitycentermanagement",
+    "version": "0.5.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.create_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.CreateEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "CreateEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.CreateEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "event_threat_detection_custom_module",
+            "type": "google.cloud.securitycentermanagement_v1.types.EventThreatDetectionCustomModule"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.EventThreatDetectionCustomModule",
+        "shortName": "create_event_threat_detection_custom_module"
+      },
+      "description": "Sample for CreateEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_create_event_threat_detection_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_CreateEventThreatDetectionCustomModule_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_create_event_threat_detection_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.create_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.CreateEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "CreateEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.CreateEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "event_threat_detection_custom_module",
+            "type": "google.cloud.securitycentermanagement_v1.types.EventThreatDetectionCustomModule"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.EventThreatDetectionCustomModule",
+        "shortName": "create_event_threat_detection_custom_module"
+      },
+      "description": "Sample for CreateEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_create_event_threat_detection_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_CreateEventThreatDetectionCustomModule_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_create_event_threat_detection_custom_module_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.create_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.CreateSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "CreateSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.CreateSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "security_health_analytics_custom_module",
+            "type": "google.cloud.securitycentermanagement_v1.types.SecurityHealthAnalyticsCustomModule"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SecurityHealthAnalyticsCustomModule",
+        "shortName": "create_security_health_analytics_custom_module"
+      },
+      "description": "Sample for CreateSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_create_security_health_analytics_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_CreateSecurityHealthAnalyticsCustomModule_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_create_security_health_analytics_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.create_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.CreateSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "CreateSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.CreateSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "security_health_analytics_custom_module",
+            "type": "google.cloud.securitycentermanagement_v1.types.SecurityHealthAnalyticsCustomModule"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SecurityHealthAnalyticsCustomModule",
+        "shortName": "create_security_health_analytics_custom_module"
+      },
+      "description": "Sample for CreateSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_create_security_health_analytics_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_CreateSecurityHealthAnalyticsCustomModule_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_create_security_health_analytics_custom_module_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.delete_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.DeleteEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "DeleteEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.DeleteEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_event_threat_detection_custom_module"
+      },
+      "description": "Sample for DeleteEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_delete_event_threat_detection_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_DeleteEventThreatDetectionCustomModule_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_delete_event_threat_detection_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.delete_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.DeleteEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "DeleteEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.DeleteEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_event_threat_detection_custom_module"
+      },
+      "description": "Sample for DeleteEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_delete_event_threat_detection_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_DeleteEventThreatDetectionCustomModule_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_delete_event_threat_detection_custom_module_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.delete_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.DeleteSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "DeleteSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.DeleteSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_security_health_analytics_custom_module"
+      },
+      "description": "Sample for DeleteSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_delete_security_health_analytics_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_DeleteSecurityHealthAnalyticsCustomModule_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_delete_security_health_analytics_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.delete_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.DeleteSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "DeleteSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.DeleteSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_security_health_analytics_custom_module"
+      },
+      "description": "Sample for DeleteSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_delete_security_health_analytics_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_DeleteSecurityHealthAnalyticsCustomModule_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_delete_security_health_analytics_custom_module_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.get_effective_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.GetEffectiveEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "GetEffectiveEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.GetEffectiveEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.EffectiveEventThreatDetectionCustomModule",
+        "shortName": "get_effective_event_threat_detection_custom_module"
+      },
+      "description": "Sample for GetEffectiveEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_get_effective_event_threat_detection_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_GetEffectiveEventThreatDetectionCustomModule_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_get_effective_event_threat_detection_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.get_effective_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.GetEffectiveEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "GetEffectiveEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.GetEffectiveEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.EffectiveEventThreatDetectionCustomModule",
+        "shortName": "get_effective_event_threat_detection_custom_module"
+      },
+      "description": "Sample for GetEffectiveEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_get_effective_event_threat_detection_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_GetEffectiveEventThreatDetectionCustomModule_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_get_effective_event_threat_detection_custom_module_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.get_effective_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.GetEffectiveSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "GetEffectiveSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.EffectiveSecurityHealthAnalyticsCustomModule",
+        "shortName": "get_effective_security_health_analytics_custom_module"
+      },
+      "description": "Sample for GetEffectiveSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_get_effective_security_health_analytics_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_GetEffectiveSecurityHealthAnalyticsCustomModule_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_get_effective_security_health_analytics_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.get_effective_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.GetEffectiveSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "GetEffectiveSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.EffectiveSecurityHealthAnalyticsCustomModule",
+        "shortName": "get_effective_security_health_analytics_custom_module"
+      },
+      "description": "Sample for GetEffectiveSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_get_effective_security_health_analytics_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_GetEffectiveSecurityHealthAnalyticsCustomModule_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_get_effective_security_health_analytics_custom_module_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.get_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.GetEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "GetEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.GetEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.EventThreatDetectionCustomModule",
+        "shortName": "get_event_threat_detection_custom_module"
+      },
+      "description": "Sample for GetEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_get_event_threat_detection_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_GetEventThreatDetectionCustomModule_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_get_event_threat_detection_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.get_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.GetEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "GetEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.GetEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.EventThreatDetectionCustomModule",
+        "shortName": "get_event_threat_detection_custom_module"
+      },
+      "description": "Sample for GetEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_get_event_threat_detection_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_GetEventThreatDetectionCustomModule_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_get_event_threat_detection_custom_module_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.get_security_center_service",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.GetSecurityCenterService",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "GetSecurityCenterService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.GetSecurityCenterServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SecurityCenterService",
+        "shortName": "get_security_center_service"
+      },
+      "description": "Sample for GetSecurityCenterService",
+      "file": "securitycentermanagement_v1_generated_security_center_management_get_security_center_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_GetSecurityCenterService_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_get_security_center_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.get_security_center_service",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.GetSecurityCenterService",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "GetSecurityCenterService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.GetSecurityCenterServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SecurityCenterService",
+        "shortName": "get_security_center_service"
+      },
+      "description": "Sample for GetSecurityCenterService",
+      "file": "securitycentermanagement_v1_generated_security_center_management_get_security_center_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_GetSecurityCenterService_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_get_security_center_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.get_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.GetSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "GetSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.GetSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SecurityHealthAnalyticsCustomModule",
+        "shortName": "get_security_health_analytics_custom_module"
+      },
+      "description": "Sample for GetSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_get_security_health_analytics_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_GetSecurityHealthAnalyticsCustomModule_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_get_security_health_analytics_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.get_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.GetSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "GetSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.GetSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SecurityHealthAnalyticsCustomModule",
+        "shortName": "get_security_health_analytics_custom_module"
+      },
+      "description": "Sample for GetSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_get_security_health_analytics_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_GetSecurityHealthAnalyticsCustomModule_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_get_security_health_analytics_custom_module_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.list_descendant_event_threat_detection_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListDescendantEventThreatDetectionCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListDescendantEventThreatDetectionCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListDescendantEventThreatDetectionCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListDescendantEventThreatDetectionCustomModulesAsyncPager",
+        "shortName": "list_descendant_event_threat_detection_custom_modules"
+      },
+      "description": "Sample for ListDescendantEventThreatDetectionCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_descendant_event_threat_detection_custom_modules_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListDescendantEventThreatDetectionCustomModules_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_descendant_event_threat_detection_custom_modules_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.list_descendant_event_threat_detection_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListDescendantEventThreatDetectionCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListDescendantEventThreatDetectionCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListDescendantEventThreatDetectionCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListDescendantEventThreatDetectionCustomModulesPager",
+        "shortName": "list_descendant_event_threat_detection_custom_modules"
+      },
+      "description": "Sample for ListDescendantEventThreatDetectionCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_descendant_event_threat_detection_custom_modules_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListDescendantEventThreatDetectionCustomModules_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_descendant_event_threat_detection_custom_modules_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.list_descendant_security_health_analytics_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListDescendantSecurityHealthAnalyticsCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListDescendantSecurityHealthAnalyticsCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListDescendantSecurityHealthAnalyticsCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListDescendantSecurityHealthAnalyticsCustomModulesAsyncPager",
+        "shortName": "list_descendant_security_health_analytics_custom_modules"
+      },
+      "description": "Sample for ListDescendantSecurityHealthAnalyticsCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_descendant_security_health_analytics_custom_modules_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListDescendantSecurityHealthAnalyticsCustomModules_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_descendant_security_health_analytics_custom_modules_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.list_descendant_security_health_analytics_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListDescendantSecurityHealthAnalyticsCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListDescendantSecurityHealthAnalyticsCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListDescendantSecurityHealthAnalyticsCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListDescendantSecurityHealthAnalyticsCustomModulesPager",
+        "shortName": "list_descendant_security_health_analytics_custom_modules"
+      },
+      "description": "Sample for ListDescendantSecurityHealthAnalyticsCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_descendant_security_health_analytics_custom_modules_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListDescendantSecurityHealthAnalyticsCustomModules_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_descendant_security_health_analytics_custom_modules_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.list_effective_event_threat_detection_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListEffectiveEventThreatDetectionCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListEffectiveEventThreatDetectionCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListEffectiveEventThreatDetectionCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListEffectiveEventThreatDetectionCustomModulesAsyncPager",
+        "shortName": "list_effective_event_threat_detection_custom_modules"
+      },
+      "description": "Sample for ListEffectiveEventThreatDetectionCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_effective_event_threat_detection_custom_modules_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListEffectiveEventThreatDetectionCustomModules_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_effective_event_threat_detection_custom_modules_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.list_effective_event_threat_detection_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListEffectiveEventThreatDetectionCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListEffectiveEventThreatDetectionCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListEffectiveEventThreatDetectionCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListEffectiveEventThreatDetectionCustomModulesPager",
+        "shortName": "list_effective_event_threat_detection_custom_modules"
+      },
+      "description": "Sample for ListEffectiveEventThreatDetectionCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_effective_event_threat_detection_custom_modules_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListEffectiveEventThreatDetectionCustomModules_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_effective_event_threat_detection_custom_modules_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.list_effective_security_health_analytics_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListEffectiveSecurityHealthAnalyticsCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListEffectiveSecurityHealthAnalyticsCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListEffectiveSecurityHealthAnalyticsCustomModulesAsyncPager",
+        "shortName": "list_effective_security_health_analytics_custom_modules"
+      },
+      "description": "Sample for ListEffectiveSecurityHealthAnalyticsCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_effective_security_health_analytics_custom_modules_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListEffectiveSecurityHealthAnalyticsCustomModules_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_effective_security_health_analytics_custom_modules_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.list_effective_security_health_analytics_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListEffectiveSecurityHealthAnalyticsCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListEffectiveSecurityHealthAnalyticsCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListEffectiveSecurityHealthAnalyticsCustomModulesPager",
+        "shortName": "list_effective_security_health_analytics_custom_modules"
+      },
+      "description": "Sample for ListEffectiveSecurityHealthAnalyticsCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_effective_security_health_analytics_custom_modules_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListEffectiveSecurityHealthAnalyticsCustomModules_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_effective_security_health_analytics_custom_modules_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.list_event_threat_detection_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListEventThreatDetectionCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListEventThreatDetectionCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListEventThreatDetectionCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListEventThreatDetectionCustomModulesAsyncPager",
+        "shortName": "list_event_threat_detection_custom_modules"
+      },
+      "description": "Sample for ListEventThreatDetectionCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_event_threat_detection_custom_modules_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListEventThreatDetectionCustomModules_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_event_threat_detection_custom_modules_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.list_event_threat_detection_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListEventThreatDetectionCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListEventThreatDetectionCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListEventThreatDetectionCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListEventThreatDetectionCustomModulesPager",
+        "shortName": "list_event_threat_detection_custom_modules"
+      },
+      "description": "Sample for ListEventThreatDetectionCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_event_threat_detection_custom_modules_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListEventThreatDetectionCustomModules_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_event_threat_detection_custom_modules_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.list_security_center_services",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListSecurityCenterServices",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListSecurityCenterServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListSecurityCenterServicesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListSecurityCenterServicesAsyncPager",
+        "shortName": "list_security_center_services"
+      },
+      "description": "Sample for ListSecurityCenterServices",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_security_center_services_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListSecurityCenterServices_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_security_center_services_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.list_security_center_services",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListSecurityCenterServices",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListSecurityCenterServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListSecurityCenterServicesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListSecurityCenterServicesPager",
+        "shortName": "list_security_center_services"
+      },
+      "description": "Sample for ListSecurityCenterServices",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_security_center_services_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListSecurityCenterServices_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_security_center_services_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.list_security_health_analytics_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListSecurityHealthAnalyticsCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListSecurityHealthAnalyticsCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListSecurityHealthAnalyticsCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListSecurityHealthAnalyticsCustomModulesAsyncPager",
+        "shortName": "list_security_health_analytics_custom_modules"
+      },
+      "description": "Sample for ListSecurityHealthAnalyticsCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_security_health_analytics_custom_modules_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListSecurityHealthAnalyticsCustomModules_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_security_health_analytics_custom_modules_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.list_security_health_analytics_custom_modules",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ListSecurityHealthAnalyticsCustomModules",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ListSecurityHealthAnalyticsCustomModules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ListSecurityHealthAnalyticsCustomModulesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.services.security_center_management.pagers.ListSecurityHealthAnalyticsCustomModulesPager",
+        "shortName": "list_security_health_analytics_custom_modules"
+      },
+      "description": "Sample for ListSecurityHealthAnalyticsCustomModules",
+      "file": "securitycentermanagement_v1_generated_security_center_management_list_security_health_analytics_custom_modules_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ListSecurityHealthAnalyticsCustomModules_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_list_security_health_analytics_custom_modules_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.simulate_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.SimulateSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "SimulateSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.SimulateSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "custom_config",
+            "type": "google.cloud.securitycentermanagement_v1.types.CustomConfig"
+          },
+          {
+            "name": "resource",
+            "type": "google.cloud.securitycentermanagement_v1.types.SimulateSecurityHealthAnalyticsCustomModuleRequest.SimulatedResource"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SimulateSecurityHealthAnalyticsCustomModuleResponse",
+        "shortName": "simulate_security_health_analytics_custom_module"
+      },
+      "description": "Sample for SimulateSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_simulate_security_health_analytics_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_SimulateSecurityHealthAnalyticsCustomModule_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_simulate_security_health_analytics_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.simulate_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.SimulateSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "SimulateSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.SimulateSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "custom_config",
+            "type": "google.cloud.securitycentermanagement_v1.types.CustomConfig"
+          },
+          {
+            "name": "resource",
+            "type": "google.cloud.securitycentermanagement_v1.types.SimulateSecurityHealthAnalyticsCustomModuleRequest.SimulatedResource"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SimulateSecurityHealthAnalyticsCustomModuleResponse",
+        "shortName": "simulate_security_health_analytics_custom_module"
+      },
+      "description": "Sample for SimulateSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_simulate_security_health_analytics_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_SimulateSecurityHealthAnalyticsCustomModule_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_simulate_security_health_analytics_custom_module_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.update_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.UpdateEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "UpdateEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.UpdateEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "event_threat_detection_custom_module",
+            "type": "google.cloud.securitycentermanagement_v1.types.EventThreatDetectionCustomModule"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.EventThreatDetectionCustomModule",
+        "shortName": "update_event_threat_detection_custom_module"
+      },
+      "description": "Sample for UpdateEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_update_event_threat_detection_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_UpdateEventThreatDetectionCustomModule_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_update_event_threat_detection_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.update_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.UpdateEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "UpdateEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.UpdateEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "event_threat_detection_custom_module",
+            "type": "google.cloud.securitycentermanagement_v1.types.EventThreatDetectionCustomModule"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.EventThreatDetectionCustomModule",
+        "shortName": "update_event_threat_detection_custom_module"
+      },
+      "description": "Sample for UpdateEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_update_event_threat_detection_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_UpdateEventThreatDetectionCustomModule_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_update_event_threat_detection_custom_module_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.update_security_center_service",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.UpdateSecurityCenterService",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "UpdateSecurityCenterService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.UpdateSecurityCenterServiceRequest"
+          },
+          {
+            "name": "security_center_service",
+            "type": "google.cloud.securitycentermanagement_v1.types.SecurityCenterService"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SecurityCenterService",
+        "shortName": "update_security_center_service"
+      },
+      "description": "Sample for UpdateSecurityCenterService",
+      "file": "securitycentermanagement_v1_generated_security_center_management_update_security_center_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_UpdateSecurityCenterService_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_update_security_center_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.update_security_center_service",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.UpdateSecurityCenterService",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "UpdateSecurityCenterService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.UpdateSecurityCenterServiceRequest"
+          },
+          {
+            "name": "security_center_service",
+            "type": "google.cloud.securitycentermanagement_v1.types.SecurityCenterService"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SecurityCenterService",
+        "shortName": "update_security_center_service"
+      },
+      "description": "Sample for UpdateSecurityCenterService",
+      "file": "securitycentermanagement_v1_generated_security_center_management_update_security_center_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_UpdateSecurityCenterService_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_update_security_center_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.update_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.UpdateSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "UpdateSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.UpdateSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "security_health_analytics_custom_module",
+            "type": "google.cloud.securitycentermanagement_v1.types.SecurityHealthAnalyticsCustomModule"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SecurityHealthAnalyticsCustomModule",
+        "shortName": "update_security_health_analytics_custom_module"
+      },
+      "description": "Sample for UpdateSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_update_security_health_analytics_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_UpdateSecurityHealthAnalyticsCustomModule_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_update_security_health_analytics_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.update_security_health_analytics_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.UpdateSecurityHealthAnalyticsCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "UpdateSecurityHealthAnalyticsCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.UpdateSecurityHealthAnalyticsCustomModuleRequest"
+          },
+          {
+            "name": "security_health_analytics_custom_module",
+            "type": "google.cloud.securitycentermanagement_v1.types.SecurityHealthAnalyticsCustomModule"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.SecurityHealthAnalyticsCustomModule",
+        "shortName": "update_security_health_analytics_custom_module"
+      },
+      "description": "Sample for UpdateSecurityHealthAnalyticsCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_update_security_health_analytics_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_UpdateSecurityHealthAnalyticsCustomModule_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_update_security_health_analytics_custom_module_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient",
+          "shortName": "SecurityCenterManagementAsyncClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementAsyncClient.validate_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ValidateEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ValidateEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ValidateEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.ValidateEventThreatDetectionCustomModuleResponse",
+        "shortName": "validate_event_threat_detection_custom_module"
+      },
+      "description": "Sample for ValidateEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_validate_event_threat_detection_custom_module_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ValidateEventThreatDetectionCustomModule_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_validate_event_threat_detection_custom_module_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient",
+          "shortName": "SecurityCenterManagementClient"
+        },
+        "fullName": "google.cloud.securitycentermanagement_v1.SecurityCenterManagementClient.validate_event_threat_detection_custom_module",
+        "method": {
+          "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement.ValidateEventThreatDetectionCustomModule",
+          "service": {
+            "fullName": "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+            "shortName": "SecurityCenterManagement"
+          },
+          "shortName": "ValidateEventThreatDetectionCustomModule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.securitycentermanagement_v1.types.ValidateEventThreatDetectionCustomModuleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.securitycentermanagement_v1.types.ValidateEventThreatDetectionCustomModuleResponse",
+        "shortName": "validate_event_threat_detection_custom_module"
+      },
+      "description": "Sample for ValidateEventThreatDetectionCustomModule",
+      "file": "securitycentermanagement_v1_generated_security_center_management_validate_event_threat_detection_custom_module_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "securitycentermanagement_v1_generated_SecurityCenterManagement_ValidateEventThreatDetectionCustomModule_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "securitycentermanagement_v1_generated_security_center_management_validate_event_threat_detection_custom_module_sync.py"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The Synthesizer requires either\n   plain text or SSML\
+      \ as input."
+    id: input
+    var_type: <xref uid="google.cloud.texttospeech_v1beta1.types.SynthesisInput">google.cloud.texttospeech_v1beta1.types.SynthesisInput</xref>
+  - description: "Required. The desired voice of the\n   synthesized audio."
+    id: voice
+    var_type: <xref uid="google.cloud.texttospeech_v1beta1.types.VoiceSelectionParams">google.cloud.texttospeech_v1beta1.types.VoiceSelectionParams</xref>
+  - description: "Required. The configuration of the\n   synthesized audio."
+    id: audio_config
+    var_type: <xref uid="google.cloud.texttospeech_v1beta1.types.AudioConfig">google.cloud.texttospeech_v1beta1.types.AudioConfig</xref>
+  - description: "Whether and what timepoints are returned in\n   the response."
+    id: enable_time_pointing
+    var_type: Sequence[<xref uid="google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest.TimepointType">google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest.TimepointType</xref>]
+  children:
+  - google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest.TimepointType
+  class: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest
+  fullName: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.types
+  name: SynthesizeSpeechRequest
+  source:
+    id: SynthesizeSpeechRequest
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/types/cloud_tts.py
+    startLine: 135
+  summary: 'The top-level message sent by the client for the
+
+    `SynthesizeSpeech` method.
+
+    '
+  syntax:
+    content: SynthesizeSpeechRequest(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest
+references:
+- fullName: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest.TimepointType
+  isExternal: false
+  name: TimepointType
+  parent: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest
+  uid: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest.TimepointType

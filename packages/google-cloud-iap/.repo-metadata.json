@@ -1,0 +1,15 @@
+{
+    "api_description": "Controls access to cloud applications running on Google Cloud Platform.",
+    "api_id": "iap.googleapis.com",
+    "api_shortname": "iap",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/iap/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-iap",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "iap",
+    "name_pretty": "Cloud Identity-Aware Proxy",
+    "product_documentation": "https://cloud.google.com/iap",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

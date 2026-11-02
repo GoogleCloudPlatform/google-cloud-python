@@ -1,0 +1,15 @@
+{
+    "api_description": "Certificate Manager simplifies the acquisition, deployment, and management of Transport Layer Security (TLS) certificates.",
+    "api_id": "certificatemanager.googleapis.com",
+    "api_shortname": "certificatemanager",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/certificatemanager/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-certificate-manager",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "certificatemanager",
+    "name_pretty": "Certificate Manager",
+    "product_documentation": "https://docs.cloud.google.com/certificate-manager/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

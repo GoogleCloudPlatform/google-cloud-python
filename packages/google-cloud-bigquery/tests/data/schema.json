@@ -1,0 +1,96 @@
+{
+   "fields" : [
+      {
+         "type" : "STRING",
+         "name" : "Name",
+         "mode" : "NULLABLE"
+      },
+      {
+         "name" : "Age",
+         "mode" : "NULLABLE",
+         "type" : "INTEGER"
+      },
+      {
+         "type" : "FLOAT",
+         "name" : "Weight",
+         "mode" : "NULLABLE"
+      },
+      {
+         "mode" : "NULLABLE",
+         "name" : "IsMagic",
+         "type" : "BOOLEAN"
+      },
+      {
+         "name" : "Spells",
+         "fields" : [
+            {
+               "mode" : "NULLABLE",
+               "name" : "Name",
+               "type" : "STRING"
+            },
+            {
+               "mode" : "NULLABLE",
+               "name" : "LastUsed",
+               "type" : "TIMESTAMP"
+            },
+            {
+               "type" : "STRING",
+               "mode" : "NULLABLE",
+               "name" : "DiscoveredBy"
+            },
+            {
+               "name" : "Properties",
+               "fields" : [
+                  {
+                     "name" : "Name",
+                     "mode" : "NULLABLE",
+                     "type" : "STRING"
+                  },
+                  {
+                     "type" : "FLOAT",
+                     "name" : "Power",
+                     "mode" : "NULLABLE"
+                  }
+               ],
+               "mode" : "REPEATED",
+               "type" : "RECORD"
+            },
+            {
+               "mode" : "NULLABLE",
+               "name" : "Icon",
+               "type" : "BYTES"
+            }
+         ],
+         "mode" : "REPEATED",
+         "type" : "RECORD"
+      },
+      {
+         "type" : "TIME",
+         "mode" : "NULLABLE",
+         "name" : "TeaTime"
+      },
+      {
+         "type" : "DATE",
+         "name" : "NextVacation",
+         "mode" : "NULLABLE"
+      },
+      {
+         "mode" : "NULLABLE",
+         "name" : "FavoriteTime",
+         "type" : "DATETIME"
+      },
+      {
+         "mode" : "NULLABLE",
+         "name" : "FavoriteNumber",
+         "type" : "NUMERIC"
+      },
+      {
+         "mode" : "NULLABLE",
+         "name" : "TimeRange",
+         "type" : "RANGE",
+         "rangeElementType": {
+            "type": "DATETIME"
+          }
+      }
+   ]
+}

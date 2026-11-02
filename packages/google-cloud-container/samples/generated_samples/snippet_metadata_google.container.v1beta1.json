@@ -1,0 +1,6585 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.container.v1beta1",
+        "version": "v1beta1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-container",
+    "version": "2.67.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.cancel_operation",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CancelOperation",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CancelOperation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CancelOperationRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "operation_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "cancel_operation"
+      },
+      "description": "Sample for CancelOperation",
+      "file": "container_v1beta1_generated_cluster_manager_cancel_operation_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CancelOperation_async",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_cancel_operation_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.cancel_operation",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CancelOperation",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CancelOperation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CancelOperationRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "operation_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "cancel_operation"
+      },
+      "description": "Sample for CancelOperation",
+      "file": "container_v1beta1_generated_cluster_manager_cancel_operation_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CancelOperation_sync",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_cancel_operation_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.check_autopilot_compatibility",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CheckAutopilotCompatibility",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CheckAutopilotCompatibility"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CheckAutopilotCompatibilityRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.CheckAutopilotCompatibilityResponse",
+        "shortName": "check_autopilot_compatibility"
+      },
+      "description": "Sample for CheckAutopilotCompatibility",
+      "file": "container_v1beta1_generated_cluster_manager_check_autopilot_compatibility_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CheckAutopilotCompatibility_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_check_autopilot_compatibility_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.check_autopilot_compatibility",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CheckAutopilotCompatibility",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CheckAutopilotCompatibility"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CheckAutopilotCompatibilityRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.CheckAutopilotCompatibilityResponse",
+        "shortName": "check_autopilot_compatibility"
+      },
+      "description": "Sample for CheckAutopilotCompatibility",
+      "file": "container_v1beta1_generated_cluster_manager_check_autopilot_compatibility_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CheckAutopilotCompatibility_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_check_autopilot_compatibility_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.complete_control_plane_upgrade",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CompleteControlPlaneUpgrade",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CompleteControlPlaneUpgrade"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CompleteControlPlaneUpgradeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "complete_control_plane_upgrade"
+      },
+      "description": "Sample for CompleteControlPlaneUpgrade",
+      "file": "container_v1beta1_generated_cluster_manager_complete_control_plane_upgrade_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CompleteControlPlaneUpgrade_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_complete_control_plane_upgrade_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.complete_control_plane_upgrade",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CompleteControlPlaneUpgrade",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CompleteControlPlaneUpgrade"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CompleteControlPlaneUpgradeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "complete_control_plane_upgrade"
+      },
+      "description": "Sample for CompleteControlPlaneUpgrade",
+      "file": "container_v1beta1_generated_cluster_manager_complete_control_plane_upgrade_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CompleteControlPlaneUpgrade_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_complete_control_plane_upgrade_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.complete_ip_rotation",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CompleteIPRotation",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CompleteIPRotation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CompleteIPRotationRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "complete_ip_rotation"
+      },
+      "description": "Sample for CompleteIPRotation",
+      "file": "container_v1beta1_generated_cluster_manager_complete_ip_rotation_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CompleteIPRotation_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_complete_ip_rotation_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.complete_ip_rotation",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CompleteIPRotation",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CompleteIPRotation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CompleteIPRotationRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "complete_ip_rotation"
+      },
+      "description": "Sample for CompleteIPRotation",
+      "file": "container_v1beta1_generated_cluster_manager_complete_ip_rotation_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CompleteIPRotation_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_complete_ip_rotation_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.complete_node_pool_upgrade",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CompleteNodePoolUpgrade",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CompleteNodePoolUpgrade"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CompleteNodePoolUpgradeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "complete_node_pool_upgrade"
+      },
+      "description": "Sample for CompleteNodePoolUpgrade",
+      "file": "container_v1beta1_generated_cluster_manager_complete_node_pool_upgrade_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CompleteNodePoolUpgrade_async",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_complete_node_pool_upgrade_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.complete_node_pool_upgrade",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CompleteNodePoolUpgrade",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CompleteNodePoolUpgrade"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CompleteNodePoolUpgradeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "complete_node_pool_upgrade"
+      },
+      "description": "Sample for CompleteNodePoolUpgrade",
+      "file": "container_v1beta1_generated_cluster_manager_complete_node_pool_upgrade_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CompleteNodePoolUpgrade_sync",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_complete_node_pool_upgrade_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.create_cluster",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CreateCluster",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CreateCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CreateClusterRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster",
+            "type": "google.cloud.container_v1beta1.types.Cluster"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "create_cluster"
+      },
+      "description": "Sample for CreateCluster",
+      "file": "container_v1beta1_generated_cluster_manager_create_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CreateCluster_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_create_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.create_cluster",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CreateCluster",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CreateCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CreateClusterRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster",
+            "type": "google.cloud.container_v1beta1.types.Cluster"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "create_cluster"
+      },
+      "description": "Sample for CreateCluster",
+      "file": "container_v1beta1_generated_cluster_manager_create_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CreateCluster_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_create_cluster_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.create_node_pool",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CreateNodePool",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CreateNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CreateNodePoolRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "node_pool",
+            "type": "google.cloud.container_v1beta1.types.NodePool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "create_node_pool"
+      },
+      "description": "Sample for CreateNodePool",
+      "file": "container_v1beta1_generated_cluster_manager_create_node_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CreateNodePool_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_create_node_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.create_node_pool",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.CreateNodePool",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "CreateNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.CreateNodePoolRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "node_pool",
+            "type": "google.cloud.container_v1beta1.types.NodePool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "create_node_pool"
+      },
+      "description": "Sample for CreateNodePool",
+      "file": "container_v1beta1_generated_cluster_manager_create_node_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_CreateNodePool_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_create_node_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.delete_cluster",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.DeleteCluster",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "DeleteCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.DeleteClusterRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "delete_cluster"
+      },
+      "description": "Sample for DeleteCluster",
+      "file": "container_v1beta1_generated_cluster_manager_delete_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_DeleteCluster_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_delete_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.delete_cluster",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.DeleteCluster",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "DeleteCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.DeleteClusterRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "delete_cluster"
+      },
+      "description": "Sample for DeleteCluster",
+      "file": "container_v1beta1_generated_cluster_manager_delete_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_DeleteCluster_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_delete_cluster_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.delete_node_pool",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.DeleteNodePool",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "DeleteNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.DeleteNodePoolRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "node_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "delete_node_pool"
+      },
+      "description": "Sample for DeleteNodePool",
+      "file": "container_v1beta1_generated_cluster_manager_delete_node_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_DeleteNodePool_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_delete_node_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.delete_node_pool",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.DeleteNodePool",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "DeleteNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.DeleteNodePoolRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "node_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "delete_node_pool"
+      },
+      "description": "Sample for DeleteNodePool",
+      "file": "container_v1beta1_generated_cluster_manager_delete_node_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_DeleteNodePool_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_delete_node_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.fetch_cluster_upgrade_info",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.FetchClusterUpgradeInfo",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "FetchClusterUpgradeInfo"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.FetchClusterUpgradeInfoRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ClusterUpgradeInfo",
+        "shortName": "fetch_cluster_upgrade_info"
+      },
+      "description": "Sample for FetchClusterUpgradeInfo",
+      "file": "container_v1beta1_generated_cluster_manager_fetch_cluster_upgrade_info_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_FetchClusterUpgradeInfo_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_fetch_cluster_upgrade_info_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.fetch_cluster_upgrade_info",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.FetchClusterUpgradeInfo",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "FetchClusterUpgradeInfo"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.FetchClusterUpgradeInfoRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ClusterUpgradeInfo",
+        "shortName": "fetch_cluster_upgrade_info"
+      },
+      "description": "Sample for FetchClusterUpgradeInfo",
+      "file": "container_v1beta1_generated_cluster_manager_fetch_cluster_upgrade_info_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_FetchClusterUpgradeInfo_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_fetch_cluster_upgrade_info_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.fetch_node_pool_upgrade_info",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.FetchNodePoolUpgradeInfo",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "FetchNodePoolUpgradeInfo"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.FetchNodePoolUpgradeInfoRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.NodePoolUpgradeInfo",
+        "shortName": "fetch_node_pool_upgrade_info"
+      },
+      "description": "Sample for FetchNodePoolUpgradeInfo",
+      "file": "container_v1beta1_generated_cluster_manager_fetch_node_pool_upgrade_info_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_FetchNodePoolUpgradeInfo_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_fetch_node_pool_upgrade_info_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.fetch_node_pool_upgrade_info",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.FetchNodePoolUpgradeInfo",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "FetchNodePoolUpgradeInfo"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.FetchNodePoolUpgradeInfoRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.NodePoolUpgradeInfo",
+        "shortName": "fetch_node_pool_upgrade_info"
+      },
+      "description": "Sample for FetchNodePoolUpgradeInfo",
+      "file": "container_v1beta1_generated_cluster_manager_fetch_node_pool_upgrade_info_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_FetchNodePoolUpgradeInfo_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_fetch_node_pool_upgrade_info_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.get_cluster",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.GetCluster",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "GetCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.GetClusterRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Cluster",
+        "shortName": "get_cluster"
+      },
+      "description": "Sample for GetCluster",
+      "file": "container_v1beta1_generated_cluster_manager_get_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_GetCluster_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_get_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.get_cluster",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.GetCluster",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "GetCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.GetClusterRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Cluster",
+        "shortName": "get_cluster"
+      },
+      "description": "Sample for GetCluster",
+      "file": "container_v1beta1_generated_cluster_manager_get_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_GetCluster_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_get_cluster_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.get_json_web_keys",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.GetJSONWebKeys",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "GetJSONWebKeys"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.GetJSONWebKeysRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.GetJSONWebKeysResponse",
+        "shortName": "get_json_web_keys"
+      },
+      "description": "Sample for GetJSONWebKeys",
+      "file": "container_v1beta1_generated_cluster_manager_get_json_web_keys_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_GetJSONWebKeys_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_get_json_web_keys_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.get_json_web_keys",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.GetJSONWebKeys",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "GetJSONWebKeys"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.GetJSONWebKeysRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.GetJSONWebKeysResponse",
+        "shortName": "get_json_web_keys"
+      },
+      "description": "Sample for GetJSONWebKeys",
+      "file": "container_v1beta1_generated_cluster_manager_get_json_web_keys_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_GetJSONWebKeys_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_get_json_web_keys_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.get_node_pool",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.GetNodePool",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "GetNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.GetNodePoolRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "node_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.NodePool",
+        "shortName": "get_node_pool"
+      },
+      "description": "Sample for GetNodePool",
+      "file": "container_v1beta1_generated_cluster_manager_get_node_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_GetNodePool_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_get_node_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.get_node_pool",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.GetNodePool",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "GetNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.GetNodePoolRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "node_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.NodePool",
+        "shortName": "get_node_pool"
+      },
+      "description": "Sample for GetNodePool",
+      "file": "container_v1beta1_generated_cluster_manager_get_node_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_GetNodePool_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_get_node_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.get_operation",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.GetOperation",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "GetOperation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.GetOperationRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "operation_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "get_operation"
+      },
+      "description": "Sample for GetOperation",
+      "file": "container_v1beta1_generated_cluster_manager_get_operation_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_GetOperation_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_get_operation_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.get_operation",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.GetOperation",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "GetOperation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.GetOperationRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "operation_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "get_operation"
+      },
+      "description": "Sample for GetOperation",
+      "file": "container_v1beta1_generated_cluster_manager_get_operation_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_GetOperation_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_get_operation_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.get_server_config",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.GetServerConfig",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "GetServerConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.GetServerConfigRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ServerConfig",
+        "shortName": "get_server_config"
+      },
+      "description": "Sample for GetServerConfig",
+      "file": "container_v1beta1_generated_cluster_manager_get_server_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_GetServerConfig_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_get_server_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.get_server_config",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.GetServerConfig",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "GetServerConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.GetServerConfigRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ServerConfig",
+        "shortName": "get_server_config"
+      },
+      "description": "Sample for GetServerConfig",
+      "file": "container_v1beta1_generated_cluster_manager_get_server_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_GetServerConfig_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_get_server_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.list_clusters",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.ListClusters",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "ListClusters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.ListClustersRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ListClustersResponse",
+        "shortName": "list_clusters"
+      },
+      "description": "Sample for ListClusters",
+      "file": "container_v1beta1_generated_cluster_manager_list_clusters_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_ListClusters_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_list_clusters_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.list_clusters",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.ListClusters",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "ListClusters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.ListClustersRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ListClustersResponse",
+        "shortName": "list_clusters"
+      },
+      "description": "Sample for ListClusters",
+      "file": "container_v1beta1_generated_cluster_manager_list_clusters_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_ListClusters_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_list_clusters_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.list_locations",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.ListLocations",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "ListLocations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.ListLocationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ListLocationsResponse",
+        "shortName": "list_locations"
+      },
+      "description": "Sample for ListLocations",
+      "file": "container_v1beta1_generated_cluster_manager_list_locations_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_ListLocations_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_list_locations_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.list_locations",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.ListLocations",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "ListLocations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.ListLocationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ListLocationsResponse",
+        "shortName": "list_locations"
+      },
+      "description": "Sample for ListLocations",
+      "file": "container_v1beta1_generated_cluster_manager_list_locations_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_ListLocations_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_list_locations_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.list_node_pools",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.ListNodePools",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "ListNodePools"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.ListNodePoolsRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ListNodePoolsResponse",
+        "shortName": "list_node_pools"
+      },
+      "description": "Sample for ListNodePools",
+      "file": "container_v1beta1_generated_cluster_manager_list_node_pools_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_ListNodePools_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_list_node_pools_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.list_node_pools",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.ListNodePools",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "ListNodePools"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.ListNodePoolsRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ListNodePoolsResponse",
+        "shortName": "list_node_pools"
+      },
+      "description": "Sample for ListNodePools",
+      "file": "container_v1beta1_generated_cluster_manager_list_node_pools_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_ListNodePools_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_list_node_pools_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.list_operations",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.ListOperations",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "ListOperations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.ListOperationsRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ListOperationsResponse",
+        "shortName": "list_operations"
+      },
+      "description": "Sample for ListOperations",
+      "file": "container_v1beta1_generated_cluster_manager_list_operations_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_ListOperations_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_list_operations_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.list_operations",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.ListOperations",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "ListOperations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.ListOperationsRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.ListOperationsResponse",
+        "shortName": "list_operations"
+      },
+      "description": "Sample for ListOperations",
+      "file": "container_v1beta1_generated_cluster_manager_list_operations_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_ListOperations_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_list_operations_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.list_usable_subnetworks",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.ListUsableSubnetworks",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "ListUsableSubnetworks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.ListUsableSubnetworksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.services.cluster_manager.pagers.ListUsableSubnetworksAsyncPager",
+        "shortName": "list_usable_subnetworks"
+      },
+      "description": "Sample for ListUsableSubnetworks",
+      "file": "container_v1beta1_generated_cluster_manager_list_usable_subnetworks_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_ListUsableSubnetworks_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_list_usable_subnetworks_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.list_usable_subnetworks",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.ListUsableSubnetworks",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "ListUsableSubnetworks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.ListUsableSubnetworksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.services.cluster_manager.pagers.ListUsableSubnetworksPager",
+        "shortName": "list_usable_subnetworks"
+      },
+      "description": "Sample for ListUsableSubnetworks",
+      "file": "container_v1beta1_generated_cluster_manager_list_usable_subnetworks_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_ListUsableSubnetworks_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_list_usable_subnetworks_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.rollback_node_pool_upgrade",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.RollbackNodePoolUpgrade",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "RollbackNodePoolUpgrade"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.RollbackNodePoolUpgradeRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "node_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "rollback_node_pool_upgrade"
+      },
+      "description": "Sample for RollbackNodePoolUpgrade",
+      "file": "container_v1beta1_generated_cluster_manager_rollback_node_pool_upgrade_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_RollbackNodePoolUpgrade_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_rollback_node_pool_upgrade_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.rollback_node_pool_upgrade",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.RollbackNodePoolUpgrade",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "RollbackNodePoolUpgrade"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.RollbackNodePoolUpgradeRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "node_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "rollback_node_pool_upgrade"
+      },
+      "description": "Sample for RollbackNodePoolUpgrade",
+      "file": "container_v1beta1_generated_cluster_manager_rollback_node_pool_upgrade_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_RollbackNodePoolUpgrade_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_rollback_node_pool_upgrade_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_addons_config",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetAddonsConfig",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetAddonsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetAddonsConfigRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "addons_config",
+            "type": "google.cloud.container_v1beta1.types.AddonsConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_addons_config"
+      },
+      "description": "Sample for SetAddonsConfig",
+      "file": "container_v1beta1_generated_cluster_manager_set_addons_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetAddonsConfig_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_addons_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_addons_config",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetAddonsConfig",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetAddonsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetAddonsConfigRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "addons_config",
+            "type": "google.cloud.container_v1beta1.types.AddonsConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_addons_config"
+      },
+      "description": "Sample for SetAddonsConfig",
+      "file": "container_v1beta1_generated_cluster_manager_set_addons_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetAddonsConfig_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_addons_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_labels",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetLabels",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetLabels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetLabelsRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "resource_labels",
+            "type": "MutableMapping[str, str]"
+          },
+          {
+            "name": "label_fingerprint",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_labels"
+      },
+      "description": "Sample for SetLabels",
+      "file": "container_v1beta1_generated_cluster_manager_set_labels_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetLabels_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_labels_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_labels",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetLabels",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetLabels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetLabelsRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "resource_labels",
+            "type": "MutableMapping[str, str]"
+          },
+          {
+            "name": "label_fingerprint",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_labels"
+      },
+      "description": "Sample for SetLabels",
+      "file": "container_v1beta1_generated_cluster_manager_set_labels_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetLabels_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_labels_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_legacy_abac",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetLegacyAbac",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetLegacyAbac"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetLegacyAbacRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "enabled",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_legacy_abac"
+      },
+      "description": "Sample for SetLegacyAbac",
+      "file": "container_v1beta1_generated_cluster_manager_set_legacy_abac_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetLegacyAbac_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_legacy_abac_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_legacy_abac",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetLegacyAbac",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetLegacyAbac"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetLegacyAbacRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "enabled",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_legacy_abac"
+      },
+      "description": "Sample for SetLegacyAbac",
+      "file": "container_v1beta1_generated_cluster_manager_set_legacy_abac_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetLegacyAbac_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_legacy_abac_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_locations",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetLocations",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetLocations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetLocationsRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "locations",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_locations"
+      },
+      "description": "Sample for SetLocations",
+      "file": "container_v1beta1_generated_cluster_manager_set_locations_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetLocations_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_locations_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_locations",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetLocations",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetLocations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetLocationsRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "locations",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_locations"
+      },
+      "description": "Sample for SetLocations",
+      "file": "container_v1beta1_generated_cluster_manager_set_locations_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetLocations_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_locations_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_logging_service",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetLoggingService",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetLoggingService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetLoggingServiceRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "logging_service",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_logging_service"
+      },
+      "description": "Sample for SetLoggingService",
+      "file": "container_v1beta1_generated_cluster_manager_set_logging_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetLoggingService_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_logging_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_logging_service",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetLoggingService",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetLoggingService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetLoggingServiceRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "logging_service",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_logging_service"
+      },
+      "description": "Sample for SetLoggingService",
+      "file": "container_v1beta1_generated_cluster_manager_set_logging_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetLoggingService_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_logging_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_maintenance_policy",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetMaintenancePolicy",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetMaintenancePolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetMaintenancePolicyRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "maintenance_policy",
+            "type": "google.cloud.container_v1beta1.types.MaintenancePolicy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_maintenance_policy"
+      },
+      "description": "Sample for SetMaintenancePolicy",
+      "file": "container_v1beta1_generated_cluster_manager_set_maintenance_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetMaintenancePolicy_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_maintenance_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_maintenance_policy",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetMaintenancePolicy",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetMaintenancePolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetMaintenancePolicyRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "maintenance_policy",
+            "type": "google.cloud.container_v1beta1.types.MaintenancePolicy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_maintenance_policy"
+      },
+      "description": "Sample for SetMaintenancePolicy",
+      "file": "container_v1beta1_generated_cluster_manager_set_maintenance_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetMaintenancePolicy_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_maintenance_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_master_auth",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetMasterAuth",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetMasterAuth"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetMasterAuthRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_master_auth"
+      },
+      "description": "Sample for SetMasterAuth",
+      "file": "container_v1beta1_generated_cluster_manager_set_master_auth_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetMasterAuth_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_master_auth_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_master_auth",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetMasterAuth",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetMasterAuth"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetMasterAuthRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_master_auth"
+      },
+      "description": "Sample for SetMasterAuth",
+      "file": "container_v1beta1_generated_cluster_manager_set_master_auth_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetMasterAuth_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_master_auth_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_monitoring_service",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetMonitoringService",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetMonitoringService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetMonitoringServiceRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "monitoring_service",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_monitoring_service"
+      },
+      "description": "Sample for SetMonitoringService",
+      "file": "container_v1beta1_generated_cluster_manager_set_monitoring_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetMonitoringService_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_monitoring_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_monitoring_service",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetMonitoringService",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetMonitoringService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetMonitoringServiceRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "monitoring_service",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_monitoring_service"
+      },
+      "description": "Sample for SetMonitoringService",
+      "file": "container_v1beta1_generated_cluster_manager_set_monitoring_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetMonitoringService_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_monitoring_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_network_policy",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetNetworkPolicy",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetNetworkPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetNetworkPolicyRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "network_policy",
+            "type": "google.cloud.container_v1beta1.types.NetworkPolicy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_network_policy"
+      },
+      "description": "Sample for SetNetworkPolicy",
+      "file": "container_v1beta1_generated_cluster_manager_set_network_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetNetworkPolicy_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_network_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_network_policy",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetNetworkPolicy",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetNetworkPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetNetworkPolicyRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "network_policy",
+            "type": "google.cloud.container_v1beta1.types.NetworkPolicy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_network_policy"
+      },
+      "description": "Sample for SetNetworkPolicy",
+      "file": "container_v1beta1_generated_cluster_manager_set_network_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetNetworkPolicy_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_network_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_node_pool_autoscaling",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetNodePoolAutoscaling",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetNodePoolAutoscaling"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetNodePoolAutoscalingRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_node_pool_autoscaling"
+      },
+      "description": "Sample for SetNodePoolAutoscaling",
+      "file": "container_v1beta1_generated_cluster_manager_set_node_pool_autoscaling_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetNodePoolAutoscaling_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_node_pool_autoscaling_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_node_pool_autoscaling",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetNodePoolAutoscaling",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetNodePoolAutoscaling"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetNodePoolAutoscalingRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_node_pool_autoscaling"
+      },
+      "description": "Sample for SetNodePoolAutoscaling",
+      "file": "container_v1beta1_generated_cluster_manager_set_node_pool_autoscaling_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetNodePoolAutoscaling_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_node_pool_autoscaling_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_node_pool_management",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetNodePoolManagement",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetNodePoolManagement"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetNodePoolManagementRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "node_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "management",
+            "type": "google.cloud.container_v1beta1.types.NodeManagement"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_node_pool_management"
+      },
+      "description": "Sample for SetNodePoolManagement",
+      "file": "container_v1beta1_generated_cluster_manager_set_node_pool_management_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetNodePoolManagement_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_node_pool_management_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_node_pool_management",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetNodePoolManagement",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetNodePoolManagement"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetNodePoolManagementRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "node_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "management",
+            "type": "google.cloud.container_v1beta1.types.NodeManagement"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_node_pool_management"
+      },
+      "description": "Sample for SetNodePoolManagement",
+      "file": "container_v1beta1_generated_cluster_manager_set_node_pool_management_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetNodePoolManagement_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_node_pool_management_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.set_node_pool_size",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetNodePoolSize",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetNodePoolSize"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetNodePoolSizeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_node_pool_size"
+      },
+      "description": "Sample for SetNodePoolSize",
+      "file": "container_v1beta1_generated_cluster_manager_set_node_pool_size_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetNodePoolSize_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_node_pool_size_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.set_node_pool_size",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.SetNodePoolSize",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "SetNodePoolSize"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.SetNodePoolSizeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "set_node_pool_size"
+      },
+      "description": "Sample for SetNodePoolSize",
+      "file": "container_v1beta1_generated_cluster_manager_set_node_pool_size_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_SetNodePoolSize_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_set_node_pool_size_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.start_ip_rotation",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.StartIPRotation",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "StartIPRotation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.StartIPRotationRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "start_ip_rotation"
+      },
+      "description": "Sample for StartIPRotation",
+      "file": "container_v1beta1_generated_cluster_manager_start_ip_rotation_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_StartIPRotation_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_start_ip_rotation_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.start_ip_rotation",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.StartIPRotation",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "StartIPRotation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.StartIPRotationRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "start_ip_rotation"
+      },
+      "description": "Sample for StartIPRotation",
+      "file": "container_v1beta1_generated_cluster_manager_start_ip_rotation_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_StartIPRotation_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_start_ip_rotation_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.update_cluster",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.UpdateCluster",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "UpdateCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.UpdateClusterRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "update",
+            "type": "google.cloud.container_v1beta1.types.ClusterUpdate"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "update_cluster"
+      },
+      "description": "Sample for UpdateCluster",
+      "file": "container_v1beta1_generated_cluster_manager_update_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_UpdateCluster_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_update_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.update_cluster",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.UpdateCluster",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "UpdateCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.UpdateClusterRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "update",
+            "type": "google.cloud.container_v1beta1.types.ClusterUpdate"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "update_cluster"
+      },
+      "description": "Sample for UpdateCluster",
+      "file": "container_v1beta1_generated_cluster_manager_update_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_UpdateCluster_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_update_cluster_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.update_master",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.UpdateMaster",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "UpdateMaster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.UpdateMasterRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "master_version",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "update_master"
+      },
+      "description": "Sample for UpdateMaster",
+      "file": "container_v1beta1_generated_cluster_manager_update_master_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_UpdateMaster_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_update_master_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.update_master",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.UpdateMaster",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "UpdateMaster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.UpdateMasterRequest"
+          },
+          {
+            "name": "project_id",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "str"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "master_version",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "update_master"
+      },
+      "description": "Sample for UpdateMaster",
+      "file": "container_v1beta1_generated_cluster_manager_update_master_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_UpdateMaster_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_update_master_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient",
+          "shortName": "ClusterManagerAsyncClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerAsyncClient.update_node_pool",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.UpdateNodePool",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "UpdateNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.UpdateNodePoolRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "update_node_pool"
+      },
+      "description": "Sample for UpdateNodePool",
+      "file": "container_v1beta1_generated_cluster_manager_update_node_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_UpdateNodePool_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_update_node_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.container_v1beta1.ClusterManagerClient",
+          "shortName": "ClusterManagerClient"
+        },
+        "fullName": "google.cloud.container_v1beta1.ClusterManagerClient.update_node_pool",
+        "method": {
+          "fullName": "google.container.v1beta1.ClusterManager.UpdateNodePool",
+          "service": {
+            "fullName": "google.container.v1beta1.ClusterManager",
+            "shortName": "ClusterManager"
+          },
+          "shortName": "UpdateNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.container_v1beta1.types.UpdateNodePoolRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.container_v1beta1.types.Operation",
+        "shortName": "update_node_pool"
+      },
+      "description": "Sample for UpdateNodePool",
+      "file": "container_v1beta1_generated_cluster_manager_update_node_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "container_v1beta1_generated_ClusterManager_UpdateNodePool_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "container_v1beta1_generated_cluster_manager_update_node_pool_sync.py"
+    }
+  ]
+}

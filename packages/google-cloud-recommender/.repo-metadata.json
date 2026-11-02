@@ -1,0 +1,15 @@
+{
+    "api_description": "Recommenders generate recommendations that fall into six value categories that can help you optimize your cloud in a variety of ways.",
+    "api_id": "recommender.googleapis.com",
+    "api_shortname": "recommender",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/recommender/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-recommender",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "recommender",
+    "name_pretty": "Recommender",
+    "product_documentation": "https://cloud.google.com/recommender",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

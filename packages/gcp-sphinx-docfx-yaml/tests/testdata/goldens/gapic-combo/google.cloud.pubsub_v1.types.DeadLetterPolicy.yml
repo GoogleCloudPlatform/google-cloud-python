@@ -1,0 +1,53 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "The name of the topic to which dead letter messages should\n   be\
+      \ published. Format is\n   <code>projects/{project}/topics/{topic}</code>.The\
+      \ Cloud Pub/Sub\n   service account associated with the enclosing subscription's\n\
+      \   parent project (i.e.,\n   service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com)\n\
+      \   must have permission to Publish() to this topic.\n   \n   The operation\
+      \ will fail if the topic does not exist. Users\n   should ensure that there\
+      \ is a subscription attached to this\n   topic since messages published to a\
+      \ topic with no\n   subscriptions are lost."
+    id: dead_letter_topic
+    var_type: str
+  - description: "The maximum number of delivery attempts for any message. The\n \
+      \  value must be between 5 and 100.\n   \n   The number of delivery attempts\
+      \ is defined as 1 + (the sum\n   of number of NACKs and number of times the\
+      \ acknowledgement\n   deadline has been exceeded for the message).\n   \n  \
+      \ A NACK is any call to ModifyAckDeadline with a 0 deadline.\n   Note that client\
+      \ libraries may automatically extend\n   ack_deadlines.\n   \n   This field\
+      \ will be honored on a best effort basis.\n   \n   If this parameter is 0, a\
+      \ default value of 5 is used."
+    id: max_delivery_attempts
+    var_type: int
+  children: []
+  class: google.cloud.pubsub_v1.types.DeadLetterPolicy
+  fullName: google.cloud.pubsub_v1.types.DeadLetterPolicy
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: DeadLetterPolicy
+  source:
+    id: DeadLetterPolicy
+    path: null
+    startLine: null
+  summary: 'Dead lettering is done on a best effort basis. The same
+
+    message might be dead lettered multiple times.
+
+
+    If validation on any of the fields fails at subscription
+
+    creation/updation, the create/update subscription request will
+
+    fail.
+
+    '
+  syntax:
+    content: DeadLetterPolicy(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.DeadLetterPolicy
+references: []

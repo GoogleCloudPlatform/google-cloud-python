@@ -1,0 +1,123 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.networkconnectivity_v1alpha1",
+  "protoPackage": "google.cloud.networkconnectivity.v1alpha1",
+  "schema": "1.0",
+  "services": {
+    "HubService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "HubServiceClient",
+          "rpcs": {
+            "CreateHub": {
+              "methods": [
+                "create_hub"
+              ]
+            },
+            "CreateSpoke": {
+              "methods": [
+                "create_spoke"
+              ]
+            },
+            "DeleteHub": {
+              "methods": [
+                "delete_hub"
+              ]
+            },
+            "DeleteSpoke": {
+              "methods": [
+                "delete_spoke"
+              ]
+            },
+            "GetHub": {
+              "methods": [
+                "get_hub"
+              ]
+            },
+            "GetSpoke": {
+              "methods": [
+                "get_spoke"
+              ]
+            },
+            "ListHubs": {
+              "methods": [
+                "list_hubs"
+              ]
+            },
+            "ListSpokes": {
+              "methods": [
+                "list_spokes"
+              ]
+            },
+            "UpdateHub": {
+              "methods": [
+                "update_hub"
+              ]
+            },
+            "UpdateSpoke": {
+              "methods": [
+                "update_spoke"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "HubServiceAsyncClient",
+          "rpcs": {
+            "CreateHub": {
+              "methods": [
+                "create_hub"
+              ]
+            },
+            "CreateSpoke": {
+              "methods": [
+                "create_spoke"
+              ]
+            },
+            "DeleteHub": {
+              "methods": [
+                "delete_hub"
+              ]
+            },
+            "DeleteSpoke": {
+              "methods": [
+                "delete_spoke"
+              ]
+            },
+            "GetHub": {
+              "methods": [
+                "get_hub"
+              ]
+            },
+            "GetSpoke": {
+              "methods": [
+                "get_spoke"
+              ]
+            },
+            "ListHubs": {
+              "methods": [
+                "list_hubs"
+              ]
+            },
+            "ListSpokes": {
+              "methods": [
+                "list_spokes"
+              ]
+            },
+            "UpdateHub": {
+              "methods": [
+                "update_hub"
+              ]
+            },
+            "UpdateSpoke": {
+              "methods": [
+                "update_spoke"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

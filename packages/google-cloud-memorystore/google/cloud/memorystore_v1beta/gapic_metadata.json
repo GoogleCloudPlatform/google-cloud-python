@@ -1,0 +1,508 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.memorystore_v1beta",
+  "protoPackage": "google.cloud.memorystore.v1beta",
+  "schema": "1.0",
+  "services": {
+    "Memorystore": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MemorystoreClient",
+          "rpcs": {
+            "AddAuthToken": {
+              "methods": [
+                "add_auth_token"
+              ]
+            },
+            "AddTokenAuthUser": {
+              "methods": [
+                "add_token_auth_user"
+              ]
+            },
+            "BackupInstance": {
+              "methods": [
+                "backup_instance"
+              ]
+            },
+            "CreateAclPolicy": {
+              "methods": [
+                "create_acl_policy"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteAclPolicy": {
+              "methods": [
+                "delete_acl_policy"
+              ]
+            },
+            "DeleteAuthToken": {
+              "methods": [
+                "delete_auth_token"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteTokenAuthUser": {
+              "methods": [
+                "delete_token_auth_user"
+              ]
+            },
+            "ExportBackup": {
+              "methods": [
+                "export_backup"
+              ]
+            },
+            "FinishMigration": {
+              "methods": [
+                "finish_migration"
+              ]
+            },
+            "GetAclPolicy": {
+              "methods": [
+                "get_acl_policy"
+              ]
+            },
+            "GetAclPolicyRevision": {
+              "methods": [
+                "get_acl_policy_revision"
+              ]
+            },
+            "GetAuthToken": {
+              "methods": [
+                "get_auth_token"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupCollection": {
+              "methods": [
+                "get_backup_collection"
+              ]
+            },
+            "GetCertificateAuthority": {
+              "methods": [
+                "get_certificate_authority"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetSharedRegionalCertificateAuthority": {
+              "methods": [
+                "get_shared_regional_certificate_authority"
+              ]
+            },
+            "GetTokenAuthUser": {
+              "methods": [
+                "get_token_auth_user"
+              ]
+            },
+            "ListAclPolicies": {
+              "methods": [
+                "list_acl_policies"
+              ]
+            },
+            "ListAclPolicyRevisions": {
+              "methods": [
+                "list_acl_policy_revisions"
+              ]
+            },
+            "ListAuthTokens": {
+              "methods": [
+                "list_auth_tokens"
+              ]
+            },
+            "ListBackupCollections": {
+              "methods": [
+                "list_backup_collections"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListTokenAuthUsers": {
+              "methods": [
+                "list_token_auth_users"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
+            "StartMigration": {
+              "methods": [
+                "start_migration"
+              ]
+            },
+            "UpdateAclPolicy": {
+              "methods": [
+                "update_acl_policy"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MemorystoreAsyncClient",
+          "rpcs": {
+            "AddAuthToken": {
+              "methods": [
+                "add_auth_token"
+              ]
+            },
+            "AddTokenAuthUser": {
+              "methods": [
+                "add_token_auth_user"
+              ]
+            },
+            "BackupInstance": {
+              "methods": [
+                "backup_instance"
+              ]
+            },
+            "CreateAclPolicy": {
+              "methods": [
+                "create_acl_policy"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteAclPolicy": {
+              "methods": [
+                "delete_acl_policy"
+              ]
+            },
+            "DeleteAuthToken": {
+              "methods": [
+                "delete_auth_token"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteTokenAuthUser": {
+              "methods": [
+                "delete_token_auth_user"
+              ]
+            },
+            "ExportBackup": {
+              "methods": [
+                "export_backup"
+              ]
+            },
+            "FinishMigration": {
+              "methods": [
+                "finish_migration"
+              ]
+            },
+            "GetAclPolicy": {
+              "methods": [
+                "get_acl_policy"
+              ]
+            },
+            "GetAclPolicyRevision": {
+              "methods": [
+                "get_acl_policy_revision"
+              ]
+            },
+            "GetAuthToken": {
+              "methods": [
+                "get_auth_token"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupCollection": {
+              "methods": [
+                "get_backup_collection"
+              ]
+            },
+            "GetCertificateAuthority": {
+              "methods": [
+                "get_certificate_authority"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetSharedRegionalCertificateAuthority": {
+              "methods": [
+                "get_shared_regional_certificate_authority"
+              ]
+            },
+            "GetTokenAuthUser": {
+              "methods": [
+                "get_token_auth_user"
+              ]
+            },
+            "ListAclPolicies": {
+              "methods": [
+                "list_acl_policies"
+              ]
+            },
+            "ListAclPolicyRevisions": {
+              "methods": [
+                "list_acl_policy_revisions"
+              ]
+            },
+            "ListAuthTokens": {
+              "methods": [
+                "list_auth_tokens"
+              ]
+            },
+            "ListBackupCollections": {
+              "methods": [
+                "list_backup_collections"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListTokenAuthUsers": {
+              "methods": [
+                "list_token_auth_users"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
+            "StartMigration": {
+              "methods": [
+                "start_migration"
+              ]
+            },
+            "UpdateAclPolicy": {
+              "methods": [
+                "update_acl_policy"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "MemorystoreClient",
+          "rpcs": {
+            "AddAuthToken": {
+              "methods": [
+                "add_auth_token"
+              ]
+            },
+            "AddTokenAuthUser": {
+              "methods": [
+                "add_token_auth_user"
+              ]
+            },
+            "BackupInstance": {
+              "methods": [
+                "backup_instance"
+              ]
+            },
+            "CreateAclPolicy": {
+              "methods": [
+                "create_acl_policy"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteAclPolicy": {
+              "methods": [
+                "delete_acl_policy"
+              ]
+            },
+            "DeleteAuthToken": {
+              "methods": [
+                "delete_auth_token"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteTokenAuthUser": {
+              "methods": [
+                "delete_token_auth_user"
+              ]
+            },
+            "ExportBackup": {
+              "methods": [
+                "export_backup"
+              ]
+            },
+            "FinishMigration": {
+              "methods": [
+                "finish_migration"
+              ]
+            },
+            "GetAclPolicy": {
+              "methods": [
+                "get_acl_policy"
+              ]
+            },
+            "GetAclPolicyRevision": {
+              "methods": [
+                "get_acl_policy_revision"
+              ]
+            },
+            "GetAuthToken": {
+              "methods": [
+                "get_auth_token"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupCollection": {
+              "methods": [
+                "get_backup_collection"
+              ]
+            },
+            "GetCertificateAuthority": {
+              "methods": [
+                "get_certificate_authority"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetSharedRegionalCertificateAuthority": {
+              "methods": [
+                "get_shared_regional_certificate_authority"
+              ]
+            },
+            "GetTokenAuthUser": {
+              "methods": [
+                "get_token_auth_user"
+              ]
+            },
+            "ListAclPolicies": {
+              "methods": [
+                "list_acl_policies"
+              ]
+            },
+            "ListAclPolicyRevisions": {
+              "methods": [
+                "list_acl_policy_revisions"
+              ]
+            },
+            "ListAuthTokens": {
+              "methods": [
+                "list_auth_tokens"
+              ]
+            },
+            "ListBackupCollections": {
+              "methods": [
+                "list_backup_collections"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListTokenAuthUsers": {
+              "methods": [
+                "list_token_auth_users"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
+            "StartMigration": {
+              "methods": [
+                "start_migration"
+              ]
+            },
+            "UpdateAclPolicy": {
+              "methods": [
+                "update_acl_policy"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

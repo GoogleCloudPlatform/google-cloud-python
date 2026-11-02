@@ -1,0 +1,16 @@
+{
+    "api_description": "API for reading and writing the contents of Bigtable tables associated with\na Google Cloud project.",
+    "api_id": "bigtable.googleapis.com",
+    "api_shortname": "bigtable",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/bigtable/latest",
+    "default_version": "v2",
+    "distribution_name": "google-cloud-bigtable",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=187206\u0026template=0",
+    "language": "python",
+    "library_type": "GAPIC_COMBO",
+    "name": "bigtable",
+    "name_pretty": "Cloud Bigtable",
+    "product_documentation": "https://cloud.google.com/bigtable/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

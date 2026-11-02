@@ -1,0 +1,16 @@
+{
+    "api_description": "Database Center offers a comprehensive, organization-wide platform for\nmonitoring database fleet health across various products. It simplifies\nmanagement and reduces risk by automatically aggregating and summarizing\nkey health signals, removing the need for custom dashboards. The platform\nprovides a unified view through its dashboard and API, enabling teams\nfocused on reliability, compliance, security, cost, and administration to\nquickly identify and address relevant issues within their database fleets.",
+    "api_id": "databasecenter.googleapis.com",
+    "api_shortname": "databasecenter",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-databasecenter/latest",
+    "default_version": "v1beta",
+    "distribution_name": "google-cloud-databasecenter",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1476470",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-databasecenter",
+    "name_pretty": "Database Center",
+    "product_documentation": "https://cloud.google.com/database-center/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

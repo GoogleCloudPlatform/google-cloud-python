@@ -1,0 +1,184 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.phishingprotection.v1beta1",
+        "version": "v1beta1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-phishing-protection",
+    "version": "1.19.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.phishingprotection_v1beta1.PhishingProtectionServiceV1Beta1AsyncClient",
+          "shortName": "PhishingProtectionServiceV1Beta1AsyncClient"
+        },
+        "fullName": "google.cloud.phishingprotection_v1beta1.PhishingProtectionServiceV1Beta1AsyncClient.report_phishing",
+        "method": {
+          "fullName": "google.cloud.phishingprotection.v1beta1.PhishingProtectionServiceV1Beta1.ReportPhishing",
+          "service": {
+            "fullName": "google.cloud.phishingprotection.v1beta1.PhishingProtectionServiceV1Beta1",
+            "shortName": "PhishingProtectionServiceV1Beta1"
+          },
+          "shortName": "ReportPhishing"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.phishingprotection_v1beta1.types.ReportPhishingRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "uri",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.phishingprotection_v1beta1.types.ReportPhishingResponse",
+        "shortName": "report_phishing"
+      },
+      "description": "Sample for ReportPhishing",
+      "file": "phishingprotection_v1beta1_generated_phishing_protection_service_v1_beta1_report_phishing_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "phishingprotection_v1beta1_generated_PhishingProtectionServiceV1Beta1_ReportPhishing_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "phishingprotection_v1beta1_generated_phishing_protection_service_v1_beta1_report_phishing_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.phishingprotection_v1beta1.PhishingProtectionServiceV1Beta1Client",
+          "shortName": "PhishingProtectionServiceV1Beta1Client"
+        },
+        "fullName": "google.cloud.phishingprotection_v1beta1.PhishingProtectionServiceV1Beta1Client.report_phishing",
+        "method": {
+          "fullName": "google.cloud.phishingprotection.v1beta1.PhishingProtectionServiceV1Beta1.ReportPhishing",
+          "service": {
+            "fullName": "google.cloud.phishingprotection.v1beta1.PhishingProtectionServiceV1Beta1",
+            "shortName": "PhishingProtectionServiceV1Beta1"
+          },
+          "shortName": "ReportPhishing"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.phishingprotection_v1beta1.types.ReportPhishingRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "uri",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.phishingprotection_v1beta1.types.ReportPhishingResponse",
+        "shortName": "report_phishing"
+      },
+      "description": "Sample for ReportPhishing",
+      "file": "phishingprotection_v1beta1_generated_phishing_protection_service_v1_beta1_report_phishing_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "phishingprotection_v1beta1_generated_PhishingProtectionServiceV1Beta1_ReportPhishing_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "phishingprotection_v1beta1_generated_phishing_protection_service_v1_beta1_report_phishing_sync.py"
+    }
+  ]
+}

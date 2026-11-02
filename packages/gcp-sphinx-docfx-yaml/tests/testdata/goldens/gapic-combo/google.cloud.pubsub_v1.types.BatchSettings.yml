@@ -1,0 +1,129 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.pubsub_v1.types.BatchSettings
+  - google.cloud.pubsub_v1.types.BatchSettings.max_bytes
+  - google.cloud.pubsub_v1.types.BatchSettings.max_latency
+  - google.cloud.pubsub_v1.types.BatchSettings.max_messages
+  class: google.cloud.pubsub_v1.types.BatchSettings
+  fullName: google.cloud.pubsub_v1.types.BatchSettings
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: BatchSettings
+  source:
+    id: BatchSettings
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/types.py
+    startLine: 63
+  summary: 'The settings for batch publishing the messages.
+
+
+    '
+  syntax:
+    content: "BatchSettings(\n    max_bytes: int = 1000000, max_latency: float = 0.01,\
+      \ max_messages: int = 100\n)"
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.BatchSettings
+- attributes: []
+  class: google.cloud.pubsub_v1.types.BatchSettings
+  fullName: google.cloud.pubsub_v1.types.BatchSettings
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: BatchSettings
+  source:
+    id: BatchSettings
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/types.py
+    startLine: 63
+  summary: 'Create new instance of BatchSettings(max_bytes, max_latency, max_messages)
+
+
+    '
+  syntax:
+    content: "BatchSettings(\n    max_bytes: int = 1000000, max_latency: float = 0.01,\
+      \ max_messages: int = 100\n)"
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.types.BatchSettings
+- attributes: []
+  class: google.cloud.pubsub_v1.types.BatchSettings
+  fullName: google.cloud.pubsub_v1.types.BatchSettings.max_bytes
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: max_bytes
+  source:
+    id: max_bytes
+    path: null
+    startLine: null
+  summary: 'The maximum total size of the messages to collect before automatically
+    publishing the batch, including any byte size overhead of the publish request
+    itself. The maximum value is bound by the server-side limit of 10_000_000 bytes.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.BatchSettings.max_bytes
+- attributes: []
+  class: google.cloud.pubsub_v1.types.BatchSettings
+  fullName: google.cloud.pubsub_v1.types.BatchSettings.max_latency
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: max_latency
+  source:
+    id: max_latency
+    path: null
+    startLine: null
+  summary: 'The maximum number of seconds to wait for additional messages before automatically
+    publishing the batch.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.BatchSettings.max_latency
+- attributes: []
+  class: google.cloud.pubsub_v1.types.BatchSettings
+  fullName: google.cloud.pubsub_v1.types.BatchSettings.max_messages
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: max_messages
+  source:
+    id: max_messages
+    path: null
+    startLine: null
+  summary: 'The maximum number of messages to collect before automatically publishing
+    the batch.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.BatchSettings.max_messages
+references:
+- fullName: google.cloud.pubsub_v1.types.BatchSettings
+  isExternal: false
+  name: BatchSettings
+  parent: google.cloud.pubsub_v1.types.BatchSettings
+  uid: google.cloud.pubsub_v1.types.BatchSettings
+- fullName: google.cloud.pubsub_v1.types.BatchSettings.max_bytes
+  isExternal: false
+  name: max_bytes
+  parent: google.cloud.pubsub_v1.types.BatchSettings
+  uid: google.cloud.pubsub_v1.types.BatchSettings.max_bytes
+- fullName: google.cloud.pubsub_v1.types.BatchSettings.max_latency
+  isExternal: false
+  name: max_latency
+  parent: google.cloud.pubsub_v1.types.BatchSettings
+  uid: google.cloud.pubsub_v1.types.BatchSettings.max_latency
+- fullName: google.cloud.pubsub_v1.types.BatchSettings.max_messages
+  isExternal: false
+  name: max_messages
+  parent: google.cloud.pubsub_v1.types.BatchSettings
+  uid: google.cloud.pubsub_v1.types.BatchSettings.max_messages

@@ -1,0 +1,284 @@
+tests:
+  - description: array_subquery_with_variable
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: title
+              - Constant: "1984"
+      - Define:
+          - AliasedExpression:
+              - Field: genre
+              - target_genre
+      - AddFields:
+          - AliasedExpression:
+              - Pipeline.to_array_expression:
+                  - Collection: books
+                  - Where:
+                      - FunctionExpression.equal:
+                          - Field: genre
+                          - Variable: target_genre
+                  - Select:
+                      - Field: title
+              - same_genre_books
+      - Select:
+          - Field: title
+          - Field: same_genre_books
+    assert_results:
+      - title: "1984"
+        same_genre_books:
+          - "1984"
+          - "The Handmaid's Tale"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: title
+              - stringValue: '1984'
+              name: equal
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                target_genre:
+                  fieldReferenceValue: genre
+          name: let
+        - args:
+          - mapValue:
+              fields:
+                same_genre_books:
+                  functionValue:
+                    args:
+                    - pipelineValue:
+                        stages:
+                        - args:
+                          - referenceValue: /books
+                          name: collection
+                        - args:
+                          - functionValue:
+                              args:
+                              - fieldReferenceValue: genre
+                              - variableReferenceValue: target_genre
+                              name: equal
+                          name: where
+                        - args:
+                          - mapValue:
+                              fields:
+                                title:
+                                  fieldReferenceValue: title
+                          name: select
+                    name: array
+          name: add_fields
+        - args:
+          - mapValue:
+              fields:
+                same_genre_books:
+                  fieldReferenceValue: same_genre_books
+                title:
+                  fieldReferenceValue: title
+          name: select
+
+  - description: scalar_subquery_with_current_document
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: title
+              - Constant: "1984"
+      - Define:
+          - AliasedExpression:
+              - CurrentDocument:
+              - doc
+      - AddFields:
+          - AliasedExpression:
+              - Pipeline.to_scalar_expression:
+                  - Collection: books
+                  - Where:
+                      - FunctionExpression.equal:
+                          - Field: genre
+                          - FunctionExpression.map_get:
+                              - Variable: doc
+                              - Constant: "genre"
+                  - Aggregate:
+                      - AliasedExpression:
+                          - FunctionExpression.average:
+                              - Field: rating
+                          - avg_rating
+              - average_rating
+      - Select:
+          - Field: title
+          - Field: average_rating
+    assert_results:
+      - title: "1984"
+        average_rating: 4.15
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: title
+              - stringValue: '1984'
+              name: equal
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                doc:
+                  functionValue:
+                    name: current_document
+          name: let
+        - args:
+          - mapValue:
+              fields:
+                average_rating:
+                  functionValue:
+                    args:
+                    - pipelineValue:
+                        stages:
+                        - args:
+                          - referenceValue: /books
+                          name: collection
+                        - args:
+                          - functionValue:
+                              args:
+                              - fieldReferenceValue: genre
+                              - functionValue:
+                                  args:
+                                  - variableReferenceValue: doc
+                                  - stringValue: genre
+                                  name: map_get
+                              name: equal
+                          name: where
+                        - args:
+                          - mapValue:
+                              fields:
+                                avg_rating:
+                                  functionValue:
+                                    args:
+                                    - fieldReferenceValue: rating
+                                    name: average
+                          - mapValue: {}
+                          name: aggregate
+                    name: scalar
+          name: add_fields
+        - args:
+          - mapValue:
+              fields:
+                average_rating:
+                  fieldReferenceValue: average_rating
+                title:
+                  fieldReferenceValue: title
+          name: select
+
+  - description: scalar_subquery_multiple_items_error
+    pipeline:
+      - Collection: books
+      - Limit: 1
+      - AddFields:
+          - AliasedExpression:
+              - Pipeline.to_scalar_expression:
+                  - Collection: books
+              - bad_scalar
+    assert_error: ".*multiple results.*"
+
+  - description: subcollection_array_subquery_missing
+    pipeline:
+      - Collection: books
+      - Limit: 1
+      - Define:
+          - AliasedExpression:
+              - CurrentDocument:
+              - p
+      - Select:
+          - AliasedExpression:
+              - Pipeline.to_array_expression:
+                  - Subcollection: does_not_exist
+                  - Select:
+                      - AliasedExpression:
+                          - Variable: p
+                          - sub_p
+              - missing_data
+    assert_results:
+      - missing_data: []
+
+  - description: subcollection_array_subquery_landmarks
+    pipeline:
+      - Collection: cities
+      - Where:
+          - FunctionExpression.equal:
+              - Field: name
+              - Constant: "San Francisco"
+      - Select:
+          - Field: name
+          - AliasedExpression:
+              - Pipeline.to_array_expression:
+                  - Subcollection: landmarks
+                  - Select:
+                      - Field: name
+                      - Field: type
+                  - Sort:
+                      - Ordering:
+                          - Field: name
+                          - ASCENDING
+              - landmarks_data
+    assert_results:
+      - name: "San Francisco"
+        landmarks_data:
+          - name: "Alcatraz"
+            type: "Island"
+          - name: "Golden Gate Bridge"
+            type: "Bridge"
+
+  - description: subcollection_array_subquery_reviews
+    pipeline:
+      - Collection: cities
+      - Where:
+          - FunctionExpression.equal:
+              - Field: name
+              - Constant: "San Francisco"
+      - Limit: 1
+      - Define:
+          - AliasedExpression:
+              - CurrentDocument:
+              - city_doc
+      - Select:
+          - Field: name
+          - AliasedExpression:
+              - Pipeline.to_array_expression:
+                  - Subcollection: landmarks
+                  - Where:
+                      - FunctionExpression.equal:
+                          - Field: name
+                          - Constant: "Golden Gate Bridge"
+                  - Select:
+                      - Field: name
+                      - AliasedExpression:
+                          - Pipeline.to_array_expression:
+                              - Subcollection: reviews
+                              - Select:
+                                  - Field: author
+                                  - Field: rating
+                              - Sort:
+                                  - Ordering:
+                                      - Field: author
+                                      - ASCENDING
+                          - review_data
+              - landmark_with_reviews
+    assert_results:
+      - name: "San Francisco"
+        landmark_with_reviews:
+          - name: "Golden Gate Bridge"
+            review_data:
+              - author: "Alice"
+                rating: 5
+              - author: "Bob"
+                rating: 4

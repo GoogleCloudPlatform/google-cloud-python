@@ -1,0 +1,678 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.bucket.LifecycleRuleConditions.age
+  - google.cloud.storage.bucket.LifecycleRuleConditions.clear
+  - google.cloud.storage.bucket.LifecycleRuleConditions.copy
+  - google.cloud.storage.bucket.LifecycleRuleConditions.created_before
+  - google.cloud.storage.bucket.LifecycleRuleConditions.custom_time_before
+  - google.cloud.storage.bucket.LifecycleRuleConditions.days_since_custom_time
+  - google.cloud.storage.bucket.LifecycleRuleConditions.days_since_noncurrent_time
+  - google.cloud.storage.bucket.LifecycleRuleConditions.from_api_repr
+  - google.cloud.storage.bucket.LifecycleRuleConditions.fromkeys
+  - google.cloud.storage.bucket.LifecycleRuleConditions.get
+  - google.cloud.storage.bucket.LifecycleRuleConditions.is_live
+  - google.cloud.storage.bucket.LifecycleRuleConditions.items
+  - google.cloud.storage.bucket.LifecycleRuleConditions.keys
+  - google.cloud.storage.bucket.LifecycleRuleConditions.matches_prefix
+  - google.cloud.storage.bucket.LifecycleRuleConditions.matches_storage_class
+  - google.cloud.storage.bucket.LifecycleRuleConditions.matches_suffix
+  - google.cloud.storage.bucket.LifecycleRuleConditions.noncurrent_time_before
+  - google.cloud.storage.bucket.LifecycleRuleConditions.number_of_newer_versions
+  - google.cloud.storage.bucket.LifecycleRuleConditions.pop
+  - google.cloud.storage.bucket.LifecycleRuleConditions.popitem
+  - google.cloud.storage.bucket.LifecycleRuleConditions.setdefault
+  - google.cloud.storage.bucket.LifecycleRuleConditions.update
+  - google.cloud.storage.bucket.LifecycleRuleConditions.values
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: LifecycleRuleConditions
+  source:
+    id: LifecycleRuleConditions
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 147
+  summary: 'Map a single lifecycle rule for a bucket.
+
+
+    See: https://cloud.google.com/storage/docs/lifecycle
+
+    '
+  syntax:
+    content: "LifecycleRuleConditions(\n    age=None,\n    created_before=None,\n\
+      \    is_live=None,\n    matches_storage_class=None,\n    number_of_newer_versions=None,\n\
+      \    days_since_custom_time=None,\n    custom_time_before=None,\n    days_since_noncurrent_time=None,\n\
+      \    noncurrent_time_before=None,\n    matches_prefix=None,\n    matches_suffix=None,\n\
+      \    _factory=False,\n)"
+    exceptions:
+    - description: if no arguments are passed.
+      var_type: ValueError
+    parameters:
+    - description: (Optional) Apply rule action to items whose age, in days, exceeds
+        this value.
+      id: age
+      var_type: int
+    - description: (Optional) Apply rule action to items created before this date.
+      id: created_before
+      var_type: datetime.date
+    - description: (Optional) If true, apply rule action to non-versioned items, or
+        to items with no newer versions. If false, apply rule action to versioned
+        items with at least one newer version.
+      id: is_live
+      var_type: bool
+    - description: (Optional) Apply rule action to items which any prefix matches
+        the beginning of the item name.
+      id: matches_prefix
+      var_type: list(str)
+    - description: (Optional) Apply rule action to items whose storage class matches
+        this value.
+      id: matches_storage_class
+      var_type: list(str), one or more of <code>Bucket.STORAGE_CLASSES</code>.
+    - description: (Optional) Apply rule action to items which any suffix matches
+        the end of the item name.
+      id: matches_suffix
+      var_type: list(str)
+    - description: (Optional) Apply rule action to versioned items having N newer
+        versions.
+      id: number_of_newer_versions
+      var_type: int
+    - description: (Optional) Apply rule action to items whose number of days elapsed
+        since the custom timestamp. This condition is relevant only for versioned
+        objects. The value of the field must be a non negative integer. If it's zero,
+        the object version will become eligible for lifecycle action as soon as it
+        becomes custom.
+      id: days_since_custom_time
+      var_type: int
+    - description: (Optional) Date object parsed from RFC3339 valid date, apply rule
+        action to items whose custom time is before this date. This condition is relevant
+        only for versioned objects, e.g., 2019-03-16.
+      id: custom_time_before
+      var_type: <code>datetime.date</code>
+    - description: (Optional) Apply rule action to items whose number of days elapsed
+        since the non current timestamp. This condition is relevant only for versioned
+        objects. The value of the field must be a non negative integer. If it's zero,
+        the object version will become eligible for lifecycle action as soon as it
+        becomes non current.
+      id: days_since_noncurrent_time
+      var_type: int
+    - description: (Optional) Date object parsed from RFC3339 valid date, apply rule
+        action to items whose non current time is before this date. This condition
+        is relevant only for versioned objects, e.g, 2019-03-16.
+      id: noncurrent_time_before
+      var_type: <code>datetime.date</code>
+  type: class
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions
+- &id001
+  attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.age
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: age
+  source:
+    id: age
+    path: null
+    startLine: null
+  summary: 'Conditon''s age value.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.age
+- *id001
+- class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.clear
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: clear
+  source:
+    id: clear
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleConditions.clear` method.
+  syntax:
+    content: clear()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.clear
+- class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.copy
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: copy
+  source:
+    id: copy
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleConditions.copy` method.
+  syntax:
+    content: copy()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.copy
+- &id002
+  attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.created_before
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: created_before
+  source:
+    id: created_before
+    path: null
+    startLine: null
+  summary: 'Conditon''s created_before value.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.created_before
+- *id002
+- &id003
+  attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.custom_time_before
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: custom_time_before
+  source:
+    id: custom_time_before
+    path: null
+    startLine: null
+  summary: 'Conditon''s ''custom_time_before'' value.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.custom_time_before
+- *id003
+- &id004
+  attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.days_since_custom_time
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: days_since_custom_time
+  source:
+    id: days_since_custom_time
+    path: null
+    startLine: null
+  summary: 'Conditon''s ''days_since_custom_time'' value.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.days_since_custom_time
+- *id004
+- &id005
+  attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.days_since_noncurrent_time
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: days_since_noncurrent_time
+  source:
+    id: days_since_noncurrent_time
+    path: null
+    startLine: null
+  summary: 'Conditon''s ''days_since_noncurrent_time'' value.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.days_since_noncurrent_time
+- *id005
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.from_api_repr
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: from_api_repr
+  source:
+    id: from_api_repr
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 266
+  summary: 'Factory:  construct instance from resource.
+
+    '
+  syntax:
+    content: from_api_repr(resource)
+    parameters:
+    - description: mapping as returned from API call.
+      id: resource
+      var_type: dict
+    returns:
+    - description: Instance created from resource.
+      var_type: <code>LifecycleRuleConditions</code>
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.from_api_repr
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.fromkeys
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: fromkeys
+  source:
+    id: fromkeys
+    path: null
+    startLine: null
+  summary: 'Create a new dictionary with keys from iterable and values set to value.
+
+
+    '
+  syntax:
+    content: fromkeys(value=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.fromkeys
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.get
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: get
+  source:
+    id: get
+    path: null
+    startLine: null
+  summary: 'Return the value for key if key is in the dictionary, else default.
+
+
+    '
+  syntax:
+    content: get(key, default=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.get
+- &id006
+  attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.is_live
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: is_live
+  source:
+    id: is_live
+    path: null
+    startLine: null
+  summary: 'Conditon''s ''is_live'' value.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.is_live
+- *id006
+- class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.items
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: items
+  source:
+    id: items
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleConditions.items` method.
+  syntax:
+    content: items()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.items
+- class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.keys
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: keys
+  source:
+    id: keys
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleConditions.keys` method.
+  syntax:
+    content: keys()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.keys
+- &id007
+  attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.matches_prefix
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: matches_prefix
+  source:
+    id: matches_prefix
+    path: null
+    startLine: null
+  summary: 'Conditon''s ''matches_prefix'' value.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.matches_prefix
+- *id007
+- &id008
+  attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.matches_storage_class
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: matches_storage_class
+  source:
+    id: matches_storage_class
+    path: null
+    startLine: null
+  summary: 'Conditon''s ''matches_storage_class'' value.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.matches_storage_class
+- *id008
+- &id009
+  attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.matches_suffix
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: matches_suffix
+  source:
+    id: matches_suffix
+    path: null
+    startLine: null
+  summary: 'Conditon''s ''matches_suffix'' value.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.matches_suffix
+- *id009
+- &id010
+  attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.noncurrent_time_before
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: noncurrent_time_before
+  source:
+    id: noncurrent_time_before
+    path: null
+    startLine: null
+  summary: 'Conditon''s ''noncurrent_time_before'' value.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.noncurrent_time_before
+- *id010
+- &id011
+  attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.number_of_newer_versions
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: number_of_newer_versions
+  source:
+    id: number_of_newer_versions
+    path: null
+    startLine: null
+  summary: 'Conditon''s ''number_of_newer_versions'' value.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.number_of_newer_versions
+- *id011
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.pop
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: pop
+  source:
+    id: pop
+    path: null
+    startLine: null
+  summary: 'If the key is not found, return the default if given; otherwise,
+
+    raise a KeyError.
+
+
+    '
+  syntax:
+    content: pop(k[,d])
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.pop
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.popitem
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: popitem
+  source:
+    id: popitem
+    path: null
+    startLine: null
+  summary: 'Remove and return a (key, value) pair as a 2-tuple.
+
+
+    Pairs are returned in LIFO (last-in, first-out) order.
+
+    Raises KeyError if the dict is empty.
+
+
+    '
+  syntax:
+    content: popitem()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.popitem
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.setdefault
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: setdefault
+  source:
+    id: setdefault
+    path: null
+    startLine: null
+  summary: 'Insert key with a value of default if key is not in the dictionary.
+
+
+    Return the value for key if key is in the dictionary, else default.
+
+
+    '
+  syntax:
+    content: setdefault(key, default=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.setdefault
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.update
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: update
+  source:
+    id: update
+    path: null
+    startLine: null
+  summary: 'If E is present and has a .keys() method, then does:  for k in E: D[k]
+    = E[k]
+
+    If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] =
+    v
+
+    In either case, this is followed by: for k in F:  D[k] = F[k]
+
+
+    '
+  syntax:
+    content: update([E, ]**F)
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.update
+- class: google.cloud.storage.bucket.LifecycleRuleConditions
+  fullName: google.cloud.storage.bucket.LifecycleRuleConditions.values
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: values
+  source:
+    id: values
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleConditions.values` method.
+  syntax:
+    content: values()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.values
+references:
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.age
+  isExternal: false
+  name: age
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.age
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.clear
+  isExternal: false
+  name: clear
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.clear
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.copy
+  isExternal: false
+  name: copy
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.copy
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.created_before
+  isExternal: false
+  name: created_before
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.created_before
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.custom_time_before
+  isExternal: false
+  name: custom_time_before
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.custom_time_before
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.days_since_custom_time
+  isExternal: false
+  name: days_since_custom_time
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.days_since_custom_time
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.days_since_noncurrent_time
+  isExternal: false
+  name: days_since_noncurrent_time
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.days_since_noncurrent_time
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.from_api_repr
+  isExternal: false
+  name: from_api_repr
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.from_api_repr
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.fromkeys
+  isExternal: false
+  name: fromkeys
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.fromkeys
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.get
+  isExternal: false
+  name: get
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.get
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.is_live
+  isExternal: false
+  name: is_live
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.is_live
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.items
+  isExternal: false
+  name: items
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.items
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.keys
+  isExternal: false
+  name: keys
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.keys
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.matches_prefix
+  isExternal: false
+  name: matches_prefix
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.matches_prefix
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.matches_storage_class
+  isExternal: false
+  name: matches_storage_class
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.matches_storage_class
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.matches_suffix
+  isExternal: false
+  name: matches_suffix
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.matches_suffix
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.noncurrent_time_before
+  isExternal: false
+  name: noncurrent_time_before
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.noncurrent_time_before
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.number_of_newer_versions
+  isExternal: false
+  name: number_of_newer_versions
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.number_of_newer_versions
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.pop
+  isExternal: false
+  name: pop
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.pop
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.popitem
+  isExternal: false
+  name: popitem
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.popitem
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.setdefault
+  isExternal: false
+  name: setdefault
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.setdefault
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.update
+  isExternal: false
+  name: update
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.update
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions.values
+  isExternal: false
+  name: values
+  parent: google.cloud.storage.bucket.LifecycleRuleConditions
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions.values

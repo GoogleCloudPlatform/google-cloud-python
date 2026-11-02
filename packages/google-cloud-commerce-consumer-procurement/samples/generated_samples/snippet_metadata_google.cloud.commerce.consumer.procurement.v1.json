@@ -1,0 +1,1625 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.commerce.consumer.procurement.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-commerce-consumer-procurement",
+    "version": "0.6.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceAsyncClient",
+          "shortName": "ConsumerProcurementServiceAsyncClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceAsyncClient.cancel_order",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService.CancelOrder",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService",
+            "shortName": "ConsumerProcurementService"
+          },
+          "shortName": "CancelOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.CancelOrderRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "cancel_order"
+      },
+      "description": "Sample for CancelOrder",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_cancel_order_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_ConsumerProcurementService_CancelOrder_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_cancel_order_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceClient",
+          "shortName": "ConsumerProcurementServiceClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceClient.cancel_order",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService.CancelOrder",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService",
+            "shortName": "ConsumerProcurementService"
+          },
+          "shortName": "CancelOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.CancelOrderRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "cancel_order"
+      },
+      "description": "Sample for CancelOrder",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_cancel_order_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_ConsumerProcurementService_CancelOrder_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_cancel_order_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceAsyncClient",
+          "shortName": "ConsumerProcurementServiceAsyncClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceAsyncClient.get_order",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService.GetOrder",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService",
+            "shortName": "ConsumerProcurementService"
+          },
+          "shortName": "GetOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.GetOrderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.types.Order",
+        "shortName": "get_order"
+      },
+      "description": "Sample for GetOrder",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_get_order_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_ConsumerProcurementService_GetOrder_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_get_order_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceClient",
+          "shortName": "ConsumerProcurementServiceClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceClient.get_order",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService.GetOrder",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService",
+            "shortName": "ConsumerProcurementService"
+          },
+          "shortName": "GetOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.GetOrderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.types.Order",
+        "shortName": "get_order"
+      },
+      "description": "Sample for GetOrder",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_get_order_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_ConsumerProcurementService_GetOrder_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_get_order_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceAsyncClient",
+          "shortName": "ConsumerProcurementServiceAsyncClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceAsyncClient.list_orders",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService.ListOrders",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService",
+            "shortName": "ConsumerProcurementService"
+          },
+          "shortName": "ListOrders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.ListOrdersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.services.consumer_procurement_service.pagers.ListOrdersAsyncPager",
+        "shortName": "list_orders"
+      },
+      "description": "Sample for ListOrders",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_list_orders_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_ConsumerProcurementService_ListOrders_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_list_orders_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceClient",
+          "shortName": "ConsumerProcurementServiceClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceClient.list_orders",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService.ListOrders",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService",
+            "shortName": "ConsumerProcurementService"
+          },
+          "shortName": "ListOrders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.ListOrdersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.services.consumer_procurement_service.pagers.ListOrdersPager",
+        "shortName": "list_orders"
+      },
+      "description": "Sample for ListOrders",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_list_orders_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_ConsumerProcurementService_ListOrders_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_list_orders_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceAsyncClient",
+          "shortName": "ConsumerProcurementServiceAsyncClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceAsyncClient.modify_order",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService.ModifyOrder",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService",
+            "shortName": "ConsumerProcurementService"
+          },
+          "shortName": "ModifyOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.ModifyOrderRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "modify_order"
+      },
+      "description": "Sample for ModifyOrder",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_modify_order_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_ConsumerProcurementService_ModifyOrder_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_modify_order_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceClient",
+          "shortName": "ConsumerProcurementServiceClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceClient.modify_order",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService.ModifyOrder",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService",
+            "shortName": "ConsumerProcurementService"
+          },
+          "shortName": "ModifyOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.ModifyOrderRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "modify_order"
+      },
+      "description": "Sample for ModifyOrder",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_modify_order_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_ConsumerProcurementService_ModifyOrder_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_modify_order_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceAsyncClient",
+          "shortName": "ConsumerProcurementServiceAsyncClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceAsyncClient.place_order",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService.PlaceOrder",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService",
+            "shortName": "ConsumerProcurementService"
+          },
+          "shortName": "PlaceOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.PlaceOrderRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "place_order"
+      },
+      "description": "Sample for PlaceOrder",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_place_order_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_ConsumerProcurementService_PlaceOrder_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_place_order_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceClient",
+          "shortName": "ConsumerProcurementServiceClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.ConsumerProcurementServiceClient.place_order",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService.PlaceOrder",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.ConsumerProcurementService",
+            "shortName": "ConsumerProcurementService"
+          },
+          "shortName": "PlaceOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.PlaceOrderRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "place_order"
+      },
+      "description": "Sample for PlaceOrder",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_place_order_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_ConsumerProcurementService_PlaceOrder_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_consumer_procurement_service_place_order_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceAsyncClient",
+          "shortName": "LicenseManagementServiceAsyncClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceAsyncClient.assign",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService.Assign",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService",
+            "shortName": "LicenseManagementService"
+          },
+          "shortName": "Assign"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.AssignRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "usernames",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.types.AssignResponse",
+        "shortName": "assign"
+      },
+      "description": "Sample for Assign",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_assign_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_LicenseManagementService_Assign_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_assign_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceClient",
+          "shortName": "LicenseManagementServiceClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceClient.assign",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService.Assign",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService",
+            "shortName": "LicenseManagementService"
+          },
+          "shortName": "Assign"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.AssignRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "usernames",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.types.AssignResponse",
+        "shortName": "assign"
+      },
+      "description": "Sample for Assign",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_assign_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_LicenseManagementService_Assign_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_assign_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceAsyncClient",
+          "shortName": "LicenseManagementServiceAsyncClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceAsyncClient.enumerate_licensed_users",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService.EnumerateLicensedUsers",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService",
+            "shortName": "LicenseManagementService"
+          },
+          "shortName": "EnumerateLicensedUsers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.EnumerateLicensedUsersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.services.license_management_service.pagers.EnumerateLicensedUsersAsyncPager",
+        "shortName": "enumerate_licensed_users"
+      },
+      "description": "Sample for EnumerateLicensedUsers",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_enumerate_licensed_users_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_LicenseManagementService_EnumerateLicensedUsers_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_enumerate_licensed_users_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceClient",
+          "shortName": "LicenseManagementServiceClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceClient.enumerate_licensed_users",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService.EnumerateLicensedUsers",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService",
+            "shortName": "LicenseManagementService"
+          },
+          "shortName": "EnumerateLicensedUsers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.EnumerateLicensedUsersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.services.license_management_service.pagers.EnumerateLicensedUsersPager",
+        "shortName": "enumerate_licensed_users"
+      },
+      "description": "Sample for EnumerateLicensedUsers",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_enumerate_licensed_users_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_LicenseManagementService_EnumerateLicensedUsers_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_enumerate_licensed_users_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceAsyncClient",
+          "shortName": "LicenseManagementServiceAsyncClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceAsyncClient.get_license_pool",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService.GetLicensePool",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService",
+            "shortName": "LicenseManagementService"
+          },
+          "shortName": "GetLicensePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.GetLicensePoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.types.LicensePool",
+        "shortName": "get_license_pool"
+      },
+      "description": "Sample for GetLicensePool",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_get_license_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_LicenseManagementService_GetLicensePool_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_get_license_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceClient",
+          "shortName": "LicenseManagementServiceClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceClient.get_license_pool",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService.GetLicensePool",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService",
+            "shortName": "LicenseManagementService"
+          },
+          "shortName": "GetLicensePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.GetLicensePoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.types.LicensePool",
+        "shortName": "get_license_pool"
+      },
+      "description": "Sample for GetLicensePool",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_get_license_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_LicenseManagementService_GetLicensePool_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_get_license_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceAsyncClient",
+          "shortName": "LicenseManagementServiceAsyncClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceAsyncClient.unassign",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService.Unassign",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService",
+            "shortName": "LicenseManagementService"
+          },
+          "shortName": "Unassign"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.UnassignRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "usernames",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.types.UnassignResponse",
+        "shortName": "unassign"
+      },
+      "description": "Sample for Unassign",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_unassign_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_LicenseManagementService_Unassign_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_unassign_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceClient",
+          "shortName": "LicenseManagementServiceClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceClient.unassign",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService.Unassign",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService",
+            "shortName": "LicenseManagementService"
+          },
+          "shortName": "Unassign"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.UnassignRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "usernames",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.types.UnassignResponse",
+        "shortName": "unassign"
+      },
+      "description": "Sample for Unassign",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_unassign_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_LicenseManagementService_Unassign_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_unassign_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceAsyncClient",
+          "shortName": "LicenseManagementServiceAsyncClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceAsyncClient.update_license_pool",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService.UpdateLicensePool",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService",
+            "shortName": "LicenseManagementService"
+          },
+          "shortName": "UpdateLicensePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.UpdateLicensePoolRequest"
+          },
+          {
+            "name": "license_pool",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.LicensePool"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.types.LicensePool",
+        "shortName": "update_license_pool"
+      },
+      "description": "Sample for UpdateLicensePool",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_update_license_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_LicenseManagementService_UpdateLicensePool_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_update_license_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceClient",
+          "shortName": "LicenseManagementServiceClient"
+        },
+        "fullName": "google.cloud.commerce_consumer_procurement_v1.LicenseManagementServiceClient.update_license_pool",
+        "method": {
+          "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService.UpdateLicensePool",
+          "service": {
+            "fullName": "google.cloud.commerce.consumer.procurement.v1.LicenseManagementService",
+            "shortName": "LicenseManagementService"
+          },
+          "shortName": "UpdateLicensePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.UpdateLicensePoolRequest"
+          },
+          {
+            "name": "license_pool",
+            "type": "google.cloud.commerce_consumer_procurement_v1.types.LicensePool"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.commerce_consumer_procurement_v1.types.LicensePool",
+        "shortName": "update_license_pool"
+      },
+      "description": "Sample for UpdateLicensePool",
+      "file": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_update_license_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudcommerceconsumerprocurement_v1_generated_LicenseManagementService_UpdateLicensePool_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudcommerceconsumerprocurement_v1_generated_license_management_service_update_license_pool_sync.py"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.databasecenter_v1beta",
+  "protoPackage": "google.cloud.databasecenter.v1beta",
+  "schema": "1.0",
+  "services": {
+    "DatabaseCenter": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DatabaseCenterClient",
+          "rpcs": {
+            "AggregateFleet": {
+              "methods": [
+                "aggregate_fleet"
+              ]
+            },
+            "AggregateIssueStats": {
+              "methods": [
+                "aggregate_issue_stats"
+              ]
+            },
+            "AggregateQueryStats": {
+              "methods": [
+                "aggregate_query_stats"
+              ]
+            },
+            "QueryDatabaseResourceGroups": {
+              "methods": [
+                "query_database_resource_groups"
+              ]
+            },
+            "QueryIssues": {
+              "methods": [
+                "query_issues"
+              ]
+            },
+            "QueryProducts": {
+              "methods": [
+                "query_products"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DatabaseCenterAsyncClient",
+          "rpcs": {
+            "AggregateFleet": {
+              "methods": [
+                "aggregate_fleet"
+              ]
+            },
+            "AggregateIssueStats": {
+              "methods": [
+                "aggregate_issue_stats"
+              ]
+            },
+            "AggregateQueryStats": {
+              "methods": [
+                "aggregate_query_stats"
+              ]
+            },
+            "QueryDatabaseResourceGroups": {
+              "methods": [
+                "query_database_resource_groups"
+              ]
+            },
+            "QueryIssues": {
+              "methods": [
+                "query_issues"
+              ]
+            },
+            "QueryProducts": {
+              "methods": [
+                "query_products"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DatabaseCenterClient",
+          "rpcs": {
+            "AggregateFleet": {
+              "methods": [
+                "aggregate_fleet"
+              ]
+            },
+            "AggregateIssueStats": {
+              "methods": [
+                "aggregate_issue_stats"
+              ]
+            },
+            "AggregateQueryStats": {
+              "methods": [
+                "aggregate_query_stats"
+              ]
+            },
+            "QueryDatabaseResourceGroups": {
+              "methods": [
+                "query_database_resource_groups"
+              ]
+            },
+            "QueryIssues": {
+              "methods": [
+                "query_issues"
+              ]
+            },
+            "QueryProducts": {
+              "methods": [
+                "query_products"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

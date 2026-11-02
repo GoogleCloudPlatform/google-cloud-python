@@ -1,0 +1,532 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.ACTIVE_STATE
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.DELETED_STATE
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.INACTIVE_STATE
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.access_id
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.delete
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.etag
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.exists
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.id
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.path
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.project
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.reload
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.service_account_email
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.state
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.time_created
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.update
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.updated
+  - google.cloud.storage.hmac_key.HMACKeyMetadata.user_project
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: HMACKeyMetadata
+  source:
+    id: HMACKeyMetadata
+    path: tests/testdata/handwritten/google/cloud/storage/hmac_key.py
+    startLine: 28
+  summary: 'Metadata about an HMAC service account key withn Cloud Storage.
+
+    '
+  syntax:
+    content: HMACKeyMetadata(client, access_id=None, project_id=None, user_project=None)
+    parameters:
+    - description: client associated with the key metadata.
+      id: client
+      var_type: <xref uid="google.cloud.stoage.client.Client">Client</xref>
+    - description: (Optional) Unique ID of an existing key.
+      id: access_id
+      var_type: str
+    - description: (Optional) Project ID of an existing key. Defaults to client's
+        project.
+      id: project_id
+      var_type: str
+    - description: (Optional) This parameter is currently ignored.
+      id: user_project
+      var_type: str
+  type: class
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata
+- attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.ACTIVE_STATE
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: ACTIVE_STATE
+  source:
+    id: ACTIVE_STATE
+    path: null
+    startLine: null
+  summary: 'Key is active, and may be used to sign requests.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.ACTIVE_STATE
+- attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.DELETED_STATE
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: DELETED_STATE
+  source:
+    id: DELETED_STATE
+    path: null
+    startLine: null
+  summary: 'Key is deleted.  It cannot be re-activated.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.DELETED_STATE
+- attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.INACTIVE_STATE
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: INACTIVE_STATE
+  source:
+    id: INACTIVE_STATE
+    path: null
+    startLine: null
+  summary: 'Key is inactive, and may not be used to sign requests.
+
+
+    It can be re-activated via `update`.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.INACTIVE_STATE
+- &id001
+  attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.access_id
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: access_id
+  source:
+    id: access_id
+    path: null
+    startLine: null
+  summary: 'Access ID of the key.
+
+    '
+  syntax:
+    returns:
+    - description: unique identifier of the key within a project.
+      var_type: str or None
+  type: property
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.access_id
+- *id001
+- attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.delete
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: delete
+  source:
+    id: delete
+    path: tests/testdata/handwritten/google/cloud/storage/hmac_key.py
+    startLine: 277
+  summary: 'Delete the key from Cloud Storage.
+
+    '
+  syntax:
+    content: delete(timeout=60, retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: if the key does not exist on the back-end.
+      var_type: <code>google.api_core.exceptions.NotFound</code>
+    parameters:
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.delete
+- &id002
+  attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.etag
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: etag
+  source:
+    id: etag
+    path: null
+    startLine: null
+  summary: 'ETag identifying the version of the key metadata.
+
+    '
+  syntax:
+    returns:
+    - description: ETag for the version of the key's metadata.
+      var_type: str or None
+  type: property
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.etag
+- *id002
+- attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.exists
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: exists
+  source:
+    id: exists
+    path: tests/testdata/handwritten/google/cloud/storage/hmac_key.py
+    startLine: 190
+  summary: 'Determine whether or not the key for this metadata exists.
+
+    '
+  syntax:
+    content: exists(timeout=60, retry=<google.api_core.retry.Retry object>)
+    parameters:
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: True if the key exists in Cloud Storage.
+      var_type: bool
+  type: method
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.exists
+- &id003
+  attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.id
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: id
+  source:
+    id: id
+    path: null
+    startLine: null
+  summary: 'ID of the key, including the Project ID and the Access ID.
+
+    '
+  syntax:
+    returns:
+    - description: ID of the key.
+      var_type: str or None
+  type: property
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.id
+- *id003
+- &id004
+  attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.path
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: path
+  source:
+    id: path
+    path: null
+    startLine: null
+  summary: 'Resource path for the metadata''s key.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.path
+- *id004
+- &id005
+  attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.project
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: project
+  source:
+    id: project
+    path: null
+    startLine: null
+  summary: 'Project ID associated with the key.
+
+    '
+  syntax:
+    returns:
+    - description: project identfier for the key.
+      var_type: str or None
+  type: property
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.project
+- *id005
+- attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.reload
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: reload
+  source:
+    id: reload
+    path: tests/testdata/handwritten/google/cloud/storage/hmac_key.py
+    startLine: 222
+  summary: 'Reload properties from Cloud Storage.
+
+    '
+  syntax:
+    content: reload(timeout=60, retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: if the key does not exist on the back-end.
+      var_type: <code>google.api_core.exceptions.NotFound</code>
+    parameters:
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.reload
+- &id006
+  attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.service_account_email
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: service_account_email
+  source:
+    id: service_account_email
+    path: null
+    startLine: null
+  summary: 'Service account e-mail address associated with the key.
+
+    '
+  syntax:
+    returns:
+    - description: e-mail address for the service account which created the key.
+      var_type: str or None
+  type: property
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.service_account_email
+- *id006
+- &id007
+  attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.state
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: state
+  source:
+    id: state
+    path: null
+    startLine: null
+  summary: "Get / set key's state.\n\nOne of:\n    - `ACTIVE`\n    - `INACTIVE`\n\
+    \    - `DELETED`\n"
+  syntax:
+    returns:
+    - description: key's current state.
+      var_type: str or None
+  type: property
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.state
+- *id007
+- &id008
+  attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.time_created
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: time_created
+  source:
+    id: time_created
+    path: null
+    startLine: null
+  summary: 'Retrieve the timestamp at which the HMAC key was created.
+
+    '
+  syntax:
+    returns:
+    - description: Datetime object parsed from RFC3339 valid timestamp, or <code>None</code>
+        if the bucket's resource has not been loaded from the server.
+      var_type: <code>datetime.datetime</code> or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.time_created
+- *id008
+- attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.update
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: update
+  source:
+    id: update
+    path: tests/testdata/handwritten/google/cloud/storage/hmac_key.py
+    startLine: 249
+  summary: 'Save writable properties to Cloud Storage.
+
+    '
+  syntax:
+    content: update(timeout=60, retry=<google.cloud.storage.retry.ConditionalRetryPolicy
+      object>)
+    exceptions:
+    - description: if the key does not exist on the back-end.
+      var_type: <code>google.api_core.exceptions.NotFound</code>
+    parameters:
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.update
+- &id009
+  attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.updated
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: updated
+  source:
+    id: updated
+    path: null
+    startLine: null
+  summary: 'Retrieve the timestamp at which the HMAC key was created.
+
+    '
+  syntax:
+    returns:
+    - description: Datetime object parsed from RFC3339 valid timestamp, or <code>None</code>
+        if the bucket's resource has not been loaded from the server.
+      var_type: <code>datetime.datetime</code> or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.updated
+- *id009
+- &id010
+  attributes: []
+  class: google.cloud.storage.hmac_key.HMACKeyMetadata
+  fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.user_project
+  langs:
+  - python
+  module: google.cloud.storage.hmac_key
+  name: user_project
+  source:
+    id: user_project
+    path: null
+    startLine: null
+  summary: 'Project ID to be billed for API requests made via this bucket.
+
+
+    This property is currently ignored by the server.
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.user_project
+- *id010
+references:
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.ACTIVE_STATE
+  isExternal: false
+  name: ACTIVE_STATE
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.ACTIVE_STATE
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.DELETED_STATE
+  isExternal: false
+  name: DELETED_STATE
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.DELETED_STATE
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.INACTIVE_STATE
+  isExternal: false
+  name: INACTIVE_STATE
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.INACTIVE_STATE
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.access_id
+  isExternal: false
+  name: access_id
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.access_id
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.delete
+  isExternal: false
+  name: delete
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.delete
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.etag
+  isExternal: false
+  name: etag
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.etag
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.exists
+  isExternal: false
+  name: exists
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.exists
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.id
+  isExternal: false
+  name: id
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.id
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.path
+  isExternal: false
+  name: path
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.path
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.project
+  isExternal: false
+  name: project
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.project
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.reload
+  isExternal: false
+  name: reload
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.reload
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.service_account_email
+  isExternal: false
+  name: service_account_email
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.service_account_email
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.state
+  isExternal: false
+  name: state
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.state
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.time_created
+  isExternal: false
+  name: time_created
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.time_created
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.update
+  isExternal: false
+  name: update
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.update
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.updated
+  isExternal: false
+  name: updated
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.updated
+- fullName: google.cloud.storage.hmac_key.HMACKeyMetadata.user_project
+  isExternal: false
+  name: user_project
+  parent: google.cloud.storage.hmac_key.HMACKeyMetadata
+  uid: google.cloud.storage.hmac_key.HMACKeyMetadata.user_project

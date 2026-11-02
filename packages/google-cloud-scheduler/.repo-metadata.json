@@ -1,0 +1,16 @@
+{
+    "api_description": "Creates and manages jobs run on a regular recurring schedule.",
+    "api_id": "cloudscheduler.googleapis.com",
+    "api_shortname": "cloudscheduler",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/cloudscheduler/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-scheduler",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5411429",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "cloudscheduler",
+    "name_pretty": "Cloud Scheduler",
+    "product_documentation": "https://cloud.google.com/scheduler/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

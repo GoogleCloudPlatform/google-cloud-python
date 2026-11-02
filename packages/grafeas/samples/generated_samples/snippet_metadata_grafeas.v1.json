@@ -1,0 +1,2353 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "grafeas.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "grafeas",
+    "version": "1.25.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.batch_create_notes",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.BatchCreateNotes",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "BatchCreateNotes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.BatchCreateNotesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "notes",
+            "type": "MutableMapping[str, grafeas.grafeas_v1.types.Note]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.BatchCreateNotesResponse",
+        "shortName": "batch_create_notes"
+      },
+      "description": "Sample for BatchCreateNotes",
+      "file": "containeranalysis_v1_generated_grafeas_batch_create_notes_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_BatchCreateNotes_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_batch_create_notes_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.batch_create_notes",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.BatchCreateNotes",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "BatchCreateNotes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.BatchCreateNotesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "notes",
+            "type": "MutableMapping[str, grafeas.grafeas_v1.types.Note]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.BatchCreateNotesResponse",
+        "shortName": "batch_create_notes"
+      },
+      "description": "Sample for BatchCreateNotes",
+      "file": "containeranalysis_v1_generated_grafeas_batch_create_notes_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_BatchCreateNotes_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_batch_create_notes_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.batch_create_occurrences",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.BatchCreateOccurrences",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "BatchCreateOccurrences"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.BatchCreateOccurrencesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "occurrences",
+            "type": "MutableSequence[grafeas.grafeas_v1.types.Occurrence]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.BatchCreateOccurrencesResponse",
+        "shortName": "batch_create_occurrences"
+      },
+      "description": "Sample for BatchCreateOccurrences",
+      "file": "containeranalysis_v1_generated_grafeas_batch_create_occurrences_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_BatchCreateOccurrences_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_batch_create_occurrences_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.batch_create_occurrences",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.BatchCreateOccurrences",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "BatchCreateOccurrences"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.BatchCreateOccurrencesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "occurrences",
+            "type": "MutableSequence[grafeas.grafeas_v1.types.Occurrence]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.BatchCreateOccurrencesResponse",
+        "shortName": "batch_create_occurrences"
+      },
+      "description": "Sample for BatchCreateOccurrences",
+      "file": "containeranalysis_v1_generated_grafeas_batch_create_occurrences_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_BatchCreateOccurrences_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_batch_create_occurrences_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.create_note",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.CreateNote",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "CreateNote"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.CreateNoteRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "note_id",
+            "type": "str"
+          },
+          {
+            "name": "note",
+            "type": "grafeas.grafeas_v1.types.Note"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Note",
+        "shortName": "create_note"
+      },
+      "description": "Sample for CreateNote",
+      "file": "containeranalysis_v1_generated_grafeas_create_note_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_CreateNote_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_create_note_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.create_note",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.CreateNote",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "CreateNote"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.CreateNoteRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "note_id",
+            "type": "str"
+          },
+          {
+            "name": "note",
+            "type": "grafeas.grafeas_v1.types.Note"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Note",
+        "shortName": "create_note"
+      },
+      "description": "Sample for CreateNote",
+      "file": "containeranalysis_v1_generated_grafeas_create_note_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_CreateNote_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_create_note_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.create_occurrence",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.CreateOccurrence",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "CreateOccurrence"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.CreateOccurrenceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "occurrence",
+            "type": "grafeas.grafeas_v1.types.Occurrence"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Occurrence",
+        "shortName": "create_occurrence"
+      },
+      "description": "Sample for CreateOccurrence",
+      "file": "containeranalysis_v1_generated_grafeas_create_occurrence_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_CreateOccurrence_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_create_occurrence_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.create_occurrence",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.CreateOccurrence",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "CreateOccurrence"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.CreateOccurrenceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "occurrence",
+            "type": "grafeas.grafeas_v1.types.Occurrence"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Occurrence",
+        "shortName": "create_occurrence"
+      },
+      "description": "Sample for CreateOccurrence",
+      "file": "containeranalysis_v1_generated_grafeas_create_occurrence_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_CreateOccurrence_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_create_occurrence_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.delete_note",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.DeleteNote",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "DeleteNote"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.DeleteNoteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_note"
+      },
+      "description": "Sample for DeleteNote",
+      "file": "containeranalysis_v1_generated_grafeas_delete_note_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_DeleteNote_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_delete_note_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.delete_note",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.DeleteNote",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "DeleteNote"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.DeleteNoteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_note"
+      },
+      "description": "Sample for DeleteNote",
+      "file": "containeranalysis_v1_generated_grafeas_delete_note_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_DeleteNote_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_delete_note_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.delete_occurrence",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.DeleteOccurrence",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "DeleteOccurrence"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.DeleteOccurrenceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_occurrence"
+      },
+      "description": "Sample for DeleteOccurrence",
+      "file": "containeranalysis_v1_generated_grafeas_delete_occurrence_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_DeleteOccurrence_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_delete_occurrence_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.delete_occurrence",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.DeleteOccurrence",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "DeleteOccurrence"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.DeleteOccurrenceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_occurrence"
+      },
+      "description": "Sample for DeleteOccurrence",
+      "file": "containeranalysis_v1_generated_grafeas_delete_occurrence_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_DeleteOccurrence_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_delete_occurrence_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.get_note",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.GetNote",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "GetNote"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.GetNoteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Note",
+        "shortName": "get_note"
+      },
+      "description": "Sample for GetNote",
+      "file": "containeranalysis_v1_generated_grafeas_get_note_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_GetNote_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_get_note_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.get_note",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.GetNote",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "GetNote"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.GetNoteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Note",
+        "shortName": "get_note"
+      },
+      "description": "Sample for GetNote",
+      "file": "containeranalysis_v1_generated_grafeas_get_note_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_GetNote_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_get_note_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.get_occurrence_note",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.GetOccurrenceNote",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "GetOccurrenceNote"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.GetOccurrenceNoteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Note",
+        "shortName": "get_occurrence_note"
+      },
+      "description": "Sample for GetOccurrenceNote",
+      "file": "containeranalysis_v1_generated_grafeas_get_occurrence_note_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_GetOccurrenceNote_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_get_occurrence_note_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.get_occurrence_note",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.GetOccurrenceNote",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "GetOccurrenceNote"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.GetOccurrenceNoteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Note",
+        "shortName": "get_occurrence_note"
+      },
+      "description": "Sample for GetOccurrenceNote",
+      "file": "containeranalysis_v1_generated_grafeas_get_occurrence_note_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_GetOccurrenceNote_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_get_occurrence_note_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.get_occurrence",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.GetOccurrence",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "GetOccurrence"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.GetOccurrenceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Occurrence",
+        "shortName": "get_occurrence"
+      },
+      "description": "Sample for GetOccurrence",
+      "file": "containeranalysis_v1_generated_grafeas_get_occurrence_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_GetOccurrence_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_get_occurrence_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.get_occurrence",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.GetOccurrence",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "GetOccurrence"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.GetOccurrenceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Occurrence",
+        "shortName": "get_occurrence"
+      },
+      "description": "Sample for GetOccurrence",
+      "file": "containeranalysis_v1_generated_grafeas_get_occurrence_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_GetOccurrence_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_get_occurrence_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.list_note_occurrences",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.ListNoteOccurrences",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "ListNoteOccurrences"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.ListNoteOccurrencesRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.services.grafeas.pagers.ListNoteOccurrencesAsyncPager",
+        "shortName": "list_note_occurrences"
+      },
+      "description": "Sample for ListNoteOccurrences",
+      "file": "containeranalysis_v1_generated_grafeas_list_note_occurrences_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_ListNoteOccurrences_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_list_note_occurrences_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.list_note_occurrences",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.ListNoteOccurrences",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "ListNoteOccurrences"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.ListNoteOccurrencesRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.services.grafeas.pagers.ListNoteOccurrencesPager",
+        "shortName": "list_note_occurrences"
+      },
+      "description": "Sample for ListNoteOccurrences",
+      "file": "containeranalysis_v1_generated_grafeas_list_note_occurrences_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_ListNoteOccurrences_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_list_note_occurrences_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.list_notes",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.ListNotes",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "ListNotes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.ListNotesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.services.grafeas.pagers.ListNotesAsyncPager",
+        "shortName": "list_notes"
+      },
+      "description": "Sample for ListNotes",
+      "file": "containeranalysis_v1_generated_grafeas_list_notes_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_ListNotes_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_list_notes_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.list_notes",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.ListNotes",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "ListNotes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.ListNotesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.services.grafeas.pagers.ListNotesPager",
+        "shortName": "list_notes"
+      },
+      "description": "Sample for ListNotes",
+      "file": "containeranalysis_v1_generated_grafeas_list_notes_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_ListNotes_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_list_notes_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.list_occurrences",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.ListOccurrences",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "ListOccurrences"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.ListOccurrencesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.services.grafeas.pagers.ListOccurrencesAsyncPager",
+        "shortName": "list_occurrences"
+      },
+      "description": "Sample for ListOccurrences",
+      "file": "containeranalysis_v1_generated_grafeas_list_occurrences_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_ListOccurrences_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_list_occurrences_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.list_occurrences",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.ListOccurrences",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "ListOccurrences"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.ListOccurrencesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.services.grafeas.pagers.ListOccurrencesPager",
+        "shortName": "list_occurrences"
+      },
+      "description": "Sample for ListOccurrences",
+      "file": "containeranalysis_v1_generated_grafeas_list_occurrences_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_ListOccurrences_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_list_occurrences_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.update_note",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.UpdateNote",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "UpdateNote"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.UpdateNoteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "note",
+            "type": "grafeas.grafeas_v1.types.Note"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Note",
+        "shortName": "update_note"
+      },
+      "description": "Sample for UpdateNote",
+      "file": "containeranalysis_v1_generated_grafeas_update_note_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_UpdateNote_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_update_note_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.update_note",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.UpdateNote",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "UpdateNote"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.UpdateNoteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "note",
+            "type": "grafeas.grafeas_v1.types.Note"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Note",
+        "shortName": "update_note"
+      },
+      "description": "Sample for UpdateNote",
+      "file": "containeranalysis_v1_generated_grafeas_update_note_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_UpdateNote_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_update_note_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient",
+          "shortName": "GrafeasAsyncClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasAsyncClient.update_occurrence",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.UpdateOccurrence",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "UpdateOccurrence"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.UpdateOccurrenceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "occurrence",
+            "type": "grafeas.grafeas_v1.types.Occurrence"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Occurrence",
+        "shortName": "update_occurrence"
+      },
+      "description": "Sample for UpdateOccurrence",
+      "file": "containeranalysis_v1_generated_grafeas_update_occurrence_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_UpdateOccurrence_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_update_occurrence_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "grafeas.grafeas_v1.GrafeasClient",
+          "shortName": "GrafeasClient"
+        },
+        "fullName": "grafeas.grafeas_v1.GrafeasClient.update_occurrence",
+        "method": {
+          "fullName": "grafeas.v1.Grafeas.UpdateOccurrence",
+          "service": {
+            "fullName": "grafeas.v1.Grafeas",
+            "shortName": "Grafeas"
+          },
+          "shortName": "UpdateOccurrence"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "grafeas.grafeas_v1.types.UpdateOccurrenceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "occurrence",
+            "type": "grafeas.grafeas_v1.types.Occurrence"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "grafeas.grafeas_v1.types.Occurrence",
+        "shortName": "update_occurrence"
+      },
+      "description": "Sample for UpdateOccurrence",
+      "file": "containeranalysis_v1_generated_grafeas_update_occurrence_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "containeranalysis_v1_generated_Grafeas_UpdateOccurrence_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "containeranalysis_v1_generated_grafeas_update_occurrence_sync.py"
+    }
+  ]
+}

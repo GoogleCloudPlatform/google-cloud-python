@@ -1,0 +1,123 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.managedidentities_v1",
+  "protoPackage": "google.cloud.managedidentities.v1",
+  "schema": "1.0",
+  "services": {
+    "ManagedIdentitiesService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ManagedIdentitiesServiceClient",
+          "rpcs": {
+            "AttachTrust": {
+              "methods": [
+                "attach_trust"
+              ]
+            },
+            "CreateMicrosoftAdDomain": {
+              "methods": [
+                "create_microsoft_ad_domain"
+              ]
+            },
+            "DeleteDomain": {
+              "methods": [
+                "delete_domain"
+              ]
+            },
+            "DetachTrust": {
+              "methods": [
+                "detach_trust"
+              ]
+            },
+            "GetDomain": {
+              "methods": [
+                "get_domain"
+              ]
+            },
+            "ListDomains": {
+              "methods": [
+                "list_domains"
+              ]
+            },
+            "ReconfigureTrust": {
+              "methods": [
+                "reconfigure_trust"
+              ]
+            },
+            "ResetAdminPassword": {
+              "methods": [
+                "reset_admin_password"
+              ]
+            },
+            "UpdateDomain": {
+              "methods": [
+                "update_domain"
+              ]
+            },
+            "ValidateTrust": {
+              "methods": [
+                "validate_trust"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ManagedIdentitiesServiceAsyncClient",
+          "rpcs": {
+            "AttachTrust": {
+              "methods": [
+                "attach_trust"
+              ]
+            },
+            "CreateMicrosoftAdDomain": {
+              "methods": [
+                "create_microsoft_ad_domain"
+              ]
+            },
+            "DeleteDomain": {
+              "methods": [
+                "delete_domain"
+              ]
+            },
+            "DetachTrust": {
+              "methods": [
+                "detach_trust"
+              ]
+            },
+            "GetDomain": {
+              "methods": [
+                "get_domain"
+              ]
+            },
+            "ListDomains": {
+              "methods": [
+                "list_domains"
+              ]
+            },
+            "ReconfigureTrust": {
+              "methods": [
+                "reconfigure_trust"
+              ]
+            },
+            "ResetAdminPassword": {
+              "methods": [
+                "reset_admin_password"
+              ]
+            },
+            "UpdateDomain": {
+              "methods": [
+                "update_domain"
+              ]
+            },
+            "ValidateTrust": {
+              "methods": [
+                "validate_trust"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

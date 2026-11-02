@@ -1,0 +1,538 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.video.live_stream_v1",
+  "protoPackage": "google.cloud.video.livestream.v1",
+  "schema": "1.0",
+  "services": {
+    "LivestreamService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "LivestreamServiceClient",
+          "rpcs": {
+            "CreateAsset": {
+              "methods": [
+                "create_asset"
+              ]
+            },
+            "CreateChannel": {
+              "methods": [
+                "create_channel"
+              ]
+            },
+            "CreateClip": {
+              "methods": [
+                "create_clip"
+              ]
+            },
+            "CreateDvrSession": {
+              "methods": [
+                "create_dvr_session"
+              ]
+            },
+            "CreateEvent": {
+              "methods": [
+                "create_event"
+              ]
+            },
+            "CreateInput": {
+              "methods": [
+                "create_input"
+              ]
+            },
+            "DeleteAsset": {
+              "methods": [
+                "delete_asset"
+              ]
+            },
+            "DeleteChannel": {
+              "methods": [
+                "delete_channel"
+              ]
+            },
+            "DeleteClip": {
+              "methods": [
+                "delete_clip"
+              ]
+            },
+            "DeleteDvrSession": {
+              "methods": [
+                "delete_dvr_session"
+              ]
+            },
+            "DeleteEvent": {
+              "methods": [
+                "delete_event"
+              ]
+            },
+            "DeleteInput": {
+              "methods": [
+                "delete_input"
+              ]
+            },
+            "GetAsset": {
+              "methods": [
+                "get_asset"
+              ]
+            },
+            "GetChannel": {
+              "methods": [
+                "get_channel"
+              ]
+            },
+            "GetClip": {
+              "methods": [
+                "get_clip"
+              ]
+            },
+            "GetDvrSession": {
+              "methods": [
+                "get_dvr_session"
+              ]
+            },
+            "GetEvent": {
+              "methods": [
+                "get_event"
+              ]
+            },
+            "GetInput": {
+              "methods": [
+                "get_input"
+              ]
+            },
+            "GetPool": {
+              "methods": [
+                "get_pool"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListChannels": {
+              "methods": [
+                "list_channels"
+              ]
+            },
+            "ListClips": {
+              "methods": [
+                "list_clips"
+              ]
+            },
+            "ListDvrSessions": {
+              "methods": [
+                "list_dvr_sessions"
+              ]
+            },
+            "ListEvents": {
+              "methods": [
+                "list_events"
+              ]
+            },
+            "ListInputs": {
+              "methods": [
+                "list_inputs"
+              ]
+            },
+            "PreviewInput": {
+              "methods": [
+                "preview_input"
+              ]
+            },
+            "StartChannel": {
+              "methods": [
+                "start_channel"
+              ]
+            },
+            "StartDistribution": {
+              "methods": [
+                "start_distribution"
+              ]
+            },
+            "StopChannel": {
+              "methods": [
+                "stop_channel"
+              ]
+            },
+            "StopDistribution": {
+              "methods": [
+                "stop_distribution"
+              ]
+            },
+            "UpdateChannel": {
+              "methods": [
+                "update_channel"
+              ]
+            },
+            "UpdateDvrSession": {
+              "methods": [
+                "update_dvr_session"
+              ]
+            },
+            "UpdateInput": {
+              "methods": [
+                "update_input"
+              ]
+            },
+            "UpdatePool": {
+              "methods": [
+                "update_pool"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "LivestreamServiceAsyncClient",
+          "rpcs": {
+            "CreateAsset": {
+              "methods": [
+                "create_asset"
+              ]
+            },
+            "CreateChannel": {
+              "methods": [
+                "create_channel"
+              ]
+            },
+            "CreateClip": {
+              "methods": [
+                "create_clip"
+              ]
+            },
+            "CreateDvrSession": {
+              "methods": [
+                "create_dvr_session"
+              ]
+            },
+            "CreateEvent": {
+              "methods": [
+                "create_event"
+              ]
+            },
+            "CreateInput": {
+              "methods": [
+                "create_input"
+              ]
+            },
+            "DeleteAsset": {
+              "methods": [
+                "delete_asset"
+              ]
+            },
+            "DeleteChannel": {
+              "methods": [
+                "delete_channel"
+              ]
+            },
+            "DeleteClip": {
+              "methods": [
+                "delete_clip"
+              ]
+            },
+            "DeleteDvrSession": {
+              "methods": [
+                "delete_dvr_session"
+              ]
+            },
+            "DeleteEvent": {
+              "methods": [
+                "delete_event"
+              ]
+            },
+            "DeleteInput": {
+              "methods": [
+                "delete_input"
+              ]
+            },
+            "GetAsset": {
+              "methods": [
+                "get_asset"
+              ]
+            },
+            "GetChannel": {
+              "methods": [
+                "get_channel"
+              ]
+            },
+            "GetClip": {
+              "methods": [
+                "get_clip"
+              ]
+            },
+            "GetDvrSession": {
+              "methods": [
+                "get_dvr_session"
+              ]
+            },
+            "GetEvent": {
+              "methods": [
+                "get_event"
+              ]
+            },
+            "GetInput": {
+              "methods": [
+                "get_input"
+              ]
+            },
+            "GetPool": {
+              "methods": [
+                "get_pool"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListChannels": {
+              "methods": [
+                "list_channels"
+              ]
+            },
+            "ListClips": {
+              "methods": [
+                "list_clips"
+              ]
+            },
+            "ListDvrSessions": {
+              "methods": [
+                "list_dvr_sessions"
+              ]
+            },
+            "ListEvents": {
+              "methods": [
+                "list_events"
+              ]
+            },
+            "ListInputs": {
+              "methods": [
+                "list_inputs"
+              ]
+            },
+            "PreviewInput": {
+              "methods": [
+                "preview_input"
+              ]
+            },
+            "StartChannel": {
+              "methods": [
+                "start_channel"
+              ]
+            },
+            "StartDistribution": {
+              "methods": [
+                "start_distribution"
+              ]
+            },
+            "StopChannel": {
+              "methods": [
+                "stop_channel"
+              ]
+            },
+            "StopDistribution": {
+              "methods": [
+                "stop_distribution"
+              ]
+            },
+            "UpdateChannel": {
+              "methods": [
+                "update_channel"
+              ]
+            },
+            "UpdateDvrSession": {
+              "methods": [
+                "update_dvr_session"
+              ]
+            },
+            "UpdateInput": {
+              "methods": [
+                "update_input"
+              ]
+            },
+            "UpdatePool": {
+              "methods": [
+                "update_pool"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "LivestreamServiceClient",
+          "rpcs": {
+            "CreateAsset": {
+              "methods": [
+                "create_asset"
+              ]
+            },
+            "CreateChannel": {
+              "methods": [
+                "create_channel"
+              ]
+            },
+            "CreateClip": {
+              "methods": [
+                "create_clip"
+              ]
+            },
+            "CreateDvrSession": {
+              "methods": [
+                "create_dvr_session"
+              ]
+            },
+            "CreateEvent": {
+              "methods": [
+                "create_event"
+              ]
+            },
+            "CreateInput": {
+              "methods": [
+                "create_input"
+              ]
+            },
+            "DeleteAsset": {
+              "methods": [
+                "delete_asset"
+              ]
+            },
+            "DeleteChannel": {
+              "methods": [
+                "delete_channel"
+              ]
+            },
+            "DeleteClip": {
+              "methods": [
+                "delete_clip"
+              ]
+            },
+            "DeleteDvrSession": {
+              "methods": [
+                "delete_dvr_session"
+              ]
+            },
+            "DeleteEvent": {
+              "methods": [
+                "delete_event"
+              ]
+            },
+            "DeleteInput": {
+              "methods": [
+                "delete_input"
+              ]
+            },
+            "GetAsset": {
+              "methods": [
+                "get_asset"
+              ]
+            },
+            "GetChannel": {
+              "methods": [
+                "get_channel"
+              ]
+            },
+            "GetClip": {
+              "methods": [
+                "get_clip"
+              ]
+            },
+            "GetDvrSession": {
+              "methods": [
+                "get_dvr_session"
+              ]
+            },
+            "GetEvent": {
+              "methods": [
+                "get_event"
+              ]
+            },
+            "GetInput": {
+              "methods": [
+                "get_input"
+              ]
+            },
+            "GetPool": {
+              "methods": [
+                "get_pool"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListChannels": {
+              "methods": [
+                "list_channels"
+              ]
+            },
+            "ListClips": {
+              "methods": [
+                "list_clips"
+              ]
+            },
+            "ListDvrSessions": {
+              "methods": [
+                "list_dvr_sessions"
+              ]
+            },
+            "ListEvents": {
+              "methods": [
+                "list_events"
+              ]
+            },
+            "ListInputs": {
+              "methods": [
+                "list_inputs"
+              ]
+            },
+            "PreviewInput": {
+              "methods": [
+                "preview_input"
+              ]
+            },
+            "StartChannel": {
+              "methods": [
+                "start_channel"
+              ]
+            },
+            "StartDistribution": {
+              "methods": [
+                "start_distribution"
+              ]
+            },
+            "StopChannel": {
+              "methods": [
+                "stop_channel"
+              ]
+            },
+            "StopDistribution": {
+              "methods": [
+                "stop_distribution"
+              ]
+            },
+            "UpdateChannel": {
+              "methods": [
+                "update_channel"
+              ]
+            },
+            "UpdateDvrSession": {
+              "methods": [
+                "update_dvr_session"
+              ]
+            },
+            "UpdateInput": {
+              "methods": [
+                "update_input"
+              ]
+            },
+            "UpdatePool": {
+              "methods": [
+                "update_pool"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

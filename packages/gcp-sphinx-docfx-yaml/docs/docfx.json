@@ -1,0 +1,22 @@
+{
+  "build": {
+    "content": [
+      {
+        "files": [ "**/*.yml" ],
+        "cwd": "_build",
+        "dest": "api"
+      },
+    ],
+    "resource": [
+      {
+        "files": [ "articles/images/**"]
+      }
+    ],
+    "overwrite": "specs/*.md",
+    "globalMetadata": {
+      "_appTitle": "docfx seed website",
+      "_enableSearch": true
+    },
+    "dest": "_site"
+  }
+}

@@ -1,0 +1,40 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "`Service account\n   email <https://cloud.google.com/iam/docs/service-accounts>`__\n\
+      \   to be used for generating the OIDC token. The caller (for\n   CreateSubscription,\
+      \ UpdateSubscription, and ModifyPushConfig\n   RPCs) must have the iam.serviceAccounts.actAs\
+      \ permission for\n   the service account."
+    id: service_account_email
+    var_type: str
+  - description: "Audience to be used when generating OIDC\n   token. The audience\
+      \ claim identifies the\n   recipients that the JWT is intended for. The\n  \
+      \ audience value is a single case-sensitive\n   string. Having multiple values\
+      \ (array) for the\n   audience field is not supported. More info about\n   the\
+      \ OIDC JWT token audience here:\n   https://tools.ietf.org/html/rfc7519#section-4.1.3\n\
+      \   Note: if not specified, the Push endpoint URL\n   will be used."
+    id: audience
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.PushConfig.OidcToken
+  fullName: google.cloud.pubsub_v1.types.PushConfig.OidcToken
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types.PushConfig
+  name: OidcToken
+  source:
+    id: OidcToken
+    path: tests/testdata/gapic-combo/google/pubsub_v1/types/pubsub.py
+    startLine: 960
+  summary: 'Contains information needed for generating an `OpenID Connect
+
+    token <https://developers.google.com/identity/protocols/OpenIDConnect>`__.
+
+    '
+  syntax:
+    content: OidcToken(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.PushConfig.OidcToken
+references: []

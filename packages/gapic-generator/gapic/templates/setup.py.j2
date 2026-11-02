@@ -1,0 +1,115 @@
+{# TODO(https://github.com/googleapis/gapic-generator-python/issues/2121): Remove the following variable (and the condition later in this file) for async rest transport once support for it is GA. #}
+{% set rest_async_io_enabled = api.all_library_settings[api.naming.proto_package].python_settings.experimental_features.rest_async_io_enabled or api.has_resumable_upload_methods %}
+{% set unversioned_package_disabled = api.all_library_settings[api.naming.proto_package].python_settings.experimental_features.unversioned_package_disabled %}
+{% extends '_base.py.j2' %}
+{% from '_pypi_packages.j2' import pypi_packages %}
+{% block content %}
+
+import io
+import os
+import re
+
+import setuptools # type: ignore
+
+package_root = os.path.abspath(os.path.dirname(__file__))
+
+name = '{{ api.naming.warehouse_package_name }}'
+
+{% set warehouse_description = api.naming.warehouse_package_name.replace('-',' ')|title %}
+
+{% set package_path = api.naming.module_namespace|join('/') + "/" + (api.naming.versioned_module_name if unversioned_package_disabled else api.naming.module_name) %}
+description = "{{ warehouse_description }} API client library"
+
+version = None
+
+with open(os.path.join(package_root, '{{ package_path }}/gapic_version.py')) as fp:
+    version_candidates = re.findall(
+        r"(?<=\")\d+\.\d+\.\d+[^\"\s]*(?=\")",
+        fp.read(),
+    )
+    assert (len(version_candidates) == 1)
+    version = version_candidates[0]
+
+if version[0] == "0":
+    release_status = "Development Status :: 4 - Beta"
+else:
+    release_status = "Development Status :: 5 - Production/Stable"
+
+dependencies = [
+    {% if api.has_resumable_upload_methods %}
+    "google-api-core[grpc] >= 2.41.0, <3.0.0",
+    {% else %}
+    "google-api-core[grpc] >= 2.28.0, <3.0.0",
+    {% endif %}
+    # Exclude incompatible versions of `google-auth`
+    # See https://github.com/googleapis/google-cloud-python/issues/12364
+    "google-auth >= 2.14.1, <3.0.0,!=2.24.0,!=2.25.0",
+    "grpcio >= 1.59.0, < 2.0.0",
+    "grpcio >= 1.75.1, < 2.0.0; python_version >= '3.14'",
+    "proto-plus >= 1.26.1, <2.0.0",
+    {# Explicitly exclude protobuf versions mentioned in https://cloud.google.com/support/bulletins#GCP-2022-019 #}
+    "protobuf >= 6.33.5, < 8.0.0",
+    {% for package_tuple, package_info in pypi_packages.items() %}
+    {# Quick check to make sure `package_info.package_name` is not the package being generated so we don't circularly include this package in its own constraints file. #}
+    {% if api.naming.warehouse_package_name != package_info.package_name %}
+    {% if api.requires_package(package_tuple) %}
+    "{{ package_info.package_name }} >= {{ package_info.lower_bound }}, <{{ package_info.upper_bound }}",
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+]
+extras = {
+{% if rest_async_io_enabled %}
+    "async_rest": [
+        "google-auth[aiohttp] >= 2.60.0, <3.0.0",
+        "google-api-core >= 2.41.0, <3.0.0",
+    ],
+{% endif %}
+}
+url = "https://github.com/googleapis/google-cloud-python/tree/main/packages/{{ api.naming.warehouse_package_name }}"
+
+package_root = os.path.abspath(os.path.dirname(__file__))
+
+readme_filename = os.path.join(package_root, "README.rst")
+with io.open(readme_filename, encoding="utf-8") as readme_file:
+    readme = readme_file.read()
+
+packages = [
+    package
+    for package in setuptools.find_namespace_packages()
+    if package.startswith("{{ api.naming.namespace_packages|first }}")
+]
+
+setuptools.setup(
+    name=name,
+    version=version,
+    description=description,
+    long_description=readme,
+    author="Google LLC",
+    author_email="googleapis-packages@google.com",
+    license="Apache-2.0",
+    url=url,
+    classifiers=[
+        release_status,
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: Apache Software License",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
+        "Operating System :: OS Independent",
+        "Topic :: Internet",
+    ],
+    platforms="Posix; MacOS X; Windows",
+    packages=packages,
+    python_requires=">=3.10",
+    install_requires=dependencies,
+    extras_require=extras,
+    include_package_data=True,
+    zip_safe=False,
+)
+{% endblock %}

@@ -1,0 +1,328 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.edgecontainer_v1",
+  "protoPackage": "google.cloud.edgecontainer.v1",
+  "schema": "1.0",
+  "services": {
+    "EdgeContainer": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "EdgeContainerClient",
+          "rpcs": {
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "CreateNodePool": {
+              "methods": [
+                "create_node_pool"
+              ]
+            },
+            "CreateVpnConnection": {
+              "methods": [
+                "create_vpn_connection"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteNodePool": {
+              "methods": [
+                "delete_node_pool"
+              ]
+            },
+            "DeleteVpnConnection": {
+              "methods": [
+                "delete_vpn_connection"
+              ]
+            },
+            "GenerateAccessToken": {
+              "methods": [
+                "generate_access_token"
+              ]
+            },
+            "GenerateOfflineCredential": {
+              "methods": [
+                "generate_offline_credential"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetMachine": {
+              "methods": [
+                "get_machine"
+              ]
+            },
+            "GetNodePool": {
+              "methods": [
+                "get_node_pool"
+              ]
+            },
+            "GetServerConfig": {
+              "methods": [
+                "get_server_config"
+              ]
+            },
+            "GetVpnConnection": {
+              "methods": [
+                "get_vpn_connection"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListMachines": {
+              "methods": [
+                "list_machines"
+              ]
+            },
+            "ListNodePools": {
+              "methods": [
+                "list_node_pools"
+              ]
+            },
+            "ListVpnConnections": {
+              "methods": [
+                "list_vpn_connections"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            },
+            "UpdateNodePool": {
+              "methods": [
+                "update_node_pool"
+              ]
+            },
+            "UpgradeCluster": {
+              "methods": [
+                "upgrade_cluster"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "EdgeContainerAsyncClient",
+          "rpcs": {
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "CreateNodePool": {
+              "methods": [
+                "create_node_pool"
+              ]
+            },
+            "CreateVpnConnection": {
+              "methods": [
+                "create_vpn_connection"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteNodePool": {
+              "methods": [
+                "delete_node_pool"
+              ]
+            },
+            "DeleteVpnConnection": {
+              "methods": [
+                "delete_vpn_connection"
+              ]
+            },
+            "GenerateAccessToken": {
+              "methods": [
+                "generate_access_token"
+              ]
+            },
+            "GenerateOfflineCredential": {
+              "methods": [
+                "generate_offline_credential"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetMachine": {
+              "methods": [
+                "get_machine"
+              ]
+            },
+            "GetNodePool": {
+              "methods": [
+                "get_node_pool"
+              ]
+            },
+            "GetServerConfig": {
+              "methods": [
+                "get_server_config"
+              ]
+            },
+            "GetVpnConnection": {
+              "methods": [
+                "get_vpn_connection"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListMachines": {
+              "methods": [
+                "list_machines"
+              ]
+            },
+            "ListNodePools": {
+              "methods": [
+                "list_node_pools"
+              ]
+            },
+            "ListVpnConnections": {
+              "methods": [
+                "list_vpn_connections"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            },
+            "UpdateNodePool": {
+              "methods": [
+                "update_node_pool"
+              ]
+            },
+            "UpgradeCluster": {
+              "methods": [
+                "upgrade_cluster"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "EdgeContainerClient",
+          "rpcs": {
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "CreateNodePool": {
+              "methods": [
+                "create_node_pool"
+              ]
+            },
+            "CreateVpnConnection": {
+              "methods": [
+                "create_vpn_connection"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteNodePool": {
+              "methods": [
+                "delete_node_pool"
+              ]
+            },
+            "DeleteVpnConnection": {
+              "methods": [
+                "delete_vpn_connection"
+              ]
+            },
+            "GenerateAccessToken": {
+              "methods": [
+                "generate_access_token"
+              ]
+            },
+            "GenerateOfflineCredential": {
+              "methods": [
+                "generate_offline_credential"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetMachine": {
+              "methods": [
+                "get_machine"
+              ]
+            },
+            "GetNodePool": {
+              "methods": [
+                "get_node_pool"
+              ]
+            },
+            "GetServerConfig": {
+              "methods": [
+                "get_server_config"
+              ]
+            },
+            "GetVpnConnection": {
+              "methods": [
+                "get_vpn_connection"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListMachines": {
+              "methods": [
+                "list_machines"
+              ]
+            },
+            "ListNodePools": {
+              "methods": [
+                "list_node_pools"
+              ]
+            },
+            "ListVpnConnections": {
+              "methods": [
+                "list_vpn_connections"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            },
+            "UpdateNodePool": {
+              "methods": [
+                "update_node_pool"
+              ]
+            },
+            "UpgradeCluster": {
+              "methods": [
+                "upgrade_cluster"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

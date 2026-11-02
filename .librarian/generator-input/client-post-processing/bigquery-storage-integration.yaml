@@ -1,0 +1,527 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+description: Integrate BigQuery Storage Handwritten code
+# TODO(Fill in issue number below to add more context)
+url: https://github.com/googleapis/gapic-generator-python/issues/123
+replacements:
+  - paths: [
+      packages/google-cloud-bigquery-storage/noxfile.py,
+    ]
+    before: |
+      UNIT_TEST_EXTRAS: List\[str\] = \[\]
+    after: |
+      UNIT_TEST_EXTRAS: List[str] = [
+          "tests",
+          "fastavro",
+          "pandas",
+          "pyarrow",
+      ]
+    count: 1
+  - paths: [
+      packages/google-cloud-bigquery-storage/noxfile.py,
+    ]
+    before: |
+      \    # Install all dependencies\n    session.install\("-e", "\."\)
+    after: |2
+          # Install all dependencies
+          session.install("-e", f".[{','.join(UNIT_TEST_EXTRAS)}]")
+    count: 2
+  - paths: [
+      packages/google-cloud-bigquery-storage/noxfile.py,
+    ]
+    before: |
+      SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List\[str\] = \[\]
+    after: |
+      SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List[str] = [
+          "google-cloud-bigquery",
+      ]
+    count: 1
+  - paths: [
+      packages/google-cloud-bigquery-storage/noxfile.py,
+    ]
+    before: |
+      SYSTEM_TEST_EXTRAS: List\[str\] = \[\]
+    after: |
+      SYSTEM_TEST_EXTRAS: List[str] = [
+          "fastavro",
+          "pandas",
+          "pyarrow",
+      ]
+    count: 1
+  - paths: [
+      packages/google-cloud-bigquery-storage/noxfile.py,
+    ]
+    before: |
+      nox.options.sessions = \[
+          "unit",
+          "system",
+    after: |
+      nox.options.sessions = [
+          "unit",
+          "system-3.13",
+    count: 1
+  - paths: [
+      packages/google-cloud-bigquery-storage/noxfile.py,
+    ]
+    before: |
+      if system_test_folder_exists:
+      \        session.run\(
+      \            "py.test",
+      \            "--quiet",
+      \            f"--junitxml=system_{session.python}_sponge_log.xml",
+      \            system_test_folder_path,
+      \            \*session.posargs,
+      \        \)\n\n
+      \@nox.session\(python=DEFAULT_PYTHON_VERSION\)
+    after: |
+      if system_test_folder_exists:
+              session.run(
+                  "py.test",
+                  "--quiet",
+                  f"--junitxml=system_{session.python}_sponge_log.xml",
+                  system_test_folder_path,
+                  *session.posargs,
+              )
+
+              # Maunally added samples tests.
+              # TODO: remove tests after samples are migrated to https://github.com/GoogleCloudPlatform/python-docs-samples
+              samples_tests = ["pyarrow", "quickstart", "snippets", "to_dataframe"]
+              for name in samples_tests:
+                  _run_samples_test(session, name)
+
+
+      # Maunally added samples tests helper function.
+      # TODO(https://github.com/googleapis/google-cloud-python/issues/14417): remove tests after samples are migrated to https://github.com/GoogleCloudPlatform/python-docs-samples
+      def _run_samples_test(session, name):
+          samples_path = os.path.join("samples", name)
+          samples_requirements_path = os.path.join("samples", name, "requirements.txt")
+          test_requirements_path = os.path.join("samples", name, "requirements-test.txt")
+
+          # Install dependencies.
+          if os.path.exists(samples_requirements_path):
+              session.install("-r", samples_requirements_path)
+
+          if os.path.exists(test_requirements_path):
+              session.install("-r", test_requirements_path)
+
+          session.run(
+              "pytest",
+              f"--junitxml=system_{session.python}_sponge_log.xml",
+              *session.posargs,
+              samples_path,
+          )\n\n
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+    count: 1
+  - paths: [
+      packages/google-cloud-bigquery-storage/setup.py,
+    ]
+    before: |
+      extras = \{\}
+    after: |
+      extras = {
+          "pandas": [
+              "pandas >= 1.1.3, < 4.0.0",
+              "pyarrow >= 3.0.0",
+              "pandas-gbq >= 0.35.1, < 2.0.0",
+          ],
+          "fastavro": ["fastavro >= 1.1.0, < 2.0.0"],
+          "pyarrow": ["pyarrow >= 3.0.0"],
+      }
+    count: 1
+  - paths: [
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage/__init__.py,
+    ]
+    before: |
+      from google.cloud.bigquery_storage_v1.services.big_query_read.async_client import \(
+          BigQueryReadAsyncClient,
+      \)
+      from google.cloud.bigquery_storage_v1.services.big_query_read.client import \(
+          BigQueryReadClient,
+      \)
+    after: |
+      from google.cloud.bigquery_storage_v1 import BigQueryReadClient
+      from google.cloud.bigquery_storage_v1 import gapic_types as types
+      from google.cloud.bigquery_storage_v1.reader import ReadRowsStream
+    count: 1
+  - paths: [
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage/__init__.py,
+    ]
+    before: |
+      from google.cloud.bigquery_storage_v1.types.table import TableFieldSchema, TableSchema\n
+      __all__ = \(
+    after: |
+      from google.cloud.bigquery_storage_v1.types.table import TableFieldSchema, TableSchema
+      from google.cloud.bigquery_storage_v1.writer import AppendRowsStream\n
+      __all__ = (
+    count: 1
+  - paths: [
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage/__init__.py,
+    ]
+    before: |
+      "BigQueryReadClient",
+          "BigQueryReadAsyncClient",
+          "BigQueryWriteClient",
+          "BigQueryWriteAsyncClient",
+          "ArrowRecordBatch",
+    after: |
+      "BigQueryReadClient",
+          "BigQueryWriteClient",
+          "BigQueryWriteAsyncClient",
+          "__version__",
+          "types",
+          "ArrowRecordBatch",
+    count: 1
+  - paths: [
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage/__init__.py,
+    ]
+    before: |
+      "ThrottleState",
+          "ReadSession",
+    after: |
+      "ThrottleState",
+          "AppendRowsStream",
+          "ReadRowsStream",
+          "ReadSession",
+    count: 1
+    # Given that this file is mostly handwritten, we could omit the file during code generation
+    # This will require a change to gapic-generator-python to provide the ability to omit files
+  - paths: [
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage_v1/__init__.py,
+    ]
+    before: |
+      from .services.big_query_read import BigQueryReadAsyncClient, BigQueryReadClient
+      from .services.big_query_write import BigQueryWriteAsyncClient, BigQueryWriteClient
+      from .types.arrow import ArrowRecordBatch, ArrowSchema, ArrowSerializationOptions
+      from .types.avro import AvroRows, AvroSchema, AvroSerializationOptions
+      from .types.protobuf import ProtoRows, ProtoSchema
+      from .types.storage import \(
+          AppendRowsRequest,
+          AppendRowsResponse,
+          BatchCommitWriteStreamsRequest,
+          BatchCommitWriteStreamsResponse,
+          ClientStats,
+          CreateReadSessionRequest,
+          CreateWriteStreamRequest,
+          FinalizeWriteStreamRequest,
+          FinalizeWriteStreamResponse,
+          FlushRowsRequest,
+          FlushRowsResponse,
+          GetWriteStreamRequest,
+          ReadRowsRequest,
+          ReadRowsResponse,
+          RowError,
+          SplitReadStreamRequest,
+          SplitReadStreamResponse,
+          StorageError,
+          StreamStats,
+          ThrottleState,
+      \)
+      from .types.stream import \(
+          DataFormat,
+          ReadSession,
+          ReadStream,
+          WriteStream,
+          WriteStreamView,
+      \)
+      from .types.table import TableFieldSchema, TableSchema\n
+    after: |
+      from google.cloud.bigquery_storage_v1 import client, types\n\n
+      class BigQueryReadClient(client.BigQueryReadClient):
+          __doc__ = client.BigQueryReadClient.__doc__\n\n
+      class BigQueryWriteClient(client.BigQueryWriteClient):
+          __doc__ = client.BigQueryWriteClient.__doc__\n\n
+    count: 1
+    # Given that this file is mostly handwritten, we could omit the file during code generation
+    # This will require a change to gapic-generator-python to provide the ability to omit files
+  - paths: [
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage_v1/__init__.py,
+    ]
+    before: |
+      __all__ = \(
+          "BigQueryReadAsyncClient",
+          "BigQueryWriteAsyncClient",
+          "AppendRowsRequest",
+          "AppendRowsResponse",
+          "ArrowRecordBatch",
+          "ArrowSchema",
+          "ArrowSerializationOptions",
+          "AvroRows",
+          "AvroSchema",
+          "AvroSerializationOptions",
+          "BatchCommitWriteStreamsRequest",
+          "BatchCommitWriteStreamsResponse",
+          "BigQueryReadClient",
+          "BigQueryWriteClient",
+          "ClientStats",
+          "CreateReadSessionRequest",
+          "CreateWriteStreamRequest",
+          "DataFormat",
+          "FinalizeWriteStreamRequest",
+          "FinalizeWriteStreamResponse",
+          "FlushRowsRequest",
+          "FlushRowsResponse",
+          "GetWriteStreamRequest",
+          "ProtoRows",
+          "ProtoSchema",
+          "ReadRowsRequest",
+          "ReadRowsResponse",
+          "ReadSession",
+          "ReadStream",
+          "RowError",
+          "SplitReadStreamRequest",
+          "SplitReadStreamResponse",
+          "StorageError",
+          "StreamStats",
+          "TableFieldSchema",
+          "TableSchema",
+          "ThrottleState",
+          "WriteStream",
+          "WriteStreamView",
+      \)
+    after: |
+      __all__ = (
+          # google.cloud.bigquery_storage_v1
+          "__version__",
+          "types",
+          # google.cloud.bigquery_storage_v1.client
+          "BigQueryReadClient",
+          "BigQueryWriteClient",
+      )
+    count: 1
+    # Given that this file is mostly handwritten, we could omit the file during code generation
+    # This will require a change to gapic-generator-python to provide the ability to omit files
+  - paths: [
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage_v1alpha/__init__.py,
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage_v1beta/__init__.py,
+    ]
+    before: |
+      from .services.metastore_partition_service import \(
+          MetastorePartitionServiceAsyncClient,
+          MetastorePartitionServiceClient,
+      \)
+      from .types.metastore_partition import \(
+          BatchCreateMetastorePartitionsRequest,
+          BatchCreateMetastorePartitionsResponse,
+          BatchDeleteMetastorePartitionsRequest,
+          BatchSizeTooLargeError,
+          BatchUpdateMetastorePartitionsRequest,
+          BatchUpdateMetastorePartitionsResponse,
+          CreateMetastorePartitionRequest,
+          ListMetastorePartitionsRequest,
+          ListMetastorePartitionsResponse,
+          StreamMetastorePartitionsRequest,
+          StreamMetastorePartitionsResponse,
+          UpdateMetastorePartitionRequest,
+      \)
+      from .types.partition import \(
+          FieldSchema,
+          MetastorePartition,
+          MetastorePartitionList,
+          MetastorePartitionValues,
+          ReadStream,
+          SerDeInfo,
+          StorageDescriptor,
+          StreamList,
+      \)\n
+    after: ""
+    count: 2
+    # Given that this file is mostly handwritten, we could omit the file during code generation
+    # This will require a change to gapic-generator-python to provide the ability to omit files
+  - paths: [
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage_v1alpha/__init__.py,
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage_v1beta/__init__.py,
+    ]
+    before: |
+      \}\n\n
+      __all__ = \(
+          "MetastorePartitionServiceAsyncClient",
+          "BatchCreateMetastorePartitionsRequest",
+          "BatchCreateMetastorePartitionsResponse",
+          "BatchDeleteMetastorePartitionsRequest",
+          "BatchSizeTooLargeError",
+          "BatchUpdateMetastorePartitionsRequest",
+          "BatchUpdateMetastorePartitionsResponse",
+          "CreateMetastorePartitionRequest",
+          "FieldSchema",
+          "ListMetastorePartitionsRequest",
+          "ListMetastorePartitionsResponse",
+          "MetastorePartition",
+          "MetastorePartitionList",
+          "MetastorePartitionServiceClient",
+          "MetastorePartitionValues",
+          "ReadStream",
+          "SerDeInfo",
+          "StorageDescriptor",
+          "StreamList",
+          "StreamMetastorePartitionsRequest",
+          "StreamMetastorePartitionsResponse",
+          "UpdateMetastorePartitionRequest",
+      \)
+    after: |
+      }
+    count: 2
+    # Given that this file is mostly handwritten, we could omit the file during code generation
+    # This will require a change to gapic-generator-python to provide the ability to omit files
+  - paths: [
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage_v1beta2/__init__.py,
+    ]
+    before: |
+      from .services.big_query_read import BigQueryReadAsyncClient, BigQueryReadClient
+      from .services.big_query_write import BigQueryWriteAsyncClient, BigQueryWriteClient
+      from .types.arrow import ArrowRecordBatch, ArrowSchema, ArrowSerializationOptions
+      from .types.avro import AvroRows, AvroSchema
+      from .types.protobuf import ProtoRows, ProtoSchema
+      from .types.storage import \(
+          AppendRowsRequest,
+          AppendRowsResponse,
+          BatchCommitWriteStreamsRequest,
+          BatchCommitWriteStreamsResponse,
+          CreateReadSessionRequest,
+          CreateWriteStreamRequest,
+          FinalizeWriteStreamRequest,
+          FinalizeWriteStreamResponse,
+          FlushRowsRequest,
+          FlushRowsResponse,
+          GetWriteStreamRequest,
+          ReadRowsRequest,
+          ReadRowsResponse,
+          SplitReadStreamRequest,
+          SplitReadStreamResponse,
+          StorageError,
+          StreamStats,
+          ThrottleState,
+      \)
+      from .types.stream import DataFormat, ReadSession, ReadStream, WriteStream
+      from .types.table import TableFieldSchema, TableSchema\n
+    after: |
+      from google.cloud.bigquery_storage_v1beta2 import client, types\n\n
+      class BigQueryReadClient(client.BigQueryReadClient):
+          __doc__ = client.BigQueryReadClient.__doc__\n\n
+      class BigQueryWriteClient(client.BigQueryWriteClient):
+          __doc__ = client.BigQueryWriteClient.__doc__\n\n
+    count: 1
+    # Given that this file is mostly handwritten, we could omit the file during code generation
+    # This will require a change to gapic-generator-python to provide the ability to omit files
+  - paths: [
+      packages/google-cloud-bigquery-storage/google/cloud/bigquery_storage_v1beta2/__init__.py,
+    ]
+    before: |
+      __all__ = \(
+          "BigQueryReadAsyncClient",
+          "BigQueryWriteAsyncClient",
+          "AppendRowsRequest",
+          "AppendRowsResponse",
+          "ArrowRecordBatch",
+          "ArrowSchema",
+          "ArrowSerializationOptions",
+          "AvroRows",
+          "AvroSchema",
+          "BatchCommitWriteStreamsRequest",
+          "BatchCommitWriteStreamsResponse",
+          "BigQueryReadClient",
+          "BigQueryWriteClient",
+          "CreateReadSessionRequest",
+          "CreateWriteStreamRequest",
+          "DataFormat",
+          "FinalizeWriteStreamRequest",
+          "FinalizeWriteStreamResponse",
+          "FlushRowsRequest",
+          "FlushRowsResponse",
+          "GetWriteStreamRequest",
+          "ProtoRows",
+          "ProtoSchema",
+          "ReadRowsRequest",
+          "ReadRowsResponse",
+          "ReadSession",
+          "ReadStream",
+          "SplitReadStreamRequest",
+          "SplitReadStreamResponse",
+          "StorageError",
+          "StreamStats",
+          "TableFieldSchema",
+          "TableSchema",
+          "ThrottleState",
+          "WriteStream",
+      \)
+    after: |
+      __all__ = (
+          # google.cloud.bigquery_storage_v1beta2
+          "__version__",
+          "types",
+          # google.cloud.bigquery_storage_v1beta2.client
+          "BigQueryReadClient",
+          "BigQueryWriteClient",
+      )
+    count: 1
+    # Given that this file is mostly handwritten, we could omit the file during code generation
+    # This will require a change to gapic-generator-python to provide the ability to omit files
+  - paths: [
+      packages/google-cloud-bigquery-storage/docs/index.rst,
+    ]
+    before: |
+      .. include:: README.rst\n
+      .. include:: multiprocessing.rst\n
+      This package includes clients for multiple versions of BigQuery Storage.
+      By default, you will get version ``bigquery_storage_v1``.\n\n
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2\n
+          bigquery_storage_v1/services_
+          bigquery_storage_v1/types_\n
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2\n
+          bigquery_storage_v1alpha/services_
+          bigquery_storage_v1alpha/types_\n
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2\n
+          bigquery_storage_v1beta/services_
+          bigquery_storage_v1beta/types_\n
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2\n
+          bigquery_storage_v1beta2/services_
+          bigquery_storage_v1beta2/types_\n\n
+      Changelog
+    after: |
+      .. include:: README.rst\n
+      .. include:: multiprocessing.rst\n\n
+      Example Usage
+      -------------\n
+      .. literalinclude:: samples/quickstart/quickstart.py
+        :language: python
+        :dedent: 4
+        :start-after: [START bigquerystorage_quickstart]
+        :end-before: [END bigquerystorage_quickstart]\n\n
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2\n
+          bigquery_storage_v1/library
+          bigquery_storage_v1/services_
+          bigquery_storage_v1/types_
+          bigquery_storage_v1beta/services_
+          bigquery_storage_v1beta/types_
+          bigquery_storage_v1beta2/library
+          bigquery_storage_v1beta2/services_
+          bigquery_storage_v1beta2/types_
+          bigquery_storage_v1alpha/services_
+          bigquery_storage_v1alpha/types_\n\n
+      Changelog
+    count: 1

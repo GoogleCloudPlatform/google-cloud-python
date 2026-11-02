@@ -1,0 +1,635 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.developers.knowledge.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-developer-knowledge",
+    "version": "0.1.5"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeAsyncClient",
+          "shortName": "DeveloperKnowledgeAsyncClient"
+        },
+        "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeAsyncClient.answer_query",
+        "method": {
+          "fullName": "google.developers.knowledge.v1.DeveloperKnowledge.AnswerQuery",
+          "service": {
+            "fullName": "google.developers.knowledge.v1.DeveloperKnowledge",
+            "shortName": "DeveloperKnowledge"
+          },
+          "shortName": "AnswerQuery"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.developer_knowledge_v1.types.AnswerQueryRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.developer_knowledge_v1.types.AnswerQueryResponse",
+        "shortName": "answer_query"
+      },
+      "description": "Sample for AnswerQuery",
+      "file": "developerknowledge_v1_generated_developer_knowledge_answer_query_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "developerknowledge_v1_generated_DeveloperKnowledge_AnswerQuery_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "developerknowledge_v1_generated_developer_knowledge_answer_query_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeClient",
+          "shortName": "DeveloperKnowledgeClient"
+        },
+        "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeClient.answer_query",
+        "method": {
+          "fullName": "google.developers.knowledge.v1.DeveloperKnowledge.AnswerQuery",
+          "service": {
+            "fullName": "google.developers.knowledge.v1.DeveloperKnowledge",
+            "shortName": "DeveloperKnowledge"
+          },
+          "shortName": "AnswerQuery"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.developer_knowledge_v1.types.AnswerQueryRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.developer_knowledge_v1.types.AnswerQueryResponse",
+        "shortName": "answer_query"
+      },
+      "description": "Sample for AnswerQuery",
+      "file": "developerknowledge_v1_generated_developer_knowledge_answer_query_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "developerknowledge_v1_generated_DeveloperKnowledge_AnswerQuery_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "developerknowledge_v1_generated_developer_knowledge_answer_query_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeAsyncClient",
+          "shortName": "DeveloperKnowledgeAsyncClient"
+        },
+        "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeAsyncClient.batch_get_documents",
+        "method": {
+          "fullName": "google.developers.knowledge.v1.DeveloperKnowledge.BatchGetDocuments",
+          "service": {
+            "fullName": "google.developers.knowledge.v1.DeveloperKnowledge",
+            "shortName": "DeveloperKnowledge"
+          },
+          "shortName": "BatchGetDocuments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.developer_knowledge_v1.types.BatchGetDocumentsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.developer_knowledge_v1.types.BatchGetDocumentsResponse",
+        "shortName": "batch_get_documents"
+      },
+      "description": "Sample for BatchGetDocuments",
+      "file": "developerknowledge_v1_generated_developer_knowledge_batch_get_documents_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "developerknowledge_v1_generated_DeveloperKnowledge_BatchGetDocuments_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "developerknowledge_v1_generated_developer_knowledge_batch_get_documents_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeClient",
+          "shortName": "DeveloperKnowledgeClient"
+        },
+        "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeClient.batch_get_documents",
+        "method": {
+          "fullName": "google.developers.knowledge.v1.DeveloperKnowledge.BatchGetDocuments",
+          "service": {
+            "fullName": "google.developers.knowledge.v1.DeveloperKnowledge",
+            "shortName": "DeveloperKnowledge"
+          },
+          "shortName": "BatchGetDocuments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.developer_knowledge_v1.types.BatchGetDocumentsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.developer_knowledge_v1.types.BatchGetDocumentsResponse",
+        "shortName": "batch_get_documents"
+      },
+      "description": "Sample for BatchGetDocuments",
+      "file": "developerknowledge_v1_generated_developer_knowledge_batch_get_documents_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "developerknowledge_v1_generated_DeveloperKnowledge_BatchGetDocuments_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "developerknowledge_v1_generated_developer_knowledge_batch_get_documents_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeAsyncClient",
+          "shortName": "DeveloperKnowledgeAsyncClient"
+        },
+        "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeAsyncClient.get_document",
+        "method": {
+          "fullName": "google.developers.knowledge.v1.DeveloperKnowledge.GetDocument",
+          "service": {
+            "fullName": "google.developers.knowledge.v1.DeveloperKnowledge",
+            "shortName": "DeveloperKnowledge"
+          },
+          "shortName": "GetDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.developer_knowledge_v1.types.GetDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.developer_knowledge_v1.types.Document",
+        "shortName": "get_document"
+      },
+      "description": "Sample for GetDocument",
+      "file": "developerknowledge_v1_generated_developer_knowledge_get_document_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "developerknowledge_v1_generated_DeveloperKnowledge_GetDocument_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "developerknowledge_v1_generated_developer_knowledge_get_document_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeClient",
+          "shortName": "DeveloperKnowledgeClient"
+        },
+        "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeClient.get_document",
+        "method": {
+          "fullName": "google.developers.knowledge.v1.DeveloperKnowledge.GetDocument",
+          "service": {
+            "fullName": "google.developers.knowledge.v1.DeveloperKnowledge",
+            "shortName": "DeveloperKnowledge"
+          },
+          "shortName": "GetDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.developer_knowledge_v1.types.GetDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.developer_knowledge_v1.types.Document",
+        "shortName": "get_document"
+      },
+      "description": "Sample for GetDocument",
+      "file": "developerknowledge_v1_generated_developer_knowledge_get_document_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "developerknowledge_v1_generated_DeveloperKnowledge_GetDocument_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "developerknowledge_v1_generated_developer_knowledge_get_document_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeAsyncClient",
+          "shortName": "DeveloperKnowledgeAsyncClient"
+        },
+        "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeAsyncClient.search_document_chunks",
+        "method": {
+          "fullName": "google.developers.knowledge.v1.DeveloperKnowledge.SearchDocumentChunks",
+          "service": {
+            "fullName": "google.developers.knowledge.v1.DeveloperKnowledge",
+            "shortName": "DeveloperKnowledge"
+          },
+          "shortName": "SearchDocumentChunks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.developer_knowledge_v1.types.SearchDocumentChunksRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.developer_knowledge_v1.services.developer_knowledge.pagers.SearchDocumentChunksAsyncPager",
+        "shortName": "search_document_chunks"
+      },
+      "description": "Sample for SearchDocumentChunks",
+      "file": "developerknowledge_v1_generated_developer_knowledge_search_document_chunks_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "developerknowledge_v1_generated_DeveloperKnowledge_SearchDocumentChunks_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "developerknowledge_v1_generated_developer_knowledge_search_document_chunks_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeClient",
+          "shortName": "DeveloperKnowledgeClient"
+        },
+        "fullName": "google.developer_knowledge_v1.DeveloperKnowledgeClient.search_document_chunks",
+        "method": {
+          "fullName": "google.developers.knowledge.v1.DeveloperKnowledge.SearchDocumentChunks",
+          "service": {
+            "fullName": "google.developers.knowledge.v1.DeveloperKnowledge",
+            "shortName": "DeveloperKnowledge"
+          },
+          "shortName": "SearchDocumentChunks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.developer_knowledge_v1.types.SearchDocumentChunksRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.developer_knowledge_v1.services.developer_knowledge.pagers.SearchDocumentChunksPager",
+        "shortName": "search_document_chunks"
+      },
+      "description": "Sample for SearchDocumentChunks",
+      "file": "developerknowledge_v1_generated_developer_knowledge_search_document_chunks_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "developerknowledge_v1_generated_DeveloperKnowledge_SearchDocumentChunks_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "developerknowledge_v1_generated_developer_knowledge_search_document_chunks_sync.py"
+    }
+  ]
+}

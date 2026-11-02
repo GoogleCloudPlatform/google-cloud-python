@@ -1,0 +1,37 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The Synthesizer requires either\n   plain text or SSML\
+      \ as input."
+    id: input
+    var_type: <xref uid="google.cloud.texttospeech_v1.types.SynthesisInput">google.cloud.texttospeech_v1.types.SynthesisInput</xref>
+  - description: "Required. The desired voice of the\n   synthesized audio."
+    id: voice
+    var_type: <xref uid="google.cloud.texttospeech_v1.types.VoiceSelectionParams">google.cloud.texttospeech_v1.types.VoiceSelectionParams</xref>
+  - description: "Required. The configuration of the\n   synthesized audio."
+    id: audio_config
+    var_type: <xref uid="google.cloud.texttospeech_v1.types.AudioConfig">google.cloud.texttospeech_v1.types.AudioConfig</xref>
+  children: []
+  class: google.cloud.texttospeech_v1.types.SynthesizeSpeechRequest
+  fullName: google.cloud.texttospeech_v1.types.SynthesizeSpeechRequest
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1.types
+  name: SynthesizeSpeechRequest
+  source:
+    id: SynthesizeSpeechRequest
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1/types/cloud_tts.py
+    startLine: 133
+  summary: 'The top-level message sent by the client for the
+
+    `SynthesizeSpeech` method.
+
+    '
+  syntax:
+    content: SynthesizeSpeechRequest(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1.types.SynthesizeSpeechRequest
+references: []

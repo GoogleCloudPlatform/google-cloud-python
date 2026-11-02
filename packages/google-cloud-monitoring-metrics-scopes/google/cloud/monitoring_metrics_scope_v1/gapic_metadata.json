@@ -1,0 +1,63 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.monitoring_metrics_scope_v1",
+  "protoPackage": "google.monitoring.metricsscope.v1",
+  "schema": "1.0",
+  "services": {
+    "MetricsScopes": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MetricsScopesClient",
+          "rpcs": {
+            "CreateMonitoredProject": {
+              "methods": [
+                "create_monitored_project"
+              ]
+            },
+            "DeleteMonitoredProject": {
+              "methods": [
+                "delete_monitored_project"
+              ]
+            },
+            "GetMetricsScope": {
+              "methods": [
+                "get_metrics_scope"
+              ]
+            },
+            "ListMetricsScopesByMonitoredProject": {
+              "methods": [
+                "list_metrics_scopes_by_monitored_project"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MetricsScopesAsyncClient",
+          "rpcs": {
+            "CreateMonitoredProject": {
+              "methods": [
+                "create_monitored_project"
+              ]
+            },
+            "DeleteMonitoredProject": {
+              "methods": [
+                "delete_monitored_project"
+              ]
+            },
+            "GetMetricsScope": {
+              "methods": [
+                "get_metrics_scope"
+              ]
+            },
+            "ListMetricsScopesByMonitoredProject": {
+              "methods": [
+                "list_metrics_scopes_by_monitored_project"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

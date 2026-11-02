@@ -1,0 +1,92 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.kms_inventory_v1",
+  "protoPackage": "google.cloud.kms.inventory.v1",
+  "schema": "1.0",
+  "services": {
+    "KeyDashboardService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "KeyDashboardServiceClient",
+          "rpcs": {
+            "ListCryptoKeys": {
+              "methods": [
+                "list_crypto_keys"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "KeyDashboardServiceAsyncClient",
+          "rpcs": {
+            "ListCryptoKeys": {
+              "methods": [
+                "list_crypto_keys"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "KeyDashboardServiceClient",
+          "rpcs": {
+            "ListCryptoKeys": {
+              "methods": [
+                "list_crypto_keys"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "KeyTrackingService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "KeyTrackingServiceClient",
+          "rpcs": {
+            "GetProtectedResourcesSummary": {
+              "methods": [
+                "get_protected_resources_summary"
+              ]
+            },
+            "SearchProtectedResources": {
+              "methods": [
+                "search_protected_resources"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "KeyTrackingServiceAsyncClient",
+          "rpcs": {
+            "GetProtectedResourcesSummary": {
+              "methods": [
+                "get_protected_resources_summary"
+              ]
+            },
+            "SearchProtectedResources": {
+              "methods": [
+                "search_protected_resources"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "KeyTrackingServiceClient",
+          "rpcs": {
+            "GetProtectedResourcesSummary": {
+              "methods": [
+                "get_protected_resources_summary"
+              ]
+            },
+            "SearchProtectedResources": {
+              "methods": [
+                "search_protected_resources"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

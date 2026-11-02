@@ -1,0 +1,30 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.cloud.pubsub_v1.subscriber.futures.Future
+  - google.cloud.pubsub_v1.subscriber.futures.StreamingPullFuture
+  fullName: google.cloud.pubsub_v1.subscriber.futures
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: subscriber.futures
+  source:
+    id: futures
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/futures.py
+    startLine: 0
+  summary: API documentation for `pubsub_v1.subscriber.futures` module.
+  syntax: {}
+  type: module
+  uid: google.cloud.pubsub_v1.subscriber.futures
+references:
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future
+  isExternal: false
+  name: Future
+  parent: google.cloud.pubsub_v1.subscriber.futures
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future
+- fullName: google.cloud.pubsub_v1.subscriber.futures.StreamingPullFuture
+  isExternal: false
+  name: StreamingPullFuture
+  parent: google.cloud.pubsub_v1.subscriber.futures
+  uid: google.cloud.pubsub_v1.subscriber.futures.StreamingPullFuture

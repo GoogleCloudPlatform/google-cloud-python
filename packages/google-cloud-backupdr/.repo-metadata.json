@@ -1,0 +1,16 @@
+{
+    "api_description": "Backup and DR Service is a managed service that provides backup and recovery of workloads running in Google Cloud.",
+    "api_id": "backupdr.googleapis.com",
+    "api_shortname": "backupdr",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/backupdr/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-backupdr",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=966572",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "backupdr",
+    "name_pretty": "Backup and DR Service",
+    "product_documentation": "https://cloud.google.com/backup-disaster-recovery/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

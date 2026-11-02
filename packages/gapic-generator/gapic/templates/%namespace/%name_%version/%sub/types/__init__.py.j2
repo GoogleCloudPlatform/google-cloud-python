@@ -1,0 +1,26 @@
+{% extends '_base.py.j2' %}
+
+{% block content %}
+
+{% for _, proto in api.protos|dictsort if proto.file_to_generate and proto.messages or proto.enums %}
+from .{{proto.module_name }} import (
+  {% for _, message in proto.messages|dictsort %}
+    {{message.name }},
+  {% endfor %}
+  {% for _, enum in proto.enums|dictsort %}
+    {{ enum.name }},
+  {% endfor %}
+)
+{% endfor %}
+
+__all__ = (
+  {% for _, proto in api.protos|dictsort if proto.file_to_generate %}
+  {% for _, message in proto.messages|dictsort %}
+    '{{ message.name }}',
+  {% endfor %}
+  {% for _, enum in proto.enums|dictsort %}
+    '{{ enum.name }}',
+  {% endfor %}
+  {% endfor %}
+)
+{% endblock %}

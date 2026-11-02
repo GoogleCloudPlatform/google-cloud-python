@@ -1,0 +1,346 @@
+{% extends '_base.py.j2' %}
+
+{% block content %}
+
+import abc
+from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
+
+import google.auth  # type: ignore
+import google.api_core  # type: ignore
+from google.api_core import exceptions as core_exceptions  # type: ignore
+from google.api_core import gapic_v1    # type: ignore
+from google.api_core import retry as retries  # type: ignore
+{% if service.has_lro %}
+from google.api_core import operations_v1
+{% endif %}
+from google.auth import credentials as ga_credentials  # type: ignore
+from google.oauth2 import service_account # type: ignore
+
+{% filter sort_lines %}
+{% set import_ns = namespace(has_operations_mixin=false) %}
+{% for method in service.methods.values() %}
+{{ method.input.ident.python_import }}
+{% if method.output.ident|string() == "operations_pb2.Operation" %}
+{% set import_ns.has_operations_mixin = True %}
+{% else %}
+{{ method.output.ident.python_import }}
+{% endif %}
+{% endfor %}
+{% if opts.add_iam_methods or api.has_iam_mixin %}
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+{% endif %}
+{% if api.has_location_mixin %}
+from google.cloud.location import locations_pb2 # type: ignore
+{% endif %}
+{% if api.has_operations_mixin %}
+{% set import_ns.has_operations_mixin = True %}
+{% endif %}
+{% if import_ns.has_operations_mixin %}
+from google.longrunning import operations_pb2 # type: ignore
+{% endif %}
+{% endfilter %}
+
+{% set package_path = api.naming.module_namespace|join('.') + "." + api.naming.versioned_module_name %}
+from {{package_path}} import gapic_version as package_version
+
+DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(gapic_version=package_version.__version__)
+
+
+class {{ service.name }}Transport(abc.ABC):
+    """Abstract transport class for {{ service.name }}."""
+
+    AUTH_SCOPES = (
+        {% for scope in service.oauth_scopes %}
+        '{{ scope }}',
+        {% endfor %}
+    )
+
+    DEFAULT_HOST: str = {% if service.host %}'{{ service.host }}'{% else %}{{ '' }}{% endif %}
+
+    def __init__(
+            self, *,
+            host: str = DEFAULT_HOST,
+            credentials: Optional[ga_credentials.Credentials] = None,
+            credentials_file: Optional[str] = None,
+            scopes: Optional[Sequence[str]] = None,
+            quota_project_id: Optional[str] = None,
+            client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
+            always_use_jwt_access: Optional[bool] = False,
+            **kwargs,
+            ) -> None:
+        """Instantiate the transport.
+
+        Args:
+            host ({% if service.host %}Optional[str]{% else %}str{% endif %}):
+                {{ ' ' }}The hostname to connect to.
+            credentials (Optional[google.auth.credentials.Credentials]): The
+                authorization credentials to attach to requests. These
+                credentials identify the application to the service; if none
+                are specified, the client will attempt to ascertain the
+                credentials from the environment.
+            credentials_file (Optional[str]): A file with credentials that can
+                be loaded with :func:`google.auth.load_credentials_from_file`.
+                This argument is mutually exclusive with credentials.
+            scopes (Optional[Sequence[str]]): A list of scopes.
+            quota_project_id (Optional[str]): An optional project to use for billing
+                and quota.
+            client_info (google.api_core.gapic_v1.client_info.ClientInfo):
+                The client info used to send a user-agent string along with
+                API requests. If ``None``, then default info will be used.
+                Generally, you only need to set this if you're developing
+                your own client library.
+            always_use_jwt_access (Optional[bool]): Whether self signed JWT should
+                be used for service account credentials.
+        """
+        # Save the hostname. Default to port 443 (HTTPS) if none is specified.
+        if ':' not in host:
+            host += ':443'
+        self._host = host
+
+        self._wrapped_methods: Dict[Callable, Callable] = {}
+
+        # Save the scopes.
+        self._scopes = scopes
+
+        if not hasattr(self, "_ignore_credentials"):
+            self._ignore_credentials: bool = False
+
+        # If no credentials are provided, then determine the appropriate
+        # defaults.
+        if credentials and credentials_file:
+            raise core_exceptions.DuplicateCredentialArgs("'credentials_file' and 'credentials' are mutually exclusive")
+
+        if credentials_file is not None:
+            credentials, _ = google.auth.load_credentials_from_file(
+                                credentials_file,
+                                scopes=scopes,
+                                quota_project_id=quota_project_id,
+                                default_scopes=self.AUTH_SCOPES,
+                            )
+        elif credentials is None and not self._ignore_credentials:
+            credentials, _ = google.auth.default(scopes=scopes, quota_project_id=quota_project_id, default_scopes=self.AUTH_SCOPES)
+
+        # If the credentials are service account credentials, then always try to use self signed JWT.
+        if always_use_jwt_access and isinstance(credentials, service_account.Credentials) and hasattr(service_account.Credentials, "with_always_use_jwt_access"):
+            credentials = credentials.with_always_use_jwt_access(True)
+
+        # Save the credentials.
+        self._credentials = credentials
+
+
+    def _prep_wrapped_messages(self, client_info):
+        # Precompute the wrapped methods.
+        self._wrapped_methods = {
+            {% for method in service.methods.values() %}
+            self.{{ method.transport_safe_name|snake_case }}: gapic_v1.method.wrap_method(
+                self.{{ method.transport_safe_name|snake_case }},
+                {% if method.retry %}
+                default_retry=retries.Retry(
+                    {% if method.retry.initial_backoff %}initial={{ method.retry.initial_backoff }},{% endif %}
+                    {% if method.retry.max_backoff %}maximum={{ method.retry.max_backoff }},{% endif %}
+                    {% if method.retry.backoff_multiplier %}multiplier={{ method.retry.backoff_multiplier }},{% endif %}
+                    predicate=retries.if_exception_type(
+                        {% for ex in method.retry.retryable_exceptions|sort(attribute='__name__') %}
+                        core_exceptions.{{ ex.__name__ }},
+                        {% endfor %}
+                    ),
+                    deadline={{ method.timeout }},
+                ),
+                {% endif %}
+                default_timeout={{ method.timeout }},
+                client_info=client_info,
+            ),
+            {% endfor %}{# method in service.methods.values() #}
+            {% for method_name in api.mixin_api_methods.keys() %}
+            self.{{ method_name|snake_case }}: gapic_v1.method.wrap_method(
+                self.{{ method_name|snake_case }},
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            {% endfor %} {# method_name in api.mixin_api_methods.keys() #}
+        }
+
+    def close(self):
+        """Closes resources associated with the transport.
+
+       .. warning::
+            Only call this method if the transport is NOT shared
+            with other clients - this may cause errors in other clients!
+        """
+        raise NotImplementedError()
+
+    {% if service.has_lro %}
+
+    @property
+    def operations_client(self):
+        """Return the client designed to process long-running operations."""
+        raise NotImplementedError()
+    {% endif %}
+    {% for method in service.methods.values() %}
+
+    @property
+    def {{ method.transport_safe_name|snake_case }}(self) -> Callable[
+            [{{ method.input.ident }}],
+            Union[
+                {{ method.output.ident }},
+                Awaitable[{{ method.output.ident }}]
+            ]]:
+        raise NotImplementedError()
+    {% endfor %}
+
+    {% if api.has_operations_mixin %}
+    {% if "ListOperations" in api.mixin_api_methods %}
+    @property
+    def list_operations(
+        self,
+    ) -> Callable[
+        [operations_pb2.ListOperationsRequest],
+        Union[operations_pb2.ListOperationsResponse, Awaitable[operations_pb2.ListOperationsResponse]],
+    ]:
+        raise NotImplementedError()
+    {% endif %}
+
+    {% if "GetOperation" in api.mixin_api_methods %}
+    @property
+    def get_operation(
+        self,
+    ) -> Callable[
+        [operations_pb2.GetOperationRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+    {% endif %}
+
+    {% if "CancelOperation" in api.mixin_api_methods %}
+    @property
+    def cancel_operation(
+        self,
+    ) -> Callable[
+        [operations_pb2.CancelOperationRequest],
+        None,
+    ]:
+        raise NotImplementedError()
+    {% endif %}
+
+    {% if "DeleteOperation" in api.mixin_api_methods %}
+    @property
+    def delete_operation(
+        self,
+    ) -> Callable[
+        [operations_pb2.DeleteOperationRequest],
+        None,
+    ]:
+        raise NotImplementedError()
+    {% endif %}
+
+    {% if "WaitOperation" in api.mixin_api_methods %}
+    @property
+    def wait_operation(
+        self,
+    ) -> Callable[
+        [operations_pb2.WaitOperationRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+    {% endif %}
+    {% endif %}
+
+    {# TODO: Remove after https://github.com/googleapis/gapic-generator-python/pull/1240 is merged. #}
+    {% if not opts.add_iam_methods and api.has_iam_mixin %}
+    {% if "SetIamPolicy" in api.mixin_api_methods %}
+    @property
+    def set_iam_policy(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.SetIamPolicyRequest],
+        Union[policy_pb2.Policy, Awaitable[policy_pb2.Policy]],
+    ]:
+        raise NotImplementedError()
+    {% endif %}
+
+    {% if "GetIamPolicy" in api.mixin_api_methods %}
+    @property
+    def get_iam_policy(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.GetIamPolicyRequest],
+        Union[policy_pb2.Policy, Awaitable[policy_pb2.Policy]],
+    ]:
+        raise NotImplementedError()
+    {% endif %}
+
+    {% if "TestIamPermissions" in api.mixin_api_methods %}
+    @property
+    def test_iam_permissions(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.TestIamPermissionsRequest],
+        Union[
+            iam_policy_pb2.TestIamPermissionsResponse,
+            Awaitable[iam_policy_pb2.TestIamPermissionsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+    {% endif %}
+    {% endif %}
+
+    {% if api.has_location_mixin %}
+    {% if "GetLocation" in api.mixin_api_methods %}
+    @property
+    def get_location(self,
+    ) -> Callable[
+        [locations_pb2.GetLocationRequest],
+        Union[locations_pb2.Location, Awaitable[locations_pb2.Location]],
+    ]:
+        raise NotImplementedError()
+    {% endif %}
+
+    {% if "ListLocations" in api.mixin_api_methods %}
+    @property
+    def list_locations(self,
+    ) -> Callable[
+        [locations_pb2.ListLocationsRequest],
+        Union[locations_pb2.ListLocationsResponse, Awaitable[locations_pb2.ListLocationsResponse]],
+    ]:
+        raise NotImplementedError()
+    {% endif %}
+    {% endif %}
+
+    {# TODO: Remove after https://github.com/googleapis/gapic-generator-python/pull/1240 is merged. #}
+    {% if opts.add_iam_methods %}
+    @property
+    def set_iam_policy(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.SetIamPolicyRequest],
+        Union[policy_pb2.Policy, Awaitable[policy_pb2.Policy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_iam_policy(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.GetIamPolicyRequest],
+        Union[policy_pb2.Policy, Awaitable[policy_pb2.Policy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def test_iam_permissions(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.TestIamPermissionsRequest],
+        Union[
+            iam_policy_pb2.TestIamPermissionsResponse,
+            Awaitable[iam_policy_pb2.TestIamPermissionsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+    {% endif %}
+
+__all__ = (
+    '{{ service.name }}Transport',
+)
+{% endblock %}

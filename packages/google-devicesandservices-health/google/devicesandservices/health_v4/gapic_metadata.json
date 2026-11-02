@@ -1,0 +1,441 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.devicesandservices.health_v4",
+  "protoPackage": "google.devicesandservices.health.v4",
+  "schema": "1.0",
+  "services": {
+    "DataPointsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataPointsServiceClient",
+          "rpcs": {
+            "BatchDeleteDataPoints": {
+              "methods": [
+                "batch_delete_data_points"
+              ]
+            },
+            "CreateDataPoint": {
+              "methods": [
+                "create_data_point"
+              ]
+            },
+            "DailyRollUpDataPoints": {
+              "methods": [
+                "daily_roll_up_data_points"
+              ]
+            },
+            "ExportExerciseTcx": {
+              "methods": [
+                "export_exercise_tcx"
+              ]
+            },
+            "GetDataPoint": {
+              "methods": [
+                "get_data_point"
+              ]
+            },
+            "ListDataPoints": {
+              "methods": [
+                "list_data_points"
+              ]
+            },
+            "ReconcileDataPoints": {
+              "methods": [
+                "reconcile_data_points"
+              ]
+            },
+            "RollUpDataPoints": {
+              "methods": [
+                "roll_up_data_points"
+              ]
+            },
+            "UpdateDataPoint": {
+              "methods": [
+                "update_data_point"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataPointsServiceAsyncClient",
+          "rpcs": {
+            "BatchDeleteDataPoints": {
+              "methods": [
+                "batch_delete_data_points"
+              ]
+            },
+            "CreateDataPoint": {
+              "methods": [
+                "create_data_point"
+              ]
+            },
+            "DailyRollUpDataPoints": {
+              "methods": [
+                "daily_roll_up_data_points"
+              ]
+            },
+            "ExportExerciseTcx": {
+              "methods": [
+                "export_exercise_tcx"
+              ]
+            },
+            "GetDataPoint": {
+              "methods": [
+                "get_data_point"
+              ]
+            },
+            "ListDataPoints": {
+              "methods": [
+                "list_data_points"
+              ]
+            },
+            "ReconcileDataPoints": {
+              "methods": [
+                "reconcile_data_points"
+              ]
+            },
+            "RollUpDataPoints": {
+              "methods": [
+                "roll_up_data_points"
+              ]
+            },
+            "UpdateDataPoint": {
+              "methods": [
+                "update_data_point"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataPointsServiceClient",
+          "rpcs": {
+            "BatchDeleteDataPoints": {
+              "methods": [
+                "batch_delete_data_points"
+              ]
+            },
+            "CreateDataPoint": {
+              "methods": [
+                "create_data_point"
+              ]
+            },
+            "DailyRollUpDataPoints": {
+              "methods": [
+                "daily_roll_up_data_points"
+              ]
+            },
+            "ExportExerciseTcx": {
+              "methods": [
+                "export_exercise_tcx"
+              ]
+            },
+            "GetDataPoint": {
+              "methods": [
+                "get_data_point"
+              ]
+            },
+            "ListDataPoints": {
+              "methods": [
+                "list_data_points"
+              ]
+            },
+            "ReconcileDataPoints": {
+              "methods": [
+                "reconcile_data_points"
+              ]
+            },
+            "RollUpDataPoints": {
+              "methods": [
+                "roll_up_data_points"
+              ]
+            },
+            "UpdateDataPoint": {
+              "methods": [
+                "update_data_point"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DataSubscriptionService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataSubscriptionServiceClient",
+          "rpcs": {
+            "CreateSubscriber": {
+              "methods": [
+                "create_subscriber"
+              ]
+            },
+            "CreateSubscription": {
+              "methods": [
+                "create_subscription"
+              ]
+            },
+            "DeleteSubscriber": {
+              "methods": [
+                "delete_subscriber"
+              ]
+            },
+            "DeleteSubscription": {
+              "methods": [
+                "delete_subscription"
+              ]
+            },
+            "ListSubscribers": {
+              "methods": [
+                "list_subscribers"
+              ]
+            },
+            "ListSubscriptions": {
+              "methods": [
+                "list_subscriptions"
+              ]
+            },
+            "UpdateSubscriber": {
+              "methods": [
+                "update_subscriber"
+              ]
+            },
+            "UpdateSubscription": {
+              "methods": [
+                "update_subscription"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataSubscriptionServiceAsyncClient",
+          "rpcs": {
+            "CreateSubscriber": {
+              "methods": [
+                "create_subscriber"
+              ]
+            },
+            "CreateSubscription": {
+              "methods": [
+                "create_subscription"
+              ]
+            },
+            "DeleteSubscriber": {
+              "methods": [
+                "delete_subscriber"
+              ]
+            },
+            "DeleteSubscription": {
+              "methods": [
+                "delete_subscription"
+              ]
+            },
+            "ListSubscribers": {
+              "methods": [
+                "list_subscribers"
+              ]
+            },
+            "ListSubscriptions": {
+              "methods": [
+                "list_subscriptions"
+              ]
+            },
+            "UpdateSubscriber": {
+              "methods": [
+                "update_subscriber"
+              ]
+            },
+            "UpdateSubscription": {
+              "methods": [
+                "update_subscription"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataSubscriptionServiceClient",
+          "rpcs": {
+            "CreateSubscriber": {
+              "methods": [
+                "create_subscriber"
+              ]
+            },
+            "CreateSubscription": {
+              "methods": [
+                "create_subscription"
+              ]
+            },
+            "DeleteSubscriber": {
+              "methods": [
+                "delete_subscriber"
+              ]
+            },
+            "DeleteSubscription": {
+              "methods": [
+                "delete_subscription"
+              ]
+            },
+            "ListSubscribers": {
+              "methods": [
+                "list_subscribers"
+              ]
+            },
+            "ListSubscriptions": {
+              "methods": [
+                "list_subscriptions"
+              ]
+            },
+            "UpdateSubscriber": {
+              "methods": [
+                "update_subscriber"
+              ]
+            },
+            "UpdateSubscription": {
+              "methods": [
+                "update_subscription"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "HealthProfileService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "HealthProfileServiceClient",
+          "rpcs": {
+            "GetIdentity": {
+              "methods": [
+                "get_identity"
+              ]
+            },
+            "GetIrnProfile": {
+              "methods": [
+                "get_irn_profile"
+              ]
+            },
+            "GetPairedDevice": {
+              "methods": [
+                "get_paired_device"
+              ]
+            },
+            "GetProfile": {
+              "methods": [
+                "get_profile"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "ListPairedDevices": {
+              "methods": [
+                "list_paired_devices"
+              ]
+            },
+            "UpdateProfile": {
+              "methods": [
+                "update_profile"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "HealthProfileServiceAsyncClient",
+          "rpcs": {
+            "GetIdentity": {
+              "methods": [
+                "get_identity"
+              ]
+            },
+            "GetIrnProfile": {
+              "methods": [
+                "get_irn_profile"
+              ]
+            },
+            "GetPairedDevice": {
+              "methods": [
+                "get_paired_device"
+              ]
+            },
+            "GetProfile": {
+              "methods": [
+                "get_profile"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "ListPairedDevices": {
+              "methods": [
+                "list_paired_devices"
+              ]
+            },
+            "UpdateProfile": {
+              "methods": [
+                "update_profile"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "HealthProfileServiceClient",
+          "rpcs": {
+            "GetIdentity": {
+              "methods": [
+                "get_identity"
+              ]
+            },
+            "GetIrnProfile": {
+              "methods": [
+                "get_irn_profile"
+              ]
+            },
+            "GetPairedDevice": {
+              "methods": [
+                "get_paired_device"
+              ]
+            },
+            "GetProfile": {
+              "methods": [
+                "get_profile"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "ListPairedDevices": {
+              "methods": [
+                "list_paired_devices"
+              ]
+            },
+            "UpdateProfile": {
+              "methods": [
+                "update_profile"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

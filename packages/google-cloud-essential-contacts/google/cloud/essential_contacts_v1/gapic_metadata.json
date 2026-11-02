@@ -1,0 +1,133 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.essential_contacts_v1",
+  "protoPackage": "google.cloud.essentialcontacts.v1",
+  "schema": "1.0",
+  "services": {
+    "EssentialContactsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "EssentialContactsServiceClient",
+          "rpcs": {
+            "ComputeContacts": {
+              "methods": [
+                "compute_contacts"
+              ]
+            },
+            "CreateContact": {
+              "methods": [
+                "create_contact"
+              ]
+            },
+            "DeleteContact": {
+              "methods": [
+                "delete_contact"
+              ]
+            },
+            "GetContact": {
+              "methods": [
+                "get_contact"
+              ]
+            },
+            "ListContacts": {
+              "methods": [
+                "list_contacts"
+              ]
+            },
+            "SendTestMessage": {
+              "methods": [
+                "send_test_message"
+              ]
+            },
+            "UpdateContact": {
+              "methods": [
+                "update_contact"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "EssentialContactsServiceAsyncClient",
+          "rpcs": {
+            "ComputeContacts": {
+              "methods": [
+                "compute_contacts"
+              ]
+            },
+            "CreateContact": {
+              "methods": [
+                "create_contact"
+              ]
+            },
+            "DeleteContact": {
+              "methods": [
+                "delete_contact"
+              ]
+            },
+            "GetContact": {
+              "methods": [
+                "get_contact"
+              ]
+            },
+            "ListContacts": {
+              "methods": [
+                "list_contacts"
+              ]
+            },
+            "SendTestMessage": {
+              "methods": [
+                "send_test_message"
+              ]
+            },
+            "UpdateContact": {
+              "methods": [
+                "update_contact"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "EssentialContactsServiceClient",
+          "rpcs": {
+            "ComputeContacts": {
+              "methods": [
+                "compute_contacts"
+              ]
+            },
+            "CreateContact": {
+              "methods": [
+                "create_contact"
+              ]
+            },
+            "DeleteContact": {
+              "methods": [
+                "delete_contact"
+              ]
+            },
+            "GetContact": {
+              "methods": [
+                "get_contact"
+              ]
+            },
+            "ListContacts": {
+              "methods": [
+                "list_contacts"
+              ]
+            },
+            "SendTestMessage": {
+              "methods": [
+                "send_test_message"
+              ]
+            },
+            "UpdateContact": {
+              "methods": [
+                "update_contact"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

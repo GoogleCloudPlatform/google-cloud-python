@@ -1,0 +1,16 @@
+{
+    "api_description": "Creates, reads, and updates metadata for Google Cloud Platform resource\ncontainers.",
+    "api_id": "cloudresourcemanager.googleapis.com",
+    "api_shortname": "cloudresourcemanager",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/cloudresourcemanager/latest",
+    "default_version": "v3",
+    "distribution_name": "google-cloud-resource-manager",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559757",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "cloudresourcemanager",
+    "name_pretty": "Cloud Resource Manager",
+    "product_documentation": "https://cloud.google.com/resource-manager",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

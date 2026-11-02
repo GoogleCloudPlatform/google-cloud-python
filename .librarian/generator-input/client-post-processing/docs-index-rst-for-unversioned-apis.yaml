@@ -1,0 +1,174 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+description: docs/index.rst is handwritten for unversioned APIs
+url: https://github.com/googleapis/gapic-generator-python/issues/1837
+replacements:
+  - paths: [
+      packages/google-cloud-common/docs/index.rst
+    ]
+    before: |
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          common/services_
+          common/types_
+    after: |
+      .. include:: README.rst
+
+      .. include:: multiprocessing.rst
+
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+
+          common/services_
+          common/types_
+
+      Changelog
+      ---------
+
+      For a list of all ``google-cloud-common`` releases:
+
+      .. toctree::
+        :maxdepth: 2
+
+        CHANGELOG
+
+      .. toctree::
+        :hidden:
+
+        summary_overview.md
+    count: 1
+  - paths: [
+      packages/google-shopping-type/docs/index.rst
+    ]
+    before: |
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          type/services_
+          type/types_
+    after: |
+      .. include:: README.rst
+
+      .. include:: multiprocessing.rst
+
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+
+          type/services_
+          type/types_
+
+      Changelog
+      ---------
+
+      For a list of all ``google-shopping-type`` releases:
+
+      .. toctree::
+        :maxdepth: 2
+
+        CHANGELOG
+    count: 1
+  - paths: [
+      packages/google-apps-script-type/docs/index.rst
+    ]
+    before: |
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          type/services_
+          type/types_
+    after: |
+      .. include:: README.rst
+
+      .. include:: multiprocessing.rst
+
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+
+          calendar/services_
+          calendar/types_
+          docs/services_
+          docs/types_
+          drive/services_
+          drive/types_
+          gmail/services_
+          gmail/types_
+          sheets/services_
+          sheets/types_
+          slides/services_
+          slides/types_
+          type/services_
+          type/types_
+
+
+      Changelog
+      ---------
+
+      For a list of all ``google-apps-script-type`` releases:
+
+      .. toctree::
+          :maxdepth: 2
+
+          CHANGELOG
+    count: 1
+  - paths: [
+      packages/google-geo-type/docs/index.rst
+    ]
+    before: |
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          type/services_
+          type/types_
+    after: |
+      .. include:: README.rst
+
+      .. include:: multiprocessing.rst
+
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+
+          type/services_
+          type/types_
+
+      Changelog
+      ---------
+
+      For a list of all ``google-geo-type`` releases:
+
+      .. toctree::
+          :maxdepth: 2
+
+          CHANGELOG
+    count: 1

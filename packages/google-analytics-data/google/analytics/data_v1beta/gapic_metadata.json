@@ -1,0 +1,193 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.analytics.data_v1beta",
+  "protoPackage": "google.analytics.data.v1beta",
+  "schema": "1.0",
+  "services": {
+    "BetaAnalyticsData": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "BetaAnalyticsDataClient",
+          "rpcs": {
+            "BatchRunPivotReports": {
+              "methods": [
+                "batch_run_pivot_reports"
+              ]
+            },
+            "BatchRunReports": {
+              "methods": [
+                "batch_run_reports"
+              ]
+            },
+            "CheckCompatibility": {
+              "methods": [
+                "check_compatibility"
+              ]
+            },
+            "CreateAudienceExport": {
+              "methods": [
+                "create_audience_export"
+              ]
+            },
+            "GetAudienceExport": {
+              "methods": [
+                "get_audience_export"
+              ]
+            },
+            "GetMetadata": {
+              "methods": [
+                "get_metadata"
+              ]
+            },
+            "ListAudienceExports": {
+              "methods": [
+                "list_audience_exports"
+              ]
+            },
+            "QueryAudienceExport": {
+              "methods": [
+                "query_audience_export"
+              ]
+            },
+            "RunPivotReport": {
+              "methods": [
+                "run_pivot_report"
+              ]
+            },
+            "RunRealtimeReport": {
+              "methods": [
+                "run_realtime_report"
+              ]
+            },
+            "RunReport": {
+              "methods": [
+                "run_report"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "BetaAnalyticsDataAsyncClient",
+          "rpcs": {
+            "BatchRunPivotReports": {
+              "methods": [
+                "batch_run_pivot_reports"
+              ]
+            },
+            "BatchRunReports": {
+              "methods": [
+                "batch_run_reports"
+              ]
+            },
+            "CheckCompatibility": {
+              "methods": [
+                "check_compatibility"
+              ]
+            },
+            "CreateAudienceExport": {
+              "methods": [
+                "create_audience_export"
+              ]
+            },
+            "GetAudienceExport": {
+              "methods": [
+                "get_audience_export"
+              ]
+            },
+            "GetMetadata": {
+              "methods": [
+                "get_metadata"
+              ]
+            },
+            "ListAudienceExports": {
+              "methods": [
+                "list_audience_exports"
+              ]
+            },
+            "QueryAudienceExport": {
+              "methods": [
+                "query_audience_export"
+              ]
+            },
+            "RunPivotReport": {
+              "methods": [
+                "run_pivot_report"
+              ]
+            },
+            "RunRealtimeReport": {
+              "methods": [
+                "run_realtime_report"
+              ]
+            },
+            "RunReport": {
+              "methods": [
+                "run_report"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "BetaAnalyticsDataClient",
+          "rpcs": {
+            "BatchRunPivotReports": {
+              "methods": [
+                "batch_run_pivot_reports"
+              ]
+            },
+            "BatchRunReports": {
+              "methods": [
+                "batch_run_reports"
+              ]
+            },
+            "CheckCompatibility": {
+              "methods": [
+                "check_compatibility"
+              ]
+            },
+            "CreateAudienceExport": {
+              "methods": [
+                "create_audience_export"
+              ]
+            },
+            "GetAudienceExport": {
+              "methods": [
+                "get_audience_export"
+              ]
+            },
+            "GetMetadata": {
+              "methods": [
+                "get_metadata"
+              ]
+            },
+            "ListAudienceExports": {
+              "methods": [
+                "list_audience_exports"
+              ]
+            },
+            "QueryAudienceExport": {
+              "methods": [
+                "query_audience_export"
+              ]
+            },
+            "RunPivotReport": {
+              "methods": [
+                "run_pivot_report"
+              ]
+            },
+            "RunRealtimeReport": {
+              "methods": [
+                "run_realtime_report"
+              ]
+            },
+            "RunReport": {
+              "methods": [
+                "run_report"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

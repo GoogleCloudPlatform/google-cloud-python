@@ -1,0 +1,5736 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.pubsub.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-pubsub",
+    "version": "2.43.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherAsyncClient.create_topic",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.CreateTopic",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "CreateTopic"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.Topic"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Topic",
+        "shortName": "create_topic"
+      },
+      "description": "Sample for CreateTopic",
+      "file": "pubsub_v1_generated_publisher_create_topic_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_CreateTopic_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_create_topic_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherClient.create_topic",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.CreateTopic",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "CreateTopic"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.Topic"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Topic",
+        "shortName": "create_topic"
+      },
+      "description": "Sample for CreateTopic",
+      "file": "pubsub_v1_generated_publisher_create_topic_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_CreateTopic_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_create_topic_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherAsyncClient.delete_topic",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.DeleteTopic",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "DeleteTopic"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DeleteTopicRequest"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_topic"
+      },
+      "description": "Sample for DeleteTopic",
+      "file": "pubsub_v1_generated_publisher_delete_topic_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_DeleteTopic_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_delete_topic_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherClient.delete_topic",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.DeleteTopic",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "DeleteTopic"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DeleteTopicRequest"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_topic"
+      },
+      "description": "Sample for DeleteTopic",
+      "file": "pubsub_v1_generated_publisher_delete_topic_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_DeleteTopic_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_delete_topic_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherAsyncClient.detach_subscription",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.DetachSubscription",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "DetachSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DetachSubscriptionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.DetachSubscriptionResponse",
+        "shortName": "detach_subscription"
+      },
+      "description": "Sample for DetachSubscription",
+      "file": "pubsub_v1_generated_publisher_detach_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_DetachSubscription_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_detach_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherClient.detach_subscription",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.DetachSubscription",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "DetachSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DetachSubscriptionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.DetachSubscriptionResponse",
+        "shortName": "detach_subscription"
+      },
+      "description": "Sample for DetachSubscription",
+      "file": "pubsub_v1_generated_publisher_detach_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_DetachSubscription_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_detach_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherAsyncClient.get_topic",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.GetTopic",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "GetTopic"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.GetTopicRequest"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Topic",
+        "shortName": "get_topic"
+      },
+      "description": "Sample for GetTopic",
+      "file": "pubsub_v1_generated_publisher_get_topic_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_GetTopic_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_get_topic_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherClient.get_topic",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.GetTopic",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "GetTopic"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.GetTopicRequest"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Topic",
+        "shortName": "get_topic"
+      },
+      "description": "Sample for GetTopic",
+      "file": "pubsub_v1_generated_publisher_get_topic_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_GetTopic_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_get_topic_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherAsyncClient.list_topic_snapshots",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.ListTopicSnapshots",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "ListTopicSnapshots"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListTopicSnapshotsRequest"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsAsyncPager",
+        "shortName": "list_topic_snapshots"
+      },
+      "description": "Sample for ListTopicSnapshots",
+      "file": "pubsub_v1_generated_publisher_list_topic_snapshots_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_ListTopicSnapshots_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_list_topic_snapshots_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherClient.list_topic_snapshots",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.ListTopicSnapshots",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "ListTopicSnapshots"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListTopicSnapshotsRequest"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsPager",
+        "shortName": "list_topic_snapshots"
+      },
+      "description": "Sample for ListTopicSnapshots",
+      "file": "pubsub_v1_generated_publisher_list_topic_snapshots_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_ListTopicSnapshots_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_list_topic_snapshots_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherAsyncClient.list_topic_subscriptions",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.ListTopicSubscriptions",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "ListTopicSubscriptions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListTopicSubscriptionsRequest"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsAsyncPager",
+        "shortName": "list_topic_subscriptions"
+      },
+      "description": "Sample for ListTopicSubscriptions",
+      "file": "pubsub_v1_generated_publisher_list_topic_subscriptions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_ListTopicSubscriptions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_list_topic_subscriptions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherClient.list_topic_subscriptions",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.ListTopicSubscriptions",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "ListTopicSubscriptions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListTopicSubscriptionsRequest"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager",
+        "shortName": "list_topic_subscriptions"
+      },
+      "description": "Sample for ListTopicSubscriptions",
+      "file": "pubsub_v1_generated_publisher_list_topic_subscriptions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_ListTopicSubscriptions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_list_topic_subscriptions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherAsyncClient.list_topics",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.ListTopics",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "ListTopics"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListTopicsRequest"
+          },
+          {
+            "name": "project",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.publisher.pagers.ListTopicsAsyncPager",
+        "shortName": "list_topics"
+      },
+      "description": "Sample for ListTopics",
+      "file": "pubsub_v1_generated_publisher_list_topics_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_ListTopics_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_list_topics_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherClient.list_topics",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.ListTopics",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "ListTopics"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListTopicsRequest"
+          },
+          {
+            "name": "project",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.publisher.pagers.ListTopicsPager",
+        "shortName": "list_topics"
+      },
+      "description": "Sample for ListTopics",
+      "file": "pubsub_v1_generated_publisher_list_topics_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_ListTopics_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_list_topics_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherAsyncClient.publish",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.Publish",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "Publish"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.PublishRequest"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "messages",
+            "type": "MutableSequence[google.pubsub_v1.types.PubsubMessage]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.PublishResponse",
+        "shortName": "publish"
+      },
+      "description": "Sample for Publish",
+      "file": "pubsub_v1_generated_publisher_publish_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_Publish_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_publish_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherClient.publish",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.Publish",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "Publish"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.PublishRequest"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "messages",
+            "type": "MutableSequence[google.pubsub_v1.types.PubsubMessage]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.PublishResponse",
+        "shortName": "publish"
+      },
+      "description": "Sample for Publish",
+      "file": "pubsub_v1_generated_publisher_publish_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_Publish_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_publish_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherAsyncClient.update_topic",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.UpdateTopic",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "UpdateTopic"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.UpdateTopicRequest"
+          },
+          {
+            "name": "topic",
+            "type": "google.pubsub_v1.types.Topic"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Topic",
+        "shortName": "update_topic"
+      },
+      "description": "Sample for UpdateTopic",
+      "file": "pubsub_v1_generated_publisher_update_topic_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_UpdateTopic_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_update_topic_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.pubsub_v1.PublisherClient.update_topic",
+        "method": {
+          "fullName": "google.pubsub.v1.Publisher.UpdateTopic",
+          "service": {
+            "fullName": "google.pubsub.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "UpdateTopic"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.UpdateTopicRequest"
+          },
+          {
+            "name": "topic",
+            "type": "google.pubsub_v1.types.Topic"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Topic",
+        "shortName": "update_topic"
+      },
+      "description": "Sample for UpdateTopic",
+      "file": "pubsub_v1_generated_publisher_update_topic_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Publisher_UpdateTopic_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_publisher_update_topic_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceAsyncClient",
+          "shortName": "SchemaServiceAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceAsyncClient.commit_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.CommitSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "CommitSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.CommitSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "schema",
+            "type": "google.pubsub_v1.types.Schema"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Schema",
+        "shortName": "commit_schema"
+      },
+      "description": "Sample for CommitSchema",
+      "file": "pubsub_v1_generated_schema_service_commit_schema_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_CommitSchema_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_commit_schema_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceClient",
+          "shortName": "SchemaServiceClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceClient.commit_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.CommitSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "CommitSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.CommitSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "schema",
+            "type": "google.pubsub_v1.types.Schema"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Schema",
+        "shortName": "commit_schema"
+      },
+      "description": "Sample for CommitSchema",
+      "file": "pubsub_v1_generated_schema_service_commit_schema_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_CommitSchema_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_commit_schema_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceAsyncClient",
+          "shortName": "SchemaServiceAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceAsyncClient.create_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.CreateSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "CreateSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.CreateSchemaRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "schema",
+            "type": "google.pubsub_v1.types.Schema"
+          },
+          {
+            "name": "schema_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Schema",
+        "shortName": "create_schema"
+      },
+      "description": "Sample for CreateSchema",
+      "file": "pubsub_v1_generated_schema_service_create_schema_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_CreateSchema_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_create_schema_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceClient",
+          "shortName": "SchemaServiceClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceClient.create_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.CreateSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "CreateSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.CreateSchemaRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "schema",
+            "type": "google.pubsub_v1.types.Schema"
+          },
+          {
+            "name": "schema_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Schema",
+        "shortName": "create_schema"
+      },
+      "description": "Sample for CreateSchema",
+      "file": "pubsub_v1_generated_schema_service_create_schema_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_CreateSchema_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_create_schema_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceAsyncClient",
+          "shortName": "SchemaServiceAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceAsyncClient.delete_schema_revision",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.DeleteSchemaRevision",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "DeleteSchemaRevision"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DeleteSchemaRevisionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "revision_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Schema",
+        "shortName": "delete_schema_revision"
+      },
+      "description": "Sample for DeleteSchemaRevision",
+      "file": "pubsub_v1_generated_schema_service_delete_schema_revision_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_DeleteSchemaRevision_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_delete_schema_revision_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceClient",
+          "shortName": "SchemaServiceClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceClient.delete_schema_revision",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.DeleteSchemaRevision",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "DeleteSchemaRevision"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DeleteSchemaRevisionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "revision_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Schema",
+        "shortName": "delete_schema_revision"
+      },
+      "description": "Sample for DeleteSchemaRevision",
+      "file": "pubsub_v1_generated_schema_service_delete_schema_revision_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_DeleteSchemaRevision_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_delete_schema_revision_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceAsyncClient",
+          "shortName": "SchemaServiceAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceAsyncClient.delete_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.DeleteSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "DeleteSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DeleteSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_schema"
+      },
+      "description": "Sample for DeleteSchema",
+      "file": "pubsub_v1_generated_schema_service_delete_schema_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_DeleteSchema_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_delete_schema_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceClient",
+          "shortName": "SchemaServiceClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceClient.delete_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.DeleteSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "DeleteSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DeleteSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_schema"
+      },
+      "description": "Sample for DeleteSchema",
+      "file": "pubsub_v1_generated_schema_service_delete_schema_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_DeleteSchema_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_delete_schema_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceAsyncClient",
+          "shortName": "SchemaServiceAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceAsyncClient.get_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.GetSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "GetSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.GetSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Schema",
+        "shortName": "get_schema"
+      },
+      "description": "Sample for GetSchema",
+      "file": "pubsub_v1_generated_schema_service_get_schema_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_GetSchema_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_get_schema_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceClient",
+          "shortName": "SchemaServiceClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceClient.get_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.GetSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "GetSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.GetSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Schema",
+        "shortName": "get_schema"
+      },
+      "description": "Sample for GetSchema",
+      "file": "pubsub_v1_generated_schema_service_get_schema_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_GetSchema_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_get_schema_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceAsyncClient",
+          "shortName": "SchemaServiceAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceAsyncClient.list_schema_revisions",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.ListSchemaRevisions",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "ListSchemaRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListSchemaRevisionsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.schema_service.pagers.ListSchemaRevisionsAsyncPager",
+        "shortName": "list_schema_revisions"
+      },
+      "description": "Sample for ListSchemaRevisions",
+      "file": "pubsub_v1_generated_schema_service_list_schema_revisions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_ListSchemaRevisions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_list_schema_revisions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceClient",
+          "shortName": "SchemaServiceClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceClient.list_schema_revisions",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.ListSchemaRevisions",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "ListSchemaRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListSchemaRevisionsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.schema_service.pagers.ListSchemaRevisionsPager",
+        "shortName": "list_schema_revisions"
+      },
+      "description": "Sample for ListSchemaRevisions",
+      "file": "pubsub_v1_generated_schema_service_list_schema_revisions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_ListSchemaRevisions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_list_schema_revisions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceAsyncClient",
+          "shortName": "SchemaServiceAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceAsyncClient.list_schemas",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.ListSchemas",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "ListSchemas"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListSchemasRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.schema_service.pagers.ListSchemasAsyncPager",
+        "shortName": "list_schemas"
+      },
+      "description": "Sample for ListSchemas",
+      "file": "pubsub_v1_generated_schema_service_list_schemas_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_ListSchemas_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_list_schemas_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceClient",
+          "shortName": "SchemaServiceClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceClient.list_schemas",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.ListSchemas",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "ListSchemas"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListSchemasRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.schema_service.pagers.ListSchemasPager",
+        "shortName": "list_schemas"
+      },
+      "description": "Sample for ListSchemas",
+      "file": "pubsub_v1_generated_schema_service_list_schemas_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_ListSchemas_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_list_schemas_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceAsyncClient",
+          "shortName": "SchemaServiceAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceAsyncClient.rollback_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.RollbackSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "RollbackSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.RollbackSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "revision_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Schema",
+        "shortName": "rollback_schema"
+      },
+      "description": "Sample for RollbackSchema",
+      "file": "pubsub_v1_generated_schema_service_rollback_schema_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_RollbackSchema_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_rollback_schema_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceClient",
+          "shortName": "SchemaServiceClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceClient.rollback_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.RollbackSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "RollbackSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.RollbackSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "revision_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Schema",
+        "shortName": "rollback_schema"
+      },
+      "description": "Sample for RollbackSchema",
+      "file": "pubsub_v1_generated_schema_service_rollback_schema_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_RollbackSchema_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_rollback_schema_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceAsyncClient",
+          "shortName": "SchemaServiceAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceAsyncClient.validate_message",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.ValidateMessage",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "ValidateMessage"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ValidateMessageRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.ValidateMessageResponse",
+        "shortName": "validate_message"
+      },
+      "description": "Sample for ValidateMessage",
+      "file": "pubsub_v1_generated_schema_service_validate_message_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_ValidateMessage_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_validate_message_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceClient",
+          "shortName": "SchemaServiceClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceClient.validate_message",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.ValidateMessage",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "ValidateMessage"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ValidateMessageRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.ValidateMessageResponse",
+        "shortName": "validate_message"
+      },
+      "description": "Sample for ValidateMessage",
+      "file": "pubsub_v1_generated_schema_service_validate_message_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_ValidateMessage_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_validate_message_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceAsyncClient",
+          "shortName": "SchemaServiceAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceAsyncClient.validate_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.ValidateSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "ValidateSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ValidateSchemaRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "schema",
+            "type": "google.pubsub_v1.types.Schema"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.ValidateSchemaResponse",
+        "shortName": "validate_schema"
+      },
+      "description": "Sample for ValidateSchema",
+      "file": "pubsub_v1_generated_schema_service_validate_schema_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_ValidateSchema_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_validate_schema_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SchemaServiceClient",
+          "shortName": "SchemaServiceClient"
+        },
+        "fullName": "google.pubsub_v1.SchemaServiceClient.validate_schema",
+        "method": {
+          "fullName": "google.pubsub.v1.SchemaService.ValidateSchema",
+          "service": {
+            "fullName": "google.pubsub.v1.SchemaService",
+            "shortName": "SchemaService"
+          },
+          "shortName": "ValidateSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ValidateSchemaRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "schema",
+            "type": "google.pubsub_v1.types.Schema"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.ValidateSchemaResponse",
+        "shortName": "validate_schema"
+      },
+      "description": "Sample for ValidateSchema",
+      "file": "pubsub_v1_generated_schema_service_validate_schema_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_SchemaService_ValidateSchema_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_schema_service_validate_schema_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.acknowledge",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.Acknowledge",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "Acknowledge"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.AcknowledgeRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "ack_ids",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "acknowledge"
+      },
+      "description": "Sample for Acknowledge",
+      "file": "pubsub_v1_generated_subscriber_acknowledge_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_Acknowledge_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_acknowledge_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.acknowledge",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.Acknowledge",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "Acknowledge"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.AcknowledgeRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "ack_ids",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "acknowledge"
+      },
+      "description": "Sample for Acknowledge",
+      "file": "pubsub_v1_generated_subscriber_acknowledge_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_Acknowledge_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_acknowledge_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.create_snapshot",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.CreateSnapshot",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "CreateSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.CreateSnapshotRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Snapshot",
+        "shortName": "create_snapshot"
+      },
+      "description": "Sample for CreateSnapshot",
+      "file": "pubsub_v1_generated_subscriber_create_snapshot_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_CreateSnapshot_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_create_snapshot_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.create_snapshot",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.CreateSnapshot",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "CreateSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.CreateSnapshotRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Snapshot",
+        "shortName": "create_snapshot"
+      },
+      "description": "Sample for CreateSnapshot",
+      "file": "pubsub_v1_generated_subscriber_create_snapshot_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_CreateSnapshot_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_create_snapshot_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.create_subscription",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.CreateSubscription",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "CreateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.Subscription"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "push_config",
+            "type": "google.pubsub_v1.types.PushConfig"
+          },
+          {
+            "name": "ack_deadline_seconds",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Subscription",
+        "shortName": "create_subscription"
+      },
+      "description": "Sample for CreateSubscription",
+      "file": "pubsub_v1_generated_subscriber_create_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_CreateSubscription_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_create_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.create_subscription",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.CreateSubscription",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "CreateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.Subscription"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "topic",
+            "type": "str"
+          },
+          {
+            "name": "push_config",
+            "type": "google.pubsub_v1.types.PushConfig"
+          },
+          {
+            "name": "ack_deadline_seconds",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Subscription",
+        "shortName": "create_subscription"
+      },
+      "description": "Sample for CreateSubscription",
+      "file": "pubsub_v1_generated_subscriber_create_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_CreateSubscription_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_create_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.delete_snapshot",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.DeleteSnapshot",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "DeleteSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DeleteSnapshotRequest"
+          },
+          {
+            "name": "snapshot",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_snapshot"
+      },
+      "description": "Sample for DeleteSnapshot",
+      "file": "pubsub_v1_generated_subscriber_delete_snapshot_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_DeleteSnapshot_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_delete_snapshot_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.delete_snapshot",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.DeleteSnapshot",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "DeleteSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DeleteSnapshotRequest"
+          },
+          {
+            "name": "snapshot",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_snapshot"
+      },
+      "description": "Sample for DeleteSnapshot",
+      "file": "pubsub_v1_generated_subscriber_delete_snapshot_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_DeleteSnapshot_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_delete_snapshot_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.delete_subscription",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.DeleteSubscription",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "DeleteSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DeleteSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_subscription"
+      },
+      "description": "Sample for DeleteSubscription",
+      "file": "pubsub_v1_generated_subscriber_delete_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_DeleteSubscription_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_delete_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.delete_subscription",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.DeleteSubscription",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "DeleteSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.DeleteSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_subscription"
+      },
+      "description": "Sample for DeleteSubscription",
+      "file": "pubsub_v1_generated_subscriber_delete_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_DeleteSubscription_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_delete_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.get_snapshot",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.GetSnapshot",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "GetSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.GetSnapshotRequest"
+          },
+          {
+            "name": "snapshot",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Snapshot",
+        "shortName": "get_snapshot"
+      },
+      "description": "Sample for GetSnapshot",
+      "file": "pubsub_v1_generated_subscriber_get_snapshot_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_GetSnapshot_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_get_snapshot_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.get_snapshot",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.GetSnapshot",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "GetSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.GetSnapshotRequest"
+          },
+          {
+            "name": "snapshot",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Snapshot",
+        "shortName": "get_snapshot"
+      },
+      "description": "Sample for GetSnapshot",
+      "file": "pubsub_v1_generated_subscriber_get_snapshot_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_GetSnapshot_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_get_snapshot_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.get_subscription",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.GetSubscription",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "GetSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.GetSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Subscription",
+        "shortName": "get_subscription"
+      },
+      "description": "Sample for GetSubscription",
+      "file": "pubsub_v1_generated_subscriber_get_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_GetSubscription_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_get_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.get_subscription",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.GetSubscription",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "GetSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.GetSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Subscription",
+        "shortName": "get_subscription"
+      },
+      "description": "Sample for GetSubscription",
+      "file": "pubsub_v1_generated_subscriber_get_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_GetSubscription_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_get_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.list_snapshots",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.ListSnapshots",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "ListSnapshots"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListSnapshotsRequest"
+          },
+          {
+            "name": "project",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.subscriber.pagers.ListSnapshotsAsyncPager",
+        "shortName": "list_snapshots"
+      },
+      "description": "Sample for ListSnapshots",
+      "file": "pubsub_v1_generated_subscriber_list_snapshots_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_ListSnapshots_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_list_snapshots_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.list_snapshots",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.ListSnapshots",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "ListSnapshots"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListSnapshotsRequest"
+          },
+          {
+            "name": "project",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager",
+        "shortName": "list_snapshots"
+      },
+      "description": "Sample for ListSnapshots",
+      "file": "pubsub_v1_generated_subscriber_list_snapshots_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_ListSnapshots_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_list_snapshots_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.list_subscriptions",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.ListSubscriptions",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "ListSubscriptions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListSubscriptionsRequest"
+          },
+          {
+            "name": "project",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsAsyncPager",
+        "shortName": "list_subscriptions"
+      },
+      "description": "Sample for ListSubscriptions",
+      "file": "pubsub_v1_generated_subscriber_list_subscriptions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_ListSubscriptions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_list_subscriptions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.list_subscriptions",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.ListSubscriptions",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "ListSubscriptions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ListSubscriptionsRequest"
+          },
+          {
+            "name": "project",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsPager",
+        "shortName": "list_subscriptions"
+      },
+      "description": "Sample for ListSubscriptions",
+      "file": "pubsub_v1_generated_subscriber_list_subscriptions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_ListSubscriptions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_list_subscriptions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.modify_ack_deadline",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.ModifyAckDeadline",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "ModifyAckDeadline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ModifyAckDeadlineRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "ack_ids",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "ack_deadline_seconds",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "modify_ack_deadline"
+      },
+      "description": "Sample for ModifyAckDeadline",
+      "file": "pubsub_v1_generated_subscriber_modify_ack_deadline_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_ModifyAckDeadline_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_modify_ack_deadline_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.modify_ack_deadline",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.ModifyAckDeadline",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "ModifyAckDeadline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ModifyAckDeadlineRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "ack_ids",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "ack_deadline_seconds",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "modify_ack_deadline"
+      },
+      "description": "Sample for ModifyAckDeadline",
+      "file": "pubsub_v1_generated_subscriber_modify_ack_deadline_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_ModifyAckDeadline_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_modify_ack_deadline_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.modify_push_config",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.ModifyPushConfig",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "ModifyPushConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ModifyPushConfigRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "push_config",
+            "type": "google.pubsub_v1.types.PushConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "modify_push_config"
+      },
+      "description": "Sample for ModifyPushConfig",
+      "file": "pubsub_v1_generated_subscriber_modify_push_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_ModifyPushConfig_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_modify_push_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.modify_push_config",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.ModifyPushConfig",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "ModifyPushConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.ModifyPushConfigRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "push_config",
+            "type": "google.pubsub_v1.types.PushConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "modify_push_config"
+      },
+      "description": "Sample for ModifyPushConfig",
+      "file": "pubsub_v1_generated_subscriber_modify_push_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_ModifyPushConfig_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_modify_push_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.pull",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.Pull",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "Pull"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.PullRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "return_immediately",
+            "type": "bool"
+          },
+          {
+            "name": "max_messages",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.PullResponse",
+        "shortName": "pull"
+      },
+      "description": "Sample for Pull",
+      "file": "pubsub_v1_generated_subscriber_pull_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_Pull_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_pull_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.pull",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.Pull",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "Pull"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.PullRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "str"
+          },
+          {
+            "name": "return_immediately",
+            "type": "bool"
+          },
+          {
+            "name": "max_messages",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.PullResponse",
+        "shortName": "pull"
+      },
+      "description": "Sample for Pull",
+      "file": "pubsub_v1_generated_subscriber_pull_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_Pull_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_pull_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.seek",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.Seek",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "Seek"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.SeekRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.SeekResponse",
+        "shortName": "seek"
+      },
+      "description": "Sample for Seek",
+      "file": "pubsub_v1_generated_subscriber_seek_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_Seek_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_seek_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.seek",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.Seek",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "Seek"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.SeekRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.SeekResponse",
+        "shortName": "seek"
+      },
+      "description": "Sample for Seek",
+      "file": "pubsub_v1_generated_subscriber_seek_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_Seek_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_seek_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.streaming_pull",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.StreamingPull",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "StreamingPull"
+        },
+        "parameters": [
+          {
+            "name": "requests",
+            "type": "Iterator[google.pubsub_v1.types.StreamingPullRequest]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.pubsub_v1.types.StreamingPullResponse]",
+        "shortName": "streaming_pull"
+      },
+      "description": "Sample for StreamingPull",
+      "file": "pubsub_v1_generated_subscriber_streaming_pull_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_StreamingPull_async",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 57,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_streaming_pull_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.streaming_pull",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.StreamingPull",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "StreamingPull"
+        },
+        "parameters": [
+          {
+            "name": "requests",
+            "type": "Iterator[google.pubsub_v1.types.StreamingPullRequest]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.pubsub_v1.types.StreamingPullResponse]",
+        "shortName": "streaming_pull"
+      },
+      "description": "Sample for StreamingPull",
+      "file": "pubsub_v1_generated_subscriber_streaming_pull_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_StreamingPull_sync",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 57,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_streaming_pull_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.update_snapshot",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.UpdateSnapshot",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "UpdateSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.UpdateSnapshotRequest"
+          },
+          {
+            "name": "snapshot",
+            "type": "google.pubsub_v1.types.Snapshot"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Snapshot",
+        "shortName": "update_snapshot"
+      },
+      "description": "Sample for UpdateSnapshot",
+      "file": "pubsub_v1_generated_subscriber_update_snapshot_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_UpdateSnapshot_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_update_snapshot_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.update_snapshot",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.UpdateSnapshot",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "UpdateSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.UpdateSnapshotRequest"
+          },
+          {
+            "name": "snapshot",
+            "type": "google.pubsub_v1.types.Snapshot"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Snapshot",
+        "shortName": "update_snapshot"
+      },
+      "description": "Sample for UpdateSnapshot",
+      "file": "pubsub_v1_generated_subscriber_update_snapshot_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_UpdateSnapshot_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_update_snapshot_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberAsyncClient",
+          "shortName": "SubscriberAsyncClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberAsyncClient.update_subscription",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.UpdateSubscription",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "UpdateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.UpdateSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "google.pubsub_v1.types.Subscription"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Subscription",
+        "shortName": "update_subscription"
+      },
+      "description": "Sample for UpdateSubscription",
+      "file": "pubsub_v1_generated_subscriber_update_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_UpdateSubscription_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_update_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.pubsub_v1.SubscriberClient",
+          "shortName": "SubscriberClient"
+        },
+        "fullName": "google.pubsub_v1.SubscriberClient.update_subscription",
+        "method": {
+          "fullName": "google.pubsub.v1.Subscriber.UpdateSubscription",
+          "service": {
+            "fullName": "google.pubsub.v1.Subscriber",
+            "shortName": "Subscriber"
+          },
+          "shortName": "UpdateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.pubsub_v1.types.UpdateSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "google.pubsub_v1.types.Subscription"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.pubsub_v1.types.Subscription",
+        "shortName": "update_subscription"
+      },
+      "description": "Sample for UpdateSubscription",
+      "file": "pubsub_v1_generated_subscriber_update_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "pubsub_v1_generated_Subscriber_UpdateSubscription_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "pubsub_v1_generated_subscriber_update_subscription_sync.py"
+    }
+  ]
+}

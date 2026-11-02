@@ -1,0 +1,506 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.kms.inventory.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-kms-inventory",
+    "version": "0.6.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.kms_inventory_v1.KeyDashboardServiceAsyncClient",
+          "shortName": "KeyDashboardServiceAsyncClient"
+        },
+        "fullName": "google.cloud.kms_inventory_v1.KeyDashboardServiceAsyncClient.list_crypto_keys",
+        "method": {
+          "fullName": "google.cloud.kms.inventory.v1.KeyDashboardService.ListCryptoKeys",
+          "service": {
+            "fullName": "google.cloud.kms.inventory.v1.KeyDashboardService",
+            "shortName": "KeyDashboardService"
+          },
+          "shortName": "ListCryptoKeys"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.kms_inventory_v1.types.ListCryptoKeysRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.kms_inventory_v1.services.key_dashboard_service.pagers.ListCryptoKeysAsyncPager",
+        "shortName": "list_crypto_keys"
+      },
+      "description": "Sample for ListCryptoKeys",
+      "file": "kmsinventory_v1_generated_key_dashboard_service_list_crypto_keys_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "kmsinventory_v1_generated_KeyDashboardService_ListCryptoKeys_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "kmsinventory_v1_generated_key_dashboard_service_list_crypto_keys_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.kms_inventory_v1.KeyDashboardServiceClient",
+          "shortName": "KeyDashboardServiceClient"
+        },
+        "fullName": "google.cloud.kms_inventory_v1.KeyDashboardServiceClient.list_crypto_keys",
+        "method": {
+          "fullName": "google.cloud.kms.inventory.v1.KeyDashboardService.ListCryptoKeys",
+          "service": {
+            "fullName": "google.cloud.kms.inventory.v1.KeyDashboardService",
+            "shortName": "KeyDashboardService"
+          },
+          "shortName": "ListCryptoKeys"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.kms_inventory_v1.types.ListCryptoKeysRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.kms_inventory_v1.services.key_dashboard_service.pagers.ListCryptoKeysPager",
+        "shortName": "list_crypto_keys"
+      },
+      "description": "Sample for ListCryptoKeys",
+      "file": "kmsinventory_v1_generated_key_dashboard_service_list_crypto_keys_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "kmsinventory_v1_generated_KeyDashboardService_ListCryptoKeys_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "kmsinventory_v1_generated_key_dashboard_service_list_crypto_keys_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.kms_inventory_v1.KeyTrackingServiceAsyncClient",
+          "shortName": "KeyTrackingServiceAsyncClient"
+        },
+        "fullName": "google.cloud.kms_inventory_v1.KeyTrackingServiceAsyncClient.get_protected_resources_summary",
+        "method": {
+          "fullName": "google.cloud.kms.inventory.v1.KeyTrackingService.GetProtectedResourcesSummary",
+          "service": {
+            "fullName": "google.cloud.kms.inventory.v1.KeyTrackingService",
+            "shortName": "KeyTrackingService"
+          },
+          "shortName": "GetProtectedResourcesSummary"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.kms_inventory_v1.types.GetProtectedResourcesSummaryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.kms_inventory_v1.types.ProtectedResourcesSummary",
+        "shortName": "get_protected_resources_summary"
+      },
+      "description": "Sample for GetProtectedResourcesSummary",
+      "file": "kmsinventory_v1_generated_key_tracking_service_get_protected_resources_summary_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "kmsinventory_v1_generated_KeyTrackingService_GetProtectedResourcesSummary_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "kmsinventory_v1_generated_key_tracking_service_get_protected_resources_summary_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.kms_inventory_v1.KeyTrackingServiceClient",
+          "shortName": "KeyTrackingServiceClient"
+        },
+        "fullName": "google.cloud.kms_inventory_v1.KeyTrackingServiceClient.get_protected_resources_summary",
+        "method": {
+          "fullName": "google.cloud.kms.inventory.v1.KeyTrackingService.GetProtectedResourcesSummary",
+          "service": {
+            "fullName": "google.cloud.kms.inventory.v1.KeyTrackingService",
+            "shortName": "KeyTrackingService"
+          },
+          "shortName": "GetProtectedResourcesSummary"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.kms_inventory_v1.types.GetProtectedResourcesSummaryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.kms_inventory_v1.types.ProtectedResourcesSummary",
+        "shortName": "get_protected_resources_summary"
+      },
+      "description": "Sample for GetProtectedResourcesSummary",
+      "file": "kmsinventory_v1_generated_key_tracking_service_get_protected_resources_summary_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "kmsinventory_v1_generated_KeyTrackingService_GetProtectedResourcesSummary_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "kmsinventory_v1_generated_key_tracking_service_get_protected_resources_summary_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.kms_inventory_v1.KeyTrackingServiceAsyncClient",
+          "shortName": "KeyTrackingServiceAsyncClient"
+        },
+        "fullName": "google.cloud.kms_inventory_v1.KeyTrackingServiceAsyncClient.search_protected_resources",
+        "method": {
+          "fullName": "google.cloud.kms.inventory.v1.KeyTrackingService.SearchProtectedResources",
+          "service": {
+            "fullName": "google.cloud.kms.inventory.v1.KeyTrackingService",
+            "shortName": "KeyTrackingService"
+          },
+          "shortName": "SearchProtectedResources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.kms_inventory_v1.types.SearchProtectedResourcesRequest"
+          },
+          {
+            "name": "scope",
+            "type": "str"
+          },
+          {
+            "name": "crypto_key",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.kms_inventory_v1.services.key_tracking_service.pagers.SearchProtectedResourcesAsyncPager",
+        "shortName": "search_protected_resources"
+      },
+      "description": "Sample for SearchProtectedResources",
+      "file": "kmsinventory_v1_generated_key_tracking_service_search_protected_resources_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "kmsinventory_v1_generated_KeyTrackingService_SearchProtectedResources_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "kmsinventory_v1_generated_key_tracking_service_search_protected_resources_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.kms_inventory_v1.KeyTrackingServiceClient",
+          "shortName": "KeyTrackingServiceClient"
+        },
+        "fullName": "google.cloud.kms_inventory_v1.KeyTrackingServiceClient.search_protected_resources",
+        "method": {
+          "fullName": "google.cloud.kms.inventory.v1.KeyTrackingService.SearchProtectedResources",
+          "service": {
+            "fullName": "google.cloud.kms.inventory.v1.KeyTrackingService",
+            "shortName": "KeyTrackingService"
+          },
+          "shortName": "SearchProtectedResources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.kms_inventory_v1.types.SearchProtectedResourcesRequest"
+          },
+          {
+            "name": "scope",
+            "type": "str"
+          },
+          {
+            "name": "crypto_key",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.kms_inventory_v1.services.key_tracking_service.pagers.SearchProtectedResourcesPager",
+        "shortName": "search_protected_resources"
+      },
+      "description": "Sample for SearchProtectedResources",
+      "file": "kmsinventory_v1_generated_key_tracking_service_search_protected_resources_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "kmsinventory_v1_generated_KeyTrackingService_SearchProtectedResources_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "kmsinventory_v1_generated_key_tracking_service_search_protected_resources_sync.py"
+    }
+  ]
+}

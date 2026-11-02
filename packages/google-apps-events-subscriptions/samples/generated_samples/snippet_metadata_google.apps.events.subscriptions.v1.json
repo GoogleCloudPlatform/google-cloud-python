@@ -1,0 +1,989 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.apps.events.subscriptions.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-apps-events-subscriptions",
+    "version": "0.6.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient",
+          "shortName": "SubscriptionsServiceAsyncClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient.create_subscription",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.CreateSubscription",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "CreateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.CreateSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "google.apps.events_subscriptions_v1.types.Subscription"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_subscription"
+      },
+      "description": "Sample for CreateSubscription",
+      "file": "workspaceevents_v1_generated_subscriptions_service_create_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_CreateSubscription_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_create_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient",
+          "shortName": "SubscriptionsServiceClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient.create_subscription",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.CreateSubscription",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "CreateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.CreateSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "google.apps.events_subscriptions_v1.types.Subscription"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_subscription"
+      },
+      "description": "Sample for CreateSubscription",
+      "file": "workspaceevents_v1_generated_subscriptions_service_create_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_CreateSubscription_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_create_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient",
+          "shortName": "SubscriptionsServiceAsyncClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient.delete_subscription",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.DeleteSubscription",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "DeleteSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.DeleteSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_subscription"
+      },
+      "description": "Sample for DeleteSubscription",
+      "file": "workspaceevents_v1_generated_subscriptions_service_delete_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_DeleteSubscription_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_delete_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient",
+          "shortName": "SubscriptionsServiceClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient.delete_subscription",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.DeleteSubscription",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "DeleteSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.DeleteSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_subscription"
+      },
+      "description": "Sample for DeleteSubscription",
+      "file": "workspaceevents_v1_generated_subscriptions_service_delete_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_DeleteSubscription_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_delete_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient",
+          "shortName": "SubscriptionsServiceAsyncClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient.get_subscription",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.GetSubscription",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "GetSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.GetSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.apps.events_subscriptions_v1.types.Subscription",
+        "shortName": "get_subscription"
+      },
+      "description": "Sample for GetSubscription",
+      "file": "workspaceevents_v1_generated_subscriptions_service_get_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_GetSubscription_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_get_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient",
+          "shortName": "SubscriptionsServiceClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient.get_subscription",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.GetSubscription",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "GetSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.GetSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.apps.events_subscriptions_v1.types.Subscription",
+        "shortName": "get_subscription"
+      },
+      "description": "Sample for GetSubscription",
+      "file": "workspaceevents_v1_generated_subscriptions_service_get_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_GetSubscription_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_get_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient",
+          "shortName": "SubscriptionsServiceAsyncClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient.list_subscriptions",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.ListSubscriptions",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "ListSubscriptions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.ListSubscriptionsRequest"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.apps.events_subscriptions_v1.services.subscriptions_service.pagers.ListSubscriptionsAsyncPager",
+        "shortName": "list_subscriptions"
+      },
+      "description": "Sample for ListSubscriptions",
+      "file": "workspaceevents_v1_generated_subscriptions_service_list_subscriptions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_ListSubscriptions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_list_subscriptions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient",
+          "shortName": "SubscriptionsServiceClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient.list_subscriptions",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.ListSubscriptions",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "ListSubscriptions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.ListSubscriptionsRequest"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.apps.events_subscriptions_v1.services.subscriptions_service.pagers.ListSubscriptionsPager",
+        "shortName": "list_subscriptions"
+      },
+      "description": "Sample for ListSubscriptions",
+      "file": "workspaceevents_v1_generated_subscriptions_service_list_subscriptions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_ListSubscriptions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_list_subscriptions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient",
+          "shortName": "SubscriptionsServiceAsyncClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient.reactivate_subscription",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.ReactivateSubscription",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "ReactivateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.ReactivateSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "reactivate_subscription"
+      },
+      "description": "Sample for ReactivateSubscription",
+      "file": "workspaceevents_v1_generated_subscriptions_service_reactivate_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_ReactivateSubscription_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_reactivate_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient",
+          "shortName": "SubscriptionsServiceClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient.reactivate_subscription",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.ReactivateSubscription",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "ReactivateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.ReactivateSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "reactivate_subscription"
+      },
+      "description": "Sample for ReactivateSubscription",
+      "file": "workspaceevents_v1_generated_subscriptions_service_reactivate_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_ReactivateSubscription_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_reactivate_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient",
+          "shortName": "SubscriptionsServiceAsyncClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceAsyncClient.update_subscription",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.UpdateSubscription",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "UpdateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.UpdateSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "google.apps.events_subscriptions_v1.types.Subscription"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_subscription"
+      },
+      "description": "Sample for UpdateSubscription",
+      "file": "workspaceevents_v1_generated_subscriptions_service_update_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_UpdateSubscription_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_update_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient",
+          "shortName": "SubscriptionsServiceClient"
+        },
+        "fullName": "google.apps.events_subscriptions_v1.SubscriptionsServiceClient.update_subscription",
+        "method": {
+          "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService.UpdateSubscription",
+          "service": {
+            "fullName": "google.apps.events.subscriptions.v1.SubscriptionsService",
+            "shortName": "SubscriptionsService"
+          },
+          "shortName": "UpdateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.events_subscriptions_v1.types.UpdateSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "google.apps.events_subscriptions_v1.types.Subscription"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_subscription"
+      },
+      "description": "Sample for UpdateSubscription",
+      "file": "workspaceevents_v1_generated_subscriptions_service_update_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "workspaceevents_v1_generated_SubscriptionsService_UpdateSubscription_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "workspaceevents_v1_generated_subscriptions_service_update_subscription_sync.py"
+    }
+  ]
+}

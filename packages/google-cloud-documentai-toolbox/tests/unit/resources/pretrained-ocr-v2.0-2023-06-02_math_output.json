@@ -1,0 +1,233 @@
+{
+  "uri": "",
+  "mimeType": "image/png",
+  "text": "\\int_{-\\infty}^{\\infty}e^{-x^{2}}dx=\\sqrt{x}.\n",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "dimension": {
+        "width": 341,
+        "height": 147,
+        "unit": "pixels"
+      },
+      "layout": {
+        "textAnchor": {
+          "textSegments": [
+            {
+              "endIndex": "46"
+            }
+          ]
+        },
+        "confidence": 1,
+        "boundingPoly": {
+          "vertices": [
+            {},
+            {
+              "x": 341
+            },
+            {
+              "x": 341,
+              "y": 147
+            },
+            {
+              "y": 147
+            }
+          ],
+          "normalizedVertices": [
+            {},
+            {
+              "x": 1
+            },
+            {
+              "x": 1,
+              "y": 1
+            },
+            {
+              "y": 1
+            }
+          ]
+        },
+        "orientation": "PAGE_UP"
+      },
+      "blocks": [
+        {
+          "layout": {
+            "textAnchor": {
+              "textSegments": [
+                {
+                  "endIndex": "46"
+                }
+              ]
+            },
+            "confidence": 1,
+            "boundingPoly": {
+              "normalizedVertices": [
+                {
+                  "x": 0.14662756,
+                  "y": 0.27891156
+                },
+                {
+                  "x": 0.9032258,
+                  "y": 0.27891156
+                },
+                {
+                  "x": 0.9032258,
+                  "y": 0.8027211
+                },
+                {
+                  "x": 0.14662756,
+                  "y": 0.8027211
+                }
+              ]
+            },
+            "orientation": "PAGE_UP"
+          }
+        }
+      ],
+      "paragraphs": [
+        {
+          "layout": {
+            "textAnchor": {
+              "textSegments": [
+                {
+                  "endIndex": "46"
+                }
+              ]
+            },
+            "confidence": 1,
+            "boundingPoly": {
+              "normalizedVertices": [
+                {
+                  "x": 0.14662756,
+                  "y": 0.27891156
+                },
+                {
+                  "x": 0.9032258,
+                  "y": 0.27891156
+                },
+                {
+                  "x": 0.9032258,
+                  "y": 0.8027211
+                },
+                {
+                  "x": 0.14662756,
+                  "y": 0.8027211
+                }
+              ]
+            },
+            "orientation": "PAGE_UP"
+          }
+        }
+      ],
+      "lines": [
+        {
+          "layout": {
+            "textAnchor": {
+              "textSegments": [
+                {
+                  "endIndex": "46"
+                }
+              ]
+            },
+            "confidence": 1,
+            "boundingPoly": {
+              "normalizedVertices": [
+                {
+                  "x": 0.14662756,
+                  "y": 0.27891156
+                },
+                {
+                  "x": 0.9032258,
+                  "y": 0.27891156
+                },
+                {
+                  "x": 0.9032258,
+                  "y": 0.8027211
+                },
+                {
+                  "x": 0.14662756,
+                  "y": 0.8027211
+                }
+              ]
+            },
+            "orientation": "PAGE_UP"
+          }
+        }
+      ],
+      "tokens": [
+        {
+          "layout": {
+            "textAnchor": {
+              "textSegments": [
+                {
+                  "endIndex": "46"
+                }
+              ]
+            },
+            "confidence": 1,
+            "boundingPoly": {
+              "normalizedVertices": [
+                {
+                  "x": 0.14662756,
+                  "y": 0.27891156
+                },
+                {
+                  "x": 0.9032258,
+                  "y": 0.27891156
+                },
+                {
+                  "x": 0.9032258,
+                  "y": 0.8027211
+                },
+                {
+                  "x": 0.14662756,
+                  "y": 0.8027211
+                }
+              ]
+            },
+            "orientation": "PAGE_UP"
+          },
+          "detectedBreak": {
+            "type": "WIDE_SPACE"
+          }
+        }
+      ],
+      "visualElements": [
+        {
+          "layout": {
+            "textAnchor": {
+              "textSegments": [
+                {
+                  "endIndex": "46"
+                }
+              ]
+            },
+            "confidence": 1,
+            "boundingPoly": {
+              "normalizedVertices": [
+                {
+                  "x": 0.14662756,
+                  "y": 0.27891156
+                },
+                {
+                  "x": 0.9032258,
+                  "y": 0.27891156
+                },
+                {
+                  "x": 0.9032258,
+                  "y": 0.8027211
+                },
+                {
+                  "x": 0.14662756,
+                  "y": 0.8027211
+                }
+              ]
+            },
+            "orientation": "PAGE_UP"
+          },
+          "type": "math_formula"
+        }
+      ]
+    }
+  ]
+}

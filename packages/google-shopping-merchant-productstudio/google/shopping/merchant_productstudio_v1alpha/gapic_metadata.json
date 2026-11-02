@@ -1,0 +1,107 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_productstudio_v1alpha",
+  "protoPackage": "google.shopping.merchant.productstudio.v1alpha",
+  "schema": "1.0",
+  "services": {
+    "ImageService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ImageServiceClient",
+          "rpcs": {
+            "GenerateProductImageBackground": {
+              "methods": [
+                "generate_product_image_background"
+              ]
+            },
+            "RemoveProductImageBackground": {
+              "methods": [
+                "remove_product_image_background"
+              ]
+            },
+            "UpscaleProductImage": {
+              "methods": [
+                "upscale_product_image"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ImageServiceAsyncClient",
+          "rpcs": {
+            "GenerateProductImageBackground": {
+              "methods": [
+                "generate_product_image_background"
+              ]
+            },
+            "RemoveProductImageBackground": {
+              "methods": [
+                "remove_product_image_background"
+              ]
+            },
+            "UpscaleProductImage": {
+              "methods": [
+                "upscale_product_image"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ImageServiceClient",
+          "rpcs": {
+            "GenerateProductImageBackground": {
+              "methods": [
+                "generate_product_image_background"
+              ]
+            },
+            "RemoveProductImageBackground": {
+              "methods": [
+                "remove_product_image_background"
+              ]
+            },
+            "UpscaleProductImage": {
+              "methods": [
+                "upscale_product_image"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TextSuggestionsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "TextSuggestionsServiceClient",
+          "rpcs": {
+            "GenerateProductTextSuggestions": {
+              "methods": [
+                "generate_product_text_suggestions"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "TextSuggestionsServiceAsyncClient",
+          "rpcs": {
+            "GenerateProductTextSuggestions": {
+              "methods": [
+                "generate_product_text_suggestions"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "TextSuggestionsServiceClient",
+          "rpcs": {
+            "GenerateProductTextSuggestions": {
+              "methods": [
+                "generate_product_text_suggestions"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

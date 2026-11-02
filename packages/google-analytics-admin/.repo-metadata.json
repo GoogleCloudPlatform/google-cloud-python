@@ -1,0 +1,16 @@
+{
+    "api_description": "Manage properties in Google Analytics.  Warning: Creating multiple Customer\nApplications, Accounts, or Projects to simulate or act as a single\nCustomer Application, Account, or Project (respectively) or to circumvent\nService-specific usage limits or quotas is a direct violation of Google\nCloud Platform Terms of Service as well as Google APIs Terms of Service.\nThese actions can result in immediate termination of your GCP project(s)\nwithout any warning.",
+    "api_id": "analyticsadmin.googleapis.com",
+    "api_shortname": "analyticsadmin",
+    "client_documentation": "https://googleapis.dev/python/analyticsadmin/latest",
+    "default_version": "v1alpha",
+    "distribution_name": "google-analytics-admin",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:187400",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "analyticsadmin",
+    "name_pretty": "Google Analytics Admin",
+    "product_documentation": "https://developers.google.com/analytics/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

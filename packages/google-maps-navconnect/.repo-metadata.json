@@ -1,0 +1,16 @@
+{
+    "api_description": "Navigation Connect API.",
+    "api_id": "navigationconnect.googleapis.com",
+    "api_shortname": "navigationconnect",
+    "client_documentation": "https://googleapis.dev/python/google-maps-navconnect/latest",
+    "default_version": "v1",
+    "distribution_name": "google-maps-navconnect",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1180397\u0026template=1812135",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-maps-navconnect",
+    "name_pretty": "Navigation Connect",
+    "product_documentation": "https://developers.google.com/maps/documentation/navigation/connect",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

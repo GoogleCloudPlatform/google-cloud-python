@@ -1,0 +1,7 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.source_context_v1",
+  "protoPackage": "google.devtools.source.v1",
+  "schema": "1.0"
+}

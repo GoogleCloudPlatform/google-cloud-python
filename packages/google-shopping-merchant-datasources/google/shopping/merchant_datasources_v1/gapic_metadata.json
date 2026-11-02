@@ -1,0 +1,152 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_datasources_v1",
+  "protoPackage": "google.shopping.merchant.datasources.v1",
+  "schema": "1.0",
+  "services": {
+    "DataSourcesService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataSourcesServiceClient",
+          "rpcs": {
+            "CreateDataSource": {
+              "methods": [
+                "create_data_source"
+              ]
+            },
+            "DeleteDataSource": {
+              "methods": [
+                "delete_data_source"
+              ]
+            },
+            "FetchDataSource": {
+              "methods": [
+                "fetch_data_source"
+              ]
+            },
+            "GetDataSource": {
+              "methods": [
+                "get_data_source"
+              ]
+            },
+            "ListDataSources": {
+              "methods": [
+                "list_data_sources"
+              ]
+            },
+            "UpdateDataSource": {
+              "methods": [
+                "update_data_source"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataSourcesServiceAsyncClient",
+          "rpcs": {
+            "CreateDataSource": {
+              "methods": [
+                "create_data_source"
+              ]
+            },
+            "DeleteDataSource": {
+              "methods": [
+                "delete_data_source"
+              ]
+            },
+            "FetchDataSource": {
+              "methods": [
+                "fetch_data_source"
+              ]
+            },
+            "GetDataSource": {
+              "methods": [
+                "get_data_source"
+              ]
+            },
+            "ListDataSources": {
+              "methods": [
+                "list_data_sources"
+              ]
+            },
+            "UpdateDataSource": {
+              "methods": [
+                "update_data_source"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataSourcesServiceClient",
+          "rpcs": {
+            "CreateDataSource": {
+              "methods": [
+                "create_data_source"
+              ]
+            },
+            "DeleteDataSource": {
+              "methods": [
+                "delete_data_source"
+              ]
+            },
+            "FetchDataSource": {
+              "methods": [
+                "fetch_data_source"
+              ]
+            },
+            "GetDataSource": {
+              "methods": [
+                "get_data_source"
+              ]
+            },
+            "ListDataSources": {
+              "methods": [
+                "list_data_sources"
+              ]
+            },
+            "UpdateDataSource": {
+              "methods": [
+                "update_data_source"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "FileUploadsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "FileUploadsServiceClient",
+          "rpcs": {
+            "GetFileUpload": {
+              "methods": [
+                "get_file_upload"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "FileUploadsServiceAsyncClient",
+          "rpcs": {
+            "GetFileUpload": {
+              "methods": [
+                "get_file_upload"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "FileUploadsServiceClient",
+          "rpcs": {
+            "GetFileUpload": {
+              "methods": [
+                "get_file_upload"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

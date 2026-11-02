@@ -1,0 +1,223 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.batch_v1alpha",
+  "protoPackage": "google.cloud.batch.v1alpha",
+  "schema": "1.0",
+  "services": {
+    "BatchService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "BatchServiceClient",
+          "rpcs": {
+            "CancelJob": {
+              "methods": [
+                "cancel_job"
+              ]
+            },
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "CreateResourceAllowance": {
+              "methods": [
+                "create_resource_allowance"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "DeleteResourceAllowance": {
+              "methods": [
+                "delete_resource_allowance"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "GetResourceAllowance": {
+              "methods": [
+                "get_resource_allowance"
+              ]
+            },
+            "GetTask": {
+              "methods": [
+                "get_task"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "ListResourceAllowances": {
+              "methods": [
+                "list_resource_allowances"
+              ]
+            },
+            "ListTasks": {
+              "methods": [
+                "list_tasks"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            },
+            "UpdateResourceAllowance": {
+              "methods": [
+                "update_resource_allowance"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "BatchServiceAsyncClient",
+          "rpcs": {
+            "CancelJob": {
+              "methods": [
+                "cancel_job"
+              ]
+            },
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "CreateResourceAllowance": {
+              "methods": [
+                "create_resource_allowance"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "DeleteResourceAllowance": {
+              "methods": [
+                "delete_resource_allowance"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "GetResourceAllowance": {
+              "methods": [
+                "get_resource_allowance"
+              ]
+            },
+            "GetTask": {
+              "methods": [
+                "get_task"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "ListResourceAllowances": {
+              "methods": [
+                "list_resource_allowances"
+              ]
+            },
+            "ListTasks": {
+              "methods": [
+                "list_tasks"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            },
+            "UpdateResourceAllowance": {
+              "methods": [
+                "update_resource_allowance"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "BatchServiceClient",
+          "rpcs": {
+            "CancelJob": {
+              "methods": [
+                "cancel_job"
+              ]
+            },
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "CreateResourceAllowance": {
+              "methods": [
+                "create_resource_allowance"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "DeleteResourceAllowance": {
+              "methods": [
+                "delete_resource_allowance"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "GetResourceAllowance": {
+              "methods": [
+                "get_resource_allowance"
+              ]
+            },
+            "GetTask": {
+              "methods": [
+                "get_task"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "ListResourceAllowances": {
+              "methods": [
+                "list_resource_allowances"
+              ]
+            },
+            "ListTasks": {
+              "methods": [
+                "list_tasks"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            },
+            "UpdateResourceAllowance": {
+              "methods": [
+                "update_resource_allowance"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

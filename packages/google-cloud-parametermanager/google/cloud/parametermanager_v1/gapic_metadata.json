@@ -1,0 +1,358 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.parametermanager_v1",
+  "protoPackage": "google.cloud.parametermanager.v1",
+  "schema": "1.0",
+  "services": {
+    "ParameterManager": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ParameterManagerClient",
+          "rpcs": {
+            "CreateParameter": {
+              "methods": [
+                "create_parameter"
+              ]
+            },
+            "CreateParameterVersion": {
+              "methods": [
+                "create_parameter_version"
+              ]
+            },
+            "CreateTemplate": {
+              "methods": [
+                "create_template"
+              ]
+            },
+            "CreateTemplateVersion": {
+              "methods": [
+                "create_template_version"
+              ]
+            },
+            "DeleteParameter": {
+              "methods": [
+                "delete_parameter"
+              ]
+            },
+            "DeleteParameterVersion": {
+              "methods": [
+                "delete_parameter_version"
+              ]
+            },
+            "DeleteTemplate": {
+              "methods": [
+                "delete_template"
+              ]
+            },
+            "DeleteTemplateVersion": {
+              "methods": [
+                "delete_template_version"
+              ]
+            },
+            "GetParameter": {
+              "methods": [
+                "get_parameter"
+              ]
+            },
+            "GetParameterVersion": {
+              "methods": [
+                "get_parameter_version"
+              ]
+            },
+            "GetTemplate": {
+              "methods": [
+                "get_template"
+              ]
+            },
+            "GetTemplateVersion": {
+              "methods": [
+                "get_template_version"
+              ]
+            },
+            "ListParameterVersions": {
+              "methods": [
+                "list_parameter_versions"
+              ]
+            },
+            "ListParameters": {
+              "methods": [
+                "list_parameters"
+              ]
+            },
+            "ListTemplateVersions": {
+              "methods": [
+                "list_template_versions"
+              ]
+            },
+            "ListTemplates": {
+              "methods": [
+                "list_templates"
+              ]
+            },
+            "RenderParameterVersion": {
+              "methods": [
+                "render_parameter_version"
+              ]
+            },
+            "RenderTemplateVersion": {
+              "methods": [
+                "render_template_version"
+              ]
+            },
+            "UpdateParameter": {
+              "methods": [
+                "update_parameter"
+              ]
+            },
+            "UpdateParameterVersion": {
+              "methods": [
+                "update_parameter_version"
+              ]
+            },
+            "UpdateTemplate": {
+              "methods": [
+                "update_template"
+              ]
+            },
+            "UpdateTemplateVersion": {
+              "methods": [
+                "update_template_version"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ParameterManagerAsyncClient",
+          "rpcs": {
+            "CreateParameter": {
+              "methods": [
+                "create_parameter"
+              ]
+            },
+            "CreateParameterVersion": {
+              "methods": [
+                "create_parameter_version"
+              ]
+            },
+            "CreateTemplate": {
+              "methods": [
+                "create_template"
+              ]
+            },
+            "CreateTemplateVersion": {
+              "methods": [
+                "create_template_version"
+              ]
+            },
+            "DeleteParameter": {
+              "methods": [
+                "delete_parameter"
+              ]
+            },
+            "DeleteParameterVersion": {
+              "methods": [
+                "delete_parameter_version"
+              ]
+            },
+            "DeleteTemplate": {
+              "methods": [
+                "delete_template"
+              ]
+            },
+            "DeleteTemplateVersion": {
+              "methods": [
+                "delete_template_version"
+              ]
+            },
+            "GetParameter": {
+              "methods": [
+                "get_parameter"
+              ]
+            },
+            "GetParameterVersion": {
+              "methods": [
+                "get_parameter_version"
+              ]
+            },
+            "GetTemplate": {
+              "methods": [
+                "get_template"
+              ]
+            },
+            "GetTemplateVersion": {
+              "methods": [
+                "get_template_version"
+              ]
+            },
+            "ListParameterVersions": {
+              "methods": [
+                "list_parameter_versions"
+              ]
+            },
+            "ListParameters": {
+              "methods": [
+                "list_parameters"
+              ]
+            },
+            "ListTemplateVersions": {
+              "methods": [
+                "list_template_versions"
+              ]
+            },
+            "ListTemplates": {
+              "methods": [
+                "list_templates"
+              ]
+            },
+            "RenderParameterVersion": {
+              "methods": [
+                "render_parameter_version"
+              ]
+            },
+            "RenderTemplateVersion": {
+              "methods": [
+                "render_template_version"
+              ]
+            },
+            "UpdateParameter": {
+              "methods": [
+                "update_parameter"
+              ]
+            },
+            "UpdateParameterVersion": {
+              "methods": [
+                "update_parameter_version"
+              ]
+            },
+            "UpdateTemplate": {
+              "methods": [
+                "update_template"
+              ]
+            },
+            "UpdateTemplateVersion": {
+              "methods": [
+                "update_template_version"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ParameterManagerClient",
+          "rpcs": {
+            "CreateParameter": {
+              "methods": [
+                "create_parameter"
+              ]
+            },
+            "CreateParameterVersion": {
+              "methods": [
+                "create_parameter_version"
+              ]
+            },
+            "CreateTemplate": {
+              "methods": [
+                "create_template"
+              ]
+            },
+            "CreateTemplateVersion": {
+              "methods": [
+                "create_template_version"
+              ]
+            },
+            "DeleteParameter": {
+              "methods": [
+                "delete_parameter"
+              ]
+            },
+            "DeleteParameterVersion": {
+              "methods": [
+                "delete_parameter_version"
+              ]
+            },
+            "DeleteTemplate": {
+              "methods": [
+                "delete_template"
+              ]
+            },
+            "DeleteTemplateVersion": {
+              "methods": [
+                "delete_template_version"
+              ]
+            },
+            "GetParameter": {
+              "methods": [
+                "get_parameter"
+              ]
+            },
+            "GetParameterVersion": {
+              "methods": [
+                "get_parameter_version"
+              ]
+            },
+            "GetTemplate": {
+              "methods": [
+                "get_template"
+              ]
+            },
+            "GetTemplateVersion": {
+              "methods": [
+                "get_template_version"
+              ]
+            },
+            "ListParameterVersions": {
+              "methods": [
+                "list_parameter_versions"
+              ]
+            },
+            "ListParameters": {
+              "methods": [
+                "list_parameters"
+              ]
+            },
+            "ListTemplateVersions": {
+              "methods": [
+                "list_template_versions"
+              ]
+            },
+            "ListTemplates": {
+              "methods": [
+                "list_templates"
+              ]
+            },
+            "RenderParameterVersion": {
+              "methods": [
+                "render_parameter_version"
+              ]
+            },
+            "RenderTemplateVersion": {
+              "methods": [
+                "render_template_version"
+              ]
+            },
+            "UpdateParameter": {
+              "methods": [
+                "update_parameter"
+              ]
+            },
+            "UpdateParameterVersion": {
+              "methods": [
+                "update_parameter_version"
+              ]
+            },
+            "UpdateTemplate": {
+              "methods": [
+                "update_template"
+              ]
+            },
+            "UpdateTemplateVersion": {
+              "methods": [
+                "update_template_version"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

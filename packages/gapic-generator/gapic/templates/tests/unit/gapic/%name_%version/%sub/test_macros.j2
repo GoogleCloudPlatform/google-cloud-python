@@ -1,0 +1,2375 @@
+{% macro grpc_required_tests(method, service, api, full_extended_lro=False) %}
+{%- set method_settings = api.all_method_settings.get(method.meta.address.proto) -%}
+{%- set auto_populated_fields = method_settings.auto_populated_fields if method_settings else [] -%}
+{%- set auto_populated_field_sample_value = "explicit value for autopopulate-able field" -%}
+{% with method_name = method.client_method_name|snake_case + "_unary" if method.extended_lro and not full_extended_lro else method.client_method_name|snake_case, method_output = method.extended_lro.operation_type if method.extended_lro and not full_extended_lro else method.output %}
+@pytest.mark.parametrize("request_type", [
+{% if auto_populated_fields %}
+  # Pure protobuf messages (non-proto-plus) require keyword arguments.
+  {{ method.input.ident }}(**{
+    {% for auto_populated_field in auto_populated_fields %}
+    "{{ auto_populated_field }}": "{{ auto_populated_field_sample_value }}",
+    {% endfor %}
+  }),
+  {
+    {% for auto_populated_field in auto_populated_fields %}
+    "{{ auto_populated_field }}": "{{ auto_populated_field_sample_value }}",
+    {% endfor %}
+  },
+{% else %}
+  {{ method.input.ident }}(),
+  {},
+{% endif %}
+])
+def test_{{ method_name }}(request_type, transport: str = 'grpc'):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+    {% if method.client_streaming %}
+    requests = [request]
+    {% endif %}
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        # Designate an appropriate return value for the call.
+        {% if method.void %}
+        call.return_value = None
+        {% elif method.lro %}
+        call.return_value = operations_pb2.Operation(name='operations/spam')
+        {% elif method.server_streaming %}
+        call.return_value = iter([{{ method.output.ident }}()])
+        {% elif method.is_resumable_upload %}
+        call.return_value = {{ method.client_output.ident }}()
+        {% else %}
+        call.return_value = {{ method.output.ident }}(
+          {% for field in method.output.fields.values() | rejectattr('message')%}
+          {% if not field.oneof or field.proto3_optional %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endif %}{% endfor %}
+            {# This is a hack to only pick one field #}
+            {% for oneof_fields in method.output.oneof_fields().values() %}
+            {# Take the first non-message oneof field. In the corner case when all the fields of a oneof are messages, the oneof will not be populated #}
+            {# Use an outer if-statement here because `first` raises an error if called on an empty sequence #}
+            {% if (oneof_fields | rejectattr('message') | list) %}
+            {% with field = (oneof_fields | rejectattr('message') | first) %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endwith %}
+            {% endif %}
+            {% endfor %}
+        )
+        {% endif %}
+        {% if method.client_streaming %}
+        response = client.{{ method.client_method_name|snake_case }}(iter(requests))
+        {% else %}
+        response = client.{{ method_name }}(request)
+        {% endif %}
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        {% if method.client_streaming %}
+        assert next(args[0]) == request
+        {% else %}
+        request = {{ method.input.ident }}()
+        {% for auto_populated_field in auto_populated_fields %}
+        request.{{ auto_populated_field }} = "{{ auto_populated_field_sample_value }}"
+        {% endfor %}
+        assert args[0] == request
+        {% endif %}
+
+    # Establish that the response is the type that we expect.
+    {% if method.void %}
+    assert response is None
+    {% elif method.lro or (method.extended_lro and full_extended_lro) %}
+    assert isinstance(response, future.Future)
+    {% elif method.extended_lro and not full_extended_lro %}
+    assert isinstance(response, {{ method.extended_lro.operation_type.ident }})
+    {% elif method.server_streaming %}
+    for message in response:
+        assert isinstance(message, {{ method.output.ident }})
+    {% elif method.is_resumable_upload %}
+    assert isinstance(response, {{ method.client_output.ident }})
+    {% else %}
+    {% if "next_page_token" in method.output.fields.values()|map(attribute='name', default="") and not method.paged_result_field %}
+    {# Cheeser assertion to force code coverage for bad paginated methods #}
+    assert response.raw_page is response
+    {% endif %}
+    assert isinstance(response, {{ method.client_output.ident }})
+    {% for field in method_output.fields.values() | rejectattr('message') %}
+    {% if not field.oneof or field.proto3_optional %}
+    {% if field.field_pb.type in [1, 2] %}{# Use approx eq for floats #}
+    {% if field.repeated %}
+    for index in range(len(response.{{ field.name }})):
+        assert math.isclose(
+            response.{{ field.name }}[index],
+            {{ field.mock_value }}[index],
+            rel_tol=1e-6,
+        )
+    {% else %}{# field.repeated #}
+    assert math.isclose(response.{{ field.name }}, {{ field.mock_value }}, rel_tol=1e-6)
+    {% endif %}{# field.repeated #}
+    {% elif field.field_pb.type == 8 %}{# Use 'is' for bools #}
+    assert response.{{ field.name }} is {{ field.mock_value }}
+    {% else %}
+    assert response.{{ field.name }} == {{ field.mock_value }}
+    {% endif %}
+    {% endif %}{# end oneof/optional #}
+    {% endfor %}
+    {% endif %}
+    {%- if not method.client_streaming %}
+
+
+def test_{{ method_name }}_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport='grpc',
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = {{ method.input.ident }}(
+    {% for field in method.input.fields.values() if field.ident|string() == "str" and not field.uuid4 %}
+        {{ field.name }}={{ field.mock_value }},
+    {% endfor %}
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        call.return_value.name = "foo" # operation_request.operation in compute client(s) expect a string.
+        client.{{ method_name }}(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+{% with method_settings = api.all_method_settings.get(method.meta.address.proto) %}
+        request_msg = {{ method.input.ident }}(
+        {% for field in method.input.fields.values() if field.ident|string() == "str" and not field.uuid4 %}
+            {{ field.name }}={{ field.mock_value }},
+        {% endfor %}
+        )
+{% if method_settings is not none %}
+{% for auto_populated_field in method_settings.auto_populated_fields %}
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].{{ auto_populated_field }})
+        request_msg.{{ auto_populated_field }} = args[0].{{ auto_populated_field }}
+{% endfor %}
+{% endif %}{# if method_settings is not none #}
+{% endwith %}{# method_settings #}
+        assert args[0] == request_msg
+{% endif %}
+
+def test_{{ method_name }}_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = {{ service.client_name }}(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.{{method.transport_safe_name|snake_case}} in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = "foo" # operation_request.operation in compute client(s) expect a string.
+        client._transport._wrapped_methods[client._transport.{{method.transport_safe_name|snake_case}}] = mock_rpc
+        {% if method.client_streaming %}
+        request = [{}]
+        client.{{ method.client_method_name|snake_case }}(request)
+        {% else %}
+        request = {}
+        client.{{ method_name }}(request)
+        {% endif %}
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        {% if method.lro or method.extended_lro %}
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+        {% endif %}
+
+        {% if method.client_streaming %}
+        client.{{ method.client_method_name|snake_case }}(request)
+        {% else %}
+        client.{{ method_name }}(request)
+        {% endif %}
+
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+{% if not full_extended_lro %}
+@pytest.mark.asyncio
+async def test_{{ method_name }}_async_use_cached_wrapped_rpc(transport: str = "grpc_asyncio"):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = {{ service.async_client_name }}(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._client._transport.{{method.transport_safe_name|snake_case}} in client._client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[client._client._transport.{{method.transport_safe_name|snake_case}}] = mock_rpc
+
+        {% if method.client_streaming %}
+        request = [{}]
+        await client.{{ method.client_method_name|snake_case }}(request)
+        {% else %}
+        request = {}
+        await client.{{ method_name }}(request)
+        {% endif %}
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        {% if method.lro or method.extended_lro %}
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+        {% endif %}
+
+        {% if method.client_streaming %}
+        await client.{{ method.client_method_name|snake_case }}(request)
+        {% else %}
+        await client.{{ method_name }}(request)
+        {% endif %}
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("request_type", [
+{% if auto_populated_fields %}
+  # Pure protobuf messages (non-proto-plus) require keyword arguments.
+  {{ method.input.ident }}(**{
+    {%- for auto_populated_field in auto_populated_fields %}
+    "{{ auto_populated_field }}": "{{ auto_populated_field_sample_value }}",
+    {%- endfor %}
+  }),
+  {
+    {%- for auto_populated_field in auto_populated_fields %}
+    "{{ auto_populated_field }}": "{{ auto_populated_field_sample_value }}",
+    {%- endfor %}
+  },
+{% else %}
+  {{ method.input.ident }}(),
+  {},
+{% endif %}
+])
+async def test_{{ method_name }}_async(request_type, transport: str = 'grpc_asyncio'):
+    client = {{ service.async_client_name }}(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+    {% if method.client_streaming %}
+    requests = [request]
+    {% endif %}
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        # Designate an appropriate return value for the call.
+        {% if method.void %}
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
+        {% elif method.lro %}
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name='operations/spam')
+        )
+        {% elif not method.client_streaming and method.server_streaming %}
+        call.return_value = mock.Mock(aio.UnaryStreamCall, autospec=True)
+        call.return_value.read = mock.AsyncMock(side_effect=[{{ method.output.ident }}()])
+        {% elif method.client_streaming and method.server_streaming %}
+        call.return_value = mock.Mock(aio.StreamStreamCall, autospec=True)
+        call.return_value.read = mock.AsyncMock(side_effect=[{{ method.output.ident }}()])
+        {% elif method.is_resumable_upload %}
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            {{ method.client_output_async.ident }}()
+        )
+        {% else %}
+        call.return_value ={{ '' }}
+            {%- if not method.client_streaming and not method.server_streaming -%}
+                grpc_helpers_async.FakeUnaryUnaryCall
+            {%- else -%}
+                grpc_helpers_async.FakeStreamUnaryCall
+            {%- endif -%}({{ method.output.ident }}(
+            {% for field in method.output.fields.values() | rejectattr('message') %}{% if not field.oneof or field.proto3_optional %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endif %}
+            {% endfor %}
+        ))
+        {% endif %}
+        {% if method.client_streaming and method.server_streaming %}
+        response = await client.{{ method.client_method_name|snake_case }}(iter(requests))
+        {% elif method.client_streaming and not method.server_streaming %}
+        response = await (await client.{{ method.client_method_name|snake_case }}(iter(requests)))
+        {% else %}
+        response = await client.{{ method_name }}(request)
+        {% endif %}
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        {% if method.client_streaming %}
+        assert next(args[0]) == request
+        {% else %}
+        request = {{ method.input.ident }}()
+        {% for auto_populated_field in auto_populated_fields %}
+        request.{{ auto_populated_field }} = "{{ auto_populated_field_sample_value }}"
+        {% endfor %}
+        assert args[0] == request
+        {% endif %}
+
+    # Establish that the response is the type that we expect.
+    {% if method.void %}
+    assert response is None
+    {% elif method.lro %}
+    assert isinstance(response, future.Future)
+    {% elif method.extended_lro and not full_extended_lro %}
+    assert isinstance(response, {{ method.extended_lro.operation_type.ident }})
+    {% elif method.server_streaming %}
+    message = await response.read()
+    assert isinstance(message, {{ method.output.ident }})
+    {% elif method.is_resumable_upload %}
+    assert isinstance(response, {{ method.client_output_async.ident }})
+    {% else %}
+    assert isinstance(response, {{ method.client_output_async.ident }})
+    {% for field in method_output.fields.values() | rejectattr('message') %}
+    {% if not field.oneof or field.proto3_optional %}
+    {% if field.field_pb.type in [1, 2] %}{# Use approx eq for floats #}
+    {% if field.repeated %}
+    for index in range(len(response.{{ field.name }})):
+        assert math.isclose(
+            response.{{ field.name }}[index],
+            {{ field.mock_value }}[index],
+            rel_tol=1e-6,
+        )
+    {% else %}{# field.repeated #}
+    assert math.isclose(response.{{ field.name }}, {{ field.mock_value }}, rel_tol=1e-6)
+    {% endif %}{# field.repeated #}
+    {% elif field.field_pb.type == 8 %}{# Use 'is' for bools #}
+    assert response.{{ field.name }} is {{ field.mock_value }}
+    {% else %}
+    assert response.{{ field.name }} == {{ field.mock_value }}
+    {% endif %}
+    {% endif %}{# oneof/optional #}
+    {% endfor %}
+    {% endif %}
+{% endif %}{# full_extended_lro #}
+
+{% if method.field_headers and not method.client_streaming and not method.explicit_routing %}
+def test_{{ method_name }}_field_headers():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = {{ method.input.ident }}()
+
+    {% for field_header in method.field_headers %}
+    request.{{ field_header.disambiguated }} = {{ method.input.get_field(field_header.disambiguated).mock_value }}
+    {% endfor %}
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        {% if method.void %}
+        call.return_value = None
+        {% elif method.lro %}
+        call.return_value = operations_pb2.Operation(name='operations/op')
+        {% elif method.server_streaming %}
+        call.return_value = iter([{{ method.output.ident }}()])
+        {% else %}
+        call.return_value = {{ method.output.ident }}()
+        {% endif %}
+        client.{{ method_name }}(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        'x-goog-request-params',
+        '{% for field_header in method.field_headers -%}
+        {{ field_header.raw }}={{ method.input.get_field(field_header.disambiguated).mock_value|trim("'") }}
+        {%- if not loop.last %}&{% endif %}
+        {%- endfor -%}',
+    ) in kw['metadata']
+
+
+{% if not full_extended_lro %}
+@pytest.mark.asyncio
+async def test_{{ method_name }}_field_headers_async():
+    client = {{ service.async_client_name }}(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = {{ method.input.ident }}()
+
+    {% for field_header in method.field_headers %}
+    request.{{ field_header.disambiguated }} = {{ method.input.get_field(field_header.disambiguated).mock_value }}
+    {% endfor %}
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        {% if method.void %}
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
+        {% elif method.lro %}
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(operations_pb2.Operation(name='operations/op'))
+        {% elif method.server_streaming %}
+        call.return_value = mock.Mock(aio.UnaryStreamCall, autospec=True)
+        call.return_value.read = mock.AsyncMock(side_effect=[{{ method.output.ident }}()])
+        {% else %}
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall({{ method.output.ident }}())
+        {% endif %}
+        await client.{{ method_name }}(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        'x-goog-request-params',
+        '{% for field_header in method.field_headers -%}
+        {{ field_header.raw }}={{ method.input.get_field(field_header.disambiguated).mock_value|trim("'") }}
+        {%- if not loop.last %}&{% endif %}
+        {%- endfor -%}',
+    ) in kw['metadata']
+{% endif %}
+{% endif %}{# full_extended_lro #}
+
+{% if method.ident.package != method.input.ident.package %}
+def test_{{ method_name }}_from_dict_foreign():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        # Designate an appropriate return value for the call.
+        {% if method.void %}
+        call.return_value = None
+        {% elif method.lro %}
+        call.return_value = operations_pb2.Operation(name='operations/op')
+        {% elif method.server_streaming %}
+        call.return_value = iter([{{ method.output.ident }}()])
+        {% else %}
+        call.return_value = {{ method.output.ident }}()
+        {% endif %}
+        response = client.{{ method_name }}(request={
+            {% for field in method.input.fields.values() %}
+            '{{ field.name }}': {{ field.mock_value }},
+            {% endfor %}
+            }
+        )
+        call.assert_called()
+
+{% endif %}
+
+{% if method.flattened_fields and not method.client_streaming %}
+def test_{{ method_name }}_flattened():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        # Designate an appropriate return value for the call.
+        {% if method.void %}
+        call.return_value = None
+        {% elif method.lro %}
+        call.return_value = operations_pb2.Operation(name='operations/op')
+        {% elif method.server_streaming %}
+        call.return_value = iter([{{ method.output.ident }}()])
+        {% else %}
+        call.return_value = {{ method.output.ident }}()
+        {% endif %}
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.{{ method_name }}(
+            {% for field in method.flattened_fields.values() %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endfor %}
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        {% for key, field in method.flattened_fields.items() %}{% if not field.oneof or field.proto3_optional %}
+        {% if field.ident|string() == 'timestamp_pb2.Timestamp' %}
+        assert TimestampRule().to_proto(args[0].{{ key }}) == {{ field.mock_value }}
+        {% elif field.ident|string() == 'duration_pb2.Duration' %}
+        assert DurationRule().to_proto(args[0].{{ key }}) == {{ field.mock_value }}
+        {% elif (field.ident|string()).startswith('wrappers_pb2.') %}
+        assert wrappers.{{ (field.ident|string())[13:] }}Rule().to_proto(args[0].{{ key }}) == {{ field.mock_value }}
+        {% elif field.field_pb.type == 2 %}{# Use approx eq for floats #}
+        assert math.isclose(args[0].{{ field.name }}, {{ field.mock_value }}, rel_tol=1e-6)
+        {% else %}
+        arg = args[0].{{ key }}
+        mock_val = {{ field.mock_value }}
+        {% if field.ident|string() == "struct_pb2.Value" %}
+        from proto.marshal import Marshal
+        from proto.marshal.rules.struct import ValueRule
+        rule = ValueRule(marshal=Marshal(name="Test"))
+        mock_val = rule.to_python(mock_val)
+        {% endif %}{# struct_pb2.Value #}
+        assert arg == mock_val
+        {% endif %}
+        {% endif %}{% endfor %}
+        {% for oneofs in method.flattened_oneof_fields().values() %}
+        {% with field = oneofs[-1]  %}
+        assert args[0].{{ method.flattened_field_to_key[field.name] }} == {{ field.mock_value }}
+        {% endwith %}
+        {% endfor %}
+
+
+
+def test_{{ method_name }}_flattened_error():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.{{ method_name }}(
+            {{ method.input.ident }}(),
+            {% for field in method.flattened_fields.values() %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endfor %}
+        )
+
+{% if not full_extended_lro %}
+@pytest.mark.asyncio
+async def test_{{ method_name }}_flattened_async():
+    client = {{ service.async_client_name }}(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        # Designate an appropriate return value for the call.
+        {% if method.void %}
+        call.return_value = None
+        {% elif method.lro %}
+        call.return_value = operations_pb2.Operation(name='operations/op')
+        {% elif method.server_streaming %}
+        call.return_value = iter([{{ method.output.ident }}()])
+        {% else %}
+        call.return_value = {{ method.output.ident }}()
+        {% endif %}
+
+
+        {% if method.void %}
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
+        {% elif method.lro %}
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name='operations/spam')
+        )
+        {% elif not method.client_streaming and method.server_streaming %}
+        call.return_value = mock.Mock(aio.UnaryStreamCall, autospec=True)
+        {% elif method.client_streaming and method.server_streaming %}
+        call.return_value = mock.Mock(aio.StreamStreamCall, autospec=True)
+        {% else %}
+        call.return_value = {{ '' }}
+            {%- if not method.client_streaming and not method.server_streaming -%}
+                grpc_helpers_async.FakeUnaryUnaryCall
+            {%- else -%}
+                grpc_helpers_async.FakeStreamUnaryCall
+            {%- endif -%}({{ method.output.ident }}())
+        {% endif %}
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.{{ method_name }}(
+            {% for field in method.flattened_fields.values() %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endfor %}
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        {% for key, field in method.flattened_fields.items() %}{% if not field.oneof or field.proto3_optional %}
+        {% if field.ident|string() == 'timestamp_pb2.Timestamp' %}
+        assert TimestampRule().to_proto(args[0].{{ key }}) == {{ field.mock_value }}
+        {% elif field.ident|string() == 'duration_pb2.Duration' %}
+        assert DurationRule().to_proto(args[0].{{ key }}) == {{ field.mock_value }}
+        {% elif (field.ident|string()).startswith('wrappers_pb2.') %}
+        assert wrappers.{{ (field.ident|string())[13:] }}Rule().to_proto(args[0].{{ key }}) == {{ field.mock_value }}
+        {% elif field.field_pb.type == 2 %}{# Use approx eq for floats #}
+        assert math.isclose(args[0].{{ field.name }}, {{ field.mock_value }}, rel_tol=1e-6)
+        {% else %}
+        arg = args[0].{{ key }}
+        mock_val = {{ field.mock_value }}
+        {% if field.ident|string() == "struct_pb2.Value" %}
+        from proto.marshal import Marshal
+        from proto.marshal.rules.struct import ValueRule
+        rule = ValueRule(marshal=Marshal(name="Test"))
+        mock_val = rule.to_python(mock_val)
+        {% endif %}{# struct_pb2.Value #}
+        assert arg == mock_val
+        {% endif %}
+        {% endif %}{% endfor %}
+        {% for oneofs in method.flattened_oneof_fields().values() %}
+        {% with field = oneofs[-1]  %}
+        assert args[0].{{ method.flattened_field_to_key[field.name] }} == {{ field.mock_value }}
+        {% endwith %}
+        {% endfor %}
+
+@pytest.mark.asyncio
+async def test_{{ method_name }}_flattened_error_async():
+    client = {{ service.async_client_name }}(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.{{ method_name }}(
+            {{ method.input.ident }}(),
+            {% for field in method.flattened_fields.values() %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endfor %}
+        )
+{% endif %}
+{% endif %}{# full_extended_lro #}
+
+
+{% if method.paged_result_field %}
+{% if not method.paged_result_field.map %}
+def test_{{ method_name }}_pager(transport_name: str = "grpc"):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[],
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+            ),
+            RuntimeError,
+        )
+
+        expected_metadata = ()
+        retry = retries.Retry()
+        timeout = 5
+        {% if not method.explicit_routing and method.field_headers and not method.client_streaming %}
+        expected_metadata = tuple(expected_metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((
+                {% for field_header in method.field_headers %}
+                ('{{ field_header.raw }}', ''),
+                {% endfor %}
+            )),
+        )
+        {% endif %}
+        {% if service.version %}
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:
+            expected_metadata = tuple(expected_metadata) + (
+                version_header.to_api_version_header("{{ service.version }}"),
+            )
+        {% endif %}
+        pager = client.{{ method_name }}(request={}, retry=retry, timeout=timeout)
+
+        assert pager._metadata == expected_metadata
+        assert pager._retry == retry
+        assert pager._timeout == timeout
+
+        assert pager.next_page_token == 'abc'
+        assert str(pager).startswith(f'{pager.__class__.__name__}<')
+
+        results = list(pager)
+        assert len(results) == 6
+        {% if method.paged_result_field.type.ident|string == 'struct_pb2.ListValue' %}
+        assert all(isinstance(i, Sequence)
+                   for i in results)
+        {% elif method.paged_result_field.type.ident|string == 'struct_pb2.Struct' %}
+        assert all(isinstance(i, Mapping)
+                   for i in results)
+        {% elif method.paged_result_field.type.ident|string == 'struct_pb2.Value' %}
+        assert all(True for i in results)
+        {% else %}
+        assert all(isinstance(i, {{ method.paged_result_field.type.ident }})
+                   for i in results)
+        {% endif %}
+{% endif %}
+def test_{{ method_name }}_pages(transport_name: str = "grpc"):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        # Set the response to a series of pages.
+        {% if method.paged_result_field.map %}
+        call.side_effect = (
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'a':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'b':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'c':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={},
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'g':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'h':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'i':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+            ),
+            RuntimeError,
+        )
+        {% else %}
+        call.side_effect = (
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[],
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+            ),
+            RuntimeError,
+        )
+        {% endif %}
+        {# method.paged_result_field.map #}
+        pages = list(client.{{ method_name }}(request={}).pages)
+        for page_, token in zip(pages, ['abc','def','ghi', '']):
+            assert page_.raw_page.next_page_token == token
+
+@pytest.mark.asyncio
+async def test_{{ method_name }}_async_pager():
+    client = {{ service.async_client_name }}(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__', new_callable=mock.AsyncMock) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+        {% if method.paged_result_field.map %}
+              {{ method.output.ident }}(
+                  {{ method.paged_result_field.name }}={
+                      'a':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                      'b':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                      'c':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                  },
+                  next_page_token='abc',
+              ),
+              {{ method.output.ident }}(
+                  {{ method.paged_result_field.name }}={},
+                  next_page_token='def',
+              ),
+              {{ method.output.ident }}(
+                  {{ method.paged_result_field.name }}={
+                      'g':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                  },
+                  next_page_token='ghi',
+              ),
+              {{ method.output.ident }}(
+                  {{ method.paged_result_field.name }}={
+                      'h':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                      'i':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                  },
+              ),
+            RuntimeError,
+        {% else %}
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[],
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+            ),
+            RuntimeError,
+        {% endif %}
+        )
+        async_pager = await client.{{ method_name }}(request={},)
+        assert async_pager.next_page_token == 'abc'
+        assert str(async_pager).startswith(f'{async_pager.__class__.__name__}<')
+
+        responses = []
+        async for response in async_pager: # pragma: no branch
+            responses.append(response)
+
+        assert len(responses) == 6
+        {% if method.paged_result_field.map %}
+
+        assert all(
+            isinstance(i, tuple)
+                for i in responses)
+        for result in responses:
+            assert isinstance(result, tuple)
+            assert tuple(type(t) for t in result) == (str, {{ method.paged_result_field.type.fields.get('value').ident }})
+
+        assert async_pager.get('a') is None
+        assert isinstance(async_pager.get('h'), {{ method.paged_result_field.type.fields.get('value').ident }})
+        {% else %}
+        {% if method.paged_result_field.type.ident|string == 'struct_pb2.ListValue' %}
+        assert all(isinstance(i, Sequence)
+                for i in responses)
+        {% elif method.paged_result_field.type.ident|string == 'struct_pb2.Struct' %}
+        assert all(isinstance(i, Mapping)
+                for i in responses)
+        {% elif method.paged_result_field.type.ident|string == 'struct_pb2.Value' %}
+        assert all(True for i in responses)
+        {% else %}
+        assert all(isinstance(i, {{ method.paged_result_field.type.ident }})
+                for i in responses)
+        {% endif %}
+        {% endif %}
+
+
+@pytest.mark.asyncio
+async def test_{{ method_name }}_async_pages():
+    client = {{ service.async_client_name }}(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__', new_callable=mock.AsyncMock) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+        {% if method.paged_result_field.map %}
+              {{ method.output.ident }}(
+                  {{ method.paged_result_field.name }}={
+                      'a':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                      'b':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                      'c':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                  },
+                  next_page_token='abc',
+              ),
+              {{ method.output.ident }}(
+                  {{ method.paged_result_field.name }}={},
+                  next_page_token='def',
+              ),
+              {{ method.output.ident }}(
+                  {{ method.paged_result_field.name }}={
+                      'g':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                  },
+                  next_page_token='ghi',
+              ),
+              {{ method.output.ident }}(
+                  {{ method.paged_result_field.name }}={
+                      'h':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                      'i':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                  },
+              ),
+            RuntimeError,
+        {% else %}
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[],
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+            ),
+            RuntimeError,
+        {% endif %}
+        )
+        pages = []
+        async for page_ in (
+            await client.{{ method_name }}(request={})
+        ).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ['abc','def','ghi', '']):
+            assert page_.raw_page.next_page_token == token
+{% elif method.lro and "next_page_token" in method.lro.response_type.fields.keys() %}
+def test_{{ method_name }}_raw_page_lro():
+    response = {{ method.lro.response_type.ident }}()
+    assert response.raw_page is response
+{% endif %}{# method.paged_result_field #}{% endwith %}
+{% endmacro %}
+
+{% macro rest_required_tests(api, method, service, numeric_enums=False, full_extended_lro=False) %}
+{% with method_name = method.client_method_name|snake_case + "_unary" if method.extended_lro and not full_extended_lro else method.client_method_name|snake_case, method_output = method.extended_lro.operation_type if method.extended_lro and not full_extended_lro else method.output %}{% if method.http_options %}
+{# TODO(kbandes): remove this if condition when lro and client streaming are supported. #}
+{% if not method.client_streaming %}
+def test_{{ method_name }}_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = {{ service.client_name }}(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.{{method.transport_safe_name|snake_case}} in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = "foo" # operation_request.operation in compute client(s) expect a string.
+        client._transport._wrapped_methods[client._transport.{{method.transport_safe_name|snake_case}}] = mock_rpc
+
+        {% if method.client_streaming %}
+        request = [{}]
+        client.{{ method.client_method_name|snake_case }}(request)
+        {% else %}
+        request = {}
+        client.{{ method_name }}(request)
+        {% endif %}
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        {% if method.lro or method.extended_lro %}
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+        {% endif %}
+
+        {% if method.client_streaming %}
+        client.{{ method.client_method_name|snake_case }}(request)
+        {% else %}
+        client.{{ method_name }}(request)
+        {% endif %}
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+    {% if method.input.required_fields %}
+def test_{{ method_name }}_rest_required_fields(request_type={{ method.input.ident }}):
+    transport_class = transports.{{ service.rest_transport_name }}
+
+    request_init = {}
+    {% for req_field in method.input.required_fields if req_field.is_primitive %}
+    {% if req_field.field_pb.type == 9 %}
+    request_init["{{ req_field.name }}"] = "{{ req_field.field_pb.default_value }}"
+    {% else %}
+    request_init["{{ req_field.name }}"] = {{ req_field.type.python_type(req_field.field_pb.default_value or 0) }}
+    {% endif %}{# default is str #}
+    {% endfor %}
+    request = request_type(**request_init)
+    {% if method.input.ident.is_proto_plus_type %}
+    pb_request = request_type.pb(request)
+    {% else %}
+    pb_request = request
+    {% endif %}
+    jsonified_request = json.loads(json_format.MessageToJson(
+        pb_request,
+        use_integers_for_enums=False
+    ))
+
+    # verify fields with default values are dropped
+    {% for req_field in method.input.required_fields if req_field.is_primitive and req_field.name in method.query_params %}
+    {% set field_name = req_field.name | camel_case %}
+    assert "{{ field_name }}" not in jsonified_request
+    {% endfor %}
+
+    default_values = getattr(
+        transport_class._Base{{ method.name }},
+        "_Base{{ method.name }}__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {k: v for k, v in default_values.items() if k not in jsonified_request}
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+    {% for req_field in method.input.required_fields if req_field.is_primitive and req_field.name in method.query_params %}
+    {% set field_name = req_field.name | camel_case %}
+    assert "{{ field_name }}" in jsonified_request
+    assert jsonified_request["{{ field_name }}"] == request_init["{{ req_field.name }}"]
+    {% endfor %}
+
+    {% for req_field in method.input.required_fields if req_field.is_primitive %}
+    {% set field_name = req_field.name | camel_case %}
+    {% set mock_value = req_field.primitive_mock_as_str() %}
+    jsonified_request["{{ field_name }}"] = {{ mock_value }}
+    {% endfor %}
+
+    {% if method.query_params %}
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(({% for param in method.query_params|sort %}"{{param | camel_case}}", {% endfor %}))
+    {% endif %}
+
+    # verify required fields with non-default values are left alone
+    {% for req_field in method.input.required_fields if req_field.is_primitive %}
+    {% set field_name = req_field.name | camel_case %}
+    {% set mock_value = req_field.primitive_mock_as_str() %}
+    assert "{{ field_name }}" in jsonified_request
+    assert jsonified_request["{{ field_name }}"] == {{ mock_value }}
+    {% endfor %}
+
+
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport='rest',
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    {% if method.void %}
+    return_value = None
+    {% elif method.lro %}
+    return_value = operations_pb2.Operation(name='operations/spam')
+    {% else %}
+    return_value = {{ method.output.ident }}()
+    {% endif %}
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, 'request') as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, 'transcode') as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            {% if method.input.ident.is_proto_plus_type %}
+            pb_request = request_type.pb(request)
+            {% else %}
+            pb_request = request
+            {% endif %}
+            transcode_result = {
+                'uri': 'v1/sample_method',
+                'method': "{{ method.http_options[0].method }}",
+                'query_params': pb_request,
+            }
+            {% if method.http_options[0].body %}
+            transcode_result['body'] = pb_request
+            {% endif %}
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            {% if method.void %}
+            json_return_value = ''
+            {% elif method.lro %}
+            json_return_value = json_format.MessageToJson(return_value)
+            {% else %}
+
+            {% if method.output.ident.is_proto_plus_type %}
+            # Convert return value to protobuf type
+            return_value = {{ method.output.ident }}.pb(return_value)
+            {% endif %}
+            json_return_value = json_format.MessageToJson(return_value)
+            {% endif %}
+            {% if method.server_streaming %}
+            json_return_value = "[{}]".format(json_return_value)
+            {% endif %}
+
+            response_value._content = json_return_value.encode('UTF-8')
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            {% if method.client_streaming %}
+            response = client.{{ method_name }}(iter(requests))
+            {% elif method.server_streaming %}
+            with mock.patch.object(response_value, 'iter_content') as iter_content:
+                iter_content.return_value = iter(json_return_value)
+                response = client.{{ method_name }}(request)
+            {% else %}
+            response = client.{{ method_name }}(request)
+            {% endif %}
+
+            expected_params = [
+            {% for req_field in method.input.required_fields if req_field.is_primitive and req_field.name in method.query_params %}
+                (
+                    "{{ req_field.name | camel_case }}",
+                    {% if req_field.field_pb.type == 9 %}
+                    "{{ req_field.field_pb.default_value }}",
+                    {% elif req_field.field_pb.type == 8 %}
+                    str({{ req_field.type.python_type(req_field.field_pb.default_value or 0) }}).lower(),
+                    {% else %}
+                    str({{ req_field.type.python_type(req_field.field_pb.default_value or 0) }}),
+                    {% endif %}{# default is str #}
+                ),
+              {% endfor %}
+              {% if numeric_enums %}
+                ('$alt', 'json;enum-encoding=int')
+              {% endif %}
+            ]
+    {% with method_settings = api.all_method_settings.get(method.meta.address.proto) %}
+    {% if method_settings is not none %}
+    {% for auto_populated_field in method_settings.auto_populated_fields %}
+            # Ensure that the uuid4 field is set according to AIP 4235
+            for i, (key, value) in enumerate(req.call_args.kwargs['params']):
+                if key == "{{ auto_populated_field|camel_case }}":
+                    assert _UUID4_RE.match(value)
+                    break
+            
+            # Include {{ auto_populated_field|camel_case }} within expected_params with value mock.ANY
+            expected_params = [p for p in expected_params if p[0] != "{{ auto_populated_field|camel_case }}"]
+            expected_params.append(
+                ("{{ auto_populated_field|camel_case }}", mock.ANY)
+            )
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+            actual_params = req.call_args.kwargs['params']
+            assert sorted(expected_params) == sorted(actual_params)
+
+    {% endif %}{# required_fields #}
+
+
+{% if method.flattened_fields and not method.client_streaming %}
+def test_{{ method_name }}_rest_flattened():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), 'request') as req:
+        # Designate an appropriate value for the returned response.
+        {% if method.void %}
+        return_value = None
+        {% elif method.lro %}
+        return_value = operations_pb2.Operation(name='operations/spam')
+        {% else %}
+        return_value = {{ method.output.ident }}()
+        {% endif %}
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {{ method.http_options[0].sample_request(method) }}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            {% for field in method.flattened_fields.values() %}
+            {% if not field.oneof or field.proto3_optional %}
+            {# ignore oneof fields that might conflict with sample_request #}
+            {{ field.name }}={{ field.mock_value }},
+            {% endif %}
+            {% endfor %}
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        {% if method.void %}
+        json_return_value = ''
+        {% elif method.lro %}
+        json_return_value = json_format.MessageToJson(return_value)
+        {% else %}
+        {% if method.output.ident.is_proto_plus_type %}
+        # Convert return value to protobuf type
+        return_value = {{ method.output.ident }}.pb(return_value)
+        {% endif %}
+        json_return_value = json_format.MessageToJson(return_value)
+        {% endif %}
+        {% if method.server_streaming %}
+        json_return_value = "[{}]".format(json_return_value)
+        {% endif %}
+        response_value._content = json_return_value.encode('UTF-8')
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        {% if method.server_streaming %}
+        with mock.patch.object(response_value, 'iter_content') as iter_content:
+            iter_content.return_value = iter(json_return_value)
+            client.{{ method_name }}(**mock_args)
+        {% else %}
+        client.{{ method_name }}(**mock_args)
+        {% endif %}
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        {% with uri = method.http_options[0].uri %}
+        assert path_template.validate("%s{{ uri }}" % client.transport._host, args[1])
+        {% endwith %}
+        {# TODO(kbandes) - reverse-transcode request args to check all request fields #}
+
+
+def test_{{ method_name }}_rest_flattened_error(transport: str = 'rest'):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.{{ method_name }}(
+            {{ method.input.ident }}(),
+            {% for field in method.flattened_fields.values() %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endfor %}
+        )
+{% endif %}{# flattened fields #}
+
+
+{% if method.paged_result_field %}
+def test_{{ method_name }}_rest_pager(transport: str = 'rest'):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, 'request') as req:
+        # TODO(kbandes): remove this mock unless there's a good reason for it.
+        #with mock.patch.object(path_template, 'transcode') as transcode:
+        # Set the response as a series of pages
+        {% if method.paged_result_field.map%}
+        response = (
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'a':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'b':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'c':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={},
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'g':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'h':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'i':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+            ),
+        )
+        {% else %}
+        response = (
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[],
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+            ),
+        )
+        {% endif %}
+        # Two responses for two calls
+        response = response + response
+
+        # Wrap the values into proper Response objs
+        response = tuple({{ method.output.ident }}.to_json(x) for x in response)
+        return_values = tuple(Response() for i in response)
+        for return_val, response_val in zip(return_values, response):
+            {% if method.server_streaming %}
+            response_val = "[{}]".format(response_val)
+            {% endif %}
+            return_val._content = response_val.encode('UTF-8')
+            return_val.status_code = 200
+        req.side_effect = return_values
+
+        sample_request = {{ method.http_options[0].sample_request(method) }}
+        {% for field in method.body_fields.values() %}
+        {% if not field.oneof or field.proto3_optional %}
+        {# ignore oneof fields that might conflict with sample_request #}
+        sample_request["{{ field.name }}"] = {{ field.mock_value }}
+        {% endif %}
+        {% endfor %}
+
+
+        pager = client.{{ method_name }}(request=sample_request)
+
+        assert pager.next_page_token == 'abc'
+        assert str(pager).startswith(f'{pager.__class__.__name__}<')
+
+        {% if method.paged_result_field.map %}
+        assert isinstance(pager.get('a'), {{ method.paged_result_field.type.fields.get('value').ident }})
+        assert pager.get('h') is None
+        {% endif %}
+
+        results = list(pager)
+        assert len(results) == 6
+        {% if method.paged_result_field.map %}
+        assert all(
+            isinstance(i, tuple)
+                for i in results)
+        for result in results:
+            assert isinstance(result, tuple)
+            assert tuple(type(t) for t in result) == (str, {{ method.paged_result_field.type.fields.get('value').ident }})
+
+        assert pager.get('a') is None
+        assert isinstance(pager.get('h'), {{ method.paged_result_field.type.fields.get('value').ident }})
+        {% else %}
+        {% if method.paged_result_field.type.ident|string == 'struct_pb2.ListValue' %}
+        assert all(isinstance(i, Sequence)
+                for i in results)
+        {% elif method.paged_result_field.type.ident|string == 'struct_pb2.Struct' %}
+        assert all(isinstance(i, Mapping)
+                for i in results)
+        {% elif method.paged_result_field.type.ident|string == 'struct_pb2.Value' %}
+        assert all(True for i in results)
+        {% else %}
+        assert all(isinstance(i, {{ method.paged_result_field.type.ident }})
+                for i in results)
+        {% endif %}
+        {% endif %}
+
+        pages = list(client.{{ method_name }}(request=sample_request).pages)
+        for page_, token in zip(pages, ['abc','def','ghi', '']):
+            assert page_.raw_page.next_page_token == token
+
+
+{%- endif %}{# paged_result_field #}
+
+{% else %}{# this is an lro or streaming method #}
+def test_{{ method_name }}_rest_unimplemented():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = {{ method.input.ident }}()
+    {% if method.client_streaming %}
+    requests = [request]
+    {% endif %}
+    with pytest.raises(NotImplementedError):
+        client.{{ method_name }}({% if method.client_streaming %}requests{% else %}request{% endif %})
+
+{% endif %}{# not lro and not streaming #}{% else %}{# not method.http_options #}
+def test_{{ method_name }}_rest_no_http_options():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = {{ method.input.ident }}()
+    {% if method.client_streaming %}
+    requests = [request]
+    {% endif %}
+    with pytest.raises(RuntimeError):
+        client.{{ method_name }}({% if method.client_streaming %}requests{% else %}request{% endif %})
+
+
+{% endif %}{# not method.http_options #}
+{% endwith %}{# method_name #}
+{% endmacro %}
+
+{#
+    This is a generic macro for testing method calls. Ideally this macro can be used to avoid duplication
+    in Jinja templates. If this macro cannot be custimized for a specific method call test, consider
+    creating a new macro with the name `method_call_test_<with_customization>` for the macro which supports
+    a more customized method call.
+#}
+{% macro method_call_test_generic(test_name, method, service, api, transport, request_dict, is_async=False, routing_param=None) %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+{% with method_name = method.name|snake_case + "_unary" if method.operation_service else method.client_method_name|snake_case %}
+{% set async_method_prefix = "async " if is_async else "" %}
+{% if is_async %}
+@pytest.mark.asyncio
+{% endif %}{# is_async #}
+{{ async_method_prefix }}def test_{{ method_name }}_{{ test_name }}_{{transport_name}}():
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+    client = {{ get_client(service=service, is_async=is_async) }}(
+        credentials={{ get_credentials(is_async=is_async) }},
+        transport="{{ transport_name }}",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+    {% if 'rest' not in transport %}
+        {% if is_async %}
+        # Designate an appropriate return value for the call.
+        {% if method.void %}
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
+        {% elif method.lro %}
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name='operations/spam')
+        )
+        {% elif method.server_streaming %}
+        call.return_value = mock.Mock(aio.UnaryStreamCall, autospec=True)
+        call.return_value.read = mock.AsyncMock(side_effect=[{{ method.output.ident }}()])
+        {% else %}
+        call.return_value = {{ '' }}
+            {%- if not method.server_streaming -%}
+                grpc_helpers_async.FakeUnaryUnaryCall
+            {%- else -%}
+                grpc_helpers_async.FakeStreamUnaryCall
+            {%- endif -%}({{ method.output.ident }}(
+            {% for field in method.output.fields.values() | rejectattr('message') %}{% if not field.oneof or field.proto3_optional %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endif %}
+            {% endfor %}
+        ))
+        {% endif %}{# method.void #}
+        {% else %}{# if not is_async #}
+        {% if method.void %}
+        call.return_value = None
+        {% elif method.lro %}
+        call.return_value = operations_pb2.Operation(name='operations/op')
+        {% elif method.server_streaming %}
+        call.return_value = iter([{{ method.output.ident }}()])
+        {% else %}
+        call.return_value = {{ method.output.ident }}()
+        {% endif %}
+        {% endif %}{# is_async #}
+    {% endif %}{# if 'rest' not in transport #}
+        {% if is_async %}
+        await client.{{ method_name }}(request={{ request_dict }})
+        {% else %}{# is_async #}
+        client.{{ method_name }}(request={{ request_dict }})
+        {% endif %}{# is_async #}
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, {% if routing_param %}kw{% else %}_{% endif %} = call.mock_calls[0]
+        {% if request_dict %}
+        request_msg = {{ method.input.ident }}(**{{ request_dict }})
+        {% else %}
+        request_msg = {{ method.input.ident }}()
+        {% endif %}{# request_dict #}
+        {% with method_settings = api.all_method_settings.get(method.meta.address.proto) %}
+        {% if method_settings is not none %}
+        {% for auto_populated_field in method_settings.auto_populated_fields %}
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].{{ auto_populated_field }})
+        request_msg.{{ auto_populated_field }} = args[0].{{ auto_populated_field }}
+        {% endfor %}{# for auto_populated_field in method_settings.auto_populated_fields #}
+        {% endif %}{# if method_settings is not none #}
+        {% endwith %}{# method_settings #}
+        assert args[0] == request_msg
+
+        {% if routing_param %}
+        expected_headers = {{ method.routing_rule.resolve(method.routing_rule, routing_param.sample_request) }}
+        assert gapic_v1.routing_header.to_grpc_metadata(expected_headers) in kw['metadata']
+        {% endif %}
+{% endwith %}{# method_name #}
+{% endmacro %}
+
+{% macro get_credentials(is_async=False) %}
+{{- 'async_anonymous_credentials()' if is_async else 'ga_credentials.AnonymousCredentials()' -}}
+{% endmacro %}
+
+{% macro get_client(service, is_async) %}
+{{- service.async_client_name if is_async else service.client_name -}}
+{% endmacro %}
+
+{% macro get_transport_name(transport, is_async=False)%}
+{{- transport + ("_asyncio" if is_async else "") -}}
+{% endmacro %}
+
+{% macro transport_kind_test(service, api, transport, is_async) %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+def test_transport_kind_{{ transport_name }}():
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+    transport = {{ get_client(service, is_async) }}.get_transport_class("{{ transport_name }}")(
+        credentials={{get_credentials(is_async)}}
+    )
+    assert transport.kind == "{{ transport_name }}"
+
+{% endmacro %}{# transport_kind_test #}
+
+{% macro lro_client_test(service, api, transport, is_async) %}
+{% if 'rest' in transport %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+def test_{{ service.name|snake_case }}_{{ transport_name }}_lro_client():
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+    client = {{ get_client(service=service, is_async=is_async) }}(
+        credentials={{ get_credentials(is_async=is_async) }},
+        transport="{{ transport_name }}",
+    )
+    transport = client.transport
+
+    # Ensure that we have an api-core operations client.
+    assert isinstance(
+        transport.operations_client,
+        {% if is_async %}operations_v1.AsyncOperationsRestClient{% else %}operations_v1.AbstractOperationsClient{% endif %},
+    )
+
+    # Ensure that subsequent calls to the property send the exact same object.
+    assert transport.operations_client is transport.operations_client
+{% endif %}{# 'rest' in transport #}
+{% endmacro %}{# lro_client_test #}
+
+
+{% macro transport_close_test(service, api, transport, is_async) %}
+{% set async_prefix = get_async_prefix(is_async) %}
+{% set async_decorator = get_async_decorator(is_async) %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+{% set close_session = {
+    'rest': "_session",
+    'grpc': "_grpc_channel"}
+-%}
+{{async_decorator}}
+{{async_prefix}}def test_transport_close_{{transport_name}}():
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+    client = {{ get_client(service, is_async) }}(
+        credentials={{get_credentials(is_async)}},
+        transport="{{transport_name}}"
+    )
+    with mock.patch.object(type(getattr(client.transport, "{{close_session[transport]}}")), "close") as close:
+        {{async_prefix}}with client:
+            close.assert_not_called()
+        close.assert_called_once()
+
+{% endmacro %}
+
+{# TODO(https://github.com/googleapis/gapic-generator-python/issues/2121): Remove / Update this test macro when async rest is GA. #}
+{% macro async_rest_unsupported_params_test(service) %}
+def test_unsupported_parameter_rest_asyncio():
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    options = client_options.ClientOptions(quota_project_id="octopus")
+    {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2137): Remove `type: ignore` once we add a version check for google-api-core. #}
+    with pytest.raises(core_exceptions.AsyncRestUnsupportedParameterError, match="google.api_core.client_options.ClientOptions.quota_project_id") as exc:  # type: ignore
+        client = {{ get_client(service, True) }}(
+            credentials={{get_credentials(True)}},
+            transport="rest_asyncio",
+            client_options=options
+    )
+
+{% endmacro %}
+
+{# get_await_prefix sets an "await" keyword
+ # to a method call if is_async=True.
+#}
+{% macro get_await_prefix(is_async) %}
+{{- "await " if is_async else "" -}}
+{% endmacro %}
+
+{# get_async_prefix sets an "async" keyword
+ # to a method definition if is_async=True.
+#}
+{% macro get_async_prefix(is_async) %}
+{{- "async " if is_async else "" -}}
+{% endmacro %}
+
+{# get_async_decorator sets a "@pytest.mark.asyncio" decorator
+ # to an async test method if is_async=True.
+#}
+{% macro get_async_decorator(is_async) %}
+{{- "@pytest.mark.asyncio " if is_async else "" -}}
+{% endmacro %}
+
+{# is_rest_unsupported_method renders:
+ # 'True' if transport is REST (sync or async) and method is a client_streaming method.
+ # 'False' otherwise.
+ # NOTE: There are no plans to add support for client streaming.
+#}
+{% macro is_rest_unsupported_method(method, is_async) %}
+{%- if method.client_streaming -%}
+{{'True'}}
+{%- else -%}
+{{'False'}}
+{%- endif -%}
+{% endmacro %}
+
+{# run_transport_tests_for_config generates all the rest specific tests for both
+# sync and async transport.
+# TODO(https://github.com/googleapis/gapic-generator-python/issues/2142): Continue migrating the test cases
+# in macro::run_transport_tests_for_config into here, and then delete that macro in favor of this one.
+# TODO(https://github.com/googleapis/gapic-generator-python/issues/2153): As a follow up, migrate gRPC test cases
+# into `run_transport_tests_for_config` and make any of the rest specific specific macros which are called within more generic. 
+#}
+{% macro run_transport_tests_for_config(service, api, transport, is_async) %}
+{% for method in service.methods.values() %}
+{% if is_rest_unsupported_method(method, is_async) == 'True' or not method.http_options %}
+{{ rest_method_not_implemented_error(service, method, transport, is_async) }}
+{% else %}
+{% if 'rest' in transport %}
+{{ bad_request_test(service, method, transport, is_async) }}
+{{ call_success_test(service, method, transport, is_async) }}
+{{ inteceptor_class_test(service, method, transport, is_async) }}
+{% endif %}{# if 'rest' in transport #}
+{% endif %}{# is_rest_unsupported_method(method, is_async) == 'False' and method.http_options #}
+{% endfor %}{# for method in service.methods.values() #}
+{% for name, sig in api.mixin_api_signatures.items() %}
+{% if 'rest' in transport %}
+{{ bad_request_mixins_test(service, api, name, sig, transport, is_async) }}
+{{ call_success_mixins_test(service, api, name, sig, transport, is_async) }}
+{% endif %}{# if 'rest' in transport #}
+{% endfor %}
+{{ initialize_client_with_transport_test(service, transport, is_async) }}
+{% endmacro %}
+
+{# rest_method_not_implemented_error generates tests for methods
+ # which are not supported for rest transport.
+#}
+{% macro rest_method_not_implemented_error(service, method, transport, is_async) %}
+{% if 'rest' in transport %}
+{% set await_prefix = get_await_prefix(is_async) %}
+{% set async_prefix = get_async_prefix(is_async) %}
+{% set async_decorator = get_async_decorator(is_async) %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+{% set method_name = method.client_method_name|snake_case %}
+{{async_decorator}}
+{{async_prefix}}def test_{{ method_name }}_{{transport_name}}_error():
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+
+    client = {{ get_client(service, is_async) }}(
+        credentials={{get_credentials(is_async)}},
+        transport="{{transport_name}}"
+    )
+
+    with pytest.raises(NotImplementedError) as not_implemented_error:
+        {{await_prefix}}client.{{ method_name }}({})
+    assert (
+        "Method {{ method.name }} is not available over REST transport"
+        in str(not_implemented_error.value)
+    )
+
+{% endif %}{# if 'rest' in transport #}
+{% endmacro %}
+
+{# initialize_client_with_transport_test adds coverage for transport clients.
+ # Note: This test case is needed because we aren't unconditionally 
+ # generating the not implemented coverage test for every client.
+#}
+{% macro initialize_client_with_transport_test(service, transport, is_async) %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+def test_initialize_client_w_{{transport_name}}():
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+    client = {{ get_client(service, is_async) }}(
+        credentials={{get_credentials(is_async)}},
+        transport="{{transport_name}}"
+    )
+    assert client is not None
+
+{% endmacro %}
+
+{# bad_request_test generates tests for rest methods
+ # which raise a google.api.core.exceptions.BadRequest error.
+#}
+{% macro bad_request_test(service, method, transport, is_async) %}
+{% set await_prefix = get_await_prefix(is_async) %}
+{% set async_prefix = get_async_prefix(is_async) %}
+{% set async_decorator = get_async_decorator(is_async) %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+{% set method_name = method.client_method_name|snake_case %}
+{% set mocked_session = "AsyncAuthorizedSession" if is_async else "Session" %}
+{{ async_decorator }}
+{{ async_prefix }}def test_{{ method_name }}_{{transport_name}}_bad_request(request_type={{ method.input.ident }}):
+{# TODO(https://github.com/googleapis/gapic-generator-python/issues/2157): Refactor this macro to include `gRPC` coverage. #}
+{% if 'grpc' in transport %}
+    raise NotImplementedError("gRPC is currently not supported for this test case.")
+{% else %}{# 'rest' in transport #}
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+    client = {{ get_client(service, is_async) }}(
+        credentials={{get_credentials(is_async)}},
+        transport="{{transport_name}}"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {{ method.http_options[0].sample_request(method) }}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with mock.patch.object({{mocked_session}}, 'request') as req, pytest.raises(core_exceptions.BadRequest):
+        # Wrap the value into a proper Response obj
+        {% if method.is_resumable_upload %}
+        response_value = mock.MagicMock()
+        {% else %}
+        response_value = mock.Mock()
+        {% endif %}
+        {% if is_async %}
+        response_value.read = mock.AsyncMock(return_value=b'{}')
+        {% if method.is_resumable_upload %}
+        response_value.close = mock.AsyncMock(return_value=None)
+        {% endif %}
+        {% else %}
+        json_return_value = ''
+        response_value.json = mock.Mock(return_value={})
+        {% if method.is_resumable_upload %}
+        response_value.ok = False
+        {% endif %}
+        {% endif %}{# if is_async #}
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        {% if method.is_resumable_upload %}
+        response = {{ await_prefix }}client.{{ method_name }}(request)
+        {{ await_prefix }}response.upload(b"")
+        {% else %}
+        {{ await_prefix }}client.{{ method_name }}(request)
+        {% endif %}
+
+{% endif %}{# if 'grpc' in transport #}
+{% endmacro %}
+
+{# bad_request_mixins_test generates tests for rest mixin methods
+ # which raise a google.api.core.exceptions.BadRequest error.
+#}
+{% macro bad_request_mixins_test(service, api, name, sig, transport, is_async=False) %}
+{% set await_prefix = get_await_prefix(is_async) %}
+{% set async_prefix = get_async_prefix(is_async) %}
+{% set async_decorator = get_async_decorator(is_async) %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+{% set method_name = name|snake_case %}
+{% set mocked_session = "AsyncAuthorizedSession" if is_async else "Session" %}
+{{ async_decorator }}
+{{ async_prefix }}def test_{{ method_name }}_{{ transport_name }}_bad_request(request_type={{ sig.request_type }}):
+{# TODO(https://github.com/googleapis/gapic-generator-python/issues/2157): Refactor this macro to include `gRPC` coverage. #}
+{% if 'grpc' in transport %}
+    raise NotImplementedError("gRPC is currently not supported for this test case.")
+{% else %}{# 'rest' in transport #}
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+    client = {{ get_client(service, is_async) }}(
+        credentials={{get_credentials(is_async)}},
+        transport="{{transport_name}}",
+    )
+    request = request_type()
+    request = json_format.ParseDict({{ api.mixin_http_options["{}".format(name)][0].sample_request }}, request)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with mock.patch.object({{mocked_session}}, 'request') as req, pytest.raises(core_exceptions.BadRequest):
+        # Wrap the value into a proper Response obj
+        {% if is_async %}
+        response_value = mock.Mock()
+        response_value.read = mock.AsyncMock(return_value=b'{}')
+        {% else %}
+        response_value = Response()
+        json_return_value = ''
+        response_value.json = mock.Mock(return_value={})
+        {% endif %}{# if is_async #}
+        response_value.status_code = 400
+        {% if is_async %}
+        response_value.request = mock.Mock()
+        {% else %}
+        response_value.request = Request()
+        {% endif %}
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        {{ await_prefix }}client.{{ method_name }}(request)
+{% endif %}{# if 'grpc' in transport #}
+{% endmacro %}
+
+{# call_success_test generates tests for rest methods
+ # when they make a successful request.
+ # NOTE: Currently, this macro does not support the following method
+ # types: [method.paged_result_field].
+ # As support is added for the above methods, the relevant guard can be removed from within the macro
+ # TODO(https://github.com/googleapis/gapic-generator-python/issues/2142): Clean up `rest_required_tests` as we add support for each of the method types metioned above.
+#}
+{% macro call_success_test(service, method, transport, is_async) %}
+{% set await_prefix = get_await_prefix(is_async) %}
+{% set async_prefix = get_async_prefix(is_async) %}
+{% set async_decorator = get_async_decorator(is_async) %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+{% set method_name = method.client_method_name|snake_case %}
+{# NOTE: set method_output to method.extended_lro.operation_type for the following method types:
+ # (method.extended_lro and not full_extended_lro)
+#}
+{% set method_output = method.output %}
+{# TODO(https://github.com/googleapis/gapic-generator-python/issues/2143): Update the guard below as we add support for each method, and keep it in sync with the guard in
+ # `rest_required_tests`, which should be the exact opposite. Remove it once we have all the methods supported in async rest transport that are supported in sync rest transport.
+ #}
+{{ async_decorator }}
+@pytest.mark.parametrize("request_type", [
+  {{ method.input.ident }},
+  dict,
+])
+{{async_prefix}}def test_{{method_name}}_{{transport_name}}_call_success(request_type):
+{# TODO(https://github.com/googleapis/gapic-generator-python/issues/2157): Refactor this macro to include `gRPC` coverage. #}
+{% if 'grpc' in transport %}
+    raise NotImplementedError("gRPC is currently not supported for this test case.")
+{% else %}{# 'rest' in transport #}
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+    client = {{ get_client(service, is_async) }}(
+        credentials={{get_credentials(is_async)}},
+        transport="{{transport_name}}"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {{ method.http_options[0].sample_request(method) }}
+    {% for field in method.body_fields.values() %}
+    {% if not field.oneof or field.proto3_optional %}
+    {# ignore oneof fields that might conflict with sample_request #}
+    request_init["{{ field.name }}"] = {{ field.merged_mock_value(method.http_options[0].sample_request(method).get(field.name)) }}
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = {{ method.input.ident }}.meta.fields["{{ field.name }}"]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else: # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init["{{ field.name }}"].items(): # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {"field": field, "subfield": subfield, "is_repeated": is_repeated}
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime: # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(0, len(request_init["{{ field.name }}"][field])):
+                    del request_init["{{ field.name }}"][field][i][subfield]
+            else:
+                del request_init["{{ field.name }}"][field][subfield]
+    {% endif %}
+    {% endfor %}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), 'request') as req:
+        # Designate an appropriate value for the returned response.
+        {% if method.void %}
+        return_value = None
+        {% elif method.lro %}
+        return_value = operations_pb2.Operation(name='operations/spam')
+        {% elif method.extended_lro %}
+        return_value = {{ method.extended_lro.operation_type.ident }}(
+            {% for field in method.extended_lro.operation_type.fields.values() | rejectattr('message')%}
+            {% if not field.oneof or field.proto3_optional %}
+              {{ field.name }}={{ field.mock_value }},
+            {% endif %}{% endfor %}
+            {# This is a hack to only pick one field #}
+            {% for oneof_fields in method.output.oneof_fields().values() %}
+            {% if (oneof_fields | rejectattr('message') | list) %}
+            {% with field = (oneof_fields | rejectattr('message') | first) %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endwith %}
+            {% endif %}
+            {% endfor %}
+        )
+        {% else %}
+        return_value = {{ method.output.ident }}(
+            {% for field in method.output.fields.values() | rejectattr('message')%}
+            {% if not field.oneof or field.proto3_optional %}
+              {{ field.name }}={{ field.mock_value }},
+              {% endif %}{% endfor %}
+            {# This is a hack to only pick one field #}
+            {% for oneof_fields in method.output.oneof_fields().values() %}
+            {% if (oneof_fields | rejectattr('message') | list) %}
+            {% with field = (oneof_fields | rejectattr('message') | first) %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endwith %}
+            {% endif %}
+            {% endfor %}
+        )
+        {% endif %}{# method.void #}
+
+        # Wrap the value into a proper Response obj
+        {% if method.is_resumable_upload %}
+        response_value = mock.MagicMock()
+        {% else %}
+        response_value = mock.Mock()
+        {% endif %}
+        response_value.status_code = 200
+        {% if method.void %}
+        json_return_value = ''
+        {% else %}{# method.void #}
+        {% if method.output.ident.is_proto_plus_type %}
+
+        # Convert return value to protobuf type
+        return_value = {{ method.output.ident }}.pb(return_value)
+        {% endif %}{# method.output.ident.is_proto_plus_type #}
+        json_return_value = json_format.MessageToJson(return_value)
+        {% endif %}{# method.void #}
+        {% if method.server_streaming %}
+        json_return_value = "[{}]".format(json_return_value)
+        {% if is_async %}
+        response_value.content.return_value = mock_async_gen(json_return_value)
+        {% else %}{# not is_async #}
+        response_value.iter_content = mock.Mock(return_value=iter(json_return_value))
+        {% endif %}{# is_async #}
+        {% else %}{# not method.streaming #}
+        {% if is_async %}
+        response_value.read = mock.AsyncMock(return_value=json_return_value.encode('UTF-8'))
+        {% else %}{# not is_async #}
+        response_value.content = json_return_value.encode('UTF-8')
+        {% endif %}{# is_async #}
+        {% endif %}{# method.server_streaming #}
+        {% if method.is_resumable_upload %}
+        start_response = mock.MagicMock()
+        start_response.status_code = 200
+        start_response.headers = {"x-goog-upload-status": "active", "x-goog-upload-url": "http://localhost/upload"}
+        response_value.headers = {"x-goog-upload-status": "final", "header-1": "value-1", "header-2": "value-2"}
+        {% if is_async %}
+        start_response.read = mock.AsyncMock(return_value=b"")
+        start_response.close = mock.AsyncMock(return_value=None)
+        response_value.close = mock.AsyncMock(return_value=None)
+        {% else %}
+        start_response.ok = True
+        start_response.content = b""
+        response_value.ok = True
+        {% endif %}
+        req.side_effect = [start_response, response_value]
+        response = {{ await_prefix }}client.{{ method_name }}(request)
+        {% if is_async %}
+        assert isinstance(response, {{ method.client_output_async.ident }})
+        {% else %}
+        assert isinstance(response, {{ method.client_output.ident }})
+        {% endif %}
+        response = {{ await_prefix }}response.upload(b"test data")
+        {% else %}
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = {{ await_prefix }}client.{{ method_name }}(request)
+        {% endif %}
+    {% if "next_page_token" in method_output.fields.values()|map(attribute='name', default="") and not method.paged_result_field %}
+    {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2199): The following assert statement is added to force
+     # code coverage for bad paginated methods. Investigate what bad paginated methods are, and follow up on why this assertion is required.
+    #}
+
+    assert response.raw_page is response
+    {% endif %}
+    
+    {% if method.server_streaming %}
+    {% if is_async %}
+    assert isinstance(response, AsyncIterable)
+    response = await response.__anext__()
+    {% else %}
+    assert isinstance(response, Iterable)
+    response = next(response)
+    {% endif %}
+    {% endif %}
+    
+    # Establish that the response is the type that we expect.
+    {% if method.void %}
+    assert response is None
+    {% elif method.lro %}
+    json_return_value = json_format.MessageToJson(return_value)
+    {% else %}
+    {% if method.is_resumable_upload %}
+    assert isinstance(response, {{ method.output.ident }})
+    {% elif is_async %}
+    assert isinstance(response, {{ method.client_output_async.ident }})
+    {% else %}
+    assert isinstance(response, {{ method.client_output.ident }})
+    {% endif %}
+    {% for field in method_output.fields.values() | rejectattr('message') %}
+    {% if not field.oneof or field.proto3_optional %}
+    {% if field.field_pb.type in [1, 2] %}{# Use approx eq for floats #}
+    {% if field.repeated %}
+    for index in range(len(response.{{ field.name }})):
+        assert math.isclose(
+            response.{{ field.name }}[index],
+            {{ field.mock_value }}[index],
+            rel_tol=1e-6,
+        )
+    {% else %}{# field.repeated #}
+    assert math.isclose(response.{{ field.name }}, {{ field.mock_value }}, rel_tol=1e-6)
+    {% endif %}{# field.repeated #}
+    {% elif field.field_pb.type == 8 %}{# Use 'is' for bools #}
+    assert response.{{ field.name }} is {{ field.mock_value }}
+    {% else %}
+    assert response.{{ field.name }} == {{ field.mock_value }}
+    {% endif %}{# field.field_pb.type in [1, 2] #}
+    {% endif %}{# not field.oneof or field.proto3_optional #}
+    {% endfor %}{# field in method_output.fields.values() | rejectattr('message') #}
+    {% endif %}{# method.void #}
+
+{% endif %}{# if 'grpc' in transport #}
+{% endmacro %}{# call_success_test #}
+
+{# call_success_mixins_test generates tests for rest mixin methods
+ # when they make a successful request.
+#}
+{% macro call_success_mixins_test(service, api, name, sig, transport, is_async=False) %}
+{% set await_prefix = get_await_prefix(is_async) %}
+{% set async_prefix = get_async_prefix(is_async) %}
+{% set async_decorator = get_async_decorator(is_async) %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+{% set method_name = name|snake_case %}
+{% set mocked_session = "AsyncAuthorizedSession" if is_async else "Session" %}
+{{ async_decorator }}
+@pytest.mark.parametrize("request_type", [
+    {{ sig.request_type }},
+    dict,
+])
+{{ async_prefix }}def test_{{ method_name }}_{{ transport_name }}(request_type):
+{# TODO(https://github.com/googleapis/gapic-generator-python/issues/2157): Refactor this macro to include `gRPC` coverage. #}
+{% if 'grpc' in transport %}
+    raise NotImplementedError("gRPC is currently not supported for this test case.")
+{% else %}{# 'rest' in transport #}
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+    client = {{ get_client(service, is_async) }}(
+        credentials={{get_credentials(is_async)}},
+        transport="{{transport_name}}",
+    )
+
+    request_init = {{ api.mixin_http_options["{}".format(name)][0].sample_request }}
+    request = request_type(**request_init)
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object({{mocked_session}}, 'request') as req:
+        # Designate an appropriate value for the returned response.
+        {% if sig.response_type == "None" %}
+        return_value = None
+        {% else %}
+        return_value = {{ sig.response_type }}()
+        {% endif %}
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        {% if sig.response_type == "None" %}
+        json_return_value = '{}'
+        {% else %}
+        json_return_value = json_format.MessageToJson(return_value)
+        {% endif %}
+        {% if is_async %}
+        response_value.read = mock.AsyncMock(return_value=json_return_value.encode('UTF-8'))
+        {% else %}
+        response_value.content = json_return_value.encode('UTF-8')
+        {% endif %}
+
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        response = {{ await_prefix }}client.{{ method_name }}(request)
+
+    # Establish that the response is the type that we expect.
+    {% if sig.response_type == "None" %}
+    assert response is None
+    {% else %}
+    assert isinstance(response, {{ sig.response_type }})
+    {% endif %}
+{% endif %}{# if 'grpc' in transport #}
+{% endmacro %}{# call_success_mixins_test #}
+
+{% macro empty_call_test(service, api, transport, is_async) %}
+{% for method in service.methods.values() %}{# method #}
+{% if not method.client_streaming %}
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+{{ method_call_test_generic("empty_call", method, service, api, transport, request_dict=None, is_async=is_async) }}
+{% endif %}{# not method.client_streaming #}
+{% endfor %}{# method in service.methods.values() #}
+{% endmacro %}{# empty_call_test #}
+
+{% macro routing_parameter_test(service, api, transport, is_async) %}
+{% for method in service.methods.values() %}{# method #}
+{# See existing proposal b/330610501 to add support for explicit routing in BIDI/client side streaming #}
+{% if method.explicit_routing and not method.client_streaming %}
+{# Any value that is part of the HTTP/1.1 URI should be sent as #}
+{# a field header. Set these to a non-empty value. #}
+{% for routing_param in method.routing_rule.routing_parameters %}
+{{ method_call_test_generic("routing_parameters_request_" + loop.index|string, method, service, api, transport, request_dict=routing_param.sample_request, is_async=is_async, routing_param=routing_param) }}
+{% endfor %}{# routing_param in method.routing_rule.routing_parameters #}
+{% endif %}{# method.explicit_routing #}
+{% endfor %}{# method in service.methods.values() #}
+{% endmacro %}{# routing_parameter_test #}
+
+{# inteceptor_class_test generates tests for rest interceptors. #}
+{% macro inteceptor_class_test(service, method, transport, is_async) %}
+{% set await_prefix = get_await_prefix(is_async) %}
+{% set async_prefix = get_async_prefix(is_async) %}
+{% set async_decorator = get_async_decorator(is_async) %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+{% set method_name = method.client_method_name|snake_case %}
+{% set async_method_prefix = "Async" if is_async else "" %}
+{{async_decorator}}
+@pytest.mark.parametrize("null_interceptor", [True, False])
+{{async_prefix}}def test_{{ method_name }}_{{transport_name}}_interceptors(null_interceptor):
+{% if 'grpc' in transport %}
+    {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2191):
+     # Currently this macro only supports REST. It should be updated to support gRPC
+     # transport as well.
+    #}
+    raise NotImplementedError("gRPC is currently not supported for this test case.")
+{% else %}{# 'rest' in transport #}
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+    transport = transports.{{async_method_prefix}}{{ service.name }}RestTransport(
+        credentials={{get_credentials(is_async)}},
+        interceptor=None if null_interceptor else transports.{{async_method_prefix}}{{ service.name}}RestInterceptor(),
+        )
+    client = {{ get_client(service, is_async) }}(transport=transport)
+
+    with mock.patch.object(type(client.transport._session), "request") as req, \
+        mock.patch.object(path_template, "transcode")  as transcode, \
+        {% if method.lro %}
+        mock.patch.object(operation.Operation, "_set_result_from_operation"), \
+        {% endif %}
+        {% if not method.void and not method.is_resumable_upload %}
+        mock.patch.object(transports.{{async_method_prefix}}{{ service.name }}RestInterceptor, "post_{{method.name|snake_case}}") as post, \
+        mock.patch.object(transports.{{async_method_prefix}}{{ service.name }}RestInterceptor, "post_{{method.name|snake_case}}_with_metadata") as post_with_metadata, \
+        {% endif %}
+        mock.patch.object(transports.{{async_method_prefix}}{{ service.name }}RestInterceptor, "pre_{{ method.name|snake_case }}") as pre:
+        pre.assert_not_called()
+        {% if not method.void and not method.is_resumable_upload %}
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        {% endif %}
+        {% if method.input.ident.is_proto_plus_type %}
+        pb_message = {{ method.input.ident }}.pb({{ method.input.ident }}())
+        {% else %}
+        pb_message = {{ method.input.ident }}()
+        {% endif %}{# if method.input.ident.is_proto_plus_type #}
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        {% if not method.void and not method.is_resumable_upload %}
+        return_value = {% if method.output.ident.is_proto_plus_type %}{{ method.output.ident }}.to_json({{ method.output.ident }}()){% else %}json_format.MessageToJson({{ method.output.ident }}()){% endif %}
+
+        {% if method.server_streaming %}
+        {% if is_async %}
+        req.return_value.content.return_value = mock_async_gen(return_value)
+        {% else %}{# not is_async #}
+        req.return_value.iter_content = mock.Mock(return_value=iter(return_value))
+        {% endif %}{# end is_async #}
+        {% else %}{# not method.server_streaming #}
+        {% if is_async %}
+        req.return_value.read = mock.AsyncMock(return_value=return_value)
+        {% else %}{# not is_async #}
+        req.return_value.content = return_value
+        {% endif %}{# end is_async #}
+        {% endif %}{# end method.server_streaming #}
+        {% endif %}{# end not method.void and not method.is_resumable_upload #}
+
+        request = {{ method.input.ident }}()
+        metadata =[
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        {% if not method.void and not method.is_resumable_upload %}
+        post.return_value = {{ method.output.ident }}()
+        post_with_metadata.return_value = {{ method.output.ident }}(), metadata
+        {% endif %}
+
+        {{await_prefix}}client.{{ method_name }}(request, metadata=[("key", "val"), ("cephalopod", "squid"),])
+
+        pre.assert_called_once()
+        {% if not method.void and not method.is_resumable_upload %}
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+        {% endif %}
+{% endif %}{# end 'grpc' in transport #}
+{% endmacro%}{# inteceptor_class_test #}

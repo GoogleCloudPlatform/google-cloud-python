@@ -1,0 +1,343 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.commerceproducer_v1beta",
+  "protoPackage": "google.cloud.commerceproducer.v1beta",
+  "schema": "1.0",
+  "services": {
+    "CommerceTransaction": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CommerceTransactionClient",
+          "rpcs": {
+            "CancelPrivateOffer": {
+              "methods": [
+                "cancel_private_offer"
+              ]
+            },
+            "CreatePrivateOffer": {
+              "methods": [
+                "create_private_offer"
+              ]
+            },
+            "CreatePrivateOfferDocument": {
+              "methods": [
+                "create_private_offer_document"
+              ]
+            },
+            "DeletePrivateOffer": {
+              "methods": [
+                "delete_private_offer"
+              ]
+            },
+            "DeletePrivateOfferDocument": {
+              "methods": [
+                "delete_private_offer_document"
+              ]
+            },
+            "GetPrivateOffer": {
+              "methods": [
+                "get_private_offer"
+              ]
+            },
+            "GetPrivateOfferDocument": {
+              "methods": [
+                "get_private_offer_document"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "GetSku": {
+              "methods": [
+                "get_sku"
+              ]
+            },
+            "GetSkuGroup": {
+              "methods": [
+                "get_sku_group"
+              ]
+            },
+            "GetStandardOffer": {
+              "methods": [
+                "get_standard_offer"
+              ]
+            },
+            "ListPrivateOfferDocuments": {
+              "methods": [
+                "list_private_offer_documents"
+              ]
+            },
+            "ListPrivateOffers": {
+              "methods": [
+                "list_private_offers"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "ListSkuGroups": {
+              "methods": [
+                "list_sku_groups"
+              ]
+            },
+            "ListSkus": {
+              "methods": [
+                "list_skus"
+              ]
+            },
+            "ListStandardOffers": {
+              "methods": [
+                "list_standard_offers"
+              ]
+            },
+            "PublishPrivateOffer": {
+              "methods": [
+                "publish_private_offer"
+              ]
+            },
+            "ResolveAmendmentTarget": {
+              "methods": [
+                "resolve_amendment_target"
+              ]
+            },
+            "UpdatePrivateOffer": {
+              "methods": [
+                "update_private_offer"
+              ]
+            },
+            "UpdatePrivateOfferDocument": {
+              "methods": [
+                "update_private_offer_document"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CommerceTransactionAsyncClient",
+          "rpcs": {
+            "CancelPrivateOffer": {
+              "methods": [
+                "cancel_private_offer"
+              ]
+            },
+            "CreatePrivateOffer": {
+              "methods": [
+                "create_private_offer"
+              ]
+            },
+            "CreatePrivateOfferDocument": {
+              "methods": [
+                "create_private_offer_document"
+              ]
+            },
+            "DeletePrivateOffer": {
+              "methods": [
+                "delete_private_offer"
+              ]
+            },
+            "DeletePrivateOfferDocument": {
+              "methods": [
+                "delete_private_offer_document"
+              ]
+            },
+            "GetPrivateOffer": {
+              "methods": [
+                "get_private_offer"
+              ]
+            },
+            "GetPrivateOfferDocument": {
+              "methods": [
+                "get_private_offer_document"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "GetSku": {
+              "methods": [
+                "get_sku"
+              ]
+            },
+            "GetSkuGroup": {
+              "methods": [
+                "get_sku_group"
+              ]
+            },
+            "GetStandardOffer": {
+              "methods": [
+                "get_standard_offer"
+              ]
+            },
+            "ListPrivateOfferDocuments": {
+              "methods": [
+                "list_private_offer_documents"
+              ]
+            },
+            "ListPrivateOffers": {
+              "methods": [
+                "list_private_offers"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "ListSkuGroups": {
+              "methods": [
+                "list_sku_groups"
+              ]
+            },
+            "ListSkus": {
+              "methods": [
+                "list_skus"
+              ]
+            },
+            "ListStandardOffers": {
+              "methods": [
+                "list_standard_offers"
+              ]
+            },
+            "PublishPrivateOffer": {
+              "methods": [
+                "publish_private_offer"
+              ]
+            },
+            "ResolveAmendmentTarget": {
+              "methods": [
+                "resolve_amendment_target"
+              ]
+            },
+            "UpdatePrivateOffer": {
+              "methods": [
+                "update_private_offer"
+              ]
+            },
+            "UpdatePrivateOfferDocument": {
+              "methods": [
+                "update_private_offer_document"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CommerceTransactionClient",
+          "rpcs": {
+            "CancelPrivateOffer": {
+              "methods": [
+                "cancel_private_offer"
+              ]
+            },
+            "CreatePrivateOffer": {
+              "methods": [
+                "create_private_offer"
+              ]
+            },
+            "CreatePrivateOfferDocument": {
+              "methods": [
+                "create_private_offer_document"
+              ]
+            },
+            "DeletePrivateOffer": {
+              "methods": [
+                "delete_private_offer"
+              ]
+            },
+            "DeletePrivateOfferDocument": {
+              "methods": [
+                "delete_private_offer_document"
+              ]
+            },
+            "GetPrivateOffer": {
+              "methods": [
+                "get_private_offer"
+              ]
+            },
+            "GetPrivateOfferDocument": {
+              "methods": [
+                "get_private_offer_document"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "GetSku": {
+              "methods": [
+                "get_sku"
+              ]
+            },
+            "GetSkuGroup": {
+              "methods": [
+                "get_sku_group"
+              ]
+            },
+            "GetStandardOffer": {
+              "methods": [
+                "get_standard_offer"
+              ]
+            },
+            "ListPrivateOfferDocuments": {
+              "methods": [
+                "list_private_offer_documents"
+              ]
+            },
+            "ListPrivateOffers": {
+              "methods": [
+                "list_private_offers"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "ListSkuGroups": {
+              "methods": [
+                "list_sku_groups"
+              ]
+            },
+            "ListSkus": {
+              "methods": [
+                "list_skus"
+              ]
+            },
+            "ListStandardOffers": {
+              "methods": [
+                "list_standard_offers"
+              ]
+            },
+            "PublishPrivateOffer": {
+              "methods": [
+                "publish_private_offer"
+              ]
+            },
+            "ResolveAmendmentTarget": {
+              "methods": [
+                "resolve_amendment_target"
+              ]
+            },
+            "UpdatePrivateOffer": {
+              "methods": [
+                "update_private_offer"
+              ]
+            },
+            "UpdatePrivateOfferDocument": {
+              "methods": [
+                "update_private_offer_document"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,152 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.policysimulator_v1",
+  "protoPackage": "google.cloud.policysimulator.v1",
+  "schema": "1.0",
+  "services": {
+    "OrgPolicyViolationsPreviewService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "OrgPolicyViolationsPreviewServiceClient",
+          "rpcs": {
+            "CreateOrgPolicyViolationsPreview": {
+              "methods": [
+                "create_org_policy_violations_preview"
+              ]
+            },
+            "GetOrgPolicyViolationsPreview": {
+              "methods": [
+                "get_org_policy_violations_preview"
+              ]
+            },
+            "ListOrgPolicyViolations": {
+              "methods": [
+                "list_org_policy_violations"
+              ]
+            },
+            "ListOrgPolicyViolationsPreviews": {
+              "methods": [
+                "list_org_policy_violations_previews"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "OrgPolicyViolationsPreviewServiceAsyncClient",
+          "rpcs": {
+            "CreateOrgPolicyViolationsPreview": {
+              "methods": [
+                "create_org_policy_violations_preview"
+              ]
+            },
+            "GetOrgPolicyViolationsPreview": {
+              "methods": [
+                "get_org_policy_violations_preview"
+              ]
+            },
+            "ListOrgPolicyViolations": {
+              "methods": [
+                "list_org_policy_violations"
+              ]
+            },
+            "ListOrgPolicyViolationsPreviews": {
+              "methods": [
+                "list_org_policy_violations_previews"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "OrgPolicyViolationsPreviewServiceClient",
+          "rpcs": {
+            "CreateOrgPolicyViolationsPreview": {
+              "methods": [
+                "create_org_policy_violations_preview"
+              ]
+            },
+            "GetOrgPolicyViolationsPreview": {
+              "methods": [
+                "get_org_policy_violations_preview"
+              ]
+            },
+            "ListOrgPolicyViolations": {
+              "methods": [
+                "list_org_policy_violations"
+              ]
+            },
+            "ListOrgPolicyViolationsPreviews": {
+              "methods": [
+                "list_org_policy_violations_previews"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Simulator": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SimulatorClient",
+          "rpcs": {
+            "CreateReplay": {
+              "methods": [
+                "create_replay"
+              ]
+            },
+            "GetReplay": {
+              "methods": [
+                "get_replay"
+              ]
+            },
+            "ListReplayResults": {
+              "methods": [
+                "list_replay_results"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SimulatorAsyncClient",
+          "rpcs": {
+            "CreateReplay": {
+              "methods": [
+                "create_replay"
+              ]
+            },
+            "GetReplay": {
+              "methods": [
+                "get_replay"
+              ]
+            },
+            "ListReplayResults": {
+              "methods": [
+                "list_replay_results"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SimulatorClient",
+          "rpcs": {
+            "CreateReplay": {
+              "methods": [
+                "create_replay"
+              ]
+            },
+            "GetReplay": {
+              "methods": [
+                "get_replay"
+              ]
+            },
+            "ListReplayResults": {
+              "methods": [
+                "list_replay_results"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,688 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.gkehub_v1",
+  "protoPackage": "google.cloud.gkehub.v1",
+  "schema": "1.0",
+  "services": {
+    "GkeHub": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "GkeHubClient",
+          "rpcs": {
+            "CreateFeature": {
+              "methods": [
+                "create_feature"
+              ]
+            },
+            "CreateFleet": {
+              "methods": [
+                "create_fleet"
+              ]
+            },
+            "CreateMembership": {
+              "methods": [
+                "create_membership"
+              ]
+            },
+            "CreateMembershipBinding": {
+              "methods": [
+                "create_membership_binding"
+              ]
+            },
+            "CreateMembershipRBACRoleBinding": {
+              "methods": [
+                "create_membership_rbac_role_binding"
+              ]
+            },
+            "CreateScope": {
+              "methods": [
+                "create_scope"
+              ]
+            },
+            "CreateScopeNamespace": {
+              "methods": [
+                "create_scope_namespace"
+              ]
+            },
+            "CreateScopeRBACRoleBinding": {
+              "methods": [
+                "create_scope_rbac_role_binding"
+              ]
+            },
+            "DeleteFeature": {
+              "methods": [
+                "delete_feature"
+              ]
+            },
+            "DeleteFleet": {
+              "methods": [
+                "delete_fleet"
+              ]
+            },
+            "DeleteMembership": {
+              "methods": [
+                "delete_membership"
+              ]
+            },
+            "DeleteMembershipBinding": {
+              "methods": [
+                "delete_membership_binding"
+              ]
+            },
+            "DeleteMembershipRBACRoleBinding": {
+              "methods": [
+                "delete_membership_rbac_role_binding"
+              ]
+            },
+            "DeleteScope": {
+              "methods": [
+                "delete_scope"
+              ]
+            },
+            "DeleteScopeNamespace": {
+              "methods": [
+                "delete_scope_namespace"
+              ]
+            },
+            "DeleteScopeRBACRoleBinding": {
+              "methods": [
+                "delete_scope_rbac_role_binding"
+              ]
+            },
+            "GenerateConnectManifest": {
+              "methods": [
+                "generate_connect_manifest"
+              ]
+            },
+            "GenerateMembershipRBACRoleBindingYAML": {
+              "methods": [
+                "generate_membership_rbac_role_binding_yaml"
+              ]
+            },
+            "GetFeature": {
+              "methods": [
+                "get_feature"
+              ]
+            },
+            "GetFleet": {
+              "methods": [
+                "get_fleet"
+              ]
+            },
+            "GetMembership": {
+              "methods": [
+                "get_membership"
+              ]
+            },
+            "GetMembershipBinding": {
+              "methods": [
+                "get_membership_binding"
+              ]
+            },
+            "GetMembershipRBACRoleBinding": {
+              "methods": [
+                "get_membership_rbac_role_binding"
+              ]
+            },
+            "GetScope": {
+              "methods": [
+                "get_scope"
+              ]
+            },
+            "GetScopeNamespace": {
+              "methods": [
+                "get_scope_namespace"
+              ]
+            },
+            "GetScopeRBACRoleBinding": {
+              "methods": [
+                "get_scope_rbac_role_binding"
+              ]
+            },
+            "ListBoundMemberships": {
+              "methods": [
+                "list_bound_memberships"
+              ]
+            },
+            "ListFeatures": {
+              "methods": [
+                "list_features"
+              ]
+            },
+            "ListFleets": {
+              "methods": [
+                "list_fleets"
+              ]
+            },
+            "ListMembershipBindings": {
+              "methods": [
+                "list_membership_bindings"
+              ]
+            },
+            "ListMembershipRBACRoleBindings": {
+              "methods": [
+                "list_membership_rbac_role_bindings"
+              ]
+            },
+            "ListMemberships": {
+              "methods": [
+                "list_memberships"
+              ]
+            },
+            "ListPermittedScopes": {
+              "methods": [
+                "list_permitted_scopes"
+              ]
+            },
+            "ListScopeNamespaces": {
+              "methods": [
+                "list_scope_namespaces"
+              ]
+            },
+            "ListScopeRBACRoleBindings": {
+              "methods": [
+                "list_scope_rbac_role_bindings"
+              ]
+            },
+            "ListScopes": {
+              "methods": [
+                "list_scopes"
+              ]
+            },
+            "UpdateFeature": {
+              "methods": [
+                "update_feature"
+              ]
+            },
+            "UpdateFleet": {
+              "methods": [
+                "update_fleet"
+              ]
+            },
+            "UpdateMembership": {
+              "methods": [
+                "update_membership"
+              ]
+            },
+            "UpdateMembershipBinding": {
+              "methods": [
+                "update_membership_binding"
+              ]
+            },
+            "UpdateMembershipRBACRoleBinding": {
+              "methods": [
+                "update_membership_rbac_role_binding"
+              ]
+            },
+            "UpdateScope": {
+              "methods": [
+                "update_scope"
+              ]
+            },
+            "UpdateScopeNamespace": {
+              "methods": [
+                "update_scope_namespace"
+              ]
+            },
+            "UpdateScopeRBACRoleBinding": {
+              "methods": [
+                "update_scope_rbac_role_binding"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "GkeHubAsyncClient",
+          "rpcs": {
+            "CreateFeature": {
+              "methods": [
+                "create_feature"
+              ]
+            },
+            "CreateFleet": {
+              "methods": [
+                "create_fleet"
+              ]
+            },
+            "CreateMembership": {
+              "methods": [
+                "create_membership"
+              ]
+            },
+            "CreateMembershipBinding": {
+              "methods": [
+                "create_membership_binding"
+              ]
+            },
+            "CreateMembershipRBACRoleBinding": {
+              "methods": [
+                "create_membership_rbac_role_binding"
+              ]
+            },
+            "CreateScope": {
+              "methods": [
+                "create_scope"
+              ]
+            },
+            "CreateScopeNamespace": {
+              "methods": [
+                "create_scope_namespace"
+              ]
+            },
+            "CreateScopeRBACRoleBinding": {
+              "methods": [
+                "create_scope_rbac_role_binding"
+              ]
+            },
+            "DeleteFeature": {
+              "methods": [
+                "delete_feature"
+              ]
+            },
+            "DeleteFleet": {
+              "methods": [
+                "delete_fleet"
+              ]
+            },
+            "DeleteMembership": {
+              "methods": [
+                "delete_membership"
+              ]
+            },
+            "DeleteMembershipBinding": {
+              "methods": [
+                "delete_membership_binding"
+              ]
+            },
+            "DeleteMembershipRBACRoleBinding": {
+              "methods": [
+                "delete_membership_rbac_role_binding"
+              ]
+            },
+            "DeleteScope": {
+              "methods": [
+                "delete_scope"
+              ]
+            },
+            "DeleteScopeNamespace": {
+              "methods": [
+                "delete_scope_namespace"
+              ]
+            },
+            "DeleteScopeRBACRoleBinding": {
+              "methods": [
+                "delete_scope_rbac_role_binding"
+              ]
+            },
+            "GenerateConnectManifest": {
+              "methods": [
+                "generate_connect_manifest"
+              ]
+            },
+            "GenerateMembershipRBACRoleBindingYAML": {
+              "methods": [
+                "generate_membership_rbac_role_binding_yaml"
+              ]
+            },
+            "GetFeature": {
+              "methods": [
+                "get_feature"
+              ]
+            },
+            "GetFleet": {
+              "methods": [
+                "get_fleet"
+              ]
+            },
+            "GetMembership": {
+              "methods": [
+                "get_membership"
+              ]
+            },
+            "GetMembershipBinding": {
+              "methods": [
+                "get_membership_binding"
+              ]
+            },
+            "GetMembershipRBACRoleBinding": {
+              "methods": [
+                "get_membership_rbac_role_binding"
+              ]
+            },
+            "GetScope": {
+              "methods": [
+                "get_scope"
+              ]
+            },
+            "GetScopeNamespace": {
+              "methods": [
+                "get_scope_namespace"
+              ]
+            },
+            "GetScopeRBACRoleBinding": {
+              "methods": [
+                "get_scope_rbac_role_binding"
+              ]
+            },
+            "ListBoundMemberships": {
+              "methods": [
+                "list_bound_memberships"
+              ]
+            },
+            "ListFeatures": {
+              "methods": [
+                "list_features"
+              ]
+            },
+            "ListFleets": {
+              "methods": [
+                "list_fleets"
+              ]
+            },
+            "ListMembershipBindings": {
+              "methods": [
+                "list_membership_bindings"
+              ]
+            },
+            "ListMembershipRBACRoleBindings": {
+              "methods": [
+                "list_membership_rbac_role_bindings"
+              ]
+            },
+            "ListMemberships": {
+              "methods": [
+                "list_memberships"
+              ]
+            },
+            "ListPermittedScopes": {
+              "methods": [
+                "list_permitted_scopes"
+              ]
+            },
+            "ListScopeNamespaces": {
+              "methods": [
+                "list_scope_namespaces"
+              ]
+            },
+            "ListScopeRBACRoleBindings": {
+              "methods": [
+                "list_scope_rbac_role_bindings"
+              ]
+            },
+            "ListScopes": {
+              "methods": [
+                "list_scopes"
+              ]
+            },
+            "UpdateFeature": {
+              "methods": [
+                "update_feature"
+              ]
+            },
+            "UpdateFleet": {
+              "methods": [
+                "update_fleet"
+              ]
+            },
+            "UpdateMembership": {
+              "methods": [
+                "update_membership"
+              ]
+            },
+            "UpdateMembershipBinding": {
+              "methods": [
+                "update_membership_binding"
+              ]
+            },
+            "UpdateMembershipRBACRoleBinding": {
+              "methods": [
+                "update_membership_rbac_role_binding"
+              ]
+            },
+            "UpdateScope": {
+              "methods": [
+                "update_scope"
+              ]
+            },
+            "UpdateScopeNamespace": {
+              "methods": [
+                "update_scope_namespace"
+              ]
+            },
+            "UpdateScopeRBACRoleBinding": {
+              "methods": [
+                "update_scope_rbac_role_binding"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "GkeHubClient",
+          "rpcs": {
+            "CreateFeature": {
+              "methods": [
+                "create_feature"
+              ]
+            },
+            "CreateFleet": {
+              "methods": [
+                "create_fleet"
+              ]
+            },
+            "CreateMembership": {
+              "methods": [
+                "create_membership"
+              ]
+            },
+            "CreateMembershipBinding": {
+              "methods": [
+                "create_membership_binding"
+              ]
+            },
+            "CreateMembershipRBACRoleBinding": {
+              "methods": [
+                "create_membership_rbac_role_binding"
+              ]
+            },
+            "CreateScope": {
+              "methods": [
+                "create_scope"
+              ]
+            },
+            "CreateScopeNamespace": {
+              "methods": [
+                "create_scope_namespace"
+              ]
+            },
+            "CreateScopeRBACRoleBinding": {
+              "methods": [
+                "create_scope_rbac_role_binding"
+              ]
+            },
+            "DeleteFeature": {
+              "methods": [
+                "delete_feature"
+              ]
+            },
+            "DeleteFleet": {
+              "methods": [
+                "delete_fleet"
+              ]
+            },
+            "DeleteMembership": {
+              "methods": [
+                "delete_membership"
+              ]
+            },
+            "DeleteMembershipBinding": {
+              "methods": [
+                "delete_membership_binding"
+              ]
+            },
+            "DeleteMembershipRBACRoleBinding": {
+              "methods": [
+                "delete_membership_rbac_role_binding"
+              ]
+            },
+            "DeleteScope": {
+              "methods": [
+                "delete_scope"
+              ]
+            },
+            "DeleteScopeNamespace": {
+              "methods": [
+                "delete_scope_namespace"
+              ]
+            },
+            "DeleteScopeRBACRoleBinding": {
+              "methods": [
+                "delete_scope_rbac_role_binding"
+              ]
+            },
+            "GenerateConnectManifest": {
+              "methods": [
+                "generate_connect_manifest"
+              ]
+            },
+            "GenerateMembershipRBACRoleBindingYAML": {
+              "methods": [
+                "generate_membership_rbac_role_binding_yaml"
+              ]
+            },
+            "GetFeature": {
+              "methods": [
+                "get_feature"
+              ]
+            },
+            "GetFleet": {
+              "methods": [
+                "get_fleet"
+              ]
+            },
+            "GetMembership": {
+              "methods": [
+                "get_membership"
+              ]
+            },
+            "GetMembershipBinding": {
+              "methods": [
+                "get_membership_binding"
+              ]
+            },
+            "GetMembershipRBACRoleBinding": {
+              "methods": [
+                "get_membership_rbac_role_binding"
+              ]
+            },
+            "GetScope": {
+              "methods": [
+                "get_scope"
+              ]
+            },
+            "GetScopeNamespace": {
+              "methods": [
+                "get_scope_namespace"
+              ]
+            },
+            "GetScopeRBACRoleBinding": {
+              "methods": [
+                "get_scope_rbac_role_binding"
+              ]
+            },
+            "ListBoundMemberships": {
+              "methods": [
+                "list_bound_memberships"
+              ]
+            },
+            "ListFeatures": {
+              "methods": [
+                "list_features"
+              ]
+            },
+            "ListFleets": {
+              "methods": [
+                "list_fleets"
+              ]
+            },
+            "ListMembershipBindings": {
+              "methods": [
+                "list_membership_bindings"
+              ]
+            },
+            "ListMembershipRBACRoleBindings": {
+              "methods": [
+                "list_membership_rbac_role_bindings"
+              ]
+            },
+            "ListMemberships": {
+              "methods": [
+                "list_memberships"
+              ]
+            },
+            "ListPermittedScopes": {
+              "methods": [
+                "list_permitted_scopes"
+              ]
+            },
+            "ListScopeNamespaces": {
+              "methods": [
+                "list_scope_namespaces"
+              ]
+            },
+            "ListScopeRBACRoleBindings": {
+              "methods": [
+                "list_scope_rbac_role_bindings"
+              ]
+            },
+            "ListScopes": {
+              "methods": [
+                "list_scopes"
+              ]
+            },
+            "UpdateFeature": {
+              "methods": [
+                "update_feature"
+              ]
+            },
+            "UpdateFleet": {
+              "methods": [
+                "update_fleet"
+              ]
+            },
+            "UpdateMembership": {
+              "methods": [
+                "update_membership"
+              ]
+            },
+            "UpdateMembershipBinding": {
+              "methods": [
+                "update_membership_binding"
+              ]
+            },
+            "UpdateMembershipRBACRoleBinding": {
+              "methods": [
+                "update_membership_rbac_role_binding"
+              ]
+            },
+            "UpdateScope": {
+              "methods": [
+                "update_scope"
+              ]
+            },
+            "UpdateScopeNamespace": {
+              "methods": [
+                "update_scope_namespace"
+              ]
+            },
+            "UpdateScopeRBACRoleBinding": {
+              "methods": [
+                "update_scope_rbac_role_binding"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

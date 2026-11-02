@@ -1,0 +1,15 @@
+{
+    "api_description": "An implementation of the Grafeas API, which stores, and enables querying and\nretrieval of critical metadata about all of your software artifacts.",
+    "api_id": "containeranalysis.googleapis.com",
+    "api_shortname": "containeranalysis",
+    "client_documentation": "https://googleapis.dev/python/grafeas/latest",
+    "default_version": "v1",
+    "distribution_name": "grafeas",
+    "language": "python",
+    "library_type": "GAPIC_COMBO",
+    "name": "grafeas",
+    "name_pretty": "Container Analysis",
+    "product_documentation": "https://grafeas.io",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

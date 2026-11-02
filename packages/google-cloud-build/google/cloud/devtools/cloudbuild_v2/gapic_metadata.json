@@ -1,0 +1,238 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.devtools.cloudbuild_v2",
+  "protoPackage": "google.devtools.cloudbuild.v2",
+  "schema": "1.0",
+  "services": {
+    "RepositoryManager": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "RepositoryManagerClient",
+          "rpcs": {
+            "BatchCreateRepositories": {
+              "methods": [
+                "batch_create_repositories"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreateRepository": {
+              "methods": [
+                "create_repository"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeleteRepository": {
+              "methods": [
+                "delete_repository"
+              ]
+            },
+            "FetchGitRefs": {
+              "methods": [
+                "fetch_git_refs"
+              ]
+            },
+            "FetchLinkableRepositories": {
+              "methods": [
+                "fetch_linkable_repositories"
+              ]
+            },
+            "FetchReadToken": {
+              "methods": [
+                "fetch_read_token"
+              ]
+            },
+            "FetchReadWriteToken": {
+              "methods": [
+                "fetch_read_write_token"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetRepository": {
+              "methods": [
+                "get_repository"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListRepositories": {
+              "methods": [
+                "list_repositories"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "RepositoryManagerAsyncClient",
+          "rpcs": {
+            "BatchCreateRepositories": {
+              "methods": [
+                "batch_create_repositories"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreateRepository": {
+              "methods": [
+                "create_repository"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeleteRepository": {
+              "methods": [
+                "delete_repository"
+              ]
+            },
+            "FetchGitRefs": {
+              "methods": [
+                "fetch_git_refs"
+              ]
+            },
+            "FetchLinkableRepositories": {
+              "methods": [
+                "fetch_linkable_repositories"
+              ]
+            },
+            "FetchReadToken": {
+              "methods": [
+                "fetch_read_token"
+              ]
+            },
+            "FetchReadWriteToken": {
+              "methods": [
+                "fetch_read_write_token"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetRepository": {
+              "methods": [
+                "get_repository"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListRepositories": {
+              "methods": [
+                "list_repositories"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "RepositoryManagerClient",
+          "rpcs": {
+            "BatchCreateRepositories": {
+              "methods": [
+                "batch_create_repositories"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreateRepository": {
+              "methods": [
+                "create_repository"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeleteRepository": {
+              "methods": [
+                "delete_repository"
+              ]
+            },
+            "FetchGitRefs": {
+              "methods": [
+                "fetch_git_refs"
+              ]
+            },
+            "FetchLinkableRepositories": {
+              "methods": [
+                "fetch_linkable_repositories"
+              ]
+            },
+            "FetchReadToken": {
+              "methods": [
+                "fetch_read_token"
+              ]
+            },
+            "FetchReadWriteToken": {
+              "methods": [
+                "fetch_read_write_token"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetRepository": {
+              "methods": [
+                "get_repository"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListRepositories": {
+              "methods": [
+                "list_repositories"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

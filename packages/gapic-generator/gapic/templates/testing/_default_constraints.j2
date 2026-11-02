@@ -1,0 +1,18 @@
+{% from '_pypi_packages.j2' import pypi_packages %}
+# This constraints file is required for unit tests.
+# List all library dependencies and extras in this file.
+google-api-core
+google-auth
+grpcio
+proto-plus
+protobuf
+# cryptography is a direct dependency of google-auth
+cryptography
+{% for package_tuple, package_info in pypi_packages.items() %}
+{# Quick check to make sure `package_info.package_name` is not the package being generated so we don't circularly include this package in its own constraints file. #}
+{% if api.naming.warehouse_package_name != package_info.package_name %}
+{% if api.requires_package(package_tuple) %}
+{{ package_info.package_name }}
+{% endif %}
+{% endif %}
+{% endfor %}

@@ -1,0 +1,115 @@
+name: Regeneration check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    env:
+      SYNTHTOOL_TEMPLATES: /home/runner/synthtool/synthtool/gcp/templates
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Detect global generator changes
+        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: filter
+        with:
+          filters: |
+            global_regen:
+              - 'librarian.yaml'
+              - '.librarian/**'
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.15"
+
+      - name: Detect changed packages
+        id: get-packages
+        if: steps.filter.outputs.global_regen != 'true' && github.event_name == 'pull_request'
+        env:
+          BUILD_TYPE: presubmit
+          TARGET_BRANCH: ${{ github.base_ref }}
+          TEST_ALL_PACKAGES: ${{ contains(github.event.pull_request.labels.*.name, 'unit_test:all_packages') }}
+        run: |
+          if [ -n "$TARGET_BRANCH" ]; then
+            git fetch --no-tags --quiet origin "$TARGET_BRANCH" || true
+          fi
+          python3 ci/get_package_shards.py
+
+      - uses: googleapis/librarian@bb2ee61752bd0f5387195b54c509e4d01a52b41d
+        with:
+          protoc-version: "33.5"
+          protoc-checksum: "eb842a2259a90a402207cae3a9261dc9501f43a535b3b3d786ecc496e117f499cf373fe41181fd9047035f7ed6c2dee9a55f7f0a7afa1c5d7cb5be3e672bf527"
+
+      - name: Install Python packages for Librarian
+        run: librarian install
+
+      - name: Clone Synthtool Templates
+        run: |
+          git clone --recurse-submodules --single-branch https://github.com/googleapis/synthtool.git /home/runner/synthtool
+
+      - name: Regenerate
+        env:
+          GLOBAL_REGEN: ${{ steps.filter.outputs.global_regen }}
+          EVENT_NAME: ${{ github.event_name }}
+          PACKAGES: ${{ steps.get-packages.outputs.packages }}
+        run: |
+          if [ "$GLOBAL_REGEN" = "true" ] || [ "$EVENT_NAME" = "push" ]; then
+            echo "Running full regeneration..."
+            librarian generate -all -v
+          elif [ -n "$PACKAGES" ]; then
+            for pkg_path in $PACKAGES; do
+              pkg=$(basename "$pkg_path")
+              if ! grep -q "^  - name: ${pkg}$" librarian.yaml; then
+                echo "Skipping $pkg (not in librarian.yaml)..."
+                continue
+              fi
+              echo "Regenerating $pkg..."
+              librarian generate "$pkg"
+            done
+          else
+            echo "No package changes detected; skipping generation."
+          fi
+
+      - name: Check for generated code changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git status
+            echo "==================== GIT DIFF ===================="
+            git diff
+            echo "=================================================="
+            echo "Regeneration produced code changes! Please run 'librarian generate' to update the generated files."
+            exit 1
+          fi
+
+      - name: Create issue if previous step fails
+        if: ${{ failure() && github.event_name == 'push' }}
+        uses: googleapis/librarian/.github/actions/create-issue-on-failure@bb2ee61752bd0f5387195b54c509e4d01a52b41d
+        with:
+          title: "Regeneration failed"
+          body: |
+            The post-submit [regeneration check](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) failed.
+
+            Please investigate the failure. To keep the `main` branch healthy, please consider **reverting the triggering change** first. 
+            
+            You can identify the cause from the workflow logs:
+            - If the step 'Check for generated code changes' failed, there are pending code changes that need to be committed.
+            - If the step 'Regenerate' failed, the generation script itself encountered an error.

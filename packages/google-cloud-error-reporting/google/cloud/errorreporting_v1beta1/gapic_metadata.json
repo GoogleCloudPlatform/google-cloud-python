@@ -1,0 +1,156 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.errorreporting_v1beta1",
+  "protoPackage": "google.devtools.clouderrorreporting.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "ErrorGroupService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ErrorGroupServiceClient",
+          "rpcs": {
+            "GetGroup": {
+              "methods": [
+                "get_group"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "update_group"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ErrorGroupServiceAsyncClient",
+          "rpcs": {
+            "GetGroup": {
+              "methods": [
+                "get_group"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "update_group"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ErrorGroupServiceClient",
+          "rpcs": {
+            "GetGroup": {
+              "methods": [
+                "get_group"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "update_group"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ErrorStatsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ErrorStatsServiceClient",
+          "rpcs": {
+            "DeleteEvents": {
+              "methods": [
+                "delete_events"
+              ]
+            },
+            "ListEvents": {
+              "methods": [
+                "list_events"
+              ]
+            },
+            "ListGroupStats": {
+              "methods": [
+                "list_group_stats"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ErrorStatsServiceAsyncClient",
+          "rpcs": {
+            "DeleteEvents": {
+              "methods": [
+                "delete_events"
+              ]
+            },
+            "ListEvents": {
+              "methods": [
+                "list_events"
+              ]
+            },
+            "ListGroupStats": {
+              "methods": [
+                "list_group_stats"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ErrorStatsServiceClient",
+          "rpcs": {
+            "DeleteEvents": {
+              "methods": [
+                "delete_events"
+              ]
+            },
+            "ListEvents": {
+              "methods": [
+                "list_events"
+              ]
+            },
+            "ListGroupStats": {
+              "methods": [
+                "list_group_stats"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ReportErrorsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ReportErrorsServiceClient",
+          "rpcs": {
+            "ReportErrorEvent": {
+              "methods": [
+                "report_error_event"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ReportErrorsServiceAsyncClient",
+          "rpcs": {
+            "ReportErrorEvent": {
+              "methods": [
+                "report_error_event"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ReportErrorsServiceClient",
+          "rpcs": {
+            "ReportErrorEvent": {
+              "methods": [
+                "report_error_event"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

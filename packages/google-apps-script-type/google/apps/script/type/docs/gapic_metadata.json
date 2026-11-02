@@ -1,0 +1,7 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.apps.script.type.docs",
+  "protoPackage": "google.apps.script.type.docs",
+  "schema": "1.0"
+}

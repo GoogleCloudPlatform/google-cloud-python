@@ -1,0 +1,82 @@
+tests:
+  - description: "Does not Replace function name"
+    before: |
+      def function():
+          pass
+    transformers:
+      - name: SymbolReplacer
+        args:
+          replacements: {"function": "new_function"}
+    after: |
+      def function():
+          pass
+
+  - description: "Does not replace async function name"
+    before: |
+      async def async_func():
+          await old_coroutine()
+    transformers:
+      - name: SymbolReplacer
+        args:
+          replacements: {"async_func": "new_async_func", "old_coroutine": "new_coroutine"}
+    after: |
+      async def async_func():
+          await new_coroutine()
+
+  - description: "Replace method call"
+    before: |
+      result = obj.old_method()
+    transformers:
+      - name: SymbolReplacer
+        args:
+          replacements: {"old_method": "new_method"}
+    after: |
+      result = obj.new_method()
+
+  - description: "Replace in docstring"
+    before: |
+      def func():
+          """This is a docstring mentioning old_name."""
+          pass
+    transformers:
+      - name: SymbolReplacer
+        args:
+          replacements: {"old_name": "new_name"}
+    after: |
+      def func():
+          """This is a docstring mentioning new_name."""
+          pass
+
+  - description: "Replace in type annotation"
+    before: |
+      def func(param: OldType) -> OldReturnType:
+          pass
+    transformers:
+      - name: SymbolReplacer
+        args:
+          replacements: {"OldType": "NewType", "OldReturnType": "NewReturnType"}
+    after: |
+      def func(param: NewType) -> NewReturnType:
+          pass
+
+  - description: "Replace in nested attribute"
+    before: |
+      result = obj.attr1.attr2.old_attr
+    transformers:
+      - name: SymbolReplacer
+        args:
+          replacements: {"old_attr": "new_attr"}
+    after: |
+      result = obj.attr1.attr2.new_attr
+
+  - description: "No replacement when symbol not found"
+    before: |
+      def unchanged_function():
+          pass
+    transformers:
+      - name: SymbolReplacer
+        args:
+          replacements: {"non_existent": "replacement"}
+    after: |
+      def unchanged_function():
+          pass

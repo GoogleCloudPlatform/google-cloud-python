@@ -1,0 +1,25 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children: []
+  class: google.cloud.pubsub_v1.types.Subscription.State
+  fullName: google.cloud.pubsub_v1.types.Subscription.State
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types.Subscription
+  name: State
+  source:
+    id: State
+    path: tests/testdata/gapic-combo/google/pubsub_v1/types/pubsub.py
+    startLine: 717
+  summary: 'Possible states for a subscription.
+
+
+    '
+  syntax:
+    content: State(value)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.Subscription.State
+references: []

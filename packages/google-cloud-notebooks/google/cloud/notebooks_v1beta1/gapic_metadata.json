@@ -1,0 +1,313 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.notebooks_v1beta1",
+  "protoPackage": "google.cloud.notebooks.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "NotebookService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "NotebookServiceClient",
+          "rpcs": {
+            "CreateEnvironment": {
+              "methods": [
+                "create_environment"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteEnvironment": {
+              "methods": [
+                "delete_environment"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "IsInstanceUpgradeable": {
+              "methods": [
+                "is_instance_upgradeable"
+              ]
+            },
+            "ListEnvironments": {
+              "methods": [
+                "list_environments"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "RegisterInstance": {
+              "methods": [
+                "register_instance"
+              ]
+            },
+            "ReportInstanceInfo": {
+              "methods": [
+                "report_instance_info"
+              ]
+            },
+            "ResetInstance": {
+              "methods": [
+                "reset_instance"
+              ]
+            },
+            "SetInstanceAccelerator": {
+              "methods": [
+                "set_instance_accelerator"
+              ]
+            },
+            "SetInstanceLabels": {
+              "methods": [
+                "set_instance_labels"
+              ]
+            },
+            "SetInstanceMachineType": {
+              "methods": [
+                "set_instance_machine_type"
+              ]
+            },
+            "StartInstance": {
+              "methods": [
+                "start_instance"
+              ]
+            },
+            "StopInstance": {
+              "methods": [
+                "stop_instance"
+              ]
+            },
+            "UpgradeInstance": {
+              "methods": [
+                "upgrade_instance"
+              ]
+            },
+            "UpgradeInstanceInternal": {
+              "methods": [
+                "upgrade_instance_internal"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "NotebookServiceAsyncClient",
+          "rpcs": {
+            "CreateEnvironment": {
+              "methods": [
+                "create_environment"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteEnvironment": {
+              "methods": [
+                "delete_environment"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "IsInstanceUpgradeable": {
+              "methods": [
+                "is_instance_upgradeable"
+              ]
+            },
+            "ListEnvironments": {
+              "methods": [
+                "list_environments"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "RegisterInstance": {
+              "methods": [
+                "register_instance"
+              ]
+            },
+            "ReportInstanceInfo": {
+              "methods": [
+                "report_instance_info"
+              ]
+            },
+            "ResetInstance": {
+              "methods": [
+                "reset_instance"
+              ]
+            },
+            "SetInstanceAccelerator": {
+              "methods": [
+                "set_instance_accelerator"
+              ]
+            },
+            "SetInstanceLabels": {
+              "methods": [
+                "set_instance_labels"
+              ]
+            },
+            "SetInstanceMachineType": {
+              "methods": [
+                "set_instance_machine_type"
+              ]
+            },
+            "StartInstance": {
+              "methods": [
+                "start_instance"
+              ]
+            },
+            "StopInstance": {
+              "methods": [
+                "stop_instance"
+              ]
+            },
+            "UpgradeInstance": {
+              "methods": [
+                "upgrade_instance"
+              ]
+            },
+            "UpgradeInstanceInternal": {
+              "methods": [
+                "upgrade_instance_internal"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "NotebookServiceClient",
+          "rpcs": {
+            "CreateEnvironment": {
+              "methods": [
+                "create_environment"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteEnvironment": {
+              "methods": [
+                "delete_environment"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "IsInstanceUpgradeable": {
+              "methods": [
+                "is_instance_upgradeable"
+              ]
+            },
+            "ListEnvironments": {
+              "methods": [
+                "list_environments"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "RegisterInstance": {
+              "methods": [
+                "register_instance"
+              ]
+            },
+            "ReportInstanceInfo": {
+              "methods": [
+                "report_instance_info"
+              ]
+            },
+            "ResetInstance": {
+              "methods": [
+                "reset_instance"
+              ]
+            },
+            "SetInstanceAccelerator": {
+              "methods": [
+                "set_instance_accelerator"
+              ]
+            },
+            "SetInstanceLabels": {
+              "methods": [
+                "set_instance_labels"
+              ]
+            },
+            "SetInstanceMachineType": {
+              "methods": [
+                "set_instance_machine_type"
+              ]
+            },
+            "StartInstance": {
+              "methods": [
+                "start_instance"
+              ]
+            },
+            "StopInstance": {
+              "methods": [
+                "stop_instance"
+              ]
+            },
+            "UpgradeInstance": {
+              "methods": [
+                "upgrade_instance"
+              ]
+            },
+            "UpgradeInstanceInternal": {
+              "methods": [
+                "upgrade_instance_internal"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

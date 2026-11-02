@@ -1,0 +1,15 @@
+{
+    "api_description": "Google Service Management allows service producers to publish their\nservices on Google Cloud Platform so that they can be discovered and used\nby service consumers.",
+    "api_id": "servicemanagement.googleapis.com",
+    "api_shortname": "servicemanagement",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/servicemanagement/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-service-management",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "servicemanagement",
+    "name_pretty": "Service Management",
+    "product_documentation": "https://cloud.google.com/service-infrastructure/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

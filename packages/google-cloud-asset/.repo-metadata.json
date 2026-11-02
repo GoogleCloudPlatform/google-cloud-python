@@ -1,0 +1,16 @@
+{
+    "api_description": "The Cloud Asset API manages the history and inventory of Google Cloud\nresources.",
+    "api_id": "cloudasset.googleapis.com",
+    "api_shortname": "cloudasset",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/cloudasset/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-asset",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559757",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "cloudasset",
+    "name_pretty": "Cloud Asset",
+    "product_documentation": "https://cloud.google.com/resource-manager/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

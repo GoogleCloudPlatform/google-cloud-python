@@ -1,0 +1,46 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.acl.ACL
+  - google.cloud.storage.acl.BucketACL
+  - google.cloud.storage.acl.DefaultObjectACL
+  - google.cloud.storage.acl.ObjectACL
+  fullName: google.cloud.storage.acl
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: acl
+  source:
+    id: acl
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 0
+  summary: 'Manage access to objects and buckets.
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google.cloud.storage.acl
+references:
+- fullName: google.cloud.storage.acl.ACL
+  isExternal: false
+  name: ACL
+  parent: google.cloud.storage.acl
+  uid: google.cloud.storage.acl.ACL
+- fullName: google.cloud.storage.acl.BucketACL
+  isExternal: false
+  name: BucketACL
+  parent: google.cloud.storage.acl
+  uid: google.cloud.storage.acl.BucketACL
+- fullName: google.cloud.storage.acl.DefaultObjectACL
+  isExternal: false
+  name: DefaultObjectACL
+  parent: google.cloud.storage.acl
+  uid: google.cloud.storage.acl.DefaultObjectACL
+- fullName: google.cloud.storage.acl.ObjectACL
+  isExternal: false
+  name: ObjectACL
+  parent: google.cloud.storage.acl
+  uid: google.cloud.storage.acl.ObjectACL

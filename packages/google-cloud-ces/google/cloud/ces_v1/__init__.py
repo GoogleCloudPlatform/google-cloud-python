@@ -1,0 +1,463 @@
+# -*- coding: utf-8 -*-
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+import google.api_core as api_core
+
+from google.cloud.ces_v1 import gapic_version as package_version
+
+__version__ = package_version.__version__
+
+# PEP 0810: Explicit Lazy Imports
+# Python 3.15+ natively intercepts and defers these imports.
+# Developers can disable this behavior and force eager imports.
+# For more information, see:
+# https://docs.python.org/3.15/library/sys.html#sys.set_lazy_imports_filter
+# Older Python versions safely ignore this variable.
+__lazy_modules__ = {
+    "google.cloud.ces_v1.services.agent_service",
+    "google.cloud.ces_v1.services.session_service",
+    "google.cloud.ces_v1.services.tool_service",
+    "google.cloud.ces_v1.services.widget_service",
+    "google.cloud.ces_v1.types.agent",
+    "google.cloud.ces_v1.types.agent_card",
+    "google.cloud.ces_v1.types.agent_service",
+    "google.cloud.ces_v1.types.agent_tool",
+    "google.cloud.ces_v1.types.agent_transfers",
+    "google.cloud.ces_v1.types.app",
+    "google.cloud.ces_v1.types.app_version",
+    "google.cloud.ces_v1.types.auth",
+    "google.cloud.ces_v1.types.bigquery_export",
+    "google.cloud.ces_v1.types.changelog",
+    "google.cloud.ces_v1.types.client_function",
+    "google.cloud.ces_v1.types.common",
+    "google.cloud.ces_v1.types.connector_tool",
+    "google.cloud.ces_v1.types.connector_toolset",
+    "google.cloud.ces_v1.types.conversation",
+    "google.cloud.ces_v1.types.data_store",
+    "google.cloud.ces_v1.types.data_store_tool",
+    "google.cloud.ces_v1.types.deployment",
+    "google.cloud.ces_v1.types.example",
+    "google.cloud.ces_v1.types.fakes",
+    "google.cloud.ces_v1.types.file_search_tool",
+    "google.cloud.ces_v1.types.google_search_tool",
+    "google.cloud.ces_v1.types.guardrail",
+    "google.cloud.ces_v1.types.mcp_tool",
+    "google.cloud.ces_v1.types.mcp_toolset",
+    "google.cloud.ces_v1.types.mocks",
+    "google.cloud.ces_v1.types.omnichannel",
+    "google.cloud.ces_v1.types.omnichannel_service",
+    "google.cloud.ces_v1.types.open_api_tool",
+    "google.cloud.ces_v1.types.open_api_toolset",
+    "google.cloud.ces_v1.types.python_function",
+    "google.cloud.ces_v1.types.schema",
+    "google.cloud.ces_v1.types.search_suggestions",
+    "google.cloud.ces_v1.types.security_settings",
+    "google.cloud.ces_v1.types.session_service",
+    "google.cloud.ces_v1.types.system_tool",
+    "google.cloud.ces_v1.types.tool",
+    "google.cloud.ces_v1.types.tool_service",
+    "google.cloud.ces_v1.types.toolset",
+    "google.cloud.ces_v1.types.toolset_tool",
+    "google.cloud.ces_v1.types.widget_service",
+    "google.cloud.ces_v1.types.widget_tool",
+}
+
+
+from .services.agent_service import AgentServiceAsyncClient, AgentServiceClient
+from .services.session_service import SessionServiceAsyncClient, SessionServiceClient
+from .services.tool_service import ToolServiceAsyncClient, ToolServiceClient
+from .services.widget_service import WidgetServiceAsyncClient, WidgetServiceClient
+from .types.agent import Agent
+from .types.agent_card import AgentCard, AgentInterface, AgentSkill, RemoteAgentTool
+from .types.agent_service import (
+    BatchDeleteConversationsRequest,
+    BatchDeleteConversationsResponse,
+    CreateAgentRequest,
+    CreateAppRequest,
+    CreateAppVersionRequest,
+    CreateDeploymentRequest,
+    CreateExampleRequest,
+    CreateGuardrailRequest,
+    CreateToolRequest,
+    CreateToolsetRequest,
+    DeleteAgentRequest,
+    DeleteAppRequest,
+    DeleteAppVersionRequest,
+    DeleteConversationRequest,
+    DeleteDeploymentRequest,
+    DeleteExampleRequest,
+    DeleteGuardrailRequest,
+    DeleteToolRequest,
+    DeleteToolsetRequest,
+    ExportAppRequest,
+    ExportAppResponse,
+    GetAgentRequest,
+    GetAppRequest,
+    GetAppVersionRequest,
+    GetChangelogRequest,
+    GetConversationRequest,
+    GetDeploymentRequest,
+    GetExampleRequest,
+    GetGuardrailRequest,
+    GetToolRequest,
+    GetToolsetRequest,
+    ImportAppRequest,
+    ImportAppResponse,
+    ListAgentsRequest,
+    ListAgentsResponse,
+    ListAppsRequest,
+    ListAppsResponse,
+    ListAppVersionsRequest,
+    ListAppVersionsResponse,
+    ListChangelogsRequest,
+    ListChangelogsResponse,
+    ListConversationsRequest,
+    ListConversationsResponse,
+    ListDeploymentsRequest,
+    ListDeploymentsResponse,
+    ListExamplesRequest,
+    ListExamplesResponse,
+    ListGuardrailsRequest,
+    ListGuardrailsResponse,
+    ListToolsetsRequest,
+    ListToolsetsResponse,
+    ListToolsRequest,
+    ListToolsResponse,
+    OperationMetadata,
+    RestoreAppVersionRequest,
+    RestoreAppVersionResponse,
+    UpdateAgentRequest,
+    UpdateAppRequest,
+    UpdateDeploymentRequest,
+    UpdateExampleRequest,
+    UpdateGuardrailRequest,
+    UpdateToolRequest,
+    UpdateToolsetRequest,
+)
+from .types.agent_tool import AgentTool
+from .types.agent_transfers import (
+    ExpressionCondition,
+    PythonCodeCondition,
+    TransferRule,
+)
+from .types.app import (
+    AmbientSoundConfig,
+    App,
+    AudioProcessingConfig,
+    AudioRecordingConfig,
+    BargeInConfig,
+    ClientCertificateSettings,
+    CloudLoggingSettings,
+    ConversationLoggingSettings,
+    DataStoreSettings,
+    ErrorHandlingSettings,
+    EvaluationMetricsThresholds,
+    LanguageSettings,
+    LoggingSettings,
+    MetricAnalysisSettings,
+    RedactionConfig,
+    SynthesizeSpeechConfig,
+    TimeZoneSettings,
+    VpcScSettings,
+)
+from .types.app_version import AppSnapshot, AppVersion
+from .types.auth import (
+    ApiAuthentication,
+    ApiKeyConfig,
+    BearerTokenConfig,
+    EndUserAuthConfig,
+    OAuthConfig,
+    ServiceAccountAuthConfig,
+    ServiceAgentIdTokenAuthConfig,
+)
+from .types.bigquery_export import BigQueryExportSettings
+from .types.changelog import Changelog
+from .types.client_function import ClientFunction
+from .types.common import (
+    Callback,
+    ChannelProfile,
+    ExecutionType,
+    ModelSettings,
+    ServiceDirectoryConfig,
+    Span,
+    TlsConfig,
+    TriggerAction,
+)
+from .types.connector_tool import Action, ConnectorTool
+from .types.connector_toolset import ConnectorToolset
+from .types.conversation import Conversation
+from .types.data_store import DataStore
+from .types.data_store_tool import DataStoreTool
+from .types.deployment import (
+    Deployment,
+    ExperimentConfig,
+    InstagramCredentials,
+    WhatsAppCredentials,
+)
+from .types.example import (
+    AgentTransfer,
+    Blob,
+    Chunk,
+    Example,
+    Image,
+    Message,
+    ToolCall,
+    ToolResponse,
+)
+from .types.fakes import CodeBlock, ToolFakeConfig
+from .types.file_search_tool import FileSearchTool
+from .types.google_search_tool import GoogleSearchTool
+from .types.guardrail import Guardrail
+from .types.mcp_tool import McpTool
+from .types.mcp_toolset import McpToolDefinition, McpToolOverride, McpToolset
+from .types.mocks import MockedToolCall
+from .types.omnichannel import Omnichannel, OmnichannelIntegrationConfig
+from .types.omnichannel_service import OmnichannelOperationMetadata
+from .types.open_api_tool import OpenApiTool
+from .types.open_api_toolset import OpenApiToolset
+from .types.python_function import PythonFunction
+from .types.schema import Schema
+from .types.search_suggestions import GoogleSearchSuggestions, WebSearchQuery
+from .types.security_settings import EndpointControlPolicy, SecuritySettings
+from .types.session_service import (
+    AudioEncoding,
+    BidiSessionClientMessage,
+    BidiSessionServerMessage,
+    Citations,
+    EndSession,
+    Event,
+    GoAway,
+    InputAudioConfig,
+    InterruptionSignal,
+    MockConfig,
+    OutputAudioConfig,
+    RecognitionResult,
+    RunSessionRequest,
+    RunSessionResponse,
+    SessionConfig,
+    SessionInput,
+    SessionOutput,
+    ToolCalls,
+    ToolResponses,
+)
+from .types.system_tool import SystemTool
+from .types.tool import Tool
+from .types.tool_service import (
+    ExecuteToolRequest,
+    ExecuteToolResponse,
+    RetrieveToolSchemaRequest,
+    RetrieveToolSchemaResponse,
+    RetrieveToolsRequest,
+    RetrieveToolsResponse,
+)
+from .types.toolset import Toolset
+from .types.toolset_tool import ToolsetTool
+from .types.widget_service import GenerateChatTokenRequest, GenerateChatTokenResponse
+from .types.widget_tool import WidgetTool
+
+__all__ = (
+    "AgentServiceAsyncClient",
+    "SessionServiceAsyncClient",
+    "ToolServiceAsyncClient",
+    "WidgetServiceAsyncClient",
+    "Action",
+    "Agent",
+    "AgentCard",
+    "AgentInterface",
+    "AgentServiceClient",
+    "AgentSkill",
+    "AgentTool",
+    "AgentTransfer",
+    "AmbientSoundConfig",
+    "ApiAuthentication",
+    "ApiKeyConfig",
+    "App",
+    "AppSnapshot",
+    "AppVersion",
+    "AudioEncoding",
+    "AudioProcessingConfig",
+    "AudioRecordingConfig",
+    "BargeInConfig",
+    "BatchDeleteConversationsRequest",
+    "BatchDeleteConversationsResponse",
+    "BearerTokenConfig",
+    "BidiSessionClientMessage",
+    "BidiSessionServerMessage",
+    "BigQueryExportSettings",
+    "Blob",
+    "Callback",
+    "Changelog",
+    "ChannelProfile",
+    "Chunk",
+    "Citations",
+    "ClientCertificateSettings",
+    "ClientFunction",
+    "CloudLoggingSettings",
+    "CodeBlock",
+    "ConnectorTool",
+    "ConnectorToolset",
+    "Conversation",
+    "ConversationLoggingSettings",
+    "CreateAgentRequest",
+    "CreateAppRequest",
+    "CreateAppVersionRequest",
+    "CreateDeploymentRequest",
+    "CreateExampleRequest",
+    "CreateGuardrailRequest",
+    "CreateToolRequest",
+    "CreateToolsetRequest",
+    "DataStore",
+    "DataStoreSettings",
+    "DataStoreTool",
+    "DeleteAgentRequest",
+    "DeleteAppRequest",
+    "DeleteAppVersionRequest",
+    "DeleteConversationRequest",
+    "DeleteDeploymentRequest",
+    "DeleteExampleRequest",
+    "DeleteGuardrailRequest",
+    "DeleteToolRequest",
+    "DeleteToolsetRequest",
+    "Deployment",
+    "EndSession",
+    "EndUserAuthConfig",
+    "EndpointControlPolicy",
+    "ErrorHandlingSettings",
+    "EvaluationMetricsThresholds",
+    "Event",
+    "Example",
+    "ExecuteToolRequest",
+    "ExecuteToolResponse",
+    "ExecutionType",
+    "ExperimentConfig",
+    "ExportAppRequest",
+    "ExportAppResponse",
+    "ExpressionCondition",
+    "FileSearchTool",
+    "GenerateChatTokenRequest",
+    "GenerateChatTokenResponse",
+    "GetAgentRequest",
+    "GetAppRequest",
+    "GetAppVersionRequest",
+    "GetChangelogRequest",
+    "GetConversationRequest",
+    "GetDeploymentRequest",
+    "GetExampleRequest",
+    "GetGuardrailRequest",
+    "GetToolRequest",
+    "GetToolsetRequest",
+    "GoAway",
+    "GoogleSearchSuggestions",
+    "GoogleSearchTool",
+    "Guardrail",
+    "Image",
+    "ImportAppRequest",
+    "ImportAppResponse",
+    "InputAudioConfig",
+    "InstagramCredentials",
+    "InterruptionSignal",
+    "LanguageSettings",
+    "ListAgentsRequest",
+    "ListAgentsResponse",
+    "ListAppVersionsRequest",
+    "ListAppVersionsResponse",
+    "ListAppsRequest",
+    "ListAppsResponse",
+    "ListChangelogsRequest",
+    "ListChangelogsResponse",
+    "ListConversationsRequest",
+    "ListConversationsResponse",
+    "ListDeploymentsRequest",
+    "ListDeploymentsResponse",
+    "ListExamplesRequest",
+    "ListExamplesResponse",
+    "ListGuardrailsRequest",
+    "ListGuardrailsResponse",
+    "ListToolsRequest",
+    "ListToolsResponse",
+    "ListToolsetsRequest",
+    "ListToolsetsResponse",
+    "LoggingSettings",
+    "McpTool",
+    "McpToolDefinition",
+    "McpToolOverride",
+    "McpToolset",
+    "Message",
+    "MetricAnalysisSettings",
+    "MockConfig",
+    "MockedToolCall",
+    "ModelSettings",
+    "OAuthConfig",
+    "Omnichannel",
+    "OmnichannelIntegrationConfig",
+    "OmnichannelOperationMetadata",
+    "OpenApiTool",
+    "OpenApiToolset",
+    "OperationMetadata",
+    "OutputAudioConfig",
+    "PythonCodeCondition",
+    "PythonFunction",
+    "RecognitionResult",
+    "RedactionConfig",
+    "RemoteAgentTool",
+    "RestoreAppVersionRequest",
+    "RestoreAppVersionResponse",
+    "RetrieveToolSchemaRequest",
+    "RetrieveToolSchemaResponse",
+    "RetrieveToolsRequest",
+    "RetrieveToolsResponse",
+    "RunSessionRequest",
+    "RunSessionResponse",
+    "Schema",
+    "SecuritySettings",
+    "ServiceAccountAuthConfig",
+    "ServiceAgentIdTokenAuthConfig",
+    "ServiceDirectoryConfig",
+    "SessionConfig",
+    "SessionInput",
+    "SessionOutput",
+    "SessionServiceClient",
+    "Span",
+    "SynthesizeSpeechConfig",
+    "SystemTool",
+    "TimeZoneSettings",
+    "TlsConfig",
+    "Tool",
+    "ToolCall",
+    "ToolCalls",
+    "ToolFakeConfig",
+    "ToolResponse",
+    "ToolResponses",
+    "ToolServiceClient",
+    "Toolset",
+    "ToolsetTool",
+    "TransferRule",
+    "TriggerAction",
+    "UpdateAgentRequest",
+    "UpdateAppRequest",
+    "UpdateDeploymentRequest",
+    "UpdateExampleRequest",
+    "UpdateGuardrailRequest",
+    "UpdateToolRequest",
+    "UpdateToolsetRequest",
+    "VpcScSettings",
+    "WebSearchQuery",
+    "WhatsAppCredentials",
+    "WidgetServiceClient",
+    "WidgetTool",
+)
+
+api_core.check_python_version("google.cloud.ces_v1")
+api_core.check_dependency_versions("google.cloud.ces_v1")

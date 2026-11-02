@@ -1,0 +1,96 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+  class: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+  fullName: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+  langs:
+  - python
+  module: google.pubsub_v1.services.publisher.pagers
+  name: ListTopicSubscriptionsPager
+  source:
+    id: ListTopicSubscriptionsPager
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/pagers.py
+    startLine: 158
+  summary: 'A pager for iterating through `list_topic_subscriptions` requests.
+
+
+    This class thinly wraps an initial
+
+    `google.pubsub_v1.types.ListTopicSubscriptionsResponse` object, and
+
+    provides an `__iter__` method to iterate through its
+
+    `subscriptions` field.
+
+
+    If there are more pages, the `__iter__` method will make additional
+
+    `ListTopicSubscriptions` requests and continue to iterate
+
+    through the `subscriptions` field on the
+
+    corresponding responses.
+
+
+    All the usual `google.pubsub_v1.types.ListTopicSubscriptionsResponse`
+
+    attributes are available on the pager. If multiple requests are made, only
+
+    the most recent response is retained, and thus used for attribute lookup.
+
+
+    '
+  syntax:
+    content: "ListTopicSubscriptionsPager(\n    method: typing.Callable[\n       \
+      \ [...], google.cloud.pubsub_v1.types.ListTopicSubscriptionsResponse\n    ],\n\
+      \    request: google.cloud.pubsub_v1.types.ListTopicSubscriptionsRequest,\n\
+      \    response: google.cloud.pubsub_v1.types.ListTopicSubscriptionsResponse,\n\
+      \    *,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n)"
+    parameters: []
+  type: class
+  uid: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+- attributes: []
+  class: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+  fullName: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+  langs:
+  - python
+  module: google.pubsub_v1.services.publisher.pagers
+  name: ListTopicSubscriptionsPager
+  source:
+    id: ListTopicSubscriptionsPager
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/pagers.py
+    startLine: 158
+  summary: 'Instantiate the pager.
+
+    '
+  syntax:
+    content: "ListTopicSubscriptionsPager(\n    method: typing.Callable[\n       \
+      \ [...], google.cloud.pubsub_v1.types.ListTopicSubscriptionsResponse\n    ],\n\
+      \    request: google.cloud.pubsub_v1.types.ListTopicSubscriptionsRequest,\n\
+      \    response: google.cloud.pubsub_v1.types.ListTopicSubscriptionsResponse,\n\
+      \    *,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n)"
+    parameters:
+    - description: The method that was originally called, and which instantiated this
+        pager.
+      id: method
+      var_type: Callable
+    - description: The initial request object.
+      id: request
+      var_type: google.pubsub_v1.types.ListTopicSubscriptionsRequest
+    - description: The initial response object.
+      id: response
+      var_type: google.pubsub_v1.types.ListTopicSubscriptionsResponse
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+  type: method
+  uid: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+references:
+- fullName: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+  isExternal: false
+  name: ListTopicSubscriptionsPager
+  parent: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+  uid: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager

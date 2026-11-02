@@ -1,0 +1,16 @@
+{% extends '_base.py.j2' %}
+
+{% block content %}
+
+from .client import {{ service.client_name }}
+{% if 'grpc' in opts.transport %}
+from .async_client import {{ service.async_client_name }}
+{% endif %}
+
+__all__ = (
+    '{{ service.client_name }}',
+    {% if 'grpc' in opts.transport %}
+    '{{ service.async_client_name }}',
+    {% endif %}
+)
+{% endblock %}

@@ -1,0 +1,16 @@
+{
+    "api_description": "Cloud Talent Solution provides the capability to create, read, update, and\ndelete job postings, as well as search jobs based on keywords and filters.",
+    "api_id": "jobs.googleapis.com",
+    "api_shortname": "jobs",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/talent/latest",
+    "default_version": "v4",
+    "distribution_name": "google-cloud-talent",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559664",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "talent",
+    "name_pretty": "Cloud Talent Solution",
+    "product_documentation": "https://cloud.google.com/solutions/talent-solution/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

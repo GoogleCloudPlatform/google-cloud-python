@@ -1,0 +1,18 @@
+[
+   {
+      "name":"Services",
+      "uidname":"google.cloud.run_v2.services",
+      "items":[
+         {
+            "name":"Overview",
+            "uidname":"google.cloud.run_v2.services.services",
+            "uid":"google.cloud.run_v2.services.services",
+         },
+         {
+            "name":"Pagers",
+            "uidname":"google.cloud.run_v2.pagers",
+            "uid":"google.cloud.run_v2.pagers",
+         }
+      ]
+   },
+]

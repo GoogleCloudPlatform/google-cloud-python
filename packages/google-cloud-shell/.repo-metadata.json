@@ -1,0 +1,15 @@
+{
+    "api_description": "Allows users to start, configure, and connect to interactive shell sessions\nrunning in the cloud.",
+    "api_id": "cloudshell.googleapis.com",
+    "api_shortname": "cloudshell",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/cloudshell/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-shell",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "cloudshell",
+    "name_pretty": "Cloud Shell",
+    "product_documentation": "https://cloud.google.com/shell/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

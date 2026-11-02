@@ -1,0 +1,19 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.BindingDelta
+  fullName: google.cloud.pubsub_v1.types.BindingDelta
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: BindingDelta
+  source:
+    id: BindingDelta
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.BindingDelta` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.BindingDelta
+references: []

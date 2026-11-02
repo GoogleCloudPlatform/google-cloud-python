@@ -1,0 +1,313 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.agentregistry_v1",
+  "protoPackage": "google.cloud.agentregistry.v1",
+  "schema": "1.0",
+  "services": {
+    "AgentRegistry": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AgentRegistryClient",
+          "rpcs": {
+            "CreateBinding": {
+              "methods": [
+                "create_binding"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteBinding": {
+              "methods": [
+                "delete_binding"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "FetchAvailableBindings": {
+              "methods": [
+                "fetch_available_bindings"
+              ]
+            },
+            "GetAgent": {
+              "methods": [
+                "get_agent"
+              ]
+            },
+            "GetBinding": {
+              "methods": [
+                "get_binding"
+              ]
+            },
+            "GetEndpoint": {
+              "methods": [
+                "get_endpoint"
+              ]
+            },
+            "GetMcpServer": {
+              "methods": [
+                "get_mcp_server"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListAgents": {
+              "methods": [
+                "list_agents"
+              ]
+            },
+            "ListBindings": {
+              "methods": [
+                "list_bindings"
+              ]
+            },
+            "ListEndpoints": {
+              "methods": [
+                "list_endpoints"
+              ]
+            },
+            "ListMcpServers": {
+              "methods": [
+                "list_mcp_servers"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "SearchAgents": {
+              "methods": [
+                "search_agents"
+              ]
+            },
+            "SearchMcpServers": {
+              "methods": [
+                "search_mcp_servers"
+              ]
+            },
+            "UpdateBinding": {
+              "methods": [
+                "update_binding"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AgentRegistryAsyncClient",
+          "rpcs": {
+            "CreateBinding": {
+              "methods": [
+                "create_binding"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteBinding": {
+              "methods": [
+                "delete_binding"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "FetchAvailableBindings": {
+              "methods": [
+                "fetch_available_bindings"
+              ]
+            },
+            "GetAgent": {
+              "methods": [
+                "get_agent"
+              ]
+            },
+            "GetBinding": {
+              "methods": [
+                "get_binding"
+              ]
+            },
+            "GetEndpoint": {
+              "methods": [
+                "get_endpoint"
+              ]
+            },
+            "GetMcpServer": {
+              "methods": [
+                "get_mcp_server"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListAgents": {
+              "methods": [
+                "list_agents"
+              ]
+            },
+            "ListBindings": {
+              "methods": [
+                "list_bindings"
+              ]
+            },
+            "ListEndpoints": {
+              "methods": [
+                "list_endpoints"
+              ]
+            },
+            "ListMcpServers": {
+              "methods": [
+                "list_mcp_servers"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "SearchAgents": {
+              "methods": [
+                "search_agents"
+              ]
+            },
+            "SearchMcpServers": {
+              "methods": [
+                "search_mcp_servers"
+              ]
+            },
+            "UpdateBinding": {
+              "methods": [
+                "update_binding"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AgentRegistryClient",
+          "rpcs": {
+            "CreateBinding": {
+              "methods": [
+                "create_binding"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteBinding": {
+              "methods": [
+                "delete_binding"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "FetchAvailableBindings": {
+              "methods": [
+                "fetch_available_bindings"
+              ]
+            },
+            "GetAgent": {
+              "methods": [
+                "get_agent"
+              ]
+            },
+            "GetBinding": {
+              "methods": [
+                "get_binding"
+              ]
+            },
+            "GetEndpoint": {
+              "methods": [
+                "get_endpoint"
+              ]
+            },
+            "GetMcpServer": {
+              "methods": [
+                "get_mcp_server"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListAgents": {
+              "methods": [
+                "list_agents"
+              ]
+            },
+            "ListBindings": {
+              "methods": [
+                "list_bindings"
+              ]
+            },
+            "ListEndpoints": {
+              "methods": [
+                "list_endpoints"
+              ]
+            },
+            "ListMcpServers": {
+              "methods": [
+                "list_mcp_servers"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "SearchAgents": {
+              "methods": [
+                "search_agents"
+              ]
+            },
+            "SearchMcpServers": {
+              "methods": [
+                "search_mcp_servers"
+              ]
+            },
+            "UpdateBinding": {
+              "methods": [
+                "update_binding"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+
+transport inheritance structure
+_______________________________
+
+``{{ service.name }}Transport`` is the ABC for all transports.
+
+- public child ``{{ service.name }}GrpcTransport`` for sync gRPC transport (defined in ``grpc.py``).
+- public child ``{{ service.name }}GrpcAsyncIOTransport`` for async gRPC transport (defined in ``grpc_asyncio.py``).
+- private child ``_Base{{ service.name }}RestTransport`` for base REST transport with inner classes ``_BaseMETHOD`` (defined in ``rest_base.py``).
+- public child ``{{ service.name }}RestTransport`` for sync REST transport with inner classes ``METHOD`` derived from the parent's corresponding ``_BaseMETHOD`` classes (defined in ``rest.py``).
+{# Since the service mixins have a similar structure, we factor out shared code into ``_shared_macros.j2`` to avoid duplication. #}

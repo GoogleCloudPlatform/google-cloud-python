@@ -1,0 +1,37 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.batch.Batch
+  - google.cloud.storage.batch.MIMEApplicationHTTP
+  fullName: google.cloud.storage.batch
+  langs:
+  - python
+  module: google.cloud.storage.batch
+  name: batch
+  source:
+    id: batch
+    path: tests/testdata/handwritten/google/cloud/storage/batch.py
+    startLine: 0
+  summary: 'Batch updates / deletes of storage buckets / blobs.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/how-tos/batch
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google.cloud.storage.batch
+references:
+- fullName: google.cloud.storage.batch.Batch
+  isExternal: false
+  name: Batch
+  parent: google.cloud.storage.batch
+  uid: google.cloud.storage.batch.Batch
+- fullName: google.cloud.storage.batch.MIMEApplicationHTTP
+  isExternal: false
+  name: MIMEApplicationHTTP
+  parent: google.cloud.storage.batch
+  uid: google.cloud.storage.batch.MIMEApplicationHTTP

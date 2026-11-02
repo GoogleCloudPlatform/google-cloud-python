@@ -1,0 +1,1024 @@
+# -*- coding: utf-8 -*-
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+import abc
+from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
+
+import google.api_core
+import google.auth  # type: ignore
+import google.protobuf
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import exceptions as core_exceptions
+from google.api_core import gapic_v1, operations_v1
+from google.api_core import retry as retries
+from google.auth import credentials as ga_credentials  # type: ignore
+from google.cloud.location import locations_pb2  # type: ignore
+from google.longrunning import operations_pb2  # type: ignore
+from google.oauth2 import service_account  # type: ignore
+
+from google.cloud.ces_v1beta import gapic_version as package_version
+from google.cloud.ces_v1beta.types import (
+    agent,
+    agent_service,
+    app,
+    app_version,
+    changelog,
+    conversation,
+    deployment,
+    example,
+    guardrail,
+    security_settings,
+    tool,
+    toolset,
+)
+from google.cloud.ces_v1beta.types import agent as gcc_agent
+from google.cloud.ces_v1beta.types import app as gcc_app
+from google.cloud.ces_v1beta.types import app_version as gcc_app_version
+from google.cloud.ces_v1beta.types import deployment as gcc_deployment
+from google.cloud.ces_v1beta.types import example as gcc_example
+from google.cloud.ces_v1beta.types import guardrail as gcc_guardrail
+from google.cloud.ces_v1beta.types import security_settings as gcc_security_settings
+from google.cloud.ces_v1beta.types import tool as gcc_tool
+from google.cloud.ces_v1beta.types import toolset as gcc_toolset
+
+DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
+    gapic_version=package_version.__version__
+)
+DEFAULT_CLIENT_INFO.protobuf_runtime_version = google.protobuf.__version__
+
+
+class AgentServiceTransport(abc.ABC):
+    """Abstract transport class for AgentService."""
+
+    AUTH_SCOPES = (
+        "https://www.googleapis.com/auth/ces",
+        "https://www.googleapis.com/auth/cloud-platform",
+    )
+
+    DEFAULT_HOST: str = "ces.googleapis.com"
+
+    def __init__(
+        self,
+        *,
+        host: str = DEFAULT_HOST,
+        credentials: Optional[ga_credentials.Credentials] = None,
+        credentials_file: Optional[str] = None,
+        scopes: Optional[Sequence[str]] = None,
+        quota_project_id: Optional[str] = None,
+        client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
+        always_use_jwt_access: Optional[bool] = False,
+        api_audience: Optional[str] = None,
+        **kwargs,
+    ) -> None:
+        """Instantiate the transport.
+
+        Args:
+            host (Optional[str]):
+                 The hostname to connect to (default: 'ces.googleapis.com').
+            credentials (Optional[google.auth.credentials.Credentials]): The
+                authorization credentials to attach to requests. These
+                credentials identify the application to the service; if none
+                are specified, the client will attempt to ascertain the
+                credentials from the environment.
+            credentials_file (Optional[str]): Deprecated. A file with credentials that can
+                be loaded with :func:`google.auth.load_credentials_from_file`.
+                This argument is mutually exclusive with credentials. This argument will be
+                removed in the next major version of this library.
+            scopes (Optional[Sequence[str]]): A list of scopes.
+            quota_project_id (Optional[str]): An optional project to use for billing
+                and quota.
+            client_info (google.api_core.gapic_v1.client_info.ClientInfo):
+                The client info used to send a user-agent string along with
+                API requests. If ``None``, then default info will be used.
+                Generally, you only need to set this if you're developing
+                your own client library.
+            always_use_jwt_access (Optional[bool]): Whether self signed JWT should
+                be used for service account credentials.
+            api_audience (Optional[str]): The intended audience for the API calls
+                to the service that will be set when using certain 3rd party
+                authentication flows. Audience is typically a resource identifier.
+                If not set, the host value will be used as a default.
+        """
+
+        # Save the scopes.
+        self._scopes = scopes
+        if not hasattr(self, "_ignore_credentials"):
+            self._ignore_credentials: bool = False
+
+        # If no credentials are provided, then determine the appropriate
+        # defaults.
+        if credentials and credentials_file:
+            raise core_exceptions.DuplicateCredentialArgs(
+                "'credentials_file' and 'credentials' are mutually exclusive"
+            )
+
+        if credentials_file is not None:
+            credentials, _ = google.auth.load_credentials_from_file(
+                credentials_file,
+                scopes=scopes,
+                quota_project_id=quota_project_id,
+                default_scopes=self.AUTH_SCOPES,
+            )
+        elif credentials is None and not self._ignore_credentials:
+            credentials, _ = google.auth.default(
+                scopes=scopes,
+                quota_project_id=quota_project_id,
+                default_scopes=self.AUTH_SCOPES,
+            )
+            # Don't apply audience if the credentials file passed from user.
+            if hasattr(credentials, "with_gdch_audience"):
+                credentials = credentials.with_gdch_audience(
+                    api_audience if api_audience else host
+                )
+
+        # If the credentials are service account credentials, then always try to use self signed JWT.
+        if (
+            always_use_jwt_access
+            and isinstance(credentials, service_account.Credentials)
+            and hasattr(service_account.Credentials, "with_always_use_jwt_access")
+        ):
+            credentials = credentials.with_always_use_jwt_access(True)
+
+        # Save the credentials.
+        self._credentials = credentials
+
+        # Save the hostname. Default to port 443 (HTTPS) if none is specified.
+        if ":" not in host:
+            host += ":443"
+        self._host = host
+
+        self._wrapped_methods: Dict[Callable, Callable] = {}
+
+    @property
+    def host(self):
+        return self._host
+
+    def _prep_wrapped_messages(self, client_info):
+        # Precompute the wrapped methods.
+        self._wrapped_methods = {
+            self.list_apps: gapic_v1.method.wrap_method(
+                self.list_apps,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_app: gapic_v1.method.wrap_method(
+                self.get_app,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_app: gapic_v1.method.wrap_method(
+                self.create_app,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_app: gapic_v1.method.wrap_method(
+                self.update_app,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_app: gapic_v1.method.wrap_method(
+                self.delete_app,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.export_app: gapic_v1.method.wrap_method(
+                self.export_app,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.import_app: gapic_v1.method.wrap_method(
+                self.import_app,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_security_settings: gapic_v1.method.wrap_method(
+                self.get_security_settings,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_security_settings: gapic_v1.method.wrap_method(
+                self.update_security_settings,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_agents: gapic_v1.method.wrap_method(
+                self.list_agents,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_agent: gapic_v1.method.wrap_method(
+                self.get_agent,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_agent: gapic_v1.method.wrap_method(
+                self.create_agent,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_agent: gapic_v1.method.wrap_method(
+                self.update_agent,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_agent: gapic_v1.method.wrap_method(
+                self.delete_agent,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_examples: gapic_v1.method.wrap_method(
+                self.list_examples,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_example: gapic_v1.method.wrap_method(
+                self.get_example,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_example: gapic_v1.method.wrap_method(
+                self.create_example,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_example: gapic_v1.method.wrap_method(
+                self.update_example,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_example: gapic_v1.method.wrap_method(
+                self.delete_example,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_tools: gapic_v1.method.wrap_method(
+                self.list_tools,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_tool: gapic_v1.method.wrap_method(
+                self.get_tool,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_conversations: gapic_v1.method.wrap_method(
+                self.list_conversations,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_conversation: gapic_v1.method.wrap_method(
+                self.get_conversation,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_conversation: gapic_v1.method.wrap_method(
+                self.delete_conversation,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_delete_conversations: gapic_v1.method.wrap_method(
+                self.batch_delete_conversations,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_tool: gapic_v1.method.wrap_method(
+                self.create_tool,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_tool: gapic_v1.method.wrap_method(
+                self.update_tool,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_tool: gapic_v1.method.wrap_method(
+                self.delete_tool,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_guardrails: gapic_v1.method.wrap_method(
+                self.list_guardrails,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_guardrail: gapic_v1.method.wrap_method(
+                self.get_guardrail,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_guardrail: gapic_v1.method.wrap_method(
+                self.create_guardrail,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_guardrail: gapic_v1.method.wrap_method(
+                self.update_guardrail,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_guardrail: gapic_v1.method.wrap_method(
+                self.delete_guardrail,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_deployments: gapic_v1.method.wrap_method(
+                self.list_deployments,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_deployment: gapic_v1.method.wrap_method(
+                self.get_deployment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_deployment: gapic_v1.method.wrap_method(
+                self.create_deployment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_deployment: gapic_v1.method.wrap_method(
+                self.update_deployment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_deployment: gapic_v1.method.wrap_method(
+                self.delete_deployment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_toolsets: gapic_v1.method.wrap_method(
+                self.list_toolsets,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_toolset: gapic_v1.method.wrap_method(
+                self.get_toolset,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_toolset: gapic_v1.method.wrap_method(
+                self.create_toolset,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_toolset: gapic_v1.method.wrap_method(
+                self.update_toolset,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_toolset: gapic_v1.method.wrap_method(
+                self.delete_toolset,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_app_versions: gapic_v1.method.wrap_method(
+                self.list_app_versions,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_app_version: gapic_v1.method.wrap_method(
+                self.get_app_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_app_version: gapic_v1.method.wrap_method(
+                self.create_app_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_app_version: gapic_v1.method.wrap_method(
+                self.delete_app_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.restore_app_version: gapic_v1.method.wrap_method(
+                self.restore_app_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.generate_app_resource: gapic_v1.method.wrap_method(
+                self.generate_app_resource,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_changelogs: gapic_v1.method.wrap_method(
+                self.list_changelogs,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_changelog: gapic_v1.method.wrap_method(
+                self.get_changelog,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_location: gapic_v1.method.wrap_method(
+                self.get_location,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_locations: gapic_v1.method.wrap_method(
+                self.list_locations,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.cancel_operation: gapic_v1.method.wrap_method(
+                self.cancel_operation,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_operation: gapic_v1.method.wrap_method(
+                self.delete_operation,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_operation: gapic_v1.method.wrap_method(
+                self.get_operation,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_operations: gapic_v1.method.wrap_method(
+                self.list_operations,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+        }
+
+    def close(self):
+        """Closes resources associated with the transport.
+
+        .. warning::
+             Only call this method if the transport is NOT shared
+             with other clients - this may cause errors in other clients!
+        """
+        raise NotImplementedError()
+
+    @property
+    def operations_client(self):
+        """Return the client designed to process long-running operations."""
+        raise NotImplementedError()
+
+    @property
+    def list_apps(
+        self,
+    ) -> Callable[
+        [agent_service.ListAppsRequest],
+        Union[
+            agent_service.ListAppsResponse, Awaitable[agent_service.ListAppsResponse]
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_app(
+        self,
+    ) -> Callable[[agent_service.GetAppRequest], Union[app.App, Awaitable[app.App]]]:
+        raise NotImplementedError()
+
+    @property
+    def create_app(
+        self,
+    ) -> Callable[
+        [agent_service.CreateAppRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_app(
+        self,
+    ) -> Callable[
+        [agent_service.UpdateAppRequest], Union[gcc_app.App, Awaitable[gcc_app.App]]
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_app(
+        self,
+    ) -> Callable[
+        [agent_service.DeleteAppRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def export_app(
+        self,
+    ) -> Callable[
+        [agent_service.ExportAppRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def import_app(
+        self,
+    ) -> Callable[
+        [agent_service.ImportAppRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_security_settings(
+        self,
+    ) -> Callable[
+        [agent_service.GetSecuritySettingsRequest],
+        Union[
+            security_settings.SecuritySettings,
+            Awaitable[security_settings.SecuritySettings],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_security_settings(
+        self,
+    ) -> Callable[
+        [agent_service.UpdateSecuritySettingsRequest],
+        Union[
+            gcc_security_settings.SecuritySettings,
+            Awaitable[gcc_security_settings.SecuritySettings],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_agents(
+        self,
+    ) -> Callable[
+        [agent_service.ListAgentsRequest],
+        Union[
+            agent_service.ListAgentsResponse,
+            Awaitable[agent_service.ListAgentsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_agent(
+        self,
+    ) -> Callable[
+        [agent_service.GetAgentRequest], Union[agent.Agent, Awaitable[agent.Agent]]
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_agent(
+        self,
+    ) -> Callable[
+        [agent_service.CreateAgentRequest],
+        Union[gcc_agent.Agent, Awaitable[gcc_agent.Agent]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_agent(
+        self,
+    ) -> Callable[
+        [agent_service.UpdateAgentRequest],
+        Union[gcc_agent.Agent, Awaitable[gcc_agent.Agent]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_agent(
+        self,
+    ) -> Callable[
+        [agent_service.DeleteAgentRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_examples(
+        self,
+    ) -> Callable[
+        [agent_service.ListExamplesRequest],
+        Union[
+            agent_service.ListExamplesResponse,
+            Awaitable[agent_service.ListExamplesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_example(
+        self,
+    ) -> Callable[
+        [agent_service.GetExampleRequest],
+        Union[example.Example, Awaitable[example.Example]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_example(
+        self,
+    ) -> Callable[
+        [agent_service.CreateExampleRequest],
+        Union[gcc_example.Example, Awaitable[gcc_example.Example]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_example(
+        self,
+    ) -> Callable[
+        [agent_service.UpdateExampleRequest],
+        Union[gcc_example.Example, Awaitable[gcc_example.Example]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_example(
+        self,
+    ) -> Callable[
+        [agent_service.DeleteExampleRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_tools(
+        self,
+    ) -> Callable[
+        [agent_service.ListToolsRequest],
+        Union[
+            agent_service.ListToolsResponse, Awaitable[agent_service.ListToolsResponse]
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_tool(
+        self,
+    ) -> Callable[
+        [agent_service.GetToolRequest], Union[tool.Tool, Awaitable[tool.Tool]]
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_conversations(
+        self,
+    ) -> Callable[
+        [agent_service.ListConversationsRequest],
+        Union[
+            agent_service.ListConversationsResponse,
+            Awaitable[agent_service.ListConversationsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_conversation(
+        self,
+    ) -> Callable[
+        [agent_service.GetConversationRequest],
+        Union[conversation.Conversation, Awaitable[conversation.Conversation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_conversation(
+        self,
+    ) -> Callable[
+        [agent_service.DeleteConversationRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_delete_conversations(
+        self,
+    ) -> Callable[
+        [agent_service.BatchDeleteConversationsRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_tool(
+        self,
+    ) -> Callable[
+        [agent_service.CreateToolRequest],
+        Union[gcc_tool.Tool, Awaitable[gcc_tool.Tool]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_tool(
+        self,
+    ) -> Callable[
+        [agent_service.UpdateToolRequest],
+        Union[gcc_tool.Tool, Awaitable[gcc_tool.Tool]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_tool(
+        self,
+    ) -> Callable[
+        [agent_service.DeleteToolRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_guardrails(
+        self,
+    ) -> Callable[
+        [agent_service.ListGuardrailsRequest],
+        Union[
+            agent_service.ListGuardrailsResponse,
+            Awaitable[agent_service.ListGuardrailsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_guardrail(
+        self,
+    ) -> Callable[
+        [agent_service.GetGuardrailRequest],
+        Union[guardrail.Guardrail, Awaitable[guardrail.Guardrail]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_guardrail(
+        self,
+    ) -> Callable[
+        [agent_service.CreateGuardrailRequest],
+        Union[gcc_guardrail.Guardrail, Awaitable[gcc_guardrail.Guardrail]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_guardrail(
+        self,
+    ) -> Callable[
+        [agent_service.UpdateGuardrailRequest],
+        Union[gcc_guardrail.Guardrail, Awaitable[gcc_guardrail.Guardrail]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_guardrail(
+        self,
+    ) -> Callable[
+        [agent_service.DeleteGuardrailRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_deployments(
+        self,
+    ) -> Callable[
+        [agent_service.ListDeploymentsRequest],
+        Union[
+            agent_service.ListDeploymentsResponse,
+            Awaitable[agent_service.ListDeploymentsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_deployment(
+        self,
+    ) -> Callable[
+        [agent_service.GetDeploymentRequest],
+        Union[deployment.Deployment, Awaitable[deployment.Deployment]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_deployment(
+        self,
+    ) -> Callable[
+        [agent_service.CreateDeploymentRequest],
+        Union[gcc_deployment.Deployment, Awaitable[gcc_deployment.Deployment]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_deployment(
+        self,
+    ) -> Callable[
+        [agent_service.UpdateDeploymentRequest],
+        Union[gcc_deployment.Deployment, Awaitable[gcc_deployment.Deployment]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_deployment(
+        self,
+    ) -> Callable[
+        [agent_service.DeleteDeploymentRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_toolsets(
+        self,
+    ) -> Callable[
+        [agent_service.ListToolsetsRequest],
+        Union[
+            agent_service.ListToolsetsResponse,
+            Awaitable[agent_service.ListToolsetsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_toolset(
+        self,
+    ) -> Callable[
+        [agent_service.GetToolsetRequest],
+        Union[toolset.Toolset, Awaitable[toolset.Toolset]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_toolset(
+        self,
+    ) -> Callable[
+        [agent_service.CreateToolsetRequest],
+        Union[gcc_toolset.Toolset, Awaitable[gcc_toolset.Toolset]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_toolset(
+        self,
+    ) -> Callable[
+        [agent_service.UpdateToolsetRequest],
+        Union[gcc_toolset.Toolset, Awaitable[gcc_toolset.Toolset]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_toolset(
+        self,
+    ) -> Callable[
+        [agent_service.DeleteToolsetRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_app_versions(
+        self,
+    ) -> Callable[
+        [agent_service.ListAppVersionsRequest],
+        Union[
+            agent_service.ListAppVersionsResponse,
+            Awaitable[agent_service.ListAppVersionsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_app_version(
+        self,
+    ) -> Callable[
+        [agent_service.GetAppVersionRequest],
+        Union[app_version.AppVersion, Awaitable[app_version.AppVersion]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_app_version(
+        self,
+    ) -> Callable[
+        [agent_service.CreateAppVersionRequest],
+        Union[gcc_app_version.AppVersion, Awaitable[gcc_app_version.AppVersion]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_app_version(
+        self,
+    ) -> Callable[
+        [agent_service.DeleteAppVersionRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def restore_app_version(
+        self,
+    ) -> Callable[
+        [agent_service.RestoreAppVersionRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def generate_app_resource(
+        self,
+    ) -> Callable[
+        [agent_service.GenerateAppResourceRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_changelogs(
+        self,
+    ) -> Callable[
+        [agent_service.ListChangelogsRequest],
+        Union[
+            agent_service.ListChangelogsResponse,
+            Awaitable[agent_service.ListChangelogsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_changelog(
+        self,
+    ) -> Callable[
+        [agent_service.GetChangelogRequest],
+        Union[changelog.Changelog, Awaitable[changelog.Changelog]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_operations(
+        self,
+    ) -> Callable[
+        [operations_pb2.ListOperationsRequest],
+        Union[
+            operations_pb2.ListOperationsResponse,
+            Awaitable[operations_pb2.ListOperationsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_operation(
+        self,
+    ) -> Callable[
+        [operations_pb2.GetOperationRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def cancel_operation(
+        self,
+    ) -> Callable[
+        [operations_pb2.CancelOperationRequest],
+        None,
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_operation(
+        self,
+    ) -> Callable[
+        [operations_pb2.DeleteOperationRequest],
+        None,
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_location(
+        self,
+    ) -> Callable[
+        [locations_pb2.GetLocationRequest],
+        Union[locations_pb2.Location, Awaitable[locations_pb2.Location]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_locations(
+        self,
+    ) -> Callable[
+        [locations_pb2.ListLocationsRequest],
+        Union[
+            locations_pb2.ListLocationsResponse,
+            Awaitable[locations_pb2.ListLocationsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def kind(self) -> str:
+        raise NotImplementedError()
+
+
+__all__ = ("AgentServiceTransport",)

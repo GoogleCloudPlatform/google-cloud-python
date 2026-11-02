@@ -1,0 +1,2570 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.recommendationengine.v1beta1",
+        "version": "v1beta1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-recommendations-ai",
+    "version": "0.13.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient",
+          "shortName": "CatalogServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient.create_catalog_item",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.CreateCatalogItem",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "CreateCatalogItem"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.CreateCatalogItemRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "catalog_item",
+            "type": "google.cloud.recommendationengine_v1beta1.types.CatalogItem"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.types.CatalogItem",
+        "shortName": "create_catalog_item"
+      },
+      "description": "Sample for CreateCatalogItem",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_create_catalog_item_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_CreateCatalogItem_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_create_catalog_item_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient",
+          "shortName": "CatalogServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient.create_catalog_item",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.CreateCatalogItem",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "CreateCatalogItem"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.CreateCatalogItemRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "catalog_item",
+            "type": "google.cloud.recommendationengine_v1beta1.types.CatalogItem"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.types.CatalogItem",
+        "shortName": "create_catalog_item"
+      },
+      "description": "Sample for CreateCatalogItem",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_create_catalog_item_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_CreateCatalogItem_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_create_catalog_item_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient",
+          "shortName": "CatalogServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient.delete_catalog_item",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.DeleteCatalogItem",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "DeleteCatalogItem"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.DeleteCatalogItemRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_catalog_item"
+      },
+      "description": "Sample for DeleteCatalogItem",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_delete_catalog_item_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_DeleteCatalogItem_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_delete_catalog_item_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient",
+          "shortName": "CatalogServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient.delete_catalog_item",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.DeleteCatalogItem",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "DeleteCatalogItem"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.DeleteCatalogItemRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_catalog_item"
+      },
+      "description": "Sample for DeleteCatalogItem",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_delete_catalog_item_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_DeleteCatalogItem_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_delete_catalog_item_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient",
+          "shortName": "CatalogServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient.get_catalog_item",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.GetCatalogItem",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "GetCatalogItem"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.GetCatalogItemRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.types.CatalogItem",
+        "shortName": "get_catalog_item"
+      },
+      "description": "Sample for GetCatalogItem",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_get_catalog_item_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_GetCatalogItem_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_get_catalog_item_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient",
+          "shortName": "CatalogServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient.get_catalog_item",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.GetCatalogItem",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "GetCatalogItem"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.GetCatalogItemRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.types.CatalogItem",
+        "shortName": "get_catalog_item"
+      },
+      "description": "Sample for GetCatalogItem",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_get_catalog_item_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_GetCatalogItem_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_get_catalog_item_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient",
+          "shortName": "CatalogServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient.import_catalog_items",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.ImportCatalogItems",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "ImportCatalogItems"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ImportCatalogItemsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "request_id",
+            "type": "str"
+          },
+          {
+            "name": "input_config",
+            "type": "google.cloud.recommendationengine_v1beta1.types.InputConfig"
+          },
+          {
+            "name": "errors_config",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ImportErrorsConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "import_catalog_items"
+      },
+      "description": "Sample for ImportCatalogItems",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_import_catalog_items_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_ImportCatalogItems_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_import_catalog_items_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient",
+          "shortName": "CatalogServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient.import_catalog_items",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.ImportCatalogItems",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "ImportCatalogItems"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ImportCatalogItemsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "request_id",
+            "type": "str"
+          },
+          {
+            "name": "input_config",
+            "type": "google.cloud.recommendationengine_v1beta1.types.InputConfig"
+          },
+          {
+            "name": "errors_config",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ImportErrorsConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "import_catalog_items"
+      },
+      "description": "Sample for ImportCatalogItems",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_import_catalog_items_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_ImportCatalogItems_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_import_catalog_items_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient",
+          "shortName": "CatalogServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient.list_catalog_items",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.ListCatalogItems",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "ListCatalogItems"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ListCatalogItemsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.services.catalog_service.pagers.ListCatalogItemsAsyncPager",
+        "shortName": "list_catalog_items"
+      },
+      "description": "Sample for ListCatalogItems",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_list_catalog_items_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_ListCatalogItems_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_list_catalog_items_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient",
+          "shortName": "CatalogServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient.list_catalog_items",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.ListCatalogItems",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "ListCatalogItems"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ListCatalogItemsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.services.catalog_service.pagers.ListCatalogItemsPager",
+        "shortName": "list_catalog_items"
+      },
+      "description": "Sample for ListCatalogItems",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_list_catalog_items_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_ListCatalogItems_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_list_catalog_items_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient",
+          "shortName": "CatalogServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceAsyncClient.update_catalog_item",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.UpdateCatalogItem",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "UpdateCatalogItem"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.UpdateCatalogItemRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "catalog_item",
+            "type": "google.cloud.recommendationengine_v1beta1.types.CatalogItem"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.types.CatalogItem",
+        "shortName": "update_catalog_item"
+      },
+      "description": "Sample for UpdateCatalogItem",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_update_catalog_item_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_UpdateCatalogItem_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_update_catalog_item_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient",
+          "shortName": "CatalogServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.CatalogServiceClient.update_catalog_item",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService.UpdateCatalogItem",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.CatalogService",
+            "shortName": "CatalogService"
+          },
+          "shortName": "UpdateCatalogItem"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.UpdateCatalogItemRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "catalog_item",
+            "type": "google.cloud.recommendationengine_v1beta1.types.CatalogItem"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.types.CatalogItem",
+        "shortName": "update_catalog_item"
+      },
+      "description": "Sample for UpdateCatalogItem",
+      "file": "recommendationengine_v1beta1_generated_catalog_service_update_catalog_item_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_CatalogService_UpdateCatalogItem_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_catalog_service_update_catalog_item_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryAsyncClient",
+          "shortName": "PredictionApiKeyRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryAsyncClient.create_prediction_api_key_registration",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry.CreatePredictionApiKeyRegistration",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry",
+            "shortName": "PredictionApiKeyRegistry"
+          },
+          "shortName": "CreatePredictionApiKeyRegistration"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.CreatePredictionApiKeyRegistrationRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "prediction_api_key_registration",
+            "type": "google.cloud.recommendationengine_v1beta1.types.PredictionApiKeyRegistration"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.types.PredictionApiKeyRegistration",
+        "shortName": "create_prediction_api_key_registration"
+      },
+      "description": "Sample for CreatePredictionApiKeyRegistration",
+      "file": "recommendationengine_v1beta1_generated_prediction_api_key_registry_create_prediction_api_key_registration_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_PredictionApiKeyRegistry_CreatePredictionApiKeyRegistration_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_prediction_api_key_registry_create_prediction_api_key_registration_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryClient",
+          "shortName": "PredictionApiKeyRegistryClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryClient.create_prediction_api_key_registration",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry.CreatePredictionApiKeyRegistration",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry",
+            "shortName": "PredictionApiKeyRegistry"
+          },
+          "shortName": "CreatePredictionApiKeyRegistration"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.CreatePredictionApiKeyRegistrationRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "prediction_api_key_registration",
+            "type": "google.cloud.recommendationengine_v1beta1.types.PredictionApiKeyRegistration"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.types.PredictionApiKeyRegistration",
+        "shortName": "create_prediction_api_key_registration"
+      },
+      "description": "Sample for CreatePredictionApiKeyRegistration",
+      "file": "recommendationengine_v1beta1_generated_prediction_api_key_registry_create_prediction_api_key_registration_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_PredictionApiKeyRegistry_CreatePredictionApiKeyRegistration_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_prediction_api_key_registry_create_prediction_api_key_registration_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryAsyncClient",
+          "shortName": "PredictionApiKeyRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryAsyncClient.delete_prediction_api_key_registration",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry.DeletePredictionApiKeyRegistration",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry",
+            "shortName": "PredictionApiKeyRegistry"
+          },
+          "shortName": "DeletePredictionApiKeyRegistration"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.DeletePredictionApiKeyRegistrationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_prediction_api_key_registration"
+      },
+      "description": "Sample for DeletePredictionApiKeyRegistration",
+      "file": "recommendationengine_v1beta1_generated_prediction_api_key_registry_delete_prediction_api_key_registration_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_PredictionApiKeyRegistry_DeletePredictionApiKeyRegistration_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_prediction_api_key_registry_delete_prediction_api_key_registration_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryClient",
+          "shortName": "PredictionApiKeyRegistryClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryClient.delete_prediction_api_key_registration",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry.DeletePredictionApiKeyRegistration",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry",
+            "shortName": "PredictionApiKeyRegistry"
+          },
+          "shortName": "DeletePredictionApiKeyRegistration"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.DeletePredictionApiKeyRegistrationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_prediction_api_key_registration"
+      },
+      "description": "Sample for DeletePredictionApiKeyRegistration",
+      "file": "recommendationengine_v1beta1_generated_prediction_api_key_registry_delete_prediction_api_key_registration_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_PredictionApiKeyRegistry_DeletePredictionApiKeyRegistration_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_prediction_api_key_registry_delete_prediction_api_key_registration_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryAsyncClient",
+          "shortName": "PredictionApiKeyRegistryAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryAsyncClient.list_prediction_api_key_registrations",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry.ListPredictionApiKeyRegistrations",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry",
+            "shortName": "PredictionApiKeyRegistry"
+          },
+          "shortName": "ListPredictionApiKeyRegistrations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ListPredictionApiKeyRegistrationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.services.prediction_api_key_registry.pagers.ListPredictionApiKeyRegistrationsAsyncPager",
+        "shortName": "list_prediction_api_key_registrations"
+      },
+      "description": "Sample for ListPredictionApiKeyRegistrations",
+      "file": "recommendationengine_v1beta1_generated_prediction_api_key_registry_list_prediction_api_key_registrations_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_PredictionApiKeyRegistry_ListPredictionApiKeyRegistrations_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_prediction_api_key_registry_list_prediction_api_key_registrations_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryClient",
+          "shortName": "PredictionApiKeyRegistryClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.PredictionApiKeyRegistryClient.list_prediction_api_key_registrations",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry.ListPredictionApiKeyRegistrations",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.PredictionApiKeyRegistry",
+            "shortName": "PredictionApiKeyRegistry"
+          },
+          "shortName": "ListPredictionApiKeyRegistrations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ListPredictionApiKeyRegistrationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.services.prediction_api_key_registry.pagers.ListPredictionApiKeyRegistrationsPager",
+        "shortName": "list_prediction_api_key_registrations"
+      },
+      "description": "Sample for ListPredictionApiKeyRegistrations",
+      "file": "recommendationengine_v1beta1_generated_prediction_api_key_registry_list_prediction_api_key_registrations_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_PredictionApiKeyRegistry_ListPredictionApiKeyRegistrations_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_prediction_api_key_registry_list_prediction_api_key_registrations_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.PredictionServiceAsyncClient",
+          "shortName": "PredictionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.PredictionServiceAsyncClient.predict",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.PredictionService.Predict",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.PredictionService",
+            "shortName": "PredictionService"
+          },
+          "shortName": "Predict"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.PredictRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "user_event",
+            "type": "google.cloud.recommendationengine_v1beta1.types.UserEvent"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.services.prediction_service.pagers.PredictAsyncPager",
+        "shortName": "predict"
+      },
+      "description": "Sample for Predict",
+      "file": "recommendationengine_v1beta1_generated_prediction_service_predict_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_PredictionService_Predict_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_prediction_service_predict_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.PredictionServiceClient",
+          "shortName": "PredictionServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.PredictionServiceClient.predict",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.PredictionService.Predict",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.PredictionService",
+            "shortName": "PredictionService"
+          },
+          "shortName": "Predict"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.PredictRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "user_event",
+            "type": "google.cloud.recommendationengine_v1beta1.types.UserEvent"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.services.prediction_service.pagers.PredictPager",
+        "shortName": "predict"
+      },
+      "description": "Sample for Predict",
+      "file": "recommendationengine_v1beta1_generated_prediction_service_predict_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_PredictionService_Predict_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_prediction_service_predict_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceAsyncClient",
+          "shortName": "UserEventServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceAsyncClient.collect_user_event",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService.CollectUserEvent",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService",
+            "shortName": "UserEventService"
+          },
+          "shortName": "CollectUserEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.CollectUserEventRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_event",
+            "type": "str"
+          },
+          {
+            "name": "uri",
+            "type": "str"
+          },
+          {
+            "name": "ets",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api.httpbody_pb2.HttpBody",
+        "shortName": "collect_user_event"
+      },
+      "description": "Sample for CollectUserEvent",
+      "file": "recommendationengine_v1beta1_generated_user_event_service_collect_user_event_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_UserEventService_CollectUserEvent_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_user_event_service_collect_user_event_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceClient",
+          "shortName": "UserEventServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceClient.collect_user_event",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService.CollectUserEvent",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService",
+            "shortName": "UserEventService"
+          },
+          "shortName": "CollectUserEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.CollectUserEventRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_event",
+            "type": "str"
+          },
+          {
+            "name": "uri",
+            "type": "str"
+          },
+          {
+            "name": "ets",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api.httpbody_pb2.HttpBody",
+        "shortName": "collect_user_event"
+      },
+      "description": "Sample for CollectUserEvent",
+      "file": "recommendationengine_v1beta1_generated_user_event_service_collect_user_event_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_UserEventService_CollectUserEvent_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_user_event_service_collect_user_event_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceAsyncClient",
+          "shortName": "UserEventServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceAsyncClient.import_user_events",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService.ImportUserEvents",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService",
+            "shortName": "UserEventService"
+          },
+          "shortName": "ImportUserEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ImportUserEventsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "request_id",
+            "type": "str"
+          },
+          {
+            "name": "input_config",
+            "type": "google.cloud.recommendationengine_v1beta1.types.InputConfig"
+          },
+          {
+            "name": "errors_config",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ImportErrorsConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "import_user_events"
+      },
+      "description": "Sample for ImportUserEvents",
+      "file": "recommendationengine_v1beta1_generated_user_event_service_import_user_events_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_UserEventService_ImportUserEvents_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_user_event_service_import_user_events_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceClient",
+          "shortName": "UserEventServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceClient.import_user_events",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService.ImportUserEvents",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService",
+            "shortName": "UserEventService"
+          },
+          "shortName": "ImportUserEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ImportUserEventsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "request_id",
+            "type": "str"
+          },
+          {
+            "name": "input_config",
+            "type": "google.cloud.recommendationengine_v1beta1.types.InputConfig"
+          },
+          {
+            "name": "errors_config",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ImportErrorsConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "import_user_events"
+      },
+      "description": "Sample for ImportUserEvents",
+      "file": "recommendationengine_v1beta1_generated_user_event_service_import_user_events_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_UserEventService_ImportUserEvents_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_user_event_service_import_user_events_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceAsyncClient",
+          "shortName": "UserEventServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceAsyncClient.list_user_events",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService.ListUserEvents",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService",
+            "shortName": "UserEventService"
+          },
+          "shortName": "ListUserEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ListUserEventsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.services.user_event_service.pagers.ListUserEventsAsyncPager",
+        "shortName": "list_user_events"
+      },
+      "description": "Sample for ListUserEvents",
+      "file": "recommendationengine_v1beta1_generated_user_event_service_list_user_events_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_UserEventService_ListUserEvents_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_user_event_service_list_user_events_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceClient",
+          "shortName": "UserEventServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceClient.list_user_events",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService.ListUserEvents",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService",
+            "shortName": "UserEventService"
+          },
+          "shortName": "ListUserEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.ListUserEventsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.services.user_event_service.pagers.ListUserEventsPager",
+        "shortName": "list_user_events"
+      },
+      "description": "Sample for ListUserEvents",
+      "file": "recommendationengine_v1beta1_generated_user_event_service_list_user_events_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_UserEventService_ListUserEvents_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_user_event_service_list_user_events_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceAsyncClient",
+          "shortName": "UserEventServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceAsyncClient.purge_user_events",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService.PurgeUserEvents",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService",
+            "shortName": "UserEventService"
+          },
+          "shortName": "PurgeUserEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.PurgeUserEventsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "force",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "purge_user_events"
+      },
+      "description": "Sample for PurgeUserEvents",
+      "file": "recommendationengine_v1beta1_generated_user_event_service_purge_user_events_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_UserEventService_PurgeUserEvents_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_user_event_service_purge_user_events_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceClient",
+          "shortName": "UserEventServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceClient.purge_user_events",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService.PurgeUserEvents",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService",
+            "shortName": "UserEventService"
+          },
+          "shortName": "PurgeUserEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.PurgeUserEventsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "force",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "purge_user_events"
+      },
+      "description": "Sample for PurgeUserEvents",
+      "file": "recommendationengine_v1beta1_generated_user_event_service_purge_user_events_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_UserEventService_PurgeUserEvents_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_user_event_service_purge_user_events_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceAsyncClient",
+          "shortName": "UserEventServiceAsyncClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceAsyncClient.write_user_event",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService.WriteUserEvent",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService",
+            "shortName": "UserEventService"
+          },
+          "shortName": "WriteUserEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.WriteUserEventRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_event",
+            "type": "google.cloud.recommendationengine_v1beta1.types.UserEvent"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.types.UserEvent",
+        "shortName": "write_user_event"
+      },
+      "description": "Sample for WriteUserEvent",
+      "file": "recommendationengine_v1beta1_generated_user_event_service_write_user_event_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_UserEventService_WriteUserEvent_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_user_event_service_write_user_event_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceClient",
+          "shortName": "UserEventServiceClient"
+        },
+        "fullName": "google.cloud.recommendationengine_v1beta1.UserEventServiceClient.write_user_event",
+        "method": {
+          "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService.WriteUserEvent",
+          "service": {
+            "fullName": "google.cloud.recommendationengine.v1beta1.UserEventService",
+            "shortName": "UserEventService"
+          },
+          "shortName": "WriteUserEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommendationengine_v1beta1.types.WriteUserEventRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_event",
+            "type": "google.cloud.recommendationengine_v1beta1.types.UserEvent"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommendationengine_v1beta1.types.UserEvent",
+        "shortName": "write_user_event"
+      },
+      "description": "Sample for WriteUserEvent",
+      "file": "recommendationengine_v1beta1_generated_user_event_service_write_user_event_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommendationengine_v1beta1_generated_UserEventService_WriteUserEvent_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommendationengine_v1beta1_generated_user_event_service_write_user_event_sync.py"
+    }
+  ]
+}

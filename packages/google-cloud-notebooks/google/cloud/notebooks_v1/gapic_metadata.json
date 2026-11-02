@@ -1,0 +1,507 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.notebooks_v1",
+  "protoPackage": "google.cloud.notebooks.v1",
+  "schema": "1.0",
+  "services": {
+    "ManagedNotebookService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ManagedNotebookServiceClient",
+          "rpcs": {
+            "CreateRuntime": {
+              "methods": [
+                "create_runtime"
+              ]
+            },
+            "DeleteRuntime": {
+              "methods": [
+                "delete_runtime"
+              ]
+            },
+            "DiagnoseRuntime": {
+              "methods": [
+                "diagnose_runtime"
+              ]
+            },
+            "GetRuntime": {
+              "methods": [
+                "get_runtime"
+              ]
+            },
+            "ListRuntimes": {
+              "methods": [
+                "list_runtimes"
+              ]
+            },
+            "RefreshRuntimeTokenInternal": {
+              "methods": [
+                "refresh_runtime_token_internal"
+              ]
+            },
+            "ReportRuntimeEvent": {
+              "methods": [
+                "report_runtime_event"
+              ]
+            },
+            "ResetRuntime": {
+              "methods": [
+                "reset_runtime"
+              ]
+            },
+            "StartRuntime": {
+              "methods": [
+                "start_runtime"
+              ]
+            },
+            "StopRuntime": {
+              "methods": [
+                "stop_runtime"
+              ]
+            },
+            "SwitchRuntime": {
+              "methods": [
+                "switch_runtime"
+              ]
+            },
+            "UpdateRuntime": {
+              "methods": [
+                "update_runtime"
+              ]
+            },
+            "UpgradeRuntime": {
+              "methods": [
+                "upgrade_runtime"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ManagedNotebookServiceAsyncClient",
+          "rpcs": {
+            "CreateRuntime": {
+              "methods": [
+                "create_runtime"
+              ]
+            },
+            "DeleteRuntime": {
+              "methods": [
+                "delete_runtime"
+              ]
+            },
+            "DiagnoseRuntime": {
+              "methods": [
+                "diagnose_runtime"
+              ]
+            },
+            "GetRuntime": {
+              "methods": [
+                "get_runtime"
+              ]
+            },
+            "ListRuntimes": {
+              "methods": [
+                "list_runtimes"
+              ]
+            },
+            "RefreshRuntimeTokenInternal": {
+              "methods": [
+                "refresh_runtime_token_internal"
+              ]
+            },
+            "ReportRuntimeEvent": {
+              "methods": [
+                "report_runtime_event"
+              ]
+            },
+            "ResetRuntime": {
+              "methods": [
+                "reset_runtime"
+              ]
+            },
+            "StartRuntime": {
+              "methods": [
+                "start_runtime"
+              ]
+            },
+            "StopRuntime": {
+              "methods": [
+                "stop_runtime"
+              ]
+            },
+            "SwitchRuntime": {
+              "methods": [
+                "switch_runtime"
+              ]
+            },
+            "UpdateRuntime": {
+              "methods": [
+                "update_runtime"
+              ]
+            },
+            "UpgradeRuntime": {
+              "methods": [
+                "upgrade_runtime"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NotebookService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "NotebookServiceClient",
+          "rpcs": {
+            "CreateEnvironment": {
+              "methods": [
+                "create_environment"
+              ]
+            },
+            "CreateExecution": {
+              "methods": [
+                "create_execution"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "CreateSchedule": {
+              "methods": [
+                "create_schedule"
+              ]
+            },
+            "DeleteEnvironment": {
+              "methods": [
+                "delete_environment"
+              ]
+            },
+            "DeleteExecution": {
+              "methods": [
+                "delete_execution"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteSchedule": {
+              "methods": [
+                "delete_schedule"
+              ]
+            },
+            "DiagnoseInstance": {
+              "methods": [
+                "diagnose_instance"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "GetExecution": {
+              "methods": [
+                "get_execution"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetInstanceHealth": {
+              "methods": [
+                "get_instance_health"
+              ]
+            },
+            "GetSchedule": {
+              "methods": [
+                "get_schedule"
+              ]
+            },
+            "IsInstanceUpgradeable": {
+              "methods": [
+                "is_instance_upgradeable"
+              ]
+            },
+            "ListEnvironments": {
+              "methods": [
+                "list_environments"
+              ]
+            },
+            "ListExecutions": {
+              "methods": [
+                "list_executions"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListSchedules": {
+              "methods": [
+                "list_schedules"
+              ]
+            },
+            "RegisterInstance": {
+              "methods": [
+                "register_instance"
+              ]
+            },
+            "ReportInstanceInfo": {
+              "methods": [
+                "report_instance_info"
+              ]
+            },
+            "ResetInstance": {
+              "methods": [
+                "reset_instance"
+              ]
+            },
+            "RollbackInstance": {
+              "methods": [
+                "rollback_instance"
+              ]
+            },
+            "SetInstanceAccelerator": {
+              "methods": [
+                "set_instance_accelerator"
+              ]
+            },
+            "SetInstanceLabels": {
+              "methods": [
+                "set_instance_labels"
+              ]
+            },
+            "SetInstanceMachineType": {
+              "methods": [
+                "set_instance_machine_type"
+              ]
+            },
+            "StartInstance": {
+              "methods": [
+                "start_instance"
+              ]
+            },
+            "StopInstance": {
+              "methods": [
+                "stop_instance"
+              ]
+            },
+            "TriggerSchedule": {
+              "methods": [
+                "trigger_schedule"
+              ]
+            },
+            "UpdateInstanceConfig": {
+              "methods": [
+                "update_instance_config"
+              ]
+            },
+            "UpdateInstanceMetadataItems": {
+              "methods": [
+                "update_instance_metadata_items"
+              ]
+            },
+            "UpdateShieldedInstanceConfig": {
+              "methods": [
+                "update_shielded_instance_config"
+              ]
+            },
+            "UpgradeInstance": {
+              "methods": [
+                "upgrade_instance"
+              ]
+            },
+            "UpgradeInstanceInternal": {
+              "methods": [
+                "upgrade_instance_internal"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "NotebookServiceAsyncClient",
+          "rpcs": {
+            "CreateEnvironment": {
+              "methods": [
+                "create_environment"
+              ]
+            },
+            "CreateExecution": {
+              "methods": [
+                "create_execution"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "CreateSchedule": {
+              "methods": [
+                "create_schedule"
+              ]
+            },
+            "DeleteEnvironment": {
+              "methods": [
+                "delete_environment"
+              ]
+            },
+            "DeleteExecution": {
+              "methods": [
+                "delete_execution"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteSchedule": {
+              "methods": [
+                "delete_schedule"
+              ]
+            },
+            "DiagnoseInstance": {
+              "methods": [
+                "diagnose_instance"
+              ]
+            },
+            "GetEnvironment": {
+              "methods": [
+                "get_environment"
+              ]
+            },
+            "GetExecution": {
+              "methods": [
+                "get_execution"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetInstanceHealth": {
+              "methods": [
+                "get_instance_health"
+              ]
+            },
+            "GetSchedule": {
+              "methods": [
+                "get_schedule"
+              ]
+            },
+            "IsInstanceUpgradeable": {
+              "methods": [
+                "is_instance_upgradeable"
+              ]
+            },
+            "ListEnvironments": {
+              "methods": [
+                "list_environments"
+              ]
+            },
+            "ListExecutions": {
+              "methods": [
+                "list_executions"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListSchedules": {
+              "methods": [
+                "list_schedules"
+              ]
+            },
+            "RegisterInstance": {
+              "methods": [
+                "register_instance"
+              ]
+            },
+            "ReportInstanceInfo": {
+              "methods": [
+                "report_instance_info"
+              ]
+            },
+            "ResetInstance": {
+              "methods": [
+                "reset_instance"
+              ]
+            },
+            "RollbackInstance": {
+              "methods": [
+                "rollback_instance"
+              ]
+            },
+            "SetInstanceAccelerator": {
+              "methods": [
+                "set_instance_accelerator"
+              ]
+            },
+            "SetInstanceLabels": {
+              "methods": [
+                "set_instance_labels"
+              ]
+            },
+            "SetInstanceMachineType": {
+              "methods": [
+                "set_instance_machine_type"
+              ]
+            },
+            "StartInstance": {
+              "methods": [
+                "start_instance"
+              ]
+            },
+            "StopInstance": {
+              "methods": [
+                "stop_instance"
+              ]
+            },
+            "TriggerSchedule": {
+              "methods": [
+                "trigger_schedule"
+              ]
+            },
+            "UpdateInstanceConfig": {
+              "methods": [
+                "update_instance_config"
+              ]
+            },
+            "UpdateInstanceMetadataItems": {
+              "methods": [
+                "update_instance_metadata_items"
+              ]
+            },
+            "UpdateShieldedInstanceConfig": {
+              "methods": [
+                "update_shielded_instance_config"
+              ]
+            },
+            "UpgradeInstance": {
+              "methods": [
+                "upgrade_instance"
+              ]
+            },
+            "UpgradeInstanceInternal": {
+              "methods": [
+                "upgrade_instance_internal"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

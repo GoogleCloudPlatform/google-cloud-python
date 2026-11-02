@@ -1,0 +1,73 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.commerce_consumer_procurement_v1alpha1",
+  "protoPackage": "google.cloud.commerce.consumer.procurement.v1alpha1",
+  "schema": "1.0",
+  "services": {
+    "ConsumerProcurementService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ConsumerProcurementServiceClient",
+          "rpcs": {
+            "GetOrder": {
+              "methods": [
+                "get_order"
+              ]
+            },
+            "ListOrders": {
+              "methods": [
+                "list_orders"
+              ]
+            },
+            "PlaceOrder": {
+              "methods": [
+                "place_order"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ConsumerProcurementServiceAsyncClient",
+          "rpcs": {
+            "GetOrder": {
+              "methods": [
+                "get_order"
+              ]
+            },
+            "ListOrders": {
+              "methods": [
+                "list_orders"
+              ]
+            },
+            "PlaceOrder": {
+              "methods": [
+                "place_order"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ConsumerProcurementServiceClient",
+          "rpcs": {
+            "GetOrder": {
+              "methods": [
+                "get_order"
+              ]
+            },
+            "ListOrders": {
+              "methods": [
+                "list_orders"
+              ]
+            },
+            "PlaceOrder": {
+              "methods": [
+                "place_order"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

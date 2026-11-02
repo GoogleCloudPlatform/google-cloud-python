@@ -1,0 +1,4 @@
+include README.rst LICENSE
+recursive-include google
+recursive-include tests *
+global-exclude *.pyc __pycache__

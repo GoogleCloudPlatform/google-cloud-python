@@ -1,0 +1,19 @@
+[flake8]
+import-order-style=google
+# Note: this forces all google imports to be in the third group. See
+# https://github.com/PyCQA/flake8-import-order/issues/111
+application-import-names=google
+ignore = E203, E266, E501, W503, I202
+exclude =
+  __pycache__,
+  .git,
+  *.pyc,
+  conf.py
+# PEP 0810 lazy imports require __lazy_modules__ to precede import statements,
+# which causes flake8 to flag module-level imports as E402.
+per-file-ignores =
+    google/cloud/_helpers/__init__.py: E402
+    google/cloud/_http/__init__.py: E402
+    google/cloud/client/__init__.py: E402
+    google/cloud/exceptions/__init__.py: E402
+    google/cloud/operation/__init__.py: E402

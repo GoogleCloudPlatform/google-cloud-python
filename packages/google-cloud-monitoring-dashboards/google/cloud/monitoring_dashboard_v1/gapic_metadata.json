@@ -1,0 +1,103 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.monitoring_dashboard_v1",
+  "protoPackage": "google.monitoring.dashboard.v1",
+  "schema": "1.0",
+  "services": {
+    "DashboardsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DashboardsServiceClient",
+          "rpcs": {
+            "CreateDashboard": {
+              "methods": [
+                "create_dashboard"
+              ]
+            },
+            "DeleteDashboard": {
+              "methods": [
+                "delete_dashboard"
+              ]
+            },
+            "GetDashboard": {
+              "methods": [
+                "get_dashboard"
+              ]
+            },
+            "ListDashboards": {
+              "methods": [
+                "list_dashboards"
+              ]
+            },
+            "UpdateDashboard": {
+              "methods": [
+                "update_dashboard"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DashboardsServiceAsyncClient",
+          "rpcs": {
+            "CreateDashboard": {
+              "methods": [
+                "create_dashboard"
+              ]
+            },
+            "DeleteDashboard": {
+              "methods": [
+                "delete_dashboard"
+              ]
+            },
+            "GetDashboard": {
+              "methods": [
+                "get_dashboard"
+              ]
+            },
+            "ListDashboards": {
+              "methods": [
+                "list_dashboards"
+              ]
+            },
+            "UpdateDashboard": {
+              "methods": [
+                "update_dashboard"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DashboardsServiceClient",
+          "rpcs": {
+            "CreateDashboard": {
+              "methods": [
+                "create_dashboard"
+              ]
+            },
+            "DeleteDashboard": {
+              "methods": [
+                "delete_dashboard"
+              ]
+            },
+            "GetDashboard": {
+              "methods": [
+                "get_dashboard"
+              ]
+            },
+            "ListDashboards": {
+              "methods": [
+                "list_dashboards"
+              ]
+            },
+            "UpdateDashboard": {
+              "methods": [
+                "update_dashboard"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

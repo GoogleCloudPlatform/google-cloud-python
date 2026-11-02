@@ -1,0 +1,16 @@
+{
+    "api_description": "Cloud Quotas API provides Google Cloud service consumers with management\nand observability for resource usage, quotas, and restrictions of the\nservices they consume.",
+    "api_id": "cloudquotas.googleapis.com",
+    "api_shortname": "cloudquotas",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-cloudquotas/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-quotas",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=445904",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-cloudquotas",
+    "name_pretty": "Cloud Quotas",
+    "product_documentation": "https://cloud.google.com/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

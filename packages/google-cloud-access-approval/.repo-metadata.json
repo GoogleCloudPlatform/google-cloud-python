@@ -1,0 +1,15 @@
+{
+    "api_description": "An API for controlling access to data by Google personnel.",
+    "api_id": "accessapproval.googleapis.com",
+    "api_shortname": "accessapproval",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/accessapproval/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-access-approval",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "accessapproval",
+    "name_pretty": "Access Approval",
+    "product_documentation": "https://cloud.google.com/access-approval/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

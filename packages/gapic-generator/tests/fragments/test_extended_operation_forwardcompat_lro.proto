@@ -1,0 +1,108 @@
+// Copyright (C) 2021  Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+syntax = "proto3";
+
+package google.fragment;
+
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/cloud/extended_operations.proto";
+
+message Operation {
+  enum Status {
+    // A value indicating that the enum field is not set.
+    UNDEFINED_STATUS = 0;
+    DONE = 2104194;
+    PENDING = 35394935;
+    RUNNING = 121282975;
+  }
+
+  optional string name = 1 [
+    (google.cloud.operation_field) = NAME,
+    (google.cloud.operation_response_field) = "name"
+  ];
+  optional string http_error_message = 202521945 [(google.cloud.operation_field) = ERROR_MESSAGE];
+  optional int32 http_error_status_code = 312345196 [(google.cloud.operation_field) = ERROR_CODE];
+  optional Status status = 181260274 [(google.cloud.operation_field) = STATUS];
+}
+
+message GetExpensiveComputationRequest {
+  string name = 1;
+  string computation = 2;
+  string fragment = 3;
+}
+
+message DeleteExpensiveComputationRequest {
+  string computation = 1;
+  string fragment = 2;
+}
+
+message DeleteOperationResponse {
+  bool success = 1;
+}
+
+message StartExpensiveComputationRequest {
+  string computation = 1 [
+    (google.cloud.operation_request_field) = "computation"
+  ];
+  string fragment = 2 [
+    (google.cloud.operation_request_field) = "fragment"
+  ];
+}
+
+message StartCheapComputationRequest {
+  string computation = 1;
+  string fragment = 2;
+}
+
+message StartCheapComputationResponse {}
+
+// Note: the name is a hint, but this is the de facto Operations client.
+// It should _not_ generate methods with disambiguated names.
+service DefactoOperationsClient {
+  option (google.api.default_host) = "my.example.com";
+
+  rpc Get(GetExpensiveComputationRequest) returns (Operation) {
+    option (google.cloud.operation_polling_method) = true;
+    option (google.api.http) = {
+      get: "/expensive/v1/computations/{computation}/fragments/{fragment}"
+    };
+  }
+
+
+  rpc Delete(DeleteExpensiveComputationRequest) returns (DeleteOperationResponse) {
+    option (google.api.http) = {
+      delete: "/expensive/v1/computations/{computation}/fragments/{fragment}"
+    };
+
+  }
+}
+
+
+service DoStuff {
+  option (google.api.default_host) = "my.example.com";
+
+  rpc StartExpensiveComputation(StartExpensiveComputationRequest) returns (Operation) {
+    option (google.cloud.operation_service) = "DefactoOperationsClient";
+    option (google.api.http) = {
+      post: "/expensive/v1/computations/{computation}/fragments/{fragment}"
+    };
+  }
+
+  rpc StartCheapComputation(StartCheapComputationRequest) returns (StartCheapComputationResponse) {
+    option (google.api.http) = {
+      post: "/expensive/v1/computations/{computation}/fragments/{fragment}";
+    };
+  }
+}

@@ -1,0 +1,58 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.maps.routing_v2",
+  "protoPackage": "google.maps.routing.v2",
+  "schema": "1.0",
+  "services": {
+    "Routes": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "RoutesClient",
+          "rpcs": {
+            "ComputeRouteMatrix": {
+              "methods": [
+                "compute_route_matrix"
+              ]
+            },
+            "ComputeRoutes": {
+              "methods": [
+                "compute_routes"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "RoutesAsyncClient",
+          "rpcs": {
+            "ComputeRouteMatrix": {
+              "methods": [
+                "compute_route_matrix"
+              ]
+            },
+            "ComputeRoutes": {
+              "methods": [
+                "compute_routes"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "RoutesClient",
+          "rpcs": {
+            "ComputeRouteMatrix": {
+              "methods": [
+                "compute_route_matrix"
+              ]
+            },
+            "ComputeRoutes": {
+              "methods": [
+                "compute_routes"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children: []
+  class: google.cloud.pubsub_v1.types.PubsubMessage.AttributesEntry
+  fullName: google.cloud.pubsub_v1.types.PubsubMessage.AttributesEntry
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types.PubsubMessage
+  name: AttributesEntry
+  source:
+    id: AttributesEntry
+    path: null
+    startLine: null
+  summary: 'The abstract base class for a message.
+
+    '
+  syntax:
+    content: AttributesEntry(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters:
+    - defaultValue: None
+      description: Keys and values corresponding to the fields of the message.
+      id: kwargs
+      var_type: dict
+    - description: A dictionary or message to be used to determine the values for
+        this message.
+      id: mapping
+      var_type: Union[dict, <code>.Message</code>]
+    - description: If True, do not raise errors for unknown fields. Only applied if
+        <code>mapping</code> is a mapping type or there are keyword parameters.
+      id: ignore_unknown_fields
+      var_type: Optional(bool)
+  type: class
+  uid: google.cloud.pubsub_v1.types.PubsubMessage.AttributesEntry
+references: []

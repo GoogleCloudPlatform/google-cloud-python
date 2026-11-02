@@ -1,0 +1,30 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Received Pub/Sub messages. The list will be empty if there\n   are\
+      \ no more messages available in the backlog. For JSON, the\n   response can\
+      \ be entirely empty. The Pub/Sub system may\n   return fewer than the <code>maxMessages</code>\
+      \ requested even if\n   there are more messages available in the backlog."
+    id: received_messages
+    var_type: Sequence[google.pubsub_v1.types.ReceivedMessage]
+  children: []
+  class: google.cloud.pubsub_v1.types.PullResponse
+  fullName: google.cloud.pubsub_v1.types.PullResponse
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: PullResponse
+  source:
+    id: PullResponse
+    path: null
+    startLine: null
+  summary: 'Response for the `Pull` method.
+
+    '
+  syntax:
+    content: PullResponse(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.PullResponse
+references: []

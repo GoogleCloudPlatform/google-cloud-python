@@ -1,0 +1,16 @@
+{
+    "api_description": "The Cluster Director API allows you to deploy, manage, and monitor clusters\nthat run AI, ML, or HPC workloads.",
+    "api_id": "hypercomputecluster.googleapis.com",
+    "api_shortname": "hypercomputecluster",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-hypercomputecluster/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-hypercomputecluster",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1907878\u0026template=2195617",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-hypercomputecluster",
+    "name_pretty": "Cluster Director",
+    "product_documentation": "https://cloud.google.com/cluster-director/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

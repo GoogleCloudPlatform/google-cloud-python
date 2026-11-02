@@ -1,0 +1,15 @@
+{
+    "api_id": "ces.googleapis.com",
+    "api_shortname": "ces",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-ces/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-ces",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1157150",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-ces",
+    "name_pretty": "Gemini Enterprise for Customer Experience",
+    "product_documentation": "https://docs.cloud.google.com/customer-engagement-ai/conversational-agents/ps",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,1951 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.orgpolicy.v2",
+        "version": "v2"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-org-policy",
+    "version": "1.19.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.create_custom_constraint",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.CreateCustomConstraint",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "CreateCustomConstraint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.CreateCustomConstraintRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "custom_constraint",
+            "type": "google.cloud.orgpolicy_v2.types.CustomConstraint"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.CustomConstraint",
+        "shortName": "create_custom_constraint"
+      },
+      "description": "Sample for CreateCustomConstraint",
+      "file": "orgpolicy_v2_generated_org_policy_create_custom_constraint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_CreateCustomConstraint_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_create_custom_constraint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.create_custom_constraint",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.CreateCustomConstraint",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "CreateCustomConstraint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.CreateCustomConstraintRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "custom_constraint",
+            "type": "google.cloud.orgpolicy_v2.types.CustomConstraint"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.CustomConstraint",
+        "shortName": "create_custom_constraint"
+      },
+      "description": "Sample for CreateCustomConstraint",
+      "file": "orgpolicy_v2_generated_org_policy_create_custom_constraint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_CreateCustomConstraint_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_create_custom_constraint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.create_policy",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.CreatePolicy",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "CreatePolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.CreatePolicyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "policy",
+            "type": "google.cloud.orgpolicy_v2.types.Policy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.Policy",
+        "shortName": "create_policy"
+      },
+      "description": "Sample for CreatePolicy",
+      "file": "orgpolicy_v2_generated_org_policy_create_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_CreatePolicy_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_create_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.create_policy",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.CreatePolicy",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "CreatePolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.CreatePolicyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "policy",
+            "type": "google.cloud.orgpolicy_v2.types.Policy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.Policy",
+        "shortName": "create_policy"
+      },
+      "description": "Sample for CreatePolicy",
+      "file": "orgpolicy_v2_generated_org_policy_create_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_CreatePolicy_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_create_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.delete_custom_constraint",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.DeleteCustomConstraint",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "DeleteCustomConstraint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.DeleteCustomConstraintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_custom_constraint"
+      },
+      "description": "Sample for DeleteCustomConstraint",
+      "file": "orgpolicy_v2_generated_org_policy_delete_custom_constraint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_DeleteCustomConstraint_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_delete_custom_constraint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.delete_custom_constraint",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.DeleteCustomConstraint",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "DeleteCustomConstraint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.DeleteCustomConstraintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_custom_constraint"
+      },
+      "description": "Sample for DeleteCustomConstraint",
+      "file": "orgpolicy_v2_generated_org_policy_delete_custom_constraint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_DeleteCustomConstraint_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_delete_custom_constraint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.delete_policy",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.DeletePolicy",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "DeletePolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.DeletePolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_policy"
+      },
+      "description": "Sample for DeletePolicy",
+      "file": "orgpolicy_v2_generated_org_policy_delete_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_DeletePolicy_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_delete_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.delete_policy",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.DeletePolicy",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "DeletePolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.DeletePolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_policy"
+      },
+      "description": "Sample for DeletePolicy",
+      "file": "orgpolicy_v2_generated_org_policy_delete_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_DeletePolicy_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_delete_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.get_custom_constraint",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.GetCustomConstraint",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "GetCustomConstraint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.GetCustomConstraintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.CustomConstraint",
+        "shortName": "get_custom_constraint"
+      },
+      "description": "Sample for GetCustomConstraint",
+      "file": "orgpolicy_v2_generated_org_policy_get_custom_constraint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_GetCustomConstraint_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_get_custom_constraint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.get_custom_constraint",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.GetCustomConstraint",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "GetCustomConstraint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.GetCustomConstraintRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.CustomConstraint",
+        "shortName": "get_custom_constraint"
+      },
+      "description": "Sample for GetCustomConstraint",
+      "file": "orgpolicy_v2_generated_org_policy_get_custom_constraint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_GetCustomConstraint_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_get_custom_constraint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.get_effective_policy",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.GetEffectivePolicy",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "GetEffectivePolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.GetEffectivePolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.Policy",
+        "shortName": "get_effective_policy"
+      },
+      "description": "Sample for GetEffectivePolicy",
+      "file": "orgpolicy_v2_generated_org_policy_get_effective_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_GetEffectivePolicy_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_get_effective_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.get_effective_policy",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.GetEffectivePolicy",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "GetEffectivePolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.GetEffectivePolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.Policy",
+        "shortName": "get_effective_policy"
+      },
+      "description": "Sample for GetEffectivePolicy",
+      "file": "orgpolicy_v2_generated_org_policy_get_effective_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_GetEffectivePolicy_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_get_effective_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.get_policy",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.GetPolicy",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "GetPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.GetPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.Policy",
+        "shortName": "get_policy"
+      },
+      "description": "Sample for GetPolicy",
+      "file": "orgpolicy_v2_generated_org_policy_get_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_GetPolicy_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_get_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.get_policy",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.GetPolicy",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "GetPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.GetPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.Policy",
+        "shortName": "get_policy"
+      },
+      "description": "Sample for GetPolicy",
+      "file": "orgpolicy_v2_generated_org_policy_get_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_GetPolicy_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_get_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.list_constraints",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.ListConstraints",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "ListConstraints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.ListConstraintsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.services.org_policy.pagers.ListConstraintsAsyncPager",
+        "shortName": "list_constraints"
+      },
+      "description": "Sample for ListConstraints",
+      "file": "orgpolicy_v2_generated_org_policy_list_constraints_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_ListConstraints_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_list_constraints_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.list_constraints",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.ListConstraints",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "ListConstraints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.ListConstraintsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.services.org_policy.pagers.ListConstraintsPager",
+        "shortName": "list_constraints"
+      },
+      "description": "Sample for ListConstraints",
+      "file": "orgpolicy_v2_generated_org_policy_list_constraints_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_ListConstraints_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_list_constraints_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.list_custom_constraints",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.ListCustomConstraints",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "ListCustomConstraints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.ListCustomConstraintsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.services.org_policy.pagers.ListCustomConstraintsAsyncPager",
+        "shortName": "list_custom_constraints"
+      },
+      "description": "Sample for ListCustomConstraints",
+      "file": "orgpolicy_v2_generated_org_policy_list_custom_constraints_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_ListCustomConstraints_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_list_custom_constraints_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.list_custom_constraints",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.ListCustomConstraints",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "ListCustomConstraints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.ListCustomConstraintsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.services.org_policy.pagers.ListCustomConstraintsPager",
+        "shortName": "list_custom_constraints"
+      },
+      "description": "Sample for ListCustomConstraints",
+      "file": "orgpolicy_v2_generated_org_policy_list_custom_constraints_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_ListCustomConstraints_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_list_custom_constraints_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.list_policies",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.ListPolicies",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "ListPolicies"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.ListPoliciesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.services.org_policy.pagers.ListPoliciesAsyncPager",
+        "shortName": "list_policies"
+      },
+      "description": "Sample for ListPolicies",
+      "file": "orgpolicy_v2_generated_org_policy_list_policies_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_ListPolicies_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_list_policies_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.list_policies",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.ListPolicies",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "ListPolicies"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.ListPoliciesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.services.org_policy.pagers.ListPoliciesPager",
+        "shortName": "list_policies"
+      },
+      "description": "Sample for ListPolicies",
+      "file": "orgpolicy_v2_generated_org_policy_list_policies_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_ListPolicies_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_list_policies_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.update_custom_constraint",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.UpdateCustomConstraint",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "UpdateCustomConstraint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.UpdateCustomConstraintRequest"
+          },
+          {
+            "name": "custom_constraint",
+            "type": "google.cloud.orgpolicy_v2.types.CustomConstraint"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.CustomConstraint",
+        "shortName": "update_custom_constraint"
+      },
+      "description": "Sample for UpdateCustomConstraint",
+      "file": "orgpolicy_v2_generated_org_policy_update_custom_constraint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_UpdateCustomConstraint_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_update_custom_constraint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.update_custom_constraint",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.UpdateCustomConstraint",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "UpdateCustomConstraint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.UpdateCustomConstraintRequest"
+          },
+          {
+            "name": "custom_constraint",
+            "type": "google.cloud.orgpolicy_v2.types.CustomConstraint"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.CustomConstraint",
+        "shortName": "update_custom_constraint"
+      },
+      "description": "Sample for UpdateCustomConstraint",
+      "file": "orgpolicy_v2_generated_org_policy_update_custom_constraint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_UpdateCustomConstraint_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_update_custom_constraint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient",
+          "shortName": "OrgPolicyAsyncClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyAsyncClient.update_policy",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.UpdatePolicy",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "UpdatePolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.UpdatePolicyRequest"
+          },
+          {
+            "name": "policy",
+            "type": "google.cloud.orgpolicy_v2.types.Policy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.Policy",
+        "shortName": "update_policy"
+      },
+      "description": "Sample for UpdatePolicy",
+      "file": "orgpolicy_v2_generated_org_policy_update_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_UpdatePolicy_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_update_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient",
+          "shortName": "OrgPolicyClient"
+        },
+        "fullName": "google.cloud.orgpolicy_v2.OrgPolicyClient.update_policy",
+        "method": {
+          "fullName": "google.cloud.orgpolicy.v2.OrgPolicy.UpdatePolicy",
+          "service": {
+            "fullName": "google.cloud.orgpolicy.v2.OrgPolicy",
+            "shortName": "OrgPolicy"
+          },
+          "shortName": "UpdatePolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orgpolicy_v2.types.UpdatePolicyRequest"
+          },
+          {
+            "name": "policy",
+            "type": "google.cloud.orgpolicy_v2.types.Policy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orgpolicy_v2.types.Policy",
+        "shortName": "update_policy"
+      },
+      "description": "Sample for UpdatePolicy",
+      "file": "orgpolicy_v2_generated_org_policy_update_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "orgpolicy_v2_generated_OrgPolicy_UpdatePolicy_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "orgpolicy_v2_generated_org_policy_update_policy_sync.py"
+    }
+  ]
+}

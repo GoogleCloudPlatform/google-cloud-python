@@ -1,0 +1,16 @@
+{
+    "api_description": "Manages lightweight user-provided functions executed in response to events.",
+    "api_id": "cloudfunctions.googleapis.com",
+    "api_shortname": "cloudfunctions",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/cloudfunctions/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-functions",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559729",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "cloudfunctions",
+    "name_pretty": "Cloud Functions",
+    "product_documentation": "https://cloud.google.com/functions/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

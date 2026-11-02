@@ -1,0 +1,16 @@
+{
+    "api_description": "Accesses the NoSQL document database built for automatic scaling, high\nperformance, and ease of application development.",
+    "api_id": "firestore.googleapis.com",
+    "api_shortname": "firestore",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/firestore/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-firestore",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5337669",
+    "language": "python",
+    "library_type": "GAPIC_COMBO",
+    "name": "firestore",
+    "name_pretty": "Cloud Firestore",
+    "product_documentation": "https://cloud.google.com/firestore",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

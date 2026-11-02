@@ -1,0 +1,15 @@
+{
+    "api_description": "Manages Google Cloud Dataflow projects on Google Cloud Platform.",
+    "api_id": "dataflow.googleapis.com",
+    "api_shortname": "dataflow",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/dataflow/latest",
+    "default_version": "v1beta3",
+    "distribution_name": "google-cloud-dataflow-client",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "dataflow",
+    "name_pretty": "Dataflow",
+    "product_documentation": "https://cloud.google.com/dataflow/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

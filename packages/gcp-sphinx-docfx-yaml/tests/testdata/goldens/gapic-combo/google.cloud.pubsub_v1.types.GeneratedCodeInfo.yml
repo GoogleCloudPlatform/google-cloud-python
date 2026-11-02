@@ -1,0 +1,25 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.cloud.pubsub_v1.types.GeneratedCodeInfo.Annotation
+  class: google.cloud.pubsub_v1.types.GeneratedCodeInfo
+  fullName: google.cloud.pubsub_v1.types.GeneratedCodeInfo
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: GeneratedCodeInfo
+  source:
+    id: GeneratedCodeInfo
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.GeneratedCodeInfo` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.GeneratedCodeInfo
+references:
+- fullName: google.cloud.pubsub_v1.types.GeneratedCodeInfo.Annotation
+  isExternal: false
+  name: Annotation
+  parent: google.cloud.pubsub_v1.types.GeneratedCodeInfo
+  uid: google.cloud.pubsub_v1.types.GeneratedCodeInfo.Annotation

@@ -1,0 +1,15 @@
+{
+    "api_description": "Service Directory is a platform for discovering, publishing, and connecting\nservices.",
+    "api_id": "servicedirectory.googleapis.com",
+    "api_shortname": "servicedirectory",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/servicedirectory/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-service-directory",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "servicedirectory",
+    "name_pretty": "Service Directory",
+    "product_documentation": "https://cloud.google.com/service-directory/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

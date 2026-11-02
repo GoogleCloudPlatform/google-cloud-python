@@ -1,0 +1,70 @@
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    paths:
+      - 'packages/django-google-spanner/**'
+      - '.github/workflows/django-spanner-integration-tests-against-emulator-3.10.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/django-google-spanner/**'
+      - '.github/workflows/django-spanner-integration-tests-against-emulator-3.10.yml'
+
+defaults:
+  run:
+    working-directory: packages/django-google-spanner
+
+name: Run Django Spanner integration tests against emulator 3.10
+jobs:
+  check_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      run_django_spanner: ${{ steps.filter.outputs.django_spanner }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: filter
+        with:
+          filters: |
+            django_spanner:
+              - 'packages/django-google-spanner/**'
+              - '.github/workflows/django-spanner-integration-tests-against-emulator-3.10.yml'
+
+  system-tests:
+    needs: check_changes
+    if: ${{ needs.check_changes.outputs.run_django_spanner == 'true' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+
+    services:
+      emulator:
+        image: gcr.io/cloud-spanner-emulator/emulator:latest # zizmor: ignore[unpinned-images]
+        ports:
+          - 9010:9010
+          - 9020:9020
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install nox
+        run: python -m pip install nox
+      - name: Run nox
+        run: nox -s "unit-${{ matrix.python-version }}"
+        env:
+          SPANNER_EMULATOR_HOST: localhost:9010
+          GOOGLE_CLOUD_PROJECT: emulator-test-project
+          GOOGLE_CLOUD_TESTS_CREATE_SPANNER_INSTANCE: true

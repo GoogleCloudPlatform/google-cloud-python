@@ -1,0 +1,103 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.appoptimize_v1beta",
+  "protoPackage": "google.cloud.appoptimize.v1beta",
+  "schema": "1.0",
+  "services": {
+    "AppOptimize": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AppOptimizeClient",
+          "rpcs": {
+            "CreateReport": {
+              "methods": [
+                "create_report"
+              ]
+            },
+            "DeleteReport": {
+              "methods": [
+                "delete_report"
+              ]
+            },
+            "GetReport": {
+              "methods": [
+                "get_report"
+              ]
+            },
+            "ListReports": {
+              "methods": [
+                "list_reports"
+              ]
+            },
+            "ReadReport": {
+              "methods": [
+                "read_report"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AppOptimizeAsyncClient",
+          "rpcs": {
+            "CreateReport": {
+              "methods": [
+                "create_report"
+              ]
+            },
+            "DeleteReport": {
+              "methods": [
+                "delete_report"
+              ]
+            },
+            "GetReport": {
+              "methods": [
+                "get_report"
+              ]
+            },
+            "ListReports": {
+              "methods": [
+                "list_reports"
+              ]
+            },
+            "ReadReport": {
+              "methods": [
+                "read_report"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AppOptimizeClient",
+          "rpcs": {
+            "CreateReport": {
+              "methods": [
+                "create_report"
+              ]
+            },
+            "DeleteReport": {
+              "methods": [
+                "delete_report"
+              ]
+            },
+            "GetReport": {
+              "methods": [
+                "get_report"
+              ]
+            },
+            "ListReports": {
+              "methods": [
+                "list_reports"
+              ]
+            },
+            "ReadReport": {
+              "methods": [
+                "read_report"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

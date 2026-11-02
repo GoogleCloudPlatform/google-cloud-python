@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-test-utils/latest",
+    "distribution_name": "google-cloud-testutils",
+    "language": "python",
+    "library_type": "OTHER",
+    "name": "google-cloud-test-utils",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

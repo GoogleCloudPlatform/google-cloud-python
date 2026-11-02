@@ -1,0 +1,15 @@
+{
+    "api_description": "The Dataproc Metastore API is used to manage the lifecycle and\nconfiguration of metastore services.",
+    "api_id": "metastore.googleapis.com",
+    "api_shortname": "metastore",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/metastore/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-dataproc-metastore",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "metastore",
+    "name_pretty": "Dataproc Metastore",
+    "product_documentation": "https://cloud.google.com/dataproc-metastore/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

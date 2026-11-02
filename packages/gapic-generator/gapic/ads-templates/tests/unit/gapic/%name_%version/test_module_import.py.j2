@@ -1,0 +1,92 @@
+{% extends "_base.py.j2" %}
+{% block content %}
+
+{% if opts.lazy_import -%} {# lazy import #}
+import pytest
+
+
+def test_module_level_imports():
+    expected_names = []
+
+    # Message types
+    {% for message in api.top_level_messages.values() %}
+    from {{ api.naming.module_namespace|join('.') }}.{{ api.naming.module_name }} import {{ message.name }}
+    expected_names.append({{ message.name }}.__name__)
+    {% endfor %}
+
+    {% if api.top_level_enums %}# Enum types{% endif %}
+    {% for enum in api.top_level_enums.values() %}
+    from {{ api.naming.module_namespace|join('.') }}.{{ api.naming.module_name }} import {{ enum.name }}
+    expected_names.append({{ enum.name }}.__name__)
+    {% endfor %}
+
+    # Client and transport classes
+    {% for service in api.services.values() %}
+    from {{ api.naming.module_namespace|join('.')}}.{{ api.naming.module_name }} import {{ service.client_name }}
+    expected_names.append({{ service.client_name}}.__name__)
+    from {{ api.naming.module_namespace|join('.')}}.{{ api.naming.module_name }} import {{ service.transport_name }}
+    expected_names.append({{ service.transport_name }}.__name__)
+    {% if "grpc" in opts.transport %}
+    from {{ api.naming.module_namespace|join('.')}}.{{ api.naming.module_name }} import {{ service.grpc_transport_name }}
+    expected_names.append({{ service.grpc_transport_name }}.__name__)
+    {% endif %}
+    {% if "rest" in opts.transport %}
+    from {{ api.naming.module_namespace|join('.')}}.{{ api.naming.module_name }} import {{ service.rest_transport_name }}
+    expected_names.append({{ service.rest_transport_name }}.__name__)
+    {% endif %}
+    {% endfor %}
+
+    expected_names.sort()
+    from {{ api.naming.module_namespace|join('.') }} import {{ api.naming.module_name }}
+    actual_names = dir({{ api.naming.module_name }})
+    assert expected_names == actual_names
+
+
+    # Verify the logic for handling non-existant names
+    with pytest.raises(ImportError):
+        from {{ api.naming.module_namespace|join('.' )}}.{{ api.naming.module_name }} import GiantSquid
+
+
+def test_versionsed_module_level_imports():
+    expected_names = []
+
+    # Message types
+    {% for message in api.top_level_messages.values() %}
+    from {{ api.naming.module_namespace|join('.') }}.{{ api.naming.versioned_module_name }} import {{ message.name }}
+    expected_names.append({{ message.name }}.__name__)
+    {% endfor %}
+
+    {% if api.top_level_enums %}# Enum types{% endif %}
+    {% for enum in api.top_level_enums.values() %}
+    from {{ api.naming.module_namespace|join('.') }}.{{ api.naming.versioned_module_name }} import {{ enum.name }}
+    expected_names.append({{ enum.name }}.__name__)
+    {% endfor %}
+
+    # Client and transport classes
+    {% for service in api.services.values() %}
+    from {{ api.naming.module_namespace|join('.')}}.{{ api.naming.versioned_module_name }} import {{ service.client_name }}
+    expected_names.append({{ service.client_name}}.__name__)
+    from {{ api.naming.module_namespace|join('.')}}.{{ api.naming.versioned_module_name }} import {{ service.transport_name }}
+    expected_names.append({{ service.transport_name }}.__name__)
+    {% if "grpc" in opts.transport %}
+    from {{ api.naming.module_namespace|join('.')}}.{{ api.naming.versioned_module_name }} import {{ service.grpc_transport_name }}
+    expected_names.append({{ service.grpc_transport_name }}.__name__)
+    {% endif %}
+    {% if "rest" in opts.transport %}
+    from {{ api.naming.module_namespace|join('.')}}.{{ api.naming.versioned_module_name }} import {{ service.rest_transport_name }}
+    expected_names.append({{ service.rest_transport_name }}.__name__)
+    {% endif %}
+    {% endfor %}
+
+    expected_names.sort()
+    from {{ api.naming.module_namespace|join('.') }}.{{ api.naming.module_name }} import {{ api.naming.version }}
+    actual_names = dir({{ api.naming.version }})
+    assert expected_names == actual_names
+
+    # Verify the logic for handling non-existant names
+    with pytest.raises(ImportError):
+        from {{ api.naming.module_namespace|join('.' )}}.{{ api.naming.versioned_module_name }} import GiantSquid
+
+
+{% endif %} {# lazy import #}
+{% endblock %}

@@ -1,0 +1,42 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "The audio data bytes encoded as specified in the request,\n   including\
+      \ the header for encodings that are wrapped in\n   containers (e.g. MP3, OGG_OPUS).\
+      \ For LINEAR16 audio, we\n   include the WAV header. Note: as with all bytes\
+      \ fields,\n   protobuffers use a pure binary representation, whereas JSON\n\
+      \   representations use base64."
+    id: audio_content
+    var_type: bytes
+  - description: "A link between a position in the original request input and\n  \
+      \ a corresponding time in the output audio. It's only\n   supported via <code><mark></code>\
+      \ of SSML input."
+    id: timepoints
+    var_type: Sequence[<xref uid="google.cloud.texttospeech_v1beta1.types.Timepoint">google.cloud.texttospeech_v1beta1.types.Timepoint</xref>]
+  - description: The audio metadata of <code>audio_content</code>.
+    id: audio_config
+    var_type: <xref uid="google.cloud.texttospeech_v1beta1.types.AudioConfig">google.cloud.texttospeech_v1beta1.types.AudioConfig</xref>
+  children: []
+  class: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechResponse
+  fullName: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechResponse
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.types
+  name: SynthesizeSpeechResponse
+  source:
+    id: SynthesizeSpeechResponse
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/types/cloud_tts.py
+    startLine: 385
+  summary: 'The message returned to the client by the `SynthesizeSpeech`
+
+    method.
+
+    '
+  syntax:
+    content: SynthesizeSpeechResponse(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechResponse
+references: []

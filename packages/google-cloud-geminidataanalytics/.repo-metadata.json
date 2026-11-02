@@ -1,0 +1,16 @@
+{
+    "api_description": "The Gemini Data Analytics API enables developers to build intelligent data\nanalytics applications. Leverage AI-powered chat interfaces to allow users\nto interact with and analyze structured data using natural language.",
+    "api_id": "geminidataanalytics.googleapis.com",
+    "api_shortname": "geminidataanalytics",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-geminidataanalytics/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-geminidataanalytics",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1604598\u0026template=2061286",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-geminidataanalytics",
+    "name_pretty": "Data Analytics API with Gemini",
+    "product_documentation": "https://cloud.google.com/gemini/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

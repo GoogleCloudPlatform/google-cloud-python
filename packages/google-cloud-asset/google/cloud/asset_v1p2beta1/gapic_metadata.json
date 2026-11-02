@@ -1,0 +1,103 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.asset_v1p2beta1",
+  "protoPackage": "google.cloud.asset.v1p2beta1",
+  "schema": "1.0",
+  "services": {
+    "AssetService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AssetServiceClient",
+          "rpcs": {
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AssetServiceAsyncClient",
+          "rpcs": {
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AssetServiceClient",
+          "rpcs": {
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: publisher.client
+  source:
+    id: client
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/publisher/client.py
+    startLine: 0
+  summary: API documentation for `pubsub_v1.publisher.client` module.
+  syntax: {}
+  type: module
+  uid: google.cloud.pubsub_v1.publisher.client
+references:
+- fullName: google.cloud.pubsub_v1.publisher.client.Client
+  isExternal: false
+  name: Client
+  parent: google.cloud.pubsub_v1.publisher.client
+  uid: google.cloud.pubsub_v1.publisher.client.Client

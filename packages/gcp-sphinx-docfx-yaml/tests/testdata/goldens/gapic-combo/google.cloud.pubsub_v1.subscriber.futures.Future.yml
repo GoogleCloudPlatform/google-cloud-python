@@ -1,0 +1,374 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.pubsub_v1.subscriber.futures.Future
+  - google.cloud.pubsub_v1.subscriber.futures.Future.add_done_callback
+  - google.cloud.pubsub_v1.subscriber.futures.Future.cancel
+  - google.cloud.pubsub_v1.subscriber.futures.Future.cancelled
+  - google.cloud.pubsub_v1.subscriber.futures.Future.done
+  - google.cloud.pubsub_v1.subscriber.futures.Future.exception
+  - google.cloud.pubsub_v1.subscriber.futures.Future.result
+  - google.cloud.pubsub_v1.subscriber.futures.Future.running
+  - google.cloud.pubsub_v1.subscriber.futures.Future.set_exception
+  - google.cloud.pubsub_v1.subscriber.futures.Future.set_result
+  - google.cloud.pubsub_v1.subscriber.futures.Future.set_running_or_notify_cancel
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: Future
+  source:
+    id: Future
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/futures.py
+    startLine: 86
+  summary: 'This future object is for subscribe-side calls.
+
+
+    Calling `result` will resolve the future by returning the message
+
+    ID, unless an error occurs.
+
+
+    '
+  syntax:
+    content: Future()
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: Future
+  source:
+    id: Future
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/futures.py
+    startLine: 86
+  summary: 'Initializes the future. Should not be called by clients.
+
+
+    '
+  syntax:
+    content: Future()
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future.add_done_callback
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: add_done_callback
+  source:
+    id: add_done_callback
+    path: concurrent/futures/_base.py
+    startLine: 410
+  summary: 'Attaches a callable that will be called when the future finishes.
+
+    '
+  syntax:
+    content: add_done_callback(fn)
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.add_done_callback
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future.cancel
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: cancel
+  source:
+    id: cancel
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/futures.py
+    startLine: 93
+  summary: 'Actions in Pub/Sub generally may not be canceled.
+
+
+    This method always returns `False`.
+
+
+    '
+  syntax:
+    content: cancel() -> bool
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.cancel
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future.cancelled
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: cancelled
+  source:
+    id: cancelled
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/futures.py
+    startLine: 100
+  summary: 'Actions in Pub/Sub generally may not be canceled.
+
+
+    This method always returns `False`.
+
+
+    '
+  syntax:
+    content: cancelled() -> bool
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.cancelled
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future.done
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: done
+  source:
+    id: done
+    path: concurrent/futures/_base.py
+    startLine: 395
+  summary: 'Return True if the future was cancelled or finished executing.
+
+
+    '
+  syntax:
+    content: done()
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.done
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future.exception
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: exception
+  source:
+    id: exception
+    path: concurrent/futures/_base.py
+    startLine: 465
+  summary: 'Return the exception raised by the call that the future represents.
+
+    '
+  syntax:
+    content: exception(timeout=None)
+    exceptions:
+    - description: If the future was cancelled.
+      var_type: CancelledError
+    - description: If the future didn't finish executing before the given timeout.
+      var_type: TimeoutError
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.exception
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future.result
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: result
+  source:
+    id: result
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/futures.py
+    startLine: 107
+  summary: 'Return a success code or raise an exception.
+
+
+    This blocks until the operation completes successfully and
+
+    returns the error code unless an exception is raised.
+
+    '
+  syntax:
+    content: "result(\n    timeout: typing.Optional[typing.Union[int, float]] = None\n\
+      ) -> google.cloud.pubsub_v1.subscriber.exceptions.AcknowledgeStatus"
+    exceptions:
+    - description: If the request times out.
+      var_type: concurrent.futures.TimeoutError
+    - description: If the operation did not succeed for another reason.
+      var_type: AcknowledgeError
+    parameters:
+    - defaultValue: None
+      description: The number of seconds before this call times out and raises TimeoutError.
+      id: timeout
+      var_type: typing.Union[int, float]
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.result
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future.running
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: running
+  source:
+    id: running
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/futures.py
+    startLine: 33
+  summary: 'Return `True` if the associated Pub/Sub action has not yet completed.
+
+
+    '
+  syntax:
+    content: running() -> bool
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.running
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future.set_exception
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: set_exception
+  source:
+    id: set_exception
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/futures.py
+    startLine: 50
+  summary: 'Set the result of the future as being the given exception.
+
+
+    Do not use this method, it should only be used internally by the library and its
+
+    unit tests.
+
+
+    '
+  syntax:
+    content: 'set_exception(exception: typing.Optional[BaseException])'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.set_exception
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future.set_result
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: set_result
+  source:
+    id: set_result
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/futures.py
+    startLine: 42
+  summary: 'Set the return value of work associated with the future.
+
+
+    Do not use this method, it should only be used internally by the library and its
+
+    unit tests.
+
+
+    '
+  syntax:
+    content: 'set_result(result: typing.Any)'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.set_result
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.futures.Future
+  fullName: google.cloud.pubsub_v1.subscriber.futures.Future.set_running_or_notify_cancel
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.futures
+  name: set_running_or_notify_cancel
+  source:
+    id: set_running_or_notify_cancel
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/futures.py
+    startLine: 37
+  summary: 'Mark the future as running or process any cancel notifications.
+
+
+    Should only be used by Executor implementations and unit tests.
+
+
+    If the future has been cancelled (cancel() was called and returned
+
+    True) then any threads waiting on the future completing (though calls
+
+    to as_completed() or wait()) are notified and False is returned.
+
+
+    If the future was not cancelled then it is put in the running state
+
+    (future calls to running() will return True) and True is returned.
+
+
+    This method should be called by Executor implementations before
+
+    executing the work associated with this future. If this method returns
+
+    False then the work should not be executed.
+
+    '
+  syntax:
+    content: set_running_or_notify_cancel() -> typing.NoReturn
+    exceptions:
+    - description: if this method was already called or if set_result() or set_exception()
+        was called.
+      var_type: RuntimeError
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.set_running_or_notify_cancel
+references:
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future
+  isExternal: false
+  name: Future
+  parent: google.cloud.pubsub_v1.subscriber.futures.Future
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future.add_done_callback
+  isExternal: false
+  name: add_done_callback
+  parent: google.cloud.pubsub_v1.subscriber.futures.Future
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.add_done_callback
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future.cancel
+  isExternal: false
+  name: cancel
+  parent: google.cloud.pubsub_v1.subscriber.futures.Future
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.cancel
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future.cancelled
+  isExternal: false
+  name: cancelled
+  parent: google.cloud.pubsub_v1.subscriber.futures.Future
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.cancelled
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future.done
+  isExternal: false
+  name: done
+  parent: google.cloud.pubsub_v1.subscriber.futures.Future
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.done
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future.exception
+  isExternal: false
+  name: exception
+  parent: google.cloud.pubsub_v1.subscriber.futures.Future
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.exception
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future.result
+  isExternal: false
+  name: result
+  parent: google.cloud.pubsub_v1.subscriber.futures.Future
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.result
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future.running
+  isExternal: false
+  name: running
+  parent: google.cloud.pubsub_v1.subscriber.futures.Future
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.running
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future.set_exception
+  isExternal: false
+  name: set_exception
+  parent: google.cloud.pubsub_v1.subscriber.futures.Future
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.set_exception
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future.set_result
+  isExternal: false
+  name: set_result
+  parent: google.cloud.pubsub_v1.subscriber.futures.Future
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.set_result
+- fullName: google.cloud.pubsub_v1.subscriber.futures.Future.set_running_or_notify_cancel
+  isExternal: false
+  name: set_running_or_notify_cancel
+  parent: google.cloud.pubsub_v1.subscriber.futures.Future
+  uid: google.cloud.pubsub_v1.subscriber.futures.Future.set_running_or_notify_cancel

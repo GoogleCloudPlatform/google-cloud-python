@@ -1,0 +1,54 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsAsyncPager
+  - google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsPager
+  - google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsAsyncPager
+  - google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+  - google.pubsub_v1.services.publisher.pagers.ListTopicsAsyncPager
+  - google.pubsub_v1.services.publisher.pagers.ListTopicsPager
+  fullName: google.pubsub_v1.services.publisher.pagers
+  langs:
+  - python
+  module: google.pubsub_v1.services.publisher.pagers
+  name: publisher.pagers
+  source:
+    id: pagers
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/pagers.py
+    startLine: 0
+  summary: API documentation for `pubsub_v1.services.publisher.pagers` module.
+  syntax: {}
+  type: module
+  uid: google.pubsub_v1.services.publisher.pagers
+references:
+- fullName: google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsAsyncPager
+  isExternal: false
+  name: ListTopicSnapshotsAsyncPager
+  parent: google.pubsub_v1.services.publisher.pagers
+  uid: google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsAsyncPager
+- fullName: google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsPager
+  isExternal: false
+  name: ListTopicSnapshotsPager
+  parent: google.pubsub_v1.services.publisher.pagers
+  uid: google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsPager
+- fullName: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsAsyncPager
+  isExternal: false
+  name: ListTopicSubscriptionsAsyncPager
+  parent: google.pubsub_v1.services.publisher.pagers
+  uid: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsAsyncPager
+- fullName: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+  isExternal: false
+  name: ListTopicSubscriptionsPager
+  parent: google.pubsub_v1.services.publisher.pagers
+  uid: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+- fullName: google.pubsub_v1.services.publisher.pagers.ListTopicsAsyncPager
+  isExternal: false
+  name: ListTopicsAsyncPager
+  parent: google.pubsub_v1.services.publisher.pagers
+  uid: google.pubsub_v1.services.publisher.pagers.ListTopicsAsyncPager
+- fullName: google.pubsub_v1.services.publisher.pagers.ListTopicsPager
+  isExternal: false
+  name: ListTopicsPager
+  parent: google.pubsub_v1.services.publisher.pagers
+  uid: google.pubsub_v1.services.publisher.pagers.ListTopicsPager

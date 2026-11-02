@@ -1,0 +1,34 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Specifies the \"time-to-live\" duration for an associated\n   resource.\
+      \ The resource expires if it is not active for a\n   period of <code>ttl</code>.\
+      \ The definition of \"activity\" depends on\n   the type of the associated resource.\
+      \ The minimum and maximum\n   allowed values for <code>ttl</code> depend on\
+      \ the type of the\n   associated resource, as well. If <code>ttl</code> is not\
+      \ set, the\n   associated resource never expires."
+    id: ttl
+    var_type: google.protobuf.duration_pb2.Duration
+  children: []
+  class: google.cloud.pubsub_v1.types.ExpirationPolicy
+  fullName: google.cloud.pubsub_v1.types.ExpirationPolicy
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ExpirationPolicy
+  source:
+    id: ExpirationPolicy
+    path: null
+    startLine: null
+  summary: 'A policy that specifies the conditions for resource
+
+    expiration (i.e., automatic resource deletion).
+
+    '
+  syntax:
+    content: ExpirationPolicy(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ExpirationPolicy
+references: []

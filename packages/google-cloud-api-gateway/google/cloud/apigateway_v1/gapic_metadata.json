@@ -1,0 +1,253 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.apigateway_v1",
+  "protoPackage": "google.cloud.apigateway.v1",
+  "schema": "1.0",
+  "services": {
+    "ApiGatewayService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ApiGatewayServiceClient",
+          "rpcs": {
+            "CreateApi": {
+              "methods": [
+                "create_api"
+              ]
+            },
+            "CreateApiConfig": {
+              "methods": [
+                "create_api_config"
+              ]
+            },
+            "CreateGateway": {
+              "methods": [
+                "create_gateway"
+              ]
+            },
+            "DeleteApi": {
+              "methods": [
+                "delete_api"
+              ]
+            },
+            "DeleteApiConfig": {
+              "methods": [
+                "delete_api_config"
+              ]
+            },
+            "DeleteGateway": {
+              "methods": [
+                "delete_gateway"
+              ]
+            },
+            "GetApi": {
+              "methods": [
+                "get_api"
+              ]
+            },
+            "GetApiConfig": {
+              "methods": [
+                "get_api_config"
+              ]
+            },
+            "GetGateway": {
+              "methods": [
+                "get_gateway"
+              ]
+            },
+            "ListApiConfigs": {
+              "methods": [
+                "list_api_configs"
+              ]
+            },
+            "ListApis": {
+              "methods": [
+                "list_apis"
+              ]
+            },
+            "ListGateways": {
+              "methods": [
+                "list_gateways"
+              ]
+            },
+            "UpdateApi": {
+              "methods": [
+                "update_api"
+              ]
+            },
+            "UpdateApiConfig": {
+              "methods": [
+                "update_api_config"
+              ]
+            },
+            "UpdateGateway": {
+              "methods": [
+                "update_gateway"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ApiGatewayServiceAsyncClient",
+          "rpcs": {
+            "CreateApi": {
+              "methods": [
+                "create_api"
+              ]
+            },
+            "CreateApiConfig": {
+              "methods": [
+                "create_api_config"
+              ]
+            },
+            "CreateGateway": {
+              "methods": [
+                "create_gateway"
+              ]
+            },
+            "DeleteApi": {
+              "methods": [
+                "delete_api"
+              ]
+            },
+            "DeleteApiConfig": {
+              "methods": [
+                "delete_api_config"
+              ]
+            },
+            "DeleteGateway": {
+              "methods": [
+                "delete_gateway"
+              ]
+            },
+            "GetApi": {
+              "methods": [
+                "get_api"
+              ]
+            },
+            "GetApiConfig": {
+              "methods": [
+                "get_api_config"
+              ]
+            },
+            "GetGateway": {
+              "methods": [
+                "get_gateway"
+              ]
+            },
+            "ListApiConfigs": {
+              "methods": [
+                "list_api_configs"
+              ]
+            },
+            "ListApis": {
+              "methods": [
+                "list_apis"
+              ]
+            },
+            "ListGateways": {
+              "methods": [
+                "list_gateways"
+              ]
+            },
+            "UpdateApi": {
+              "methods": [
+                "update_api"
+              ]
+            },
+            "UpdateApiConfig": {
+              "methods": [
+                "update_api_config"
+              ]
+            },
+            "UpdateGateway": {
+              "methods": [
+                "update_gateway"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ApiGatewayServiceClient",
+          "rpcs": {
+            "CreateApi": {
+              "methods": [
+                "create_api"
+              ]
+            },
+            "CreateApiConfig": {
+              "methods": [
+                "create_api_config"
+              ]
+            },
+            "CreateGateway": {
+              "methods": [
+                "create_gateway"
+              ]
+            },
+            "DeleteApi": {
+              "methods": [
+                "delete_api"
+              ]
+            },
+            "DeleteApiConfig": {
+              "methods": [
+                "delete_api_config"
+              ]
+            },
+            "DeleteGateway": {
+              "methods": [
+                "delete_gateway"
+              ]
+            },
+            "GetApi": {
+              "methods": [
+                "get_api"
+              ]
+            },
+            "GetApiConfig": {
+              "methods": [
+                "get_api_config"
+              ]
+            },
+            "GetGateway": {
+              "methods": [
+                "get_gateway"
+              ]
+            },
+            "ListApiConfigs": {
+              "methods": [
+                "list_api_configs"
+              ]
+            },
+            "ListApis": {
+              "methods": [
+                "list_apis"
+              ]
+            },
+            "ListGateways": {
+              "methods": [
+                "list_gateways"
+              ]
+            },
+            "UpdateApi": {
+              "methods": [
+                "update_api"
+              ]
+            },
+            "UpdateApiConfig": {
+              "methods": [
+                "update_api_config"
+              ]
+            },
+            "UpdateGateway": {
+              "methods": [
+                "update_gateway"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

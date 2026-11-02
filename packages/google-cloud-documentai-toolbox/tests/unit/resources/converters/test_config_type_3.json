@@ -1,0 +1,21 @@
+{
+    "entity_object":"Entities",
+    "page": {
+        "height":"page_height",
+        "width":"page_width"
+    },
+    "entity": {
+        "type_":"Entities:self",
+        "mention_text":"Text||normalizedText",
+        "normalized_vertices":{
+            "type":"3",
+            "unit":"pxl",
+            "base":"bBox",
+            "x":"x",
+            "y":"y"
+        },
+        "id":"id",
+        "confidence":"confidence",
+        "page_number":"page"
+    }
+}

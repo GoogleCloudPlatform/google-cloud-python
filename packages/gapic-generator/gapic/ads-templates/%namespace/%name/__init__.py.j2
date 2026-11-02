@@ -1,0 +1,108 @@
+{% extends '_base.py.j2' %}
+{% block content %}
+
+{% if opts.lazy_import -%} {# lazy import #}
+import importlib
+import sys
+
+
+if sys.version_info < (3, 10):
+    raise ImportError('This module requires Python 3.10 or later.')
+
+
+_lazy_type_to_package_map = {
+    # Message types
+{% for _, message in api.top_level_messages|dictsort %}
+    '{{ message.name }}': '{{ message.ident.package|join('.') }}.types.{{ message.ident.module }}',
+{% endfor %}
+    # Enum types
+{% for _, enum in api.top_level_enums|dictsort %}
+    '{{ enum.name }}': '{{ enum.ident.package|join('.') }}.types.{{enum.ident.module }}',
+{% endfor %}
+    {# TODO(yon-mg): add rest transport service once I know what this is #}
+    # Client classes and transports
+{% for _, service in api.services|dictsort %}
+    '{{ service.client_name }}': '{{ service.meta.address.package|join('.') }}.services.{{ service.meta.address.module }}',
+    '{{ service.transport_name }}': '{{ service.meta.address.package|join('.') }}.services.{{ service.meta.address.module }}.transports',
+    '{{ service.grpc_transport_name }}': '{{ service.meta.address.package|join('.') }}.services.{{ service.meta.address.module }}.transports',
+{% endfor %}
+}
+
+
+# Background on how this behaves: https://www.python.org/dev/peps/pep-0562/
+def __getattr__(name):
+    if name == '__all__':
+        all_names = globals()['__all__'] = sorted(_lazy_type_to_package_map)
+        return all_names
+    elif name in _lazy_type_to_package_map:
+        module = importlib.import_module(f'{_lazy_type_to_package_map[name]}')
+        klass = getattr(module, name)
+
+        globals()[name] = klass
+        return klass
+    else:
+        raise AttributeError(f'unknown type {name!r}.')
+
+
+def __dir__():
+    return globals().get('__all__') or __getattr__('__all__')
+{% else %}                {# do not use lazy import #}
+{#  Import subpackages. -#}
+{% for subpackage in api.subpackages|dictsort %}
+from {% if api.naming.module_namespace %}{{ api.naming.module_namespace|join('.') }}.{% endif %}
+    {{- api.naming.versioned_module_name }} import {{ subpackage }}
+{% endfor %}
+
+{#  Import services for this package. -#}
+{% for service in api.services.values()|sort(attribute='name')
+        if service.meta.address.subpackage == api.subpackage_view %}
+from {% if api.naming.module_namespace %}{{ api.naming.module_namespace|join('.') }}.{% endif %}
+    {{- api.naming.versioned_module_name }}.services.{{ service.name|snake_case }}.client import {{ service.client_name }}
+{% endfor %}
+
+{#  Import messages and enums from each proto.
+    It is safe to import all of the messages into the same namespace here,
+    because protocol buffers itself enforces selector uniqueness within
+    a proto package.
+#}
+{#  Import messages from each proto.
+    It is safe to import all of the messages into the same namespace here,
+    because protocol buffers itself enforces selector uniqueness within
+    a proto package.
+#}
+{% for proto in api.protos.values()|sort(attribute='module_name')
+        if proto.meta.address.subpackage == api.subpackage_view %}
+  {% for message in proto.messages.values()|sort(attribute='name') %}
+from {% if api.naming.module_namespace %}{{ api.naming.module_namespace|join('.') }}.{% endif %}
+    {{- api.naming.versioned_module_name }}.types.{{ proto.module_name }} import {{ message.name }}
+{% endfor %}
+{% for enum in proto.enums.values()|sort(attribute='name') %}
+from {% if api.naming.module_namespace %}{{ api.naming.module_namespace|join('.') }}.{% endif %}
+    {{- api.naming.versioned_module_name }}.types.{{ proto.module_name }} import {{ enum.name }}
+{% endfor %}{% endfor %}
+{#  Define __all__.
+    This requires the full set of imported names, so we iterate over
+    them again.
+#}
+__all__ = (
+{% filter indent %}
+{% for subpackage, _ in api.subpackages|dictsort %}
+'{{ subpackage }}',
+{% endfor %}
+{% for service in api.services.values()|sort(attribute='name')
+   if service.meta.address.subpackage == api.subpackage_view %}
+'{{ service.client_name }}',
+{% endfor %}
+{% for proto in api.protos.values()|sort(attribute='module_name')
+   if proto.meta.address.subpackage == api.subpackage_view %}
+{% for message in proto.messages.values()|sort(attribute='name') %}
+'{{ message.name }}',
+{% endfor %}
+{% for enum in proto.enums.values()|sort(attribute='name')
+   if proto.meta.address.subpackage == api.subpackage_view %}
+'{{ enum.name }}',
+{% endfor %}{% endfor %}
+{% endfilter %}
+)
+{% endif %} {# lazy import #}
+{% endblock %}

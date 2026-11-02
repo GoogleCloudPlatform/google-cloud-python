@@ -1,0 +1,330 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.bucket.LifecycleRuleDelete.clear
+  - google.cloud.storage.bucket.LifecycleRuleDelete.copy
+  - google.cloud.storage.bucket.LifecycleRuleDelete.from_api_repr
+  - google.cloud.storage.bucket.LifecycleRuleDelete.fromkeys
+  - google.cloud.storage.bucket.LifecycleRuleDelete.get
+  - google.cloud.storage.bucket.LifecycleRuleDelete.items
+  - google.cloud.storage.bucket.LifecycleRuleDelete.keys
+  - google.cloud.storage.bucket.LifecycleRuleDelete.pop
+  - google.cloud.storage.bucket.LifecycleRuleDelete.popitem
+  - google.cloud.storage.bucket.LifecycleRuleDelete.setdefault
+  - google.cloud.storage.bucket.LifecycleRuleDelete.update
+  - google.cloud.storage.bucket.LifecycleRuleDelete.values
+  class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: LifecycleRuleDelete
+  source:
+    id: LifecycleRuleDelete
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 342
+  summary: 'Map a lifecycle rule deleting matching items.
+
+    '
+  syntax:
+    content: LifecycleRuleDelete(**kw)
+    parameters: []
+  type: class
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete
+- class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.clear
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: clear
+  source:
+    id: clear
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleDelete.clear` method.
+  syntax:
+    content: clear()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.clear
+- class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.copy
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: copy
+  source:
+    id: copy
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleDelete.copy` method.
+  syntax:
+    content: copy()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.copy
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.from_api_repr
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: from_api_repr
+  source:
+    id: from_api_repr
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 354
+  summary: 'Factory:  construct instance from resource.
+
+    '
+  syntax:
+    content: from_api_repr(resource)
+    parameters:
+    - description: mapping as returned from API call.
+      id: resource
+      var_type: dict
+    returns:
+    - description: Instance created from resource.
+      var_type: <code>LifecycleRuleDelete</code>
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.from_api_repr
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.fromkeys
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: fromkeys
+  source:
+    id: fromkeys
+    path: null
+    startLine: null
+  summary: 'Create a new dictionary with keys from iterable and values set to value.
+
+
+    '
+  syntax:
+    content: fromkeys(value=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.fromkeys
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.get
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: get
+  source:
+    id: get
+    path: null
+    startLine: null
+  summary: 'Return the value for key if key is in the dictionary, else default.
+
+
+    '
+  syntax:
+    content: get(key, default=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.get
+- class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.items
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: items
+  source:
+    id: items
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleDelete.items` method.
+  syntax:
+    content: items()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.items
+- class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.keys
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: keys
+  source:
+    id: keys
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleDelete.keys` method.
+  syntax:
+    content: keys()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.keys
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.pop
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: pop
+  source:
+    id: pop
+    path: null
+    startLine: null
+  summary: 'If the key is not found, return the default if given; otherwise,
+
+    raise a KeyError.
+
+
+    '
+  syntax:
+    content: pop(k[,d])
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.pop
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.popitem
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: popitem
+  source:
+    id: popitem
+    path: null
+    startLine: null
+  summary: 'Remove and return a (key, value) pair as a 2-tuple.
+
+
+    Pairs are returned in LIFO (last-in, first-out) order.
+
+    Raises KeyError if the dict is empty.
+
+
+    '
+  syntax:
+    content: popitem()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.popitem
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.setdefault
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: setdefault
+  source:
+    id: setdefault
+    path: null
+    startLine: null
+  summary: 'Insert key with a value of default if key is not in the dictionary.
+
+
+    Return the value for key if key is in the dictionary, else default.
+
+
+    '
+  syntax:
+    content: setdefault(key, default=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.setdefault
+- attributes: []
+  class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.update
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: update
+  source:
+    id: update
+    path: null
+    startLine: null
+  summary: 'If E is present and has a .keys() method, then does:  for k in E: D[k]
+    = E[k]
+
+    If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] =
+    v
+
+    In either case, this is followed by: for k in F:  D[k] = F[k]
+
+
+    '
+  syntax:
+    content: update([E, ]**F)
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.update
+- class: google.cloud.storage.bucket.LifecycleRuleDelete
+  fullName: google.cloud.storage.bucket.LifecycleRuleDelete.values
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: values
+  source:
+    id: values
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.LifecycleRuleDelete.values` method.
+  syntax:
+    content: values()
+  type: method
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.values
+references:
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.clear
+  isExternal: false
+  name: clear
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.clear
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.copy
+  isExternal: false
+  name: copy
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.copy
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.from_api_repr
+  isExternal: false
+  name: from_api_repr
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.from_api_repr
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.fromkeys
+  isExternal: false
+  name: fromkeys
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.fromkeys
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.get
+  isExternal: false
+  name: get
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.get
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.items
+  isExternal: false
+  name: items
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.items
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.keys
+  isExternal: false
+  name: keys
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.keys
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.pop
+  isExternal: false
+  name: pop
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.pop
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.popitem
+  isExternal: false
+  name: popitem
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.popitem
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.setdefault
+  isExternal: false
+  name: setdefault
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.setdefault
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.update
+  isExternal: false
+  name: update
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.update
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete.values
+  isExternal: false
+  name: values
+  parent: google.cloud.storage.bucket.LifecycleRuleDelete
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete.values

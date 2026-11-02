@@ -1,0 +1,446 @@
+{#
+ # Copyright (C) 2024  Google LLC
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #     http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ #
+ # This file is a copy of `_shared_macros.j2` in standard templates located at
+ # `gapic/templates/%namespace/%name_%version/%sub/services/%service/_shared_macros.j2`
+ # It is intended to be a symlink. 
+ # See https://github.com/googleapis/gapic-generator-python/issues/2028
+ # which contains follow up work to convert it to a symlink.
+ # Do not diverge from the copy of `_shared_macros.j2` in standard templates.
+#}
+
+{% macro auto_populate_uuid4_fields(api, method) %}
+{#
+    Automatically populate UUID4 fields according to
+    https://google.aip.dev/client-libraries/4235 when the
+    field satisfies either of:
+    - The field supports explicit presence and has not been set by the user.
+    - The field doesn't support explicit presence, and its value is the empty
+      string (i.e. the default value).
+    When using this macro, ensure the calling template generates a line `import uuid`
+#}
+{% with method_settings = api.all_method_settings.get(method.meta.address.proto) %}
+{% if method_settings is not none %}
+{% for auto_populated_field in method_settings.auto_populated_fields %}
+    {% if method.input.fields[auto_populated_field].proto3_optional %}
+        if '{{ auto_populated_field }}' not in request:
+    {% else %}
+        if not request.{{ auto_populated_field }}:
+    {% endif %}
+            request.{{ auto_populated_field }} = str(uuid.uuid4())
+{% endfor %}
+{% endif %}{# if method_settings is not none #}
+{% endwith %}{# method_settings #}
+{% endmacro %}
+
+{% macro add_google_api_core_version_header_import(service_version) %}
+{#
+The `version_header` module was added to `google-api-core`
+in version 2.19.0.
+https://github.com/googleapis/python-api-core/releases/tag/v2.19.0
+The `try/except` below can be removed once the minimum version of
+`google-api-core` is 2.19.0 or newer.
+#}
+{% if service_version %}
+try:
+    from google.api_core import version_header
+    HAS_GOOGLE_API_CORE_VERSION_HEADER = True  # pragma: NO COVER
+{# NOTE: `pragma: NO COVER` is needed since the coverage for presubmits isn't combined. #}
+except ImportError:  # pragma: NO COVER
+    HAS_GOOGLE_API_CORE_VERSION_HEADER = False
+{% endif %}{# service_version #}
+{% endmacro %}
+
+{% macro create_metadata(method) %}
+    {% if not method.client_streaming %}
+    {% if method.explicit_routing %}
+        header_params: dict[str, str] = {}
+        {% for routing_param in method.routing_rule.routing_parameters %}
+        {% if routing_param.path_template %} {# Need to match. #}
+
+        routing_param_regex = {{ routing_param.to_regex() }}
+        regex_match = routing_param_regex.match(request.{{ routing_param.field }})
+        if regex_match and regex_match.group("{{ routing_param.key }}"):
+            header_params["{{ routing_param.key }}"] = regex_match.group("{{ routing_param.key }}")
+
+    {% else %}
+
+        if request.{{ routing_param.field }}:
+            header_params["{{ routing_param.key }}"] = request.{{ routing_param.field }}
+
+        {% endif %}
+        {% endfor %} {# method.routing_rule.routing_parameters #}
+
+        if header_params:
+            metadata = tuple(metadata) + (
+                gapic_v1.routing_header.to_grpc_metadata(header_params),
+            )
+
+    {% elif method.field_headers %}{# implicit routing #}
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((
+                {% for field_header in method.field_headers %}
+                ("{{ field_header.raw }}", request.{{ field_header.disambiguated }}),
+                {% endfor %}{# for field_header in method.field_headers #}
+            )),
+        )
+    {% endif %}{# method.explicit_routing #}
+    {% endif %}{# not method.client_streaming #}
+{% endmacro %}{# create_metadata #}
+
+{% macro add_api_version_header_to_metadata(service_version) %}
+{#
+    Add API Version to metadata as per https://github.com/aip-dev/google.aip.dev/pull/1331.
+    When using this macro, ensure the calling template also calls macro
+    `add_google_api_core_version_header_import` to add the necessary import statements.
+#}
+    {% if service_version %}
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+            metadata = tuple(metadata) + (
+                version_header.to_api_version_header("{{ service_version }}"),
+            )
+    {% endif %}{# service_version #}
+{% endmacro %}
+
+{% macro operations_mixin_imports(api, service, opts) %}
+{% if import_ns is not defined %}
+{% set import_ns = namespace(has_operations_mixin=false) %}
+{% endif %}{# import_ns is not defined #}
+{% set import_ns.has_operations_mixin = api.has_operations_mixin %}
+
+{% filter sort_lines %}
+{% for method in service.methods.values() %}
+{{method.input.ident.python_import}}
+{% if method.output.ident|string() == "operations_pb2.Operation" %}
+{% set import_ns.has_operations_mixin = True %}
+{% else %}
+{{method.output.ident.python_import}}
+{% endif %}
+{% endfor %}
+{% if opts.add_iam_methods or api.has_iam_mixin %}
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+{% endif %}{# opts.add_iam_methods #}
+{% endfilter %}
+{% if import_ns.has_operations_mixin %}
+from google.longrunning import operations_pb2  # type: ignore
+{% endif %}{# import_ns.has_operations_mixin #}
+{% endmacro %}
+
+{% macro http_options_method(rules) %}
+@staticmethod
+def _get_http_options():
+    http_options: List[Dict[str, str]] = [
+    {%- for rule in rules %}{
+        'method': '{{ rule.method }}',
+        'uri': '{{ rule.uri }}',
+        {% if rule.body %}
+        'body': '{{ rule.body }}',
+        {% endif %}{# rule.body #}
+    },
+    {% endfor %}{# rule in rules #}
+    ]
+    return http_options
+{% endmacro %}
+
+{% macro response_method(body_spec, is_async=False) %}
+{% set async_prefix = "async " if is_async else "" %}
+{% set await_prefix = "await " if is_async else "" %}
+@staticmethod
+{{ async_prefix }}def _get_response(
+    host,
+    metadata,
+    query_params,
+    session,
+    timeout,
+    transcoded_request,
+    body=None):
+    
+    uri = transcoded_request['uri']
+    method = transcoded_request['method']
+    headers = dict(metadata)
+    headers['Content-Type'] = 'application/json'
+    response = {{ await_prefix }}getattr(session, method)(
+        "{host}{uri}".format(host=host, uri=uri),
+        timeout=timeout,
+        headers=headers,
+        params=rest_helpers.flatten_query_params(query_params, strict=True),
+        {% if body_spec %}
+        data=body,
+        {% endif %}
+        )
+    return response
+{% endmacro %}
+
+{# rest_call_method_common includes the common code for a rest __call__ method to be
+    re-used for sync REST, async REST, and mixins __call__ implementation.
+
+    Args:
+        body_spec (str): The http options body i.e. method.http_options[0].body
+        method_name (str): The method name.
+        service_name (str): The service name.
+        is_async (bool): Used to determine the code path i.e. whether for sync or async call. #}
+{% macro rest_call_method_common(body_spec, method_name, service_name, is_async=False) %}
+{% set await_prefix = "await " if is_async else "" %}
+{% set async_class_prefix = "Async" if is_async else "" %}
+
+    http_options = _Base{{ service_name }}RestTransport._Base{{method_name}}._get_http_options()
+    request, metadata = {{ await_prefix }}self._interceptor.pre_{{ method_name|snake_case }}(request, metadata)
+    transcoded_request = _Base{{ service_name }}RestTransport._Base{{method_name}}._get_transcoded_request(http_options, request)
+
+    {% if body_spec %}
+    body = _Base{{ service_name }}RestTransport._Base{{method_name}}._get_request_body_json(transcoded_request)
+    {% endif %}{# body_spec #}
+
+    # Jsonify the query params
+    query_params = _Base{{ service_name }}RestTransport._Base{{method_name}}._get_query_params_json(transcoded_request)
+
+    # Send the request
+    response = {{ await_prefix }}{{ async_class_prefix }}{{ service_name }}RestTransport._{{method_name}}._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request{% if body_spec %}, body{% endif %})
+
+    # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+    # subclass.
+    if response.status_code >= 400:
+        {# Note: format_http_response_error takes in more parameters than from_http_response and the 
+        latter only supports a response of type requests.Response. 
+        TODO: Clean up the sync response error handling and use format_http_response_error.
+        See issue: https://github.com/googleapis/gapic-generator-python/issues/2116. #}
+        {% if is_async %}
+        content = await response.read()
+        payload = json.loads(content.decode('utf-8'))
+        request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
+        method = transcoded_request['method']
+        {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2137): Remove `type:  ignore` once version check is added for google-api-core. #}
+        raise core_exceptions.format_http_response_error(response, method, request_url, payload)  # type: ignore
+        {% else %}
+        raise core_exceptions.from_http_response(response)
+        {% endif %}{# is_async #}
+
+{% endmacro %}
+
+
+{% macro prep_wrapped_messages_async_method(api, service) %}
+def _prep_wrapped_messages(self, client_info):
+    """ Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+    self._wrapped_methods = {
+        {% for method in service.methods.values() %}
+        self.{{ method.transport_safe_name|snake_case }}: self._wrap_method(
+            self.{{ method.transport_safe_name|snake_case }},
+            {% if method.retry %}
+            default_retry=retries.AsyncRetry(
+                {% if method.retry.initial_backoff %}
+                initial={{ method.retry.initial_backoff }},
+                {% endif %}
+                {% if method.retry.max_backoff %}
+                maximum={{ method.retry.max_backoff }},
+                {% endif %}
+                {% if method.retry.backoff_multiplier %}
+                multiplier={{ method.retry.backoff_multiplier }},
+                {% endif %}
+                predicate=retries.if_exception_type(
+                    {% for ex in method.retry.retryable_exceptions|sort(attribute='__name__') %}
+                    core_exceptions.{{ ex.__name__ }},
+                    {% endfor %}
+                ),
+                deadline={{ method.timeout }},
+            ),
+            {% endif %}
+            default_timeout={{ method.timeout }},
+            client_info=client_info,
+        ),
+        {% endfor %}{# service.methods.values() #}
+        {% for method_name in api.mixin_api_methods.keys() %}
+        self.{{ method_name|snake_case }}: self._wrap_method(
+            self.{{ method_name|snake_case }},
+            default_timeout=None,
+            client_info=client_info,
+        ),
+        {% endfor %} {# method_name in api.mixin_api_methods.keys() #}
+    }
+{% endmacro %}
+
+{# TODO: This helper logic to check whether `kind` needs to be configured in wrap_method
+can be removed once we require the correct version of the google-api-core dependency to
+avoid having a gRPC code path in an async REST call.
+See related issue: https://github.com/googleapis/python-api-core/issues/661.
+In the meantime, if an older version of the dependency is installed (which has a wrap_method with
+no kind parameter), then an async gRPC call will work correctly and async REST transport
+will not be available as a transport.
+See related issue: https://github.com/googleapis/gapic-generator-python/issues/2119. #}
+{% macro wrap_async_method_macro() %}
+def _wrap_method(self, func, *args, **kwargs):
+    {# TODO: Remove `pragma: NO COVER` once https://github.com/googleapis/python-api-core/pull/688 is merged. #}
+    if self._wrap_with_kind:  # pragma: NO COVER
+        kwargs["kind"] = self.kind
+    return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+{% endmacro %}
+
+{# `create_interceptor_class` generates an Interceptor class for
+ # synchronous and asynchronous rest transports
+#}
+{% macro create_interceptor_class(api, service, method, is_async=False) %}
+{% set async_prefix = "async " if is_async else "" %}
+{% set async_method_name_prefix = "Async" if is_async else "" %}
+{% set async_docstring = "Asynchronous " if is_async else "" %}
+{% set async_suffix = "_async" if is_async else "" %}
+
+class {{ async_method_name_prefix }}{{ service.name }}RestInterceptor:
+    """{{ async_docstring }}Interceptor for {{ service.name }}.
+
+    Interceptors are used to manipulate requests, request metadata, and responses
+    in arbitrary ways.
+    Example use cases include:
+    * Logging
+    * Verifying requests according to service or custom semantics
+    * Stripping extraneous information from responses
+
+    These use cases and more can be enabled by injecting an
+    instance of a custom subclass when constructing the {{ async_method_name_prefix }}{{ service.name }}RestTransport.
+
+    .. code-block:: python
+        class MyCustom{{ service.name }}Interceptor({{ service.name }}RestInterceptor):
+    {% for _, method in service.methods|dictsort if not method.client_streaming %}
+            {{ async_prefix }}def pre_{{ method.name|snake_case }}(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+    {% if not method.void %}
+            {{ async_prefix }}def post_{{ method.name|snake_case }}(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+    {% endif %}
+
+    {% endfor %}
+        transport = {{ async_method_name_prefix }}{{ service.name }}RestTransport(interceptor=MyCustom{{ service.name }}Interceptor())
+        client = {{ async_prefix }}{{ service.client_name }}(transport=transport)
+
+
+    """
+    {% for method in service.methods.values()|sort(attribute="name") if not method.client_streaming and method.http_options %}
+    {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2147): Remove the condition below once async rest transport supports the guarded methods. #}
+    {% if (not is_async) or (is_async and not method.lro and not method.extended_lro and not method.paged_result_field) %}
+    {{ async_prefix }}def pre_{{ method.name|snake_case }}(self, request: {{method.input.ident}}, metadata: Sequence[Tuple[str, str]]) -> Tuple[{{method.input.ident}}, Sequence[Tuple[str, str]]]:
+        """Pre-rpc interceptor for {{ method.name|snake_case }}
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the {{ service.name }} server.
+        """
+        return request, metadata
+
+    {% if not method.void %}
+    {% if not method.server_streaming %}
+    {{ async_prefix }}def post_{{ method.name|snake_case }}(self, response: {{method.output.ident}}) -> {{method.output.ident}}:
+    {% else %}
+    {{ async_prefix }}def post_{{ method.name|snake_case }}(self, response: rest_streaming{{ async_suffix }}.{{ async_method_name_prefix }}ResponseIterator) -> rest_streaming{{ async_suffix }}.{{ async_method_name_prefix }}ResponseIterator:
+    {% endif %}
+        """Post-rpc interceptor for {{ method.name|snake_case }}
+
+        Override in a subclass to manipulate the response
+        after it is returned by the {{ service.name }} server but before
+        it is returned to user code.
+        """
+        return response
+    {% endif %}
+    {% endif %}{# if (not is_async) or (is_async and not method.lro and not method.extended_lro and not method.paged_result_field) #}
+    {% endfor %}
+
+    {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2148): Remove the condition below once mixins are supported for async rest transport. #}
+    {% if not is_async %}
+    {% for name, signature in api.mixin_api_signatures.items() %}
+    {{ async_prefix }}def pre_{{ name|snake_case }}(
+        self, request: {{signature.request_type}}, metadata: Sequence[Tuple[str, str]]
+    ) -> Tuple[{{signature.request_type}}, Sequence[Tuple[str, str]]]:
+        """Pre-rpc interceptor for {{ name|snake_case }}
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the {{ service.name }} server.
+        """
+        return request, metadata
+
+    {{ async_prefix }}def post_{{ name|snake_case }}(
+        self, response: {{signature.response_type}}
+    ) -> {{signature.response_type}}:
+        """Post-rpc interceptor for {{ name|snake_case }}
+
+        Override in a subclass to manipulate the response
+        after it is returned by the {{ service.name }} server but before
+        it is returned to user code.
+        """
+        return response
+    {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{% macro generate_mixin_call_method(service, api, name, sig, is_async) %}
+{% set async_prefix = "async " if is_async else "" %}
+{% set async_method_name_prefix = "Async" if is_async else "" %}
+{% set async_suffix = "_async" if is_async else "" %}
+{% set await_prefix = "await " if is_async else "" %}
+
+@property
+def {{ name|snake_case }}(self):
+    return self._{{ name }}(self._session, self._host, self._interceptor) # type: ignore
+
+class _{{ name }}(_Base{{ service.name }}RestTransport._Base{{name}}, {{ async_method_name_prefix }}{{service.name}}RestStub):
+    def __hash__(self):
+        return hash("{{ async_method_name_prefix }}{{ service.name }}RestTransport.{{ name }}")
+
+    {% set body_spec = api.mixin_http_options["{}".format(name)][0].body %}
+    {{ response_method(body_spec) | indent(4) }}
+    
+    {{ async_prefix }}def __call__(self,
+        request: {{ sig.request_type }}, *,
+        retry: OptionalRetry=gapic_v1.method.DEFAULT,
+        timeout: Optional[float]=None,
+        metadata: Sequence[Tuple[str, str]]=(),
+        ) -> {{ sig.response_type }}:
+
+        r"""Call the {{- ' ' -}}
+        {{ (name|snake_case).replace('_',' ')|wrap(width=70, offset=45, indent=8) }}
+        {{- ' ' -}} method over HTTP.
+
+        Args:
+            request ({{ sig.request_type }}):
+                The request object for {{ name }} method.
+            retry (google.api_core.retry{{ async_suffix }}.{{ async_method_name_prefix }}Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, str]]): Strings which should be
+                sent along with the request as metadata.
+        {% if sig.response_type != 'None' %}
+
+        Returns:
+            {{ sig.response_type }}: Response from {{ name }} method.
+        {% endif %}
+        """
+        {{ rest_call_method_common(body_spec, name, service.name, is_async)|indent(4) }}
+        
+        {% if sig.response_type == "None" %}
+        return {{ await_prefix }}self._interceptor.post_{{ name|snake_case }}(None)
+        {% else %}
+        {% if is_async %}
+        content = await response.read()
+        {% else %}
+        content = response.content.decode("utf-8")
+        {% endif %}
+        resp = {{ sig.response_type }}()
+        resp = json_format.Parse(content, resp)
+        resp = {{ await_prefix }}self._interceptor.post_{{ name|snake_case }}(resp)
+        return resp
+        {% endif %}
+
+{% endmacro %}

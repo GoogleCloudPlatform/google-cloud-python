@@ -1,0 +1,675 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.vpcaccess.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-vpc-access",
+    "version": "1.18.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceAsyncClient",
+          "shortName": "VpcAccessServiceAsyncClient"
+        },
+        "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceAsyncClient.create_connector",
+        "method": {
+          "fullName": "google.cloud.vpcaccess.v1.VpcAccessService.CreateConnector",
+          "service": {
+            "fullName": "google.cloud.vpcaccess.v1.VpcAccessService",
+            "shortName": "VpcAccessService"
+          },
+          "shortName": "CreateConnector"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.vpcaccess_v1.types.CreateConnectorRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "connector_id",
+            "type": "str"
+          },
+          {
+            "name": "connector",
+            "type": "google.cloud.vpcaccess_v1.types.Connector"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_connector"
+      },
+      "description": "Sample for CreateConnector",
+      "file": "vpcaccess_v1_generated_vpc_access_service_create_connector_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "vpcaccess_v1_generated_VpcAccessService_CreateConnector_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "vpcaccess_v1_generated_vpc_access_service_create_connector_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceClient",
+          "shortName": "VpcAccessServiceClient"
+        },
+        "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceClient.create_connector",
+        "method": {
+          "fullName": "google.cloud.vpcaccess.v1.VpcAccessService.CreateConnector",
+          "service": {
+            "fullName": "google.cloud.vpcaccess.v1.VpcAccessService",
+            "shortName": "VpcAccessService"
+          },
+          "shortName": "CreateConnector"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.vpcaccess_v1.types.CreateConnectorRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "connector_id",
+            "type": "str"
+          },
+          {
+            "name": "connector",
+            "type": "google.cloud.vpcaccess_v1.types.Connector"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_connector"
+      },
+      "description": "Sample for CreateConnector",
+      "file": "vpcaccess_v1_generated_vpc_access_service_create_connector_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "vpcaccess_v1_generated_VpcAccessService_CreateConnector_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "vpcaccess_v1_generated_vpc_access_service_create_connector_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceAsyncClient",
+          "shortName": "VpcAccessServiceAsyncClient"
+        },
+        "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceAsyncClient.delete_connector",
+        "method": {
+          "fullName": "google.cloud.vpcaccess.v1.VpcAccessService.DeleteConnector",
+          "service": {
+            "fullName": "google.cloud.vpcaccess.v1.VpcAccessService",
+            "shortName": "VpcAccessService"
+          },
+          "shortName": "DeleteConnector"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.vpcaccess_v1.types.DeleteConnectorRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_connector"
+      },
+      "description": "Sample for DeleteConnector",
+      "file": "vpcaccess_v1_generated_vpc_access_service_delete_connector_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "vpcaccess_v1_generated_VpcAccessService_DeleteConnector_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "vpcaccess_v1_generated_vpc_access_service_delete_connector_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceClient",
+          "shortName": "VpcAccessServiceClient"
+        },
+        "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceClient.delete_connector",
+        "method": {
+          "fullName": "google.cloud.vpcaccess.v1.VpcAccessService.DeleteConnector",
+          "service": {
+            "fullName": "google.cloud.vpcaccess.v1.VpcAccessService",
+            "shortName": "VpcAccessService"
+          },
+          "shortName": "DeleteConnector"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.vpcaccess_v1.types.DeleteConnectorRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_connector"
+      },
+      "description": "Sample for DeleteConnector",
+      "file": "vpcaccess_v1_generated_vpc_access_service_delete_connector_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "vpcaccess_v1_generated_VpcAccessService_DeleteConnector_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "vpcaccess_v1_generated_vpc_access_service_delete_connector_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceAsyncClient",
+          "shortName": "VpcAccessServiceAsyncClient"
+        },
+        "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceAsyncClient.get_connector",
+        "method": {
+          "fullName": "google.cloud.vpcaccess.v1.VpcAccessService.GetConnector",
+          "service": {
+            "fullName": "google.cloud.vpcaccess.v1.VpcAccessService",
+            "shortName": "VpcAccessService"
+          },
+          "shortName": "GetConnector"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.vpcaccess_v1.types.GetConnectorRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.vpcaccess_v1.types.Connector",
+        "shortName": "get_connector"
+      },
+      "description": "Sample for GetConnector",
+      "file": "vpcaccess_v1_generated_vpc_access_service_get_connector_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "vpcaccess_v1_generated_VpcAccessService_GetConnector_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "vpcaccess_v1_generated_vpc_access_service_get_connector_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceClient",
+          "shortName": "VpcAccessServiceClient"
+        },
+        "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceClient.get_connector",
+        "method": {
+          "fullName": "google.cloud.vpcaccess.v1.VpcAccessService.GetConnector",
+          "service": {
+            "fullName": "google.cloud.vpcaccess.v1.VpcAccessService",
+            "shortName": "VpcAccessService"
+          },
+          "shortName": "GetConnector"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.vpcaccess_v1.types.GetConnectorRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.vpcaccess_v1.types.Connector",
+        "shortName": "get_connector"
+      },
+      "description": "Sample for GetConnector",
+      "file": "vpcaccess_v1_generated_vpc_access_service_get_connector_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "vpcaccess_v1_generated_VpcAccessService_GetConnector_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "vpcaccess_v1_generated_vpc_access_service_get_connector_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceAsyncClient",
+          "shortName": "VpcAccessServiceAsyncClient"
+        },
+        "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceAsyncClient.list_connectors",
+        "method": {
+          "fullName": "google.cloud.vpcaccess.v1.VpcAccessService.ListConnectors",
+          "service": {
+            "fullName": "google.cloud.vpcaccess.v1.VpcAccessService",
+            "shortName": "VpcAccessService"
+          },
+          "shortName": "ListConnectors"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.vpcaccess_v1.types.ListConnectorsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.vpcaccess_v1.services.vpc_access_service.pagers.ListConnectorsAsyncPager",
+        "shortName": "list_connectors"
+      },
+      "description": "Sample for ListConnectors",
+      "file": "vpcaccess_v1_generated_vpc_access_service_list_connectors_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "vpcaccess_v1_generated_VpcAccessService_ListConnectors_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "vpcaccess_v1_generated_vpc_access_service_list_connectors_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceClient",
+          "shortName": "VpcAccessServiceClient"
+        },
+        "fullName": "google.cloud.vpcaccess_v1.VpcAccessServiceClient.list_connectors",
+        "method": {
+          "fullName": "google.cloud.vpcaccess.v1.VpcAccessService.ListConnectors",
+          "service": {
+            "fullName": "google.cloud.vpcaccess.v1.VpcAccessService",
+            "shortName": "VpcAccessService"
+          },
+          "shortName": "ListConnectors"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.vpcaccess_v1.types.ListConnectorsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.vpcaccess_v1.services.vpc_access_service.pagers.ListConnectorsPager",
+        "shortName": "list_connectors"
+      },
+      "description": "Sample for ListConnectors",
+      "file": "vpcaccess_v1_generated_vpc_access_service_list_connectors_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "vpcaccess_v1_generated_VpcAccessService_ListConnectors_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "vpcaccess_v1_generated_vpc_access_service_list_connectors_sync.py"
+    }
+  ]
+}

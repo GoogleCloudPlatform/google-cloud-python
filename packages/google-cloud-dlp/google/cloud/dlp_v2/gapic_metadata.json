@@ -1,0 +1,928 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.dlp_v2",
+  "protoPackage": "google.privacy.dlp.v2",
+  "schema": "1.0",
+  "services": {
+    "DlpService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DlpServiceClient",
+          "rpcs": {
+            "ActivateJobTrigger": {
+              "methods": [
+                "activate_job_trigger"
+              ]
+            },
+            "CancelDlpJob": {
+              "methods": [
+                "cancel_dlp_job"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreateContentPolicy": {
+              "methods": [
+                "create_content_policy"
+              ]
+            },
+            "CreateDeidentifyTemplate": {
+              "methods": [
+                "create_deidentify_template"
+              ]
+            },
+            "CreateDiscoveryConfig": {
+              "methods": [
+                "create_discovery_config"
+              ]
+            },
+            "CreateDlpJob": {
+              "methods": [
+                "create_dlp_job"
+              ]
+            },
+            "CreateInspectTemplate": {
+              "methods": [
+                "create_inspect_template"
+              ]
+            },
+            "CreateJobTrigger": {
+              "methods": [
+                "create_job_trigger"
+              ]
+            },
+            "CreateStoredInfoType": {
+              "methods": [
+                "create_stored_info_type"
+              ]
+            },
+            "DeidentifyContent": {
+              "methods": [
+                "deidentify_content"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeleteContentPolicy": {
+              "methods": [
+                "delete_content_policy"
+              ]
+            },
+            "DeleteDeidentifyTemplate": {
+              "methods": [
+                "delete_deidentify_template"
+              ]
+            },
+            "DeleteDiscoveryConfig": {
+              "methods": [
+                "delete_discovery_config"
+              ]
+            },
+            "DeleteDlpJob": {
+              "methods": [
+                "delete_dlp_job"
+              ]
+            },
+            "DeleteFileStoreDataProfile": {
+              "methods": [
+                "delete_file_store_data_profile"
+              ]
+            },
+            "DeleteInspectTemplate": {
+              "methods": [
+                "delete_inspect_template"
+              ]
+            },
+            "DeleteJobTrigger": {
+              "methods": [
+                "delete_job_trigger"
+              ]
+            },
+            "DeleteStoredInfoType": {
+              "methods": [
+                "delete_stored_info_type"
+              ]
+            },
+            "DeleteTableDataProfile": {
+              "methods": [
+                "delete_table_data_profile"
+              ]
+            },
+            "FinishDlpJob": {
+              "methods": [
+                "finish_dlp_job"
+              ]
+            },
+            "GetColumnDataProfile": {
+              "methods": [
+                "get_column_data_profile"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetContentPolicy": {
+              "methods": [
+                "get_content_policy"
+              ]
+            },
+            "GetDeidentifyTemplate": {
+              "methods": [
+                "get_deidentify_template"
+              ]
+            },
+            "GetDiscoveryConfig": {
+              "methods": [
+                "get_discovery_config"
+              ]
+            },
+            "GetDlpJob": {
+              "methods": [
+                "get_dlp_job"
+              ]
+            },
+            "GetFileStoreDataProfile": {
+              "methods": [
+                "get_file_store_data_profile"
+              ]
+            },
+            "GetInspectTemplate": {
+              "methods": [
+                "get_inspect_template"
+              ]
+            },
+            "GetJobTrigger": {
+              "methods": [
+                "get_job_trigger"
+              ]
+            },
+            "GetProjectDataProfile": {
+              "methods": [
+                "get_project_data_profile"
+              ]
+            },
+            "GetStoredInfoType": {
+              "methods": [
+                "get_stored_info_type"
+              ]
+            },
+            "GetTableDataProfile": {
+              "methods": [
+                "get_table_data_profile"
+              ]
+            },
+            "HybridInspectDlpJob": {
+              "methods": [
+                "hybrid_inspect_dlp_job"
+              ]
+            },
+            "HybridInspectJobTrigger": {
+              "methods": [
+                "hybrid_inspect_job_trigger"
+              ]
+            },
+            "InspectContent": {
+              "methods": [
+                "inspect_content"
+              ]
+            },
+            "ListColumnDataProfiles": {
+              "methods": [
+                "list_column_data_profiles"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListContentPolicies": {
+              "methods": [
+                "list_content_policies"
+              ]
+            },
+            "ListDeidentifyTemplates": {
+              "methods": [
+                "list_deidentify_templates"
+              ]
+            },
+            "ListDiscoveryConfigs": {
+              "methods": [
+                "list_discovery_configs"
+              ]
+            },
+            "ListDlpJobs": {
+              "methods": [
+                "list_dlp_jobs"
+              ]
+            },
+            "ListFileStoreDataProfiles": {
+              "methods": [
+                "list_file_store_data_profiles"
+              ]
+            },
+            "ListInfoTypes": {
+              "methods": [
+                "list_info_types"
+              ]
+            },
+            "ListInspectTemplates": {
+              "methods": [
+                "list_inspect_templates"
+              ]
+            },
+            "ListJobTriggers": {
+              "methods": [
+                "list_job_triggers"
+              ]
+            },
+            "ListProjectDataProfiles": {
+              "methods": [
+                "list_project_data_profiles"
+              ]
+            },
+            "ListStoredInfoTypes": {
+              "methods": [
+                "list_stored_info_types"
+              ]
+            },
+            "ListTableDataProfiles": {
+              "methods": [
+                "list_table_data_profiles"
+              ]
+            },
+            "RedactImage": {
+              "methods": [
+                "redact_image"
+              ]
+            },
+            "ReidentifyContent": {
+              "methods": [
+                "reidentify_content"
+              ]
+            },
+            "SearchConnections": {
+              "methods": [
+                "search_connections"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            },
+            "UpdateContentPolicy": {
+              "methods": [
+                "update_content_policy"
+              ]
+            },
+            "UpdateDeidentifyTemplate": {
+              "methods": [
+                "update_deidentify_template"
+              ]
+            },
+            "UpdateDiscoveryConfig": {
+              "methods": [
+                "update_discovery_config"
+              ]
+            },
+            "UpdateInspectTemplate": {
+              "methods": [
+                "update_inspect_template"
+              ]
+            },
+            "UpdateJobTrigger": {
+              "methods": [
+                "update_job_trigger"
+              ]
+            },
+            "UpdateStoredInfoType": {
+              "methods": [
+                "update_stored_info_type"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DlpServiceAsyncClient",
+          "rpcs": {
+            "ActivateJobTrigger": {
+              "methods": [
+                "activate_job_trigger"
+              ]
+            },
+            "CancelDlpJob": {
+              "methods": [
+                "cancel_dlp_job"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreateContentPolicy": {
+              "methods": [
+                "create_content_policy"
+              ]
+            },
+            "CreateDeidentifyTemplate": {
+              "methods": [
+                "create_deidentify_template"
+              ]
+            },
+            "CreateDiscoveryConfig": {
+              "methods": [
+                "create_discovery_config"
+              ]
+            },
+            "CreateDlpJob": {
+              "methods": [
+                "create_dlp_job"
+              ]
+            },
+            "CreateInspectTemplate": {
+              "methods": [
+                "create_inspect_template"
+              ]
+            },
+            "CreateJobTrigger": {
+              "methods": [
+                "create_job_trigger"
+              ]
+            },
+            "CreateStoredInfoType": {
+              "methods": [
+                "create_stored_info_type"
+              ]
+            },
+            "DeidentifyContent": {
+              "methods": [
+                "deidentify_content"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeleteContentPolicy": {
+              "methods": [
+                "delete_content_policy"
+              ]
+            },
+            "DeleteDeidentifyTemplate": {
+              "methods": [
+                "delete_deidentify_template"
+              ]
+            },
+            "DeleteDiscoveryConfig": {
+              "methods": [
+                "delete_discovery_config"
+              ]
+            },
+            "DeleteDlpJob": {
+              "methods": [
+                "delete_dlp_job"
+              ]
+            },
+            "DeleteFileStoreDataProfile": {
+              "methods": [
+                "delete_file_store_data_profile"
+              ]
+            },
+            "DeleteInspectTemplate": {
+              "methods": [
+                "delete_inspect_template"
+              ]
+            },
+            "DeleteJobTrigger": {
+              "methods": [
+                "delete_job_trigger"
+              ]
+            },
+            "DeleteStoredInfoType": {
+              "methods": [
+                "delete_stored_info_type"
+              ]
+            },
+            "DeleteTableDataProfile": {
+              "methods": [
+                "delete_table_data_profile"
+              ]
+            },
+            "FinishDlpJob": {
+              "methods": [
+                "finish_dlp_job"
+              ]
+            },
+            "GetColumnDataProfile": {
+              "methods": [
+                "get_column_data_profile"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetContentPolicy": {
+              "methods": [
+                "get_content_policy"
+              ]
+            },
+            "GetDeidentifyTemplate": {
+              "methods": [
+                "get_deidentify_template"
+              ]
+            },
+            "GetDiscoveryConfig": {
+              "methods": [
+                "get_discovery_config"
+              ]
+            },
+            "GetDlpJob": {
+              "methods": [
+                "get_dlp_job"
+              ]
+            },
+            "GetFileStoreDataProfile": {
+              "methods": [
+                "get_file_store_data_profile"
+              ]
+            },
+            "GetInspectTemplate": {
+              "methods": [
+                "get_inspect_template"
+              ]
+            },
+            "GetJobTrigger": {
+              "methods": [
+                "get_job_trigger"
+              ]
+            },
+            "GetProjectDataProfile": {
+              "methods": [
+                "get_project_data_profile"
+              ]
+            },
+            "GetStoredInfoType": {
+              "methods": [
+                "get_stored_info_type"
+              ]
+            },
+            "GetTableDataProfile": {
+              "methods": [
+                "get_table_data_profile"
+              ]
+            },
+            "HybridInspectDlpJob": {
+              "methods": [
+                "hybrid_inspect_dlp_job"
+              ]
+            },
+            "HybridInspectJobTrigger": {
+              "methods": [
+                "hybrid_inspect_job_trigger"
+              ]
+            },
+            "InspectContent": {
+              "methods": [
+                "inspect_content"
+              ]
+            },
+            "ListColumnDataProfiles": {
+              "methods": [
+                "list_column_data_profiles"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListContentPolicies": {
+              "methods": [
+                "list_content_policies"
+              ]
+            },
+            "ListDeidentifyTemplates": {
+              "methods": [
+                "list_deidentify_templates"
+              ]
+            },
+            "ListDiscoveryConfigs": {
+              "methods": [
+                "list_discovery_configs"
+              ]
+            },
+            "ListDlpJobs": {
+              "methods": [
+                "list_dlp_jobs"
+              ]
+            },
+            "ListFileStoreDataProfiles": {
+              "methods": [
+                "list_file_store_data_profiles"
+              ]
+            },
+            "ListInfoTypes": {
+              "methods": [
+                "list_info_types"
+              ]
+            },
+            "ListInspectTemplates": {
+              "methods": [
+                "list_inspect_templates"
+              ]
+            },
+            "ListJobTriggers": {
+              "methods": [
+                "list_job_triggers"
+              ]
+            },
+            "ListProjectDataProfiles": {
+              "methods": [
+                "list_project_data_profiles"
+              ]
+            },
+            "ListStoredInfoTypes": {
+              "methods": [
+                "list_stored_info_types"
+              ]
+            },
+            "ListTableDataProfiles": {
+              "methods": [
+                "list_table_data_profiles"
+              ]
+            },
+            "RedactImage": {
+              "methods": [
+                "redact_image"
+              ]
+            },
+            "ReidentifyContent": {
+              "methods": [
+                "reidentify_content"
+              ]
+            },
+            "SearchConnections": {
+              "methods": [
+                "search_connections"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            },
+            "UpdateContentPolicy": {
+              "methods": [
+                "update_content_policy"
+              ]
+            },
+            "UpdateDeidentifyTemplate": {
+              "methods": [
+                "update_deidentify_template"
+              ]
+            },
+            "UpdateDiscoveryConfig": {
+              "methods": [
+                "update_discovery_config"
+              ]
+            },
+            "UpdateInspectTemplate": {
+              "methods": [
+                "update_inspect_template"
+              ]
+            },
+            "UpdateJobTrigger": {
+              "methods": [
+                "update_job_trigger"
+              ]
+            },
+            "UpdateStoredInfoType": {
+              "methods": [
+                "update_stored_info_type"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DlpServiceClient",
+          "rpcs": {
+            "ActivateJobTrigger": {
+              "methods": [
+                "activate_job_trigger"
+              ]
+            },
+            "CancelDlpJob": {
+              "methods": [
+                "cancel_dlp_job"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreateContentPolicy": {
+              "methods": [
+                "create_content_policy"
+              ]
+            },
+            "CreateDeidentifyTemplate": {
+              "methods": [
+                "create_deidentify_template"
+              ]
+            },
+            "CreateDiscoveryConfig": {
+              "methods": [
+                "create_discovery_config"
+              ]
+            },
+            "CreateDlpJob": {
+              "methods": [
+                "create_dlp_job"
+              ]
+            },
+            "CreateInspectTemplate": {
+              "methods": [
+                "create_inspect_template"
+              ]
+            },
+            "CreateJobTrigger": {
+              "methods": [
+                "create_job_trigger"
+              ]
+            },
+            "CreateStoredInfoType": {
+              "methods": [
+                "create_stored_info_type"
+              ]
+            },
+            "DeidentifyContent": {
+              "methods": [
+                "deidentify_content"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeleteContentPolicy": {
+              "methods": [
+                "delete_content_policy"
+              ]
+            },
+            "DeleteDeidentifyTemplate": {
+              "methods": [
+                "delete_deidentify_template"
+              ]
+            },
+            "DeleteDiscoveryConfig": {
+              "methods": [
+                "delete_discovery_config"
+              ]
+            },
+            "DeleteDlpJob": {
+              "methods": [
+                "delete_dlp_job"
+              ]
+            },
+            "DeleteFileStoreDataProfile": {
+              "methods": [
+                "delete_file_store_data_profile"
+              ]
+            },
+            "DeleteInspectTemplate": {
+              "methods": [
+                "delete_inspect_template"
+              ]
+            },
+            "DeleteJobTrigger": {
+              "methods": [
+                "delete_job_trigger"
+              ]
+            },
+            "DeleteStoredInfoType": {
+              "methods": [
+                "delete_stored_info_type"
+              ]
+            },
+            "DeleteTableDataProfile": {
+              "methods": [
+                "delete_table_data_profile"
+              ]
+            },
+            "FinishDlpJob": {
+              "methods": [
+                "finish_dlp_job"
+              ]
+            },
+            "GetColumnDataProfile": {
+              "methods": [
+                "get_column_data_profile"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetContentPolicy": {
+              "methods": [
+                "get_content_policy"
+              ]
+            },
+            "GetDeidentifyTemplate": {
+              "methods": [
+                "get_deidentify_template"
+              ]
+            },
+            "GetDiscoveryConfig": {
+              "methods": [
+                "get_discovery_config"
+              ]
+            },
+            "GetDlpJob": {
+              "methods": [
+                "get_dlp_job"
+              ]
+            },
+            "GetFileStoreDataProfile": {
+              "methods": [
+                "get_file_store_data_profile"
+              ]
+            },
+            "GetInspectTemplate": {
+              "methods": [
+                "get_inspect_template"
+              ]
+            },
+            "GetJobTrigger": {
+              "methods": [
+                "get_job_trigger"
+              ]
+            },
+            "GetProjectDataProfile": {
+              "methods": [
+                "get_project_data_profile"
+              ]
+            },
+            "GetStoredInfoType": {
+              "methods": [
+                "get_stored_info_type"
+              ]
+            },
+            "GetTableDataProfile": {
+              "methods": [
+                "get_table_data_profile"
+              ]
+            },
+            "HybridInspectDlpJob": {
+              "methods": [
+                "hybrid_inspect_dlp_job"
+              ]
+            },
+            "HybridInspectJobTrigger": {
+              "methods": [
+                "hybrid_inspect_job_trigger"
+              ]
+            },
+            "InspectContent": {
+              "methods": [
+                "inspect_content"
+              ]
+            },
+            "ListColumnDataProfiles": {
+              "methods": [
+                "list_column_data_profiles"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListContentPolicies": {
+              "methods": [
+                "list_content_policies"
+              ]
+            },
+            "ListDeidentifyTemplates": {
+              "methods": [
+                "list_deidentify_templates"
+              ]
+            },
+            "ListDiscoveryConfigs": {
+              "methods": [
+                "list_discovery_configs"
+              ]
+            },
+            "ListDlpJobs": {
+              "methods": [
+                "list_dlp_jobs"
+              ]
+            },
+            "ListFileStoreDataProfiles": {
+              "methods": [
+                "list_file_store_data_profiles"
+              ]
+            },
+            "ListInfoTypes": {
+              "methods": [
+                "list_info_types"
+              ]
+            },
+            "ListInspectTemplates": {
+              "methods": [
+                "list_inspect_templates"
+              ]
+            },
+            "ListJobTriggers": {
+              "methods": [
+                "list_job_triggers"
+              ]
+            },
+            "ListProjectDataProfiles": {
+              "methods": [
+                "list_project_data_profiles"
+              ]
+            },
+            "ListStoredInfoTypes": {
+              "methods": [
+                "list_stored_info_types"
+              ]
+            },
+            "ListTableDataProfiles": {
+              "methods": [
+                "list_table_data_profiles"
+              ]
+            },
+            "RedactImage": {
+              "methods": [
+                "redact_image"
+              ]
+            },
+            "ReidentifyContent": {
+              "methods": [
+                "reidentify_content"
+              ]
+            },
+            "SearchConnections": {
+              "methods": [
+                "search_connections"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            },
+            "UpdateContentPolicy": {
+              "methods": [
+                "update_content_policy"
+              ]
+            },
+            "UpdateDeidentifyTemplate": {
+              "methods": [
+                "update_deidentify_template"
+              ]
+            },
+            "UpdateDiscoveryConfig": {
+              "methods": [
+                "update_discovery_config"
+              ]
+            },
+            "UpdateInspectTemplate": {
+              "methods": [
+                "update_inspect_template"
+              ]
+            },
+            "UpdateJobTrigger": {
+              "methods": [
+                "update_job_trigger"
+              ]
+            },
+            "UpdateStoredInfoType": {
+              "methods": [
+                "update_stored_info_type"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

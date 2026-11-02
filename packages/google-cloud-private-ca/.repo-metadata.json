@@ -1,0 +1,15 @@
+{
+    "api_description": "The Certificate Authority Service API is a highly-available, scalable\nservice that enables you to simplify and automate the management of\nprivate certificate authorities (CAs) while staying in control of your\nprivate keys.",
+    "api_id": "privateca.googleapis.com",
+    "api_shortname": "privateca",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/privateca/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-private-ca",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "privateca",
+    "name_pretty": "Certificate Authority",
+    "product_documentation": "https://cloud.google.com/certificate-authority-service",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

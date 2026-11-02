@@ -1,0 +1,5 @@
+# Added so third_party folder is included when running `pip install -e .`
+# See PR #1083 for more detail
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

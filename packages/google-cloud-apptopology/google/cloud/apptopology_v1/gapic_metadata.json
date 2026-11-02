@@ -1,0 +1,103 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.apptopology_v1",
+  "protoPackage": "google.cloud.apptopology.v1",
+  "schema": "1.0",
+  "services": {
+    "AppTopology": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AppTopologyClient",
+          "rpcs": {
+            "ExploreSchema": {
+              "methods": [
+                "explore_schema"
+              ]
+            },
+            "GenerateDiscoveredResourcesTopology": {
+              "methods": [
+                "generate_discovered_resources_topology"
+              ]
+            },
+            "GetDomain": {
+              "methods": [
+                "get_domain"
+              ]
+            },
+            "GetSchema": {
+              "methods": [
+                "get_schema"
+              ]
+            },
+            "ListDomains": {
+              "methods": [
+                "list_domains"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AppTopologyAsyncClient",
+          "rpcs": {
+            "ExploreSchema": {
+              "methods": [
+                "explore_schema"
+              ]
+            },
+            "GenerateDiscoveredResourcesTopology": {
+              "methods": [
+                "generate_discovered_resources_topology"
+              ]
+            },
+            "GetDomain": {
+              "methods": [
+                "get_domain"
+              ]
+            },
+            "GetSchema": {
+              "methods": [
+                "get_schema"
+              ]
+            },
+            "ListDomains": {
+              "methods": [
+                "list_domains"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AppTopologyClient",
+          "rpcs": {
+            "ExploreSchema": {
+              "methods": [
+                "explore_schema"
+              ]
+            },
+            "GenerateDiscoveredResourcesTopology": {
+              "methods": [
+                "generate_discovered_resources_topology"
+              ]
+            },
+            "GetDomain": {
+              "methods": [
+                "get_domain"
+              ]
+            },
+            "GetSchema": {
+              "methods": [
+                "get_schema"
+              ]
+            },
+            "ListDomains": {
+              "methods": [
+                "list_domains"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the snapshot to delete. Format is\n   <code>projects/{project}/snapshots/{snap}</code>."
+    id: snapshot
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.DeleteSnapshotRequest
+  fullName: google.cloud.pubsub_v1.types.DeleteSnapshotRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: DeleteSnapshotRequest
+  source:
+    id: DeleteSnapshotRequest
+    path: null
+    startLine: null
+  summary: 'Request for the `DeleteSnapshot` method.
+
+    '
+  syntax:
+    content: DeleteSnapshotRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.DeleteSnapshotRequest
+references: []

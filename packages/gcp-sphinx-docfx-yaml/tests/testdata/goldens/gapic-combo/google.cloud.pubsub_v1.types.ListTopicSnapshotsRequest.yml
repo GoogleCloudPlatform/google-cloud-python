@@ -1,0 +1,37 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the topic that snapshots are attached\n  \
+      \ to. Format is <code>projects/{project}/topics/{topic}</code>."
+    id: topic
+    var_type: str
+  - description: Maximum number of snapshot names to return.
+    id: page_size
+    var_type: int
+  - description: "The value returned by the last\n   <code>ListTopicSnapshotsResponse</code>;\
+      \ indicates that this is a\n   continuation of a prior <code>ListTopicSnapshots</code>\
+      \ call, and\n   that the system should return the next page of data."
+    id: page_token
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.ListTopicSnapshotsRequest
+  fullName: google.cloud.pubsub_v1.types.ListTopicSnapshotsRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ListTopicSnapshotsRequest
+  source:
+    id: ListTopicSnapshotsRequest
+    path: null
+    startLine: null
+  summary: 'Request for the `ListTopicSnapshots` method.
+
+    '
+  syntax:
+    content: ListTopicSnapshotsRequest(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ListTopicSnapshotsRequest
+references: []

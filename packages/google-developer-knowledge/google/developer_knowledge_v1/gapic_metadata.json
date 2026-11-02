@@ -1,0 +1,88 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.developer_knowledge_v1",
+  "protoPackage": "google.developers.knowledge.v1",
+  "schema": "1.0",
+  "services": {
+    "DeveloperKnowledge": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DeveloperKnowledgeClient",
+          "rpcs": {
+            "AnswerQuery": {
+              "methods": [
+                "answer_query"
+              ]
+            },
+            "BatchGetDocuments": {
+              "methods": [
+                "batch_get_documents"
+              ]
+            },
+            "GetDocument": {
+              "methods": [
+                "get_document"
+              ]
+            },
+            "SearchDocumentChunks": {
+              "methods": [
+                "search_document_chunks"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DeveloperKnowledgeAsyncClient",
+          "rpcs": {
+            "AnswerQuery": {
+              "methods": [
+                "answer_query"
+              ]
+            },
+            "BatchGetDocuments": {
+              "methods": [
+                "batch_get_documents"
+              ]
+            },
+            "GetDocument": {
+              "methods": [
+                "get_document"
+              ]
+            },
+            "SearchDocumentChunks": {
+              "methods": [
+                "search_document_chunks"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DeveloperKnowledgeClient",
+          "rpcs": {
+            "AnswerQuery": {
+              "methods": [
+                "answer_query"
+              ]
+            },
+            "BatchGetDocuments": {
+              "methods": [
+                "batch_get_documents"
+              ]
+            },
+            "GetDocument": {
+              "methods": [
+                "get_document"
+              ]
+            },
+            "SearchDocumentChunks": {
+              "methods": [
+                "search_document_chunks"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

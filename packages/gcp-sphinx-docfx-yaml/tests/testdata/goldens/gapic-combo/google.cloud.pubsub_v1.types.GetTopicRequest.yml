@@ -1,0 +1,27 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the topic to get. Format is\n   <code>projects/{project}/topics/{topic}</code>."
+    id: topic
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.GetTopicRequest
+  fullName: google.cloud.pubsub_v1.types.GetTopicRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: GetTopicRequest
+  source:
+    id: GetTopicRequest
+    path: null
+    startLine: null
+  summary: 'Request for the GetTopic method.
+
+    '
+  syntax:
+    content: GetTopicRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.GetTopicRequest
+references: []

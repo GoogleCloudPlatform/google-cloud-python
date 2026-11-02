@@ -1,0 +1,15 @@
+{
+    "api_description": "The GKE Hub service handles the registration of many Kubernetes clusters to Google Cloud, and the management of multi-cluster features over those clusters.",
+    "api_id": "gkehub.googleapis.com",
+    "api_shortname": "gkehub",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/gkehub/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-gke-hub",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "gkehub",
+    "name_pretty": "GKE Hub",
+    "product_documentation": "https://cloud.google.com/anthos/gke/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

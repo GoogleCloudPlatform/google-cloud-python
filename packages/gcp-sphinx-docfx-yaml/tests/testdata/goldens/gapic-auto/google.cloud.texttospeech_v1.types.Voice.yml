@@ -1,0 +1,38 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "The languages that this voice supports, expressed as\n   <code>BCP-47\
+      \ <https://www.rfc-editor.org/rfc/bcp/bcp47.txt></code>__\n   language tags\
+      \ (e.g. \"en-US\", \"es-419\", \"cmn-tw\")."
+    id: language_codes
+    var_type: Sequence[str]
+  - description: "The name of this voice.  Each distinct voice\n   has a unique name."
+    id: name
+    var_type: str
+  - description: The gender of this voice.
+    id: ssml_gender
+    var_type: <xref uid="google.cloud.texttospeech_v1.types.SsmlVoiceGender">google.cloud.texttospeech_v1.types.SsmlVoiceGender</xref>
+  - description: "The natural sample rate (in hertz) for this\n   voice."
+    id: natural_sample_rate_hertz
+    var_type: int
+  children: []
+  class: google.cloud.texttospeech_v1.types.Voice
+  fullName: google.cloud.texttospeech_v1.types.Voice
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1.types
+  name: Voice
+  source:
+    id: Voice
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1/types/cloud_tts.py
+    startLine: 96
+  summary: 'Description of a voice supported by the TTS service.
+
+    '
+  syntax:
+    content: Voice(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1.types.Voice
+references: []

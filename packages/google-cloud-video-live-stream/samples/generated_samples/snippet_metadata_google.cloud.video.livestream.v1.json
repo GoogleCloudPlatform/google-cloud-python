@@ -1,0 +1,5627 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.video.livestream.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-video-live-stream",
+    "version": "1.18.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.create_asset",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateAsset",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateAsset"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateAssetRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "asset",
+            "type": "google.cloud.video.live_stream_v1.types.Asset"
+          },
+          {
+            "name": "asset_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_asset"
+      },
+      "description": "Sample for CreateAsset",
+      "file": "livestream_v1_generated_livestream_service_create_asset_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateAsset_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_asset_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.create_asset",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateAsset",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateAsset"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateAssetRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "asset",
+            "type": "google.cloud.video.live_stream_v1.types.Asset"
+          },
+          {
+            "name": "asset_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_asset"
+      },
+      "description": "Sample for CreateAsset",
+      "file": "livestream_v1_generated_livestream_service_create_asset_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateAsset_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_asset_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.create_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateChannelRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "channel",
+            "type": "google.cloud.video.live_stream_v1.types.Channel"
+          },
+          {
+            "name": "channel_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_channel"
+      },
+      "description": "Sample for CreateChannel",
+      "file": "livestream_v1_generated_livestream_service_create_channel_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateChannel_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_channel_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.create_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateChannelRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "channel",
+            "type": "google.cloud.video.live_stream_v1.types.Channel"
+          },
+          {
+            "name": "channel_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_channel"
+      },
+      "description": "Sample for CreateChannel",
+      "file": "livestream_v1_generated_livestream_service_create_channel_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateChannel_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_channel_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.create_clip",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateClip",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateClip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateClipRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "clip",
+            "type": "google.cloud.video.live_stream_v1.types.Clip"
+          },
+          {
+            "name": "clip_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_clip"
+      },
+      "description": "Sample for CreateClip",
+      "file": "livestream_v1_generated_livestream_service_create_clip_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateClip_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_clip_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.create_clip",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateClip",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateClip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateClipRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "clip",
+            "type": "google.cloud.video.live_stream_v1.types.Clip"
+          },
+          {
+            "name": "clip_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_clip"
+      },
+      "description": "Sample for CreateClip",
+      "file": "livestream_v1_generated_livestream_service_create_clip_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateClip_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_clip_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.create_dvr_session",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateDvrSession",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateDvrSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateDvrSessionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "dvr_session",
+            "type": "google.cloud.video.live_stream_v1.types.DvrSession"
+          },
+          {
+            "name": "dvr_session_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_dvr_session"
+      },
+      "description": "Sample for CreateDvrSession",
+      "file": "livestream_v1_generated_livestream_service_create_dvr_session_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateDvrSession_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_dvr_session_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.create_dvr_session",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateDvrSession",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateDvrSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateDvrSessionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "dvr_session",
+            "type": "google.cloud.video.live_stream_v1.types.DvrSession"
+          },
+          {
+            "name": "dvr_session_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_dvr_session"
+      },
+      "description": "Sample for CreateDvrSession",
+      "file": "livestream_v1_generated_livestream_service_create_dvr_session_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateDvrSession_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_dvr_session_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.create_event",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateEvent",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateEventRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "event",
+            "type": "google.cloud.video.live_stream_v1.types.Event"
+          },
+          {
+            "name": "event_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Event",
+        "shortName": "create_event"
+      },
+      "description": "Sample for CreateEvent",
+      "file": "livestream_v1_generated_livestream_service_create_event_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateEvent_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_event_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.create_event",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateEvent",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateEventRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "event",
+            "type": "google.cloud.video.live_stream_v1.types.Event"
+          },
+          {
+            "name": "event_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Event",
+        "shortName": "create_event"
+      },
+      "description": "Sample for CreateEvent",
+      "file": "livestream_v1_generated_livestream_service_create_event_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateEvent_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_event_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.create_input",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateInput",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateInputRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "input",
+            "type": "google.cloud.video.live_stream_v1.types.Input"
+          },
+          {
+            "name": "input_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_input"
+      },
+      "description": "Sample for CreateInput",
+      "file": "livestream_v1_generated_livestream_service_create_input_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateInput_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_input_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.create_input",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.CreateInput",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "CreateInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.CreateInputRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "input",
+            "type": "google.cloud.video.live_stream_v1.types.Input"
+          },
+          {
+            "name": "input_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_input"
+      },
+      "description": "Sample for CreateInput",
+      "file": "livestream_v1_generated_livestream_service_create_input_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_CreateInput_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_create_input_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.delete_asset",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteAsset",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteAsset"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteAssetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_asset"
+      },
+      "description": "Sample for DeleteAsset",
+      "file": "livestream_v1_generated_livestream_service_delete_asset_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteAsset_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_asset_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.delete_asset",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteAsset",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteAsset"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteAssetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_asset"
+      },
+      "description": "Sample for DeleteAsset",
+      "file": "livestream_v1_generated_livestream_service_delete_asset_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteAsset_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_asset_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.delete_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_channel"
+      },
+      "description": "Sample for DeleteChannel",
+      "file": "livestream_v1_generated_livestream_service_delete_channel_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteChannel_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_channel_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.delete_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_channel"
+      },
+      "description": "Sample for DeleteChannel",
+      "file": "livestream_v1_generated_livestream_service_delete_channel_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteChannel_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_channel_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.delete_clip",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteClip",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteClip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteClipRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_clip"
+      },
+      "description": "Sample for DeleteClip",
+      "file": "livestream_v1_generated_livestream_service_delete_clip_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteClip_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_clip_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.delete_clip",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteClip",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteClip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteClipRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_clip"
+      },
+      "description": "Sample for DeleteClip",
+      "file": "livestream_v1_generated_livestream_service_delete_clip_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteClip_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_clip_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.delete_dvr_session",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteDvrSession",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteDvrSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteDvrSessionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_dvr_session"
+      },
+      "description": "Sample for DeleteDvrSession",
+      "file": "livestream_v1_generated_livestream_service_delete_dvr_session_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteDvrSession_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_dvr_session_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.delete_dvr_session",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteDvrSession",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteDvrSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteDvrSessionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_dvr_session"
+      },
+      "description": "Sample for DeleteDvrSession",
+      "file": "livestream_v1_generated_livestream_service_delete_dvr_session_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteDvrSession_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_dvr_session_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.delete_event",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteEvent",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteEventRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_event"
+      },
+      "description": "Sample for DeleteEvent",
+      "file": "livestream_v1_generated_livestream_service_delete_event_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteEvent_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_event_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.delete_event",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteEvent",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteEventRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_event"
+      },
+      "description": "Sample for DeleteEvent",
+      "file": "livestream_v1_generated_livestream_service_delete_event_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteEvent_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_event_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.delete_input",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteInput",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteInputRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_input"
+      },
+      "description": "Sample for DeleteInput",
+      "file": "livestream_v1_generated_livestream_service_delete_input_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteInput_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_input_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.delete_input",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.DeleteInput",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "DeleteInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.DeleteInputRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_input"
+      },
+      "description": "Sample for DeleteInput",
+      "file": "livestream_v1_generated_livestream_service_delete_input_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_DeleteInput_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_delete_input_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.get_asset",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetAsset",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetAsset"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetAssetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Asset",
+        "shortName": "get_asset"
+      },
+      "description": "Sample for GetAsset",
+      "file": "livestream_v1_generated_livestream_service_get_asset_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetAsset_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_asset_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.get_asset",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetAsset",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetAsset"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetAssetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Asset",
+        "shortName": "get_asset"
+      },
+      "description": "Sample for GetAsset",
+      "file": "livestream_v1_generated_livestream_service_get_asset_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetAsset_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_asset_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.get_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Channel",
+        "shortName": "get_channel"
+      },
+      "description": "Sample for GetChannel",
+      "file": "livestream_v1_generated_livestream_service_get_channel_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetChannel_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_channel_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.get_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Channel",
+        "shortName": "get_channel"
+      },
+      "description": "Sample for GetChannel",
+      "file": "livestream_v1_generated_livestream_service_get_channel_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetChannel_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_channel_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.get_clip",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetClip",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetClip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetClipRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Clip",
+        "shortName": "get_clip"
+      },
+      "description": "Sample for GetClip",
+      "file": "livestream_v1_generated_livestream_service_get_clip_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetClip_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_clip_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.get_clip",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetClip",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetClip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetClipRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Clip",
+        "shortName": "get_clip"
+      },
+      "description": "Sample for GetClip",
+      "file": "livestream_v1_generated_livestream_service_get_clip_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetClip_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_clip_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.get_dvr_session",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetDvrSession",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetDvrSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetDvrSessionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.DvrSession",
+        "shortName": "get_dvr_session"
+      },
+      "description": "Sample for GetDvrSession",
+      "file": "livestream_v1_generated_livestream_service_get_dvr_session_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetDvrSession_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_dvr_session_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.get_dvr_session",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetDvrSession",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetDvrSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetDvrSessionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.DvrSession",
+        "shortName": "get_dvr_session"
+      },
+      "description": "Sample for GetDvrSession",
+      "file": "livestream_v1_generated_livestream_service_get_dvr_session_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetDvrSession_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_dvr_session_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.get_event",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetEvent",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetEventRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Event",
+        "shortName": "get_event"
+      },
+      "description": "Sample for GetEvent",
+      "file": "livestream_v1_generated_livestream_service_get_event_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetEvent_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_event_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.get_event",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetEvent",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetEventRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Event",
+        "shortName": "get_event"
+      },
+      "description": "Sample for GetEvent",
+      "file": "livestream_v1_generated_livestream_service_get_event_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetEvent_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_event_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.get_input",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetInput",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetInputRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Input",
+        "shortName": "get_input"
+      },
+      "description": "Sample for GetInput",
+      "file": "livestream_v1_generated_livestream_service_get_input_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetInput_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_input_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.get_input",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetInput",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetInputRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Input",
+        "shortName": "get_input"
+      },
+      "description": "Sample for GetInput",
+      "file": "livestream_v1_generated_livestream_service_get_input_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetInput_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_input_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.get_pool",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetPool",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetPoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Pool",
+        "shortName": "get_pool"
+      },
+      "description": "Sample for GetPool",
+      "file": "livestream_v1_generated_livestream_service_get_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetPool_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.get_pool",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.GetPool",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "GetPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.GetPoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.Pool",
+        "shortName": "get_pool"
+      },
+      "description": "Sample for GetPool",
+      "file": "livestream_v1_generated_livestream_service_get_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_GetPool_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_get_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.list_assets",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListAssets",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListAssets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListAssetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListAssetsAsyncPager",
+        "shortName": "list_assets"
+      },
+      "description": "Sample for ListAssets",
+      "file": "livestream_v1_generated_livestream_service_list_assets_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListAssets_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_assets_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.list_assets",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListAssets",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListAssets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListAssetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListAssetsPager",
+        "shortName": "list_assets"
+      },
+      "description": "Sample for ListAssets",
+      "file": "livestream_v1_generated_livestream_service_list_assets_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListAssets_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_assets_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.list_channels",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListChannels",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListChannels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListChannelsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListChannelsAsyncPager",
+        "shortName": "list_channels"
+      },
+      "description": "Sample for ListChannels",
+      "file": "livestream_v1_generated_livestream_service_list_channels_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListChannels_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_channels_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.list_channels",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListChannels",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListChannels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListChannelsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListChannelsPager",
+        "shortName": "list_channels"
+      },
+      "description": "Sample for ListChannels",
+      "file": "livestream_v1_generated_livestream_service_list_channels_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListChannels_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_channels_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.list_clips",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListClips",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListClips"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListClipsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListClipsAsyncPager",
+        "shortName": "list_clips"
+      },
+      "description": "Sample for ListClips",
+      "file": "livestream_v1_generated_livestream_service_list_clips_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListClips_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_clips_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.list_clips",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListClips",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListClips"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListClipsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListClipsPager",
+        "shortName": "list_clips"
+      },
+      "description": "Sample for ListClips",
+      "file": "livestream_v1_generated_livestream_service_list_clips_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListClips_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_clips_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.list_dvr_sessions",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListDvrSessions",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListDvrSessions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListDvrSessionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListDvrSessionsAsyncPager",
+        "shortName": "list_dvr_sessions"
+      },
+      "description": "Sample for ListDvrSessions",
+      "file": "livestream_v1_generated_livestream_service_list_dvr_sessions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListDvrSessions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_dvr_sessions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.list_dvr_sessions",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListDvrSessions",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListDvrSessions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListDvrSessionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListDvrSessionsPager",
+        "shortName": "list_dvr_sessions"
+      },
+      "description": "Sample for ListDvrSessions",
+      "file": "livestream_v1_generated_livestream_service_list_dvr_sessions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListDvrSessions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_dvr_sessions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.list_events",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListEvents",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListEventsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListEventsAsyncPager",
+        "shortName": "list_events"
+      },
+      "description": "Sample for ListEvents",
+      "file": "livestream_v1_generated_livestream_service_list_events_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListEvents_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_events_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.list_events",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListEvents",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListEventsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListEventsPager",
+        "shortName": "list_events"
+      },
+      "description": "Sample for ListEvents",
+      "file": "livestream_v1_generated_livestream_service_list_events_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListEvents_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_events_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.list_inputs",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListInputs",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListInputs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListInputsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListInputsAsyncPager",
+        "shortName": "list_inputs"
+      },
+      "description": "Sample for ListInputs",
+      "file": "livestream_v1_generated_livestream_service_list_inputs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListInputs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_inputs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.list_inputs",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.ListInputs",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "ListInputs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.ListInputsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.services.livestream_service.pagers.ListInputsPager",
+        "shortName": "list_inputs"
+      },
+      "description": "Sample for ListInputs",
+      "file": "livestream_v1_generated_livestream_service_list_inputs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_ListInputs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_list_inputs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.preview_input",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.PreviewInput",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "PreviewInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.PreviewInputRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.PreviewInputResponse",
+        "shortName": "preview_input"
+      },
+      "description": "Sample for PreviewInput",
+      "file": "livestream_v1_generated_livestream_service_preview_input_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_PreviewInput_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_preview_input_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.preview_input",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.PreviewInput",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "PreviewInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.PreviewInputRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.video.live_stream_v1.types.PreviewInputResponse",
+        "shortName": "preview_input"
+      },
+      "description": "Sample for PreviewInput",
+      "file": "livestream_v1_generated_livestream_service_preview_input_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_PreviewInput_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_preview_input_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.start_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.StartChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "StartChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.StartChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "start_channel"
+      },
+      "description": "Sample for StartChannel",
+      "file": "livestream_v1_generated_livestream_service_start_channel_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_StartChannel_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_start_channel_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.start_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.StartChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "StartChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.StartChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "start_channel"
+      },
+      "description": "Sample for StartChannel",
+      "file": "livestream_v1_generated_livestream_service_start_channel_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_StartChannel_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_start_channel_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.start_distribution",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.StartDistribution",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "StartDistribution"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.StartDistributionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "distribution_keys",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "start_distribution"
+      },
+      "description": "Sample for StartDistribution",
+      "file": "livestream_v1_generated_livestream_service_start_distribution_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_StartDistribution_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_start_distribution_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.start_distribution",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.StartDistribution",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "StartDistribution"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.StartDistributionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "distribution_keys",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "start_distribution"
+      },
+      "description": "Sample for StartDistribution",
+      "file": "livestream_v1_generated_livestream_service_start_distribution_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_StartDistribution_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_start_distribution_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.stop_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.StopChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "StopChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.StopChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "stop_channel"
+      },
+      "description": "Sample for StopChannel",
+      "file": "livestream_v1_generated_livestream_service_stop_channel_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_StopChannel_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_stop_channel_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.stop_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.StopChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "StopChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.StopChannelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "stop_channel"
+      },
+      "description": "Sample for StopChannel",
+      "file": "livestream_v1_generated_livestream_service_stop_channel_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_StopChannel_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_stop_channel_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.stop_distribution",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.StopDistribution",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "StopDistribution"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.StopDistributionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "distribution_keys",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "stop_distribution"
+      },
+      "description": "Sample for StopDistribution",
+      "file": "livestream_v1_generated_livestream_service_stop_distribution_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_StopDistribution_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_stop_distribution_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.stop_distribution",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.StopDistribution",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "StopDistribution"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.StopDistributionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "distribution_keys",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "stop_distribution"
+      },
+      "description": "Sample for StopDistribution",
+      "file": "livestream_v1_generated_livestream_service_stop_distribution_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_StopDistribution_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_stop_distribution_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.update_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.UpdateChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "UpdateChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.UpdateChannelRequest"
+          },
+          {
+            "name": "channel",
+            "type": "google.cloud.video.live_stream_v1.types.Channel"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_channel"
+      },
+      "description": "Sample for UpdateChannel",
+      "file": "livestream_v1_generated_livestream_service_update_channel_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_UpdateChannel_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_update_channel_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.update_channel",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.UpdateChannel",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "UpdateChannel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.UpdateChannelRequest"
+          },
+          {
+            "name": "channel",
+            "type": "google.cloud.video.live_stream_v1.types.Channel"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_channel"
+      },
+      "description": "Sample for UpdateChannel",
+      "file": "livestream_v1_generated_livestream_service_update_channel_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_UpdateChannel_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_update_channel_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.update_dvr_session",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.UpdateDvrSession",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "UpdateDvrSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.UpdateDvrSessionRequest"
+          },
+          {
+            "name": "dvr_session",
+            "type": "google.cloud.video.live_stream_v1.types.DvrSession"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_dvr_session"
+      },
+      "description": "Sample for UpdateDvrSession",
+      "file": "livestream_v1_generated_livestream_service_update_dvr_session_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_UpdateDvrSession_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_update_dvr_session_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.update_dvr_session",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.UpdateDvrSession",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "UpdateDvrSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.UpdateDvrSessionRequest"
+          },
+          {
+            "name": "dvr_session",
+            "type": "google.cloud.video.live_stream_v1.types.DvrSession"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_dvr_session"
+      },
+      "description": "Sample for UpdateDvrSession",
+      "file": "livestream_v1_generated_livestream_service_update_dvr_session_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_UpdateDvrSession_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_update_dvr_session_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.update_input",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.UpdateInput",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "UpdateInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.UpdateInputRequest"
+          },
+          {
+            "name": "input",
+            "type": "google.cloud.video.live_stream_v1.types.Input"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_input"
+      },
+      "description": "Sample for UpdateInput",
+      "file": "livestream_v1_generated_livestream_service_update_input_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_UpdateInput_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_update_input_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.update_input",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.UpdateInput",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "UpdateInput"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.UpdateInputRequest"
+          },
+          {
+            "name": "input",
+            "type": "google.cloud.video.live_stream_v1.types.Input"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_input"
+      },
+      "description": "Sample for UpdateInput",
+      "file": "livestream_v1_generated_livestream_service_update_input_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_UpdateInput_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_update_input_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient",
+          "shortName": "LivestreamServiceAsyncClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceAsyncClient.update_pool",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.UpdatePool",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "UpdatePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.UpdatePoolRequest"
+          },
+          {
+            "name": "pool",
+            "type": "google.cloud.video.live_stream_v1.types.Pool"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_pool"
+      },
+      "description": "Sample for UpdatePool",
+      "file": "livestream_v1_generated_livestream_service_update_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_UpdatePool_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_update_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient",
+          "shortName": "LivestreamServiceClient"
+        },
+        "fullName": "google.cloud.video.live_stream_v1.LivestreamServiceClient.update_pool",
+        "method": {
+          "fullName": "google.cloud.video.livestream.v1.LivestreamService.UpdatePool",
+          "service": {
+            "fullName": "google.cloud.video.livestream.v1.LivestreamService",
+            "shortName": "LivestreamService"
+          },
+          "shortName": "UpdatePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.video.live_stream_v1.types.UpdatePoolRequest"
+          },
+          {
+            "name": "pool",
+            "type": "google.cloud.video.live_stream_v1.types.Pool"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_pool"
+      },
+      "description": "Sample for UpdatePool",
+      "file": "livestream_v1_generated_livestream_service_update_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "livestream_v1_generated_LivestreamService_UpdatePool_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "livestream_v1_generated_livestream_service_update_pool_sync.py"
+    }
+  ]
+}

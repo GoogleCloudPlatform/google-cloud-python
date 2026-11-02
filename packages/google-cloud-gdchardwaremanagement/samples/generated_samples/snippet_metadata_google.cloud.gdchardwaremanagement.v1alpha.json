@@ -1,0 +1,6132 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.gdchardwaremanagement.v1alpha",
+        "version": "v1alpha"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-gdchardwaremanagement",
+    "version": "0.5.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.cancel_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CancelOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CancelOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CancelOrderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "cancel_order"
+      },
+      "description": "Sample for CancelOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_cancel_order_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CancelOrder_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_cancel_order_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.cancel_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CancelOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CancelOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CancelOrderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "cancel_order"
+      },
+      "description": "Sample for CancelOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_cancel_order_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CancelOrder_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_cancel_order_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.create_comment",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateComment",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateComment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateCommentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "comment",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Comment"
+          },
+          {
+            "name": "comment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_comment"
+      },
+      "description": "Sample for CreateComment",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_comment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateComment_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_comment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.create_comment",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateComment",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateComment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateCommentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "comment",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Comment"
+          },
+          {
+            "name": "comment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_comment"
+      },
+      "description": "Sample for CreateComment",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_comment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateComment_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_comment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.create_hardware_group",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateHardwareGroup",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateHardwareGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateHardwareGroupRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "hardware_group",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.HardwareGroup"
+          },
+          {
+            "name": "hardware_group_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_hardware_group"
+      },
+      "description": "Sample for CreateHardwareGroup",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_hardware_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateHardwareGroup_async",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_hardware_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.create_hardware_group",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateHardwareGroup",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateHardwareGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateHardwareGroupRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "hardware_group",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.HardwareGroup"
+          },
+          {
+            "name": "hardware_group_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_hardware_group"
+      },
+      "description": "Sample for CreateHardwareGroup",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_hardware_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateHardwareGroup_sync",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_hardware_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.create_hardware",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateHardware",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateHardware"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateHardwareRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "hardware",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Hardware"
+          },
+          {
+            "name": "hardware_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_hardware"
+      },
+      "description": "Sample for CreateHardware",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_hardware_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateHardware_async",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_hardware_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.create_hardware",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateHardware",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateHardware"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateHardwareRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "hardware",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Hardware"
+          },
+          {
+            "name": "hardware_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_hardware"
+      },
+      "description": "Sample for CreateHardware",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_hardware_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateHardware_sync",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_hardware_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.create_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateOrderRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "order",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Order"
+          },
+          {
+            "name": "order_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_order"
+      },
+      "description": "Sample for CreateOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_order_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateOrder_async",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_order_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.create_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateOrderRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "order",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Order"
+          },
+          {
+            "name": "order_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_order"
+      },
+      "description": "Sample for CreateOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_order_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateOrder_sync",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_order_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.create_site",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateSite",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateSite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateSiteRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "site",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Site"
+          },
+          {
+            "name": "site_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_site"
+      },
+      "description": "Sample for CreateSite",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_site_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateSite_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_site_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.create_site",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateSite",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateSite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateSiteRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "site",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Site"
+          },
+          {
+            "name": "site_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_site"
+      },
+      "description": "Sample for CreateSite",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_site_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateSite_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_site_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.create_zone",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateZone",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateZoneRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Zone"
+          },
+          {
+            "name": "zone_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_zone"
+      },
+      "description": "Sample for CreateZone",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_zone_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateZone_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_zone_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.create_zone",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.CreateZone",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "CreateZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.CreateZoneRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "zone",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Zone"
+          },
+          {
+            "name": "zone_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_zone"
+      },
+      "description": "Sample for CreateZone",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_zone_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_CreateZone_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_create_zone_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.delete_hardware_group",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.DeleteHardwareGroup",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "DeleteHardwareGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.DeleteHardwareGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_hardware_group"
+      },
+      "description": "Sample for DeleteHardwareGroup",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_hardware_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_DeleteHardwareGroup_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_hardware_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.delete_hardware_group",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.DeleteHardwareGroup",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "DeleteHardwareGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.DeleteHardwareGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_hardware_group"
+      },
+      "description": "Sample for DeleteHardwareGroup",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_hardware_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_DeleteHardwareGroup_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_hardware_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.delete_hardware",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.DeleteHardware",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "DeleteHardware"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.DeleteHardwareRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_hardware"
+      },
+      "description": "Sample for DeleteHardware",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_hardware_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_DeleteHardware_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_hardware_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.delete_hardware",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.DeleteHardware",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "DeleteHardware"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.DeleteHardwareRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_hardware"
+      },
+      "description": "Sample for DeleteHardware",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_hardware_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_DeleteHardware_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_hardware_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.delete_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.DeleteOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "DeleteOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.DeleteOrderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_order"
+      },
+      "description": "Sample for DeleteOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_order_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_DeleteOrder_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_order_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.delete_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.DeleteOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "DeleteOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.DeleteOrderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_order"
+      },
+      "description": "Sample for DeleteOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_order_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_DeleteOrder_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_order_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.delete_site",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.DeleteSite",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "DeleteSite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.DeleteSiteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_site"
+      },
+      "description": "Sample for DeleteSite",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_site_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_DeleteSite_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_site_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.delete_site",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.DeleteSite",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "DeleteSite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.DeleteSiteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_site"
+      },
+      "description": "Sample for DeleteSite",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_site_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_DeleteSite_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_site_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.delete_zone",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.DeleteZone",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "DeleteZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.DeleteZoneRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_zone"
+      },
+      "description": "Sample for DeleteZone",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_zone_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_DeleteZone_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_zone_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.delete_zone",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.DeleteZone",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "DeleteZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.DeleteZoneRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_zone"
+      },
+      "description": "Sample for DeleteZone",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_zone_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_DeleteZone_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_delete_zone_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.get_change_log_entry",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetChangeLogEntry",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetChangeLogEntry"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetChangeLogEntryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.ChangeLogEntry",
+        "shortName": "get_change_log_entry"
+      },
+      "description": "Sample for GetChangeLogEntry",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_change_log_entry_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetChangeLogEntry_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_change_log_entry_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.get_change_log_entry",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetChangeLogEntry",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetChangeLogEntry"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetChangeLogEntryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.ChangeLogEntry",
+        "shortName": "get_change_log_entry"
+      },
+      "description": "Sample for GetChangeLogEntry",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_change_log_entry_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetChangeLogEntry_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_change_log_entry_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.get_comment",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetComment",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetComment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetCommentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Comment",
+        "shortName": "get_comment"
+      },
+      "description": "Sample for GetComment",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_comment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetComment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_comment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.get_comment",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetComment",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetComment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetCommentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Comment",
+        "shortName": "get_comment"
+      },
+      "description": "Sample for GetComment",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_comment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetComment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_comment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.get_hardware_group",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetHardwareGroup",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetHardwareGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetHardwareGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.HardwareGroup",
+        "shortName": "get_hardware_group"
+      },
+      "description": "Sample for GetHardwareGroup",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_hardware_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetHardwareGroup_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_hardware_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.get_hardware_group",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetHardwareGroup",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetHardwareGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetHardwareGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.HardwareGroup",
+        "shortName": "get_hardware_group"
+      },
+      "description": "Sample for GetHardwareGroup",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_hardware_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetHardwareGroup_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_hardware_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.get_hardware",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetHardware",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetHardware"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetHardwareRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Hardware",
+        "shortName": "get_hardware"
+      },
+      "description": "Sample for GetHardware",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_hardware_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetHardware_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_hardware_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.get_hardware",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetHardware",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetHardware"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetHardwareRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Hardware",
+        "shortName": "get_hardware"
+      },
+      "description": "Sample for GetHardware",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_hardware_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetHardware_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_hardware_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.get_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetOrderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Order",
+        "shortName": "get_order"
+      },
+      "description": "Sample for GetOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_order_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetOrder_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_order_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.get_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetOrderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Order",
+        "shortName": "get_order"
+      },
+      "description": "Sample for GetOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_order_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetOrder_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_order_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.get_site",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetSite",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetSite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetSiteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Site",
+        "shortName": "get_site"
+      },
+      "description": "Sample for GetSite",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_site_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetSite_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_site_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.get_site",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetSite",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetSite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetSiteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Site",
+        "shortName": "get_site"
+      },
+      "description": "Sample for GetSite",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_site_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetSite_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_site_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.get_sku",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetSku",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetSku"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetSkuRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Sku",
+        "shortName": "get_sku"
+      },
+      "description": "Sample for GetSku",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_sku_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetSku_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_sku_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.get_sku",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetSku",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetSku"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetSkuRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Sku",
+        "shortName": "get_sku"
+      },
+      "description": "Sample for GetSku",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_sku_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetSku_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_sku_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.get_zone",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetZone",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetZoneRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Zone",
+        "shortName": "get_zone"
+      },
+      "description": "Sample for GetZone",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_zone_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetZone_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_zone_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.get_zone",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.GetZone",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "GetZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.GetZoneRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Zone",
+        "shortName": "get_zone"
+      },
+      "description": "Sample for GetZone",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_zone_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_GetZone_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_get_zone_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.list_change_log_entries",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListChangeLogEntries",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListChangeLogEntries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListChangeLogEntriesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListChangeLogEntriesAsyncPager",
+        "shortName": "list_change_log_entries"
+      },
+      "description": "Sample for ListChangeLogEntries",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_change_log_entries_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListChangeLogEntries_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_change_log_entries_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.list_change_log_entries",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListChangeLogEntries",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListChangeLogEntries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListChangeLogEntriesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListChangeLogEntriesPager",
+        "shortName": "list_change_log_entries"
+      },
+      "description": "Sample for ListChangeLogEntries",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_change_log_entries_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListChangeLogEntries_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_change_log_entries_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.list_comments",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListComments",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListComments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListCommentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListCommentsAsyncPager",
+        "shortName": "list_comments"
+      },
+      "description": "Sample for ListComments",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_comments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListComments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_comments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.list_comments",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListComments",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListComments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListCommentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListCommentsPager",
+        "shortName": "list_comments"
+      },
+      "description": "Sample for ListComments",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_comments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListComments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_comments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.list_hardware_groups",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListHardwareGroups",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListHardwareGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListHardwareGroupsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListHardwareGroupsAsyncPager",
+        "shortName": "list_hardware_groups"
+      },
+      "description": "Sample for ListHardwareGroups",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_hardware_groups_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListHardwareGroups_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_hardware_groups_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.list_hardware_groups",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListHardwareGroups",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListHardwareGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListHardwareGroupsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListHardwareGroupsPager",
+        "shortName": "list_hardware_groups"
+      },
+      "description": "Sample for ListHardwareGroups",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_hardware_groups_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListHardwareGroups_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_hardware_groups_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.list_hardware",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListHardware",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListHardware"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListHardwareRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListHardwareAsyncPager",
+        "shortName": "list_hardware"
+      },
+      "description": "Sample for ListHardware",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_hardware_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListHardware_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_hardware_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.list_hardware",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListHardware",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListHardware"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListHardwareRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListHardwarePager",
+        "shortName": "list_hardware"
+      },
+      "description": "Sample for ListHardware",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_hardware_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListHardware_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_hardware_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.list_orders",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListOrders",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListOrders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListOrdersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListOrdersAsyncPager",
+        "shortName": "list_orders"
+      },
+      "description": "Sample for ListOrders",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_orders_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListOrders_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_orders_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.list_orders",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListOrders",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListOrders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListOrdersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListOrdersPager",
+        "shortName": "list_orders"
+      },
+      "description": "Sample for ListOrders",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_orders_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListOrders_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_orders_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.list_sites",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListSites",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListSites"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListSitesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListSitesAsyncPager",
+        "shortName": "list_sites"
+      },
+      "description": "Sample for ListSites",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_sites_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListSites_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_sites_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.list_sites",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListSites",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListSites"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListSitesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListSitesPager",
+        "shortName": "list_sites"
+      },
+      "description": "Sample for ListSites",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_sites_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListSites_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_sites_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.list_skus",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListSkus",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListSkus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListSkusRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListSkusAsyncPager",
+        "shortName": "list_skus"
+      },
+      "description": "Sample for ListSkus",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_skus_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListSkus_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_skus_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.list_skus",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListSkus",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListSkus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListSkusRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListSkusPager",
+        "shortName": "list_skus"
+      },
+      "description": "Sample for ListSkus",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_skus_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListSkus_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_skus_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.list_zones",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListZones",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListZones"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListZonesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListZonesAsyncPager",
+        "shortName": "list_zones"
+      },
+      "description": "Sample for ListZones",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_zones_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListZones_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_zones_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.list_zones",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.ListZones",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "ListZones"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.ListZonesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.services.gdc_hardware_management.pagers.ListZonesPager",
+        "shortName": "list_zones"
+      },
+      "description": "Sample for ListZones",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_zones_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_ListZones_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_list_zones_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.record_action_on_comment",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.RecordActionOnComment",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "RecordActionOnComment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.RecordActionOnCommentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "action_type",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.RecordActionOnCommentRequest.ActionType"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Comment",
+        "shortName": "record_action_on_comment"
+      },
+      "description": "Sample for RecordActionOnComment",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_record_action_on_comment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_RecordActionOnComment_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_record_action_on_comment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.record_action_on_comment",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.RecordActionOnComment",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "RecordActionOnComment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.RecordActionOnCommentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "action_type",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.RecordActionOnCommentRequest.ActionType"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gdchardwaremanagement_v1alpha.types.Comment",
+        "shortName": "record_action_on_comment"
+      },
+      "description": "Sample for RecordActionOnComment",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_record_action_on_comment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_RecordActionOnComment_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_record_action_on_comment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.request_order_date_change",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.RequestOrderDateChange",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "RequestOrderDateChange"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.RequestOrderDateChangeRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "requested_date",
+            "type": "google.type.date_pb2.Date"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "request_order_date_change"
+      },
+      "description": "Sample for RequestOrderDateChange",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_request_order_date_change_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_RequestOrderDateChange_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_request_order_date_change_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.request_order_date_change",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.RequestOrderDateChange",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "RequestOrderDateChange"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.RequestOrderDateChangeRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "requested_date",
+            "type": "google.type.date_pb2.Date"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "request_order_date_change"
+      },
+      "description": "Sample for RequestOrderDateChange",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_request_order_date_change_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_RequestOrderDateChange_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_request_order_date_change_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.signal_zone_state",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.SignalZoneState",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "SignalZoneState"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.SignalZoneStateRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "state_signal",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.SignalZoneStateRequest.StateSignal"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "signal_zone_state"
+      },
+      "description": "Sample for SignalZoneState",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_signal_zone_state_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_SignalZoneState_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_signal_zone_state_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.signal_zone_state",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.SignalZoneState",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "SignalZoneState"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.SignalZoneStateRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "state_signal",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.SignalZoneStateRequest.StateSignal"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "signal_zone_state"
+      },
+      "description": "Sample for SignalZoneState",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_signal_zone_state_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_SignalZoneState_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_signal_zone_state_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.submit_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.SubmitOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "SubmitOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.SubmitOrderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "submit_order"
+      },
+      "description": "Sample for SubmitOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_submit_order_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_SubmitOrder_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_submit_order_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.submit_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.SubmitOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "SubmitOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.SubmitOrderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "submit_order"
+      },
+      "description": "Sample for SubmitOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_submit_order_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_SubmitOrder_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_submit_order_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.update_hardware_group",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.UpdateHardwareGroup",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "UpdateHardwareGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.UpdateHardwareGroupRequest"
+          },
+          {
+            "name": "hardware_group",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.HardwareGroup"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_hardware_group"
+      },
+      "description": "Sample for UpdateHardwareGroup",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_hardware_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_UpdateHardwareGroup_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_hardware_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.update_hardware_group",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.UpdateHardwareGroup",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "UpdateHardwareGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.UpdateHardwareGroupRequest"
+          },
+          {
+            "name": "hardware_group",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.HardwareGroup"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_hardware_group"
+      },
+      "description": "Sample for UpdateHardwareGroup",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_hardware_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_UpdateHardwareGroup_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_hardware_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.update_hardware",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.UpdateHardware",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "UpdateHardware"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.UpdateHardwareRequest"
+          },
+          {
+            "name": "hardware",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Hardware"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_hardware"
+      },
+      "description": "Sample for UpdateHardware",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_hardware_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_UpdateHardware_async",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_hardware_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.update_hardware",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.UpdateHardware",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "UpdateHardware"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.UpdateHardwareRequest"
+          },
+          {
+            "name": "hardware",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Hardware"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_hardware"
+      },
+      "description": "Sample for UpdateHardware",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_hardware_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_UpdateHardware_sync",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_hardware_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.update_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.UpdateOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "UpdateOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.UpdateOrderRequest"
+          },
+          {
+            "name": "order",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Order"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_order"
+      },
+      "description": "Sample for UpdateOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_order_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_UpdateOrder_async",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_order_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.update_order",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.UpdateOrder",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "UpdateOrder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.UpdateOrderRequest"
+          },
+          {
+            "name": "order",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Order"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_order"
+      },
+      "description": "Sample for UpdateOrder",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_order_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_UpdateOrder_sync",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_order_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.update_site",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.UpdateSite",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "UpdateSite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.UpdateSiteRequest"
+          },
+          {
+            "name": "site",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Site"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_site"
+      },
+      "description": "Sample for UpdateSite",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_site_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_UpdateSite_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_site_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.update_site",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.UpdateSite",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "UpdateSite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.UpdateSiteRequest"
+          },
+          {
+            "name": "site",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Site"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_site"
+      },
+      "description": "Sample for UpdateSite",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_site_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_UpdateSite_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_site_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient",
+          "shortName": "GDCHardwareManagementAsyncClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementAsyncClient.update_zone",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.UpdateZone",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "UpdateZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.UpdateZoneRequest"
+          },
+          {
+            "name": "zone",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Zone"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_zone"
+      },
+      "description": "Sample for UpdateZone",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_zone_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_UpdateZone_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_zone_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient",
+          "shortName": "GDCHardwareManagementClient"
+        },
+        "fullName": "google.cloud.gdchardwaremanagement_v1alpha.GDCHardwareManagementClient.update_zone",
+        "method": {
+          "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement.UpdateZone",
+          "service": {
+            "fullName": "google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement",
+            "shortName": "GDCHardwareManagement"
+          },
+          "shortName": "UpdateZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.UpdateZoneRequest"
+          },
+          {
+            "name": "zone",
+            "type": "google.cloud.gdchardwaremanagement_v1alpha.types.Zone"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_zone"
+      },
+      "description": "Sample for UpdateZone",
+      "file": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_zone_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gdchardwaremanagement_v1alpha_generated_GDCHardwareManagement_UpdateZone_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gdchardwaremanagement_v1alpha_generated_gdc_hardware_management_update_zone_sync.py"
+    }
+  ]
+}

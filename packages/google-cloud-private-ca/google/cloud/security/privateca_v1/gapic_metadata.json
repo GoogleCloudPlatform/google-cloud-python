@@ -1,0 +1,463 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.security.privateca_v1",
+  "protoPackage": "google.cloud.security.privateca.v1",
+  "schema": "1.0",
+  "services": {
+    "CertificateAuthorityService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CertificateAuthorityServiceClient",
+          "rpcs": {
+            "ActivateCertificateAuthority": {
+              "methods": [
+                "activate_certificate_authority"
+              ]
+            },
+            "CreateCaPool": {
+              "methods": [
+                "create_ca_pool"
+              ]
+            },
+            "CreateCertificate": {
+              "methods": [
+                "create_certificate"
+              ]
+            },
+            "CreateCertificateAuthority": {
+              "methods": [
+                "create_certificate_authority"
+              ]
+            },
+            "CreateCertificateTemplate": {
+              "methods": [
+                "create_certificate_template"
+              ]
+            },
+            "DeleteCaPool": {
+              "methods": [
+                "delete_ca_pool"
+              ]
+            },
+            "DeleteCertificateAuthority": {
+              "methods": [
+                "delete_certificate_authority"
+              ]
+            },
+            "DeleteCertificateTemplate": {
+              "methods": [
+                "delete_certificate_template"
+              ]
+            },
+            "DisableCertificateAuthority": {
+              "methods": [
+                "disable_certificate_authority"
+              ]
+            },
+            "EnableCertificateAuthority": {
+              "methods": [
+                "enable_certificate_authority"
+              ]
+            },
+            "FetchCaCerts": {
+              "methods": [
+                "fetch_ca_certs"
+              ]
+            },
+            "FetchCertificateAuthorityCsr": {
+              "methods": [
+                "fetch_certificate_authority_csr"
+              ]
+            },
+            "GetCaPool": {
+              "methods": [
+                "get_ca_pool"
+              ]
+            },
+            "GetCertificate": {
+              "methods": [
+                "get_certificate"
+              ]
+            },
+            "GetCertificateAuthority": {
+              "methods": [
+                "get_certificate_authority"
+              ]
+            },
+            "GetCertificateRevocationList": {
+              "methods": [
+                "get_certificate_revocation_list"
+              ]
+            },
+            "GetCertificateTemplate": {
+              "methods": [
+                "get_certificate_template"
+              ]
+            },
+            "ListCaPools": {
+              "methods": [
+                "list_ca_pools"
+              ]
+            },
+            "ListCertificateAuthorities": {
+              "methods": [
+                "list_certificate_authorities"
+              ]
+            },
+            "ListCertificateRevocationLists": {
+              "methods": [
+                "list_certificate_revocation_lists"
+              ]
+            },
+            "ListCertificateTemplates": {
+              "methods": [
+                "list_certificate_templates"
+              ]
+            },
+            "ListCertificates": {
+              "methods": [
+                "list_certificates"
+              ]
+            },
+            "RevokeCertificate": {
+              "methods": [
+                "revoke_certificate"
+              ]
+            },
+            "UndeleteCertificateAuthority": {
+              "methods": [
+                "undelete_certificate_authority"
+              ]
+            },
+            "UpdateCaPool": {
+              "methods": [
+                "update_ca_pool"
+              ]
+            },
+            "UpdateCertificate": {
+              "methods": [
+                "update_certificate"
+              ]
+            },
+            "UpdateCertificateAuthority": {
+              "methods": [
+                "update_certificate_authority"
+              ]
+            },
+            "UpdateCertificateRevocationList": {
+              "methods": [
+                "update_certificate_revocation_list"
+              ]
+            },
+            "UpdateCertificateTemplate": {
+              "methods": [
+                "update_certificate_template"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CertificateAuthorityServiceAsyncClient",
+          "rpcs": {
+            "ActivateCertificateAuthority": {
+              "methods": [
+                "activate_certificate_authority"
+              ]
+            },
+            "CreateCaPool": {
+              "methods": [
+                "create_ca_pool"
+              ]
+            },
+            "CreateCertificate": {
+              "methods": [
+                "create_certificate"
+              ]
+            },
+            "CreateCertificateAuthority": {
+              "methods": [
+                "create_certificate_authority"
+              ]
+            },
+            "CreateCertificateTemplate": {
+              "methods": [
+                "create_certificate_template"
+              ]
+            },
+            "DeleteCaPool": {
+              "methods": [
+                "delete_ca_pool"
+              ]
+            },
+            "DeleteCertificateAuthority": {
+              "methods": [
+                "delete_certificate_authority"
+              ]
+            },
+            "DeleteCertificateTemplate": {
+              "methods": [
+                "delete_certificate_template"
+              ]
+            },
+            "DisableCertificateAuthority": {
+              "methods": [
+                "disable_certificate_authority"
+              ]
+            },
+            "EnableCertificateAuthority": {
+              "methods": [
+                "enable_certificate_authority"
+              ]
+            },
+            "FetchCaCerts": {
+              "methods": [
+                "fetch_ca_certs"
+              ]
+            },
+            "FetchCertificateAuthorityCsr": {
+              "methods": [
+                "fetch_certificate_authority_csr"
+              ]
+            },
+            "GetCaPool": {
+              "methods": [
+                "get_ca_pool"
+              ]
+            },
+            "GetCertificate": {
+              "methods": [
+                "get_certificate"
+              ]
+            },
+            "GetCertificateAuthority": {
+              "methods": [
+                "get_certificate_authority"
+              ]
+            },
+            "GetCertificateRevocationList": {
+              "methods": [
+                "get_certificate_revocation_list"
+              ]
+            },
+            "GetCertificateTemplate": {
+              "methods": [
+                "get_certificate_template"
+              ]
+            },
+            "ListCaPools": {
+              "methods": [
+                "list_ca_pools"
+              ]
+            },
+            "ListCertificateAuthorities": {
+              "methods": [
+                "list_certificate_authorities"
+              ]
+            },
+            "ListCertificateRevocationLists": {
+              "methods": [
+                "list_certificate_revocation_lists"
+              ]
+            },
+            "ListCertificateTemplates": {
+              "methods": [
+                "list_certificate_templates"
+              ]
+            },
+            "ListCertificates": {
+              "methods": [
+                "list_certificates"
+              ]
+            },
+            "RevokeCertificate": {
+              "methods": [
+                "revoke_certificate"
+              ]
+            },
+            "UndeleteCertificateAuthority": {
+              "methods": [
+                "undelete_certificate_authority"
+              ]
+            },
+            "UpdateCaPool": {
+              "methods": [
+                "update_ca_pool"
+              ]
+            },
+            "UpdateCertificate": {
+              "methods": [
+                "update_certificate"
+              ]
+            },
+            "UpdateCertificateAuthority": {
+              "methods": [
+                "update_certificate_authority"
+              ]
+            },
+            "UpdateCertificateRevocationList": {
+              "methods": [
+                "update_certificate_revocation_list"
+              ]
+            },
+            "UpdateCertificateTemplate": {
+              "methods": [
+                "update_certificate_template"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CertificateAuthorityServiceClient",
+          "rpcs": {
+            "ActivateCertificateAuthority": {
+              "methods": [
+                "activate_certificate_authority"
+              ]
+            },
+            "CreateCaPool": {
+              "methods": [
+                "create_ca_pool"
+              ]
+            },
+            "CreateCertificate": {
+              "methods": [
+                "create_certificate"
+              ]
+            },
+            "CreateCertificateAuthority": {
+              "methods": [
+                "create_certificate_authority"
+              ]
+            },
+            "CreateCertificateTemplate": {
+              "methods": [
+                "create_certificate_template"
+              ]
+            },
+            "DeleteCaPool": {
+              "methods": [
+                "delete_ca_pool"
+              ]
+            },
+            "DeleteCertificateAuthority": {
+              "methods": [
+                "delete_certificate_authority"
+              ]
+            },
+            "DeleteCertificateTemplate": {
+              "methods": [
+                "delete_certificate_template"
+              ]
+            },
+            "DisableCertificateAuthority": {
+              "methods": [
+                "disable_certificate_authority"
+              ]
+            },
+            "EnableCertificateAuthority": {
+              "methods": [
+                "enable_certificate_authority"
+              ]
+            },
+            "FetchCaCerts": {
+              "methods": [
+                "fetch_ca_certs"
+              ]
+            },
+            "FetchCertificateAuthorityCsr": {
+              "methods": [
+                "fetch_certificate_authority_csr"
+              ]
+            },
+            "GetCaPool": {
+              "methods": [
+                "get_ca_pool"
+              ]
+            },
+            "GetCertificate": {
+              "methods": [
+                "get_certificate"
+              ]
+            },
+            "GetCertificateAuthority": {
+              "methods": [
+                "get_certificate_authority"
+              ]
+            },
+            "GetCertificateRevocationList": {
+              "methods": [
+                "get_certificate_revocation_list"
+              ]
+            },
+            "GetCertificateTemplate": {
+              "methods": [
+                "get_certificate_template"
+              ]
+            },
+            "ListCaPools": {
+              "methods": [
+                "list_ca_pools"
+              ]
+            },
+            "ListCertificateAuthorities": {
+              "methods": [
+                "list_certificate_authorities"
+              ]
+            },
+            "ListCertificateRevocationLists": {
+              "methods": [
+                "list_certificate_revocation_lists"
+              ]
+            },
+            "ListCertificateTemplates": {
+              "methods": [
+                "list_certificate_templates"
+              ]
+            },
+            "ListCertificates": {
+              "methods": [
+                "list_certificates"
+              ]
+            },
+            "RevokeCertificate": {
+              "methods": [
+                "revoke_certificate"
+              ]
+            },
+            "UndeleteCertificateAuthority": {
+              "methods": [
+                "undelete_certificate_authority"
+              ]
+            },
+            "UpdateCaPool": {
+              "methods": [
+                "update_ca_pool"
+              ]
+            },
+            "UpdateCertificate": {
+              "methods": [
+                "update_certificate"
+              ]
+            },
+            "UpdateCertificateAuthority": {
+              "methods": [
+                "update_certificate_authority"
+              ]
+            },
+            "UpdateCertificateRevocationList": {
+              "methods": [
+                "update_certificate_revocation_list"
+              ]
+            },
+            "UpdateCertificateTemplate": {
+              "methods": [
+                "update_certificate_template"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

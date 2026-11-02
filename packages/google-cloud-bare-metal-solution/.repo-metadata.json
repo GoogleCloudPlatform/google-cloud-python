@@ -1,0 +1,15 @@
+{
+    "api_description": "Provides ways to manage Bare Metal Solution hardware installed in a\nregional extension located near a Google Cloud data center.",
+    "api_id": "baremetalsolution.googleapis.com",
+    "api_shortname": "baremetalsolution",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/baremetalsolution/latest",
+    "default_version": "v2",
+    "distribution_name": "google-cloud-bare-metal-solution",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "baremetalsolution",
+    "name_pretty": "Bare Metal Solution",
+    "product_documentation": "https://cloud.google.com/bare-metal/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

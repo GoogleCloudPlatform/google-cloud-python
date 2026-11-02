@@ -1,0 +1,15 @@
+{
+    "api_description": "routes.googleapis.com API.",
+    "api_id": "routes.googleapis.com",
+    "api_shortname": "routes",
+    "client_documentation": "https://googleapis.dev/python/routing/latest",
+    "default_version": "v2",
+    "distribution_name": "google-maps-routing",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "routing",
+    "name_pretty": "Routes",
+    "product_documentation": "https://mapsplatform.google.com/maps-products/#routes-section",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

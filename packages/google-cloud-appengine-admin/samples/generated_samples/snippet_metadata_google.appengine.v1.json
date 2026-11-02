@@ -1,0 +1,5213 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.appengine.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-appengine-admin",
+    "version": "1.19.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ApplicationsAsyncClient",
+          "shortName": "ApplicationsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ApplicationsAsyncClient.create_application",
+        "method": {
+          "fullName": "google.appengine.v1.Applications.CreateApplication",
+          "service": {
+            "fullName": "google.appengine.v1.Applications",
+            "shortName": "Applications"
+          },
+          "shortName": "CreateApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.CreateApplicationRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_application"
+      },
+      "description": "Sample for CreateApplication",
+      "file": "appengine_v1_generated_applications_create_application_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Applications_CreateApplication_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_applications_create_application_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ApplicationsClient",
+          "shortName": "ApplicationsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ApplicationsClient.create_application",
+        "method": {
+          "fullName": "google.appengine.v1.Applications.CreateApplication",
+          "service": {
+            "fullName": "google.appengine.v1.Applications",
+            "shortName": "Applications"
+          },
+          "shortName": "CreateApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.CreateApplicationRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_application"
+      },
+      "description": "Sample for CreateApplication",
+      "file": "appengine_v1_generated_applications_create_application_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Applications_CreateApplication_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_applications_create_application_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ApplicationsAsyncClient",
+          "shortName": "ApplicationsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ApplicationsAsyncClient.get_application",
+        "method": {
+          "fullName": "google.appengine.v1.Applications.GetApplication",
+          "service": {
+            "fullName": "google.appengine.v1.Applications",
+            "shortName": "Applications"
+          },
+          "shortName": "GetApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetApplicationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.Application",
+        "shortName": "get_application"
+      },
+      "description": "Sample for GetApplication",
+      "file": "appengine_v1_generated_applications_get_application_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Applications_GetApplication_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_applications_get_application_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ApplicationsClient",
+          "shortName": "ApplicationsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ApplicationsClient.get_application",
+        "method": {
+          "fullName": "google.appengine.v1.Applications.GetApplication",
+          "service": {
+            "fullName": "google.appengine.v1.Applications",
+            "shortName": "Applications"
+          },
+          "shortName": "GetApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetApplicationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.Application",
+        "shortName": "get_application"
+      },
+      "description": "Sample for GetApplication",
+      "file": "appengine_v1_generated_applications_get_application_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Applications_GetApplication_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_applications_get_application_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ApplicationsAsyncClient",
+          "shortName": "ApplicationsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ApplicationsAsyncClient.repair_application",
+        "method": {
+          "fullName": "google.appengine.v1.Applications.RepairApplication",
+          "service": {
+            "fullName": "google.appengine.v1.Applications",
+            "shortName": "Applications"
+          },
+          "shortName": "RepairApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.RepairApplicationRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "repair_application"
+      },
+      "description": "Sample for RepairApplication",
+      "file": "appengine_v1_generated_applications_repair_application_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Applications_RepairApplication_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_applications_repair_application_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ApplicationsClient",
+          "shortName": "ApplicationsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ApplicationsClient.repair_application",
+        "method": {
+          "fullName": "google.appengine.v1.Applications.RepairApplication",
+          "service": {
+            "fullName": "google.appengine.v1.Applications",
+            "shortName": "Applications"
+          },
+          "shortName": "RepairApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.RepairApplicationRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "repair_application"
+      },
+      "description": "Sample for RepairApplication",
+      "file": "appengine_v1_generated_applications_repair_application_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Applications_RepairApplication_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_applications_repair_application_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ApplicationsAsyncClient",
+          "shortName": "ApplicationsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ApplicationsAsyncClient.update_application",
+        "method": {
+          "fullName": "google.appengine.v1.Applications.UpdateApplication",
+          "service": {
+            "fullName": "google.appengine.v1.Applications",
+            "shortName": "Applications"
+          },
+          "shortName": "UpdateApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateApplicationRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_application"
+      },
+      "description": "Sample for UpdateApplication",
+      "file": "appengine_v1_generated_applications_update_application_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Applications_UpdateApplication_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_applications_update_application_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ApplicationsClient",
+          "shortName": "ApplicationsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ApplicationsClient.update_application",
+        "method": {
+          "fullName": "google.appengine.v1.Applications.UpdateApplication",
+          "service": {
+            "fullName": "google.appengine.v1.Applications",
+            "shortName": "Applications"
+          },
+          "shortName": "UpdateApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateApplicationRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_application"
+      },
+      "description": "Sample for UpdateApplication",
+      "file": "appengine_v1_generated_applications_update_application_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Applications_UpdateApplication_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_applications_update_application_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesAsyncClient",
+          "shortName": "AuthorizedCertificatesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesAsyncClient.create_authorized_certificate",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedCertificates.CreateAuthorizedCertificate",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedCertificates",
+            "shortName": "AuthorizedCertificates"
+          },
+          "shortName": "CreateAuthorizedCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.CreateAuthorizedCertificateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.AuthorizedCertificate",
+        "shortName": "create_authorized_certificate"
+      },
+      "description": "Sample for CreateAuthorizedCertificate",
+      "file": "appengine_v1_generated_authorized_certificates_create_authorized_certificate_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedCertificates_CreateAuthorizedCertificate_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_certificates_create_authorized_certificate_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesClient",
+          "shortName": "AuthorizedCertificatesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesClient.create_authorized_certificate",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedCertificates.CreateAuthorizedCertificate",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedCertificates",
+            "shortName": "AuthorizedCertificates"
+          },
+          "shortName": "CreateAuthorizedCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.CreateAuthorizedCertificateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.AuthorizedCertificate",
+        "shortName": "create_authorized_certificate"
+      },
+      "description": "Sample for CreateAuthorizedCertificate",
+      "file": "appengine_v1_generated_authorized_certificates_create_authorized_certificate_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedCertificates_CreateAuthorizedCertificate_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_certificates_create_authorized_certificate_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesAsyncClient",
+          "shortName": "AuthorizedCertificatesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesAsyncClient.delete_authorized_certificate",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedCertificates.DeleteAuthorizedCertificate",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedCertificates",
+            "shortName": "AuthorizedCertificates"
+          },
+          "shortName": "DeleteAuthorizedCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteAuthorizedCertificateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_authorized_certificate"
+      },
+      "description": "Sample for DeleteAuthorizedCertificate",
+      "file": "appengine_v1_generated_authorized_certificates_delete_authorized_certificate_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedCertificates_DeleteAuthorizedCertificate_async",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_certificates_delete_authorized_certificate_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesClient",
+          "shortName": "AuthorizedCertificatesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesClient.delete_authorized_certificate",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedCertificates.DeleteAuthorizedCertificate",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedCertificates",
+            "shortName": "AuthorizedCertificates"
+          },
+          "shortName": "DeleteAuthorizedCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteAuthorizedCertificateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_authorized_certificate"
+      },
+      "description": "Sample for DeleteAuthorizedCertificate",
+      "file": "appengine_v1_generated_authorized_certificates_delete_authorized_certificate_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedCertificates_DeleteAuthorizedCertificate_sync",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_certificates_delete_authorized_certificate_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesAsyncClient",
+          "shortName": "AuthorizedCertificatesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesAsyncClient.get_authorized_certificate",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedCertificates.GetAuthorizedCertificate",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedCertificates",
+            "shortName": "AuthorizedCertificates"
+          },
+          "shortName": "GetAuthorizedCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetAuthorizedCertificateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.AuthorizedCertificate",
+        "shortName": "get_authorized_certificate"
+      },
+      "description": "Sample for GetAuthorizedCertificate",
+      "file": "appengine_v1_generated_authorized_certificates_get_authorized_certificate_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedCertificates_GetAuthorizedCertificate_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_certificates_get_authorized_certificate_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesClient",
+          "shortName": "AuthorizedCertificatesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesClient.get_authorized_certificate",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedCertificates.GetAuthorizedCertificate",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedCertificates",
+            "shortName": "AuthorizedCertificates"
+          },
+          "shortName": "GetAuthorizedCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetAuthorizedCertificateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.AuthorizedCertificate",
+        "shortName": "get_authorized_certificate"
+      },
+      "description": "Sample for GetAuthorizedCertificate",
+      "file": "appengine_v1_generated_authorized_certificates_get_authorized_certificate_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedCertificates_GetAuthorizedCertificate_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_certificates_get_authorized_certificate_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesAsyncClient",
+          "shortName": "AuthorizedCertificatesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesAsyncClient.list_authorized_certificates",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedCertificates.ListAuthorizedCertificates",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedCertificates",
+            "shortName": "AuthorizedCertificates"
+          },
+          "shortName": "ListAuthorizedCertificates"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListAuthorizedCertificatesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.authorized_certificates.pagers.ListAuthorizedCertificatesAsyncPager",
+        "shortName": "list_authorized_certificates"
+      },
+      "description": "Sample for ListAuthorizedCertificates",
+      "file": "appengine_v1_generated_authorized_certificates_list_authorized_certificates_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedCertificates_ListAuthorizedCertificates_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_certificates_list_authorized_certificates_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesClient",
+          "shortName": "AuthorizedCertificatesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesClient.list_authorized_certificates",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedCertificates.ListAuthorizedCertificates",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedCertificates",
+            "shortName": "AuthorizedCertificates"
+          },
+          "shortName": "ListAuthorizedCertificates"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListAuthorizedCertificatesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.authorized_certificates.pagers.ListAuthorizedCertificatesPager",
+        "shortName": "list_authorized_certificates"
+      },
+      "description": "Sample for ListAuthorizedCertificates",
+      "file": "appengine_v1_generated_authorized_certificates_list_authorized_certificates_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedCertificates_ListAuthorizedCertificates_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_certificates_list_authorized_certificates_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesAsyncClient",
+          "shortName": "AuthorizedCertificatesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesAsyncClient.update_authorized_certificate",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedCertificates.UpdateAuthorizedCertificate",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedCertificates",
+            "shortName": "AuthorizedCertificates"
+          },
+          "shortName": "UpdateAuthorizedCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateAuthorizedCertificateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.AuthorizedCertificate",
+        "shortName": "update_authorized_certificate"
+      },
+      "description": "Sample for UpdateAuthorizedCertificate",
+      "file": "appengine_v1_generated_authorized_certificates_update_authorized_certificate_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedCertificates_UpdateAuthorizedCertificate_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_certificates_update_authorized_certificate_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesClient",
+          "shortName": "AuthorizedCertificatesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedCertificatesClient.update_authorized_certificate",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedCertificates.UpdateAuthorizedCertificate",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedCertificates",
+            "shortName": "AuthorizedCertificates"
+          },
+          "shortName": "UpdateAuthorizedCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateAuthorizedCertificateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.AuthorizedCertificate",
+        "shortName": "update_authorized_certificate"
+      },
+      "description": "Sample for UpdateAuthorizedCertificate",
+      "file": "appengine_v1_generated_authorized_certificates_update_authorized_certificate_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedCertificates_UpdateAuthorizedCertificate_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_certificates_update_authorized_certificate_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedDomainsAsyncClient",
+          "shortName": "AuthorizedDomainsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedDomainsAsyncClient.list_authorized_domains",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedDomains.ListAuthorizedDomains",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedDomains",
+            "shortName": "AuthorizedDomains"
+          },
+          "shortName": "ListAuthorizedDomains"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListAuthorizedDomainsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.authorized_domains.pagers.ListAuthorizedDomainsAsyncPager",
+        "shortName": "list_authorized_domains"
+      },
+      "description": "Sample for ListAuthorizedDomains",
+      "file": "appengine_v1_generated_authorized_domains_list_authorized_domains_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedDomains_ListAuthorizedDomains_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_domains_list_authorized_domains_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.AuthorizedDomainsClient",
+          "shortName": "AuthorizedDomainsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.AuthorizedDomainsClient.list_authorized_domains",
+        "method": {
+          "fullName": "google.appengine.v1.AuthorizedDomains.ListAuthorizedDomains",
+          "service": {
+            "fullName": "google.appengine.v1.AuthorizedDomains",
+            "shortName": "AuthorizedDomains"
+          },
+          "shortName": "ListAuthorizedDomains"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListAuthorizedDomainsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.authorized_domains.pagers.ListAuthorizedDomainsPager",
+        "shortName": "list_authorized_domains"
+      },
+      "description": "Sample for ListAuthorizedDomains",
+      "file": "appengine_v1_generated_authorized_domains_list_authorized_domains_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_AuthorizedDomains_ListAuthorizedDomains_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_authorized_domains_list_authorized_domains_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.DomainMappingsAsyncClient",
+          "shortName": "DomainMappingsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.DomainMappingsAsyncClient.create_domain_mapping",
+        "method": {
+          "fullName": "google.appengine.v1.DomainMappings.CreateDomainMapping",
+          "service": {
+            "fullName": "google.appengine.v1.DomainMappings",
+            "shortName": "DomainMappings"
+          },
+          "shortName": "CreateDomainMapping"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.CreateDomainMappingRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_domain_mapping"
+      },
+      "description": "Sample for CreateDomainMapping",
+      "file": "appengine_v1_generated_domain_mappings_create_domain_mapping_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_DomainMappings_CreateDomainMapping_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_domain_mappings_create_domain_mapping_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.DomainMappingsClient",
+          "shortName": "DomainMappingsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.DomainMappingsClient.create_domain_mapping",
+        "method": {
+          "fullName": "google.appengine.v1.DomainMappings.CreateDomainMapping",
+          "service": {
+            "fullName": "google.appengine.v1.DomainMappings",
+            "shortName": "DomainMappings"
+          },
+          "shortName": "CreateDomainMapping"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.CreateDomainMappingRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_domain_mapping"
+      },
+      "description": "Sample for CreateDomainMapping",
+      "file": "appengine_v1_generated_domain_mappings_create_domain_mapping_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_DomainMappings_CreateDomainMapping_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_domain_mappings_create_domain_mapping_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.DomainMappingsAsyncClient",
+          "shortName": "DomainMappingsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.DomainMappingsAsyncClient.delete_domain_mapping",
+        "method": {
+          "fullName": "google.appengine.v1.DomainMappings.DeleteDomainMapping",
+          "service": {
+            "fullName": "google.appengine.v1.DomainMappings",
+            "shortName": "DomainMappings"
+          },
+          "shortName": "DeleteDomainMapping"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteDomainMappingRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_domain_mapping"
+      },
+      "description": "Sample for DeleteDomainMapping",
+      "file": "appengine_v1_generated_domain_mappings_delete_domain_mapping_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_DomainMappings_DeleteDomainMapping_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_domain_mappings_delete_domain_mapping_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.DomainMappingsClient",
+          "shortName": "DomainMappingsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.DomainMappingsClient.delete_domain_mapping",
+        "method": {
+          "fullName": "google.appengine.v1.DomainMappings.DeleteDomainMapping",
+          "service": {
+            "fullName": "google.appengine.v1.DomainMappings",
+            "shortName": "DomainMappings"
+          },
+          "shortName": "DeleteDomainMapping"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteDomainMappingRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_domain_mapping"
+      },
+      "description": "Sample for DeleteDomainMapping",
+      "file": "appengine_v1_generated_domain_mappings_delete_domain_mapping_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_DomainMappings_DeleteDomainMapping_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_domain_mappings_delete_domain_mapping_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.DomainMappingsAsyncClient",
+          "shortName": "DomainMappingsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.DomainMappingsAsyncClient.get_domain_mapping",
+        "method": {
+          "fullName": "google.appengine.v1.DomainMappings.GetDomainMapping",
+          "service": {
+            "fullName": "google.appengine.v1.DomainMappings",
+            "shortName": "DomainMappings"
+          },
+          "shortName": "GetDomainMapping"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetDomainMappingRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.DomainMapping",
+        "shortName": "get_domain_mapping"
+      },
+      "description": "Sample for GetDomainMapping",
+      "file": "appengine_v1_generated_domain_mappings_get_domain_mapping_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_DomainMappings_GetDomainMapping_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_domain_mappings_get_domain_mapping_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.DomainMappingsClient",
+          "shortName": "DomainMappingsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.DomainMappingsClient.get_domain_mapping",
+        "method": {
+          "fullName": "google.appengine.v1.DomainMappings.GetDomainMapping",
+          "service": {
+            "fullName": "google.appengine.v1.DomainMappings",
+            "shortName": "DomainMappings"
+          },
+          "shortName": "GetDomainMapping"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetDomainMappingRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.DomainMapping",
+        "shortName": "get_domain_mapping"
+      },
+      "description": "Sample for GetDomainMapping",
+      "file": "appengine_v1_generated_domain_mappings_get_domain_mapping_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_DomainMappings_GetDomainMapping_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_domain_mappings_get_domain_mapping_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.DomainMappingsAsyncClient",
+          "shortName": "DomainMappingsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.DomainMappingsAsyncClient.list_domain_mappings",
+        "method": {
+          "fullName": "google.appengine.v1.DomainMappings.ListDomainMappings",
+          "service": {
+            "fullName": "google.appengine.v1.DomainMappings",
+            "shortName": "DomainMappings"
+          },
+          "shortName": "ListDomainMappings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListDomainMappingsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.domain_mappings.pagers.ListDomainMappingsAsyncPager",
+        "shortName": "list_domain_mappings"
+      },
+      "description": "Sample for ListDomainMappings",
+      "file": "appengine_v1_generated_domain_mappings_list_domain_mappings_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_DomainMappings_ListDomainMappings_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_domain_mappings_list_domain_mappings_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.DomainMappingsClient",
+          "shortName": "DomainMappingsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.DomainMappingsClient.list_domain_mappings",
+        "method": {
+          "fullName": "google.appengine.v1.DomainMappings.ListDomainMappings",
+          "service": {
+            "fullName": "google.appengine.v1.DomainMappings",
+            "shortName": "DomainMappings"
+          },
+          "shortName": "ListDomainMappings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListDomainMappingsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.domain_mappings.pagers.ListDomainMappingsPager",
+        "shortName": "list_domain_mappings"
+      },
+      "description": "Sample for ListDomainMappings",
+      "file": "appengine_v1_generated_domain_mappings_list_domain_mappings_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_DomainMappings_ListDomainMappings_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_domain_mappings_list_domain_mappings_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.DomainMappingsAsyncClient",
+          "shortName": "DomainMappingsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.DomainMappingsAsyncClient.update_domain_mapping",
+        "method": {
+          "fullName": "google.appengine.v1.DomainMappings.UpdateDomainMapping",
+          "service": {
+            "fullName": "google.appengine.v1.DomainMappings",
+            "shortName": "DomainMappings"
+          },
+          "shortName": "UpdateDomainMapping"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateDomainMappingRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_domain_mapping"
+      },
+      "description": "Sample for UpdateDomainMapping",
+      "file": "appengine_v1_generated_domain_mappings_update_domain_mapping_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_DomainMappings_UpdateDomainMapping_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_domain_mappings_update_domain_mapping_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.DomainMappingsClient",
+          "shortName": "DomainMappingsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.DomainMappingsClient.update_domain_mapping",
+        "method": {
+          "fullName": "google.appengine.v1.DomainMappings.UpdateDomainMapping",
+          "service": {
+            "fullName": "google.appengine.v1.DomainMappings",
+            "shortName": "DomainMappings"
+          },
+          "shortName": "UpdateDomainMapping"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateDomainMappingRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_domain_mapping"
+      },
+      "description": "Sample for UpdateDomainMapping",
+      "file": "appengine_v1_generated_domain_mappings_update_domain_mapping_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_DomainMappings_UpdateDomainMapping_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_domain_mappings_update_domain_mapping_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient",
+          "shortName": "FirewallAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient.batch_update_ingress_rules",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.BatchUpdateIngressRules",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "BatchUpdateIngressRules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.BatchUpdateIngressRulesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.BatchUpdateIngressRulesResponse",
+        "shortName": "batch_update_ingress_rules"
+      },
+      "description": "Sample for BatchUpdateIngressRules",
+      "file": "appengine_v1_generated_firewall_batch_update_ingress_rules_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_BatchUpdateIngressRules_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_batch_update_ingress_rules_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallClient",
+          "shortName": "FirewallClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallClient.batch_update_ingress_rules",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.BatchUpdateIngressRules",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "BatchUpdateIngressRules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.BatchUpdateIngressRulesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.BatchUpdateIngressRulesResponse",
+        "shortName": "batch_update_ingress_rules"
+      },
+      "description": "Sample for BatchUpdateIngressRules",
+      "file": "appengine_v1_generated_firewall_batch_update_ingress_rules_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_BatchUpdateIngressRules_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_batch_update_ingress_rules_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient",
+          "shortName": "FirewallAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient.create_ingress_rule",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.CreateIngressRule",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "CreateIngressRule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.CreateIngressRuleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.FirewallRule",
+        "shortName": "create_ingress_rule"
+      },
+      "description": "Sample for CreateIngressRule",
+      "file": "appengine_v1_generated_firewall_create_ingress_rule_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_CreateIngressRule_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_create_ingress_rule_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallClient",
+          "shortName": "FirewallClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallClient.create_ingress_rule",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.CreateIngressRule",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "CreateIngressRule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.CreateIngressRuleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.FirewallRule",
+        "shortName": "create_ingress_rule"
+      },
+      "description": "Sample for CreateIngressRule",
+      "file": "appengine_v1_generated_firewall_create_ingress_rule_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_CreateIngressRule_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_create_ingress_rule_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient",
+          "shortName": "FirewallAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient.delete_ingress_rule",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.DeleteIngressRule",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "DeleteIngressRule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteIngressRuleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_ingress_rule"
+      },
+      "description": "Sample for DeleteIngressRule",
+      "file": "appengine_v1_generated_firewall_delete_ingress_rule_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_DeleteIngressRule_async",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_delete_ingress_rule_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallClient",
+          "shortName": "FirewallClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallClient.delete_ingress_rule",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.DeleteIngressRule",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "DeleteIngressRule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteIngressRuleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_ingress_rule"
+      },
+      "description": "Sample for DeleteIngressRule",
+      "file": "appengine_v1_generated_firewall_delete_ingress_rule_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_DeleteIngressRule_sync",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_delete_ingress_rule_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient",
+          "shortName": "FirewallAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient.get_ingress_rule",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.GetIngressRule",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "GetIngressRule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetIngressRuleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.FirewallRule",
+        "shortName": "get_ingress_rule"
+      },
+      "description": "Sample for GetIngressRule",
+      "file": "appengine_v1_generated_firewall_get_ingress_rule_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_GetIngressRule_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_get_ingress_rule_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallClient",
+          "shortName": "FirewallClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallClient.get_ingress_rule",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.GetIngressRule",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "GetIngressRule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetIngressRuleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.FirewallRule",
+        "shortName": "get_ingress_rule"
+      },
+      "description": "Sample for GetIngressRule",
+      "file": "appengine_v1_generated_firewall_get_ingress_rule_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_GetIngressRule_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_get_ingress_rule_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient",
+          "shortName": "FirewallAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient.list_ingress_rules",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.ListIngressRules",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "ListIngressRules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListIngressRulesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.firewall.pagers.ListIngressRulesAsyncPager",
+        "shortName": "list_ingress_rules"
+      },
+      "description": "Sample for ListIngressRules",
+      "file": "appengine_v1_generated_firewall_list_ingress_rules_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_ListIngressRules_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_list_ingress_rules_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallClient",
+          "shortName": "FirewallClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallClient.list_ingress_rules",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.ListIngressRules",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "ListIngressRules"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListIngressRulesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.firewall.pagers.ListIngressRulesPager",
+        "shortName": "list_ingress_rules"
+      },
+      "description": "Sample for ListIngressRules",
+      "file": "appengine_v1_generated_firewall_list_ingress_rules_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_ListIngressRules_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_list_ingress_rules_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient",
+          "shortName": "FirewallAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallAsyncClient.update_ingress_rule",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.UpdateIngressRule",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "UpdateIngressRule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateIngressRuleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.FirewallRule",
+        "shortName": "update_ingress_rule"
+      },
+      "description": "Sample for UpdateIngressRule",
+      "file": "appengine_v1_generated_firewall_update_ingress_rule_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_UpdateIngressRule_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_update_ingress_rule_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.FirewallClient",
+          "shortName": "FirewallClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.FirewallClient.update_ingress_rule",
+        "method": {
+          "fullName": "google.appengine.v1.Firewall.UpdateIngressRule",
+          "service": {
+            "fullName": "google.appengine.v1.Firewall",
+            "shortName": "Firewall"
+          },
+          "shortName": "UpdateIngressRule"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateIngressRuleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.FirewallRule",
+        "shortName": "update_ingress_rule"
+      },
+      "description": "Sample for UpdateIngressRule",
+      "file": "appengine_v1_generated_firewall_update_ingress_rule_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Firewall_UpdateIngressRule_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_firewall_update_ingress_rule_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.InstancesAsyncClient",
+          "shortName": "InstancesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.InstancesAsyncClient.debug_instance",
+        "method": {
+          "fullName": "google.appengine.v1.Instances.DebugInstance",
+          "service": {
+            "fullName": "google.appengine.v1.Instances",
+            "shortName": "Instances"
+          },
+          "shortName": "DebugInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DebugInstanceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "debug_instance"
+      },
+      "description": "Sample for DebugInstance",
+      "file": "appengine_v1_generated_instances_debug_instance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Instances_DebugInstance_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_instances_debug_instance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.InstancesClient",
+          "shortName": "InstancesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.InstancesClient.debug_instance",
+        "method": {
+          "fullName": "google.appengine.v1.Instances.DebugInstance",
+          "service": {
+            "fullName": "google.appengine.v1.Instances",
+            "shortName": "Instances"
+          },
+          "shortName": "DebugInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DebugInstanceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "debug_instance"
+      },
+      "description": "Sample for DebugInstance",
+      "file": "appengine_v1_generated_instances_debug_instance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Instances_DebugInstance_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_instances_debug_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.InstancesAsyncClient",
+          "shortName": "InstancesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.InstancesAsyncClient.delete_instance",
+        "method": {
+          "fullName": "google.appengine.v1.Instances.DeleteInstance",
+          "service": {
+            "fullName": "google.appengine.v1.Instances",
+            "shortName": "Instances"
+          },
+          "shortName": "DeleteInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteInstanceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_instance"
+      },
+      "description": "Sample for DeleteInstance",
+      "file": "appengine_v1_generated_instances_delete_instance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Instances_DeleteInstance_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_instances_delete_instance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.InstancesClient",
+          "shortName": "InstancesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.InstancesClient.delete_instance",
+        "method": {
+          "fullName": "google.appengine.v1.Instances.DeleteInstance",
+          "service": {
+            "fullName": "google.appengine.v1.Instances",
+            "shortName": "Instances"
+          },
+          "shortName": "DeleteInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteInstanceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_instance"
+      },
+      "description": "Sample for DeleteInstance",
+      "file": "appengine_v1_generated_instances_delete_instance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Instances_DeleteInstance_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_instances_delete_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.InstancesAsyncClient",
+          "shortName": "InstancesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.InstancesAsyncClient.get_instance",
+        "method": {
+          "fullName": "google.appengine.v1.Instances.GetInstance",
+          "service": {
+            "fullName": "google.appengine.v1.Instances",
+            "shortName": "Instances"
+          },
+          "shortName": "GetInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetInstanceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.Instance",
+        "shortName": "get_instance"
+      },
+      "description": "Sample for GetInstance",
+      "file": "appengine_v1_generated_instances_get_instance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Instances_GetInstance_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_instances_get_instance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.InstancesClient",
+          "shortName": "InstancesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.InstancesClient.get_instance",
+        "method": {
+          "fullName": "google.appengine.v1.Instances.GetInstance",
+          "service": {
+            "fullName": "google.appengine.v1.Instances",
+            "shortName": "Instances"
+          },
+          "shortName": "GetInstance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetInstanceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.Instance",
+        "shortName": "get_instance"
+      },
+      "description": "Sample for GetInstance",
+      "file": "appengine_v1_generated_instances_get_instance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Instances_GetInstance_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_instances_get_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.InstancesAsyncClient",
+          "shortName": "InstancesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.InstancesAsyncClient.list_instances",
+        "method": {
+          "fullName": "google.appengine.v1.Instances.ListInstances",
+          "service": {
+            "fullName": "google.appengine.v1.Instances",
+            "shortName": "Instances"
+          },
+          "shortName": "ListInstances"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListInstancesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.instances.pagers.ListInstancesAsyncPager",
+        "shortName": "list_instances"
+      },
+      "description": "Sample for ListInstances",
+      "file": "appengine_v1_generated_instances_list_instances_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Instances_ListInstances_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_instances_list_instances_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.InstancesClient",
+          "shortName": "InstancesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.InstancesClient.list_instances",
+        "method": {
+          "fullName": "google.appengine.v1.Instances.ListInstances",
+          "service": {
+            "fullName": "google.appengine.v1.Instances",
+            "shortName": "Instances"
+          },
+          "shortName": "ListInstances"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListInstancesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.instances.pagers.ListInstancesPager",
+        "shortName": "list_instances"
+      },
+      "description": "Sample for ListInstances",
+      "file": "appengine_v1_generated_instances_list_instances_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Instances_ListInstances_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_instances_list_instances_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ServicesAsyncClient",
+          "shortName": "ServicesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ServicesAsyncClient.delete_service",
+        "method": {
+          "fullName": "google.appengine.v1.Services.DeleteService",
+          "service": {
+            "fullName": "google.appengine.v1.Services",
+            "shortName": "Services"
+          },
+          "shortName": "DeleteService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteServiceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_service"
+      },
+      "description": "Sample for DeleteService",
+      "file": "appengine_v1_generated_services_delete_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Services_DeleteService_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_services_delete_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ServicesClient",
+          "shortName": "ServicesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ServicesClient.delete_service",
+        "method": {
+          "fullName": "google.appengine.v1.Services.DeleteService",
+          "service": {
+            "fullName": "google.appengine.v1.Services",
+            "shortName": "Services"
+          },
+          "shortName": "DeleteService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteServiceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_service"
+      },
+      "description": "Sample for DeleteService",
+      "file": "appengine_v1_generated_services_delete_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Services_DeleteService_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_services_delete_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ServicesAsyncClient",
+          "shortName": "ServicesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ServicesAsyncClient.get_service",
+        "method": {
+          "fullName": "google.appengine.v1.Services.GetService",
+          "service": {
+            "fullName": "google.appengine.v1.Services",
+            "shortName": "Services"
+          },
+          "shortName": "GetService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetServiceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.Service",
+        "shortName": "get_service"
+      },
+      "description": "Sample for GetService",
+      "file": "appengine_v1_generated_services_get_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Services_GetService_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_services_get_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ServicesClient",
+          "shortName": "ServicesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ServicesClient.get_service",
+        "method": {
+          "fullName": "google.appengine.v1.Services.GetService",
+          "service": {
+            "fullName": "google.appengine.v1.Services",
+            "shortName": "Services"
+          },
+          "shortName": "GetService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetServiceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.Service",
+        "shortName": "get_service"
+      },
+      "description": "Sample for GetService",
+      "file": "appengine_v1_generated_services_get_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Services_GetService_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_services_get_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ServicesAsyncClient",
+          "shortName": "ServicesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ServicesAsyncClient.list_services",
+        "method": {
+          "fullName": "google.appengine.v1.Services.ListServices",
+          "service": {
+            "fullName": "google.appengine.v1.Services",
+            "shortName": "Services"
+          },
+          "shortName": "ListServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListServicesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.services.pagers.ListServicesAsyncPager",
+        "shortName": "list_services"
+      },
+      "description": "Sample for ListServices",
+      "file": "appengine_v1_generated_services_list_services_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Services_ListServices_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_services_list_services_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ServicesClient",
+          "shortName": "ServicesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ServicesClient.list_services",
+        "method": {
+          "fullName": "google.appengine.v1.Services.ListServices",
+          "service": {
+            "fullName": "google.appengine.v1.Services",
+            "shortName": "Services"
+          },
+          "shortName": "ListServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListServicesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.services.pagers.ListServicesPager",
+        "shortName": "list_services"
+      },
+      "description": "Sample for ListServices",
+      "file": "appengine_v1_generated_services_list_services_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Services_ListServices_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_services_list_services_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ServicesAsyncClient",
+          "shortName": "ServicesAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ServicesAsyncClient.update_service",
+        "method": {
+          "fullName": "google.appengine.v1.Services.UpdateService",
+          "service": {
+            "fullName": "google.appengine.v1.Services",
+            "shortName": "Services"
+          },
+          "shortName": "UpdateService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateServiceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_service"
+      },
+      "description": "Sample for UpdateService",
+      "file": "appengine_v1_generated_services_update_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Services_UpdateService_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_services_update_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.ServicesClient",
+          "shortName": "ServicesClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.ServicesClient.update_service",
+        "method": {
+          "fullName": "google.appengine.v1.Services.UpdateService",
+          "service": {
+            "fullName": "google.appengine.v1.Services",
+            "shortName": "Services"
+          },
+          "shortName": "UpdateService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateServiceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_service"
+      },
+      "description": "Sample for UpdateService",
+      "file": "appengine_v1_generated_services_update_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Services_UpdateService_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_services_update_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.VersionsAsyncClient",
+          "shortName": "VersionsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.VersionsAsyncClient.create_version",
+        "method": {
+          "fullName": "google.appengine.v1.Versions.CreateVersion",
+          "service": {
+            "fullName": "google.appengine.v1.Versions",
+            "shortName": "Versions"
+          },
+          "shortName": "CreateVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.CreateVersionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_version"
+      },
+      "description": "Sample for CreateVersion",
+      "file": "appengine_v1_generated_versions_create_version_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Versions_CreateVersion_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_versions_create_version_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.VersionsClient",
+          "shortName": "VersionsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.VersionsClient.create_version",
+        "method": {
+          "fullName": "google.appengine.v1.Versions.CreateVersion",
+          "service": {
+            "fullName": "google.appengine.v1.Versions",
+            "shortName": "Versions"
+          },
+          "shortName": "CreateVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.CreateVersionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_version"
+      },
+      "description": "Sample for CreateVersion",
+      "file": "appengine_v1_generated_versions_create_version_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Versions_CreateVersion_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_versions_create_version_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.VersionsAsyncClient",
+          "shortName": "VersionsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.VersionsAsyncClient.delete_version",
+        "method": {
+          "fullName": "google.appengine.v1.Versions.DeleteVersion",
+          "service": {
+            "fullName": "google.appengine.v1.Versions",
+            "shortName": "Versions"
+          },
+          "shortName": "DeleteVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteVersionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_version"
+      },
+      "description": "Sample for DeleteVersion",
+      "file": "appengine_v1_generated_versions_delete_version_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Versions_DeleteVersion_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_versions_delete_version_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.VersionsClient",
+          "shortName": "VersionsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.VersionsClient.delete_version",
+        "method": {
+          "fullName": "google.appengine.v1.Versions.DeleteVersion",
+          "service": {
+            "fullName": "google.appengine.v1.Versions",
+            "shortName": "Versions"
+          },
+          "shortName": "DeleteVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.DeleteVersionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_version"
+      },
+      "description": "Sample for DeleteVersion",
+      "file": "appengine_v1_generated_versions_delete_version_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Versions_DeleteVersion_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_versions_delete_version_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.VersionsAsyncClient",
+          "shortName": "VersionsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.VersionsAsyncClient.get_version",
+        "method": {
+          "fullName": "google.appengine.v1.Versions.GetVersion",
+          "service": {
+            "fullName": "google.appengine.v1.Versions",
+            "shortName": "Versions"
+          },
+          "shortName": "GetVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetVersionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.Version",
+        "shortName": "get_version"
+      },
+      "description": "Sample for GetVersion",
+      "file": "appengine_v1_generated_versions_get_version_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Versions_GetVersion_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_versions_get_version_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.VersionsClient",
+          "shortName": "VersionsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.VersionsClient.get_version",
+        "method": {
+          "fullName": "google.appengine.v1.Versions.GetVersion",
+          "service": {
+            "fullName": "google.appengine.v1.Versions",
+            "shortName": "Versions"
+          },
+          "shortName": "GetVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.GetVersionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.types.Version",
+        "shortName": "get_version"
+      },
+      "description": "Sample for GetVersion",
+      "file": "appengine_v1_generated_versions_get_version_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Versions_GetVersion_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_versions_get_version_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.VersionsAsyncClient",
+          "shortName": "VersionsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.VersionsAsyncClient.list_versions",
+        "method": {
+          "fullName": "google.appengine.v1.Versions.ListVersions",
+          "service": {
+            "fullName": "google.appengine.v1.Versions",
+            "shortName": "Versions"
+          },
+          "shortName": "ListVersions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListVersionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.versions.pagers.ListVersionsAsyncPager",
+        "shortName": "list_versions"
+      },
+      "description": "Sample for ListVersions",
+      "file": "appengine_v1_generated_versions_list_versions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Versions_ListVersions_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_versions_list_versions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.VersionsClient",
+          "shortName": "VersionsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.VersionsClient.list_versions",
+        "method": {
+          "fullName": "google.appengine.v1.Versions.ListVersions",
+          "service": {
+            "fullName": "google.appengine.v1.Versions",
+            "shortName": "Versions"
+          },
+          "shortName": "ListVersions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.ListVersionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.appengine_admin_v1.services.versions.pagers.ListVersionsPager",
+        "shortName": "list_versions"
+      },
+      "description": "Sample for ListVersions",
+      "file": "appengine_v1_generated_versions_list_versions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Versions_ListVersions_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_versions_list_versions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.VersionsAsyncClient",
+          "shortName": "VersionsAsyncClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.VersionsAsyncClient.update_version",
+        "method": {
+          "fullName": "google.appengine.v1.Versions.UpdateVersion",
+          "service": {
+            "fullName": "google.appengine.v1.Versions",
+            "shortName": "Versions"
+          },
+          "shortName": "UpdateVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateVersionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_version"
+      },
+      "description": "Sample for UpdateVersion",
+      "file": "appengine_v1_generated_versions_update_version_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Versions_UpdateVersion_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_versions_update_version_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.appengine_admin_v1.VersionsClient",
+          "shortName": "VersionsClient"
+        },
+        "fullName": "google.cloud.appengine_admin_v1.VersionsClient.update_version",
+        "method": {
+          "fullName": "google.appengine.v1.Versions.UpdateVersion",
+          "service": {
+            "fullName": "google.appengine.v1.Versions",
+            "shortName": "Versions"
+          },
+          "shortName": "UpdateVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.appengine_admin_v1.types.UpdateVersionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_version"
+      },
+      "description": "Sample for UpdateVersion",
+      "file": "appengine_v1_generated_versions_update_version_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "appengine_v1_generated_Versions_UpdateVersion_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "appengine_v1_generated_versions_update_version_sync.py"
+    }
+  ]
+}

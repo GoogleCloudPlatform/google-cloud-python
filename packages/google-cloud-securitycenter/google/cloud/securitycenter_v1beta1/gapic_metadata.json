@@ -1,0 +1,298 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.securitycenter_v1beta1",
+  "protoPackage": "google.cloud.securitycenter.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "SecurityCenter": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SecurityCenterClient",
+          "rpcs": {
+            "CreateFinding": {
+              "methods": [
+                "create_finding"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetOrganizationSettings": {
+              "methods": [
+                "get_organization_settings"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "GroupAssets": {
+              "methods": [
+                "group_assets"
+              ]
+            },
+            "GroupFindings": {
+              "methods": [
+                "group_findings"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListFindings": {
+              "methods": [
+                "list_findings"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "RunAssetDiscovery": {
+              "methods": [
+                "run_asset_discovery"
+              ]
+            },
+            "SetFindingState": {
+              "methods": [
+                "set_finding_state"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateFinding": {
+              "methods": [
+                "update_finding"
+              ]
+            },
+            "UpdateOrganizationSettings": {
+              "methods": [
+                "update_organization_settings"
+              ]
+            },
+            "UpdateSecurityMarks": {
+              "methods": [
+                "update_security_marks"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SecurityCenterAsyncClient",
+          "rpcs": {
+            "CreateFinding": {
+              "methods": [
+                "create_finding"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetOrganizationSettings": {
+              "methods": [
+                "get_organization_settings"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "GroupAssets": {
+              "methods": [
+                "group_assets"
+              ]
+            },
+            "GroupFindings": {
+              "methods": [
+                "group_findings"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListFindings": {
+              "methods": [
+                "list_findings"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "RunAssetDiscovery": {
+              "methods": [
+                "run_asset_discovery"
+              ]
+            },
+            "SetFindingState": {
+              "methods": [
+                "set_finding_state"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateFinding": {
+              "methods": [
+                "update_finding"
+              ]
+            },
+            "UpdateOrganizationSettings": {
+              "methods": [
+                "update_organization_settings"
+              ]
+            },
+            "UpdateSecurityMarks": {
+              "methods": [
+                "update_security_marks"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SecurityCenterClient",
+          "rpcs": {
+            "CreateFinding": {
+              "methods": [
+                "create_finding"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetOrganizationSettings": {
+              "methods": [
+                "get_organization_settings"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "GroupAssets": {
+              "methods": [
+                "group_assets"
+              ]
+            },
+            "GroupFindings": {
+              "methods": [
+                "group_findings"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListFindings": {
+              "methods": [
+                "list_findings"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "RunAssetDiscovery": {
+              "methods": [
+                "run_asset_discovery"
+              ]
+            },
+            "SetFindingState": {
+              "methods": [
+                "set_finding_state"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateFinding": {
+              "methods": [
+                "update_finding"
+              ]
+            },
+            "UpdateOrganizationSettings": {
+              "methods": [
+                "update_organization_settings"
+              ]
+            },
+            "UpdateSecurityMarks": {
+              "methods": [
+                "update_security_marks"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

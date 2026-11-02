@@ -1,0 +1,2921 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.tpu.v2",
+        "version": "v2"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-tpu",
+    "version": "1.28.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.create_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.CreateNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "CreateNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.CreateNodeRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "node",
+            "type": "google.cloud.tpu_v2.types.Node"
+          },
+          {
+            "name": "node_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_node"
+      },
+      "description": "Sample for CreateNode",
+      "file": "tpu_v2_generated_tpu_create_node_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_CreateNode_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_create_node_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.create_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.CreateNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "CreateNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.CreateNodeRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "node",
+            "type": "google.cloud.tpu_v2.types.Node"
+          },
+          {
+            "name": "node_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_node"
+      },
+      "description": "Sample for CreateNode",
+      "file": "tpu_v2_generated_tpu_create_node_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_CreateNode_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_create_node_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.create_queued_resource",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.CreateQueuedResource",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "CreateQueuedResource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.CreateQueuedResourceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "queued_resource",
+            "type": "google.cloud.tpu_v2.types.QueuedResource"
+          },
+          {
+            "name": "queued_resource_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_queued_resource"
+      },
+      "description": "Sample for CreateQueuedResource",
+      "file": "tpu_v2_generated_tpu_create_queued_resource_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_CreateQueuedResource_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_create_queued_resource_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.create_queued_resource",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.CreateQueuedResource",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "CreateQueuedResource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.CreateQueuedResourceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "queued_resource",
+            "type": "google.cloud.tpu_v2.types.QueuedResource"
+          },
+          {
+            "name": "queued_resource_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_queued_resource"
+      },
+      "description": "Sample for CreateQueuedResource",
+      "file": "tpu_v2_generated_tpu_create_queued_resource_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_CreateQueuedResource_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_create_queued_resource_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.delete_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.DeleteNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "DeleteNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.DeleteNodeRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_node"
+      },
+      "description": "Sample for DeleteNode",
+      "file": "tpu_v2_generated_tpu_delete_node_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_DeleteNode_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_delete_node_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.delete_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.DeleteNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "DeleteNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.DeleteNodeRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_node"
+      },
+      "description": "Sample for DeleteNode",
+      "file": "tpu_v2_generated_tpu_delete_node_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_DeleteNode_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_delete_node_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.delete_queued_resource",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.DeleteQueuedResource",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "DeleteQueuedResource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.DeleteQueuedResourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_queued_resource"
+      },
+      "description": "Sample for DeleteQueuedResource",
+      "file": "tpu_v2_generated_tpu_delete_queued_resource_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_DeleteQueuedResource_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_delete_queued_resource_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.delete_queued_resource",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.DeleteQueuedResource",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "DeleteQueuedResource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.DeleteQueuedResourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_queued_resource"
+      },
+      "description": "Sample for DeleteQueuedResource",
+      "file": "tpu_v2_generated_tpu_delete_queued_resource_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_DeleteQueuedResource_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_delete_queued_resource_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.generate_service_identity",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GenerateServiceIdentity",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GenerateServiceIdentity"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GenerateServiceIdentityRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.GenerateServiceIdentityResponse",
+        "shortName": "generate_service_identity"
+      },
+      "description": "Sample for GenerateServiceIdentity",
+      "file": "tpu_v2_generated_tpu_generate_service_identity_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GenerateServiceIdentity_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_generate_service_identity_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.generate_service_identity",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GenerateServiceIdentity",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GenerateServiceIdentity"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GenerateServiceIdentityRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.GenerateServiceIdentityResponse",
+        "shortName": "generate_service_identity"
+      },
+      "description": "Sample for GenerateServiceIdentity",
+      "file": "tpu_v2_generated_tpu_generate_service_identity_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GenerateServiceIdentity_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_generate_service_identity_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.get_accelerator_type",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GetAcceleratorType",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GetAcceleratorType"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GetAcceleratorTypeRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.AcceleratorType",
+        "shortName": "get_accelerator_type"
+      },
+      "description": "Sample for GetAcceleratorType",
+      "file": "tpu_v2_generated_tpu_get_accelerator_type_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GetAcceleratorType_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_get_accelerator_type_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.get_accelerator_type",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GetAcceleratorType",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GetAcceleratorType"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GetAcceleratorTypeRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.AcceleratorType",
+        "shortName": "get_accelerator_type"
+      },
+      "description": "Sample for GetAcceleratorType",
+      "file": "tpu_v2_generated_tpu_get_accelerator_type_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GetAcceleratorType_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_get_accelerator_type_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.get_guest_attributes",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GetGuestAttributes",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GetGuestAttributes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GetGuestAttributesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.GetGuestAttributesResponse",
+        "shortName": "get_guest_attributes"
+      },
+      "description": "Sample for GetGuestAttributes",
+      "file": "tpu_v2_generated_tpu_get_guest_attributes_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GetGuestAttributes_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_get_guest_attributes_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.get_guest_attributes",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GetGuestAttributes",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GetGuestAttributes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GetGuestAttributesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.GetGuestAttributesResponse",
+        "shortName": "get_guest_attributes"
+      },
+      "description": "Sample for GetGuestAttributes",
+      "file": "tpu_v2_generated_tpu_get_guest_attributes_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GetGuestAttributes_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_get_guest_attributes_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.get_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GetNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GetNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GetNodeRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.Node",
+        "shortName": "get_node"
+      },
+      "description": "Sample for GetNode",
+      "file": "tpu_v2_generated_tpu_get_node_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GetNode_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_get_node_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.get_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GetNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GetNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GetNodeRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.Node",
+        "shortName": "get_node"
+      },
+      "description": "Sample for GetNode",
+      "file": "tpu_v2_generated_tpu_get_node_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GetNode_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_get_node_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.get_queued_resource",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GetQueuedResource",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GetQueuedResource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GetQueuedResourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.QueuedResource",
+        "shortName": "get_queued_resource"
+      },
+      "description": "Sample for GetQueuedResource",
+      "file": "tpu_v2_generated_tpu_get_queued_resource_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GetQueuedResource_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_get_queued_resource_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.get_queued_resource",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GetQueuedResource",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GetQueuedResource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GetQueuedResourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.QueuedResource",
+        "shortName": "get_queued_resource"
+      },
+      "description": "Sample for GetQueuedResource",
+      "file": "tpu_v2_generated_tpu_get_queued_resource_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GetQueuedResource_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_get_queued_resource_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.get_runtime_version",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GetRuntimeVersion",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GetRuntimeVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GetRuntimeVersionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.RuntimeVersion",
+        "shortName": "get_runtime_version"
+      },
+      "description": "Sample for GetRuntimeVersion",
+      "file": "tpu_v2_generated_tpu_get_runtime_version_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GetRuntimeVersion_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_get_runtime_version_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.get_runtime_version",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.GetRuntimeVersion",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "GetRuntimeVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.GetRuntimeVersionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.types.RuntimeVersion",
+        "shortName": "get_runtime_version"
+      },
+      "description": "Sample for GetRuntimeVersion",
+      "file": "tpu_v2_generated_tpu_get_runtime_version_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_GetRuntimeVersion_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_get_runtime_version_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.list_accelerator_types",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.ListAcceleratorTypes",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "ListAcceleratorTypes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.ListAcceleratorTypesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.services.tpu.pagers.ListAcceleratorTypesAsyncPager",
+        "shortName": "list_accelerator_types"
+      },
+      "description": "Sample for ListAcceleratorTypes",
+      "file": "tpu_v2_generated_tpu_list_accelerator_types_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_ListAcceleratorTypes_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_list_accelerator_types_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.list_accelerator_types",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.ListAcceleratorTypes",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "ListAcceleratorTypes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.ListAcceleratorTypesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.services.tpu.pagers.ListAcceleratorTypesPager",
+        "shortName": "list_accelerator_types"
+      },
+      "description": "Sample for ListAcceleratorTypes",
+      "file": "tpu_v2_generated_tpu_list_accelerator_types_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_ListAcceleratorTypes_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_list_accelerator_types_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.list_nodes",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.ListNodes",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "ListNodes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.ListNodesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.services.tpu.pagers.ListNodesAsyncPager",
+        "shortName": "list_nodes"
+      },
+      "description": "Sample for ListNodes",
+      "file": "tpu_v2_generated_tpu_list_nodes_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_ListNodes_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_list_nodes_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.list_nodes",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.ListNodes",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "ListNodes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.ListNodesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.services.tpu.pagers.ListNodesPager",
+        "shortName": "list_nodes"
+      },
+      "description": "Sample for ListNodes",
+      "file": "tpu_v2_generated_tpu_list_nodes_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_ListNodes_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_list_nodes_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.list_queued_resources",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.ListQueuedResources",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "ListQueuedResources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.ListQueuedResourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.services.tpu.pagers.ListQueuedResourcesAsyncPager",
+        "shortName": "list_queued_resources"
+      },
+      "description": "Sample for ListQueuedResources",
+      "file": "tpu_v2_generated_tpu_list_queued_resources_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_ListQueuedResources_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_list_queued_resources_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.list_queued_resources",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.ListQueuedResources",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "ListQueuedResources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.ListQueuedResourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.services.tpu.pagers.ListQueuedResourcesPager",
+        "shortName": "list_queued_resources"
+      },
+      "description": "Sample for ListQueuedResources",
+      "file": "tpu_v2_generated_tpu_list_queued_resources_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_ListQueuedResources_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_list_queued_resources_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.list_runtime_versions",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.ListRuntimeVersions",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "ListRuntimeVersions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.ListRuntimeVersionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.services.tpu.pagers.ListRuntimeVersionsAsyncPager",
+        "shortName": "list_runtime_versions"
+      },
+      "description": "Sample for ListRuntimeVersions",
+      "file": "tpu_v2_generated_tpu_list_runtime_versions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_ListRuntimeVersions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_list_runtime_versions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.list_runtime_versions",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.ListRuntimeVersions",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "ListRuntimeVersions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.ListRuntimeVersionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.tpu_v2.services.tpu.pagers.ListRuntimeVersionsPager",
+        "shortName": "list_runtime_versions"
+      },
+      "description": "Sample for ListRuntimeVersions",
+      "file": "tpu_v2_generated_tpu_list_runtime_versions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_ListRuntimeVersions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_list_runtime_versions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.reset_queued_resource",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.ResetQueuedResource",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "ResetQueuedResource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.ResetQueuedResourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "reset_queued_resource"
+      },
+      "description": "Sample for ResetQueuedResource",
+      "file": "tpu_v2_generated_tpu_reset_queued_resource_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_ResetQueuedResource_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_reset_queued_resource_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.reset_queued_resource",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.ResetQueuedResource",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "ResetQueuedResource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.ResetQueuedResourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "reset_queued_resource"
+      },
+      "description": "Sample for ResetQueuedResource",
+      "file": "tpu_v2_generated_tpu_reset_queued_resource_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_ResetQueuedResource_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_reset_queued_resource_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.start_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.StartNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "StartNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.StartNodeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "start_node"
+      },
+      "description": "Sample for StartNode",
+      "file": "tpu_v2_generated_tpu_start_node_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_StartNode_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_start_node_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.start_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.StartNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "StartNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.StartNodeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "start_node"
+      },
+      "description": "Sample for StartNode",
+      "file": "tpu_v2_generated_tpu_start_node_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_StartNode_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_start_node_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.stop_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.StopNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "StopNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.StopNodeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "stop_node"
+      },
+      "description": "Sample for StopNode",
+      "file": "tpu_v2_generated_tpu_stop_node_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_StopNode_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_stop_node_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.stop_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.StopNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "StopNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.StopNodeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "stop_node"
+      },
+      "description": "Sample for StopNode",
+      "file": "tpu_v2_generated_tpu_stop_node_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_StopNode_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_stop_node_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuAsyncClient",
+          "shortName": "TpuAsyncClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuAsyncClient.update_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.UpdateNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "UpdateNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.UpdateNodeRequest"
+          },
+          {
+            "name": "node",
+            "type": "google.cloud.tpu_v2.types.Node"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_node"
+      },
+      "description": "Sample for UpdateNode",
+      "file": "tpu_v2_generated_tpu_update_node_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_UpdateNode_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_update_node_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.tpu_v2.TpuClient",
+          "shortName": "TpuClient"
+        },
+        "fullName": "google.cloud.tpu_v2.TpuClient.update_node",
+        "method": {
+          "fullName": "google.cloud.tpu.v2.Tpu.UpdateNode",
+          "service": {
+            "fullName": "google.cloud.tpu.v2.Tpu",
+            "shortName": "Tpu"
+          },
+          "shortName": "UpdateNode"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.tpu_v2.types.UpdateNodeRequest"
+          },
+          {
+            "name": "node",
+            "type": "google.cloud.tpu_v2.types.Node"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_node"
+      },
+      "description": "Sample for UpdateNode",
+      "file": "tpu_v2_generated_tpu_update_node_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "tpu_v2_generated_Tpu_UpdateNode_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "tpu_v2_generated_tpu_update_node_sync.py"
+    }
+  ]
+}

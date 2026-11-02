@@ -1,0 +1,118 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_conversions_v1beta",
+  "protoPackage": "google.shopping.merchant.conversions.v1beta",
+  "schema": "1.0",
+  "services": {
+    "ConversionSourcesService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ConversionSourcesServiceClient",
+          "rpcs": {
+            "CreateConversionSource": {
+              "methods": [
+                "create_conversion_source"
+              ]
+            },
+            "DeleteConversionSource": {
+              "methods": [
+                "delete_conversion_source"
+              ]
+            },
+            "GetConversionSource": {
+              "methods": [
+                "get_conversion_source"
+              ]
+            },
+            "ListConversionSources": {
+              "methods": [
+                "list_conversion_sources"
+              ]
+            },
+            "UndeleteConversionSource": {
+              "methods": [
+                "undelete_conversion_source"
+              ]
+            },
+            "UpdateConversionSource": {
+              "methods": [
+                "update_conversion_source"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ConversionSourcesServiceAsyncClient",
+          "rpcs": {
+            "CreateConversionSource": {
+              "methods": [
+                "create_conversion_source"
+              ]
+            },
+            "DeleteConversionSource": {
+              "methods": [
+                "delete_conversion_source"
+              ]
+            },
+            "GetConversionSource": {
+              "methods": [
+                "get_conversion_source"
+              ]
+            },
+            "ListConversionSources": {
+              "methods": [
+                "list_conversion_sources"
+              ]
+            },
+            "UndeleteConversionSource": {
+              "methods": [
+                "undelete_conversion_source"
+              ]
+            },
+            "UpdateConversionSource": {
+              "methods": [
+                "update_conversion_source"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ConversionSourcesServiceClient",
+          "rpcs": {
+            "CreateConversionSource": {
+              "methods": [
+                "create_conversion_source"
+              ]
+            },
+            "DeleteConversionSource": {
+              "methods": [
+                "delete_conversion_source"
+              ]
+            },
+            "GetConversionSource": {
+              "methods": [
+                "get_conversion_source"
+              ]
+            },
+            "ListConversionSources": {
+              "methods": [
+                "list_conversion_sources"
+              ]
+            },
+            "UndeleteConversionSource": {
+              "methods": [
+                "undelete_conversion_source"
+              ]
+            },
+            "UpdateConversionSource": {
+              "methods": [
+                "update_conversion_source"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

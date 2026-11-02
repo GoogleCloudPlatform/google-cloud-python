@@ -1,0 +1,2293 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.osconfig.v1alpha",
+        "version": "v1alpha"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-os-config",
+    "version": "1.26.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.create_os_policy_assignment",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.CreateOSPolicyAssignment",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "CreateOSPolicyAssignment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.CreateOSPolicyAssignmentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "os_policy_assignment",
+            "type": "google.cloud.osconfig_v1alpha.types.OSPolicyAssignment"
+          },
+          {
+            "name": "os_policy_assignment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_os_policy_assignment"
+      },
+      "description": "Sample for CreateOSPolicyAssignment",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_create_os_policy_assignment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_CreateOSPolicyAssignment_async",
+      "segments": [
+        {
+          "end": 65,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 65,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 62,
+          "start": 56,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 66,
+          "start": 63,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_create_os_policy_assignment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.create_os_policy_assignment",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.CreateOSPolicyAssignment",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "CreateOSPolicyAssignment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.CreateOSPolicyAssignmentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "os_policy_assignment",
+            "type": "google.cloud.osconfig_v1alpha.types.OSPolicyAssignment"
+          },
+          {
+            "name": "os_policy_assignment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_os_policy_assignment"
+      },
+      "description": "Sample for CreateOSPolicyAssignment",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_create_os_policy_assignment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_CreateOSPolicyAssignment_sync",
+      "segments": [
+        {
+          "end": 65,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 65,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 62,
+          "start": 56,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 66,
+          "start": 63,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_create_os_policy_assignment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.delete_os_policy_assignment",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.DeleteOSPolicyAssignment",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "DeleteOSPolicyAssignment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.DeleteOSPolicyAssignmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_os_policy_assignment"
+      },
+      "description": "Sample for DeleteOSPolicyAssignment",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_delete_os_policy_assignment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_DeleteOSPolicyAssignment_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_delete_os_policy_assignment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.delete_os_policy_assignment",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.DeleteOSPolicyAssignment",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "DeleteOSPolicyAssignment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.DeleteOSPolicyAssignmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_os_policy_assignment"
+      },
+      "description": "Sample for DeleteOSPolicyAssignment",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_delete_os_policy_assignment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_DeleteOSPolicyAssignment_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_delete_os_policy_assignment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.get_instance_os_policies_compliance",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.GetInstanceOSPoliciesCompliance",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "GetInstanceOSPoliciesCompliance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.GetInstanceOSPoliciesComplianceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.types.InstanceOSPoliciesCompliance",
+        "shortName": "get_instance_os_policies_compliance"
+      },
+      "description": "Sample for GetInstanceOSPoliciesCompliance",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_get_instance_os_policies_compliance_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_GetInstanceOSPoliciesCompliance_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_get_instance_os_policies_compliance_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.get_instance_os_policies_compliance",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.GetInstanceOSPoliciesCompliance",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "GetInstanceOSPoliciesCompliance"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.GetInstanceOSPoliciesComplianceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.types.InstanceOSPoliciesCompliance",
+        "shortName": "get_instance_os_policies_compliance"
+      },
+      "description": "Sample for GetInstanceOSPoliciesCompliance",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_get_instance_os_policies_compliance_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_GetInstanceOSPoliciesCompliance_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_get_instance_os_policies_compliance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.get_inventory",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.GetInventory",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "GetInventory"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.GetInventoryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.types.Inventory",
+        "shortName": "get_inventory"
+      },
+      "description": "Sample for GetInventory",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_get_inventory_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_GetInventory_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_get_inventory_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.get_inventory",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.GetInventory",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "GetInventory"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.GetInventoryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.types.Inventory",
+        "shortName": "get_inventory"
+      },
+      "description": "Sample for GetInventory",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_get_inventory_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_GetInventory_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_get_inventory_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.get_os_policy_assignment_report",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.GetOSPolicyAssignmentReport",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "GetOSPolicyAssignmentReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.GetOSPolicyAssignmentReportRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.types.OSPolicyAssignmentReport",
+        "shortName": "get_os_policy_assignment_report"
+      },
+      "description": "Sample for GetOSPolicyAssignmentReport",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_get_os_policy_assignment_report_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_GetOSPolicyAssignmentReport_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_get_os_policy_assignment_report_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.get_os_policy_assignment_report",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.GetOSPolicyAssignmentReport",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "GetOSPolicyAssignmentReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.GetOSPolicyAssignmentReportRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.types.OSPolicyAssignmentReport",
+        "shortName": "get_os_policy_assignment_report"
+      },
+      "description": "Sample for GetOSPolicyAssignmentReport",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_get_os_policy_assignment_report_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_GetOSPolicyAssignmentReport_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_get_os_policy_assignment_report_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.get_os_policy_assignment",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.GetOSPolicyAssignment",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "GetOSPolicyAssignment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.GetOSPolicyAssignmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.types.OSPolicyAssignment",
+        "shortName": "get_os_policy_assignment"
+      },
+      "description": "Sample for GetOSPolicyAssignment",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_get_os_policy_assignment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_GetOSPolicyAssignment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_get_os_policy_assignment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.get_os_policy_assignment",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.GetOSPolicyAssignment",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "GetOSPolicyAssignment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.GetOSPolicyAssignmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.types.OSPolicyAssignment",
+        "shortName": "get_os_policy_assignment"
+      },
+      "description": "Sample for GetOSPolicyAssignment",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_get_os_policy_assignment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_GetOSPolicyAssignment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_get_os_policy_assignment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.get_vulnerability_report",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.GetVulnerabilityReport",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "GetVulnerabilityReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.GetVulnerabilityReportRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.types.VulnerabilityReport",
+        "shortName": "get_vulnerability_report"
+      },
+      "description": "Sample for GetVulnerabilityReport",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_get_vulnerability_report_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_GetVulnerabilityReport_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_get_vulnerability_report_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.get_vulnerability_report",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.GetVulnerabilityReport",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "GetVulnerabilityReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.GetVulnerabilityReportRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.types.VulnerabilityReport",
+        "shortName": "get_vulnerability_report"
+      },
+      "description": "Sample for GetVulnerabilityReport",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_get_vulnerability_report_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_GetVulnerabilityReport_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_get_vulnerability_report_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.list_instance_os_policies_compliances",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListInstanceOSPoliciesCompliances",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListInstanceOSPoliciesCompliances"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListInstanceOSPoliciesCompliancesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListInstanceOSPoliciesCompliancesAsyncPager",
+        "shortName": "list_instance_os_policies_compliances"
+      },
+      "description": "Sample for ListInstanceOSPoliciesCompliances",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_instance_os_policies_compliances_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListInstanceOSPoliciesCompliances_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_instance_os_policies_compliances_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.list_instance_os_policies_compliances",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListInstanceOSPoliciesCompliances",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListInstanceOSPoliciesCompliances"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListInstanceOSPoliciesCompliancesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListInstanceOSPoliciesCompliancesPager",
+        "shortName": "list_instance_os_policies_compliances"
+      },
+      "description": "Sample for ListInstanceOSPoliciesCompliances",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_instance_os_policies_compliances_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListInstanceOSPoliciesCompliances_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_instance_os_policies_compliances_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.list_inventories",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListInventories",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListInventories"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListInventoriesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListInventoriesAsyncPager",
+        "shortName": "list_inventories"
+      },
+      "description": "Sample for ListInventories",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_inventories_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListInventories_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_inventories_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.list_inventories",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListInventories",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListInventories"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListInventoriesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListInventoriesPager",
+        "shortName": "list_inventories"
+      },
+      "description": "Sample for ListInventories",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_inventories_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListInventories_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_inventories_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.list_os_policy_assignment_reports",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListOSPolicyAssignmentReports",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListOSPolicyAssignmentReports"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListOSPolicyAssignmentReportsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListOSPolicyAssignmentReportsAsyncPager",
+        "shortName": "list_os_policy_assignment_reports"
+      },
+      "description": "Sample for ListOSPolicyAssignmentReports",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignment_reports_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListOSPolicyAssignmentReports_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignment_reports_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.list_os_policy_assignment_reports",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListOSPolicyAssignmentReports",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListOSPolicyAssignmentReports"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListOSPolicyAssignmentReportsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListOSPolicyAssignmentReportsPager",
+        "shortName": "list_os_policy_assignment_reports"
+      },
+      "description": "Sample for ListOSPolicyAssignmentReports",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignment_reports_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListOSPolicyAssignmentReports_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignment_reports_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.list_os_policy_assignment_revisions",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListOSPolicyAssignmentRevisions",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListOSPolicyAssignmentRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListOSPolicyAssignmentRevisionsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListOSPolicyAssignmentRevisionsAsyncPager",
+        "shortName": "list_os_policy_assignment_revisions"
+      },
+      "description": "Sample for ListOSPolicyAssignmentRevisions",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignment_revisions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListOSPolicyAssignmentRevisions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignment_revisions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.list_os_policy_assignment_revisions",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListOSPolicyAssignmentRevisions",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListOSPolicyAssignmentRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListOSPolicyAssignmentRevisionsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListOSPolicyAssignmentRevisionsPager",
+        "shortName": "list_os_policy_assignment_revisions"
+      },
+      "description": "Sample for ListOSPolicyAssignmentRevisions",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignment_revisions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListOSPolicyAssignmentRevisions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignment_revisions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.list_os_policy_assignments",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListOSPolicyAssignments",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListOSPolicyAssignments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListOSPolicyAssignmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListOSPolicyAssignmentsAsyncPager",
+        "shortName": "list_os_policy_assignments"
+      },
+      "description": "Sample for ListOSPolicyAssignments",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListOSPolicyAssignments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.list_os_policy_assignments",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListOSPolicyAssignments",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListOSPolicyAssignments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListOSPolicyAssignmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListOSPolicyAssignmentsPager",
+        "shortName": "list_os_policy_assignments"
+      },
+      "description": "Sample for ListOSPolicyAssignments",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListOSPolicyAssignments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_os_policy_assignments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.list_vulnerability_reports",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListVulnerabilityReports",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListVulnerabilityReports"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListVulnerabilityReportsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListVulnerabilityReportsAsyncPager",
+        "shortName": "list_vulnerability_reports"
+      },
+      "description": "Sample for ListVulnerabilityReports",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_vulnerability_reports_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListVulnerabilityReports_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_vulnerability_reports_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.list_vulnerability_reports",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.ListVulnerabilityReports",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "ListVulnerabilityReports"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.ListVulnerabilityReportsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.osconfig_v1alpha.services.os_config_zonal_service.pagers.ListVulnerabilityReportsPager",
+        "shortName": "list_vulnerability_reports"
+      },
+      "description": "Sample for ListVulnerabilityReports",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_list_vulnerability_reports_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_ListVulnerabilityReports_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_list_vulnerability_reports_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient",
+          "shortName": "OsConfigZonalServiceAsyncClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceAsyncClient.update_os_policy_assignment",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.UpdateOSPolicyAssignment",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "UpdateOSPolicyAssignment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.UpdateOSPolicyAssignmentRequest"
+          },
+          {
+            "name": "os_policy_assignment",
+            "type": "google.cloud.osconfig_v1alpha.types.OSPolicyAssignment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_os_policy_assignment"
+      },
+      "description": "Sample for UpdateOSPolicyAssignment",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_update_os_policy_assignment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_UpdateOSPolicyAssignment_async",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_update_os_policy_assignment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient",
+          "shortName": "OsConfigZonalServiceClient"
+        },
+        "fullName": "google.cloud.osconfig_v1alpha.OsConfigZonalServiceClient.update_os_policy_assignment",
+        "method": {
+          "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService.UpdateOSPolicyAssignment",
+          "service": {
+            "fullName": "google.cloud.osconfig.v1alpha.OsConfigZonalService",
+            "shortName": "OsConfigZonalService"
+          },
+          "shortName": "UpdateOSPolicyAssignment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.osconfig_v1alpha.types.UpdateOSPolicyAssignmentRequest"
+          },
+          {
+            "name": "os_policy_assignment",
+            "type": "google.cloud.osconfig_v1alpha.types.OSPolicyAssignment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_os_policy_assignment"
+      },
+      "description": "Sample for UpdateOSPolicyAssignment",
+      "file": "osconfig_v1alpha_generated_os_config_zonal_service_update_os_policy_assignment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "osconfig_v1alpha_generated_OsConfigZonalService_UpdateOSPolicyAssignment_sync",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "osconfig_v1alpha_generated_os_config_zonal_service_update_os_policy_assignment_sync.py"
+    }
+  ]
+}

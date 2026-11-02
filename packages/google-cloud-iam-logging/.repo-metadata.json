@@ -1,0 +1,12 @@
+{
+    "client_documentation": "https://cloud.google.com/python/docs/reference/iamlogging/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-iam-logging",
+    "language": "python",
+    "library_type": "OTHER",
+    "name": "iamlogging",
+    "name_pretty": "IAM Audit Logging",
+    "product_documentation": "https://cloud.google.com/iam/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

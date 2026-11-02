@@ -1,0 +1,15 @@
+{
+    "api_description": "The Cloud Filestore API is used for creating and managing cloud file\nservers.",
+    "api_id": "file.googleapis.com",
+    "api_shortname": "file",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/file/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-filestore",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "file",
+    "name_pretty": "Cloud Filestore",
+    "product_documentation": "https://cloud.google.com/filestore/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

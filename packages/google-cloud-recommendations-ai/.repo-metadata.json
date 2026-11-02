@@ -1,0 +1,15 @@
+{
+    "api_description": "Recommendations AI service enables customers to build end-to-end\npersonalized recommendation systems without requiring a high level of\nexpertise in machine learning, recommendation system, or Google Cloud.",
+    "api_id": "recommendationengine.googleapis.com",
+    "api_shortname": "recommendationengine",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/recommendationengine/latest",
+    "default_version": "v1beta1",
+    "distribution_name": "google-cloud-recommendations-ai",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "recommendationengine",
+    "name_pretty": "Recommendations AI",
+    "product_documentation": "https://cloud.google.com/recommendations-ai/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,4573 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.contentwarehouse.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-contentwarehouse",
+    "version": "0.11.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceAsyncClient",
+          "shortName": "DocumentLinkServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceAsyncClient.create_document_link",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService.CreateDocumentLink",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService",
+            "shortName": "DocumentLinkService"
+          },
+          "shortName": "CreateDocumentLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.CreateDocumentLinkRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "document_link",
+            "type": "google.cloud.contentwarehouse_v1.types.DocumentLink"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.DocumentLink",
+        "shortName": "create_document_link"
+      },
+      "description": "Sample for CreateDocumentLink",
+      "file": "contentwarehouse_v1_generated_document_link_service_create_document_link_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentLinkService_CreateDocumentLink_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_link_service_create_document_link_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceClient",
+          "shortName": "DocumentLinkServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceClient.create_document_link",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService.CreateDocumentLink",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService",
+            "shortName": "DocumentLinkService"
+          },
+          "shortName": "CreateDocumentLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.CreateDocumentLinkRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "document_link",
+            "type": "google.cloud.contentwarehouse_v1.types.DocumentLink"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.DocumentLink",
+        "shortName": "create_document_link"
+      },
+      "description": "Sample for CreateDocumentLink",
+      "file": "contentwarehouse_v1_generated_document_link_service_create_document_link_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentLinkService_CreateDocumentLink_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_link_service_create_document_link_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceAsyncClient",
+          "shortName": "DocumentLinkServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceAsyncClient.delete_document_link",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService.DeleteDocumentLink",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService",
+            "shortName": "DocumentLinkService"
+          },
+          "shortName": "DeleteDocumentLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.DeleteDocumentLinkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_document_link"
+      },
+      "description": "Sample for DeleteDocumentLink",
+      "file": "contentwarehouse_v1_generated_document_link_service_delete_document_link_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentLinkService_DeleteDocumentLink_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_link_service_delete_document_link_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceClient",
+          "shortName": "DocumentLinkServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceClient.delete_document_link",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService.DeleteDocumentLink",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService",
+            "shortName": "DocumentLinkService"
+          },
+          "shortName": "DeleteDocumentLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.DeleteDocumentLinkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_document_link"
+      },
+      "description": "Sample for DeleteDocumentLink",
+      "file": "contentwarehouse_v1_generated_document_link_service_delete_document_link_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentLinkService_DeleteDocumentLink_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_link_service_delete_document_link_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceAsyncClient",
+          "shortName": "DocumentLinkServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceAsyncClient.list_linked_sources",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService.ListLinkedSources",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService",
+            "shortName": "DocumentLinkService"
+          },
+          "shortName": "ListLinkedSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.ListLinkedSourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.services.document_link_service.pagers.ListLinkedSourcesAsyncPager",
+        "shortName": "list_linked_sources"
+      },
+      "description": "Sample for ListLinkedSources",
+      "file": "contentwarehouse_v1_generated_document_link_service_list_linked_sources_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentLinkService_ListLinkedSources_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_link_service_list_linked_sources_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceClient",
+          "shortName": "DocumentLinkServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceClient.list_linked_sources",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService.ListLinkedSources",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService",
+            "shortName": "DocumentLinkService"
+          },
+          "shortName": "ListLinkedSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.ListLinkedSourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.services.document_link_service.pagers.ListLinkedSourcesPager",
+        "shortName": "list_linked_sources"
+      },
+      "description": "Sample for ListLinkedSources",
+      "file": "contentwarehouse_v1_generated_document_link_service_list_linked_sources_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentLinkService_ListLinkedSources_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_link_service_list_linked_sources_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceAsyncClient",
+          "shortName": "DocumentLinkServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceAsyncClient.list_linked_targets",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService.ListLinkedTargets",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService",
+            "shortName": "DocumentLinkService"
+          },
+          "shortName": "ListLinkedTargets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.ListLinkedTargetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.ListLinkedTargetsResponse",
+        "shortName": "list_linked_targets"
+      },
+      "description": "Sample for ListLinkedTargets",
+      "file": "contentwarehouse_v1_generated_document_link_service_list_linked_targets_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentLinkService_ListLinkedTargets_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_link_service_list_linked_targets_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceClient",
+          "shortName": "DocumentLinkServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentLinkServiceClient.list_linked_targets",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService.ListLinkedTargets",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentLinkService",
+            "shortName": "DocumentLinkService"
+          },
+          "shortName": "ListLinkedTargets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.ListLinkedTargetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.ListLinkedTargetsResponse",
+        "shortName": "list_linked_targets"
+      },
+      "description": "Sample for ListLinkedTargets",
+      "file": "contentwarehouse_v1_generated_document_link_service_list_linked_targets_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentLinkService_ListLinkedTargets_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_link_service_list_linked_targets_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceAsyncClient",
+          "shortName": "DocumentSchemaServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceAsyncClient.create_document_schema",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService.CreateDocumentSchema",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService",
+            "shortName": "DocumentSchemaService"
+          },
+          "shortName": "CreateDocumentSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.CreateDocumentSchemaRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "document_schema",
+            "type": "google.cloud.contentwarehouse_v1.types.DocumentSchema"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.DocumentSchema",
+        "shortName": "create_document_schema"
+      },
+      "description": "Sample for CreateDocumentSchema",
+      "file": "contentwarehouse_v1_generated_document_schema_service_create_document_schema_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentSchemaService_CreateDocumentSchema_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_schema_service_create_document_schema_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceClient",
+          "shortName": "DocumentSchemaServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceClient.create_document_schema",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService.CreateDocumentSchema",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService",
+            "shortName": "DocumentSchemaService"
+          },
+          "shortName": "CreateDocumentSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.CreateDocumentSchemaRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "document_schema",
+            "type": "google.cloud.contentwarehouse_v1.types.DocumentSchema"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.DocumentSchema",
+        "shortName": "create_document_schema"
+      },
+      "description": "Sample for CreateDocumentSchema",
+      "file": "contentwarehouse_v1_generated_document_schema_service_create_document_schema_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentSchemaService_CreateDocumentSchema_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_schema_service_create_document_schema_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceAsyncClient",
+          "shortName": "DocumentSchemaServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceAsyncClient.delete_document_schema",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService.DeleteDocumentSchema",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService",
+            "shortName": "DocumentSchemaService"
+          },
+          "shortName": "DeleteDocumentSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.DeleteDocumentSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_document_schema"
+      },
+      "description": "Sample for DeleteDocumentSchema",
+      "file": "contentwarehouse_v1_generated_document_schema_service_delete_document_schema_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentSchemaService_DeleteDocumentSchema_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_schema_service_delete_document_schema_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceClient",
+          "shortName": "DocumentSchemaServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceClient.delete_document_schema",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService.DeleteDocumentSchema",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService",
+            "shortName": "DocumentSchemaService"
+          },
+          "shortName": "DeleteDocumentSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.DeleteDocumentSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_document_schema"
+      },
+      "description": "Sample for DeleteDocumentSchema",
+      "file": "contentwarehouse_v1_generated_document_schema_service_delete_document_schema_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentSchemaService_DeleteDocumentSchema_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_schema_service_delete_document_schema_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceAsyncClient",
+          "shortName": "DocumentSchemaServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceAsyncClient.get_document_schema",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService.GetDocumentSchema",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService",
+            "shortName": "DocumentSchemaService"
+          },
+          "shortName": "GetDocumentSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.GetDocumentSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.DocumentSchema",
+        "shortName": "get_document_schema"
+      },
+      "description": "Sample for GetDocumentSchema",
+      "file": "contentwarehouse_v1_generated_document_schema_service_get_document_schema_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentSchemaService_GetDocumentSchema_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_schema_service_get_document_schema_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceClient",
+          "shortName": "DocumentSchemaServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceClient.get_document_schema",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService.GetDocumentSchema",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService",
+            "shortName": "DocumentSchemaService"
+          },
+          "shortName": "GetDocumentSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.GetDocumentSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.DocumentSchema",
+        "shortName": "get_document_schema"
+      },
+      "description": "Sample for GetDocumentSchema",
+      "file": "contentwarehouse_v1_generated_document_schema_service_get_document_schema_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentSchemaService_GetDocumentSchema_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_schema_service_get_document_schema_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceAsyncClient",
+          "shortName": "DocumentSchemaServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceAsyncClient.list_document_schemas",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService.ListDocumentSchemas",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService",
+            "shortName": "DocumentSchemaService"
+          },
+          "shortName": "ListDocumentSchemas"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.ListDocumentSchemasRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.services.document_schema_service.pagers.ListDocumentSchemasAsyncPager",
+        "shortName": "list_document_schemas"
+      },
+      "description": "Sample for ListDocumentSchemas",
+      "file": "contentwarehouse_v1_generated_document_schema_service_list_document_schemas_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentSchemaService_ListDocumentSchemas_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_schema_service_list_document_schemas_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceClient",
+          "shortName": "DocumentSchemaServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceClient.list_document_schemas",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService.ListDocumentSchemas",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService",
+            "shortName": "DocumentSchemaService"
+          },
+          "shortName": "ListDocumentSchemas"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.ListDocumentSchemasRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.services.document_schema_service.pagers.ListDocumentSchemasPager",
+        "shortName": "list_document_schemas"
+      },
+      "description": "Sample for ListDocumentSchemas",
+      "file": "contentwarehouse_v1_generated_document_schema_service_list_document_schemas_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentSchemaService_ListDocumentSchemas_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_schema_service_list_document_schemas_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceAsyncClient",
+          "shortName": "DocumentSchemaServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceAsyncClient.update_document_schema",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService.UpdateDocumentSchema",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService",
+            "shortName": "DocumentSchemaService"
+          },
+          "shortName": "UpdateDocumentSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.UpdateDocumentSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "document_schema",
+            "type": "google.cloud.contentwarehouse_v1.types.DocumentSchema"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.DocumentSchema",
+        "shortName": "update_document_schema"
+      },
+      "description": "Sample for UpdateDocumentSchema",
+      "file": "contentwarehouse_v1_generated_document_schema_service_update_document_schema_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentSchemaService_UpdateDocumentSchema_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_schema_service_update_document_schema_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceClient",
+          "shortName": "DocumentSchemaServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentSchemaServiceClient.update_document_schema",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService.UpdateDocumentSchema",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentSchemaService",
+            "shortName": "DocumentSchemaService"
+          },
+          "shortName": "UpdateDocumentSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.UpdateDocumentSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "document_schema",
+            "type": "google.cloud.contentwarehouse_v1.types.DocumentSchema"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.DocumentSchema",
+        "shortName": "update_document_schema"
+      },
+      "description": "Sample for UpdateDocumentSchema",
+      "file": "contentwarehouse_v1_generated_document_schema_service_update_document_schema_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentSchemaService_UpdateDocumentSchema_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_schema_service_update_document_schema_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient",
+          "shortName": "DocumentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient.create_document",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.CreateDocument",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "CreateDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.CreateDocumentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "document",
+            "type": "google.cloud.contentwarehouse_v1.types.Document"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.CreateDocumentResponse",
+        "shortName": "create_document"
+      },
+      "description": "Sample for CreateDocument",
+      "file": "contentwarehouse_v1_generated_document_service_create_document_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_CreateDocument_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_create_document_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient",
+          "shortName": "DocumentServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient.create_document",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.CreateDocument",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "CreateDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.CreateDocumentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "document",
+            "type": "google.cloud.contentwarehouse_v1.types.Document"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.CreateDocumentResponse",
+        "shortName": "create_document"
+      },
+      "description": "Sample for CreateDocument",
+      "file": "contentwarehouse_v1_generated_document_service_create_document_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_CreateDocument_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_create_document_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient",
+          "shortName": "DocumentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient.delete_document",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.DeleteDocument",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "DeleteDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.DeleteDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_document"
+      },
+      "description": "Sample for DeleteDocument",
+      "file": "contentwarehouse_v1_generated_document_service_delete_document_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_DeleteDocument_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_delete_document_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient",
+          "shortName": "DocumentServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient.delete_document",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.DeleteDocument",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "DeleteDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.DeleteDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_document"
+      },
+      "description": "Sample for DeleteDocument",
+      "file": "contentwarehouse_v1_generated_document_service_delete_document_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_DeleteDocument_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_delete_document_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient",
+          "shortName": "DocumentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient.fetch_acl",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.FetchAcl",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "FetchAcl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.FetchAclRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.FetchAclResponse",
+        "shortName": "fetch_acl"
+      },
+      "description": "Sample for FetchAcl",
+      "file": "contentwarehouse_v1_generated_document_service_fetch_acl_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_FetchAcl_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_fetch_acl_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient",
+          "shortName": "DocumentServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient.fetch_acl",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.FetchAcl",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "FetchAcl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.FetchAclRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.FetchAclResponse",
+        "shortName": "fetch_acl"
+      },
+      "description": "Sample for FetchAcl",
+      "file": "contentwarehouse_v1_generated_document_service_fetch_acl_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_FetchAcl_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_fetch_acl_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient",
+          "shortName": "DocumentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient.get_document",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.GetDocument",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "GetDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.GetDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.Document",
+        "shortName": "get_document"
+      },
+      "description": "Sample for GetDocument",
+      "file": "contentwarehouse_v1_generated_document_service_get_document_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_GetDocument_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_get_document_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient",
+          "shortName": "DocumentServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient.get_document",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.GetDocument",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "GetDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.GetDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.Document",
+        "shortName": "get_document"
+      },
+      "description": "Sample for GetDocument",
+      "file": "contentwarehouse_v1_generated_document_service_get_document_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_GetDocument_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_get_document_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient",
+          "shortName": "DocumentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient.lock_document",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.LockDocument",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "LockDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.LockDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.Document",
+        "shortName": "lock_document"
+      },
+      "description": "Sample for LockDocument",
+      "file": "contentwarehouse_v1_generated_document_service_lock_document_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_LockDocument_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_lock_document_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient",
+          "shortName": "DocumentServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient.lock_document",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.LockDocument",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "LockDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.LockDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.Document",
+        "shortName": "lock_document"
+      },
+      "description": "Sample for LockDocument",
+      "file": "contentwarehouse_v1_generated_document_service_lock_document_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_LockDocument_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_lock_document_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient",
+          "shortName": "DocumentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient.search_documents",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.SearchDocuments",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "SearchDocuments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.SearchDocumentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.services.document_service.pagers.SearchDocumentsAsyncPager",
+        "shortName": "search_documents"
+      },
+      "description": "Sample for SearchDocuments",
+      "file": "contentwarehouse_v1_generated_document_service_search_documents_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_SearchDocuments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_search_documents_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient",
+          "shortName": "DocumentServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient.search_documents",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.SearchDocuments",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "SearchDocuments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.SearchDocumentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.services.document_service.pagers.SearchDocumentsPager",
+        "shortName": "search_documents"
+      },
+      "description": "Sample for SearchDocuments",
+      "file": "contentwarehouse_v1_generated_document_service_search_documents_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_SearchDocuments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_search_documents_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient",
+          "shortName": "DocumentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient.set_acl",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.SetAcl",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "SetAcl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.SetAclRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "policy",
+            "type": "google.iam.v1.policy_pb2.Policy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.SetAclResponse",
+        "shortName": "set_acl"
+      },
+      "description": "Sample for SetAcl",
+      "file": "contentwarehouse_v1_generated_document_service_set_acl_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_SetAcl_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_set_acl_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient",
+          "shortName": "DocumentServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient.set_acl",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.SetAcl",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "SetAcl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.SetAclRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "policy",
+            "type": "google.iam.v1.policy_pb2.Policy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.SetAclResponse",
+        "shortName": "set_acl"
+      },
+      "description": "Sample for SetAcl",
+      "file": "contentwarehouse_v1_generated_document_service_set_acl_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_SetAcl_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_set_acl_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient",
+          "shortName": "DocumentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceAsyncClient.update_document",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.UpdateDocument",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "UpdateDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.UpdateDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "document",
+            "type": "google.cloud.contentwarehouse_v1.types.Document"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.UpdateDocumentResponse",
+        "shortName": "update_document"
+      },
+      "description": "Sample for UpdateDocument",
+      "file": "contentwarehouse_v1_generated_document_service_update_document_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_UpdateDocument_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_update_document_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient",
+          "shortName": "DocumentServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.DocumentServiceClient.update_document",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.DocumentService.UpdateDocument",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.DocumentService",
+            "shortName": "DocumentService"
+          },
+          "shortName": "UpdateDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.UpdateDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "document",
+            "type": "google.cloud.contentwarehouse_v1.types.Document"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.UpdateDocumentResponse",
+        "shortName": "update_document"
+      },
+      "description": "Sample for UpdateDocument",
+      "file": "contentwarehouse_v1_generated_document_service_update_document_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_DocumentService_UpdateDocument_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_document_service_update_document_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.PipelineServiceAsyncClient",
+          "shortName": "PipelineServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.PipelineServiceAsyncClient.run_pipeline",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.PipelineService.RunPipeline",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.PipelineService",
+            "shortName": "PipelineService"
+          },
+          "shortName": "RunPipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.RunPipelineRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "run_pipeline"
+      },
+      "description": "Sample for RunPipeline",
+      "file": "contentwarehouse_v1_generated_pipeline_service_run_pipeline_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_PipelineService_RunPipeline_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_pipeline_service_run_pipeline_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.PipelineServiceClient",
+          "shortName": "PipelineServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.PipelineServiceClient.run_pipeline",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.PipelineService.RunPipeline",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.PipelineService",
+            "shortName": "PipelineService"
+          },
+          "shortName": "RunPipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.RunPipelineRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "run_pipeline"
+      },
+      "description": "Sample for RunPipeline",
+      "file": "contentwarehouse_v1_generated_pipeline_service_run_pipeline_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_PipelineService_RunPipeline_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_pipeline_service_run_pipeline_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceAsyncClient",
+          "shortName": "RuleSetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceAsyncClient.create_rule_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.CreateRuleSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.RuleSetService",
+            "shortName": "RuleSetService"
+          },
+          "shortName": "CreateRuleSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.CreateRuleSetRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "rule_set",
+            "type": "google.cloud.contentwarehouse_v1.types.RuleSet"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.RuleSet",
+        "shortName": "create_rule_set"
+      },
+      "description": "Sample for CreateRuleSet",
+      "file": "contentwarehouse_v1_generated_rule_set_service_create_rule_set_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_RuleSetService_CreateRuleSet_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_rule_set_service_create_rule_set_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceClient",
+          "shortName": "RuleSetServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceClient.create_rule_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.CreateRuleSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.RuleSetService",
+            "shortName": "RuleSetService"
+          },
+          "shortName": "CreateRuleSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.CreateRuleSetRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "rule_set",
+            "type": "google.cloud.contentwarehouse_v1.types.RuleSet"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.RuleSet",
+        "shortName": "create_rule_set"
+      },
+      "description": "Sample for CreateRuleSet",
+      "file": "contentwarehouse_v1_generated_rule_set_service_create_rule_set_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_RuleSetService_CreateRuleSet_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_rule_set_service_create_rule_set_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceAsyncClient",
+          "shortName": "RuleSetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceAsyncClient.delete_rule_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.DeleteRuleSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.RuleSetService",
+            "shortName": "RuleSetService"
+          },
+          "shortName": "DeleteRuleSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.DeleteRuleSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_rule_set"
+      },
+      "description": "Sample for DeleteRuleSet",
+      "file": "contentwarehouse_v1_generated_rule_set_service_delete_rule_set_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_RuleSetService_DeleteRuleSet_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_rule_set_service_delete_rule_set_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceClient",
+          "shortName": "RuleSetServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceClient.delete_rule_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.DeleteRuleSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.RuleSetService",
+            "shortName": "RuleSetService"
+          },
+          "shortName": "DeleteRuleSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.DeleteRuleSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_rule_set"
+      },
+      "description": "Sample for DeleteRuleSet",
+      "file": "contentwarehouse_v1_generated_rule_set_service_delete_rule_set_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_RuleSetService_DeleteRuleSet_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_rule_set_service_delete_rule_set_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceAsyncClient",
+          "shortName": "RuleSetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceAsyncClient.get_rule_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.GetRuleSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.RuleSetService",
+            "shortName": "RuleSetService"
+          },
+          "shortName": "GetRuleSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.GetRuleSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.RuleSet",
+        "shortName": "get_rule_set"
+      },
+      "description": "Sample for GetRuleSet",
+      "file": "contentwarehouse_v1_generated_rule_set_service_get_rule_set_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_RuleSetService_GetRuleSet_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_rule_set_service_get_rule_set_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceClient",
+          "shortName": "RuleSetServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceClient.get_rule_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.GetRuleSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.RuleSetService",
+            "shortName": "RuleSetService"
+          },
+          "shortName": "GetRuleSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.GetRuleSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.RuleSet",
+        "shortName": "get_rule_set"
+      },
+      "description": "Sample for GetRuleSet",
+      "file": "contentwarehouse_v1_generated_rule_set_service_get_rule_set_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_RuleSetService_GetRuleSet_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_rule_set_service_get_rule_set_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceAsyncClient",
+          "shortName": "RuleSetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceAsyncClient.list_rule_sets",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.ListRuleSets",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.RuleSetService",
+            "shortName": "RuleSetService"
+          },
+          "shortName": "ListRuleSets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.ListRuleSetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.services.rule_set_service.pagers.ListRuleSetsAsyncPager",
+        "shortName": "list_rule_sets"
+      },
+      "description": "Sample for ListRuleSets",
+      "file": "contentwarehouse_v1_generated_rule_set_service_list_rule_sets_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_RuleSetService_ListRuleSets_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_rule_set_service_list_rule_sets_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceClient",
+          "shortName": "RuleSetServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceClient.list_rule_sets",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.ListRuleSets",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.RuleSetService",
+            "shortName": "RuleSetService"
+          },
+          "shortName": "ListRuleSets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.ListRuleSetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.services.rule_set_service.pagers.ListRuleSetsPager",
+        "shortName": "list_rule_sets"
+      },
+      "description": "Sample for ListRuleSets",
+      "file": "contentwarehouse_v1_generated_rule_set_service_list_rule_sets_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_RuleSetService_ListRuleSets_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_rule_set_service_list_rule_sets_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceAsyncClient",
+          "shortName": "RuleSetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceAsyncClient.update_rule_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.UpdateRuleSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.RuleSetService",
+            "shortName": "RuleSetService"
+          },
+          "shortName": "UpdateRuleSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.UpdateRuleSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "rule_set",
+            "type": "google.cloud.contentwarehouse_v1.types.RuleSet"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.RuleSet",
+        "shortName": "update_rule_set"
+      },
+      "description": "Sample for UpdateRuleSet",
+      "file": "contentwarehouse_v1_generated_rule_set_service_update_rule_set_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_RuleSetService_UpdateRuleSet_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_rule_set_service_update_rule_set_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceClient",
+          "shortName": "RuleSetServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.RuleSetServiceClient.update_rule_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.UpdateRuleSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.RuleSetService",
+            "shortName": "RuleSetService"
+          },
+          "shortName": "UpdateRuleSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.UpdateRuleSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "rule_set",
+            "type": "google.cloud.contentwarehouse_v1.types.RuleSet"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.RuleSet",
+        "shortName": "update_rule_set"
+      },
+      "description": "Sample for UpdateRuleSet",
+      "file": "contentwarehouse_v1_generated_rule_set_service_update_rule_set_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_RuleSetService_UpdateRuleSet_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_rule_set_service_update_rule_set_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceAsyncClient",
+          "shortName": "SynonymSetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceAsyncClient.create_synonym_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService.CreateSynonymSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService",
+            "shortName": "SynonymSetService"
+          },
+          "shortName": "CreateSynonymSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.CreateSynonymSetRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "synonym_set",
+            "type": "google.cloud.contentwarehouse_v1.types.SynonymSet"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.SynonymSet",
+        "shortName": "create_synonym_set"
+      },
+      "description": "Sample for CreateSynonymSet",
+      "file": "contentwarehouse_v1_generated_synonym_set_service_create_synonym_set_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_SynonymSetService_CreateSynonymSet_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_synonym_set_service_create_synonym_set_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceClient",
+          "shortName": "SynonymSetServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceClient.create_synonym_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService.CreateSynonymSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService",
+            "shortName": "SynonymSetService"
+          },
+          "shortName": "CreateSynonymSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.CreateSynonymSetRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "synonym_set",
+            "type": "google.cloud.contentwarehouse_v1.types.SynonymSet"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.SynonymSet",
+        "shortName": "create_synonym_set"
+      },
+      "description": "Sample for CreateSynonymSet",
+      "file": "contentwarehouse_v1_generated_synonym_set_service_create_synonym_set_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_SynonymSetService_CreateSynonymSet_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_synonym_set_service_create_synonym_set_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceAsyncClient",
+          "shortName": "SynonymSetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceAsyncClient.delete_synonym_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService.DeleteSynonymSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService",
+            "shortName": "SynonymSetService"
+          },
+          "shortName": "DeleteSynonymSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.DeleteSynonymSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_synonym_set"
+      },
+      "description": "Sample for DeleteSynonymSet",
+      "file": "contentwarehouse_v1_generated_synonym_set_service_delete_synonym_set_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_SynonymSetService_DeleteSynonymSet_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_synonym_set_service_delete_synonym_set_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceClient",
+          "shortName": "SynonymSetServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceClient.delete_synonym_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService.DeleteSynonymSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService",
+            "shortName": "SynonymSetService"
+          },
+          "shortName": "DeleteSynonymSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.DeleteSynonymSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_synonym_set"
+      },
+      "description": "Sample for DeleteSynonymSet",
+      "file": "contentwarehouse_v1_generated_synonym_set_service_delete_synonym_set_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_SynonymSetService_DeleteSynonymSet_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_synonym_set_service_delete_synonym_set_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceAsyncClient",
+          "shortName": "SynonymSetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceAsyncClient.get_synonym_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService.GetSynonymSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService",
+            "shortName": "SynonymSetService"
+          },
+          "shortName": "GetSynonymSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.GetSynonymSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.SynonymSet",
+        "shortName": "get_synonym_set"
+      },
+      "description": "Sample for GetSynonymSet",
+      "file": "contentwarehouse_v1_generated_synonym_set_service_get_synonym_set_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_SynonymSetService_GetSynonymSet_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_synonym_set_service_get_synonym_set_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceClient",
+          "shortName": "SynonymSetServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceClient.get_synonym_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService.GetSynonymSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService",
+            "shortName": "SynonymSetService"
+          },
+          "shortName": "GetSynonymSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.GetSynonymSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.SynonymSet",
+        "shortName": "get_synonym_set"
+      },
+      "description": "Sample for GetSynonymSet",
+      "file": "contentwarehouse_v1_generated_synonym_set_service_get_synonym_set_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_SynonymSetService_GetSynonymSet_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_synonym_set_service_get_synonym_set_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceAsyncClient",
+          "shortName": "SynonymSetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceAsyncClient.list_synonym_sets",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService.ListSynonymSets",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService",
+            "shortName": "SynonymSetService"
+          },
+          "shortName": "ListSynonymSets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.ListSynonymSetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.services.synonym_set_service.pagers.ListSynonymSetsAsyncPager",
+        "shortName": "list_synonym_sets"
+      },
+      "description": "Sample for ListSynonymSets",
+      "file": "contentwarehouse_v1_generated_synonym_set_service_list_synonym_sets_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_SynonymSetService_ListSynonymSets_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_synonym_set_service_list_synonym_sets_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceClient",
+          "shortName": "SynonymSetServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceClient.list_synonym_sets",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService.ListSynonymSets",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService",
+            "shortName": "SynonymSetService"
+          },
+          "shortName": "ListSynonymSets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.ListSynonymSetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.services.synonym_set_service.pagers.ListSynonymSetsPager",
+        "shortName": "list_synonym_sets"
+      },
+      "description": "Sample for ListSynonymSets",
+      "file": "contentwarehouse_v1_generated_synonym_set_service_list_synonym_sets_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_SynonymSetService_ListSynonymSets_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_synonym_set_service_list_synonym_sets_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceAsyncClient",
+          "shortName": "SynonymSetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceAsyncClient.update_synonym_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService.UpdateSynonymSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService",
+            "shortName": "SynonymSetService"
+          },
+          "shortName": "UpdateSynonymSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.UpdateSynonymSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "synonym_set",
+            "type": "google.cloud.contentwarehouse_v1.types.SynonymSet"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.SynonymSet",
+        "shortName": "update_synonym_set"
+      },
+      "description": "Sample for UpdateSynonymSet",
+      "file": "contentwarehouse_v1_generated_synonym_set_service_update_synonym_set_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_SynonymSetService_UpdateSynonymSet_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_synonym_set_service_update_synonym_set_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceClient",
+          "shortName": "SynonymSetServiceClient"
+        },
+        "fullName": "google.cloud.contentwarehouse_v1.SynonymSetServiceClient.update_synonym_set",
+        "method": {
+          "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService.UpdateSynonymSet",
+          "service": {
+            "fullName": "google.cloud.contentwarehouse.v1.SynonymSetService",
+            "shortName": "SynonymSetService"
+          },
+          "shortName": "UpdateSynonymSet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.contentwarehouse_v1.types.UpdateSynonymSetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "synonym_set",
+            "type": "google.cloud.contentwarehouse_v1.types.SynonymSet"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.contentwarehouse_v1.types.SynonymSet",
+        "shortName": "update_synonym_set"
+      },
+      "description": "Sample for UpdateSynonymSet",
+      "file": "contentwarehouse_v1_generated_synonym_set_service_update_synonym_set_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "contentwarehouse_v1_generated_SynonymSetService_UpdateSynonymSet_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "contentwarehouse_v1_generated_synonym_set_service_update_synonym_set_sync.py"
+    }
+  ]
+}

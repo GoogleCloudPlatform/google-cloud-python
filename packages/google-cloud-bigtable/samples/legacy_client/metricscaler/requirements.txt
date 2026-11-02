@@ -1,0 +1,2 @@
+google-cloud-bigtable
+google-cloud-monitoring

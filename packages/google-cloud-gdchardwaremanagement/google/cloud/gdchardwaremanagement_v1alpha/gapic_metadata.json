@@ -1,0 +1,583 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.gdchardwaremanagement_v1alpha",
+  "protoPackage": "google.cloud.gdchardwaremanagement.v1alpha",
+  "schema": "1.0",
+  "services": {
+    "GDCHardwareManagement": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "GDCHardwareManagementClient",
+          "rpcs": {
+            "CancelOrder": {
+              "methods": [
+                "cancel_order"
+              ]
+            },
+            "CreateComment": {
+              "methods": [
+                "create_comment"
+              ]
+            },
+            "CreateHardware": {
+              "methods": [
+                "create_hardware"
+              ]
+            },
+            "CreateHardwareGroup": {
+              "methods": [
+                "create_hardware_group"
+              ]
+            },
+            "CreateOrder": {
+              "methods": [
+                "create_order"
+              ]
+            },
+            "CreateSite": {
+              "methods": [
+                "create_site"
+              ]
+            },
+            "CreateZone": {
+              "methods": [
+                "create_zone"
+              ]
+            },
+            "DeleteHardware": {
+              "methods": [
+                "delete_hardware"
+              ]
+            },
+            "DeleteHardwareGroup": {
+              "methods": [
+                "delete_hardware_group"
+              ]
+            },
+            "DeleteOrder": {
+              "methods": [
+                "delete_order"
+              ]
+            },
+            "DeleteSite": {
+              "methods": [
+                "delete_site"
+              ]
+            },
+            "DeleteZone": {
+              "methods": [
+                "delete_zone"
+              ]
+            },
+            "GetChangeLogEntry": {
+              "methods": [
+                "get_change_log_entry"
+              ]
+            },
+            "GetComment": {
+              "methods": [
+                "get_comment"
+              ]
+            },
+            "GetHardware": {
+              "methods": [
+                "get_hardware"
+              ]
+            },
+            "GetHardwareGroup": {
+              "methods": [
+                "get_hardware_group"
+              ]
+            },
+            "GetOrder": {
+              "methods": [
+                "get_order"
+              ]
+            },
+            "GetSite": {
+              "methods": [
+                "get_site"
+              ]
+            },
+            "GetSku": {
+              "methods": [
+                "get_sku"
+              ]
+            },
+            "GetZone": {
+              "methods": [
+                "get_zone"
+              ]
+            },
+            "ListChangeLogEntries": {
+              "methods": [
+                "list_change_log_entries"
+              ]
+            },
+            "ListComments": {
+              "methods": [
+                "list_comments"
+              ]
+            },
+            "ListHardware": {
+              "methods": [
+                "list_hardware"
+              ]
+            },
+            "ListHardwareGroups": {
+              "methods": [
+                "list_hardware_groups"
+              ]
+            },
+            "ListOrders": {
+              "methods": [
+                "list_orders"
+              ]
+            },
+            "ListSites": {
+              "methods": [
+                "list_sites"
+              ]
+            },
+            "ListSkus": {
+              "methods": [
+                "list_skus"
+              ]
+            },
+            "ListZones": {
+              "methods": [
+                "list_zones"
+              ]
+            },
+            "RecordActionOnComment": {
+              "methods": [
+                "record_action_on_comment"
+              ]
+            },
+            "RequestOrderDateChange": {
+              "methods": [
+                "request_order_date_change"
+              ]
+            },
+            "SignalZoneState": {
+              "methods": [
+                "signal_zone_state"
+              ]
+            },
+            "SubmitOrder": {
+              "methods": [
+                "submit_order"
+              ]
+            },
+            "UpdateHardware": {
+              "methods": [
+                "update_hardware"
+              ]
+            },
+            "UpdateHardwareGroup": {
+              "methods": [
+                "update_hardware_group"
+              ]
+            },
+            "UpdateOrder": {
+              "methods": [
+                "update_order"
+              ]
+            },
+            "UpdateSite": {
+              "methods": [
+                "update_site"
+              ]
+            },
+            "UpdateZone": {
+              "methods": [
+                "update_zone"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "GDCHardwareManagementAsyncClient",
+          "rpcs": {
+            "CancelOrder": {
+              "methods": [
+                "cancel_order"
+              ]
+            },
+            "CreateComment": {
+              "methods": [
+                "create_comment"
+              ]
+            },
+            "CreateHardware": {
+              "methods": [
+                "create_hardware"
+              ]
+            },
+            "CreateHardwareGroup": {
+              "methods": [
+                "create_hardware_group"
+              ]
+            },
+            "CreateOrder": {
+              "methods": [
+                "create_order"
+              ]
+            },
+            "CreateSite": {
+              "methods": [
+                "create_site"
+              ]
+            },
+            "CreateZone": {
+              "methods": [
+                "create_zone"
+              ]
+            },
+            "DeleteHardware": {
+              "methods": [
+                "delete_hardware"
+              ]
+            },
+            "DeleteHardwareGroup": {
+              "methods": [
+                "delete_hardware_group"
+              ]
+            },
+            "DeleteOrder": {
+              "methods": [
+                "delete_order"
+              ]
+            },
+            "DeleteSite": {
+              "methods": [
+                "delete_site"
+              ]
+            },
+            "DeleteZone": {
+              "methods": [
+                "delete_zone"
+              ]
+            },
+            "GetChangeLogEntry": {
+              "methods": [
+                "get_change_log_entry"
+              ]
+            },
+            "GetComment": {
+              "methods": [
+                "get_comment"
+              ]
+            },
+            "GetHardware": {
+              "methods": [
+                "get_hardware"
+              ]
+            },
+            "GetHardwareGroup": {
+              "methods": [
+                "get_hardware_group"
+              ]
+            },
+            "GetOrder": {
+              "methods": [
+                "get_order"
+              ]
+            },
+            "GetSite": {
+              "methods": [
+                "get_site"
+              ]
+            },
+            "GetSku": {
+              "methods": [
+                "get_sku"
+              ]
+            },
+            "GetZone": {
+              "methods": [
+                "get_zone"
+              ]
+            },
+            "ListChangeLogEntries": {
+              "methods": [
+                "list_change_log_entries"
+              ]
+            },
+            "ListComments": {
+              "methods": [
+                "list_comments"
+              ]
+            },
+            "ListHardware": {
+              "methods": [
+                "list_hardware"
+              ]
+            },
+            "ListHardwareGroups": {
+              "methods": [
+                "list_hardware_groups"
+              ]
+            },
+            "ListOrders": {
+              "methods": [
+                "list_orders"
+              ]
+            },
+            "ListSites": {
+              "methods": [
+                "list_sites"
+              ]
+            },
+            "ListSkus": {
+              "methods": [
+                "list_skus"
+              ]
+            },
+            "ListZones": {
+              "methods": [
+                "list_zones"
+              ]
+            },
+            "RecordActionOnComment": {
+              "methods": [
+                "record_action_on_comment"
+              ]
+            },
+            "RequestOrderDateChange": {
+              "methods": [
+                "request_order_date_change"
+              ]
+            },
+            "SignalZoneState": {
+              "methods": [
+                "signal_zone_state"
+              ]
+            },
+            "SubmitOrder": {
+              "methods": [
+                "submit_order"
+              ]
+            },
+            "UpdateHardware": {
+              "methods": [
+                "update_hardware"
+              ]
+            },
+            "UpdateHardwareGroup": {
+              "methods": [
+                "update_hardware_group"
+              ]
+            },
+            "UpdateOrder": {
+              "methods": [
+                "update_order"
+              ]
+            },
+            "UpdateSite": {
+              "methods": [
+                "update_site"
+              ]
+            },
+            "UpdateZone": {
+              "methods": [
+                "update_zone"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "GDCHardwareManagementClient",
+          "rpcs": {
+            "CancelOrder": {
+              "methods": [
+                "cancel_order"
+              ]
+            },
+            "CreateComment": {
+              "methods": [
+                "create_comment"
+              ]
+            },
+            "CreateHardware": {
+              "methods": [
+                "create_hardware"
+              ]
+            },
+            "CreateHardwareGroup": {
+              "methods": [
+                "create_hardware_group"
+              ]
+            },
+            "CreateOrder": {
+              "methods": [
+                "create_order"
+              ]
+            },
+            "CreateSite": {
+              "methods": [
+                "create_site"
+              ]
+            },
+            "CreateZone": {
+              "methods": [
+                "create_zone"
+              ]
+            },
+            "DeleteHardware": {
+              "methods": [
+                "delete_hardware"
+              ]
+            },
+            "DeleteHardwareGroup": {
+              "methods": [
+                "delete_hardware_group"
+              ]
+            },
+            "DeleteOrder": {
+              "methods": [
+                "delete_order"
+              ]
+            },
+            "DeleteSite": {
+              "methods": [
+                "delete_site"
+              ]
+            },
+            "DeleteZone": {
+              "methods": [
+                "delete_zone"
+              ]
+            },
+            "GetChangeLogEntry": {
+              "methods": [
+                "get_change_log_entry"
+              ]
+            },
+            "GetComment": {
+              "methods": [
+                "get_comment"
+              ]
+            },
+            "GetHardware": {
+              "methods": [
+                "get_hardware"
+              ]
+            },
+            "GetHardwareGroup": {
+              "methods": [
+                "get_hardware_group"
+              ]
+            },
+            "GetOrder": {
+              "methods": [
+                "get_order"
+              ]
+            },
+            "GetSite": {
+              "methods": [
+                "get_site"
+              ]
+            },
+            "GetSku": {
+              "methods": [
+                "get_sku"
+              ]
+            },
+            "GetZone": {
+              "methods": [
+                "get_zone"
+              ]
+            },
+            "ListChangeLogEntries": {
+              "methods": [
+                "list_change_log_entries"
+              ]
+            },
+            "ListComments": {
+              "methods": [
+                "list_comments"
+              ]
+            },
+            "ListHardware": {
+              "methods": [
+                "list_hardware"
+              ]
+            },
+            "ListHardwareGroups": {
+              "methods": [
+                "list_hardware_groups"
+              ]
+            },
+            "ListOrders": {
+              "methods": [
+                "list_orders"
+              ]
+            },
+            "ListSites": {
+              "methods": [
+                "list_sites"
+              ]
+            },
+            "ListSkus": {
+              "methods": [
+                "list_skus"
+              ]
+            },
+            "ListZones": {
+              "methods": [
+                "list_zones"
+              ]
+            },
+            "RecordActionOnComment": {
+              "methods": [
+                "record_action_on_comment"
+              ]
+            },
+            "RequestOrderDateChange": {
+              "methods": [
+                "request_order_date_change"
+              ]
+            },
+            "SignalZoneState": {
+              "methods": [
+                "signal_zone_state"
+              ]
+            },
+            "SubmitOrder": {
+              "methods": [
+                "submit_order"
+              ]
+            },
+            "UpdateHardware": {
+              "methods": [
+                "update_hardware"
+              ]
+            },
+            "UpdateHardwareGroup": {
+              "methods": [
+                "update_hardware_group"
+              ]
+            },
+            "UpdateOrder": {
+              "methods": [
+                "update_order"
+              ]
+            },
+            "UpdateSite": {
+              "methods": [
+                "update_site"
+              ]
+            },
+            "UpdateZone": {
+              "methods": [
+                "update_zone"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

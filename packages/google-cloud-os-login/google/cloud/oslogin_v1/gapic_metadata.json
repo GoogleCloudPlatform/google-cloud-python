@@ -1,0 +1,133 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.oslogin_v1",
+  "protoPackage": "google.cloud.oslogin.v1",
+  "schema": "1.0",
+  "services": {
+    "OsLoginService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "OsLoginServiceClient",
+          "rpcs": {
+            "CreateSshPublicKey": {
+              "methods": [
+                "create_ssh_public_key"
+              ]
+            },
+            "DeletePosixAccount": {
+              "methods": [
+                "delete_posix_account"
+              ]
+            },
+            "DeleteSshPublicKey": {
+              "methods": [
+                "delete_ssh_public_key"
+              ]
+            },
+            "GetLoginProfile": {
+              "methods": [
+                "get_login_profile"
+              ]
+            },
+            "GetSshPublicKey": {
+              "methods": [
+                "get_ssh_public_key"
+              ]
+            },
+            "ImportSshPublicKey": {
+              "methods": [
+                "import_ssh_public_key"
+              ]
+            },
+            "UpdateSshPublicKey": {
+              "methods": [
+                "update_ssh_public_key"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "OsLoginServiceAsyncClient",
+          "rpcs": {
+            "CreateSshPublicKey": {
+              "methods": [
+                "create_ssh_public_key"
+              ]
+            },
+            "DeletePosixAccount": {
+              "methods": [
+                "delete_posix_account"
+              ]
+            },
+            "DeleteSshPublicKey": {
+              "methods": [
+                "delete_ssh_public_key"
+              ]
+            },
+            "GetLoginProfile": {
+              "methods": [
+                "get_login_profile"
+              ]
+            },
+            "GetSshPublicKey": {
+              "methods": [
+                "get_ssh_public_key"
+              ]
+            },
+            "ImportSshPublicKey": {
+              "methods": [
+                "import_ssh_public_key"
+              ]
+            },
+            "UpdateSshPublicKey": {
+              "methods": [
+                "update_ssh_public_key"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "OsLoginServiceClient",
+          "rpcs": {
+            "CreateSshPublicKey": {
+              "methods": [
+                "create_ssh_public_key"
+              ]
+            },
+            "DeletePosixAccount": {
+              "methods": [
+                "delete_posix_account"
+              ]
+            },
+            "DeleteSshPublicKey": {
+              "methods": [
+                "delete_ssh_public_key"
+              ]
+            },
+            "GetLoginProfile": {
+              "methods": [
+                "get_login_profile"
+              ]
+            },
+            "GetSshPublicKey": {
+              "methods": [
+                "get_ssh_public_key"
+              ]
+            },
+            "ImportSshPublicKey": {
+              "methods": [
+                "import_ssh_public_key"
+              ]
+            },
+            "UpdateSshPublicKey": {
+              "methods": [
+                "update_ssh_public_key"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

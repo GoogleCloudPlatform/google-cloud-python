@@ -1,0 +1,15 @@
+{
+    "api_id": "apihub.googleapis.com",
+    "api_shortname": "apihub",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-apihub/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-apihub",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1447560",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-apihub",
+    "name_pretty": "API hub",
+    "product_documentation": "https://cloud.google.com/apigee/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

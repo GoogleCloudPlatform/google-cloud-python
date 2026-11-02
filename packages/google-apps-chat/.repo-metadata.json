@@ -1,0 +1,16 @@
+{
+    "api_description": "The Google Chat API lets you build Chat apps to integrate your services\nwith Google Chat and manage Chat resources such as spaces, members, and\nmessages.",
+    "api_id": "chat.googleapis.com",
+    "api_shortname": "chat",
+    "client_documentation": "https://googleapis.dev/python/google-apps-chat/latest",
+    "default_version": "v1",
+    "distribution_name": "google-apps-chat",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=350158\u0026template=1047346",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-apps-chat",
+    "name_pretty": "Google Chat",
+    "product_documentation": "https://developers.google.com/chat/concepts",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

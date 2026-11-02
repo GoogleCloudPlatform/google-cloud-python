@@ -1,0 +1,12 @@
+{
+    "client_documentation": "https://googleapis.dev/python/type/latest",
+    "default_version": "apiVersion",
+    "distribution_name": "google-apps-script-type",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "type",
+    "name_pretty": "Google Apps Script Types",
+    "product_documentation": "https://developers.google.com/apps-script/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

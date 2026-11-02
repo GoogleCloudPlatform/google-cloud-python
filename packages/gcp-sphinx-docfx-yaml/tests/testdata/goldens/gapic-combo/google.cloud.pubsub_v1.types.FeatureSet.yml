@@ -1,0 +1,19 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.FeatureSet
+  fullName: google.cloud.pubsub_v1.types.FeatureSet
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: FeatureSet
+  source:
+    id: FeatureSet
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.FeatureSet` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.FeatureSet
+references: []

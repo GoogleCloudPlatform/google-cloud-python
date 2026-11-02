@@ -1,0 +1,275 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.fileio.BlobWriter.close
+  - google.cloud.storage.fileio.BlobWriter.flush
+  - google.cloud.storage.fileio.BlobWriter.readable
+  - google.cloud.storage.fileio.BlobWriter.seekable
+  - google.cloud.storage.fileio.BlobWriter.tell
+  - google.cloud.storage.fileio.BlobWriter.writable
+  - google.cloud.storage.fileio.BlobWriter.write
+  class: google.cloud.storage.fileio.BlobWriter
+  fullName: google.cloud.storage.fileio.BlobWriter
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: BlobWriter
+  source:
+    id: BlobWriter
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 228
+  summary: 'A file-like object that writes to a blob.
+
+    '
+  syntax:
+    content: BlobWriter(blob, chunk_size=None, text_mode=False, ignore_flush=False,
+      retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>, **upload_kwargs)
+    parameters:
+    - description: The blob to which to write.
+      id: blob
+      var_type: '''<xref uid="google.cloud.storage.blob.Blob">google.cloud.storage.blob.Blob</xref>'''
+    - description: (Optional) The maximum number of bytes to buffer before sending
+        data to the server, and the size of each request when data is sent. Writes
+        are implemented as a "resumable upload", so chunk_size for writes must be
+        exactly a multiple of 256KiB as with other resumable uploads. The default
+        is the chunk_size of the blob, or 40 MiB.
+      id: chunk_size
+      var_type: long
+    - description: (Deprecated) A synonym for ignore_flush. For backwards-compatibility,
+        if True, sets ignore_flush to True. Use ignore_flush instead. This parameter
+        will be removed in a future release.
+      id: text_mode
+      var_type: bool
+    - description: Makes flush() do nothing instead of raise an error. flush() without
+        closing is not supported by the remote service and therefore calling it on
+        this class normally results in io.UnsupportedOperation. However, that behavior
+        is incompatible with some consumers and wrappers of file objects in Python,
+        such as zipfile.ZipFile or io.TextIOWrapper. Setting ignore_flush will cause
+        flush() to successfully do nothing, for compatibility with those contexts.
+        The correct way to actually flush data to the remote server is to close()
+        (using this object as a context manager is recommended).
+      id: ignore_flush
+      var_type: bool
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_metageneration_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them. Media operations (downloads and
+        uploads) do not support non-default predicates in a Retry object. The default
+        will always be used. Other configuration changes for Retry objects such as
+        delays and deadlines are respected.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: class
+  uid: google.cloud.storage.fileio.BlobWriter
+- attributes: []
+  class: google.cloud.storage.fileio.BlobWriter
+  fullName: google.cloud.storage.fileio.BlobWriter.close
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: close
+  source:
+    id: close
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 429
+  summary: 'Flush and close the IO object.
+
+
+    This method has no effect if the file is already closed.
+
+
+    '
+  syntax:
+    content: close()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.BlobWriter.close
+- attributes: []
+  class: google.cloud.storage.fileio.BlobWriter
+  fullName: google.cloud.storage.fileio.BlobWriter.flush
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: flush
+  source:
+    id: flush
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 419
+  summary: 'Flush write buffers, if applicable.
+
+
+    This is not implemented for read-only and non-blocking streams.
+
+
+    '
+  syntax:
+    content: flush()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.BlobWriter.flush
+- attributes: []
+  class: google.cloud.storage.fileio.BlobWriter
+  fullName: google.cloud.storage.fileio.BlobWriter.readable
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: readable
+  source:
+    id: readable
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 438
+  summary: 'Return whether object was opened for reading.
+
+
+    If False, read() will raise OSError.
+
+
+    '
+  syntax:
+    content: readable()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.BlobWriter.readable
+- attributes: []
+  class: google.cloud.storage.fileio.BlobWriter
+  fullName: google.cloud.storage.fileio.BlobWriter.seekable
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: seekable
+  source:
+    id: seekable
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 444
+  summary: 'Return whether object supports random access.
+
+
+    If False, seek(), tell() and truncate() will raise OSError.
+
+    This method may need to do a test seek().
+
+
+    '
+  syntax:
+    content: seekable()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.BlobWriter.seekable
+- attributes: []
+  class: google.cloud.storage.fileio.BlobWriter
+  fullName: google.cloud.storage.fileio.BlobWriter.tell
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: tell
+  source:
+    id: tell
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 416
+  summary: 'Return current stream position.
+
+
+    '
+  syntax:
+    content: tell()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.BlobWriter.tell
+- attributes: []
+  class: google.cloud.storage.fileio.BlobWriter
+  fullName: google.cloud.storage.fileio.BlobWriter.writable
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: writable
+  source:
+    id: writable
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 441
+  summary: 'Return whether object was opened for writing.
+
+
+    If False, write() will raise OSError.
+
+
+    '
+  syntax:
+    content: writable()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.BlobWriter.writable
+- attributes: []
+  class: google.cloud.storage.fileio.BlobWriter
+  fullName: google.cloud.storage.fileio.BlobWriter.write
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: write
+  source:
+    id: write
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 349
+  summary: 'Write the given buffer to the IO stream.
+
+
+    Returns the number of bytes written, which is always the length of b
+
+    in bytes.
+
+
+    Raises BlockingIOError if the buffer is full and the
+
+    underlying raw stream cannot accept more data at the moment.
+
+
+    '
+  syntax:
+    content: write(b)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.BlobWriter.write
+references:
+- fullName: google.cloud.storage.fileio.BlobWriter.close
+  isExternal: false
+  name: close
+  parent: google.cloud.storage.fileio.BlobWriter
+  uid: google.cloud.storage.fileio.BlobWriter.close
+- fullName: google.cloud.storage.fileio.BlobWriter.flush
+  isExternal: false
+  name: flush
+  parent: google.cloud.storage.fileio.BlobWriter
+  uid: google.cloud.storage.fileio.BlobWriter.flush
+- fullName: google.cloud.storage.fileio.BlobWriter.readable
+  isExternal: false
+  name: readable
+  parent: google.cloud.storage.fileio.BlobWriter
+  uid: google.cloud.storage.fileio.BlobWriter.readable
+- fullName: google.cloud.storage.fileio.BlobWriter.seekable
+  isExternal: false
+  name: seekable
+  parent: google.cloud.storage.fileio.BlobWriter
+  uid: google.cloud.storage.fileio.BlobWriter.seekable
+- fullName: google.cloud.storage.fileio.BlobWriter.tell
+  isExternal: false
+  name: tell
+  parent: google.cloud.storage.fileio.BlobWriter
+  uid: google.cloud.storage.fileio.BlobWriter.tell
+- fullName: google.cloud.storage.fileio.BlobWriter.writable
+  isExternal: false
+  name: writable
+  parent: google.cloud.storage.fileio.BlobWriter
+  uid: google.cloud.storage.fileio.BlobWriter.writable
+- fullName: google.cloud.storage.fileio.BlobWriter.write
+  isExternal: false
+  name: write
+  parent: google.cloud.storage.fileio.BlobWriter
+  uid: google.cloud.storage.fileio.BlobWriter.write

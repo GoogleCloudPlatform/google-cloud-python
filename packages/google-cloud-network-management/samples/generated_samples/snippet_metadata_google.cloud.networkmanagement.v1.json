@@ -1,0 +1,2961 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.networkmanagement.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-network-management",
+    "version": "1.38.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceAsyncClient",
+          "shortName": "OrganizationVpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceAsyncClient.create_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService.CreateVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService",
+            "shortName": "OrganizationVpcFlowLogsService"
+          },
+          "shortName": "CreateVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.CreateVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "vpc_flow_logs_config",
+            "type": "google.cloud.network_management_v1.types.VpcFlowLogsConfig"
+          },
+          {
+            "name": "vpc_flow_logs_config_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_vpc_flow_logs_config"
+      },
+      "description": "Sample for CreateVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_create_vpc_flow_logs_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_OrganizationVpcFlowLogsService_CreateVpcFlowLogsConfig_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_create_vpc_flow_logs_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceClient",
+          "shortName": "OrganizationVpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceClient.create_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService.CreateVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService",
+            "shortName": "OrganizationVpcFlowLogsService"
+          },
+          "shortName": "CreateVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.CreateVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "vpc_flow_logs_config",
+            "type": "google.cloud.network_management_v1.types.VpcFlowLogsConfig"
+          },
+          {
+            "name": "vpc_flow_logs_config_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_vpc_flow_logs_config"
+      },
+      "description": "Sample for CreateVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_create_vpc_flow_logs_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_OrganizationVpcFlowLogsService_CreateVpcFlowLogsConfig_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_create_vpc_flow_logs_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceAsyncClient",
+          "shortName": "OrganizationVpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceAsyncClient.delete_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService.DeleteVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService",
+            "shortName": "OrganizationVpcFlowLogsService"
+          },
+          "shortName": "DeleteVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.DeleteVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_vpc_flow_logs_config"
+      },
+      "description": "Sample for DeleteVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_delete_vpc_flow_logs_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_OrganizationVpcFlowLogsService_DeleteVpcFlowLogsConfig_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_delete_vpc_flow_logs_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceClient",
+          "shortName": "OrganizationVpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceClient.delete_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService.DeleteVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService",
+            "shortName": "OrganizationVpcFlowLogsService"
+          },
+          "shortName": "DeleteVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.DeleteVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_vpc_flow_logs_config"
+      },
+      "description": "Sample for DeleteVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_delete_vpc_flow_logs_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_OrganizationVpcFlowLogsService_DeleteVpcFlowLogsConfig_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_delete_vpc_flow_logs_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceAsyncClient",
+          "shortName": "OrganizationVpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceAsyncClient.get_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService.GetVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService",
+            "shortName": "OrganizationVpcFlowLogsService"
+          },
+          "shortName": "GetVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.GetVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.types.VpcFlowLogsConfig",
+        "shortName": "get_vpc_flow_logs_config"
+      },
+      "description": "Sample for GetVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_get_vpc_flow_logs_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_OrganizationVpcFlowLogsService_GetVpcFlowLogsConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_get_vpc_flow_logs_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceClient",
+          "shortName": "OrganizationVpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceClient.get_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService.GetVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService",
+            "shortName": "OrganizationVpcFlowLogsService"
+          },
+          "shortName": "GetVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.GetVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.types.VpcFlowLogsConfig",
+        "shortName": "get_vpc_flow_logs_config"
+      },
+      "description": "Sample for GetVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_get_vpc_flow_logs_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_OrganizationVpcFlowLogsService_GetVpcFlowLogsConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_get_vpc_flow_logs_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceAsyncClient",
+          "shortName": "OrganizationVpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceAsyncClient.list_vpc_flow_logs_configs",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService.ListVpcFlowLogsConfigs",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService",
+            "shortName": "OrganizationVpcFlowLogsService"
+          },
+          "shortName": "ListVpcFlowLogsConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.ListVpcFlowLogsConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.services.organization_vpc_flow_logs_service.pagers.ListVpcFlowLogsConfigsAsyncPager",
+        "shortName": "list_vpc_flow_logs_configs"
+      },
+      "description": "Sample for ListVpcFlowLogsConfigs",
+      "file": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_list_vpc_flow_logs_configs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_OrganizationVpcFlowLogsService_ListVpcFlowLogsConfigs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_list_vpc_flow_logs_configs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceClient",
+          "shortName": "OrganizationVpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceClient.list_vpc_flow_logs_configs",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService.ListVpcFlowLogsConfigs",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService",
+            "shortName": "OrganizationVpcFlowLogsService"
+          },
+          "shortName": "ListVpcFlowLogsConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.ListVpcFlowLogsConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.services.organization_vpc_flow_logs_service.pagers.ListVpcFlowLogsConfigsPager",
+        "shortName": "list_vpc_flow_logs_configs"
+      },
+      "description": "Sample for ListVpcFlowLogsConfigs",
+      "file": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_list_vpc_flow_logs_configs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_OrganizationVpcFlowLogsService_ListVpcFlowLogsConfigs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_list_vpc_flow_logs_configs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceAsyncClient",
+          "shortName": "OrganizationVpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceAsyncClient.update_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService.UpdateVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService",
+            "shortName": "OrganizationVpcFlowLogsService"
+          },
+          "shortName": "UpdateVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.UpdateVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "vpc_flow_logs_config",
+            "type": "google.cloud.network_management_v1.types.VpcFlowLogsConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_vpc_flow_logs_config"
+      },
+      "description": "Sample for UpdateVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_update_vpc_flow_logs_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_OrganizationVpcFlowLogsService_UpdateVpcFlowLogsConfig_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_update_vpc_flow_logs_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceClient",
+          "shortName": "OrganizationVpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.OrganizationVpcFlowLogsServiceClient.update_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService.UpdateVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsService",
+            "shortName": "OrganizationVpcFlowLogsService"
+          },
+          "shortName": "UpdateVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.UpdateVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "vpc_flow_logs_config",
+            "type": "google.cloud.network_management_v1.types.VpcFlowLogsConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_vpc_flow_logs_config"
+      },
+      "description": "Sample for UpdateVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_update_vpc_flow_logs_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_OrganizationVpcFlowLogsService_UpdateVpcFlowLogsConfig_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_organization_vpc_flow_logs_service_update_vpc_flow_logs_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient",
+          "shortName": "ReachabilityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient.create_connectivity_test",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.CreateConnectivityTest",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "CreateConnectivityTest"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.CreateConnectivityTestRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "test_id",
+            "type": "str"
+          },
+          {
+            "name": "resource",
+            "type": "google.cloud.network_management_v1.types.ConnectivityTest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_connectivity_test"
+      },
+      "description": "Sample for CreateConnectivityTest",
+      "file": "networkmanagement_v1_generated_reachability_service_create_connectivity_test_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_CreateConnectivityTest_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_create_connectivity_test_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient",
+          "shortName": "ReachabilityServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient.create_connectivity_test",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.CreateConnectivityTest",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "CreateConnectivityTest"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.CreateConnectivityTestRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "test_id",
+            "type": "str"
+          },
+          {
+            "name": "resource",
+            "type": "google.cloud.network_management_v1.types.ConnectivityTest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_connectivity_test"
+      },
+      "description": "Sample for CreateConnectivityTest",
+      "file": "networkmanagement_v1_generated_reachability_service_create_connectivity_test_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_CreateConnectivityTest_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_create_connectivity_test_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient",
+          "shortName": "ReachabilityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient.delete_connectivity_test",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.DeleteConnectivityTest",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "DeleteConnectivityTest"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.DeleteConnectivityTestRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_connectivity_test"
+      },
+      "description": "Sample for DeleteConnectivityTest",
+      "file": "networkmanagement_v1_generated_reachability_service_delete_connectivity_test_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_DeleteConnectivityTest_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_delete_connectivity_test_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient",
+          "shortName": "ReachabilityServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient.delete_connectivity_test",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.DeleteConnectivityTest",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "DeleteConnectivityTest"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.DeleteConnectivityTestRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_connectivity_test"
+      },
+      "description": "Sample for DeleteConnectivityTest",
+      "file": "networkmanagement_v1_generated_reachability_service_delete_connectivity_test_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_DeleteConnectivityTest_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_delete_connectivity_test_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient",
+          "shortName": "ReachabilityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient.get_connectivity_test",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.GetConnectivityTest",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "GetConnectivityTest"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.GetConnectivityTestRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.types.ConnectivityTest",
+        "shortName": "get_connectivity_test"
+      },
+      "description": "Sample for GetConnectivityTest",
+      "file": "networkmanagement_v1_generated_reachability_service_get_connectivity_test_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_GetConnectivityTest_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_get_connectivity_test_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient",
+          "shortName": "ReachabilityServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient.get_connectivity_test",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.GetConnectivityTest",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "GetConnectivityTest"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.GetConnectivityTestRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.types.ConnectivityTest",
+        "shortName": "get_connectivity_test"
+      },
+      "description": "Sample for GetConnectivityTest",
+      "file": "networkmanagement_v1_generated_reachability_service_get_connectivity_test_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_GetConnectivityTest_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_get_connectivity_test_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient",
+          "shortName": "ReachabilityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient.list_connectivity_tests",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.ListConnectivityTests",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "ListConnectivityTests"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.ListConnectivityTestsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.services.reachability_service.pagers.ListConnectivityTestsAsyncPager",
+        "shortName": "list_connectivity_tests"
+      },
+      "description": "Sample for ListConnectivityTests",
+      "file": "networkmanagement_v1_generated_reachability_service_list_connectivity_tests_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_ListConnectivityTests_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_list_connectivity_tests_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient",
+          "shortName": "ReachabilityServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient.list_connectivity_tests",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.ListConnectivityTests",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "ListConnectivityTests"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.ListConnectivityTestsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.services.reachability_service.pagers.ListConnectivityTestsPager",
+        "shortName": "list_connectivity_tests"
+      },
+      "description": "Sample for ListConnectivityTests",
+      "file": "networkmanagement_v1_generated_reachability_service_list_connectivity_tests_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_ListConnectivityTests_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_list_connectivity_tests_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient",
+          "shortName": "ReachabilityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient.rerun_connectivity_test",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.RerunConnectivityTest",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "RerunConnectivityTest"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.RerunConnectivityTestRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "rerun_connectivity_test"
+      },
+      "description": "Sample for RerunConnectivityTest",
+      "file": "networkmanagement_v1_generated_reachability_service_rerun_connectivity_test_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_RerunConnectivityTest_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_rerun_connectivity_test_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient",
+          "shortName": "ReachabilityServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient.rerun_connectivity_test",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.RerunConnectivityTest",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "RerunConnectivityTest"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.RerunConnectivityTestRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "rerun_connectivity_test"
+      },
+      "description": "Sample for RerunConnectivityTest",
+      "file": "networkmanagement_v1_generated_reachability_service_rerun_connectivity_test_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_RerunConnectivityTest_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_rerun_connectivity_test_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient",
+          "shortName": "ReachabilityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceAsyncClient.update_connectivity_test",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.UpdateConnectivityTest",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "UpdateConnectivityTest"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.UpdateConnectivityTestRequest"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "resource",
+            "type": "google.cloud.network_management_v1.types.ConnectivityTest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_connectivity_test"
+      },
+      "description": "Sample for UpdateConnectivityTest",
+      "file": "networkmanagement_v1_generated_reachability_service_update_connectivity_test_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_UpdateConnectivityTest_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_update_connectivity_test_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient",
+          "shortName": "ReachabilityServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.ReachabilityServiceClient.update_connectivity_test",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.ReachabilityService.UpdateConnectivityTest",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.ReachabilityService",
+            "shortName": "ReachabilityService"
+          },
+          "shortName": "UpdateConnectivityTest"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.UpdateConnectivityTestRequest"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "resource",
+            "type": "google.cloud.network_management_v1.types.ConnectivityTest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_connectivity_test"
+      },
+      "description": "Sample for UpdateConnectivityTest",
+      "file": "networkmanagement_v1_generated_reachability_service_update_connectivity_test_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_ReachabilityService_UpdateConnectivityTest_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_reachability_service_update_connectivity_test_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient",
+          "shortName": "VpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient.create_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.CreateVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "CreateVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.CreateVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "vpc_flow_logs_config",
+            "type": "google.cloud.network_management_v1.types.VpcFlowLogsConfig"
+          },
+          {
+            "name": "vpc_flow_logs_config_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_vpc_flow_logs_config"
+      },
+      "description": "Sample for CreateVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_create_vpc_flow_logs_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_CreateVpcFlowLogsConfig_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_create_vpc_flow_logs_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient",
+          "shortName": "VpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient.create_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.CreateVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "CreateVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.CreateVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "vpc_flow_logs_config",
+            "type": "google.cloud.network_management_v1.types.VpcFlowLogsConfig"
+          },
+          {
+            "name": "vpc_flow_logs_config_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_vpc_flow_logs_config"
+      },
+      "description": "Sample for CreateVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_create_vpc_flow_logs_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_CreateVpcFlowLogsConfig_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_create_vpc_flow_logs_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient",
+          "shortName": "VpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient.delete_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.DeleteVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "DeleteVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.DeleteVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_vpc_flow_logs_config"
+      },
+      "description": "Sample for DeleteVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_delete_vpc_flow_logs_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_DeleteVpcFlowLogsConfig_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_delete_vpc_flow_logs_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient",
+          "shortName": "VpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient.delete_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.DeleteVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "DeleteVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.DeleteVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_vpc_flow_logs_config"
+      },
+      "description": "Sample for DeleteVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_delete_vpc_flow_logs_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_DeleteVpcFlowLogsConfig_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_delete_vpc_flow_logs_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient",
+          "shortName": "VpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient.get_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.GetVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "GetVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.GetVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.types.VpcFlowLogsConfig",
+        "shortName": "get_vpc_flow_logs_config"
+      },
+      "description": "Sample for GetVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_get_vpc_flow_logs_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_GetVpcFlowLogsConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_get_vpc_flow_logs_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient",
+          "shortName": "VpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient.get_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.GetVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "GetVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.GetVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.types.VpcFlowLogsConfig",
+        "shortName": "get_vpc_flow_logs_config"
+      },
+      "description": "Sample for GetVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_get_vpc_flow_logs_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_GetVpcFlowLogsConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_get_vpc_flow_logs_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient",
+          "shortName": "VpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient.list_vpc_flow_logs_configs",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.ListVpcFlowLogsConfigs",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "ListVpcFlowLogsConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.ListVpcFlowLogsConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.services.vpc_flow_logs_service.pagers.ListVpcFlowLogsConfigsAsyncPager",
+        "shortName": "list_vpc_flow_logs_configs"
+      },
+      "description": "Sample for ListVpcFlowLogsConfigs",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_list_vpc_flow_logs_configs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_ListVpcFlowLogsConfigs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_list_vpc_flow_logs_configs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient",
+          "shortName": "VpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient.list_vpc_flow_logs_configs",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.ListVpcFlowLogsConfigs",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "ListVpcFlowLogsConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.ListVpcFlowLogsConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.services.vpc_flow_logs_service.pagers.ListVpcFlowLogsConfigsPager",
+        "shortName": "list_vpc_flow_logs_configs"
+      },
+      "description": "Sample for ListVpcFlowLogsConfigs",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_list_vpc_flow_logs_configs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_ListVpcFlowLogsConfigs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_list_vpc_flow_logs_configs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient",
+          "shortName": "VpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient.query_org_vpc_flow_logs_configs",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.QueryOrgVpcFlowLogsConfigs",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "QueryOrgVpcFlowLogsConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.QueryOrgVpcFlowLogsConfigsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.services.vpc_flow_logs_service.pagers.QueryOrgVpcFlowLogsConfigsAsyncPager",
+        "shortName": "query_org_vpc_flow_logs_configs"
+      },
+      "description": "Sample for QueryOrgVpcFlowLogsConfigs",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_query_org_vpc_flow_logs_configs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_QueryOrgVpcFlowLogsConfigs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_query_org_vpc_flow_logs_configs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient",
+          "shortName": "VpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient.query_org_vpc_flow_logs_configs",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.QueryOrgVpcFlowLogsConfigs",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "QueryOrgVpcFlowLogsConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.QueryOrgVpcFlowLogsConfigsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.services.vpc_flow_logs_service.pagers.QueryOrgVpcFlowLogsConfigsPager",
+        "shortName": "query_org_vpc_flow_logs_configs"
+      },
+      "description": "Sample for QueryOrgVpcFlowLogsConfigs",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_query_org_vpc_flow_logs_configs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_QueryOrgVpcFlowLogsConfigs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_query_org_vpc_flow_logs_configs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient",
+          "shortName": "VpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient.show_effective_flow_logs_configs",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.ShowEffectiveFlowLogsConfigs",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "ShowEffectiveFlowLogsConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.ShowEffectiveFlowLogsConfigsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.services.vpc_flow_logs_service.pagers.ShowEffectiveFlowLogsConfigsAsyncPager",
+        "shortName": "show_effective_flow_logs_configs"
+      },
+      "description": "Sample for ShowEffectiveFlowLogsConfigs",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_show_effective_flow_logs_configs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_ShowEffectiveFlowLogsConfigs_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_show_effective_flow_logs_configs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient",
+          "shortName": "VpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient.show_effective_flow_logs_configs",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.ShowEffectiveFlowLogsConfigs",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "ShowEffectiveFlowLogsConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.ShowEffectiveFlowLogsConfigsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.network_management_v1.services.vpc_flow_logs_service.pagers.ShowEffectiveFlowLogsConfigsPager",
+        "shortName": "show_effective_flow_logs_configs"
+      },
+      "description": "Sample for ShowEffectiveFlowLogsConfigs",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_show_effective_flow_logs_configs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_ShowEffectiveFlowLogsConfigs_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_show_effective_flow_logs_configs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient",
+          "shortName": "VpcFlowLogsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceAsyncClient.update_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.UpdateVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "UpdateVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.UpdateVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "vpc_flow_logs_config",
+            "type": "google.cloud.network_management_v1.types.VpcFlowLogsConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_vpc_flow_logs_config"
+      },
+      "description": "Sample for UpdateVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_update_vpc_flow_logs_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_UpdateVpcFlowLogsConfig_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_update_vpc_flow_logs_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient",
+          "shortName": "VpcFlowLogsServiceClient"
+        },
+        "fullName": "google.cloud.network_management_v1.VpcFlowLogsServiceClient.update_vpc_flow_logs_config",
+        "method": {
+          "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService.UpdateVpcFlowLogsConfig",
+          "service": {
+            "fullName": "google.cloud.networkmanagement.v1.VpcFlowLogsService",
+            "shortName": "VpcFlowLogsService"
+          },
+          "shortName": "UpdateVpcFlowLogsConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.network_management_v1.types.UpdateVpcFlowLogsConfigRequest"
+          },
+          {
+            "name": "vpc_flow_logs_config",
+            "type": "google.cloud.network_management_v1.types.VpcFlowLogsConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_vpc_flow_logs_config"
+      },
+      "description": "Sample for UpdateVpcFlowLogsConfig",
+      "file": "networkmanagement_v1_generated_vpc_flow_logs_service_update_vpc_flow_logs_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "networkmanagement_v1_generated_VpcFlowLogsService_UpdateVpcFlowLogsConfig_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "networkmanagement_v1_generated_vpc_flow_logs_service_update_vpc_flow_logs_config_sync.py"
+    }
+  ]
+}

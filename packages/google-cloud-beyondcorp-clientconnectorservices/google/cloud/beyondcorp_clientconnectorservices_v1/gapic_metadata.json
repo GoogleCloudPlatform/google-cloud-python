@@ -1,0 +1,103 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.beyondcorp_clientconnectorservices_v1",
+  "protoPackage": "google.cloud.beyondcorp.clientconnectorservices.v1",
+  "schema": "1.0",
+  "services": {
+    "ClientConnectorServicesService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ClientConnectorServicesServiceClient",
+          "rpcs": {
+            "CreateClientConnectorService": {
+              "methods": [
+                "create_client_connector_service"
+              ]
+            },
+            "DeleteClientConnectorService": {
+              "methods": [
+                "delete_client_connector_service"
+              ]
+            },
+            "GetClientConnectorService": {
+              "methods": [
+                "get_client_connector_service"
+              ]
+            },
+            "ListClientConnectorServices": {
+              "methods": [
+                "list_client_connector_services"
+              ]
+            },
+            "UpdateClientConnectorService": {
+              "methods": [
+                "update_client_connector_service"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ClientConnectorServicesServiceAsyncClient",
+          "rpcs": {
+            "CreateClientConnectorService": {
+              "methods": [
+                "create_client_connector_service"
+              ]
+            },
+            "DeleteClientConnectorService": {
+              "methods": [
+                "delete_client_connector_service"
+              ]
+            },
+            "GetClientConnectorService": {
+              "methods": [
+                "get_client_connector_service"
+              ]
+            },
+            "ListClientConnectorServices": {
+              "methods": [
+                "list_client_connector_services"
+              ]
+            },
+            "UpdateClientConnectorService": {
+              "methods": [
+                "update_client_connector_service"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ClientConnectorServicesServiceClient",
+          "rpcs": {
+            "CreateClientConnectorService": {
+              "methods": [
+                "create_client_connector_service"
+              ]
+            },
+            "DeleteClientConnectorService": {
+              "methods": [
+                "delete_client_connector_service"
+              ]
+            },
+            "GetClientConnectorService": {
+              "methods": [
+                "get_client_connector_service"
+              ]
+            },
+            "ListClientConnectorServices": {
+              "methods": [
+                "list_client_connector_services"
+              ]
+            },
+            "UpdateClientConnectorService": {
+              "methods": [
+                "update_client_connector_service"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

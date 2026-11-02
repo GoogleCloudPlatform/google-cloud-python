@@ -1,0 +1,118 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.beyondcorp_appconnections_v1",
+  "protoPackage": "google.cloud.beyondcorp.appconnections.v1",
+  "schema": "1.0",
+  "services": {
+    "AppConnectionsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AppConnectionsServiceClient",
+          "rpcs": {
+            "CreateAppConnection": {
+              "methods": [
+                "create_app_connection"
+              ]
+            },
+            "DeleteAppConnection": {
+              "methods": [
+                "delete_app_connection"
+              ]
+            },
+            "GetAppConnection": {
+              "methods": [
+                "get_app_connection"
+              ]
+            },
+            "ListAppConnections": {
+              "methods": [
+                "list_app_connections"
+              ]
+            },
+            "ResolveAppConnections": {
+              "methods": [
+                "resolve_app_connections"
+              ]
+            },
+            "UpdateAppConnection": {
+              "methods": [
+                "update_app_connection"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AppConnectionsServiceAsyncClient",
+          "rpcs": {
+            "CreateAppConnection": {
+              "methods": [
+                "create_app_connection"
+              ]
+            },
+            "DeleteAppConnection": {
+              "methods": [
+                "delete_app_connection"
+              ]
+            },
+            "GetAppConnection": {
+              "methods": [
+                "get_app_connection"
+              ]
+            },
+            "ListAppConnections": {
+              "methods": [
+                "list_app_connections"
+              ]
+            },
+            "ResolveAppConnections": {
+              "methods": [
+                "resolve_app_connections"
+              ]
+            },
+            "UpdateAppConnection": {
+              "methods": [
+                "update_app_connection"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AppConnectionsServiceClient",
+          "rpcs": {
+            "CreateAppConnection": {
+              "methods": [
+                "create_app_connection"
+              ]
+            },
+            "DeleteAppConnection": {
+              "methods": [
+                "delete_app_connection"
+              ]
+            },
+            "GetAppConnection": {
+              "methods": [
+                "get_app_connection"
+              ]
+            },
+            "ListAppConnections": {
+              "methods": [
+                "list_app_connections"
+              ]
+            },
+            "ResolveAppConnections": {
+              "methods": [
+                "resolve_app_connections"
+              ]
+            },
+            "UpdateAppConnection": {
+              "methods": [
+                "update_app_connection"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

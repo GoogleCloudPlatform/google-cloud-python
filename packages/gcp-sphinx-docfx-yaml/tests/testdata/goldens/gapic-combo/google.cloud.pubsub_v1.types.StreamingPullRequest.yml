@@ -1,0 +1,99 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The subscription for which to initialize the new\n   stream.\
+      \ This must be provided in the first request on the\n   stream, and must not\
+      \ be set in subsequent requests from\n   client to server. Format is\n   <code>projects/{project}/subscriptions/{sub}</code>."
+    id: subscription
+    var_type: str
+  - description: "List of acknowledgement IDs for acknowledging previously\n   received\
+      \ messages (received on this stream or a different\n   stream). If an ack ID\
+      \ has expired, the corresponding message\n   may be redelivered later. Acknowledging\
+      \ a message more than\n   once will not result in an error. If the acknowledgement\
+      \ ID\n   is malformed, the stream will be aborted with status\n   <code>INVALID_ARGUMENT</code>."
+    id: ack_ids
+    var_type: Sequence[str]
+  - description: "The list of new ack deadlines for the IDs listed in\n   <code>modify_deadline_ack_ids</code>.\
+      \ The size of this list must be\n   the same as the size of <code>modify_deadline_ack_ids</code>.\
+      \ If it\n   differs the stream will be aborted with\n   <code>INVALID_ARGUMENT</code>.\
+      \ Each element in this list is applied\n   to the element in the same position\
+      \ in\n   <code>modify_deadline_ack_ids</code>. The new ack deadline is with\n\
+      \   respect to the time this request was sent to the Pub/Sub\n   system. Must\
+      \ be >= 0. For example, if the value is 10, the\n   new ack deadline will expire\
+      \ 10 seconds after this request\n   is received. If the value is 0, the message\
+      \ is immediately\n   made available for another streaming or non-streaming pull\n\
+      \   request. If the value is < 0 (an error), the stream will be\n   aborted\
+      \ with status <code>INVALID_ARGUMENT</code>."
+    id: modify_deadline_seconds
+    var_type: Sequence[int]
+  - description: "List of acknowledgement IDs whose deadline will be modified\n  \
+      \ based on the corresponding element in\n   <code>modify_deadline_seconds</code>.\
+      \ This field can be used to\n   indicate that more time is needed to process\
+      \ a message by\n   the subscriber, or to make the message available for\n  \
+      \ redelivery if the processing was interrupted."
+    id: modify_deadline_ack_ids
+    var_type: Sequence[str]
+  - description: "Required. The ack deadline to use for the\n   stream. This must\
+      \ be provided in the first\n   request on the stream, but it can also be\n \
+      \  updated on subsequent requests from client to\n   server. The minimum deadline\
+      \ you can specify is\n   10 seconds. The maximum deadline you can specify\n\
+      \   is 600 seconds (10 minutes)."
+    id: stream_ack_deadline_seconds
+    var_type: int
+  - description: "A unique identifier that is used to distinguish client\n   instances\
+      \ from each other. Only needs to be provided on the\n   initial request. When\
+      \ a stream disconnects and reconnects\n   for the same stream, the client_id\
+      \ should be set to the same\n   value so that state associated with the old\
+      \ stream can be\n   transferred to the new stream. The same client_id should\
+      \ not\n   be used for different client instances."
+    id: client_id
+    var_type: str
+  - description: "Flow control settings for the maximum number of outstanding\n  \
+      \ messages. When there are <code>max_outstanding_messages</code> or\n   more\
+      \ currently sent to the streaming pull client that have\n   not yet been acked\
+      \ or nacked, the server stops sending more\n   messages. The sending of messages\
+      \ resumes once the number of\n   outstanding messages is less than this value.\
+      \ If the value\n   is <= 0, there is no limit to the number of outstanding\n\
+      \   messages. This property can only be set on the initial\n   StreamingPullRequest.\
+      \ If it is set on a subsequent request,\n   the stream will be aborted with\
+      \ status <code>INVALID_ARGUMENT</code>."
+    id: max_outstanding_messages
+    var_type: int
+  - description: "Flow control settings for the maximum number of outstanding\n  \
+      \ bytes. When there are <code>max_outstanding_bytes</code> or more\n   worth\
+      \ of messages currently sent to the streaming pull\n   client that have not\
+      \ yet been acked or nacked, the server\n   will stop sending more messages.\
+      \ The sending of messages\n   resumes once the number of outstanding bytes is\
+      \ less than\n   this value. If the value is <= 0, there is no limit to the\n\
+      \   number of outstanding bytes. This property can only be set\n   on the initial\
+      \ StreamingPullRequest. If it is set on a\n   subsequent request, the stream\
+      \ will be aborted with status\n   <code>INVALID_ARGUMENT</code>."
+    id: max_outstanding_bytes
+    var_type: int
+  children: []
+  class: google.cloud.pubsub_v1.types.StreamingPullRequest
+  fullName: google.cloud.pubsub_v1.types.StreamingPullRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: StreamingPullRequest
+  source:
+    id: StreamingPullRequest
+    path: null
+    startLine: null
+  summary: 'Request for the `StreamingPull` streaming RPC method. This request
+
+    is used to establish the initial stream as well as to stream
+
+    acknowledgements and ack deadline modifications from the client to
+
+    the server.
+
+    '
+  syntax:
+    content: StreamingPullRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.StreamingPullRequest
+references: []

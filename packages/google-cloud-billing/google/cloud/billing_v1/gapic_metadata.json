@@ -1,0 +1,242 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.billing_v1",
+  "protoPackage": "google.cloud.billing.v1",
+  "schema": "1.0",
+  "services": {
+    "CloudBilling": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudBillingClient",
+          "rpcs": {
+            "CreateBillingAccount": {
+              "methods": [
+                "create_billing_account"
+              ]
+            },
+            "GetBillingAccount": {
+              "methods": [
+                "get_billing_account"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetProjectBillingInfo": {
+              "methods": [
+                "get_project_billing_info"
+              ]
+            },
+            "ListBillingAccounts": {
+              "methods": [
+                "list_billing_accounts"
+              ]
+            },
+            "ListProjectBillingInfo": {
+              "methods": [
+                "list_project_billing_info"
+              ]
+            },
+            "MoveBillingAccount": {
+              "methods": [
+                "move_billing_account"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateBillingAccount": {
+              "methods": [
+                "update_billing_account"
+              ]
+            },
+            "UpdateProjectBillingInfo": {
+              "methods": [
+                "update_project_billing_info"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudBillingAsyncClient",
+          "rpcs": {
+            "CreateBillingAccount": {
+              "methods": [
+                "create_billing_account"
+              ]
+            },
+            "GetBillingAccount": {
+              "methods": [
+                "get_billing_account"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetProjectBillingInfo": {
+              "methods": [
+                "get_project_billing_info"
+              ]
+            },
+            "ListBillingAccounts": {
+              "methods": [
+                "list_billing_accounts"
+              ]
+            },
+            "ListProjectBillingInfo": {
+              "methods": [
+                "list_project_billing_info"
+              ]
+            },
+            "MoveBillingAccount": {
+              "methods": [
+                "move_billing_account"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateBillingAccount": {
+              "methods": [
+                "update_billing_account"
+              ]
+            },
+            "UpdateProjectBillingInfo": {
+              "methods": [
+                "update_project_billing_info"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudBillingClient",
+          "rpcs": {
+            "CreateBillingAccount": {
+              "methods": [
+                "create_billing_account"
+              ]
+            },
+            "GetBillingAccount": {
+              "methods": [
+                "get_billing_account"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetProjectBillingInfo": {
+              "methods": [
+                "get_project_billing_info"
+              ]
+            },
+            "ListBillingAccounts": {
+              "methods": [
+                "list_billing_accounts"
+              ]
+            },
+            "ListProjectBillingInfo": {
+              "methods": [
+                "list_project_billing_info"
+              ]
+            },
+            "MoveBillingAccount": {
+              "methods": [
+                "move_billing_account"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateBillingAccount": {
+              "methods": [
+                "update_billing_account"
+              ]
+            },
+            "UpdateProjectBillingInfo": {
+              "methods": [
+                "update_project_billing_info"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CloudCatalog": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudCatalogClient",
+          "rpcs": {
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "ListSkus": {
+              "methods": [
+                "list_skus"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudCatalogAsyncClient",
+          "rpcs": {
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "ListSkus": {
+              "methods": [
+                "list_skus"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudCatalogClient",
+          "rpcs": {
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "ListSkus": {
+              "methods": [
+                "list_skus"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

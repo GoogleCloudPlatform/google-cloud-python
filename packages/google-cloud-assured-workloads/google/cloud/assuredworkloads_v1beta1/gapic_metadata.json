@@ -1,0 +1,133 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.assuredworkloads_v1beta1",
+  "protoPackage": "google.cloud.assuredworkloads.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "AssuredWorkloadsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AssuredWorkloadsServiceClient",
+          "rpcs": {
+            "AnalyzeWorkloadMove": {
+              "methods": [
+                "analyze_workload_move"
+              ]
+            },
+            "CreateWorkload": {
+              "methods": [
+                "create_workload"
+              ]
+            },
+            "DeleteWorkload": {
+              "methods": [
+                "delete_workload"
+              ]
+            },
+            "GetWorkload": {
+              "methods": [
+                "get_workload"
+              ]
+            },
+            "ListWorkloads": {
+              "methods": [
+                "list_workloads"
+              ]
+            },
+            "RestrictAllowedResources": {
+              "methods": [
+                "restrict_allowed_resources"
+              ]
+            },
+            "UpdateWorkload": {
+              "methods": [
+                "update_workload"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AssuredWorkloadsServiceAsyncClient",
+          "rpcs": {
+            "AnalyzeWorkloadMove": {
+              "methods": [
+                "analyze_workload_move"
+              ]
+            },
+            "CreateWorkload": {
+              "methods": [
+                "create_workload"
+              ]
+            },
+            "DeleteWorkload": {
+              "methods": [
+                "delete_workload"
+              ]
+            },
+            "GetWorkload": {
+              "methods": [
+                "get_workload"
+              ]
+            },
+            "ListWorkloads": {
+              "methods": [
+                "list_workloads"
+              ]
+            },
+            "RestrictAllowedResources": {
+              "methods": [
+                "restrict_allowed_resources"
+              ]
+            },
+            "UpdateWorkload": {
+              "methods": [
+                "update_workload"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AssuredWorkloadsServiceClient",
+          "rpcs": {
+            "AnalyzeWorkloadMove": {
+              "methods": [
+                "analyze_workload_move"
+              ]
+            },
+            "CreateWorkload": {
+              "methods": [
+                "create_workload"
+              ]
+            },
+            "DeleteWorkload": {
+              "methods": [
+                "delete_workload"
+              ]
+            },
+            "GetWorkload": {
+              "methods": [
+                "get_workload"
+              ]
+            },
+            "ListWorkloads": {
+              "methods": [
+                "list_workloads"
+              ]
+            },
+            "RestrictAllowedResources": {
+              "methods": [
+                "restrict_allowed_resources"
+              ]
+            },
+            "UpdateWorkload": {
+              "methods": [
+                "update_workload"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

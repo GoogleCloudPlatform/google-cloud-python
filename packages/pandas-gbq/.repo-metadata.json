@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://googleapis.dev/python/pandas-gbq/latest",
+    "distribution_name": "pandas-gbq",
+    "language": "python",
+    "library_type": "INTEGRATION",
+    "name": "pandas-gbq",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

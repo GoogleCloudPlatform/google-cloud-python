@@ -1,0 +1,16 @@
+{
+    "api_description": "Train high-quality custom machine learning models with minimum effort and\nmachine learning expertise.",
+    "api_id": "automl.googleapis.com",
+    "api_shortname": "automl",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/automl/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-automl",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559744",
+    "language": "python",
+    "library_type": "GAPIC_COMBO",
+    "name": "automl",
+    "name_pretty": "Cloud AutoML",
+    "product_documentation": "https://cloud.google.com/automl/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

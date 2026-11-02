@@ -1,0 +1,3315 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.edgecontainer.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-edgecontainer",
+    "version": "0.8.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.create_cluster",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.CreateCluster",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "CreateCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.CreateClusterRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "cluster",
+            "type": "google.cloud.edgecontainer_v1.types.Cluster"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_cluster"
+      },
+      "description": "Sample for CreateCluster",
+      "file": "edgecontainer_v1_generated_edge_container_create_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_CreateCluster_async",
+      "segments": [
+        {
+          "end": 64,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 64,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 61,
+          "start": 55,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 65,
+          "start": 62,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_create_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.create_cluster",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.CreateCluster",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "CreateCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.CreateClusterRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "cluster",
+            "type": "google.cloud.edgecontainer_v1.types.Cluster"
+          },
+          {
+            "name": "cluster_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_cluster"
+      },
+      "description": "Sample for CreateCluster",
+      "file": "edgecontainer_v1_generated_edge_container_create_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_CreateCluster_sync",
+      "segments": [
+        {
+          "end": 64,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 64,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 61,
+          "start": 55,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 65,
+          "start": 62,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_create_cluster_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.create_node_pool",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.CreateNodePool",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "CreateNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.CreateNodePoolRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "node_pool",
+            "type": "google.cloud.edgecontainer_v1.types.NodePool"
+          },
+          {
+            "name": "node_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_node_pool"
+      },
+      "description": "Sample for CreateNodePool",
+      "file": "edgecontainer_v1_generated_edge_container_create_node_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_CreateNodePool_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_create_node_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.create_node_pool",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.CreateNodePool",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "CreateNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.CreateNodePoolRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "node_pool",
+            "type": "google.cloud.edgecontainer_v1.types.NodePool"
+          },
+          {
+            "name": "node_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_node_pool"
+      },
+      "description": "Sample for CreateNodePool",
+      "file": "edgecontainer_v1_generated_edge_container_create_node_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_CreateNodePool_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_create_node_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.create_vpn_connection",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.CreateVpnConnection",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "CreateVpnConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.CreateVpnConnectionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "vpn_connection",
+            "type": "google.cloud.edgecontainer_v1.types.VpnConnection"
+          },
+          {
+            "name": "vpn_connection_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_vpn_connection"
+      },
+      "description": "Sample for CreateVpnConnection",
+      "file": "edgecontainer_v1_generated_edge_container_create_vpn_connection_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_CreateVpnConnection_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_create_vpn_connection_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.create_vpn_connection",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.CreateVpnConnection",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "CreateVpnConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.CreateVpnConnectionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "vpn_connection",
+            "type": "google.cloud.edgecontainer_v1.types.VpnConnection"
+          },
+          {
+            "name": "vpn_connection_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_vpn_connection"
+      },
+      "description": "Sample for CreateVpnConnection",
+      "file": "edgecontainer_v1_generated_edge_container_create_vpn_connection_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_CreateVpnConnection_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_create_vpn_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.delete_cluster",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.DeleteCluster",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "DeleteCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.DeleteClusterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_cluster"
+      },
+      "description": "Sample for DeleteCluster",
+      "file": "edgecontainer_v1_generated_edge_container_delete_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_DeleteCluster_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_delete_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.delete_cluster",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.DeleteCluster",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "DeleteCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.DeleteClusterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_cluster"
+      },
+      "description": "Sample for DeleteCluster",
+      "file": "edgecontainer_v1_generated_edge_container_delete_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_DeleteCluster_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_delete_cluster_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.delete_node_pool",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.DeleteNodePool",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "DeleteNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.DeleteNodePoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_node_pool"
+      },
+      "description": "Sample for DeleteNodePool",
+      "file": "edgecontainer_v1_generated_edge_container_delete_node_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_DeleteNodePool_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_delete_node_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.delete_node_pool",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.DeleteNodePool",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "DeleteNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.DeleteNodePoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_node_pool"
+      },
+      "description": "Sample for DeleteNodePool",
+      "file": "edgecontainer_v1_generated_edge_container_delete_node_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_DeleteNodePool_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_delete_node_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.delete_vpn_connection",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.DeleteVpnConnection",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "DeleteVpnConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.DeleteVpnConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_vpn_connection"
+      },
+      "description": "Sample for DeleteVpnConnection",
+      "file": "edgecontainer_v1_generated_edge_container_delete_vpn_connection_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_DeleteVpnConnection_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_delete_vpn_connection_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.delete_vpn_connection",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.DeleteVpnConnection",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "DeleteVpnConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.DeleteVpnConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_vpn_connection"
+      },
+      "description": "Sample for DeleteVpnConnection",
+      "file": "edgecontainer_v1_generated_edge_container_delete_vpn_connection_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_DeleteVpnConnection_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_delete_vpn_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.generate_access_token",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GenerateAccessToken",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GenerateAccessToken"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GenerateAccessTokenRequest"
+          },
+          {
+            "name": "cluster",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.GenerateAccessTokenResponse",
+        "shortName": "generate_access_token"
+      },
+      "description": "Sample for GenerateAccessToken",
+      "file": "edgecontainer_v1_generated_edge_container_generate_access_token_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GenerateAccessToken_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_generate_access_token_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.generate_access_token",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GenerateAccessToken",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GenerateAccessToken"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GenerateAccessTokenRequest"
+          },
+          {
+            "name": "cluster",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.GenerateAccessTokenResponse",
+        "shortName": "generate_access_token"
+      },
+      "description": "Sample for GenerateAccessToken",
+      "file": "edgecontainer_v1_generated_edge_container_generate_access_token_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GenerateAccessToken_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_generate_access_token_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.generate_offline_credential",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GenerateOfflineCredential",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GenerateOfflineCredential"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GenerateOfflineCredentialRequest"
+          },
+          {
+            "name": "cluster",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.GenerateOfflineCredentialResponse",
+        "shortName": "generate_offline_credential"
+      },
+      "description": "Sample for GenerateOfflineCredential",
+      "file": "edgecontainer_v1_generated_edge_container_generate_offline_credential_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GenerateOfflineCredential_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_generate_offline_credential_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.generate_offline_credential",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GenerateOfflineCredential",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GenerateOfflineCredential"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GenerateOfflineCredentialRequest"
+          },
+          {
+            "name": "cluster",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.GenerateOfflineCredentialResponse",
+        "shortName": "generate_offline_credential"
+      },
+      "description": "Sample for GenerateOfflineCredential",
+      "file": "edgecontainer_v1_generated_edge_container_generate_offline_credential_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GenerateOfflineCredential_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_generate_offline_credential_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.get_cluster",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GetCluster",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GetCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GetClusterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.Cluster",
+        "shortName": "get_cluster"
+      },
+      "description": "Sample for GetCluster",
+      "file": "edgecontainer_v1_generated_edge_container_get_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GetCluster_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_get_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.get_cluster",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GetCluster",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GetCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GetClusterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.Cluster",
+        "shortName": "get_cluster"
+      },
+      "description": "Sample for GetCluster",
+      "file": "edgecontainer_v1_generated_edge_container_get_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GetCluster_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_get_cluster_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.get_machine",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GetMachine",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GetMachine"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GetMachineRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.Machine",
+        "shortName": "get_machine"
+      },
+      "description": "Sample for GetMachine",
+      "file": "edgecontainer_v1_generated_edge_container_get_machine_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GetMachine_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_get_machine_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.get_machine",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GetMachine",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GetMachine"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GetMachineRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.Machine",
+        "shortName": "get_machine"
+      },
+      "description": "Sample for GetMachine",
+      "file": "edgecontainer_v1_generated_edge_container_get_machine_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GetMachine_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_get_machine_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.get_node_pool",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GetNodePool",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GetNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GetNodePoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.NodePool",
+        "shortName": "get_node_pool"
+      },
+      "description": "Sample for GetNodePool",
+      "file": "edgecontainer_v1_generated_edge_container_get_node_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GetNodePool_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_get_node_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.get_node_pool",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GetNodePool",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GetNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GetNodePoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.NodePool",
+        "shortName": "get_node_pool"
+      },
+      "description": "Sample for GetNodePool",
+      "file": "edgecontainer_v1_generated_edge_container_get_node_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GetNodePool_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_get_node_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.get_server_config",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GetServerConfig",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GetServerConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GetServerConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.ServerConfig",
+        "shortName": "get_server_config"
+      },
+      "description": "Sample for GetServerConfig",
+      "file": "edgecontainer_v1_generated_edge_container_get_server_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GetServerConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_get_server_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.get_server_config",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GetServerConfig",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GetServerConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GetServerConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.ServerConfig",
+        "shortName": "get_server_config"
+      },
+      "description": "Sample for GetServerConfig",
+      "file": "edgecontainer_v1_generated_edge_container_get_server_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GetServerConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_get_server_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.get_vpn_connection",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GetVpnConnection",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GetVpnConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GetVpnConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.VpnConnection",
+        "shortName": "get_vpn_connection"
+      },
+      "description": "Sample for GetVpnConnection",
+      "file": "edgecontainer_v1_generated_edge_container_get_vpn_connection_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GetVpnConnection_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_get_vpn_connection_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.get_vpn_connection",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.GetVpnConnection",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "GetVpnConnection"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.GetVpnConnectionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.types.VpnConnection",
+        "shortName": "get_vpn_connection"
+      },
+      "description": "Sample for GetVpnConnection",
+      "file": "edgecontainer_v1_generated_edge_container_get_vpn_connection_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_GetVpnConnection_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_get_vpn_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.list_clusters",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.ListClusters",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "ListClusters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.ListClustersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.services.edge_container.pagers.ListClustersAsyncPager",
+        "shortName": "list_clusters"
+      },
+      "description": "Sample for ListClusters",
+      "file": "edgecontainer_v1_generated_edge_container_list_clusters_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_ListClusters_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_list_clusters_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.list_clusters",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.ListClusters",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "ListClusters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.ListClustersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.services.edge_container.pagers.ListClustersPager",
+        "shortName": "list_clusters"
+      },
+      "description": "Sample for ListClusters",
+      "file": "edgecontainer_v1_generated_edge_container_list_clusters_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_ListClusters_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_list_clusters_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.list_machines",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.ListMachines",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "ListMachines"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.ListMachinesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.services.edge_container.pagers.ListMachinesAsyncPager",
+        "shortName": "list_machines"
+      },
+      "description": "Sample for ListMachines",
+      "file": "edgecontainer_v1_generated_edge_container_list_machines_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_ListMachines_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_list_machines_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.list_machines",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.ListMachines",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "ListMachines"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.ListMachinesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.services.edge_container.pagers.ListMachinesPager",
+        "shortName": "list_machines"
+      },
+      "description": "Sample for ListMachines",
+      "file": "edgecontainer_v1_generated_edge_container_list_machines_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_ListMachines_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_list_machines_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.list_node_pools",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.ListNodePools",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "ListNodePools"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.ListNodePoolsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.services.edge_container.pagers.ListNodePoolsAsyncPager",
+        "shortName": "list_node_pools"
+      },
+      "description": "Sample for ListNodePools",
+      "file": "edgecontainer_v1_generated_edge_container_list_node_pools_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_ListNodePools_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_list_node_pools_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.list_node_pools",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.ListNodePools",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "ListNodePools"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.ListNodePoolsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.services.edge_container.pagers.ListNodePoolsPager",
+        "shortName": "list_node_pools"
+      },
+      "description": "Sample for ListNodePools",
+      "file": "edgecontainer_v1_generated_edge_container_list_node_pools_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_ListNodePools_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_list_node_pools_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.list_vpn_connections",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.ListVpnConnections",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "ListVpnConnections"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.ListVpnConnectionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.services.edge_container.pagers.ListVpnConnectionsAsyncPager",
+        "shortName": "list_vpn_connections"
+      },
+      "description": "Sample for ListVpnConnections",
+      "file": "edgecontainer_v1_generated_edge_container_list_vpn_connections_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_ListVpnConnections_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_list_vpn_connections_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.list_vpn_connections",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.ListVpnConnections",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "ListVpnConnections"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.ListVpnConnectionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgecontainer_v1.services.edge_container.pagers.ListVpnConnectionsPager",
+        "shortName": "list_vpn_connections"
+      },
+      "description": "Sample for ListVpnConnections",
+      "file": "edgecontainer_v1_generated_edge_container_list_vpn_connections_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_ListVpnConnections_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_list_vpn_connections_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.update_cluster",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.UpdateCluster",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "UpdateCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.UpdateClusterRequest"
+          },
+          {
+            "name": "cluster",
+            "type": "google.cloud.edgecontainer_v1.types.Cluster"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_cluster"
+      },
+      "description": "Sample for UpdateCluster",
+      "file": "edgecontainer_v1_generated_edge_container_update_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_UpdateCluster_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_update_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.update_cluster",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.UpdateCluster",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "UpdateCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.UpdateClusterRequest"
+          },
+          {
+            "name": "cluster",
+            "type": "google.cloud.edgecontainer_v1.types.Cluster"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_cluster"
+      },
+      "description": "Sample for UpdateCluster",
+      "file": "edgecontainer_v1_generated_edge_container_update_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_UpdateCluster_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_update_cluster_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.update_node_pool",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.UpdateNodePool",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "UpdateNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.UpdateNodePoolRequest"
+          },
+          {
+            "name": "node_pool",
+            "type": "google.cloud.edgecontainer_v1.types.NodePool"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_node_pool"
+      },
+      "description": "Sample for UpdateNodePool",
+      "file": "edgecontainer_v1_generated_edge_container_update_node_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_UpdateNodePool_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_update_node_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.update_node_pool",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.UpdateNodePool",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "UpdateNodePool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.UpdateNodePoolRequest"
+          },
+          {
+            "name": "node_pool",
+            "type": "google.cloud.edgecontainer_v1.types.NodePool"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_node_pool"
+      },
+      "description": "Sample for UpdateNodePool",
+      "file": "edgecontainer_v1_generated_edge_container_update_node_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_UpdateNodePool_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_update_node_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient",
+          "shortName": "EdgeContainerAsyncClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerAsyncClient.upgrade_cluster",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.UpgradeCluster",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "UpgradeCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.UpgradeClusterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "target_version",
+            "type": "str"
+          },
+          {
+            "name": "schedule",
+            "type": "google.cloud.edgecontainer_v1.types.UpgradeClusterRequest.Schedule"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "upgrade_cluster"
+      },
+      "description": "Sample for UpgradeCluster",
+      "file": "edgecontainer_v1_generated_edge_container_upgrade_cluster_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_UpgradeCluster_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_upgrade_cluster_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient",
+          "shortName": "EdgeContainerClient"
+        },
+        "fullName": "google.cloud.edgecontainer_v1.EdgeContainerClient.upgrade_cluster",
+        "method": {
+          "fullName": "google.cloud.edgecontainer.v1.EdgeContainer.UpgradeCluster",
+          "service": {
+            "fullName": "google.cloud.edgecontainer.v1.EdgeContainer",
+            "shortName": "EdgeContainer"
+          },
+          "shortName": "UpgradeCluster"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgecontainer_v1.types.UpgradeClusterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "target_version",
+            "type": "str"
+          },
+          {
+            "name": "schedule",
+            "type": "google.cloud.edgecontainer_v1.types.UpgradeClusterRequest.Schedule"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "upgrade_cluster"
+      },
+      "description": "Sample for UpgradeCluster",
+      "file": "edgecontainer_v1_generated_edge_container_upgrade_cluster_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgecontainer_v1_generated_EdgeContainer_UpgradeCluster_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgecontainer_v1_generated_edge_container_upgrade_cluster_sync.py"
+    }
+  ]
+}

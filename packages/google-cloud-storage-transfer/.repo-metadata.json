@@ -1,0 +1,15 @@
+{
+    "api_description": "Transfers data from external data sources to a Google Cloud Storage bucket\nor between Google Cloud Storage buckets.",
+    "api_id": "storagetransfer.googleapis.com",
+    "api_shortname": "storagetransfer",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/storagetransfer/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-storage-transfer",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "storagetransfer",
+    "name_pretty": "Storage Transfer",
+    "product_documentation": "https://cloud.google.com/storage-transfer/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

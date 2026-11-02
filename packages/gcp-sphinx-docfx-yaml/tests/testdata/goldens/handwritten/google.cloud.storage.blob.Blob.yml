@@ -1,0 +1,3267 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.blob.Blob
+  - google.cloud.storage.blob.Blob.STORAGE_CLASSES
+  - google.cloud.storage.blob.Blob.acl
+  - google.cloud.storage.blob.Blob.bucket
+  - google.cloud.storage.blob.Blob.cache_control
+  - google.cloud.storage.blob.Blob.chunk_size
+  - google.cloud.storage.blob.Blob.client
+  - google.cloud.storage.blob.Blob.component_count
+  - google.cloud.storage.blob.Blob.compose
+  - google.cloud.storage.blob.Blob.content_disposition
+  - google.cloud.storage.blob.Blob.content_encoding
+  - google.cloud.storage.blob.Blob.content_language
+  - google.cloud.storage.blob.Blob.content_type
+  - google.cloud.storage.blob.Blob.crc32c
+  - google.cloud.storage.blob.Blob.create_resumable_upload_session
+  - google.cloud.storage.blob.Blob.custom_time
+  - google.cloud.storage.blob.Blob.delete
+  - google.cloud.storage.blob.Blob.download_as_bytes
+  - google.cloud.storage.blob.Blob.download_as_string
+  - google.cloud.storage.blob.Blob.download_as_text
+  - google.cloud.storage.blob.Blob.download_to_file
+  - google.cloud.storage.blob.Blob.download_to_filename
+  - google.cloud.storage.blob.Blob.encryption_key
+  - google.cloud.storage.blob.Blob.etag
+  - google.cloud.storage.blob.Blob.event_based_hold
+  - google.cloud.storage.blob.Blob.exists
+  - google.cloud.storage.blob.Blob.from_string
+  - google.cloud.storage.blob.Blob.generate_signed_url
+  - google.cloud.storage.blob.Blob.generation
+  - google.cloud.storage.blob.Blob.get_iam_policy
+  - google.cloud.storage.blob.Blob.id
+  - google.cloud.storage.blob.Blob.kms_key_name
+  - google.cloud.storage.blob.Blob.make_private
+  - google.cloud.storage.blob.Blob.make_public
+  - google.cloud.storage.blob.Blob.md5_hash
+  - google.cloud.storage.blob.Blob.media_link
+  - google.cloud.storage.blob.Blob.metadata
+  - google.cloud.storage.blob.Blob.metageneration
+  - google.cloud.storage.blob.Blob.open
+  - google.cloud.storage.blob.Blob.owner
+  - google.cloud.storage.blob.Blob.patch
+  - google.cloud.storage.blob.Blob.path
+  - google.cloud.storage.blob.Blob.path_helper
+  - google.cloud.storage.blob.Blob.public_url
+  - google.cloud.storage.blob.Blob.reload
+  - google.cloud.storage.blob.Blob.retention_expiration_time
+  - google.cloud.storage.blob.Blob.rewrite
+  - google.cloud.storage.blob.Blob.self_link
+  - google.cloud.storage.blob.Blob.set_iam_policy
+  - google.cloud.storage.blob.Blob.size
+  - google.cloud.storage.blob.Blob.storage_class
+  - google.cloud.storage.blob.Blob.temporary_hold
+  - google.cloud.storage.blob.Blob.test_iam_permissions
+  - google.cloud.storage.blob.Blob.time_created
+  - google.cloud.storage.blob.Blob.time_deleted
+  - google.cloud.storage.blob.Blob.update
+  - google.cloud.storage.blob.Blob.update_storage_class
+  - google.cloud.storage.blob.Blob.updated
+  - google.cloud.storage.blob.Blob.upload_from_file
+  - google.cloud.storage.blob.Blob.upload_from_filename
+  - google.cloud.storage.blob.Blob.upload_from_string
+  - google.cloud.storage.blob.Blob.user_project
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: Blob
+  source:
+    id: Blob
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 145
+  summary: 'A wrapper around Cloud Storage''s concept of an `Object`.
+
+    '
+  syntax:
+    content: "Blob(\n    name,\n    bucket,\n    chunk_size=None,\n    encryption_key=None,\n\
+      \    kms_key_name=None,\n    generation=None,\n)"
+    parameters:
+    - description: The name of the blob. This corresponds to the unique path of the
+        object in the bucket. If bytes, will be converted to a unicode object. Blob
+        / object names can contain any sequence of valid unicode characters, of length
+        1-1024 bytes when UTF-8 encoded.
+      id: name
+      var_type: str
+    - description: The bucket to which this blob belongs.
+      id: bucket
+      var_type: <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref>
+    - description: (Optional) The size of a chunk of data whenever iterating (in bytes).
+        This must be a multiple of 256 KB per the API specification. If not specified,
+        the chunk_size of the blob itself is used. If that is not specified, a default
+        value of 40 MB is used.
+      id: chunk_size
+      var_type: int
+    - description: (Optional) 32 byte encryption key for customer-supplied encryption.
+        See https://cloud.google.com/storage/docs/encryption#customer-supplied.
+      id: encryption_key
+      var_type: bytes
+    - description: (Optional) Resource name of Cloud KMS key used to encrypt the blob's
+        contents.
+      id: kms_key_name
+      var_type: str
+    - description: (Optional) If present, selects a specific revision of this object.
+      id: generation
+      var_type: long
+  type: class
+  uid: google.cloud.storage.blob.Blob
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: Blob
+  source:
+    id: Blob
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 145
+  summary: "property `name`\n    Get the blob's name.\n\n"
+  syntax:
+    content: "Blob(\n    name,\n    bucket,\n    chunk_size=None,\n    encryption_key=None,\n\
+      \    kms_key_name=None,\n    generation=None,\n)"
+    parameters: []
+  type: method
+  uid: google.cloud.storage.blob.Blob
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.STORAGE_CLASSES
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: STORAGE_CLASSES
+  source:
+    id: STORAGE_CLASSES
+    path: null
+    startLine: null
+  summary: 'Allowed values for `storage_class`.
+
+
+    See
+
+    https://cloud.google.com/storage/docs/json_api/v1/objects#storageClass
+
+    https://cloud.google.com/storage/docs/per-object-storage-class
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    This list does not include ''DURABLE_REDUCED_AVAILABILITY'', which
+
+    is only documented for buckets (and deprecated).
+
+    </aside>'
+  syntax: {}
+  type: attribute
+  uid: google.cloud.storage.blob.Blob.STORAGE_CLASSES
+- &id001
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.acl
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: acl
+  source:
+    id: acl
+    path: null
+    startLine: null
+  summary: 'Create our ACL on demand.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.acl
+- *id001
+- &id002
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.bucket
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: bucket
+  source:
+    id: bucket
+    path: null
+    startLine: null
+  summary: 'Bucket which contains the object.
+
+    '
+  syntax:
+    returns:
+    - description: The object's bucket.
+      var_type: <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref>
+  type: property
+  uid: google.cloud.storage.blob.Blob.bucket
+- *id002
+- &id003
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.cache_control
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: cache_control
+  source:
+    id: cache_control
+    path: null
+    startLine: null
+  summary: 'Scalar property getter.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.cache_control
+- *id003
+- &id004
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.chunk_size
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: chunk_size
+  source:
+    id: chunk_size
+    path: null
+    startLine: null
+  summary: 'Get the blob''s default chunk size.
+
+    '
+  syntax:
+    returns:
+    - description: The current blob's chunk size, if it is set.
+      var_type: int or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.chunk_size
+- *id004
+- &id005
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.client
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: client
+  source:
+    id: client
+    path: null
+    startLine: null
+  summary: 'The client bound to this blob.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.client
+- *id005
+- &id006
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.component_count
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: component_count
+  source:
+    id: component_count
+    path: null
+    startLine: null
+  summary: 'Number of underlying components that make up this object.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: The component count (in case of a composed object) or <code>None</code>
+        if the blob's resource has not been loaded from the server. This property
+        will not be set on objects not created via <code>compose</code>.
+      var_type: int or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.component_count
+- *id006
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.compose
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: compose
+  source:
+    id: compose
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 3298
+  summary: 'Concatenate source blobs into this one.
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+
+    See [API reference docs](https://cloud.google.com/storage/docs/json_api/v1/objects/compose)
+
+    and a [code sample](https://cloud.google.com/storage/docs/samples/storage-compose-file#storage_compose_file-python).
+
+    '
+  syntax:
+    content: compose(sources, client=None, timeout=60, if_generation_match=None, if_metageneration_match=None,
+      if_source_generation_match=None, retry=<google.cloud.storage.retry.ConditionalRetryPolicy
+      object>)
+    parameters:
+    - description: Blobs whose contents will be composed into this blob.
+      id: sources
+      var_type: list of <code>Blob</code>
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) Makes the operation conditional on whether the destination
+        object''s current generation matches the given value. Setting to 0 makes the
+        operation succeed only if there are no live versions of the object. Note:
+        In a previous version, this argument worked identically to the <code>if_source_generation_match</code>
+        argument. For backwards-compatibility reasons, if a list is passed in, this
+        argument will behave like <code>if_source_generation_match</code> and also
+        issue a DeprecationWarning.'
+      id: if_generation_match
+      var_type: long
+    - description: '(Optional) Makes the operation conditional on whether the destination
+        object''s current metageneration matches the given value. If a list of long
+        is passed in, no match operation will be performed. (Deprecated: type(list
+        of long) is supported for backwards-compatability reasons only.)'
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the current
+        generation of each source blob matches the corresponding generation. The list
+        must match <code>sources</code> item-to-item.
+      id: if_source_generation_match
+      var_type: list of long
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.compose
+- &id007
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.content_disposition
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: content_disposition
+  source:
+    id: content_disposition
+    path: null
+    startLine: null
+  summary: 'Scalar property getter.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.content_disposition
+- *id007
+- &id008
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.content_encoding
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: content_encoding
+  source:
+    id: content_encoding
+    path: null
+    startLine: null
+  summary: 'Scalar property getter.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.content_encoding
+- *id008
+- &id009
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.content_language
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: content_language
+  source:
+    id: content_language
+    path: null
+    startLine: null
+  summary: 'Scalar property getter.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.content_language
+- *id009
+- &id010
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.content_type
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: content_type
+  source:
+    id: content_type
+    path: null
+    startLine: null
+  summary: 'Scalar property getter.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.content_type
+- *id010
+- &id011
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.crc32c
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: crc32c
+  source:
+    id: crc32c
+    path: null
+    startLine: null
+  summary: 'Scalar property getter.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.crc32c
+- *id011
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.create_resumable_upload_session
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: create_resumable_upload_session
+  source:
+    id: create_resumable_upload_session
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 2830
+  summary: "Create a resumable upload session.\n\nResumable upload sessions allow\
+    \ you to start an upload session from\none client and complete the session in\
+    \ another. This method is called\nby the initiator to set the metadata and limits.\
+    \ The initiator then\npasses the session URL to the client that will upload the\
+    \ binary data.\nThe client performs a PUT request on the session URL to complete\
+    \ the\nupload. This process allows untrusted clients to upload to an\naccess-controlled\
+    \ bucket.\n\nFor more details, see the\ndocumentation on [`signed URLs`](https://cloud.google.com/storage/docs/access-control/signed-urls#signing-resumable).\n\
+    \nThe content type of the upload will be determined in order\nof precedence:\n\
+    \n- The value passed in to this method (if not :data:`None`)\n- The value stored\
+    \ on the current blob\n- The default value ('application/octet-stream')\n\n<aside\
+    \ class=\"note\">\n<b>Note:</b>\nThe effect of uploading to an existing blob depends\
+    \ on the\n\"versioning\" and \"lifecycle\" policies defined on the blob's\nbucket.\
+    \  In the absence of those policies, upload will\noverwrite any existing contents.\n\
+    </aside>\n   See the [`object versioning`](https://cloud.google.com/storage/docs/object-versioning)\n\
+    \   and [`lifecycle`](https://cloud.google.com/storage/docs/lifecycle)\n   API\
+    \ documents for details.\n\nIf `encryption_key` is set, the blob will be encrypted\
+    \ with\na [`customer-supplied`](https://cloud.google.com/storage/docs/encryption#customer-supplied)\n\
+    encryption key.\n\nIf `user_project` is set on the bucket, bills the API request\n\
+    to that project.\n"
+  syntax:
+    content: create_resumable_upload_session(content_type=None, size=None, origin=None,
+      client=None, timeout=60, checksum=None, predefined_acl=None, if_generation_match=None,
+      if_generation_not_match=None, if_metageneration_match=None, if_metageneration_not_match=None,
+      retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    exceptions:
+    - description: if the session creation response returns an error status.
+      var_type: <xref uid="google.cloud.exceptions.GoogleCloudError">GoogleCloudError</xref
+    parameters:
+    - description: (Optional) The maximum number of bytes that can be uploaded using
+        this session. If the size is not known when creating the session, this should
+        be left blank.
+      id: size
+      var_type: int
+    - description: (Optional) Type of content being uploaded.
+      id: content_type
+      var_type: str
+    - description: (Optional) If set, the upload can only be completed by a user-agent
+        that uploads from the given origin. This can be useful when passing the session
+        to a web client.
+      id: origin
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) The type of checksum to compute to verify the integrity
+        of the object. After the upload is complete, the server-computed checksum
+        of the resulting object will be checked and google.resumable_media.common.DataCorruption
+        will be raised on a mismatch. On a validation failure, the client will attempt
+        to delete the uploaded object automatically. Supported values are "md5", "crc32c"
+        and None. The default is None.
+      id: checksum
+      var_type: str
+    - description: (Optional) Predefined access control list
+      id: predefined_acl
+      var_type: str
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_generation_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them. Media operations (downloads and
+        uploads) do not support non-default predicates in a Retry object. The default
+        will always be used. Other configuration changes for Retry objects such as
+        delays and deadlines are respected.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: The resumable upload session URL. The upload can be completed by
+        making an HTTP PUT request with the file's contents.
+      var_type: str
+  type: method
+  uid: google.cloud.storage.blob.Blob.create_resumable_upload_session
+- &id012
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.custom_time
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: custom_time
+  source:
+    id: custom_time
+    path: null
+    startLine: null
+  summary: 'Retrieve the custom time for the object.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: Datetime object parsed from RFC3339 valid timestamp, or <code>None</code>
+        if the blob's resource has not been loaded from the server (see <code>reload</code>).
+      var_type: <code>datetime.datetime</code> or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.custom_time
+- *id012
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.delete
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: delete
+  source:
+    id: delete
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 714
+  summary: 'Deletes a blob from Cloud Storage.
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+    '
+  syntax:
+    content: delete(client=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    exceptions:
+    - description: (propagated from <xref uid="google.cloud.storage.bucket.Bucket.delete_blob">delete_blob</xref>).
+      var_type: <xref uid="google.cloud.exceptions.NotFound">NotFound</xref
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.delete
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.download_as_bytes
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: download_as_bytes
+  source:
+    id: download_as_bytes
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 1282
+  summary: 'Download the contents of this blob as a bytes object.
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+    '
+  syntax:
+    content: download_as_bytes(client=None, start=None, end=None, raw_download=False,
+      if_etag_match=None, if_etag_not_match=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      checksum='md5', retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: ''
+      var_type: <xref uid="google.cloud.exceptions.NotFound">NotFound</xref
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) The first byte in a range to be downloaded.
+      id: start
+      var_type: int
+    - description: (Optional) The last byte in a range to be downloaded.
+      id: end
+      var_type: int
+    - description: (Optional) If true, download the object without any expansion.
+      id: raw_download
+      var_type: bool
+    - description: (Optional) See :ref:<code>using-if-etag-match</code>
+      id: if_etag_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-etag-not-match</code>
+      id: if_etag_not_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) The type of checksum to compute to verify the integrity
+        of the object. The response headers must contain a checksum of the requested
+        type. If the headers lack an appropriate checksum (for instance in the case
+        of transcoded or ranged downloads where the remote service does not know the
+        correct checksum, including downloads where chunk_size is set) an INFO-level
+        log will be emitted. Supported values are "md5", "crc32c" and None. The default
+        is "md5".
+      id: checksum
+      var_type: str
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_metageneration_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them. Media operations (downloads and
+        uploads) do not support non-default predicates in a Retry object. The default
+        will always be used. Other configuration changes for Retry objects such as
+        delays and deadlines are respected.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: The data stored in this blob.
+      var_type: bytes
+  type: method
+  uid: google.cloud.storage.blob.Blob.download_as_bytes
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.download_as_string
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: download_as_string
+  source:
+    id: download_as_string
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 1405
+  summary: '(Deprecated) Download the contents of this blob as a bytes object.
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    Deprecated alias for `download_as_bytes`.
+
+    </aside>'
+  syntax:
+    content: download_as_string(client=None, start=None, end=None, raw_download=False,
+      if_etag_match=None, if_etag_not_match=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: ''
+      var_type: <xref uid="google.cloud.exceptions.NotFound">NotFound</xref
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) The first byte in a range to be downloaded.
+      id: start
+      var_type: int
+    - description: (Optional) The last byte in a range to be downloaded.
+      id: end
+      var_type: int
+    - description: (Optional) If true, download the object without any expansion.
+      id: raw_download
+      var_type: bool
+    - description: (Optional) See :ref:<code>using-if-etag-match</code>
+      id: if_etag_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-etag-not-match</code>
+      id: if_etag_not_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_metageneration_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them. Media operations (downloads and
+        uploads) do not support non-default predicates in a Retry object. The default
+        will always be used. Other configuration changes for Retry objects such as
+        delays and deadlines are respected.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: The data stored in this blob.
+      var_type: bytes
+  type: method
+  uid: google.cloud.storage.blob.Blob.download_as_string
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.download_as_text
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: download_as_text
+  source:
+    id: download_as_text
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 1517
+  summary: 'Download the contents of this blob as text (*not* bytes).
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+    '
+  syntax:
+    content: download_as_text(client=None, start=None, end=None, raw_download=False,
+      encoding=None, if_etag_match=None, if_etag_not_match=None, if_generation_match=None,
+      if_generation_not_match=None, if_metageneration_match=None, if_metageneration_not_match=None,
+      timeout=60, retry=<google.api_core.retry.Retry object>)
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) The first byte in a range to be downloaded.
+      id: start
+      var_type: int
+    - description: (Optional) The last byte in a range to be downloaded.
+      id: end
+      var_type: int
+    - description: (Optional) If true, download the object without any expansion.
+      id: raw_download
+      var_type: bool
+    - description: (Optional) encoding to be used to decode the downloaded bytes.
+        Defaults to the <code>charset</code> param of attr:<code>content_type</code>,
+        or else to "utf-8".
+      id: encoding
+      var_type: str
+    - description: (Optional) See :ref:<code>using-if-etag-match</code>
+      id: if_etag_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-etag-not-match</code>
+      id: if_etag_not_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_metageneration_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them. Media operations (downloads and
+        uploads) do not support non-default predicates in a Retry object. The default
+        will always be used. Other configuration changes for Retry objects such as
+        delays and deadlines are respected.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: The data stored in this blob, decoded to text.
+      var_type: text
+  type: method
+  uid: google.cloud.storage.blob.Blob.download_as_text
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.download_to_file
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: download_to_file
+  source:
+    id: download_to_file
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 1010
+  summary: 'DEPRECATED. Download the contents of this blob into a file-like object.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    If the server-set property, `media_link`, is not yet
+
+    initialized, makes an additional API request to load it.
+
+    </aside>
+
+    For more fine-grained control over the download process, check out
+
+    [`google-resumable-media`](https://googleapis.dev/python/google-resumable-media/latest/index.html).
+
+    For example, this library allows downloading **parts** of a blob rather than the
+    whole thing.
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+    '
+  syntax:
+    content: download_to_file(file_obj, client=None, start=None, end=None, raw_download=False,
+      if_etag_match=None, if_etag_not_match=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      checksum='md5', retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: ''
+      var_type: <xref uid="google.cloud.exceptions.NotFound">NotFound</xref
+    parameters:
+    - description: A file handle to which to write the blob's data.
+      id: file_obj
+      var_type: file
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) The first byte in a range to be downloaded.
+      id: start
+      var_type: int
+    - description: (Optional) The last byte in a range to be downloaded.
+      id: end
+      var_type: int
+    - description: (Optional) If true, download the object without any expansion.
+      id: raw_download
+      var_type: bool
+    - description: (Optional) See :ref:<code>using-if-etag-match</code>
+      id: if_etag_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-etag-not-match</code>
+      id: if_etag_not_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) The type of checksum to compute to verify the integrity
+        of the object. The response headers must contain a checksum of the requested
+        type. If the headers lack an appropriate checksum (for instance in the case
+        of transcoded or ranged downloads where the remote service does not know the
+        correct checksum, including downloads where chunk_size is set) an INFO-level
+        log will be emitted. Supported values are "md5", "crc32c" and None. The default
+        is "md5".
+      id: checksum
+      var_type: str
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_metageneration_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them. Media operations (downloads and
+        uploads) do not support non-default predicates in a Retry object. The default
+        will always be used. Other configuration changes for Retry objects such as
+        delays and deadlines are respected.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.download_to_file
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.download_to_filename
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: download_to_filename
+  source:
+    id: download_to_filename
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 1146
+  summary: 'Download the contents of this blob into a named file.
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+
+    See a [code sample](https://cloud.google.com/storage/docs/samples/storage-download-encrypted-file#storage_download_encrypted_file-python)
+
+    to download a file with a [`customer-supplied encryption key`](https://cloud.google.com/storage/docs/encryption#customer-supplied).
+
+    '
+  syntax:
+    content: download_to_filename(filename, client=None, start=None, end=None, raw_download=False,
+      if_etag_match=None, if_etag_not_match=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      checksum='md5', retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: ''
+      var_type: <xref uid="google.cloud.exceptions.NotFound">NotFound</xref
+    parameters:
+    - description: A filename to be passed to <code>open</code>.
+      id: filename
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) The first byte in a range to be downloaded.
+      id: start
+      var_type: int
+    - description: (Optional) The last byte in a range to be downloaded.
+      id: end
+      var_type: int
+    - description: (Optional) If true, download the object without any expansion.
+      id: raw_download
+      var_type: bool
+    - description: (Optional) See :ref:<code>using-if-etag-match</code>
+      id: if_etag_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-etag-not-match</code>
+      id: if_etag_not_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) The type of checksum to compute to verify the integrity
+        of the object. The response headers must contain a checksum of the requested
+        type. If the headers lack an appropriate checksum (for instance in the case
+        of transcoded or ranged downloads where the remote service does not know the
+        correct checksum, including downloads where chunk_size is set) an INFO-level
+        log will be emitted. Supported values are "md5", "crc32c" and None. The default
+        is "md5".
+      id: checksum
+      var_type: str
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_metageneration_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them. Media operations (downloads and
+        uploads) do not support non-default predicates in a Retry object. The default
+        will always be used. Other configuration changes for Retry objects such as
+        delays and deadlines are respected.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.download_to_filename
+- &id013
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.encryption_key
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: encryption_key
+  source:
+    id: encryption_key
+    path: null
+    startLine: null
+  summary: 'Retrieve the customer-supplied encryption key for the object.
+
+    '
+  syntax:
+    returns:
+    - description: The encryption key or <code>None</code> if no customer-supplied
+        encryption key was used, or the blob's resource has not been loaded from the
+        server.
+      var_type: bytes or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.encryption_key
+- *id013
+- &id014
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.etag
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: etag
+  source:
+    id: etag
+    path: null
+    startLine: null
+  summary: 'Retrieve the ETag for the object.
+
+
+    See [`RFC 2616 (etags)`](https://tools.ietf.org/html/rfc2616#section-3.11) and
+
+    [`API reference docs`](https://cloud.google.com/storage/docs/json_api/v1/objects).
+
+    '
+  syntax:
+    returns:
+    - description: The blob etag or <code>None</code> if the blob's resource has not
+        been loaded from the server.
+      var_type: str or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.etag
+- *id014
+- &id015
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.event_based_hold
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: event_based_hold
+  source:
+    id: event_based_hold
+    path: null
+    startLine: null
+  summary: 'Scalar property getter.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.event_based_hold
+- *id015
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.exists
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: exists
+  source:
+    id: exists
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 619
+  summary: 'Determines whether or not this blob exists.
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+    '
+  syntax:
+    content: exists(client=None, if_etag_match=None, if_etag_not_match=None, if_generation_match=None,
+      if_generation_not_match=None, if_metageneration_match=None, if_metageneration_not_match=None,
+      timeout=60, retry=<google.api_core.retry.Retry object>)
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) See :ref:<code>using-if-etag-match</code>
+      id: if_etag_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-etag-not-match</code>
+      id: if_etag_not_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: True if the blob exists in Cloud Storage.
+      var_type: bool
+  type: method
+  uid: google.cloud.storage.blob.Blob.exists
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.from_string
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: from_string
+  source:
+    id: from_string
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 382
+  summary: 'Get a constructor for blob object by URI.
+
+
+    ```python
+
+    from google.cloud import storage
+
+    from google.cloud.storage.blob import Blob
+
+    client = storage.Client()
+
+    blob = Blob.from_string("gs://bucket/object", client=client)
+
+    ```
+
+    '
+  syntax:
+    content: from_string(uri, client=None)
+    parameters:
+    - description: The blob uri pass to get blob object.
+      id: uri
+      var_type: str
+    - description: (Optional) The client to use. Application code should *always*
+        pass <code>client</code>.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    returns:
+    - description: The blob object created.
+      var_type: <xref uid="google.cloud.storage.blob.Blob">Blob</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.from_string
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.generate_signed_url
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: generate_signed_url
+  source:
+    id: generate_signed_url
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 413
+  summary: 'Generates a signed URL for this blob.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    If you are on Google Compute Engine, you can''t generate a signed
+
+    URL using GCE service account.
+
+    If you''d like to be able to generate a signed URL from GCE,
+
+    you can use a standard service account from a JSON file rather
+
+    than a GCE service account.
+
+    </aside>
+
+    See a [code sample](https://cloud.google.com/storage/docs/samples/storage-generate-signed-url-v4#storage_generate_signed_url_v4-python).
+
+
+    This is particularly useful if you don''t want publicly
+
+    accessible blobs, but don''t want to require users to explicitly
+
+    log in.
+
+
+    If `bucket_bound_hostname` is set as an argument of `api_access_endpoint`,
+
+    `https` works only if using a `CDN`.
+
+    '
+  syntax:
+    content: "generate_signed_url(\n    expiration=None,\n    api_access_endpoint=\"\
+      https://storage.googleapis.com\",\n    method=\"GET\",\n    content_md5=None,\n\
+      \    content_type=None,\n    response_disposition=None,\n    response_type=None,\n\
+      \    generation=None,\n    headers=None,\n    query_parameters=None,\n    client=None,\n\
+      \    credentials=None,\n    version=None,\n    service_account_email=None,\n\
+      \    access_token=None,\n    virtual_hosted_style=False,\n    bucket_bound_hostname=None,\n\
+      \    scheme=\"http\",\n)"
+    exceptions:
+    - description: when version is invalid.
+      var_type: '`ValueError'
+    - description: when expiration is not a valid type.
+      var_type: '`TypeError'
+    - description: if credentials is not an instance of <code>google.auth.credentials.Signing</code>.
+      var_type: '`AttributeError'
+    parameters:
+    - description: Point in time when the signed URL should expire. If a <code>datetime</code>
+        instance is passed without an explicit <code>tzinfo</code> set, it will be
+        assumed to be <code>UTC</code>.
+      id: expiration
+      var_type: Union[Integer, datetime.datetime, datetime.timedelta]
+    - description: (Optional) URI base.
+      id: api_access_endpoint
+      var_type: str
+    - description: The HTTP verb that will be used when requesting the URL.
+      id: method
+      var_type: str
+    - description: (Optional) The MD5 hash of the object referenced by <code>resource</code>.
+      id: content_md5
+      var_type: str
+    - description: (Optional) The content type of the object referenced by <code>resource</code>.
+      id: content_type
+      var_type: str
+    - description: (Optional) Content disposition of responses to requests for the
+        signed URL. For example, to enable the signed URL to initiate a file of <code>blog.png</code>,
+        use the value <code>'attachment; filename=blob.png'</code>.
+      id: response_disposition
+      var_type: str
+    - description: (Optional) Content type of responses to requests for the signed
+        URL. Ignored if content_type is set on object/blob metadata.
+      id: response_type
+      var_type: str
+    - description: (Optional) A value that indicates which generation of the resource
+        to fetch.
+      id: generation
+      var_type: str
+    - description: '(Optional) Additional HTTP headers to be included as part of the
+        signed URLs. See: https://cloud.google.com/storage/docs/xml-api/reference-headers
+        Requests using the signed URL *must* pass the specified header (name and value)
+        with each request for the URL.'
+      id: headers
+      var_type: dict
+    - description: '(Optional) Additional query parameters to be included as part
+        of the signed URLs. See: https://cloud.google.com/storage/docs/xml-api/reference-headers#query'
+      id: query_parameters
+      var_type: dict
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) The authorization credentials to attach to requests.
+        These credentials identify this application to the service. If none are specified,
+        the client will attempt to ascertain the credentials from the environment.
+      id: credentials
+      var_type: <code>google.auth.credentials.Credentials</code>
+    - description: (Optional) The version of signed credential to create. Must be
+        one of 'v2' 'v4'.
+      id: version
+      var_type: str
+    - description: (Optional) E-mail address of the service account.
+      id: service_account_email
+      var_type: str
+    - description: (Optional) Access token for a service account.
+      id: access_token
+      var_type: str
+    - description: (Optional) If true, then construct the URL relative the bucket's
+        virtual hostname, e.g., '<bucket-name>.storage.googleapis.com'.
+      id: virtual_hosted_style
+      var_type: bool
+    - description: '(Optional) If passed, then construct the URL relative to the bucket-bound
+        hostname. Value can be a bare or with scheme, e.g., ''example.com'' or ''http://example.com''.
+        See: https://cloud.google.com/storage/docs/request-endpoints#cname'
+      id: bucket_bound_hostname
+      var_type: str
+    - description: (Optional) If <code>bucket_bound_hostname</code> is passed as a
+        bare hostname, use this value as the scheme. <code>https</code> will work
+        only when using a CDN. Defaults to <code>"http"</code>.
+      id: scheme
+      var_type: str
+    returns:
+    - description: A signed URL you can use to access the resource until expiration.
+      var_type: str
+  type: method
+  uid: google.cloud.storage.blob.Blob.generate_signed_url
+- &id016
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.generation
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: generation
+  source:
+    id: generation
+    path: null
+    startLine: null
+  summary: 'Retrieve the generation for the object.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: The generation of the blob or <code>None</code> if the blob's resource
+        has not been loaded from the server.
+      var_type: int or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.generation
+- *id016
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.get_iam_policy
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: get_iam_policy
+  source:
+    id: get_iam_policy
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 3009
+  summary: 'Retrieve the IAM policy for the object.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    Blob- / object-level IAM support does not yet exist and methods
+
+    currently call an internal ACL backend not providing any utility
+
+    beyond the blob''s `acl` at this time. The API may be enhanced
+
+    in the future and is currently undocumented. Use `acl` for
+
+    managing object access control.
+
+    </aside>'
+  syntax:
+    content: get_iam_policy(client=None, requested_policy_version=None, timeout=60,
+      retry=<google.api_core.retry.Retry object>)
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current object's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) The version of IAM policies to request. If a policy
+        with a condition is requested without setting this, the server will return
+        an error. This must be set to a value of 3 to retrieve IAM policies containing
+        conditions. This is to prevent client code that isn't aware of IAM conditions
+        from interpreting and modifying policies incorrectly. The service might return
+        a policy with version lower than the one that was requested, based on the
+        feature syntax in the policy fetched.
+      id: requested_policy_version
+      var_type: int or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: the policy instance, based on the resource returned from the <code>getIamPolicy</code>
+        API request.
+      var_type: <code>google.api_core.iam.Policy</code>
+  type: method
+  uid: google.cloud.storage.blob.Blob.get_iam_policy
+- &id017
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.id
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: id
+  source:
+    id: id
+    path: null
+    startLine: null
+  summary: 'Retrieve the ID for the object.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+
+    The ID consists of the bucket name, object name, and generation number.
+
+    '
+  syntax:
+    returns:
+    - description: The ID of the blob or <code>None</code> if the blob's resource
+        has not been loaded from the server.
+      var_type: str or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.id
+- *id017
+- &id018
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.kms_key_name
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: kms_key_name
+  source:
+    id: kms_key_name
+    path: null
+    startLine: null
+  summary: 'Resource name of Cloud KMS key used to encrypt the blob''s contents.
+
+    '
+  syntax:
+    returns:
+    - description: The resource name or <code>None</code> if no Cloud KMS key was
+        used, or the blob's resource has not been loaded from the server.
+      var_type: str or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.kms_key_name
+- *id018
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.make_private
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: make_private
+  source:
+    id: make_private
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 3245
+  summary: 'Update blob''s ACL, revoking read access for anonymous users.
+
+    '
+  syntax:
+    content: make_private(client=None, timeout=60, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, retry=<google.cloud.storage.retry.ConditionalRetryPolicy
+      object>)
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.make_private
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.make_public
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: make_public
+  source:
+    id: make_public
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 3192
+  summary: 'Update blob''s ACL, granting read access to anonymous users.
+
+    '
+  syntax:
+    content: make_public(client=None, timeout=60, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, retry=<google.cloud.storage.retry.ConditionalRetryPolicy
+      object>)
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.make_public
+- &id019
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.md5_hash
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: md5_hash
+  source:
+    id: md5_hash
+    path: null
+    startLine: null
+  summary: 'Scalar property getter.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.md5_hash
+- *id019
+- &id020
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.media_link
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: media_link
+  source:
+    id: media_link
+    path: null
+    startLine: null
+  summary: 'Retrieve the media download URI for the object.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: The media link for the blob or <code>None</code> if the blob's
+        resource has not been loaded from the server.
+      var_type: str or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.media_link
+- *id020
+- &id021
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.metadata
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: metadata
+  source:
+    id: metadata
+    path: null
+    startLine: null
+  summary: "Retrieve arbitrary/application specific metadata for the object.\n\nSee\
+    \ https://cloud.google.com/storage/docs/json_api/v1/objects\n\n:setter: Update\
+    \ arbitrary/application specific metadata for the\n         object.\n:getter:\
+    \ Retrieve arbitrary/application specific metadata for\n         the object.\n"
+  syntax:
+    returns:
+    - description: The metadata associated with the blob or <code>None</code> if the
+        property is not set.
+      var_type: dict or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.metadata
+- *id021
+- &id022
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.metageneration
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: metageneration
+  source:
+    id: metageneration
+    path: null
+    startLine: null
+  summary: 'Retrieve the metageneration for the object.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: The metageneration of the blob or <code>None</code> if the blob's
+        resource has not been loaded from the server.
+      var_type: int or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.metageneration
+- *id022
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.open
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: open
+  source:
+    id: open
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 3712
+  summary: 'Create a file handler for file-like I/O to or from this blob.
+
+
+    This method can be used as a context manager, just like Python''s
+
+    built-in ''open()'' function.
+
+
+    While reading, as with other read methods, if blob.generation is not set
+
+    the most recent blob generation will be used. Because the file-like IO
+
+    reader downloads progressively in chunks, this could result in data from
+
+    multiple versions being mixed together. If this is a concern, use
+
+    either bucket.get_blob(), or blob.reload(), which will download the
+
+    latest generation number and set it; or, if the generation is known, set
+
+    it manually, for instance with bucket.blob(generation=123456).
+
+
+    Checksumming (hashing) to verify data integrity is disabled for reads
+
+    using this feature because reads are implemented using request ranges,
+
+    which do not provide checksums to validate. See
+
+    https://cloud.google.com/storage/docs/hashes-etags for details.
+
+
+    See a [code sample](https://github.com/googleapis/python-storage/blob/main/samples/snippets/storage_fileio_write_read.py).
+
+
+    Keyword arguments to pass to the underlying API calls.
+
+    For both uploads and downloads, the following arguments are
+
+    supported:
+
+
+    - `if_generation_match`
+
+    - `if_generation_not_match`
+
+    - `if_metageneration_match`
+
+    - `if_metageneration_not_match`
+
+    - `timeout`
+
+    - `retry`
+
+
+    For downloads only, the following additional arguments are supported:
+
+
+    - `raw_download`
+
+
+    For uploads only, the following additional arguments are supported:
+
+
+    - `content_type`
+
+    - `num_retries`
+
+    - `predefined_acl`
+
+    - `checksum`
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    `num_retries` is supported for backwards-compatibility
+
+    reasons only; please use `retry` with a Retry object or
+
+    ConditionalRetryPolicy instead.
+
+    </aside>'
+  syntax:
+    content: "open(\n    mode=\"r\",\n    chunk_size=None,\n    ignore_flush=None,\n\
+      \    encoding=None,\n    errors=None,\n    newline=None,\n    **kwargs\n)"
+    parameters:
+    - description: (Optional) A mode string, as per standard Python <code>open()</code>
+        semantics.The first character must be 'r', to open the blob for reading, or
+        'w' to open it for writing. The second character, if present, must be 't'
+        for (unicode) text mode, or 'b' for bytes mode. If the second character is
+        omitted, text mode is the default.
+      id: mode
+      var_type: str
+    - description: (Optional) For reads, the minimum number of bytes to read at a
+        time. If fewer bytes than the chunk_size are requested, the remainder is buffered.
+        For writes, the maximum number of bytes to buffer before sending data to the
+        server, and the size of each request when data is sent. Writes are implemented
+        as a "resumable upload", so chunk_size for writes must be exactly a multiple
+        of 256KiB as with other resumable uploads. The default is 40 MiB.
+      id: chunk_size
+      var_type: long
+    - description: (Optional) For non text-mode writes, makes flush() do nothing instead
+        of raising an error. flush() without closing is not supported by the remote
+        service and therefore calling it normally results in io.UnsupportedOperation.
+        However, that behavior is incompatible with some consumers and wrappers of
+        file objects in Python, such as zipfile.ZipFile or io.TextIOWrapper. Setting
+        ignore_flush will cause flush() to successfully do nothing, for compatibility
+        with those contexts. The correct way to actually flush data to the remote
+        server is to close() (using a context manager, such as in the example, will
+        cause this to happen automatically).
+      id: ignore_flush
+      var_type: bool
+    - description: (Optional) For text mode only, the name of the encoding that the
+        stream will be decoded or encoded with. If omitted, it defaults to locale.getpreferredencoding(False).
+      id: encoding
+      var_type: str
+    - description: (Optional) For text mode only, an optional string that specifies
+        how encoding and decoding errors are to be handled. Pass 'strict' to raise
+        a ValueError exception if there is an encoding error (the default of None
+        has the same effect), or pass 'ignore' to ignore errors. (Note that ignoring
+        encoding errors can lead to data loss.) Other more rarely-used options are
+        also available; see the Python 'io' module documentation for 'io.TextIOWrapper'
+        for a complete list.
+      id: errors
+      var_type: str
+    - description: (Optional) For text mode only, controls how line endings are handled.
+        It can be None, '', '\n', '\r', and '\r\n'. If None, reads use "universal
+        newline mode" and writes use the system default. See the Python 'io' module
+        documentation for 'io.TextIOWrapper' for details.
+      id: newline
+      var_type: str
+  type: method
+  uid: google.cloud.storage.blob.Blob.open
+- &id023
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.owner
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: owner
+  source:
+    id: owner
+    path: null
+    startLine: null
+  summary: 'Retrieve info about the owner of the object.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: Mapping of owner's role/ID, or <code>None</code> if the blob's
+        resource has not been loaded from the server.
+      var_type: dict or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.owner
+- *id023
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.patch
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: patch
+  source:
+    id: patch
+    path: tests/testdata/handwritten/google/cloud/storage/_helpers.py
+    startLine: 281
+  summary: 'Sends all changed properties in a PATCH request.
+
+
+    Updates the `_properties` with the response from the backend.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: patch(client=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: the client to use. If not passed, falls back to the <code>client</code>
+        stored on the current object.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.patch
+- &id024
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.path
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: path
+  source:
+    id: path
+    path: null
+    startLine: null
+  summary: 'Getter property for the URL path to this Blob.
+
+    '
+  syntax:
+    returns:
+    - description: The URL path to this Blob.
+      var_type: str
+  type: property
+  uid: google.cloud.storage.blob.Blob.path
+- *id024
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.path_helper
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: path_helper
+  source:
+    id: path_helper
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 293
+  summary: 'Relative URL path for a blob.
+
+    '
+  syntax:
+    content: path_helper(bucket_path, blob_name)
+    parameters:
+    - description: The URL path for a bucket.
+      id: bucket_path
+      var_type: str
+    - description: The name of the blob.
+      id: blob_name
+      var_type: str
+    returns:
+    - description: The relative URL path for <code>blob_name</code>.
+      var_type: str
+  type: method
+  uid: google.cloud.storage.blob.Blob.path_helper
+- &id025
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.public_url
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: public_url
+  source:
+    id: public_url
+    path: null
+    startLine: null
+  summary: 'The public URL for this blob.
+
+
+    Use `make_public` to enable anonymous access via the returned
+
+    URL.
+
+    '
+  syntax:
+    returns:
+    - description: The public URL for this blob.
+      var_type: <code>string</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.public_url
+- *id025
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.reload
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: reload
+  source:
+    id: reload
+    path: tests/testdata/handwritten/google/cloud/storage/_helpers.py
+    startLine: 169
+  summary: 'Reload properties from Cloud Storage.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: reload(client=None, projection='noAcl', if_etag_match=None, if_etag_not_match=None,
+      if_generation_match=None, if_generation_not_match=None, if_metageneration_match=None,
+      if_metageneration_not_match=None, timeout=60, retry=<google.api_core.retry.Retry
+      object>)
+    parameters:
+    - description: the client to use. If not passed, falls back to the <code>client</code>
+        stored on the current object.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) If used, must be 'full' or 'noAcl'. Defaults to <code>'noAcl'</code>.
+        Specifies the set of properties to return.
+      id: projection
+      var_type: str
+    - description: (Optional) See :ref:<code>using-if-etag-match</code>
+      id: if_etag_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-etag-not-match</code>
+      id: if_etag_not_match
+      var_type: Union[str, Set[str]])
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.reload
+- &id026
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.retention_expiration_time
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: retention_expiration_time
+  source:
+    id: retention_expiration_time
+    path: null
+    startLine: null
+  summary: 'Retrieve timestamp at which the object''s retention period expires.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: Datetime object parsed from RFC3339 valid timestamp, or <code>None</code>
+        if the property is not set locally.
+      var_type: <code>datetime.datetime</code> or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.retention_expiration_time
+- *id026
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.rewrite
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: rewrite
+  source:
+    id: rewrite
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 3431
+  summary: 'Rewrite source blob into this one.
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+    '
+  syntax:
+    content: rewrite(source, token=None, client=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, if_source_generation_match=None,
+      if_source_generation_not_match=None, if_source_metageneration_match=None, if_source_metageneration_not_match=None,
+      timeout=60, retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: blob whose contents will be rewritten into this blob.
+      id: source
+      var_type: <code>Blob</code>
+    - description: (Optional) Token returned from an earlier, not-completed call to
+        rewrite the same source blob. If passed, result will include updated status,
+        total bytes written.
+      id: token
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) See :ref:<code>using-if-generation-match</code> Note
+        that the generation to be matched is that of the <code>destination</code>
+        blob.
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+        Note that the generation to be matched is that of the <code>destination</code>
+        blob.
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+        Note that the metageneration to be matched is that of the <code>destination</code>
+        blob.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+        Note that the metageneration to be matched is that of the <code>destination</code>
+        blob.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's generation matches the given value.
+      id: if_source_generation_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's generation does not match the given value.
+      id: if_source_generation_not_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's current metageneration matches the given value.
+      id: if_source_metageneration_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's current metageneration does not match the given value.
+      id: if_source_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: <code>(token, bytes_rewritten, total_bytes)</code>, where <code>token</code>
+        is a rewrite token (<code>None</code> if the rewrite is complete), <code>bytes_rewritten</code>
+        is the number of bytes rewritten so far, and <code>total_bytes</code> is the
+        total number of bytes to be rewritten.
+      var_type: tuple
+  type: method
+  uid: google.cloud.storage.blob.Blob.rewrite
+- &id027
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.self_link
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: self_link
+  source:
+    id: self_link
+    path: null
+    startLine: null
+  summary: 'Retrieve the URI for the object.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: The self link for the blob or <code>None</code> if the blob's resource
+        has not been loaded from the server.
+      var_type: str or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.self_link
+- *id027
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.set_iam_policy
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: set_iam_policy
+  source:
+    id: set_iam_policy
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 3077
+  summary: 'Update the IAM policy for the bucket.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    Blob- / object-level IAM support does not yet exist and methods
+
+    currently call an internal ACL backend not providing any utility
+
+    beyond the blob''s `acl` at this time. The API may be enhanced
+
+    in the future and is currently undocumented. Use `acl` for
+
+    managing object access control.
+
+    </aside>'
+  syntax:
+    content: set_iam_policy(policy, client=None, timeout=60, retry=<google.cloud.storage.retry.ConditionalRetryPolicy
+      object>)
+    parameters:
+    - description: policy instance used to update bucket's IAM policy.
+      id: policy
+      var_type: <code>google.api_core.iam.Policy</code>
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: the policy instance, based on the resource returned from the <code>setIamPolicy</code>
+        API request.
+      var_type: <code>google.api_core.iam.Policy</code>
+  type: method
+  uid: google.cloud.storage.blob.Blob.set_iam_policy
+- &id028
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.size
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: size
+  source:
+    id: size
+    path: null
+    startLine: null
+  summary: 'Size of the object, in bytes.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: The size of the blob or <code>None</code> if the blob's resource
+        has not been loaded from the server.
+      var_type: int or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.size
+- *id028
+- &id029
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.storage_class
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: storage_class
+  source:
+    id: storage_class
+    path: null
+    startLine: null
+  summary: 'Scalar property getter.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.storage_class
+- *id029
+- &id030
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.temporary_hold
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: temporary_hold
+  source:
+    id: temporary_hold
+    path: null
+    startLine: null
+  summary: 'Scalar property getter.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.temporary_hold
+- *id030
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.test_iam_permissions
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: test_iam_permissions
+  source:
+    id: test_iam_permissions
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 3138
+  summary: 'API call:  test permissions
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    Blob- / object-level IAM support does not yet exist and methods
+
+    currently call an internal ACL backend not providing any utility
+
+    beyond the blob''s `acl` at this time. The API may be enhanced
+
+    in the future and is currently undocumented. Use `acl` for
+
+    managing object access control.
+
+    </aside>'
+  syntax:
+    content: test_iam_permissions(permissions, client=None, timeout=60, retry=<google.api_core.retry.Retry
+      object>)
+    parameters:
+    - description: the permissions to check
+      id: permissions
+      var_type: list of string
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: the permissions returned by the <code>testIamPermissions</code>
+        API request.
+      var_type: list of string
+  type: method
+  uid: google.cloud.storage.blob.Blob.test_iam_permissions
+- &id031
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.time_created
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: time_created
+  source:
+    id: time_created
+    path: null
+    startLine: null
+  summary: 'Retrieve the timestamp at which the object was created.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: Datetime object parsed from RFC3339 valid timestamp, or <code>None</code>
+        if the blob's resource has not been loaded from the server (see <code>reload</code>).
+      var_type: <code>datetime.datetime</code> or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.time_created
+- *id031
+- &id032
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.time_deleted
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: time_deleted
+  source:
+    id: time_deleted
+    path: null
+    startLine: null
+  summary: 'Retrieve the timestamp at which the object was deleted.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: Datetime object parsed from RFC3339 valid timestamp, or <code>None</code>
+        if the blob's resource has not been loaded from the server (see <code>reload</code>).
+        If the blob has not been deleted, this will never be set.
+      var_type: <code>datetime.datetime</code> or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.time_deleted
+- *id032
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.update
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: update
+  source:
+    id: update
+    path: tests/testdata/handwritten/google/cloud/storage/_helpers.py
+    startLine: 352
+  summary: 'Sends all properties in a PUT request.
+
+
+    Updates the `_properties` with the response from the backend.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: update(client=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: the client to use. If not passed, falls back to the <code>client</code>
+        stored on the current object.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.update
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.update_storage_class
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: update_storage_class
+  source:
+    id: update_storage_class
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 3585
+  summary: 'Update blob''s storage class via a rewrite-in-place. This helper will
+
+    wait for the rewrite to complete before returning, so it may take some
+
+    time for large files.
+
+
+    See
+
+    https://cloud.google.com/storage/docs/per-object-storage-class
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+    '
+  syntax:
+    content: update_storage_class(new_class, client=None, if_generation_match=None,
+      if_generation_not_match=None, if_metageneration_match=None, if_metageneration_not_match=None,
+      if_source_generation_match=None, if_source_generation_not_match=None, if_source_metageneration_match=None,
+      if_source_metageneration_not_match=None, timeout=60, retry=<google.cloud.storage.retry.ConditionalRetryPolicy
+      object>)
+    parameters:
+    - description: 'new storage class for the object. One of: <xref uid="google.cloud.storage.constants.NEARLINE_STORAGE_CLASS">NEARLINE_STORAGE_CLASS</xref>,
+        <xref uid="google.cloud.storage.constants.COLDLINE_STORAGE_CLASS">COLDLINE_STORAGE_CLASS</xref>,
+        <xref uid="google.cloud.storage.constants.ARCHIVE_STORAGE_CLASS">ARCHIVE_STORAGE_CLASS</xref>,
+        <xref uid="google.cloud.storage.constants.STANDARD_STORAGE_CLASS">STANDARD_STORAGE_CLASS</xref>,
+        <xref uid="google.cloud.storage.constants.MULTI_REGIONAL_LEGACY_STORAGE_CLASS">MULTI_REGIONAL_LEGACY_STORAGE_CLASS</xref>,
+        or <xref uid="google.cloud.storage.constants.REGIONAL_LEGACY_STORAGE_CLASS">REGIONAL_LEGACY_STORAGE_CLASS</xref>.'
+      id: new_class
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) See :ref:<code>using-if-generation-match</code> Note
+        that the generation to be matched is that of the <code>destination</code>
+        blob.
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+        Note that the generation to be matched is that of the <code>destination</code>
+        blob.
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+        Note that the metageneration to be matched is that of the <code>destination</code>
+        blob.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+        Note that the metageneration to be matched is that of the <code>destination</code>
+        blob.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's generation matches the given value.
+      id: if_source_generation_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's generation does not match the given value.
+      id: if_source_generation_not_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's current metageneration matches the given value.
+      id: if_source_metageneration_match
+      var_type: long
+    - description: (Optional) Makes the operation conditional on whether the source
+        object's current metageneration does not match the given value.
+      id: if_source_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.update_storage_class
+- &id033
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.updated
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: updated
+  source:
+    id: updated
+    path: null
+    startLine: null
+  summary: 'Retrieve the timestamp at which the object was updated.
+
+
+    See https://cloud.google.com/storage/docs/json_api/v1/objects
+
+    '
+  syntax:
+    returns:
+    - description: Datetime object parsed from RFC3339 valid timestamp, or <code>None</code>
+        if the blob's resource has not been loaded from the server (see <code>reload</code>).
+      var_type: <code>datetime.datetime</code> or <code>NoneType</code>
+  type: property
+  uid: google.cloud.storage.blob.Blob.updated
+- *id033
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.upload_from_file
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: upload_from_file
+  source:
+    id: upload_from_file
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 2388
+  summary: "Upload the contents of this blob from a file-like object.\n\nThe content\
+    \ type of the upload will be determined in order\nof precedence:\n\n- The value\
+    \ passed in to this method (if not :data:`None`)\n- The value stored on the current\
+    \ blob\n- The default value ('application/octet-stream')\n\n<aside class=\"note\"\
+    >\n<b>Note:</b>\nThe effect of uploading to an existing blob depends on the\n\"\
+    versioning\" and \"lifecycle\" policies defined on the blob's\nbucket.  In the\
+    \ absence of those policies, upload will\noverwrite any existing contents.\n</aside>\n\
+    \   See the [`object versioning`](https://cloud.google.com/storage/docs/object-versioning)\n\
+    \   and [`lifecycle`](https://cloud.google.com/storage/docs/lifecycle)\n   API\
+    \ documents for details.\n\nIf the size of the data to be uploaded exceeds 8 MB\
+    \ a resumable media\nrequest will be used, otherwise the content and the metadata\
+    \ will be\nuploaded in a single multipart upload request.\n\nFor more fine-grained\
+    \ over the upload process, check out\n[`google-resumable-media`](https://googleapis.dev/python/google-resumable-media/latest/index.html).\n\
+    \nIf `user_project` is set on the bucket, bills the API request\nto that project.\n"
+  syntax:
+    content: upload_from_file(file_obj, rewind=False, size=None, content_type=None,
+      num_retries=None, client=None, predefined_acl=None, if_generation_match=None,
+      if_generation_not_match=None, if_metageneration_match=None, if_metageneration_not_match=None,
+      timeout=60, checksum=None, retry=<google.cloud.storage.retry.ConditionalRetryPolicy
+      object>)
+    exceptions:
+    - description: if the upload response returns an error status.
+      var_type: <xref uid="google.cloud.exceptions.GoogleCloudError">GoogleCloudError</xref
+    parameters:
+    - description: A file handle opened in binary mode for reading.
+      id: file_obj
+      var_type: file
+    - description: If True, seek to the beginning of the file handle before writing
+        the file to Cloud Storage.
+      id: rewind
+      var_type: bool
+    - description: The number of bytes to be uploaded (which will be read from <code>file_obj</code>).
+        If not provided, the upload will be concluded once <code>file_obj</code> is
+        exhausted.
+      id: size
+      var_type: int
+    - description: (Optional) Type of content being uploaded.
+      id: content_type
+      var_type: str
+    - description: 'Number of upload retries. By default, only uploads with if_generation_match
+        set will be retried, as uploads without the argument are not guaranteed to
+        be idempotent. Setting num_retries will override this default behavior and
+        guarantee retries even when if_generation_match is not set. (Deprecated: This
+        argument will be removed in a future release.)'
+      id: num_retries
+      var_type: int
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) Predefined access control list
+      id: predefined_acl
+      var_type: str
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) The type of checksum to compute to verify the integrity
+        of the object. If the upload is completed in a single request, the checksum
+        will be entirely precomputed and the remote server will handle verification
+        and error handling. If the upload is too large and must be transmitted in
+        multiple requests, the checksum will be incrementally computed and the client
+        will handle verification and error handling, raising google.resumable_media.common.DataCorruption
+        on a mismatch and attempting to delete the corrupted file. Supported values
+        are "md5", "crc32c" and None. The default is None.
+      id: checksum
+      var_type: str
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_generation_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them. Media operations (downloads and
+        uploads) do not support non-default predicates in a Retry object. The default
+        will always be used. Other configuration changes for Retry objects such as
+        delays and deadlines are respected.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.upload_from_file
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.upload_from_filename
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: upload_from_filename
+  source:
+    id: upload_from_filename
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 2558
+  summary: "Upload this blob's contents from the content of a named file.\n\nThe content\
+    \ type of the upload will be determined in order\nof precedence:\n\n- The value\
+    \ passed in to this method (if not :data:`None`)\n- The value stored on the current\
+    \ blob\n- The value given by `mimetypes.guess_type`\n- The default value ('application/octet-stream')\n\
+    \n<aside class=\"note\">\n<b>Note:</b>\nThe effect of uploading to an existing\
+    \ blob depends on the\n\"versioning\" and \"lifecycle\" policies defined on the\
+    \ blob's\nbucket.  In the absence of those policies, upload will\noverwrite any\
+    \ existing contents.\n</aside>\n   See the [`object versioning`](https://cloud.google.com/storage/docs/object-versioning)\n\
+    \   and [`lifecycle`](https://cloud.google.com/storage/docs/lifecycle)\n   API\
+    \ documents for details.\n\nIf `user_project` is set on the bucket, bills the\
+    \ API request\nto that project.\n\nSee a [code sample](https://cloud.google.com/storage/docs/samples/storage-upload-encrypted-file#storage_upload_encrypted_file-python)\n\
+    to upload a file with a\n[`customer-supplied encryption key`](https://cloud.google.com/storage/docs/encryption#customer-supplied).\n"
+  syntax:
+    content: upload_from_filename(filename, content_type=None, num_retries=None, client=None,
+      predefined_acl=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      checksum=None, retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: The path to the file.
+      id: filename
+      var_type: str
+    - description: (Optional) Type of content being uploaded.
+      id: content_type
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: 'Number of upload retries. By default, only uploads with if_generation_match
+        set will be retried, as uploads without the argument are not guaranteed to
+        be idempotent. Setting num_retries will override this default behavior and
+        guarantee retries even when if_generation_match is not set. (Deprecated: This
+        argument will be removed in a future release.)'
+      id: num_retries
+      var_type: int
+    - description: (Optional) Predefined access control list
+      id: predefined_acl
+      var_type: str
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) The type of checksum to compute to verify the integrity
+        of the object. If the upload is completed in a single request, the checksum
+        will be entirely precomputed and the remote server will handle verification
+        and error handling. If the upload is too large and must be transmitted in
+        multiple requests, the checksum will be incrementally computed and the client
+        will handle verification and error handling, raising google.resumable_media.common.DataCorruption
+        on a mismatch and attempting to delete the corrupted file. Supported values
+        are "md5", "crc32c" and None. The default is None.
+      id: checksum
+      var_type: str
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_generation_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them. Media operations (downloads and
+        uploads) do not support non-default predicates in a Retry object. The default
+        will always be used. Other configuration changes for Retry objects such as
+        delays and deadlines are respected.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.upload_from_filename
+- attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.upload_from_string
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: upload_from_string
+  source:
+    id: upload_from_string
+    path: tests/testdata/handwritten/google/cloud/storage/blob.py
+    startLine: 2699
+  summary: "Upload contents of this blob from the provided string.\n\n<aside class=\"\
+    note\">\n<b>Note:</b>\nThe effect of uploading to an existing blob depends on\
+    \ the\n\"versioning\" and \"lifecycle\" policies defined on the blob's\nbucket.\
+    \  In the absence of those policies, upload will\noverwrite any existing contents.\n\
+    </aside>\n   See the [`object versioning`](https://cloud.google.com/storage/docs/object-versioning)\n\
+    \   and [`lifecycle`](https://cloud.google.com/storage/docs/lifecycle)\n   API\
+    \ documents for details.\n\nIf `user_project` is set on the bucket, bills the\
+    \ API request\nto that project.\n"
+  syntax:
+    content: upload_from_string(data, content_type='text/plain', num_retries=None,
+      client=None, predefined_acl=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      checksum=None, retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: The data to store in this blob. If the value is text, it will be
+        encoded as UTF-8.
+      id: data
+      var_type: bytes or str
+    - description: (Optional) Type of content being uploaded. Defaults to <code>'text/plain'</code>.
+      id: content_type
+      var_type: str
+    - description: 'Number of upload retries. By default, only uploads with if_generation_match
+        set will be retried, as uploads without the argument are not guaranteed to
+        be idempotent. Setting num_retries will override this default behavior and
+        guarantee retries even when if_generation_match is not set. (Deprecated: This
+        argument will be removed in a future release.)'
+      id: num_retries
+      var_type: int
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the blob's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: (Optional) Predefined access control list
+      id: predefined_acl
+      var_type: str
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) The type of checksum to compute to verify the integrity
+        of the object. If the upload is completed in a single request, the checksum
+        will be entirely precomputed and the remote server will handle verification
+        and error handling. If the upload is too large and must be transmitted in
+        multiple requests, the checksum will be incrementally computed and the client
+        will handle verification and error handling, raising google.resumable_media.common.DataCorruption
+        on a mismatch and attempting to delete the corrupted file. Supported values
+        are "md5", "crc32c" and None. The default is None.
+      id: checksum
+      var_type: str
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_generation_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them. Media operations (downloads and
+        uploads) do not support non-default predicates in a Retry object. The default
+        will always be used. Other configuration changes for Retry objects such as
+        delays and deadlines are respected.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.blob.Blob.upload_from_string
+- &id034
+  attributes: []
+  class: google.cloud.storage.blob.Blob
+  fullName: google.cloud.storage.blob.Blob.user_project
+  langs:
+  - python
+  module: google.cloud.storage.blob
+  name: user_project
+  source:
+    id: user_project
+    path: null
+    startLine: null
+  summary: 'Project ID billed for API requests made via this blob.
+
+
+    Derived from bucket''s value.
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.blob.Blob.user_project
+- *id034
+references:
+- fullName: google.cloud.storage.blob.Blob
+  isExternal: false
+  name: Blob
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob
+- fullName: google.cloud.storage.blob.Blob.STORAGE_CLASSES
+  isExternal: false
+  name: STORAGE_CLASSES
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.STORAGE_CLASSES
+- fullName: google.cloud.storage.blob.Blob.acl
+  isExternal: false
+  name: acl
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.acl
+- fullName: google.cloud.storage.blob.Blob.bucket
+  isExternal: false
+  name: bucket
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.bucket
+- fullName: google.cloud.storage.blob.Blob.cache_control
+  isExternal: false
+  name: cache_control
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.cache_control
+- fullName: google.cloud.storage.blob.Blob.chunk_size
+  isExternal: false
+  name: chunk_size
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.chunk_size
+- fullName: google.cloud.storage.blob.Blob.client
+  isExternal: false
+  name: client
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.client
+- fullName: google.cloud.storage.blob.Blob.component_count
+  isExternal: false
+  name: component_count
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.component_count
+- fullName: google.cloud.storage.blob.Blob.compose
+  isExternal: false
+  name: compose
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.compose
+- fullName: google.cloud.storage.blob.Blob.content_disposition
+  isExternal: false
+  name: content_disposition
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.content_disposition
+- fullName: google.cloud.storage.blob.Blob.content_encoding
+  isExternal: false
+  name: content_encoding
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.content_encoding
+- fullName: google.cloud.storage.blob.Blob.content_language
+  isExternal: false
+  name: content_language
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.content_language
+- fullName: google.cloud.storage.blob.Blob.content_type
+  isExternal: false
+  name: content_type
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.content_type
+- fullName: google.cloud.storage.blob.Blob.crc32c
+  isExternal: false
+  name: crc32c
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.crc32c
+- fullName: google.cloud.storage.blob.Blob.create_resumable_upload_session
+  isExternal: false
+  name: create_resumable_upload_session
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.create_resumable_upload_session
+- fullName: google.cloud.storage.blob.Blob.custom_time
+  isExternal: false
+  name: custom_time
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.custom_time
+- fullName: google.cloud.storage.blob.Blob.delete
+  isExternal: false
+  name: delete
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.delete
+- fullName: google.cloud.storage.blob.Blob.download_as_bytes
+  isExternal: false
+  name: download_as_bytes
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.download_as_bytes
+- fullName: google.cloud.storage.blob.Blob.download_as_string
+  isExternal: false
+  name: download_as_string
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.download_as_string
+- fullName: google.cloud.storage.blob.Blob.download_as_text
+  isExternal: false
+  name: download_as_text
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.download_as_text
+- fullName: google.cloud.storage.blob.Blob.download_to_file
+  isExternal: false
+  name: download_to_file
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.download_to_file
+- fullName: google.cloud.storage.blob.Blob.download_to_filename
+  isExternal: false
+  name: download_to_filename
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.download_to_filename
+- fullName: google.cloud.storage.blob.Blob.encryption_key
+  isExternal: false
+  name: encryption_key
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.encryption_key
+- fullName: google.cloud.storage.blob.Blob.etag
+  isExternal: false
+  name: etag
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.etag
+- fullName: google.cloud.storage.blob.Blob.event_based_hold
+  isExternal: false
+  name: event_based_hold
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.event_based_hold
+- fullName: google.cloud.storage.blob.Blob.exists
+  isExternal: false
+  name: exists
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.exists
+- fullName: google.cloud.storage.blob.Blob.from_string
+  isExternal: false
+  name: from_string
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.from_string
+- fullName: google.cloud.storage.blob.Blob.generate_signed_url
+  isExternal: false
+  name: generate_signed_url
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.generate_signed_url
+- fullName: google.cloud.storage.blob.Blob.generation
+  isExternal: false
+  name: generation
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.generation
+- fullName: google.cloud.storage.blob.Blob.get_iam_policy
+  isExternal: false
+  name: get_iam_policy
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.get_iam_policy
+- fullName: google.cloud.storage.blob.Blob.id
+  isExternal: false
+  name: id
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.id
+- fullName: google.cloud.storage.blob.Blob.kms_key_name
+  isExternal: false
+  name: kms_key_name
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.kms_key_name
+- fullName: google.cloud.storage.blob.Blob.make_private
+  isExternal: false
+  name: make_private
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.make_private
+- fullName: google.cloud.storage.blob.Blob.make_public
+  isExternal: false
+  name: make_public
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.make_public
+- fullName: google.cloud.storage.blob.Blob.md5_hash
+  isExternal: false
+  name: md5_hash
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.md5_hash
+- fullName: google.cloud.storage.blob.Blob.media_link
+  isExternal: false
+  name: media_link
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.media_link
+- fullName: google.cloud.storage.blob.Blob.metadata
+  isExternal: false
+  name: metadata
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.metadata
+- fullName: google.cloud.storage.blob.Blob.metageneration
+  isExternal: false
+  name: metageneration
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.metageneration
+- fullName: google.cloud.storage.blob.Blob.open
+  isExternal: false
+  name: open
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.open
+- fullName: google.cloud.storage.blob.Blob.owner
+  isExternal: false
+  name: owner
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.owner
+- fullName: google.cloud.storage.blob.Blob.patch
+  isExternal: false
+  name: patch
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.patch
+- fullName: google.cloud.storage.blob.Blob.path
+  isExternal: false
+  name: path
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.path
+- fullName: google.cloud.storage.blob.Blob.path_helper
+  isExternal: false
+  name: path_helper
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.path_helper
+- fullName: google.cloud.storage.blob.Blob.public_url
+  isExternal: false
+  name: public_url
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.public_url
+- fullName: google.cloud.storage.blob.Blob.reload
+  isExternal: false
+  name: reload
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.reload
+- fullName: google.cloud.storage.blob.Blob.retention_expiration_time
+  isExternal: false
+  name: retention_expiration_time
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.retention_expiration_time
+- fullName: google.cloud.storage.blob.Blob.rewrite
+  isExternal: false
+  name: rewrite
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.rewrite
+- fullName: google.cloud.storage.blob.Blob.self_link
+  isExternal: false
+  name: self_link
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.self_link
+- fullName: google.cloud.storage.blob.Blob.set_iam_policy
+  isExternal: false
+  name: set_iam_policy
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.set_iam_policy
+- fullName: google.cloud.storage.blob.Blob.size
+  isExternal: false
+  name: size
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.size
+- fullName: google.cloud.storage.blob.Blob.storage_class
+  isExternal: false
+  name: storage_class
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.storage_class
+- fullName: google.cloud.storage.blob.Blob.temporary_hold
+  isExternal: false
+  name: temporary_hold
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.temporary_hold
+- fullName: google.cloud.storage.blob.Blob.test_iam_permissions
+  isExternal: false
+  name: test_iam_permissions
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.test_iam_permissions
+- fullName: google.cloud.storage.blob.Blob.time_created
+  isExternal: false
+  name: time_created
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.time_created
+- fullName: google.cloud.storage.blob.Blob.time_deleted
+  isExternal: false
+  name: time_deleted
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.time_deleted
+- fullName: google.cloud.storage.blob.Blob.update
+  isExternal: false
+  name: update
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.update
+- fullName: google.cloud.storage.blob.Blob.update_storage_class
+  isExternal: false
+  name: update_storage_class
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.update_storage_class
+- fullName: google.cloud.storage.blob.Blob.updated
+  isExternal: false
+  name: updated
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.updated
+- fullName: google.cloud.storage.blob.Blob.upload_from_file
+  isExternal: false
+  name: upload_from_file
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.upload_from_file
+- fullName: google.cloud.storage.blob.Blob.upload_from_filename
+  isExternal: false
+  name: upload_from_filename
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.upload_from_filename
+- fullName: google.cloud.storage.blob.Blob.upload_from_string
+  isExternal: false
+  name: upload_from_string
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.upload_from_string
+- fullName: google.cloud.storage.blob.Blob.user_project
+  isExternal: false
+  name: user_project
+  parent: google.cloud.storage.blob.Blob
+  uid: google.cloud.storage.blob.Blob.user_project

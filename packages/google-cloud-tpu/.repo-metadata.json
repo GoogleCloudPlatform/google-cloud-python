@@ -1,0 +1,15 @@
+{
+    "api_description": "TPU API provides customers with access to Google TPU technology.",
+    "api_id": "tpu.googleapis.com",
+    "api_shortname": "tpu",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/tpu/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-tpu",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "tpu",
+    "name_pretty": "Cloud TPU",
+    "product_documentation": "https://cloud.google.com/tpu/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

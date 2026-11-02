@@ -1,0 +1,33 @@
+indexes:
+
+- kind: SomeKind
+  properties:
+  - name: bar
+  - name: foo
+
+- kind: SomeKind
+  properties:
+  - name: foo
+  - name: bar
+
+- kind: SomeKind
+  properties:
+  - name: bar.one
+  - name: bar.two
+  - name: foo
+
+- kind: SomeKind
+  properties:
+  - name: bar.three
+  - name: foo
+
+- kind: SomeKind
+  properties:
+  - name: foo
+  - name: bar.one
+  - name: bar.two
+
+- kind: Animal
+  properties:
+  - name: class
+  - name: foo

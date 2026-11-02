@@ -1,0 +1,997 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.dataqna.v1alpha",
+        "version": "v1alpha"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-data-qna",
+    "version": "0.14.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.AutoSuggestionServiceAsyncClient",
+          "shortName": "AutoSuggestionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.AutoSuggestionServiceAsyncClient.suggest_queries",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.AutoSuggestionService.SuggestQueries",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.AutoSuggestionService",
+            "shortName": "AutoSuggestionService"
+          },
+          "shortName": "SuggestQueries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.SuggestQueriesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.SuggestQueriesResponse",
+        "shortName": "suggest_queries"
+      },
+      "description": "Sample for SuggestQueries",
+      "file": "dataqna_v1alpha_generated_auto_suggestion_service_suggest_queries_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_AutoSuggestionService_SuggestQueries_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_auto_suggestion_service_suggest_queries_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.AutoSuggestionServiceClient",
+          "shortName": "AutoSuggestionServiceClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.AutoSuggestionServiceClient.suggest_queries",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.AutoSuggestionService.SuggestQueries",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.AutoSuggestionService",
+            "shortName": "AutoSuggestionService"
+          },
+          "shortName": "SuggestQueries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.SuggestQueriesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.SuggestQueriesResponse",
+        "shortName": "suggest_queries"
+      },
+      "description": "Sample for SuggestQueries",
+      "file": "dataqna_v1alpha_generated_auto_suggestion_service_suggest_queries_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_AutoSuggestionService_SuggestQueries_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_auto_suggestion_service_suggest_queries_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceAsyncClient",
+          "shortName": "QuestionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceAsyncClient.create_question",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.QuestionService.CreateQuestion",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.QuestionService",
+            "shortName": "QuestionService"
+          },
+          "shortName": "CreateQuestion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.CreateQuestionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "question",
+            "type": "google.cloud.dataqna_v1alpha.types.Question"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.Question",
+        "shortName": "create_question"
+      },
+      "description": "Sample for CreateQuestion",
+      "file": "dataqna_v1alpha_generated_question_service_create_question_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_QuestionService_CreateQuestion_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_question_service_create_question_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceClient",
+          "shortName": "QuestionServiceClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceClient.create_question",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.QuestionService.CreateQuestion",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.QuestionService",
+            "shortName": "QuestionService"
+          },
+          "shortName": "CreateQuestion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.CreateQuestionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "question",
+            "type": "google.cloud.dataqna_v1alpha.types.Question"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.Question",
+        "shortName": "create_question"
+      },
+      "description": "Sample for CreateQuestion",
+      "file": "dataqna_v1alpha_generated_question_service_create_question_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_QuestionService_CreateQuestion_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_question_service_create_question_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceAsyncClient",
+          "shortName": "QuestionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceAsyncClient.execute_question",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.QuestionService.ExecuteQuestion",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.QuestionService",
+            "shortName": "QuestionService"
+          },
+          "shortName": "ExecuteQuestion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.ExecuteQuestionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "interpretation_index",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.Question",
+        "shortName": "execute_question"
+      },
+      "description": "Sample for ExecuteQuestion",
+      "file": "dataqna_v1alpha_generated_question_service_execute_question_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_QuestionService_ExecuteQuestion_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_question_service_execute_question_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceClient",
+          "shortName": "QuestionServiceClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceClient.execute_question",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.QuestionService.ExecuteQuestion",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.QuestionService",
+            "shortName": "QuestionService"
+          },
+          "shortName": "ExecuteQuestion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.ExecuteQuestionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "interpretation_index",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.Question",
+        "shortName": "execute_question"
+      },
+      "description": "Sample for ExecuteQuestion",
+      "file": "dataqna_v1alpha_generated_question_service_execute_question_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_QuestionService_ExecuteQuestion_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_question_service_execute_question_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceAsyncClient",
+          "shortName": "QuestionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceAsyncClient.get_question",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.QuestionService.GetQuestion",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.QuestionService",
+            "shortName": "QuestionService"
+          },
+          "shortName": "GetQuestion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.GetQuestionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.Question",
+        "shortName": "get_question"
+      },
+      "description": "Sample for GetQuestion",
+      "file": "dataqna_v1alpha_generated_question_service_get_question_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_QuestionService_GetQuestion_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_question_service_get_question_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceClient",
+          "shortName": "QuestionServiceClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceClient.get_question",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.QuestionService.GetQuestion",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.QuestionService",
+            "shortName": "QuestionService"
+          },
+          "shortName": "GetQuestion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.GetQuestionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.Question",
+        "shortName": "get_question"
+      },
+      "description": "Sample for GetQuestion",
+      "file": "dataqna_v1alpha_generated_question_service_get_question_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_QuestionService_GetQuestion_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_question_service_get_question_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceAsyncClient",
+          "shortName": "QuestionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceAsyncClient.get_user_feedback",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.QuestionService.GetUserFeedback",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.QuestionService",
+            "shortName": "QuestionService"
+          },
+          "shortName": "GetUserFeedback"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.GetUserFeedbackRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.UserFeedback",
+        "shortName": "get_user_feedback"
+      },
+      "description": "Sample for GetUserFeedback",
+      "file": "dataqna_v1alpha_generated_question_service_get_user_feedback_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_QuestionService_GetUserFeedback_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_question_service_get_user_feedback_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceClient",
+          "shortName": "QuestionServiceClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceClient.get_user_feedback",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.QuestionService.GetUserFeedback",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.QuestionService",
+            "shortName": "QuestionService"
+          },
+          "shortName": "GetUserFeedback"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.GetUserFeedbackRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.UserFeedback",
+        "shortName": "get_user_feedback"
+      },
+      "description": "Sample for GetUserFeedback",
+      "file": "dataqna_v1alpha_generated_question_service_get_user_feedback_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_QuestionService_GetUserFeedback_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_question_service_get_user_feedback_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceAsyncClient",
+          "shortName": "QuestionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceAsyncClient.update_user_feedback",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.QuestionService.UpdateUserFeedback",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.QuestionService",
+            "shortName": "QuestionService"
+          },
+          "shortName": "UpdateUserFeedback"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.UpdateUserFeedbackRequest"
+          },
+          {
+            "name": "user_feedback",
+            "type": "google.cloud.dataqna_v1alpha.types.UserFeedback"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.UserFeedback",
+        "shortName": "update_user_feedback"
+      },
+      "description": "Sample for UpdateUserFeedback",
+      "file": "dataqna_v1alpha_generated_question_service_update_user_feedback_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_QuestionService_UpdateUserFeedback_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_question_service_update_user_feedback_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceClient",
+          "shortName": "QuestionServiceClient"
+        },
+        "fullName": "google.cloud.dataqna_v1alpha.QuestionServiceClient.update_user_feedback",
+        "method": {
+          "fullName": "google.cloud.dataqna.v1alpha.QuestionService.UpdateUserFeedback",
+          "service": {
+            "fullName": "google.cloud.dataqna.v1alpha.QuestionService",
+            "shortName": "QuestionService"
+          },
+          "shortName": "UpdateUserFeedback"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataqna_v1alpha.types.UpdateUserFeedbackRequest"
+          },
+          {
+            "name": "user_feedback",
+            "type": "google.cloud.dataqna_v1alpha.types.UserFeedback"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataqna_v1alpha.types.UserFeedback",
+        "shortName": "update_user_feedback"
+      },
+      "description": "Sample for UpdateUserFeedback",
+      "file": "dataqna_v1alpha_generated_question_service_update_user_feedback_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataqna_v1alpha_generated_QuestionService_UpdateUserFeedback_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataqna_v1alpha_generated_question_service_update_user_feedback_sync.py"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.bucket.Bucket
+  - google.cloud.storage.bucket.IAMConfiguration
+  - google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  - google.cloud.storage.bucket.LifecycleRuleConditions
+  - google.cloud.storage.bucket.LifecycleRuleDelete
+  - google.cloud.storage.bucket.LifecycleRuleSetStorageClass
+  fullName: google.cloud.storage.bucket
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: bucket
+  source:
+    id: bucket
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 0
+  summary: 'Create / interact with Google Cloud Storage buckets.
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google.cloud.storage.bucket
+references:
+- fullName: google.cloud.storage.bucket.Bucket
+  isExternal: false
+  name: Bucket
+  parent: google.cloud.storage.bucket
+  uid: google.cloud.storage.bucket.Bucket
+- fullName: google.cloud.storage.bucket.IAMConfiguration
+  isExternal: false
+  name: IAMConfiguration
+  parent: google.cloud.storage.bucket
+  uid: google.cloud.storage.bucket.IAMConfiguration
+- fullName: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+  isExternal: false
+  name: LifecycleRuleAbortIncompleteMultipartUpload
+  parent: google.cloud.storage.bucket
+  uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+- fullName: google.cloud.storage.bucket.LifecycleRuleConditions
+  isExternal: false
+  name: LifecycleRuleConditions
+  parent: google.cloud.storage.bucket
+  uid: google.cloud.storage.bucket.LifecycleRuleConditions
+- fullName: google.cloud.storage.bucket.LifecycleRuleDelete
+  isExternal: false
+  name: LifecycleRuleDelete
+  parent: google.cloud.storage.bucket
+  uid: google.cloud.storage.bucket.LifecycleRuleDelete
+- fullName: google.cloud.storage.bucket.LifecycleRuleSetStorageClass
+  isExternal: false
+  name: LifecycleRuleSetStorageClass
+  parent: google.cloud.storage.bucket
+  uid: google.cloud.storage.bucket.LifecycleRuleSetStorageClass

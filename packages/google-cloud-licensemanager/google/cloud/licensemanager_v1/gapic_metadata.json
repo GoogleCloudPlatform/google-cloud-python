@@ -1,0 +1,223 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.licensemanager_v1",
+  "protoPackage": "google.cloud.licensemanager.v1",
+  "schema": "1.0",
+  "services": {
+    "LicenseManager": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "LicenseManagerClient",
+          "rpcs": {
+            "AggregateUsage": {
+              "methods": [
+                "aggregate_usage"
+              ]
+            },
+            "CreateConfiguration": {
+              "methods": [
+                "create_configuration"
+              ]
+            },
+            "DeactivateConfiguration": {
+              "methods": [
+                "deactivate_configuration"
+              ]
+            },
+            "DeleteConfiguration": {
+              "methods": [
+                "delete_configuration"
+              ]
+            },
+            "GetConfiguration": {
+              "methods": [
+                "get_configuration"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetProduct": {
+              "methods": [
+                "get_product"
+              ]
+            },
+            "ListConfigurations": {
+              "methods": [
+                "list_configurations"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListProducts": {
+              "methods": [
+                "list_products"
+              ]
+            },
+            "QueryConfigurationLicenseUsage": {
+              "methods": [
+                "query_configuration_license_usage"
+              ]
+            },
+            "ReactivateConfiguration": {
+              "methods": [
+                "reactivate_configuration"
+              ]
+            },
+            "UpdateConfiguration": {
+              "methods": [
+                "update_configuration"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "LicenseManagerAsyncClient",
+          "rpcs": {
+            "AggregateUsage": {
+              "methods": [
+                "aggregate_usage"
+              ]
+            },
+            "CreateConfiguration": {
+              "methods": [
+                "create_configuration"
+              ]
+            },
+            "DeactivateConfiguration": {
+              "methods": [
+                "deactivate_configuration"
+              ]
+            },
+            "DeleteConfiguration": {
+              "methods": [
+                "delete_configuration"
+              ]
+            },
+            "GetConfiguration": {
+              "methods": [
+                "get_configuration"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetProduct": {
+              "methods": [
+                "get_product"
+              ]
+            },
+            "ListConfigurations": {
+              "methods": [
+                "list_configurations"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListProducts": {
+              "methods": [
+                "list_products"
+              ]
+            },
+            "QueryConfigurationLicenseUsage": {
+              "methods": [
+                "query_configuration_license_usage"
+              ]
+            },
+            "ReactivateConfiguration": {
+              "methods": [
+                "reactivate_configuration"
+              ]
+            },
+            "UpdateConfiguration": {
+              "methods": [
+                "update_configuration"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "LicenseManagerClient",
+          "rpcs": {
+            "AggregateUsage": {
+              "methods": [
+                "aggregate_usage"
+              ]
+            },
+            "CreateConfiguration": {
+              "methods": [
+                "create_configuration"
+              ]
+            },
+            "DeactivateConfiguration": {
+              "methods": [
+                "deactivate_configuration"
+              ]
+            },
+            "DeleteConfiguration": {
+              "methods": [
+                "delete_configuration"
+              ]
+            },
+            "GetConfiguration": {
+              "methods": [
+                "get_configuration"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetProduct": {
+              "methods": [
+                "get_product"
+              ]
+            },
+            "ListConfigurations": {
+              "methods": [
+                "list_configurations"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListProducts": {
+              "methods": [
+                "list_products"
+              ]
+            },
+            "QueryConfigurationLicenseUsage": {
+              "methods": [
+                "query_configuration_license_usage"
+              ]
+            },
+            "ReactivateConfiguration": {
+              "methods": [
+                "reactivate_configuration"
+              ]
+            },
+            "UpdateConfiguration": {
+              "methods": [
+                "update_configuration"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

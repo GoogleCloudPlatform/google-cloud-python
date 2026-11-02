@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_reports_v1beta",
+  "protoPackage": "google.shopping.merchant.reports.v1beta",
+  "schema": "1.0",
+  "services": {
+    "ReportService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ReportServiceClient",
+          "rpcs": {
+            "Search": {
+              "methods": [
+                "search"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ReportServiceAsyncClient",
+          "rpcs": {
+            "Search": {
+              "methods": [
+                "search"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ReportServiceClient",
+          "rpcs": {
+            "Search": {
+              "methods": [
+                "search"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

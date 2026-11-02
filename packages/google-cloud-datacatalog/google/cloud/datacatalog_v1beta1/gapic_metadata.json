@@ -1,0 +1,481 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.datacatalog_v1beta1",
+  "protoPackage": "google.cloud.datacatalog.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "DataCatalog": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataCatalogClient",
+          "rpcs": {
+            "CreateEntry": {
+              "methods": [
+                "create_entry"
+              ]
+            },
+            "CreateEntryGroup": {
+              "methods": [
+                "create_entry_group"
+              ]
+            },
+            "CreateTag": {
+              "methods": [
+                "create_tag"
+              ]
+            },
+            "CreateTagTemplate": {
+              "methods": [
+                "create_tag_template"
+              ]
+            },
+            "CreateTagTemplateField": {
+              "methods": [
+                "create_tag_template_field"
+              ]
+            },
+            "DeleteEntry": {
+              "methods": [
+                "delete_entry"
+              ]
+            },
+            "DeleteEntryGroup": {
+              "methods": [
+                "delete_entry_group"
+              ]
+            },
+            "DeleteTag": {
+              "methods": [
+                "delete_tag"
+              ]
+            },
+            "DeleteTagTemplate": {
+              "methods": [
+                "delete_tag_template"
+              ]
+            },
+            "DeleteTagTemplateField": {
+              "methods": [
+                "delete_tag_template_field"
+              ]
+            },
+            "GetEntry": {
+              "methods": [
+                "get_entry"
+              ]
+            },
+            "GetEntryGroup": {
+              "methods": [
+                "get_entry_group"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetTagTemplate": {
+              "methods": [
+                "get_tag_template"
+              ]
+            },
+            "ListEntries": {
+              "methods": [
+                "list_entries"
+              ]
+            },
+            "ListEntryGroups": {
+              "methods": [
+                "list_entry_groups"
+              ]
+            },
+            "ListTags": {
+              "methods": [
+                "list_tags"
+              ]
+            },
+            "LookupEntry": {
+              "methods": [
+                "lookup_entry"
+              ]
+            },
+            "RenameTagTemplateField": {
+              "methods": [
+                "rename_tag_template_field"
+              ]
+            },
+            "RenameTagTemplateFieldEnumValue": {
+              "methods": [
+                "rename_tag_template_field_enum_value"
+              ]
+            },
+            "SearchCatalog": {
+              "methods": [
+                "search_catalog"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateEntry": {
+              "methods": [
+                "update_entry"
+              ]
+            },
+            "UpdateEntryGroup": {
+              "methods": [
+                "update_entry_group"
+              ]
+            },
+            "UpdateTag": {
+              "methods": [
+                "update_tag"
+              ]
+            },
+            "UpdateTagTemplate": {
+              "methods": [
+                "update_tag_template"
+              ]
+            },
+            "UpdateTagTemplateField": {
+              "methods": [
+                "update_tag_template_field"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataCatalogAsyncClient",
+          "rpcs": {
+            "CreateEntry": {
+              "methods": [
+                "create_entry"
+              ]
+            },
+            "CreateEntryGroup": {
+              "methods": [
+                "create_entry_group"
+              ]
+            },
+            "CreateTag": {
+              "methods": [
+                "create_tag"
+              ]
+            },
+            "CreateTagTemplate": {
+              "methods": [
+                "create_tag_template"
+              ]
+            },
+            "CreateTagTemplateField": {
+              "methods": [
+                "create_tag_template_field"
+              ]
+            },
+            "DeleteEntry": {
+              "methods": [
+                "delete_entry"
+              ]
+            },
+            "DeleteEntryGroup": {
+              "methods": [
+                "delete_entry_group"
+              ]
+            },
+            "DeleteTag": {
+              "methods": [
+                "delete_tag"
+              ]
+            },
+            "DeleteTagTemplate": {
+              "methods": [
+                "delete_tag_template"
+              ]
+            },
+            "DeleteTagTemplateField": {
+              "methods": [
+                "delete_tag_template_field"
+              ]
+            },
+            "GetEntry": {
+              "methods": [
+                "get_entry"
+              ]
+            },
+            "GetEntryGroup": {
+              "methods": [
+                "get_entry_group"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetTagTemplate": {
+              "methods": [
+                "get_tag_template"
+              ]
+            },
+            "ListEntries": {
+              "methods": [
+                "list_entries"
+              ]
+            },
+            "ListEntryGroups": {
+              "methods": [
+                "list_entry_groups"
+              ]
+            },
+            "ListTags": {
+              "methods": [
+                "list_tags"
+              ]
+            },
+            "LookupEntry": {
+              "methods": [
+                "lookup_entry"
+              ]
+            },
+            "RenameTagTemplateField": {
+              "methods": [
+                "rename_tag_template_field"
+              ]
+            },
+            "RenameTagTemplateFieldEnumValue": {
+              "methods": [
+                "rename_tag_template_field_enum_value"
+              ]
+            },
+            "SearchCatalog": {
+              "methods": [
+                "search_catalog"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateEntry": {
+              "methods": [
+                "update_entry"
+              ]
+            },
+            "UpdateEntryGroup": {
+              "methods": [
+                "update_entry_group"
+              ]
+            },
+            "UpdateTag": {
+              "methods": [
+                "update_tag"
+              ]
+            },
+            "UpdateTagTemplate": {
+              "methods": [
+                "update_tag_template"
+              ]
+            },
+            "UpdateTagTemplateField": {
+              "methods": [
+                "update_tag_template_field"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PolicyTagManager": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PolicyTagManagerClient",
+          "rpcs": {
+            "CreatePolicyTag": {
+              "methods": [
+                "create_policy_tag"
+              ]
+            },
+            "CreateTaxonomy": {
+              "methods": [
+                "create_taxonomy"
+              ]
+            },
+            "DeletePolicyTag": {
+              "methods": [
+                "delete_policy_tag"
+              ]
+            },
+            "DeleteTaxonomy": {
+              "methods": [
+                "delete_taxonomy"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetPolicyTag": {
+              "methods": [
+                "get_policy_tag"
+              ]
+            },
+            "GetTaxonomy": {
+              "methods": [
+                "get_taxonomy"
+              ]
+            },
+            "ListPolicyTags": {
+              "methods": [
+                "list_policy_tags"
+              ]
+            },
+            "ListTaxonomies": {
+              "methods": [
+                "list_taxonomies"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdatePolicyTag": {
+              "methods": [
+                "update_policy_tag"
+              ]
+            },
+            "UpdateTaxonomy": {
+              "methods": [
+                "update_taxonomy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "PolicyTagManagerAsyncClient",
+          "rpcs": {
+            "CreatePolicyTag": {
+              "methods": [
+                "create_policy_tag"
+              ]
+            },
+            "CreateTaxonomy": {
+              "methods": [
+                "create_taxonomy"
+              ]
+            },
+            "DeletePolicyTag": {
+              "methods": [
+                "delete_policy_tag"
+              ]
+            },
+            "DeleteTaxonomy": {
+              "methods": [
+                "delete_taxonomy"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetPolicyTag": {
+              "methods": [
+                "get_policy_tag"
+              ]
+            },
+            "GetTaxonomy": {
+              "methods": [
+                "get_taxonomy"
+              ]
+            },
+            "ListPolicyTags": {
+              "methods": [
+                "list_policy_tags"
+              ]
+            },
+            "ListTaxonomies": {
+              "methods": [
+                "list_taxonomies"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdatePolicyTag": {
+              "methods": [
+                "update_policy_tag"
+              ]
+            },
+            "UpdateTaxonomy": {
+              "methods": [
+                "update_taxonomy"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PolicyTagManagerSerialization": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PolicyTagManagerSerializationClient",
+          "rpcs": {
+            "ExportTaxonomies": {
+              "methods": [
+                "export_taxonomies"
+              ]
+            },
+            "ImportTaxonomies": {
+              "methods": [
+                "import_taxonomies"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "PolicyTagManagerSerializationAsyncClient",
+          "rpcs": {
+            "ExportTaxonomies": {
+              "methods": [
+                "export_taxonomies"
+              ]
+            },
+            "ImportTaxonomies": {
+              "methods": [
+                "import_taxonomies"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

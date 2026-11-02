@@ -1,0 +1,3096 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.servicedirectory.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-service-directory",
+    "version": "1.19.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.LookupServiceAsyncClient",
+          "shortName": "LookupServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.LookupServiceAsyncClient.resolve_service",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.LookupService.ResolveService",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.LookupService",
+            "shortName": "LookupService"
+          },
+          "shortName": "ResolveService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.ResolveServiceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.ResolveServiceResponse",
+        "shortName": "resolve_service"
+      },
+      "description": "Sample for ResolveService",
+      "file": "servicedirectory_v1_generated_lookup_service_resolve_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_LookupService_ResolveService_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_lookup_service_resolve_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.LookupServiceClient",
+          "shortName": "LookupServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.LookupServiceClient.resolve_service",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.LookupService.ResolveService",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.LookupService",
+            "shortName": "LookupService"
+          },
+          "shortName": "ResolveService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.ResolveServiceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.ResolveServiceResponse",
+        "shortName": "resolve_service"
+      },
+      "description": "Sample for ResolveService",
+      "file": "servicedirectory_v1_generated_lookup_service_resolve_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_LookupService_ResolveService_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_lookup_service_resolve_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.create_endpoint",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.CreateEndpoint",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "CreateEndpoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.CreateEndpointRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "endpoint",
+            "type": "google.cloud.servicedirectory_v1.types.Endpoint"
+          },
+          {
+            "name": "endpoint_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Endpoint",
+        "shortName": "create_endpoint"
+      },
+      "description": "Sample for CreateEndpoint",
+      "file": "servicedirectory_v1_generated_registration_service_create_endpoint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_CreateEndpoint_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_create_endpoint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.create_endpoint",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.CreateEndpoint",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "CreateEndpoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.CreateEndpointRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "endpoint",
+            "type": "google.cloud.servicedirectory_v1.types.Endpoint"
+          },
+          {
+            "name": "endpoint_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Endpoint",
+        "shortName": "create_endpoint"
+      },
+      "description": "Sample for CreateEndpoint",
+      "file": "servicedirectory_v1_generated_registration_service_create_endpoint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_CreateEndpoint_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_create_endpoint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.create_namespace",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.CreateNamespace",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "CreateNamespace"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.CreateNamespaceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "namespace",
+            "type": "google.cloud.servicedirectory_v1.types.Namespace"
+          },
+          {
+            "name": "namespace_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Namespace",
+        "shortName": "create_namespace"
+      },
+      "description": "Sample for CreateNamespace",
+      "file": "servicedirectory_v1_generated_registration_service_create_namespace_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_CreateNamespace_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_create_namespace_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.create_namespace",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.CreateNamespace",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "CreateNamespace"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.CreateNamespaceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "namespace",
+            "type": "google.cloud.servicedirectory_v1.types.Namespace"
+          },
+          {
+            "name": "namespace_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Namespace",
+        "shortName": "create_namespace"
+      },
+      "description": "Sample for CreateNamespace",
+      "file": "servicedirectory_v1_generated_registration_service_create_namespace_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_CreateNamespace_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_create_namespace_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.create_service",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.CreateService",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "CreateService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.CreateServiceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "service",
+            "type": "google.cloud.servicedirectory_v1.types.Service"
+          },
+          {
+            "name": "service_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Service",
+        "shortName": "create_service"
+      },
+      "description": "Sample for CreateService",
+      "file": "servicedirectory_v1_generated_registration_service_create_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_CreateService_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_create_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.create_service",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.CreateService",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "CreateService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.CreateServiceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "service",
+            "type": "google.cloud.servicedirectory_v1.types.Service"
+          },
+          {
+            "name": "service_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Service",
+        "shortName": "create_service"
+      },
+      "description": "Sample for CreateService",
+      "file": "servicedirectory_v1_generated_registration_service_create_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_CreateService_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_create_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.delete_endpoint",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.DeleteEndpoint",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "DeleteEndpoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.DeleteEndpointRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_endpoint"
+      },
+      "description": "Sample for DeleteEndpoint",
+      "file": "servicedirectory_v1_generated_registration_service_delete_endpoint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_DeleteEndpoint_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_delete_endpoint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.delete_endpoint",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.DeleteEndpoint",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "DeleteEndpoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.DeleteEndpointRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_endpoint"
+      },
+      "description": "Sample for DeleteEndpoint",
+      "file": "servicedirectory_v1_generated_registration_service_delete_endpoint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_DeleteEndpoint_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_delete_endpoint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.delete_namespace",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.DeleteNamespace",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "DeleteNamespace"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.DeleteNamespaceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_namespace"
+      },
+      "description": "Sample for DeleteNamespace",
+      "file": "servicedirectory_v1_generated_registration_service_delete_namespace_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_DeleteNamespace_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_delete_namespace_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.delete_namespace",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.DeleteNamespace",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "DeleteNamespace"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.DeleteNamespaceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_namespace"
+      },
+      "description": "Sample for DeleteNamespace",
+      "file": "servicedirectory_v1_generated_registration_service_delete_namespace_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_DeleteNamespace_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_delete_namespace_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.delete_service",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.DeleteService",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "DeleteService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.DeleteServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_service"
+      },
+      "description": "Sample for DeleteService",
+      "file": "servicedirectory_v1_generated_registration_service_delete_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_DeleteService_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_delete_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.delete_service",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.DeleteService",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "DeleteService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.DeleteServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_service"
+      },
+      "description": "Sample for DeleteService",
+      "file": "servicedirectory_v1_generated_registration_service_delete_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_DeleteService_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_delete_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.get_endpoint",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.GetEndpoint",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "GetEndpoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.GetEndpointRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Endpoint",
+        "shortName": "get_endpoint"
+      },
+      "description": "Sample for GetEndpoint",
+      "file": "servicedirectory_v1_generated_registration_service_get_endpoint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_GetEndpoint_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_get_endpoint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.get_endpoint",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.GetEndpoint",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "GetEndpoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.GetEndpointRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Endpoint",
+        "shortName": "get_endpoint"
+      },
+      "description": "Sample for GetEndpoint",
+      "file": "servicedirectory_v1_generated_registration_service_get_endpoint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_GetEndpoint_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_get_endpoint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.get_iam_policy",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.GetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "servicedirectory_v1_generated_registration_service_get_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_GetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_get_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.get_iam_policy",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.GetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "servicedirectory_v1_generated_registration_service_get_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_GetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_get_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.get_namespace",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.GetNamespace",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "GetNamespace"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.GetNamespaceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Namespace",
+        "shortName": "get_namespace"
+      },
+      "description": "Sample for GetNamespace",
+      "file": "servicedirectory_v1_generated_registration_service_get_namespace_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_GetNamespace_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_get_namespace_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.get_namespace",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.GetNamespace",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "GetNamespace"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.GetNamespaceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Namespace",
+        "shortName": "get_namespace"
+      },
+      "description": "Sample for GetNamespace",
+      "file": "servicedirectory_v1_generated_registration_service_get_namespace_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_GetNamespace_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_get_namespace_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.get_service",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.GetService",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "GetService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.GetServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Service",
+        "shortName": "get_service"
+      },
+      "description": "Sample for GetService",
+      "file": "servicedirectory_v1_generated_registration_service_get_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_GetService_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_get_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.get_service",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.GetService",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "GetService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.GetServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Service",
+        "shortName": "get_service"
+      },
+      "description": "Sample for GetService",
+      "file": "servicedirectory_v1_generated_registration_service_get_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_GetService_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_get_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.list_endpoints",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.ListEndpoints",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "ListEndpoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.ListEndpointsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.services.registration_service.pagers.ListEndpointsAsyncPager",
+        "shortName": "list_endpoints"
+      },
+      "description": "Sample for ListEndpoints",
+      "file": "servicedirectory_v1_generated_registration_service_list_endpoints_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_ListEndpoints_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_list_endpoints_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.list_endpoints",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.ListEndpoints",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "ListEndpoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.ListEndpointsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.services.registration_service.pagers.ListEndpointsPager",
+        "shortName": "list_endpoints"
+      },
+      "description": "Sample for ListEndpoints",
+      "file": "servicedirectory_v1_generated_registration_service_list_endpoints_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_ListEndpoints_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_list_endpoints_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.list_namespaces",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.ListNamespaces",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "ListNamespaces"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.ListNamespacesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.services.registration_service.pagers.ListNamespacesAsyncPager",
+        "shortName": "list_namespaces"
+      },
+      "description": "Sample for ListNamespaces",
+      "file": "servicedirectory_v1_generated_registration_service_list_namespaces_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_ListNamespaces_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_list_namespaces_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.list_namespaces",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.ListNamespaces",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "ListNamespaces"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.ListNamespacesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.services.registration_service.pagers.ListNamespacesPager",
+        "shortName": "list_namespaces"
+      },
+      "description": "Sample for ListNamespaces",
+      "file": "servicedirectory_v1_generated_registration_service_list_namespaces_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_ListNamespaces_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_list_namespaces_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.list_services",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.ListServices",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "ListServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.ListServicesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.services.registration_service.pagers.ListServicesAsyncPager",
+        "shortName": "list_services"
+      },
+      "description": "Sample for ListServices",
+      "file": "servicedirectory_v1_generated_registration_service_list_services_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_ListServices_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_list_services_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.list_services",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.ListServices",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "ListServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.ListServicesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.services.registration_service.pagers.ListServicesPager",
+        "shortName": "list_services"
+      },
+      "description": "Sample for ListServices",
+      "file": "servicedirectory_v1_generated_registration_service_list_services_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_ListServices_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_list_services_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.set_iam_policy",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.SetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "servicedirectory_v1_generated_registration_service_set_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_SetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_set_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.set_iam_policy",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.SetIamPolicy",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "servicedirectory_v1_generated_registration_service_set_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_SetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_set_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.TestIamPermissions",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "servicedirectory_v1_generated_registration_service_test_iam_permissions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_TestIamPermissions_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_test_iam_permissions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.TestIamPermissions",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "servicedirectory_v1_generated_registration_service_test_iam_permissions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_TestIamPermissions_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_test_iam_permissions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.update_endpoint",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.UpdateEndpoint",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "UpdateEndpoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.UpdateEndpointRequest"
+          },
+          {
+            "name": "endpoint",
+            "type": "google.cloud.servicedirectory_v1.types.Endpoint"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Endpoint",
+        "shortName": "update_endpoint"
+      },
+      "description": "Sample for UpdateEndpoint",
+      "file": "servicedirectory_v1_generated_registration_service_update_endpoint_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_UpdateEndpoint_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_update_endpoint_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.update_endpoint",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.UpdateEndpoint",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "UpdateEndpoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.UpdateEndpointRequest"
+          },
+          {
+            "name": "endpoint",
+            "type": "google.cloud.servicedirectory_v1.types.Endpoint"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Endpoint",
+        "shortName": "update_endpoint"
+      },
+      "description": "Sample for UpdateEndpoint",
+      "file": "servicedirectory_v1_generated_registration_service_update_endpoint_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_UpdateEndpoint_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_update_endpoint_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.update_namespace",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.UpdateNamespace",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "UpdateNamespace"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.UpdateNamespaceRequest"
+          },
+          {
+            "name": "namespace",
+            "type": "google.cloud.servicedirectory_v1.types.Namespace"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Namespace",
+        "shortName": "update_namespace"
+      },
+      "description": "Sample for UpdateNamespace",
+      "file": "servicedirectory_v1_generated_registration_service_update_namespace_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_UpdateNamespace_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_update_namespace_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.update_namespace",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.UpdateNamespace",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "UpdateNamespace"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.UpdateNamespaceRequest"
+          },
+          {
+            "name": "namespace",
+            "type": "google.cloud.servicedirectory_v1.types.Namespace"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Namespace",
+        "shortName": "update_namespace"
+      },
+      "description": "Sample for UpdateNamespace",
+      "file": "servicedirectory_v1_generated_registration_service_update_namespace_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_UpdateNamespace_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_update_namespace_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient",
+          "shortName": "RegistrationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceAsyncClient.update_service",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.UpdateService",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "UpdateService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.UpdateServiceRequest"
+          },
+          {
+            "name": "service",
+            "type": "google.cloud.servicedirectory_v1.types.Service"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Service",
+        "shortName": "update_service"
+      },
+      "description": "Sample for UpdateService",
+      "file": "servicedirectory_v1_generated_registration_service_update_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_UpdateService_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_update_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient",
+          "shortName": "RegistrationServiceClient"
+        },
+        "fullName": "google.cloud.servicedirectory_v1.RegistrationServiceClient.update_service",
+        "method": {
+          "fullName": "google.cloud.servicedirectory.v1.RegistrationService.UpdateService",
+          "service": {
+            "fullName": "google.cloud.servicedirectory.v1.RegistrationService",
+            "shortName": "RegistrationService"
+          },
+          "shortName": "UpdateService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.servicedirectory_v1.types.UpdateServiceRequest"
+          },
+          {
+            "name": "service",
+            "type": "google.cloud.servicedirectory_v1.types.Service"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.servicedirectory_v1.types.Service",
+        "shortName": "update_service"
+      },
+      "description": "Sample for UpdateService",
+      "file": "servicedirectory_v1_generated_registration_service_update_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "servicedirectory_v1_generated_RegistrationService_UpdateService_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "servicedirectory_v1_generated_registration_service_update_service_sync.py"
+    }
+  ]
+}

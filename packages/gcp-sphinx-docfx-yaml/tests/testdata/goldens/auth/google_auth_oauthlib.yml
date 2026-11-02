@@ -1,0 +1,118 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google_auth_oauthlib.get_user_credentials
+  - google_auth_oauthlib.flow
+  - google_auth_oauthlib.helpers
+  - google_auth_oauthlib.tool
+  fullName: google_auth_oauthlib
+  langs:
+  - python
+  module: google_auth_oauthlib
+  name: google_auth_oauthlib
+  source:
+    id: google_auth_oauthlib
+    path: tests/testdata/auth/google_auth_oauthlib/__init__.py
+    startLine: 0
+  summary: API documentation for `` package.
+  syntax: {}
+  type: subPackage
+  uid: google_auth_oauthlib
+- attributes: []
+  fullName: google_auth_oauthlib.get_user_credentials
+  langs:
+  - python
+  module: google_auth_oauthlib
+  name: get_user_credentials
+  source:
+    id: get_user_credentials
+    path: tests/testdata/auth/google_auth_oauthlib/interactive.py
+    startLine: 83
+  summary: 'Gets credentials associated with your Google user account.
+
+
+    This function authenticates using your user credentials by going through
+
+    the OAuth 2.0 flow. You''ll open a browser window to authenticate to your
+
+    Google account. The permissions it requests correspond to the scopes
+
+    you''ve provided.
+
+
+    To obtain the `client_id` and `client_secret`, create an **OAuth
+
+    client ID** with application type **Other** from the `Credentials page on
+
+    the Google Developer''s Console
+
+    <https://console.developers.google.com/apis/credentials>`_. Learn more
+
+    with the `Authenticating as an end user
+
+    <https://cloud.google.com/docs/authentication/end-user>`_ guide.
+
+    '
+  syntax:
+    content: "get_user_credentials(\n    scopes, client_id, client_secret, minimum_port=8080,\
+      \ maximum_port=None\n)"
+    parameters:
+    - description: A list of scopes to use when authenticating to Google APIs. See
+        the <code>list of OAuth 2.0 scopes for Google APIs <https://developers.google.com/identity/protocols/googlescopes></code>_.
+      id: scopes
+      var_type: Sequence[str]
+    - description: A string that identifies your application to Google APIs. Find
+        this value in the <code>Credentials page on the Google Developer's Console
+        <https://console.developers.google.com/apis/credentials></code>_.
+      id: client_id
+      var_type: str
+    - description: A string that verifies your application to Google APIs. Find this
+        value in the <code>Credentials page on the Google Developer's Console <https://console.developers.google.com/apis/credentials></code>_.
+      id: client_secret
+      var_type: str
+    - description: Beginning of range of ports to try for redirect URI HTTP server.
+        Defaults to 8080.
+      id: minimum_port
+      var_type: int
+    - description: End of range of ports to try (not including exactly equals <code>stop</code>).
+        This function tries 100 possible ports if no <code>stop</code> is specified.
+      id: maximum_port
+      var_type: Optional[int]
+    returns:
+    - description: The OAuth 2.0 credentials for the user.
+      var_type: 'google.oauth2.credentials.Credentials .. rubric:: Examples Get credentials
+        for your user account and use them to run a query with BigQuery:: import google_auth_oauthlib
+        # TODO: Create a client ID for your project. client_id = "YOUR-CLIENT-ID.apps.googleusercontent.com"
+        client_secret = "abc_ThIsIsAsEcReT" # TODO: Choose the needed scopes for your
+        applications. scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+        credentials = google_auth_oauthlib.get_user_credentials( scopes, client_id,
+        client_secret ) # 1. Open the link. # 2. Authorize the application to have
+        access to your account. # 3. Copy and paste the authorization code to the
+        prompt. # Use the credentials to construct a client for Google APIs. from
+        google.cloud import bigquery bigquery_client = bigquery.Client( credentials=credentials,
+        project="your-project-id" ) print(list(bigquery_client.query("SELECT 1").result()))'
+  type: function
+  uid: google_auth_oauthlib.get_user_credentials
+references:
+- fullName: google_auth_oauthlib.get_user_credentials
+  isExternal: false
+  name: get_user_credentials
+  parent: google_auth_oauthlib
+  uid: google_auth_oauthlib.get_user_credentials
+- fullName: google_auth_oauthlib.flow
+  isExternal: false
+  name: flow
+  parent: google_auth_oauthlib
+  uid: google_auth_oauthlib.flow
+- fullName: google_auth_oauthlib.helpers
+  isExternal: false
+  name: helpers
+  parent: google_auth_oauthlib
+  uid: google_auth_oauthlib.helpers
+- fullName: google_auth_oauthlib.tool
+  isExternal: false
+  name: tool
+  parent: google_auth_oauthlib
+  uid: google_auth_oauthlib.tool

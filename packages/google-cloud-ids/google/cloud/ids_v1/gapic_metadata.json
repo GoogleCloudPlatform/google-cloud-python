@@ -1,0 +1,88 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.ids_v1",
+  "protoPackage": "google.cloud.ids.v1",
+  "schema": "1.0",
+  "services": {
+    "IDS": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "IDSClient",
+          "rpcs": {
+            "CreateEndpoint": {
+              "methods": [
+                "create_endpoint"
+              ]
+            },
+            "DeleteEndpoint": {
+              "methods": [
+                "delete_endpoint"
+              ]
+            },
+            "GetEndpoint": {
+              "methods": [
+                "get_endpoint"
+              ]
+            },
+            "ListEndpoints": {
+              "methods": [
+                "list_endpoints"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "IDSAsyncClient",
+          "rpcs": {
+            "CreateEndpoint": {
+              "methods": [
+                "create_endpoint"
+              ]
+            },
+            "DeleteEndpoint": {
+              "methods": [
+                "delete_endpoint"
+              ]
+            },
+            "GetEndpoint": {
+              "methods": [
+                "get_endpoint"
+              ]
+            },
+            "ListEndpoints": {
+              "methods": [
+                "list_endpoints"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "IDSClient",
+          "rpcs": {
+            "CreateEndpoint": {
+              "methods": [
+                "create_endpoint"
+              ]
+            },
+            "DeleteEndpoint": {
+              "methods": [
+                "delete_endpoint"
+              ]
+            },
+            "GetEndpoint": {
+              "methods": [
+                "get_endpoint"
+              ]
+            },
+            "ListEndpoints": {
+              "methods": [
+                "list_endpoints"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

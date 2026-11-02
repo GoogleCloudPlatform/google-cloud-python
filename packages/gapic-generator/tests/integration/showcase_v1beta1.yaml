@@ -1,0 +1,91 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type: google.api.Service
+config_version: 3
+name: showcase.googleapis.com
+title: Client Libraries Showcase API
+
+apis:
+- name: google.showcase.v1beta1.Echo
+- name: google.showcase.v1beta1.Identity
+- name: google.showcase.v1beta1.Messaging
+- name: google.showcase.v1beta1.SequenceService
+- name: google.showcase.v1beta1.Testing
+- name: google.showcase.v1beta1.ResumableUploadService
+# Mix-in services
+- name: 'google.cloud.location.Locations'
+- name: 'google.iam.v1.IAMPolicy'
+- name: 'google.longrunning.Operations'
+
+documentation:
+  summary: |-
+    Showcase represents both a model API and an integration testing surface for
+    client library generator consumption.
+
+backend:
+  rules:
+  - selector: 'google.cloud.location.Locations.*'
+    deadline: 60.0
+  - selector: 'google.iam.v1.IAMPolicy.*'
+    deadline: 60.0
+  - selector: 'google.longrunning.Operations.*'
+    deadline: 60.0
+    
+http:
+  rules:
+  - selector: google.cloud.location.Locations.ListLocations
+    get:  '/v1beta1/{name=projects/*}/locations'
+  - selector: google.cloud.location.Locations.GetLocation
+    get:  '/v1beta1/{name=projects/*/locations/*}'
+  - selector: google.iam.v1.IAMPolicy.SetIamPolicy
+    post: '/v1beta1/{resource=users/*}:setIamPolicy'
+    body: '*'
+    additional_bindings:
+    - post: '/v1beta1/{resource=rooms/*}:setIamPolicy'
+      body: '*'
+    - post: '/v1beta1/{resource=rooms/*/blurbs/*}:setIamPolicy'
+      body: '*'
+    - post: '/v1beta1/{resource=sequences/*}:setIamPolicy'
+      body: '*'
+  - selector: google.iam.v1.IAMPolicy.GetIamPolicy
+    get: '/v1beta1/{resource=users/*}:getIamPolicy'
+    additional_bindings:
+    - get: '/v1beta1/{resource=rooms/*}:getIamPolicy'
+    - get: '/v1beta1/{resource=rooms/*/blurbs/*}:getIamPolicy'
+    - get: '/v1beta1/{resource=sequences/*}:getIamPolicy'
+  - selector: google.iam.v1.IAMPolicy.TestIamPermissions
+    post: '/v1beta1/{resource=users/*}:testIamPermissions'
+    body: '*'
+    additional_bindings:
+    - post: '/v1beta1/{resource=rooms/*}:testIamPermissions'
+      body: '*'
+    - post: '/v1beta1/{resource=rooms/*/blurbs/*}:testIamPermissions'
+      body: '*'
+    - post: '/v1beta1/{resource=sequences/*}:testIamPermissions'
+      body: '*'
+  - selector: google.longrunning.Operations.ListOperations
+    get: '/v1beta1/operations'
+  - selector: google.longrunning.Operations.GetOperation
+    get: '/v1beta1/{name=operations/**}'
+  - selector: google.longrunning.Operations.DeleteOperation
+    delete: '/v1beta1/{name=operations/**}'
+  - selector: google.longrunning.Operations.CancelOperation
+    post: '/v1beta1/{name=operations/**}:cancel'
+publishing:
+  method_settings:
+  - selector: google.showcase.v1beta1.Echo.Echo
+    auto_populated_fields:
+    - request_id
+    - other_request_id

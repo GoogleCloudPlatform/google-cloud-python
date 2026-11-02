@@ -1,0 +1,2499 @@
+{% extends "_base.py.j2" %}
+{% block content %}
+{% set has_auto_populated_fields = api.all_method_settings.values()|map(attribute="auto_populated_fields", default=[])|select|list %}
+
+
+{% import "%namespace/%name/%version/%sub/services/%service/_shared_macros.j2" as shared_macros %}
+
+import os
+{% if has_auto_populated_fields %}
+import re
+{% endif %}
+from unittest import mock
+from unittest.mock import AsyncMock
+
+import grpc
+from grpc.experimental import aio
+{% if "rest" in opts.transport %}
+from collections.abc import Iterable
+from google.protobuf import json_format
+import json
+{% endif %}
+import math
+import pytest
+from proto.marshal.rules.dates import DurationRule, TimestampRule
+
+{% if 'rest' in opts.transport %}
+from requests import Response
+from requests import Request, PreparedRequest
+from requests.sessions import Session
+{% endif %}
+
+{# Import the service itself as well as every proto module that it imports. #}
+{% filter sort_lines %}
+import google.auth
+from google.auth import credentials as ga_credentials
+from google.auth.exceptions import MutualTLSChannelError
+from google.oauth2 import service_account
+from {{ (api.naming.module_namespace + (api.naming.versioned_module_name,) + service.meta.address.subpackage)|join(".") }}.services.{{ service.name|snake_case }} import {{ service.client_name }}
+from {{ (api.naming.module_namespace + (api.naming.versioned_module_name,) + service.meta.address.subpackage)|join(".") }}.services.{{ service.name|snake_case }} import transports
+
+from google.api_core import api_core_version
+from google.api_core import client_options
+from google.api_core import exceptions as core_exceptions
+from google.api_core import grpc_helpers
+from google.api_core import path_template
+from google.api_core import retry as retries
+{% if service.has_lro %}
+from google.api_core import future
+from google.api_core import operation
+from google.api_core import operations_v1
+{% endif %}{# lro #}
+{% if api.has_location_mixin %}
+from google.cloud.location import locations_pb2
+{% endif %}
+{% if api.has_operations_mixin or service.has_lro %}
+from google.longrunning import operations_pb2 # type: ignore
+{% endif %}
+from google.api_core import gapic_v1
+{% for method in service.methods.values() %}
+{% for ref_type in method.ref_types
+   if not ((ref_type.ident.python_import.package == ('google', 'api_core') and ref_type.ident.python_import.module == 'operation')
+           or ref_type.ident.python_import.package == ('google', 'protobuf') and ref_type.ident.python_import.module == 'empty_pb2') %}
+{{ ref_type.ident.python_import }}
+{% endfor %}
+{% endfor %}
+{# TODO: Remove once https://github.com/googleapis/gapic-generator-python/pull/1240 is merged #}
+{% if opts.add_iam_methods or api.has_iam_mixin %}
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import options_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+{% endif %}
+{% endfilter %}
+{{ shared_macros.add_google_api_core_version_header_import(service.version) }}
+
+{% if has_auto_populated_fields %}
+_UUID4_RE = re.compile(r"{{ uuid4_re }}")
+{% endif %}
+
+
+def client_cert_source_callback():
+    return b"cert bytes", b"key bytes"
+
+
+# If default endpoint is localhost, then default mtls endpoint will be the same.
+# This method modifies the default endpoint so the client can produce a different
+# mtls endpoint for endpoint testing purposes.
+def modify_default_endpoint(client):
+    return "foo.googleapis.com" if ("localhost" in client.DEFAULT_ENDPOINT) else client.DEFAULT_ENDPOINT
+
+
+def test__get_default_mtls_endpoint():
+    api_endpoint = "example.googleapis.com"
+    api_mtls_endpoint = "example.mtls.googleapis.com"
+    sandbox_endpoint = "example.sandbox.googleapis.com"
+    sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
+    non_googleapi = "api.example.com"
+    custom_endpoint = ".custom"
+
+    assert {{ service.client_name }}._get_default_mtls_endpoint(None) is None
+    assert {{ service.client_name }}._get_default_mtls_endpoint(api_endpoint) == api_mtls_endpoint
+    assert {{ service.client_name }}._get_default_mtls_endpoint(api_mtls_endpoint) == api_mtls_endpoint
+    assert {{ service.client_name }}._get_default_mtls_endpoint(sandbox_endpoint) == sandbox_mtls_endpoint
+    assert {{ service.client_name }}._get_default_mtls_endpoint(sandbox_mtls_endpoint) == sandbox_mtls_endpoint
+    assert {{ service.client_name }}._get_default_mtls_endpoint(non_googleapi) == non_googleapi
+    assert {{ service.client_name }}._get_default_mtls_endpoint(custom_endpoint) == custom_endpoint
+
+
+@pytest.mark.parametrize("client_class,transport_name", [
+    {% if 'grpc' in opts.transport %}
+    ({{ service.client_name }}, "grpc"),
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    ({{ service.client_name }}, "rest"),
+    {% endif %}
+])
+def test_{{ service.client_name|snake_case }}_from_service_account_info(client_class, transport_name):
+    creds = ga_credentials.AnonymousCredentials()
+    with mock.patch.object(service_account.Credentials, 'from_service_account_info') as factory:
+        factory.return_value = creds
+        info = {"valid": True}
+        client = client_class.from_service_account_info(info, transport=transport_name)
+        assert client.transport._credentials == creds
+        assert isinstance(client, client_class)
+
+        {% if service.host %}
+        assert client.transport._host == (
+            '{{ service.host }}{% if ":" not in service.host %}:443{% endif %}'
+            {% if 'rest' in opts.transport %}
+            if transport_name in ['grpc', 'grpc_asyncio']
+            else
+            'https://{{ service.host }}'
+            {% endif %}
+        )
+        {% endif %}
+
+
+@pytest.mark.parametrize("transport_class,transport_name", [
+    {% if 'grpc' in opts.transport %}
+    (transports.{{ service.grpc_transport_name }}, "grpc"),
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    (transports.{{ service.rest_transport_name }}, "rest"),
+    {% endif %}
+])
+def test_{{ service.client_name|snake_case }}_service_account_always_use_jwt(transport_class, transport_name):
+    with mock.patch.object(service_account.Credentials, 'with_always_use_jwt_access', create=True) as use_jwt:
+        creds = service_account.Credentials(None, None, None)
+        transport = transport_class(credentials=creds, always_use_jwt_access=True)
+        use_jwt.assert_called_once_with(True)
+
+    with mock.patch.object(service_account.Credentials, 'with_always_use_jwt_access', create=True) as use_jwt:
+        creds = service_account.Credentials(None, None, None)
+        transport = transport_class(credentials=creds, always_use_jwt_access=False)
+        use_jwt.assert_not_called()
+
+
+@pytest.mark.parametrize("client_class,transport_name", [
+    {% if 'grpc' in opts.transport %}
+    ({{ service.client_name }}, "grpc"),
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    ({{ service.client_name }}, "rest"),
+    {% endif %}
+])
+def test_{{ service.client_name|snake_case }}_from_service_account_file(client_class, transport_name):
+    creds = ga_credentials.AnonymousCredentials()
+    with mock.patch.object(service_account.Credentials, 'from_service_account_file') as factory:
+        factory.return_value = creds
+        client = client_class.from_service_account_file("dummy/file/path.json", transport=transport_name)
+        assert client.transport._credentials == creds
+        assert isinstance(client, client_class)
+
+        client = client_class.from_service_account_json("dummy/file/path.json", transport=transport_name)
+        assert client.transport._credentials == creds
+        assert isinstance(client, client_class)
+
+        {% if service.host %}
+        assert client.transport._host == (
+            '{{ service.host }}{% if ":" not in service.host %}:443{% endif %}'
+            {% if 'rest' in opts.transport %}
+            if transport_name in ['grpc', 'grpc_asyncio']
+            else
+            'https://{{ service.host }}'
+            {% endif %}
+        )
+        {% endif %}
+
+
+def test_{{ service.client_name|snake_case }}_get_transport_class():
+    transport = {{ service.client_name }}.get_transport_class()
+    available_transports = [
+        {% for transport_name in opts.transport %}
+        transports.{{ service.name }}{{ transport_name.capitalize() }}Transport,
+        {% endfor %}
+    ]
+    assert transport in available_transports
+
+    transport = {{ service.client_name }}.get_transport_class("{{ opts.transport[0] }}")
+    assert transport == transports.{{ service.name }}{{ opts.transport[0].capitalize() }}Transport
+
+
+@pytest.mark.parametrize("client_class,transport_class,transport_name", [
+    {% if 'grpc' in opts.transport %}
+    ({{ service.client_name }}, transports.{{ service.grpc_transport_name }}, "grpc"),
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    ({{ service.client_name }}, transports.{{ service.rest_transport_name }}, "rest"),
+    {% endif %}
+])
+@mock.patch.object({{ service.client_name }}, "DEFAULT_ENDPOINT", modify_default_endpoint({{ service.client_name }}))
+def test_{{ service.client_name|snake_case }}_client_options(client_class, transport_class, transport_name):
+    # Check that if channel is provided we won't create a new one.
+    with mock.patch.object({{ service.client_name }}, 'get_transport_class') as gtc:
+        transport = transport_class(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        client = client_class(transport=transport)
+        gtc.assert_not_called()
+
+    # Check that if channel is provided via str we will create a new one.
+    with mock.patch.object({{ service.client_name }}, 'get_transport_class') as gtc:
+        client = client_class(transport=transport_name)
+        gtc.assert_called()
+
+    # Check the case api_endpoint is provided.
+    options = client_options.ClientOptions(api_endpoint="squid.clam.whelk")
+    with mock.patch.object(transport_class, '__init__') as patched:
+        patched.return_value = None
+        client = client_class(transport=transport_name, client_options=options)
+        patched.assert_called_once_with(
+            credentials=None,
+            credentials_file=None,
+            host="squid.clam.whelk",
+            scopes=None,
+            client_cert_source_for_mtls=None,
+            quota_project_id=None,
+            client_info=transports.base.DEFAULT_CLIENT_INFO,
+            always_use_jwt_access=True,
+        )
+
+    # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS_ENDPOINT is
+    # "never".
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
+        with mock.patch.object(transport_class, '__init__') as patched:
+            patched.return_value = None
+            client = client_class(transport=transport_name)
+            patched.assert_called_once_with(
+                credentials=None,
+                credentials_file=None,
+                host=client.DEFAULT_ENDPOINT,
+                scopes=None,
+                client_cert_source_for_mtls=None,
+                quota_project_id=None,
+                client_info=transports.base.DEFAULT_CLIENT_INFO,
+                always_use_jwt_access=True,
+            )
+
+    # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS_ENDPOINT is
+    # "always".
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
+        with mock.patch.object(transport_class, '__init__') as patched:
+            patched.return_value = None
+            client = client_class(transport=transport_name)
+            patched.assert_called_once_with(
+                credentials=None,
+                credentials_file=None,
+                host=client.DEFAULT_MTLS_ENDPOINT,
+                scopes=None,
+                client_cert_source_for_mtls=None,
+                quota_project_id=None,
+                client_info=transports.base.DEFAULT_CLIENT_INFO,
+                always_use_jwt_access=True,
+            )
+
+    # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS_ENDPOINT has
+    # unsupported value.
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "Unsupported"}):
+        with pytest.raises(MutualTLSChannelError):
+            client = client_class(transport=transport_name)
+
+    # Check the case GOOGLE_API_USE_CLIENT_CERTIFICATE has unsupported value.
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}):
+       if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
+           with pytest.raises(ValueError):
+               client = client_class(transport=transport_name)
+
+    # Check the case quota_project_id is provided
+    options = client_options.ClientOptions(quota_project_id="octopus")
+    with mock.patch.object(transport_class, '__init__') as patched:
+        patched.return_value = None
+        client = client_class(client_options=options, transport=transport_name)
+        patched.assert_called_once_with(
+            credentials=None,
+            credentials_file=None,
+            host=client.DEFAULT_ENDPOINT,
+            scopes=None,
+            client_cert_source_for_mtls=None,
+            quota_project_id="octopus",
+            client_info=transports.base.DEFAULT_CLIENT_INFO,
+            always_use_jwt_access=True,
+        )
+
+@pytest.mark.parametrize("client_class,transport_class,transport_name,use_client_cert_env", [
+    {% if 'grpc' in opts.transport %}
+    ({{ service.client_name }}, transports.{{ service.grpc_transport_name }}, "grpc", "true"),
+    ({{ service.client_name }}, transports.{{ service.grpc_transport_name }}, "grpc", "false"),
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    ({{ service.client_name }}, transports.{{ service.rest_transport_name }}, "rest", "true"),
+    ({{ service.client_name }}, transports.{{ service.rest_transport_name }}, "rest", "false"),
+    {% endif %}
+])
+@mock.patch.object({{ service.client_name }}, "DEFAULT_ENDPOINT", modify_default_endpoint({{ service.client_name }}))
+@mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"})
+def test_{{ service.client_name|snake_case }}_mtls_env_auto(client_class, transport_class, transport_name, use_client_cert_env):
+    # This tests the endpoint autoswitch behavior. Endpoint is autoswitched to the default
+    # mtls endpoint, if GOOGLE_API_USE_CLIENT_CERTIFICATE is "true" and client cert exists.
+
+    # Check the case client_cert_source is provided. Whether client cert is used depends on
+    # GOOGLE_API_USE_CLIENT_CERTIFICATE value.
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": use_client_cert_env}):
+        options = client_options.ClientOptions(client_cert_source=client_cert_source_callback)
+        with mock.patch.object(transport_class, '__init__') as patched:
+            patched.return_value = None
+            client = client_class(client_options=options, transport=transport_name)
+
+            if use_client_cert_env == "false":
+                expected_client_cert_source = None
+                expected_host = client.DEFAULT_ENDPOINT
+            else:
+                expected_client_cert_source = client_cert_source_callback
+                expected_host = client.DEFAULT_MTLS_ENDPOINT
+
+            patched.assert_called_once_with(
+                credentials=None,
+                credentials_file=None,
+                host=expected_host,
+                scopes=None,
+                client_cert_source_for_mtls=expected_client_cert_source,
+                quota_project_id=None,
+                client_info=transports.base.DEFAULT_CLIENT_INFO,
+                always_use_jwt_access=True,
+            )
+
+    # Check the case ADC client cert is provided. Whether client cert is used depends on
+    # GOOGLE_API_USE_CLIENT_CERTIFICATE value.
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": use_client_cert_env}):
+        with mock.patch.object(transport_class, '__init__') as patched:
+            with mock.patch('google.auth.transport.mtls.has_default_client_cert_source', return_value=True):
+                with mock.patch('google.auth.transport.mtls.default_client_cert_source', return_value=client_cert_source_callback):
+                    if use_client_cert_env == "false":
+                        expected_host = client.DEFAULT_ENDPOINT
+                        expected_client_cert_source = None
+                    else:
+                        expected_host = client.DEFAULT_MTLS_ENDPOINT
+                        expected_client_cert_source = client_cert_source_callback
+
+                    patched.return_value = None
+                    client = client_class(transport=transport_name)
+                    patched.assert_called_once_with(
+                        credentials=None,
+                        credentials_file=None,
+                        host=expected_host,
+                        scopes=None,
+                        client_cert_source_for_mtls=expected_client_cert_source,
+                        quota_project_id=None,
+                        client_info=transports.base.DEFAULT_CLIENT_INFO,
+                        always_use_jwt_access=True,
+                    )
+
+    # Check the case client_cert_source and ADC client cert are not provided.
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": use_client_cert_env}):
+        with mock.patch.object(transport_class, '__init__') as patched:
+            with mock.patch("google.auth.transport.mtls.has_default_client_cert_source", return_value=False):
+                patched.return_value = None
+                client = client_class(transport=transport_name)
+                patched.assert_called_once_with(
+                    credentials=None,
+                    credentials_file=None,
+                    host=client.DEFAULT_ENDPOINT,
+                    scopes=None,
+                    client_cert_source_for_mtls=None,
+                    quota_project_id=None,
+                    client_info=transports.base.DEFAULT_CLIENT_INFO,
+                    always_use_jwt_access=True,
+                )
+
+
+@pytest.mark.parametrize("client_class,transport_class,transport_name", [
+    {% if 'grpc' in opts.transport %}
+    ({{ service.client_name }}, transports.{{ service.grpc_transport_name }}, "grpc"),
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    ({{ service.client_name }}, transports.{{ service.rest_transport_name }}, "rest"),
+    {% endif %}
+])
+def test_{{ service.client_name|snake_case }}_client_options_scopes(client_class, transport_class, transport_name):
+    # Check the case scopes are provided.
+    options = client_options.ClientOptions(
+        scopes=["1", "2"],
+    )
+    with mock.patch.object(transport_class, '__init__') as patched:
+        patched.return_value = None
+        client = client_class(client_options=options, transport=transport_name)
+        patched.assert_called_once_with(
+            credentials=None,
+            credentials_file=None,
+            host=client.DEFAULT_ENDPOINT,
+            scopes=["1", "2"],
+            client_cert_source_for_mtls=None,
+            quota_project_id=None,
+            client_info=transports.base.DEFAULT_CLIENT_INFO,
+            always_use_jwt_access=True,
+        )
+
+@pytest.mark.parametrize("client_class,transport_class,transport_name", [
+    {% if 'grpc' in opts.transport %}
+    ({{ service.client_name }}, transports.{{ service.grpc_transport_name }}, "grpc"),
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    ({{ service.client_name }}, transports.{{ service.rest_transport_name }}, "rest"),
+    {% endif %}
+])
+def test_{{ service.client_name|snake_case }}_client_options_credentials_file(client_class, transport_class, transport_name):
+    # Check the case credentials file is provided.
+    options = client_options.ClientOptions(
+        credentials_file="credentials.json"
+    )
+
+    with mock.patch.object(transport_class, '__init__') as patched:
+        patched.return_value = None
+        client = client_class(client_options=options, transport=transport_name)
+        patched.assert_called_once_with(
+            credentials=None,
+            credentials_file="credentials.json",
+            host=client.DEFAULT_ENDPOINT,
+            scopes=None,
+            client_cert_source_for_mtls=None,
+            quota_project_id=None,
+            client_info=transports.base.DEFAULT_CLIENT_INFO,
+            always_use_jwt_access=True,
+        )
+{% if 'grpc' in opts.transport %}
+{# TODO(dovs): genericize this function#}
+
+def test_{{ service.client_name|snake_case }}_client_options_from_dict():
+    with mock.patch('{{ (api.naming.module_namespace + (api.naming.versioned_module_name,) + service.meta.address.subpackage)|join(".") }}.services.{{ service.name|snake_case }}.transports.{{ service.name }}GrpcTransport.__init__') as grpc_transport:
+        grpc_transport.return_value = None
+        client = {{ service.client_name }}(
+            client_options={'api_endpoint': 'squid.clam.whelk'}
+        )
+        grpc_transport.assert_called_once_with(
+            credentials=None,
+            credentials_file=None,
+            host="squid.clam.whelk",
+            scopes=None,
+            client_cert_source_for_mtls=None,
+            quota_project_id=None,
+            client_info=transports.base.DEFAULT_CLIENT_INFO,
+            always_use_jwt_access=True,
+        )
+
+
+@pytest.mark.parametrize("client_class,transport_class,transport_name", [
+    ({{ service.client_name }}, transports.{{ service.grpc_transport_name }}, "grpc"),
+])
+def test_{{ service.client_name|snake_case }}_create_channel_credentials_file(client_class, transport_class, transport_name):
+    # Check the case credentials file is provided.
+    options = client_options.ClientOptions(
+        credentials_file="credentials.json"
+    )
+
+    with mock.patch.object(transport_class, '__init__') as patched:
+        patched.return_value = None
+        client = client_class(client_options=options, transport=transport_name)
+        patched.assert_called_once_with(
+            credentials=None,
+            credentials_file="credentials.json",
+            host=client.DEFAULT_ENDPOINT,
+            scopes=None,
+            client_cert_source_for_mtls=None,
+            quota_project_id=None,
+            client_info=transports.base.DEFAULT_CLIENT_INFO,
+            always_use_jwt_access=True,
+        )
+
+    # test that the credentials from file are saved and used as the credentials.
+    with mock.patch.object(
+        google.auth, "load_credentials_from_file", autospec=True
+    ) as load_creds, mock.patch.object(
+        google.auth, "default", autospec=True
+    ) as adc, mock.patch.object(
+        grpc_helpers, "create_channel"
+    ) as create_channel:
+        creds = ga_credentials.AnonymousCredentials()
+        file_creds = ga_credentials.AnonymousCredentials()
+        load_creds.return_value = (file_creds, None)
+        adc.return_value = (creds, None)
+        client = client_class(client_options=options, transport=transport_name)
+        {% with host = (service.host|default('localhost', true)) %}
+        create_channel.assert_called_with(
+            "{{ host }}{% if ":" not in service.host %}:443{% endif %}",
+            credentials=file_creds,
+            credentials_file=None,
+            quota_project_id=None,
+            default_scopes=(
+                {% for scope in service.oauth_scopes %}
+                '{{ scope }}',
+                {% endfor %}),
+            scopes=None,
+            default_host="{{ host }}",
+            ssl_credentials=None,
+            options=[
+                ("grpc.max_send_message_length", -1),
+                ("grpc.max_receive_message_length", -1),
+            ],
+        )
+        {% endwith %}
+{% endif %}
+
+
+{% for method in service.methods.values() if 'grpc' in opts.transport %}{% with method_name = method.name|snake_case + "_unary" if method.operation_service else method.client_method_name|snake_case %}
+@pytest.mark.parametrize("request_type", [
+  {{ method.input.ident }},
+  dict,
+])
+def test_{{ method_name }}(request_type, transport: str = 'grpc'):
+    {% with auto_populated_field_sample_value = "explicit value for autopopulate-able field" %}
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type()
+
+    {# Set UUID4 fields so that they are not automatically populated. #}
+    {% with method_settings = api.all_method_settings.get(method.meta.address.proto) %}
+    {% if method_settings is not none %}
+    {% for auto_populated_field in method_settings.auto_populated_fields %}
+    if isinstance(request, dict):
+        request['{{ auto_populated_field }}'] = "{{ auto_populated_field_sample_value }}"
+    else:
+        request.{{ auto_populated_field }} = "{{ auto_populated_field_sample_value }}"
+    {% endfor %}
+    {% endif %}{# if method_settings is not none #}
+    {% endwith %}{# method_settings #}
+    {% if method.client_streaming %}
+    requests = [request]
+    {% endif %}
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        # Designate an appropriate return value for the call.
+        {% if method.void %}
+        call.return_value = None
+        {% elif method.lro %}
+        call.return_value = operations_pb2.Operation(name='operations/spam')
+        {% elif method.extended_lro %}
+        call.return_value = {{ method.extended_lro.operation_type.ident }}()
+        {% elif method.server_streaming %}
+        call.return_value = iter([{{ method.output.ident }}()])
+        {% else %}
+        call.return_value = {{ method.output.ident }}(
+          {% for field in method.output.fields.values() | rejectattr('message')%}
+          {% if not field.oneof or field.proto3_optional %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endif %}{% endfor %}
+            {# This is a hack to only pick one field #}
+            {% for oneof_fields in method.output.oneof_fields().values() %}
+            {# Take the first non-message oneof field. In the corner case when all the fields of a oneof are messages, the oneof will not be populated #}
+            {# Use an outer if-statement here because `first` raises an error if called on an empty sequence #}
+            {% if (oneof_fields | rejectattr('message') | list) %}
+            {% with field = (oneof_fields | rejectattr('message') | first) %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endwith %}
+            {% endif %}
+            {% endfor %}
+        )
+        {% endif %}
+        {% if method.client_streaming %}
+        response = client.{{ method.client_method_name|snake_case }}(iter(requests))
+        {% else %}
+        response = client.{{ method_name }}(request)
+        {% endif %}
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        {% if method.client_streaming %}
+        assert next(args[0]) == request
+        {% else %}
+        request = {{ method.input.ident }}()
+        {% with method_settings = api.all_method_settings.get(method.meta.address.proto) %}
+        {% if method_settings is not none %}
+        {% for auto_populated_field in method_settings.auto_populated_fields %}
+        request.{{ auto_populated_field }} = "{{ auto_populated_field_sample_value }}"
+        {% endfor %}
+        {% endif %}{# if method_settings is not none #}
+        {% endwith %}{# method_settings #}
+        assert args[0] == request
+        {% endif %}
+
+    # Establish that the response is the type that we expect.
+    {% if method.void %}
+    assert response is None
+    {% elif method.lro %}
+    assert isinstance(response, future.Future)
+    {% elif method.extended_lro %}
+    assert isinstance(response, {{ method.extended_lro.operation_type.ident }})
+    {% elif method.server_streaming %}
+    for message in response:
+        assert isinstance(message, {{ method.output.ident }})
+    {% else %}
+    {% if "next_page_token" in method.output.fields.values()|map(attribute='name', default="") and not method.paged_result_field %}
+    {# Cheeser assertion to force code coverage for bad paginated methods #}
+    assert response.raw_page is response
+    {% endif %}
+    assert isinstance(response, {{ method.client_output.ident }})
+    {% for field in method.output.fields.values() | rejectattr('message') %}
+    {% if not field.oneof or field.proto3_optional %}
+    {% if field.field_pb.type in [1, 2] %}{# Use approx eq for floats #}
+    {% if field.repeated %}
+    for index in range(len(response.{{ field.name }})):
+        assert math.isclose(
+            response.{{ field.name }}[index],
+            {{ field.mock_value }}[index],
+            rel_tol=1e-6,
+        )
+    {% else %}{# field.repeated #}
+    assert math.isclose(response.{{ field.name }}, {{ field.mock_value }}, rel_tol=1e-6)
+    {% endif %}{# field.repeated #}
+    {% elif field.field_pb.type == 8 %}{# Use 'is' for bools #}
+    assert response.{{ field.name }} is {{ field.mock_value }}
+    {% else %}
+    assert response.{{ field.name }} == {{ field.mock_value }}
+    {% endif %}
+    {% endif %}{# end oneof/optional #}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}{# auto_populated_field_sample_value #}
+
+
+{% if service.version %}
+@pytest.mark.parametrize("transport_name", [
+    {% if 'grpc' in opts.transport %}
+    ("grpc"),
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    ("rest"),
+    {% endif %}
+])
+def test_{{ method_name }}_api_version_header(transport_name):
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        client = {{ service.client_name }}(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+                type(client.transport.{{ method.transport_safe_name|snake_case }}),
+                '__call__'
+            ) as call:
+                call.return_value = {{ method.output.ident }}()
+                client.{{ method_name }}()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw['metadata']
+    else:
+        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+{% endif %}{# service.version #}
+
+{% if not method.client_streaming %}
+def test_{{ method_name }}_empty_call():
+    # This test is a coverage failsafe to make sure that totally empty calls,
+    # i.e. request == None and no flattened fields passed, work.
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport='grpc',
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        client.{{ method_name }}()
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        {% if method.client_streaming %}
+        assert next(args[0]) == request
+        {% else %}
+{% with method_settings = api.all_method_settings.get(method.meta.address.proto) %}
+{% if method_settings is not none %}
+{% for auto_populated_field in method_settings.auto_populated_fields %}
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.match(args[0].{{ auto_populated_field }})
+        # clear UUID field so that the check below succeeds
+        args[0].{{ auto_populated_field }} = None
+{% endfor %}
+{% endif %}{# if method_settings is not none #}
+{% endwith %}{# method_settings #}
+        assert args[0] == {{ method.input.ident }}()
+        {% endif %}
+
+
+def test_{{ method_name }}_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport='grpc',
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = {{ method.input.ident }}(
+    {% for field in method.input.fields.values() if field.ident|string() == "str" and not field.uuid4 %}
+        {{ field.name }}={{ field.mock_value }},
+    {% endfor %}
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        client.{{ method_name }}(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+{% with method_settings = api.all_method_settings.get(method.meta.address.proto) %}
+{% if method_settings is not none %}
+{% for auto_populated_field in method_settings.auto_populated_fields %}
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.match(args[0].{{ auto_populated_field }})
+        # clear UUID field so that the check below succeeds
+        args[0].{{ auto_populated_field }} = None
+{% endfor %}
+{% endif %}{# if method_settings is not none #}
+{% endwith %}{# method_settings #}
+        assert args[0] == {{ method.input.ident }}(
+        {% for field in method.input.fields.values() if field.ident|string() == "str" and not field.uuid4 %}
+            {{ field.name }}={{ field.mock_value }},
+        {% endfor %}
+        )
+{% endif %}
+
+
+{% if method.field_headers and not method.client_streaming %}
+def test_{{ method_name }}_field_headers():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = {{ method.input.ident }}()
+
+    {% for field_header in method.field_headers %}
+    request.{{ field_header.disambiguated }} = {{ method.input.get_field(field_header.disambiguated).mock_value }}
+    {% endfor %}
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        {% if method.void %}
+        call.return_value = None
+        {% elif method.lro %}
+        call.return_value = operations_pb2.Operation(name='operations/op')
+        {% elif method.server_streaming %}
+        call.return_value = iter([{{ method.output.ident }}()])
+        {% else %}
+        call.return_value = {{ method.output.ident }}()
+        {% endif %}
+        client.{{ method_name }}(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        'x-goog-request-params',
+        '{% for field_header in method.field_headers -%}
+        {{ field_header.raw }}={{ method.input.get_field(field_header.disambiguated).mock_value|trim("'") }}
+        {%- if not loop.last %}&{% endif %}
+        {%- endfor -%}',
+    ) in kw['metadata']
+
+
+{% endif %}
+
+{% if method.ident.package != method.input.ident.package %}
+def test_{{ method_name }}_from_dict_foreign():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        # Designate an appropriate return value for the call.
+        {% if method.void %}
+        call.return_value = None
+        {% elif method.lro %}
+        call.return_value = operations_pb2.Operation(name='operations/op')
+        {% elif method.server_streaming %}
+        call.return_value = iter([{{ method.output.ident }}()])
+        {% else %}
+        call.return_value = {{ method.output.ident }}()
+        {% endif %}
+        response = client.{{ method_name }}(request={
+            {% for field in method.input.fields.values() %}
+            '{{ field.name }}': {{ field.mock_value }},
+            {% endfor %}
+            }
+        )
+        call.assert_called()
+
+{% endif %}
+
+{% if method.flattened_fields %}
+def test_{{ method_name }}_flattened():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        # Designate an appropriate return value for the call.
+        {% if method.void %}
+        call.return_value = None
+        {% elif method.lro %}
+        call.return_value = operations_pb2.Operation(name='operations/op')
+        {% elif method.server_streaming %}
+        call.return_value = iter([{{ method.output.ident }}()])
+        {% else %}
+        call.return_value = {{ method.output.ident }}()
+        {% endif %}
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.{{ method_name }}(
+            {% for field in method.flattened_fields.values() %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endfor %}
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        {% for key, field in method.flattened_fields.items() %}{% if not field.oneof or field.proto3_optional %}
+        {% if field.ident|string() == 'timestamp_pb2.Timestamp' %}
+        assert TimestampRule().to_proto(args[0].{{ key }}) == {{ field.mock_value }}
+        {% elif field.ident|string() == 'duration_pb2.Duration' %}
+        assert DurationRule().to_proto(args[0].{{ key }}) == {{ field.mock_value }}
+        {% else %}
+        arg = args[0].{{ key }}
+        mock_val = {{ field.mock_value }}
+        {% if field.ident|string() == "struct_pb2.Value" %}
+        from proto.marshal import Marshal
+        from proto.marshal.rules.struct import ValueRule
+        rule = ValueRule(marshal=Marshal(name="Test"))
+        mock_val = rule.to_python(mock_val)
+        {% endif %}{# struct_pb2.Value #}
+        assert arg == mock_val
+        {% endif %}
+        {% endif %}{% endfor %}
+        {% for oneofs in method.flattened_oneof_fields().values() %}
+        {% with field = oneofs[-1]  %}
+        assert args[0].{{ method.flattened_field_to_key[field.name] }} == {{ field.mock_value }}
+        {% endwith %}
+        {% endfor %}
+
+
+
+def test_{{ method_name }}_flattened_error():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.{{ method_name }}(
+            {{ method.input.ident }}(),
+            {% for field in method.flattened_fields.values() %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endfor %}
+        )
+
+
+{% endif %}
+
+
+{% if method.paged_result_field %}
+{% if not method.paged_result_field.map %}
+def test_{{ method_name }}_pager(transport_name: str = "grpc"):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials,
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.{{ method.transport_safe_name|snake_case }}),
+            '__call__') as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[],
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+            ),
+            RuntimeError,
+        )
+
+        expected_metadata = ()
+        retry = retries.Retry()
+        timeout = 5
+        {% if method.field_headers and not method.client_streaming %}
+        expected_metadata = tuple(expected_metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((
+                {% for field_header in method.field_headers %}
+                ('{{ field_header.raw }}', ''),
+                {% endfor %}
+            )),
+        )
+        {% endif %}
+        pager = client.{{ method_name }}(request={}, retry=retry, timeout=timeout)
+
+        {% if service.version %}
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:
+            expected_metadata = tuple(expected_metadata) + (
+                version_header.to_api_version_header("{{ service.version }}"),
+            )
+        {% endif %}
+        assert pager._metadata == expected_metadata
+        assert pager._retry == retry
+        assert pager._timeout == timeout
+
+        assert pager.next_page_token == 'abc'
+        assert str(pager).startswith(f'{pager.__class__.__name__}<')
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(isinstance(i, {{ method.paged_result_field.type.ident }})
+                   for i in results)
+
+{% endif %}
+
+def test_{{ method_name }}_pages(transport_name: str = "grpc"):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials,
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+         type(client.transport.{{ method.transport_safe_name|snake_case }}),
+        '__call__') as call:
+        # Set the response to a series of pages.
+        {% if method.paged_result_field.map%}
+        call.side_effect = (
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'a':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'b':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'c':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={},
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'g':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'h':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'i':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+            ),
+            RuntimeError,
+        )
+        {% else %}
+        call.side_effect = (
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[],
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+            ),
+            RuntimeError,
+        )
+        {% endif %}
+        {# method.paged_result_field.map #}
+        pages = list(client.{{ method_name }}(request={}).pages)
+        for page_, token in zip(pages, ['abc','def','ghi', '']):
+            assert page_.raw_page.next_page_token == token
+
+
+{% elif method.lro and "next_page_token" in method.lro.response_type.fields.keys() %}
+def test_{{ method_name }}_raw_page_lro():
+    response = {{ method.lro.response_type.ident }}()
+    assert response.raw_page is response
+{% endif %}{# method.paged_result_field #}{% endwith %}{# method_name #}
+
+{% endfor %} {# method in methods for grpc #}
+
+{% for method in service.methods.values() if 'rest' in opts.transport %}{% with method_name = method.name|snake_case + "_unary" if method.operation_service else method.client_method_name|snake_case %}{% if method.http_options %}
+{# TODO(kbandes): remove this if condition when client streaming are supported. #}
+{% if not method.client_streaming %}
+@pytest.mark.parametrize("request_type", [
+  {{ method.input.ident }},
+  dict,
+])
+def test_{{ method_name }}_rest(request_type, transport: str = 'rest'):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    # Send a request that will satisfy transcoding
+    request = {{ method.input.ident }}({{ method.http_options[0].sample_request(method) }})
+    {% if method.client_streaming %}
+    requests = [request]
+    {% endif %}
+
+
+    with mock.patch.object(type(client.transport._session), 'request') as req:
+                {% if method.void %}
+        return_value = None
+        {% elif method.lro %}
+        return_value = operations_pb2.Operation(name='operations/spam')
+        {% else %}
+        return_value = {{ method.output.ident }}(
+            {% for field in method.output.fields.values() | rejectattr('message')%}
+            {% if not field.oneof or field.proto3_optional %}
+              {{ field.name }}={{ field.mock_value }},
+              {% endif %}{% endfor %}
+              {# This is a hack to only pick one field #}
+              {% for oneof_fields in method.output.oneof_fields().values() %}
+              {% if (oneof_fields | rejectattr('message') | list) %}
+              {% with field = (oneof_fields | rejectattr('message') | first) %}
+              {{ field.name }}={{ field.mock_value }},
+              {% endwith %}
+              {% endif %}
+              {% endfor %}
+        )
+        {% endif %}
+        req.return_value = Response()
+        req.return_value.status_code = 500
+        req.return_value.request = PreparedRequest()
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        {% if method.void %}
+        json_return_value = ''
+        {% elif method.server_streaming %}
+        json_return_value = "[{}]".format({{ method.output.ident }}.to_json(return_value))
+        {% else %}
+        json_return_value = {{ method.output.ident }}.to_json(return_value)
+        {% endif %}
+        req.return_value._content = json_return_value.encode("UTF-8")
+        with pytest.raises(core_exceptions.GoogleAPIError):
+            # We only care that the correct exception is raised when putting
+            # the request over the wire, so an empty request is fine.
+            {% if method.client_streaming %}
+            client.{{ method_name }}(iter([requests]))
+            {% elif method.server_streaming %}
+            with mock.patch.object(response_value, 'iter_content') as iter_content:
+                iter_content.return_value = iter(json_return_value)
+                response = client.{{ method_name }}(request)
+            {% else %}
+            client.{{ method_name }}(request)
+            {% endif %}
+
+
+{# TODO(kbandes): remove this if condition when lro and streaming are supported. #}
+@pytest.mark.parametrize("request_type", [
+    {{ method.input.ident }},
+    dict,
+])
+def test_{{ method.name|snake_case }}_rest(request_type):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {{ method.http_options[0].sample_request(method) }}
+    {% for field in method.body_fields.values() %}
+    {% if not field.oneof or field.proto3_optional %}
+    {# ignore oneof fields that might conflict with sample_request #}
+    request_init["{{ field.name }}"] = {{ field.merged_mock_value(method.http_options[0].sample_request(method).get(field.name)) }}
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = {{ method.input.ident }}.meta.fields["{{ field.name }}"]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else: # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init["{{ field.name }}"].items(): # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {"field": field, "subfield": subfield, "is_repeated": is_repeated}
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime: # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(0, len(request_init["{{ field.name }}"][field])):
+                    del request_init["{{ field.name }}"][field][i][subfield]
+            else:
+                del request_init["{{ field.name }}"][field][subfield]
+    {% endif %}
+    {% endfor %}
+    request = request_type(request_init)
+    {% if method.client_streaming %}
+    requests = [request]
+    {% endif %}
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), 'request') as req:
+        # Designate an appropriate value for the returned response.
+        {% if method.void %}
+        return_value = None
+        {% elif method.lro %}
+        return_value = operations_pb2.Operation(name='operations/spam')
+        {% else %}
+        return_value = {{ method.output.ident }}(
+            {% for field in method.output.fields.values() | rejectattr('message')%}
+            {% if not field.oneof or field.proto3_optional %}
+              {{ field.name }}={{ field.mock_value }},
+              {% endif %}{% endfor %}
+              {# This is a hack to only pick one field #}
+              {% for oneof_fields in method.output.oneof_fields().values() %}
+              {% if (oneof_fields | rejectattr('message') | list) %}
+              {% with field = (oneof_fields | rejectattr('message') | first) %}
+              {{ field.name }}={{ field.mock_value }},
+              {% endwith %}
+              {% endif %}
+              {% endfor %}
+        )
+        {% endif %}
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        {% if method.void %}
+        json_return_value = ''
+        {% elif method.lro %}
+        json_return_value = json_format.MessageToJson(return_value)
+        {% else %}
+
+        {% if method.output.ident.is_proto_plus_type %}
+        # Convert return value to protobuf type
+        return_value = {{ method.output.ident }}.pb(return_value)
+        {% endif %}
+        json_return_value = json_format.MessageToJson(return_value)
+        {% endif %}
+        {% if method.server_streaming %}
+        json_return_value = "[{}]".format(json_return_value)
+        {% endif %}
+
+        response_value._content = json_return_value.encode('UTF-8')
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        {% if method.client_streaming %}
+        response = client.{{ method.client_method_name|snake_case }}(iter(requests))
+        {% elif method.server_streaming %}
+        with mock.patch.object(response_value, 'iter_content') as iter_content:
+            iter_content.return_value = iter(json_return_value)
+            response = client.{{ method_name }}(request)
+        {% else %}
+        response = client.{{ method_name }}(request)
+        {% endif %}
+
+    {% if "next_page_token" in method.output.fields.values()|map(attribute='name', default="") and not method.paged_result_field %}
+    {# Cheeser assertion to force code coverage for bad paginated methods #}
+    assert response.raw_page is response
+
+    {% endif %}
+
+    {% if method.server_streaming %}
+    assert isinstance(response, Iterable)
+    response = next(response)
+    {% endif %}
+
+    # Establish that the response is the type that we expect.
+    {% if method.void %}
+    assert response is None
+    {% elif method.lro %}
+    assert response.operation.name == "operations/spam"
+    {% elif method.extended_lro %}
+    assert isinstance(response, {{ method.extended_lro.operation_type.ident }})
+    {% else %}
+    assert isinstance(response, {{ method.client_output.ident }})
+    {% for field in method.output.fields.values() | rejectattr('message') %}
+    {% if not field.oneof or field.proto3_optional %}
+    {% if field.field_pb.type in [1, 2] %}{# Use approx eq for floats #}
+    {% if field.repeated %}
+    for index in range(len(response.{{ field.name }})):
+        assert math.isclose(
+            response.{{ field.name }}[index],
+            {{ field.mock_value }}[index],
+            rel_tol=1e-6,
+        )
+    {% else %}{# field.repeated #}
+    assert math.isclose(response.{{ field.name }}, {{ field.mock_value }}, rel_tol=1e-6)
+    {% endif %}
+    {% elif field.field_pb.type == 8 %}{# Use 'is' for bools #}
+    assert response.{{ field.name }} is {{ field.mock_value }}
+    {% else %}
+    assert response.{{ field.name }} == {{ field.mock_value }}
+    {% endif %}
+    {% endif %}{# end oneof/optional #}
+    {% endfor %}
+    {% endif %}
+
+
+    {% if method.input.required_fields %}
+def test_{{ method_name }}_rest_required_fields(request_type={{ method.input.ident }}):
+    transport_class = transports.{{ service.rest_transport_name }}
+
+    request_init = {}
+    {% for req_field in method.input.required_fields if req_field.is_primitive %}
+    {% if req_field.field_pb.type == 9 %}
+    request_init["{{ req_field.name }}"] = "{{ req_field.field_pb.default_value }}"
+    {% else %}
+    request_init["{{ req_field.name }}"] = {{ req_field.type.python_type(req_field.field_pb.default_value or 0) }}
+    {% endif %}{# default is str #}
+    {% endfor %}
+    request = request_type(**request_init)
+    {% if method.input.ident.is_proto_plus_type %}
+    pb_request = request_type.pb(request)
+    {% else %}
+    pb_request = request
+    {% endif %}
+    jsonified_request = json.loads(json_format.MessageToJson(
+        pb_request,
+        use_integers_for_enums=False
+    ))
+
+    # verify fields with default values are dropped
+    {% for req_field in method.input.required_fields if req_field.is_primitive and req_field.name in method.query_params %}
+    {% set field_name = req_field.name | camel_case %}
+    assert "{{ field_name }}" not in jsonified_request
+    {% endfor %}
+
+    default_values = getattr(
+        transport_class._Base{{ method.name }},
+        "_Base{{ method.name }}__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {k: v for k, v in default_values.items() if k not in jsonified_request}
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+    {% for req_field in method.input.required_fields if req_field.is_primitive and req_field.name in method.query_params %}
+    {% set field_name = req_field.name | camel_case %}
+    assert "{{ field_name }}" in jsonified_request
+    assert jsonified_request["{{ field_name }}"] == request_init["{{ req_field.name }}"]
+    {% endfor %}
+
+    {% for req_field in method.input.required_fields if req_field.is_primitive %}
+    {% set field_name = req_field.name | camel_case %}
+    {% set mock_value = req_field.primitive_mock_as_str() %}
+    jsonified_request["{{ field_name }}"] = {{ mock_value }}
+    {% endfor %}
+
+    {% if method.query_params %}
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(({% for param in method.query_params|sort %}"{{param | camel_case}}", {% endfor %}))
+    {% endif %}
+
+    # verify required fields with non-default values are left alone
+    {% for req_field in method.input.required_fields if req_field.is_primitive %}
+    {% set field_name = req_field.name | camel_case %}
+    {% set mock_value = req_field.primitive_mock_as_str() %}
+    assert "{{ field_name }}" in jsonified_request
+    assert jsonified_request["{{ field_name }}"] == {{ mock_value }}
+    {% endfor %}
+
+
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport='rest',
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    {% if method.void %}
+    return_value = None
+    {% elif method.lro %}
+    return_value = operations_pb2.Operation(name='operations/spam')
+    {% else %}
+    return_value = {{ method.output.ident }}()
+    {% endif %}
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, 'request') as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, 'transcode') as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            {% if method.input.ident.is_proto_plus_type %}
+            pb_request = request_type.pb(request)
+            {% else %}
+            pb_request = request
+            {% endif %}
+            transcode_result = {
+                'uri': 'v1/sample_method',
+                'method': "{{ method.http_options[0].method }}",
+                'query_params': pb_request,
+            }
+            {% if method.http_options[0].body %}
+            transcode_result['body'] = pb_request
+            {% endif %}
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            {% if method.void %}
+            json_return_value = ''
+            {% elif method.lro %}
+            json_return_value = json_format.MessageToJson(return_value)
+            {% else %}
+
+            {% if method.output.ident.is_proto_plus_type %}
+            # Convert return value to protobuf type
+            return_value = {{ method.output.ident }}.pb(return_value)
+            {% endif %}
+            json_return_value = json_format.MessageToJson(return_value)
+            {% endif %}
+            {% if method.server_streaming %}
+            json_return_value = "[{}]".format(json_return_value)
+            {% endif %}
+
+            response_value._content = json_return_value.encode('UTF-8')
+            req.return_value = response_value
+
+            {% if method.client_streaming %}
+            response = client.{{ method_name }}(iter(requests))
+            {% elif method.server_streaming %}
+            with mock.patch.object(response_value, 'iter_content') as iter_content:
+                iter_content.return_value = iter(json_return_value)
+                response = client.{{ method_name }}(request)
+            {% else %}
+            response = client.{{ method_name }}(request)
+            {% endif %}
+
+            expected_params = [
+            {% for req_field in method.input.required_fields if req_field.is_primitive and req_field.name in method.query_params %}
+                (
+                    "{{ req_field.name | camel_case }}",
+                    {% if req_field.field_pb.type == 9 %}
+                    "{{ req_field.field_pb.default_value }}",
+                    {% elif req_field.field_pb.type == 8 %}
+                    str({{ req_field.type.python_type(req_field.field_pb.default_value or 0) }}).lower(),
+                    {% else %}
+                    str({{ req_field.type.python_type(req_field.field_pb.default_value or 0) }}),
+                    {% endif %}{# default is str #}
+                ),
+              {% endfor %}
+              {% if opts.rest_numeric_enums %}
+                ('$alt', 'json;enum-encoding=int')
+              {% endif %}
+            ]
+            actual_params = req.call_args.kwargs['params']
+            assert expected_params == actual_params
+
+
+    {% endif %}{# required_fields #}
+
+{% if not method.client_streaming %}
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_{{ method_name }}_rest_interceptors(null_interceptor):
+    transport = transports.{{ service.name }}RestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.{{ service.name}}RestInterceptor(),
+        )
+    client = {{ service.client_name }}(transport=transport)
+    with mock.patch.object(type(client.transport._session), "request") as req, \
+         mock.patch.object(path_template, "transcode")  as transcode, \
+         {% if method.lro %}
+         mock.patch.object(operation.Operation, "_set_result_from_operation"), \
+         {% endif %}
+         {% if not method.void %}
+         mock.patch.object(transports.{{ service.name }}RestInterceptor, "post_{{method.name|snake_case}}") as post, \
+         {% endif %}
+         mock.patch.object(transports.{{ service.name }}RestInterceptor, "pre_{{ method.name|snake_case }}") as pre:
+        pre.assert_not_called()
+        {% if not method.void %}
+        post.assert_not_called()
+        {% endif %}
+        {% if method.input.ident.is_proto_plus_type %}
+        pb_message = {{ method.input.ident }}.pb({{ method.input.ident }}())
+        {% else %}
+        pb_message = {{ method.input.ident }}()
+        {% endif %}
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = Response()
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        req.return_value.status_code = 200
+        req.return_value.request = PreparedRequest()
+        {% if not method.void %}
+        req.return_value._content = {% if method.output.ident.is_proto_plus_type %}{{ method.output.ident }}.to_json({{ method.output.ident }}()){% else %}json_format.MessageToJson({{ method.output.ident }}()){% endif %}
+
+        {% if method.server_streaming %}
+        req.return_value._content = "[{}]".format(req.return_value._content)
+        {% endif %}
+
+        {% endif %}
+
+        request = {{ method.input.ident }}()
+        metadata =[
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        {% if not method.void %}
+        post.return_value = {{ method.output.ident }}()
+        {% endif %}
+
+        client.{{ method_name }}(request, metadata=[("key", "val"), ("cephalopod", "squid"),])
+
+        pre.assert_called_once()
+        {% if not method.void %}
+        post.assert_called_once()
+        {% endif %}
+{% endif %}{# streaming #}
+
+
+def test_{{ method_name }}_rest_bad_request(transport: str = 'rest', request_type={{ method.input.ident }}):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {{ method.http_options[0].sample_request(method) }}
+    request = request_type(request_init)
+    {% if method.client_streaming %}
+    requests = [request]
+    {% endif %}
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with mock.patch.object(Session, 'request') as req, pytest.raises(core_exceptions.BadRequest):
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 400
+        response_value.request = Request()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        {% if method.client_streaming %}
+        client.{{ method.client_method_name|snake_case }}(iter(requests))
+        {% else %}
+        client.{{ method_name }}(request)
+        {% endif %}
+
+
+{% if method.flattened_fields and "rest" in opts.transport %}
+def test_{{ method.name|snake_case }}_rest_flattened():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), 'request') as req:
+        # Designate an appropriate value for the returned response.
+        {% if method.void %}
+        return_value = None
+        {% elif method.lro %}
+        return_value = operations_pb2.Operation(name='operations/spam')
+        {% else %}
+        return_value = {{ method.output.ident }}()
+        {% endif %}
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        {% if method.void %}
+        json_return_value = ''
+        {% elif method.lro %}
+        json_return_value = json_format.MessageToJson(return_value)
+        {% else %}
+
+        {% if method.output.ident.is_proto_plus_type %}
+        # Convert return value to protobuf type
+        return_value = {{ method.output.ident }}.pb(return_value)
+        {% endif %}
+        json_return_value = json_format.MessageToJson(return_value)
+        {% endif %}
+        {% if method.server_streaming %}
+        json_return_value = "[{}]".format(json_return_value)
+        {% endif %}
+        response_value._content = json_return_value.encode('UTF-8')
+        req.return_value = response_value
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {{ method.http_options[0].sample_request(method) }}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            {% for field in method.flattened_fields.values() %}
+            {% if not field.oneof or field.proto3_optional %}
+            {# ignore oneof fields that might conflict with sample_request #}
+            {{ field.name }}={{ field.mock_value }},
+            {% endif %}
+            {% endfor %}
+        )
+        mock_args.update(sample_request)
+
+        {% if method.server_streaming %}
+        with mock.patch.object(response_value, 'iter_content') as iter_content:
+            iter_content.return_value = iter(json_return_value)
+            client.{{ method_name }}(**mock_args)
+        {% else %}
+        client.{{ method_name }}(**mock_args)
+        {% endif %}
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        {% with uri = method.http_options[0].uri %}
+        assert path_template.validate("%s{{ uri }}" % client.transport._host, args[1])
+        {% endwith %}
+        {# TODO(kbandes) - reverse-transcode request args to check all request fields #}
+
+
+def test_{{ method_name }}_rest_flattened_error(transport: str = 'rest'):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.{{ method_name }}(
+            {{ method.input.ident }}(),
+            {% for field in method.flattened_fields.values() %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endfor %}
+        )
+{% endif %}{# flattened fields #}
+
+
+{% if method.paged_result_field %}
+def test_{{ method_name }}_rest_pager(transport: str = 'rest'):
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, 'request') as req:
+        # TODO(kbandes): remove this mock unless there's a good reason for it.
+        #with mock.patch.object(path_template, 'transcode') as transcode:
+        # Set the response as a series of pages
+        {% if method.paged_result_field.map%}
+        response = (
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'a':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'b':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'c':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={},
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'g':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}={
+                    'h':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                    'i':{{ method.paged_result_field.type.fields.get('value').ident }}(),
+                },
+            ),
+        )
+        {% else %}
+        response = (
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='abc',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[],
+                next_page_token='def',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+                next_page_token='ghi',
+            ),
+            {{ method.output.ident }}(
+                {{ method.paged_result_field.name }}=[
+                    {{ method.paged_result_field.type.ident }}(),
+                    {{ method.paged_result_field.type.ident }}(),
+                ],
+            ),
+        )
+        {% endif %}
+        # Two responses for two calls
+        response = response + response
+
+        # Wrap the values into proper Response objs
+        response = tuple({{ method.output.ident }}.to_json(x) for x in response)
+        return_values = tuple(Response() for i in response)
+        for return_val, response_val in zip(return_values, response):
+            {% if method.server_streaming %}
+            response_val = "[{}]".format({{ method.output.ident }}.to_json(response_val))
+            {% endif %}
+            return_val._content = response_val.encode('UTF-8')
+            return_val.status_code = 200
+        req.side_effect = return_values
+
+        sample_request = {{ method.http_options[0].sample_request(method) }}
+        {% for field in method.body_fields.values() %}
+        {% if not field.oneof or field.proto3_optional %}
+        {# ignore oneof fields that might conflict with sample_request #}
+        sample_request["{{ field.name }}"] = {{ field.mock_value }}
+        {% endif %}
+        {% endfor %}
+
+
+        pager = client.{{ method_name }}(request=sample_request)
+
+        assert pager.next_page_token == 'abc'
+        assert str(pager).startswith(f'{pager.__class__.__name__}<')
+
+        {% if method.paged_result_field.map %}
+        assert isinstance(pager.get('a'), {{ method.paged_result_field.type.fields.get('value').ident }})
+        assert pager.get('h') is None
+        {% endif %}
+
+        results = list(pager)
+        assert len(results) == 6
+        {% if method.paged_result_field.map %}
+        assert all(
+            isinstance(i, tuple)
+                for i in results)
+        for result in results:
+            assert isinstance(result, tuple)
+            assert tuple(type(t) for t in result) == (str, {{ method.paged_result_field.type.fields.get('value').ident }})
+
+        assert pager.get('a') is None
+        assert isinstance(pager.get('h'), {{ method.paged_result_field.type.fields.get('value').ident }})
+        {% else %}
+        assert all(isinstance(i, {{ method.paged_result_field.type.ident }})
+                for i in results)
+        {% endif %}
+
+        pages = list(client.{{ method_name }}(request=sample_request).pages)
+        for page_, token in zip(pages, ['abc','def','ghi', '']):
+            assert page_.raw_page.next_page_token == token
+
+
+{%- else %}{# paged_result_field #}
+
+def test_{{ method_name }}_rest_error():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport='rest'
+    )
+    {%- if not method.http_options %}
+    # Since a `google.api.http` annotation is required for using a rest transport
+    # method, this should error.
+    with pytest.raises(NotImplementedError) as not_implemented_error:
+        client.{{ method_name }}({})
+    assert (
+        "Method {{ method.name }} is not available over REST transport"
+        in str(not_implemented_error.value)
+    )
+
+    {%- endif %}{# not method.http_options #}
+{% endif %}{# flattened_fields #}
+
+{% else %}{# this is an lro or streaming method #}
+def test_{{ method_name }}_rest_unimplemented():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = {{ method.input.ident }}()
+    {% if method.client_streaming %}
+    requests = [request]
+    {% endif %}
+    with pytest.raises(NotImplementedError):
+        client.{{ method_name }}({% if method.client_streaming %}requests{% else %}request{% endif %})
+
+
+{% endif %}{# not lro and not streaming #}{% else %}{# not method.http_options #}
+def test_{{ method_name }}_rest_no_http_options():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = {{ method.input.ident }}()
+    {% if method.client_streaming %}
+    requests = [request]
+    {% endif %}
+    with pytest.raises(RuntimeError):
+        client.{{ method_name }}({% if method.client_streaming %}requests{% else %}request{% endif %})
+
+
+{% endif %}{# not method.http_options #}
+{% endwith %}{# method_name #}
+
+{% endfor -%} {#- method in methods for rest #}
+
+{% for method in service.methods.values() if 'rest' in opts.transport and
+    not method.http_options %}{% with method_name = method.name|snake_case + "_unary" if method.operation_service else method.client_method_name|snake_case %}
+def test_{{ method_name }}_rest_error():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport='rest'
+    )
+    # Since a `google.api.http` annotation is required for using a rest transport
+    # method, this should error.
+    with pytest.raises(NotImplementedError) as not_implemented_error:
+        client.{{ method_name }}({})
+    assert (
+        "Method {{ method.name }} is not available over REST transport"
+        in str(not_implemented_error.value)
+    )
+
+
+{% endwith %}{# method_name #}
+{% endfor %}{# for methods without http_options #}
+
+def test_credentials_transport_error():
+    # It is an error to provide credentials and a transport instance.
+    transport = transports.{{ service.name }}{{ opts.transport[0].capitalize() }}Transport(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+    with pytest.raises(ValueError):
+        client = {{ service.client_name }}(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport=transport,
+        )
+
+    # It is an error to provide a credentials file and a transport instance.
+    transport = transports.{{ service.name }}{{ opts.transport[0].capitalize() }}Transport(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+    with pytest.raises(ValueError):
+        client = {{ service.client_name }}(
+            client_options={"credentials_file": "credentials.json"},
+            transport=transport,
+        )
+
+    # It is an error to provide scopes and a transport instance.
+    transport = transports.{{ service.name }}{{ opts.transport[0].capitalize() }}Transport(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+    with pytest.raises(ValueError):
+        client = {{ service.client_name }}(
+            client_options={"scopes": ["1", "2"]},
+            transport=transport,
+        )
+
+
+def test_transport_instance():
+    # A client may be instantiated with a custom transport instance.
+    transport = transports.{{ service.name }}{{ opts.transport[0].capitalize() }}Transport(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+    client = {{ service.client_name }}(transport=transport)
+    assert client.transport is transport
+
+{% if 'grpc' in opts.transport %}
+{# TODO(dovs): parametrize this over async/sync grpc#}
+def test_transport_get_channel():
+    # A client may be instantiated with a custom transport instance.
+    transport = transports.{{ service.name }}GrpcTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+    channel = transport.grpc_channel
+    assert channel
+
+{% endif %}
+
+@pytest.mark.parametrize("transport_class", [
+    {% if 'grpc' in opts.transport %}
+    transports.{{ service.grpc_transport_name }},
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    transports.{{ service.rest_transport_name }},
+    {% endif %}
+])
+def test_transport_adc(transport_class):
+    # Test default credentials are used if not provided.
+    with mock.patch.object(google.auth, 'default') as adc:
+        adc.return_value = (ga_credentials.AnonymousCredentials(), None)
+        transport_class()
+        adc.assert_called_once()
+
+{% if 'grpc' in opts.transport %}
+def test_transport_grpc_default():
+    # A client should use the gRPC transport by default.
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+    assert isinstance(
+        client.transport,
+        transports.{{ service.name }}GrpcTransport,
+    )
+{% endif %}
+
+def test_{{ service.name|snake_case }}_base_transport_error():
+    # Passing both a credentials object and credentials_file should raise an error
+    with pytest.raises(core_exceptions.DuplicateCredentialArgs):
+        transport = transports.{{ service.name }}Transport(
+            credentials=ga_credentials.AnonymousCredentials(),
+            credentials_file="credentials.json"
+        )
+
+
+def test_{{ service.name|snake_case }}_base_transport():
+    # Instantiate the base transport.
+    with mock.patch('{{ (api.naming.module_namespace + (api.naming.versioned_module_name,) + service.meta.address.subpackage)|join(".") }}.services.{{ service.name|snake_case }}.transports.{{ service.name }}Transport.__init__') as Transport:
+        Transport.return_value = None
+        transport = transports.{{ service.name }}Transport(
+            credentials=ga_credentials.AnonymousCredentials(),
+        )
+
+    # Every method on the transport should just blindly
+    # raise NotImplementedError.
+    methods = (
+        {% for method in service.methods.values() %}
+        '{{ method.transport_safe_name|snake_case }}',
+        {% endfor %}
+        {# TODO: Remove after https://github.com/googleapis/gapic-generator-python/pull/1240 is merged. #}
+        {% if opts.add_iam_methods %}
+        'set_iam_policy',
+        'get_iam_policy',
+        'test_iam_permissions',
+        {% endif %}
+        {% if not opts.add_iam_methods and api.has_iam_mixin %}
+        {% if "SetIamPolicy" in api.mixin_api_methods %}
+        'set_iam_policy',
+        {% endif %}
+        {% if "GetIamPolicy" in api.mixin_api_methods %}
+        'get_iam_policy',
+        {% endif %}
+        {% if "TestIamPermissions" in api.mixin_api_methods %}
+        'test_iam_permissions',
+        {% endif %}
+        {% endif %} {# has_iam_mixin #}
+        {% if api.has_location_mixin %}
+        {% if "GetLocation" in api.mixin_api_methods %}
+        'get_location',
+        {% endif %}
+        {% if "ListLocations" in api.mixin_api_methods %}
+        'list_locations',
+        {% endif %}
+        {% endif %} {# Location Mixin #}
+        {% if api.has_operations_mixin %}
+        {% if "GetOperation" in api.mixin_api_methods %}
+        'get_operation',
+        {% endif %}
+        {% if "WaitOperation" in api.mixin_api_methods %}
+        'wait_operation',
+        {% endif %}
+        {% if "CancelOperation" in api.mixin_api_methods %}
+        'cancel_operation',
+        {% endif %}
+        {% if "DeleteOperation" in api.mixin_api_methods %}
+        'delete_operation',
+        {% endif %}
+        {% if "ListOperations" in api.mixin_api_methods %}
+        'list_operations',
+        {% endif %}
+        {% endif %} {# has_operations_mixin #}
+    )
+    for method in methods:
+        with pytest.raises(NotImplementedError):
+            getattr(transport, method)(request=object())
+
+    with pytest.raises(NotImplementedError):
+        transport.close()
+
+    {% if service.has_lro %}
+    # Additionally, the LRO client (a property) should
+    # also raise NotImplementedError
+    with pytest.raises(NotImplementedError):
+        transport.operations_client
+    {% endif %}
+
+
+def test_{{ service.name|snake_case }}_base_transport_with_credentials_file():
+    # Instantiate the base transport with a credentials file
+    with mock.patch.object(google.auth, 'load_credentials_from_file', autospec=True) as load_creds, mock.patch('{{ (api.naming.module_namespace + (api.naming.versioned_module_name,) + service.meta.address.subpackage)|join(".") }}.services.{{ service.name|snake_case }}.transports.{{ service.name }}Transport._prep_wrapped_messages') as Transport:
+        Transport.return_value = None
+        load_creds.return_value = (ga_credentials.AnonymousCredentials(), None)
+        transport = transports.{{ service.name }}Transport(
+            credentials_file="credentials.json",
+            quota_project_id="octopus",
+        )
+        load_creds.assert_called_once_with("credentials.json",
+            scopes=None,
+            default_scopes=(
+            {% for scope in service.oauth_scopes %}
+            '{{ scope }}',
+            {% endfor %}),
+            quota_project_id="octopus",
+        )
+
+
+def test_{{ service.name|snake_case }}_base_transport_with_adc():
+    # Test the default credentials are used if credentials and credentials_file are None.
+    with mock.patch.object(google.auth, 'default', autospec=True) as adc, mock.patch('{{ (api.naming.module_namespace + (api.naming.versioned_module_name,) + service.meta.address.subpackage)|join(".") }}.services.{{ service.name|snake_case }}.transports.{{ service.name }}Transport._prep_wrapped_messages') as Transport:
+        Transport.return_value = None
+        adc.return_value = (ga_credentials.AnonymousCredentials(), None)
+        transport = transports.{{ service.name }}Transport()
+        adc.assert_called_once()
+
+
+def test_{{ service.name|snake_case }}_auth_adc():
+    # If no credentials are provided, we should use ADC credentials.
+    with mock.patch.object(google.auth, 'default', autospec=True) as adc:
+        adc.return_value = (ga_credentials.AnonymousCredentials(), None)
+        {{ service.client_name }}()
+        adc.assert_called_once_with(
+            scopes=None,
+            default_scopes=(
+            {% for scope in service.oauth_scopes %}
+            '{{ scope }}',
+            {% endfor %}),
+            quota_project_id=None,
+        )
+
+
+{% if 'grpc' in opts.transport %}
+@pytest.mark.parametrize(
+    "transport_class",
+    [
+        transports.{{ service.name }}GrpcTransport,
+    ],
+)
+def test_{{ service.name|snake_case }}_transport_auth_adc(transport_class):
+    # If credentials and host are not provided, the transport class should use
+    # ADC credentials.
+    with mock.patch.object(google.auth, 'default', autospec=True) as adc:
+        adc.return_value = (ga_credentials.AnonymousCredentials(), None)
+        transport_class(quota_project_id="octopus", scopes=["1", "2"])
+        adc.assert_called_once_with(
+            scopes=["1", "2"],
+            default_scopes=(
+                {%- for scope in service.oauth_scopes %}
+                '{{ scope }}',
+                {%- endfor %}),
+            quota_project_id="octopus",
+        )
+
+
+
+
+@pytest.mark.parametrize(
+    "transport_class,grpc_helpers",
+    [
+        (transports.{{ service.name }}GrpcTransport, grpc_helpers),
+    ],
+)
+def test_{{ service.name|snake_case }}_transport_create_channel(transport_class, grpc_helpers):
+    # If credentials and host are not provided, the transport class should use
+    # ADC credentials.
+    with mock.patch.object(google.auth, "default", autospec=True) as adc, mock.patch.object(
+        grpc_helpers, "create_channel", autospec=True
+    ) as create_channel:
+        creds = ga_credentials.AnonymousCredentials()
+        adc.return_value = (creds, None)
+        transport_class(
+            quota_project_id="octopus",
+            scopes=["1", "2"]
+        )
+
+        {% with host = (service.host|default('localhost', true)) %}
+        create_channel.assert_called_with(
+            "{{ host }}{% if ":" not in service.host %}:443{% endif %}",
+            credentials=creds,
+            credentials_file=None,
+            quota_project_id="octopus",
+            default_scopes=(
+                {% for scope in service.oauth_scopes %}
+                '{{ scope }}',
+                {% endfor %}),
+            scopes=["1", "2"],
+            default_host="{{ host }}",
+            ssl_credentials=None,
+            options=[
+                ("grpc.max_send_message_length", -1),
+                ("grpc.max_receive_message_length", -1),
+            ],
+        )
+        {% endwith %}
+
+{% endif %}
+
+{% if 'grpc' in opts.transport %}
+@pytest.mark.parametrize("transport_class",
+    [
+      transports.{{ service.grpc_transport_name }},
+])
+def test_{{ service.name|snake_case }}_grpc_transport_client_cert_source_for_mtls(
+    transport_class
+):
+    cred = ga_credentials.AnonymousCredentials()
+
+    # Check ssl_channel_credentials is used if provided.
+    with mock.patch.object(transport_class, "create_channel") as mock_create_channel:
+        mock_ssl_channel_creds = mock.Mock()
+        transport_class(
+            host="squid.clam.whelk",
+            credentials=cred,
+            ssl_channel_credentials=mock_ssl_channel_creds
+        )
+        mock_create_channel.assert_called_once_with(
+            "squid.clam.whelk:443",
+            credentials=cred,
+            credentials_file=None,
+            scopes=None,
+            ssl_credentials=mock_ssl_channel_creds,
+            quota_project_id=None,
+            options=[
+                ("grpc.max_send_message_length", -1),
+                ("grpc.max_receive_message_length", -1),
+            ],
+        )
+
+    # Check if ssl_channel_credentials is not provided, then client_cert_source_for_mtls
+    # is used.
+    with mock.patch.object(transport_class, "create_channel", return_value=mock.Mock()):
+        with mock.patch("grpc.ssl_channel_credentials") as mock_ssl_cred:
+            transport_class(
+                credentials=cred,
+                client_cert_source_for_mtls=client_cert_source_callback
+            )
+            expected_cert, expected_key = client_cert_source_callback()
+            mock_ssl_cred.assert_called_once_with(
+                certificate_chain=expected_cert,
+                private_key=expected_key
+            )
+{% endif %}
+
+{% if 'rest' in opts.transport %}
+def test_{{ service.name|snake_case }}_http_transport_client_cert_source_for_mtls():
+    cred = ga_credentials.AnonymousCredentials()
+    with mock.patch("google.auth.transport.requests.AuthorizedSession.configure_mtls_channel") as mock_configure_mtls_channel:
+        transports.{{ service.rest_transport_name }} (
+            credentials=cred,
+            client_cert_source_for_mtls=client_cert_source_callback
+        )
+        mock_configure_mtls_channel.assert_called_once_with(client_cert_source_callback)
+
+
+{% if service.has_lro -%}
+def test_{{ service.name|snake_case }}_rest_lro_client():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport='rest',
+    )
+    transport = client.transport
+
+    # Ensure that we have a api-core operations client.
+    assert isinstance(
+        transport.operations_client,
+        operations_v1.AbstractOperationsClient,
+    )
+
+    # Ensure that subsequent calls to the property send the exact same object.
+    assert transport.operations_client is transport.operations_client
+{%- endif %}
+{% endif %} {# rest #}
+
+@pytest.mark.parametrize("transport_name", [
+    {% if 'grpc' in opts.transport %}
+    "grpc",
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    "rest",
+    {% endif %}
+])
+def test_{{ service.name|snake_case }}_host_no_port(transport_name):
+    {% with host = (service.host|default('localhost', true)).split(':')[0] %}
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        client_options=client_options.ClientOptions(api_endpoint='{{ host }}'),
+        transport=transport_name,
+    )
+    assert client.transport._host == (
+        '{{ host }}:443'
+        {% if 'rest' in opts.transport %}
+        if transport_name in ['grpc', 'grpc_asyncio']
+        else 'https://{{ host }}'
+        {% endif %}
+    )
+    {% endwith %}
+
+
+@pytest.mark.parametrize("transport_name", [
+    {% if 'grpc' in opts.transport %}
+    "grpc",
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    "rest",
+    {% endif %}
+])
+def test_{{ service.name|snake_case }}_host_with_port(transport_name):
+    {% with host = (service.host|default('localhost', true)).split(':')[0] %}
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        client_options=client_options.ClientOptions(api_endpoint='{{ host }}:8000'),
+        transport=transport_name,
+    )
+    assert client.transport._host == (
+        '{{ host }}:8000'
+        {% if 'rest' in opts.transport %}
+        if transport_name in ['grpc', 'grpc_asyncio']
+        else 'https://{{ host }}:8000'
+        {% endif %}
+    )
+    {% endwith %}
+
+{% if 'rest' in opts.transport %}
+@pytest.mark.parametrize("transport_name", [
+    "rest",
+])
+def test_{{ service.name|snake_case }}_client_transport_session_collision(transport_name):
+    creds1 = ga_credentials.AnonymousCredentials()
+    creds2 = ga_credentials.AnonymousCredentials()
+    client1 = {{ service.client_name }}(
+        credentials=creds1,
+        transport=transport_name,
+    )
+    client2 = {{ service.client_name }}(
+        credentials=creds2,
+        transport=transport_name,
+    )
+    {% for method in service.methods.values() %}
+    session1 = client1.transport.{{ method.transport_safe_name|snake_case }}._session
+    session2 = client2.transport.{{ method.transport_safe_name|snake_case }}._session
+    assert session1 != session2
+    {% endfor %}
+{% endif -%}
+
+{% if 'grpc' in opts.transport %}
+def test_{{ service.name|snake_case }}_grpc_transport_channel():
+    channel = grpc.secure_channel('http://localhost/', grpc.local_channel_credentials())
+
+    # Check that channel is used if provided.
+    transport = transports.{{ service.name }}GrpcTransport(
+        host="squid.clam.whelk",
+        channel=channel,
+    )
+    assert transport.grpc_channel == channel
+    assert transport._host == "squid.clam.whelk:443"
+    assert transport._ssl_channel_credentials == None
+
+
+# Remove this test when deprecated arguments (api_mtls_endpoint, client_cert_source) are
+# removed from grpc/grpc_asyncio transport constructor.
+@pytest.mark.parametrize("transport_class",
+    [
+      transports.{{ service.grpc_transport_name }},
+    ])
+def test_{{ service.name|snake_case }}_transport_channel_mtls_with_client_cert_source(
+    transport_class
+):
+    with mock.patch("grpc.ssl_channel_credentials", autospec=True) as grpc_ssl_channel_cred:
+        with mock.patch.object(transport_class, "create_channel") as grpc_create_channel:
+            mock_ssl_cred = mock.Mock()
+            grpc_ssl_channel_cred.return_value = mock_ssl_cred
+
+            mock_grpc_channel = mock.Mock()
+            grpc_create_channel.return_value = mock_grpc_channel
+
+            cred = ga_credentials.AnonymousCredentials()
+            with pytest.warns(DeprecationWarning):
+                with mock.patch.object(google.auth, 'default') as adc:
+                    adc.return_value = (cred, None)
+                    transport = transport_class(
+                        host="squid.clam.whelk",
+                        api_mtls_endpoint="mtls.squid.clam.whelk",
+                        client_cert_source=client_cert_source_callback,
+                    )
+                    adc.assert_called_once()
+
+            grpc_ssl_channel_cred.assert_called_once_with(
+                certificate_chain=b"cert bytes", private_key=b"key bytes"
+            )
+            grpc_create_channel.assert_called_once_with(
+                "mtls.squid.clam.whelk:443",
+                credentials=cred,
+                credentials_file=None,
+                scopes=None,
+                ssl_credentials=mock_ssl_cred,
+                quota_project_id=None,
+                options=[
+                    ("grpc.max_send_message_length", -1),
+                    ("grpc.max_receive_message_length", -1),
+                ],
+            )
+            assert transport.grpc_channel == mock_grpc_channel
+            assert transport._ssl_channel_credentials == mock_ssl_cred
+
+
+# Remove this test when deprecated arguments (api_mtls_endpoint, client_cert_source) are
+# removed from grpc/grpc_asyncio transport constructor.
+@pytest.mark.parametrize("transport_class",
+    [
+      transports.{{ service.grpc_transport_name }},
+    ])
+def test_{{ service.name|snake_case }}_transport_channel_mtls_with_adc(
+    transport_class
+):
+    mock_ssl_cred = mock.Mock()
+    with mock.patch.multiple(
+        "google.auth.transport.grpc.SslCredentials",
+        __init__=mock.Mock(return_value=None),
+        ssl_credentials=mock.PropertyMock(return_value=mock_ssl_cred),
+    ):
+        with mock.patch.object(transport_class, "create_channel") as grpc_create_channel:
+            mock_grpc_channel = mock.Mock()
+            grpc_create_channel.return_value = mock_grpc_channel
+            mock_cred = mock.Mock()
+
+            with pytest.warns(DeprecationWarning):
+                transport = transport_class(
+                    host="squid.clam.whelk",
+                    credentials=mock_cred,
+                    api_mtls_endpoint="mtls.squid.clam.whelk",
+                    client_cert_source=None,
+                )
+
+            grpc_create_channel.assert_called_once_with(
+                "mtls.squid.clam.whelk:443",
+                credentials=mock_cred,
+                credentials_file=None,
+                scopes=None,
+                ssl_credentials=mock_ssl_cred,
+                quota_project_id=None,
+                options=[
+                    ("grpc.max_send_message_length", -1),
+                    ("grpc.max_receive_message_length", -1),
+                ],
+            )
+            assert transport.grpc_channel == mock_grpc_channel
+
+
+{% if service.has_lro %}
+def test_{{ service.name|snake_case }}_grpc_lro_client():
+    client = {{ service.client_name }}(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport='grpc',
+    )
+    transport = client.transport
+
+    # Ensure that we have a api-core operations client.
+    assert isinstance(
+        transport.operations_client,
+        operations_v1.OperationsClient,
+    )
+
+    # Ensure that subsequent calls to the property send the exact same object.
+    assert transport.operations_client is transport.operations_client
+
+
+{% endif %}
+{% endif %} {# if grpc in opts #}
+
+{% with molluscs = cycler("squid", "clam", "whelk", "octopus", "oyster", "nudibranch", "cuttlefish", "mussel", "winkle", "nautilus", "scallop", "abalone") %}
+{% for message in service.resource_messages|sort(attribute="resource_type") %}
+def test_{{ message.resource_type|snake_case }}_path():
+    {% for arg in message.resource_path_args %}
+    {{ arg }} = "{{ molluscs.next() }}"
+    {% endfor %}
+    expected = "{{ message.resource_path_formatted }}".format({% for arg in message.resource_path_args %}{{ arg }}={{ arg }}, {% endfor %})
+    actual = {{ service.client_name }}.{{ message.resource_type|snake_case }}_path({{message.resource_path_args|join(", ") }})
+    assert expected == actual
+
+
+def test_parse_{{ message.resource_type|snake_case }}_path():
+    expected = {
+    {% for arg in message.resource_path_args %}
+        "{{ arg }}": "{{ molluscs.next() }}",
+    {% endfor %}
+    }
+    path = {{ service.client_name }}.{{ message.resource_type|snake_case }}_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = {{ service.client_name }}.parse_{{ message.resource_type|snake_case }}_path(path)
+    assert expected == actual
+
+{% endfor %}
+{% for resource_msg in service.common_resources.values()|sort(attribute="type_name") %}
+def test_common_{{ resource_msg.message_type.resource_type|snake_case }}_path():
+    {% for arg in resource_msg.message_type.resource_path_args %}
+    {{ arg }} = "{{ molluscs.next() }}"
+    {% endfor %}
+    expected = "{{ resource_msg.message_type.resource_path_formatted }}".format({% for arg in resource_msg.message_type.resource_path_args %}{{ arg }}={{ arg }}, {% endfor %})
+    actual = {{ service.client_name }}.common_{{ resource_msg.message_type.resource_type|snake_case }}_path({{ resource_msg.message_type.resource_path_args|join(", ") }})
+    assert expected == actual
+
+
+def test_parse_common_{{ resource_msg.message_type.resource_type|snake_case }}_path():
+    expected = {
+    {% for arg in resource_msg.message_type.resource_path_args %}
+        "{{ arg }}": "{{ molluscs.next() }}",
+    {% endfor %}
+    }
+    path = {{ service.client_name }}.common_{{ resource_msg.message_type.resource_type|snake_case }}_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = {{ service.client_name }}.parse_common_{{ resource_msg.message_type.resource_type|snake_case }}_path(path)
+    assert expected == actual
+
+{% endfor %} {# common resources#}
+{% endwith %} {# cycler #}
+
+
+def test_client_with_default_client_info():
+    client_info = gapic_v1.client_info.ClientInfo()
+
+    with mock.patch.object(transports.{{ service.name }}Transport, '_prep_wrapped_messages') as prep:
+        client = {{ service.client_name }}(
+            credentials=ga_credentials.AnonymousCredentials(),
+            client_info=client_info,
+        )
+        prep.assert_called_once_with(client_info)
+
+    with mock.patch.object(transports.{{ service.name }}Transport, '_prep_wrapped_messages') as prep:
+        transport_class = {{ service.client_name }}.get_transport_class()
+        transport = transport_class(
+            credentials=ga_credentials.AnonymousCredentials(),
+            client_info=client_info,
+        )
+        prep.assert_called_once_with(client_info)
+
+{% include 'tests/unit/gapic/%name_%version/%sub/_test_mixins.py.j2' %}
+
+def test_transport_close():
+    transports = {
+        {% if 'rest' in opts.transport %}
+        "rest": "_session",
+        {% endif %}
+        {% if 'grpc' in opts.transport %}
+        "grpc": "_grpc_channel",
+        {% endif %}
+    }
+
+    for transport, close_name in transports.items():
+        client = {{ service.client_name }}(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport=transport
+        )
+        with mock.patch.object(type(getattr(client.transport, close_name)), "close") as close:
+            with client:
+                close.assert_not_called()
+            close.assert_called_once()
+
+def test_client_ctx():
+    transports = [
+        {% if 'rest' in opts.transport %}
+        'rest',
+        {% endif %}
+        {% if 'grpc' in opts.transport %}
+        'grpc',
+        {% endif %}
+    ]
+    for transport in transports:
+        client = {{ service.client_name }}(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport=transport
+        )
+        # Test client calls underlying transport.
+        with mock.patch.object(type(client.transport), "close") as close:
+            close.assert_not_called()
+            with client:
+                pass
+            close.assert_called()
+
+{% endblock %}

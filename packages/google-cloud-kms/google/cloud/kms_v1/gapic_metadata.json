@@ -1,0 +1,959 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.kms_v1",
+  "protoPackage": "google.cloud.kms.v1",
+  "schema": "1.0",
+  "services": {
+    "Autokey": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AutokeyClient",
+          "rpcs": {
+            "CreateKeyHandle": {
+              "methods": [
+                "create_key_handle"
+              ]
+            },
+            "GetKeyHandle": {
+              "methods": [
+                "get_key_handle"
+              ]
+            },
+            "ListKeyHandles": {
+              "methods": [
+                "list_key_handles"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AutokeyAsyncClient",
+          "rpcs": {
+            "CreateKeyHandle": {
+              "methods": [
+                "create_key_handle"
+              ]
+            },
+            "GetKeyHandle": {
+              "methods": [
+                "get_key_handle"
+              ]
+            },
+            "ListKeyHandles": {
+              "methods": [
+                "list_key_handles"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AutokeyClient",
+          "rpcs": {
+            "CreateKeyHandle": {
+              "methods": [
+                "create_key_handle"
+              ]
+            },
+            "GetKeyHandle": {
+              "methods": [
+                "get_key_handle"
+              ]
+            },
+            "ListKeyHandles": {
+              "methods": [
+                "list_key_handles"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "AutokeyAdmin": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AutokeyAdminClient",
+          "rpcs": {
+            "GetAutokeyConfig": {
+              "methods": [
+                "get_autokey_config"
+              ]
+            },
+            "ShowEffectiveAutokeyConfig": {
+              "methods": [
+                "show_effective_autokey_config"
+              ]
+            },
+            "UpdateAutokeyConfig": {
+              "methods": [
+                "update_autokey_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AutokeyAdminAsyncClient",
+          "rpcs": {
+            "GetAutokeyConfig": {
+              "methods": [
+                "get_autokey_config"
+              ]
+            },
+            "ShowEffectiveAutokeyConfig": {
+              "methods": [
+                "show_effective_autokey_config"
+              ]
+            },
+            "UpdateAutokeyConfig": {
+              "methods": [
+                "update_autokey_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AutokeyAdminClient",
+          "rpcs": {
+            "GetAutokeyConfig": {
+              "methods": [
+                "get_autokey_config"
+              ]
+            },
+            "ShowEffectiveAutokeyConfig": {
+              "methods": [
+                "show_effective_autokey_config"
+              ]
+            },
+            "UpdateAutokeyConfig": {
+              "methods": [
+                "update_autokey_config"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "EkmService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "EkmServiceClient",
+          "rpcs": {
+            "CreateEkmConnection": {
+              "methods": [
+                "create_ekm_connection"
+              ]
+            },
+            "GetEkmConfig": {
+              "methods": [
+                "get_ekm_config"
+              ]
+            },
+            "GetEkmConnection": {
+              "methods": [
+                "get_ekm_connection"
+              ]
+            },
+            "ListEkmConnections": {
+              "methods": [
+                "list_ekm_connections"
+              ]
+            },
+            "UpdateEkmConfig": {
+              "methods": [
+                "update_ekm_config"
+              ]
+            },
+            "UpdateEkmConnection": {
+              "methods": [
+                "update_ekm_connection"
+              ]
+            },
+            "VerifyConnectivity": {
+              "methods": [
+                "verify_connectivity"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "EkmServiceAsyncClient",
+          "rpcs": {
+            "CreateEkmConnection": {
+              "methods": [
+                "create_ekm_connection"
+              ]
+            },
+            "GetEkmConfig": {
+              "methods": [
+                "get_ekm_config"
+              ]
+            },
+            "GetEkmConnection": {
+              "methods": [
+                "get_ekm_connection"
+              ]
+            },
+            "ListEkmConnections": {
+              "methods": [
+                "list_ekm_connections"
+              ]
+            },
+            "UpdateEkmConfig": {
+              "methods": [
+                "update_ekm_config"
+              ]
+            },
+            "UpdateEkmConnection": {
+              "methods": [
+                "update_ekm_connection"
+              ]
+            },
+            "VerifyConnectivity": {
+              "methods": [
+                "verify_connectivity"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "EkmServiceClient",
+          "rpcs": {
+            "CreateEkmConnection": {
+              "methods": [
+                "create_ekm_connection"
+              ]
+            },
+            "GetEkmConfig": {
+              "methods": [
+                "get_ekm_config"
+              ]
+            },
+            "GetEkmConnection": {
+              "methods": [
+                "get_ekm_connection"
+              ]
+            },
+            "ListEkmConnections": {
+              "methods": [
+                "list_ekm_connections"
+              ]
+            },
+            "UpdateEkmConfig": {
+              "methods": [
+                "update_ekm_config"
+              ]
+            },
+            "UpdateEkmConnection": {
+              "methods": [
+                "update_ekm_connection"
+              ]
+            },
+            "VerifyConnectivity": {
+              "methods": [
+                "verify_connectivity"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "HsmManagement": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "HsmManagementClient",
+          "rpcs": {
+            "ApproveSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "approve_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "CreateSingleTenantHsmInstance": {
+              "methods": [
+                "create_single_tenant_hsm_instance"
+              ]
+            },
+            "CreateSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "create_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "DeleteSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "delete_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "ExecuteSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "execute_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "GetSingleTenantHsmInstance": {
+              "methods": [
+                "get_single_tenant_hsm_instance"
+              ]
+            },
+            "GetSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "get_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "ListSingleTenantHsmInstanceProposals": {
+              "methods": [
+                "list_single_tenant_hsm_instance_proposals"
+              ]
+            },
+            "ListSingleTenantHsmInstances": {
+              "methods": [
+                "list_single_tenant_hsm_instances"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "HsmManagementAsyncClient",
+          "rpcs": {
+            "ApproveSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "approve_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "CreateSingleTenantHsmInstance": {
+              "methods": [
+                "create_single_tenant_hsm_instance"
+              ]
+            },
+            "CreateSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "create_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "DeleteSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "delete_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "ExecuteSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "execute_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "GetSingleTenantHsmInstance": {
+              "methods": [
+                "get_single_tenant_hsm_instance"
+              ]
+            },
+            "GetSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "get_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "ListSingleTenantHsmInstanceProposals": {
+              "methods": [
+                "list_single_tenant_hsm_instance_proposals"
+              ]
+            },
+            "ListSingleTenantHsmInstances": {
+              "methods": [
+                "list_single_tenant_hsm_instances"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "HsmManagementClient",
+          "rpcs": {
+            "ApproveSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "approve_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "CreateSingleTenantHsmInstance": {
+              "methods": [
+                "create_single_tenant_hsm_instance"
+              ]
+            },
+            "CreateSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "create_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "DeleteSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "delete_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "ExecuteSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "execute_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "GetSingleTenantHsmInstance": {
+              "methods": [
+                "get_single_tenant_hsm_instance"
+              ]
+            },
+            "GetSingleTenantHsmInstanceProposal": {
+              "methods": [
+                "get_single_tenant_hsm_instance_proposal"
+              ]
+            },
+            "ListSingleTenantHsmInstanceProposals": {
+              "methods": [
+                "list_single_tenant_hsm_instance_proposals"
+              ]
+            },
+            "ListSingleTenantHsmInstances": {
+              "methods": [
+                "list_single_tenant_hsm_instances"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "KeyManagementService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "KeyManagementServiceClient",
+          "rpcs": {
+            "AsymmetricDecrypt": {
+              "methods": [
+                "asymmetric_decrypt"
+              ]
+            },
+            "AsymmetricSign": {
+              "methods": [
+                "asymmetric_sign"
+              ]
+            },
+            "CreateCryptoKey": {
+              "methods": [
+                "create_crypto_key"
+              ]
+            },
+            "CreateCryptoKeyVersion": {
+              "methods": [
+                "create_crypto_key_version"
+              ]
+            },
+            "CreateImportJob": {
+              "methods": [
+                "create_import_job"
+              ]
+            },
+            "CreateKeyRing": {
+              "methods": [
+                "create_key_ring"
+              ]
+            },
+            "Decapsulate": {
+              "methods": [
+                "decapsulate"
+              ]
+            },
+            "Decrypt": {
+              "methods": [
+                "decrypt"
+              ]
+            },
+            "DeleteCryptoKey": {
+              "methods": [
+                "delete_crypto_key"
+              ]
+            },
+            "DeleteCryptoKeyVersion": {
+              "methods": [
+                "delete_crypto_key_version"
+              ]
+            },
+            "DestroyCryptoKeyVersion": {
+              "methods": [
+                "destroy_crypto_key_version"
+              ]
+            },
+            "Encrypt": {
+              "methods": [
+                "encrypt"
+              ]
+            },
+            "ExportTrustedKeyWrappedCryptoKeyVersion": {
+              "methods": [
+                "export_trusted_key_wrapped_crypto_key_version"
+              ]
+            },
+            "GenerateRandomBytes": {
+              "methods": [
+                "generate_random_bytes"
+              ]
+            },
+            "GetCryptoKey": {
+              "methods": [
+                "get_crypto_key"
+              ]
+            },
+            "GetCryptoKeyVersion": {
+              "methods": [
+                "get_crypto_key_version"
+              ]
+            },
+            "GetImportJob": {
+              "methods": [
+                "get_import_job"
+              ]
+            },
+            "GetKeyRing": {
+              "methods": [
+                "get_key_ring"
+              ]
+            },
+            "GetPublicKey": {
+              "methods": [
+                "get_public_key"
+              ]
+            },
+            "GetRetiredResource": {
+              "methods": [
+                "get_retired_resource"
+              ]
+            },
+            "ImportCryptoKeyVersion": {
+              "methods": [
+                "import_crypto_key_version"
+              ]
+            },
+            "ImportTrustedKeyWrappedCryptoKeyVersion": {
+              "methods": [
+                "import_trusted_key_wrapped_crypto_key_version"
+              ]
+            },
+            "ListCryptoKeyVersions": {
+              "methods": [
+                "list_crypto_key_versions"
+              ]
+            },
+            "ListCryptoKeys": {
+              "methods": [
+                "list_crypto_keys"
+              ]
+            },
+            "ListImportJobs": {
+              "methods": [
+                "list_import_jobs"
+              ]
+            },
+            "ListKeyRings": {
+              "methods": [
+                "list_key_rings"
+              ]
+            },
+            "ListRetiredResources": {
+              "methods": [
+                "list_retired_resources"
+              ]
+            },
+            "MacSign": {
+              "methods": [
+                "mac_sign"
+              ]
+            },
+            "MacVerify": {
+              "methods": [
+                "mac_verify"
+              ]
+            },
+            "RawDecrypt": {
+              "methods": [
+                "raw_decrypt"
+              ]
+            },
+            "RawEncrypt": {
+              "methods": [
+                "raw_encrypt"
+              ]
+            },
+            "RestoreCryptoKeyVersion": {
+              "methods": [
+                "restore_crypto_key_version"
+              ]
+            },
+            "UpdateCryptoKey": {
+              "methods": [
+                "update_crypto_key"
+              ]
+            },
+            "UpdateCryptoKeyPrimaryVersion": {
+              "methods": [
+                "update_crypto_key_primary_version"
+              ]
+            },
+            "UpdateCryptoKeyVersion": {
+              "methods": [
+                "update_crypto_key_version"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "KeyManagementServiceAsyncClient",
+          "rpcs": {
+            "AsymmetricDecrypt": {
+              "methods": [
+                "asymmetric_decrypt"
+              ]
+            },
+            "AsymmetricSign": {
+              "methods": [
+                "asymmetric_sign"
+              ]
+            },
+            "CreateCryptoKey": {
+              "methods": [
+                "create_crypto_key"
+              ]
+            },
+            "CreateCryptoKeyVersion": {
+              "methods": [
+                "create_crypto_key_version"
+              ]
+            },
+            "CreateImportJob": {
+              "methods": [
+                "create_import_job"
+              ]
+            },
+            "CreateKeyRing": {
+              "methods": [
+                "create_key_ring"
+              ]
+            },
+            "Decapsulate": {
+              "methods": [
+                "decapsulate"
+              ]
+            },
+            "Decrypt": {
+              "methods": [
+                "decrypt"
+              ]
+            },
+            "DeleteCryptoKey": {
+              "methods": [
+                "delete_crypto_key"
+              ]
+            },
+            "DeleteCryptoKeyVersion": {
+              "methods": [
+                "delete_crypto_key_version"
+              ]
+            },
+            "DestroyCryptoKeyVersion": {
+              "methods": [
+                "destroy_crypto_key_version"
+              ]
+            },
+            "Encrypt": {
+              "methods": [
+                "encrypt"
+              ]
+            },
+            "ExportTrustedKeyWrappedCryptoKeyVersion": {
+              "methods": [
+                "export_trusted_key_wrapped_crypto_key_version"
+              ]
+            },
+            "GenerateRandomBytes": {
+              "methods": [
+                "generate_random_bytes"
+              ]
+            },
+            "GetCryptoKey": {
+              "methods": [
+                "get_crypto_key"
+              ]
+            },
+            "GetCryptoKeyVersion": {
+              "methods": [
+                "get_crypto_key_version"
+              ]
+            },
+            "GetImportJob": {
+              "methods": [
+                "get_import_job"
+              ]
+            },
+            "GetKeyRing": {
+              "methods": [
+                "get_key_ring"
+              ]
+            },
+            "GetPublicKey": {
+              "methods": [
+                "get_public_key"
+              ]
+            },
+            "GetRetiredResource": {
+              "methods": [
+                "get_retired_resource"
+              ]
+            },
+            "ImportCryptoKeyVersion": {
+              "methods": [
+                "import_crypto_key_version"
+              ]
+            },
+            "ImportTrustedKeyWrappedCryptoKeyVersion": {
+              "methods": [
+                "import_trusted_key_wrapped_crypto_key_version"
+              ]
+            },
+            "ListCryptoKeyVersions": {
+              "methods": [
+                "list_crypto_key_versions"
+              ]
+            },
+            "ListCryptoKeys": {
+              "methods": [
+                "list_crypto_keys"
+              ]
+            },
+            "ListImportJobs": {
+              "methods": [
+                "list_import_jobs"
+              ]
+            },
+            "ListKeyRings": {
+              "methods": [
+                "list_key_rings"
+              ]
+            },
+            "ListRetiredResources": {
+              "methods": [
+                "list_retired_resources"
+              ]
+            },
+            "MacSign": {
+              "methods": [
+                "mac_sign"
+              ]
+            },
+            "MacVerify": {
+              "methods": [
+                "mac_verify"
+              ]
+            },
+            "RawDecrypt": {
+              "methods": [
+                "raw_decrypt"
+              ]
+            },
+            "RawEncrypt": {
+              "methods": [
+                "raw_encrypt"
+              ]
+            },
+            "RestoreCryptoKeyVersion": {
+              "methods": [
+                "restore_crypto_key_version"
+              ]
+            },
+            "UpdateCryptoKey": {
+              "methods": [
+                "update_crypto_key"
+              ]
+            },
+            "UpdateCryptoKeyPrimaryVersion": {
+              "methods": [
+                "update_crypto_key_primary_version"
+              ]
+            },
+            "UpdateCryptoKeyVersion": {
+              "methods": [
+                "update_crypto_key_version"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "KeyManagementServiceClient",
+          "rpcs": {
+            "AsymmetricDecrypt": {
+              "methods": [
+                "asymmetric_decrypt"
+              ]
+            },
+            "AsymmetricSign": {
+              "methods": [
+                "asymmetric_sign"
+              ]
+            },
+            "CreateCryptoKey": {
+              "methods": [
+                "create_crypto_key"
+              ]
+            },
+            "CreateCryptoKeyVersion": {
+              "methods": [
+                "create_crypto_key_version"
+              ]
+            },
+            "CreateImportJob": {
+              "methods": [
+                "create_import_job"
+              ]
+            },
+            "CreateKeyRing": {
+              "methods": [
+                "create_key_ring"
+              ]
+            },
+            "Decapsulate": {
+              "methods": [
+                "decapsulate"
+              ]
+            },
+            "Decrypt": {
+              "methods": [
+                "decrypt"
+              ]
+            },
+            "DeleteCryptoKey": {
+              "methods": [
+                "delete_crypto_key"
+              ]
+            },
+            "DeleteCryptoKeyVersion": {
+              "methods": [
+                "delete_crypto_key_version"
+              ]
+            },
+            "DestroyCryptoKeyVersion": {
+              "methods": [
+                "destroy_crypto_key_version"
+              ]
+            },
+            "Encrypt": {
+              "methods": [
+                "encrypt"
+              ]
+            },
+            "ExportTrustedKeyWrappedCryptoKeyVersion": {
+              "methods": [
+                "export_trusted_key_wrapped_crypto_key_version"
+              ]
+            },
+            "GenerateRandomBytes": {
+              "methods": [
+                "generate_random_bytes"
+              ]
+            },
+            "GetCryptoKey": {
+              "methods": [
+                "get_crypto_key"
+              ]
+            },
+            "GetCryptoKeyVersion": {
+              "methods": [
+                "get_crypto_key_version"
+              ]
+            },
+            "GetImportJob": {
+              "methods": [
+                "get_import_job"
+              ]
+            },
+            "GetKeyRing": {
+              "methods": [
+                "get_key_ring"
+              ]
+            },
+            "GetPublicKey": {
+              "methods": [
+                "get_public_key"
+              ]
+            },
+            "GetRetiredResource": {
+              "methods": [
+                "get_retired_resource"
+              ]
+            },
+            "ImportCryptoKeyVersion": {
+              "methods": [
+                "import_crypto_key_version"
+              ]
+            },
+            "ImportTrustedKeyWrappedCryptoKeyVersion": {
+              "methods": [
+                "import_trusted_key_wrapped_crypto_key_version"
+              ]
+            },
+            "ListCryptoKeyVersions": {
+              "methods": [
+                "list_crypto_key_versions"
+              ]
+            },
+            "ListCryptoKeys": {
+              "methods": [
+                "list_crypto_keys"
+              ]
+            },
+            "ListImportJobs": {
+              "methods": [
+                "list_import_jobs"
+              ]
+            },
+            "ListKeyRings": {
+              "methods": [
+                "list_key_rings"
+              ]
+            },
+            "ListRetiredResources": {
+              "methods": [
+                "list_retired_resources"
+              ]
+            },
+            "MacSign": {
+              "methods": [
+                "mac_sign"
+              ]
+            },
+            "MacVerify": {
+              "methods": [
+                "mac_verify"
+              ]
+            },
+            "RawDecrypt": {
+              "methods": [
+                "raw_decrypt"
+              ]
+            },
+            "RawEncrypt": {
+              "methods": [
+                "raw_encrypt"
+              ]
+            },
+            "RestoreCryptoKeyVersion": {
+              "methods": [
+                "restore_crypto_key_version"
+              ]
+            },
+            "UpdateCryptoKey": {
+              "methods": [
+                "update_crypto_key"
+              ]
+            },
+            "UpdateCryptoKeyPrimaryVersion": {
+              "methods": [
+                "update_crypto_key_primary_version"
+              ]
+            },
+            "UpdateCryptoKeyVersion": {
+              "methods": [
+                "update_crypto_key_version"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

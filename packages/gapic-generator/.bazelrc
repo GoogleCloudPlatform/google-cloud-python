@@ -1,0 +1,13 @@
+# New protobuf requires C++17
+build --repo_env=BAZEL_CXXOPTS="-std=c++17"
+
+# Workaround for rules_python precompilation bug with directory outputs:
+# Newer rules_python (v0.40.0+) attempts to precompile (.py -> .pyc) sources.
+# GAPIC code generator rules (e.g., //tests/integration:asset_py_gapic) output a
+# directory structure of generated code instead of discrete individual files.
+# This triggers: "Error in add: Cannot add directories to Args#add since they may expand to multiple values".
+# Disabling precompilation bypasses the bug without affecting runtime behavior.
+build --@rules_python//python/config_settings:precompile=force_disabled
+
+# Disable Bzlmod to use legacy WORKSPACE file repository resolution
+common --noenable_bzlmod

@@ -1,0 +1,98 @@
+name: Bug report
+description: Create a report to help us improve
+labels: ["type: bug","triage me"]
+body:
+- type: markdown
+  attributes:
+    value: |
+        _**PLEASE READ**: If you have a support contract with Google, please create an issue in the [support console](https://cloud.google.com/support/) instead of filing on GitHub. This will ensure a timely response._
+- type: checkboxes
+  attributes:
+    label: Determine this is the right repository
+    description: Please follow the steps in [the SUPPORT guide](https://github.com/googleapis/google-cloud-python/blob/main/SUPPORT.md) and determine that this is likely a client library issue and this is the correct repository in which to report it.
+    options:
+      - label: I determined this is the correct repository in which to report this bug.
+        required: true
+- type: textarea
+  attributes:
+    label: Summary of the issue
+    description: Describe succinctly what you expected to happen, and what actually happened.
+    placeholder: Describe the issue you encountered
+    value: |
+        **Context**
+        _e.g. I was trying to use the new method Foo_
+    
+        **Expected Behavior:**
+        _e.g. I expected method Foo to paginate_
+
+        **Actual Behavior:**
+        _e.g. Method Foo did not paginate_        
+- type: input
+  attributes:
+    label: API client name and version
+    description: Try `pip list | grep google`, which should give you a name corresponding to one of the packages listed [here](https://github.com/googleapis/google-cloud-python/tree/main/packages).
+    placeholder: e.g. google-cloud-vision v3.7.2
+- type: textarea
+  attributes:
+    label: 'Reproduction steps: code'
+    description: Include a minimal but complete set of Python files that will reproduce the problem.
+    value: |
+      file: main.py
+      ```python
+         def reproduce():
+          # complete code here
+      ```
+
+      <any additional py files>
+- type: textarea
+  attributes:
+    label: 'Reproduction steps: supporting files'
+    description: Include any files needed for the code above to work.
+    value: |
+      file: mydata.csv
+      ```
+      alpha,1,3
+      beta,2,5
+      ```
+
+      <any additional supporting files>
+- type: textarea
+  attributes:
+    label: 'Reproduction steps: actual results'
+    description: Include the results you got when running your code, such as output files.
+    value: |
+      file: output.txtmydata.csv
+      ```
+      Calculated: foo
+      ```
+- type: textarea
+  attributes:
+    label: 'Reproduction steps: expected results'
+    description: Include the results you expected to get when running your code.
+    value: |
+      file: output.txtmydata.csv
+      ```
+      Calculated: bar
+      ```
+- type: input
+  attributes:
+    label: OS & version + platform
+    placeholder: e.g. Debian 6.6 on GKE
+- type: input
+  attributes:
+    label: Python environment
+    description: Try `python3 --version`.
+    placeholder: e.g. Python 3.11.8
+- type: textarea
+  attributes:
+    label: Python dependencies
+    description: Try `pip list`.
+    placeholder: |
+      pip list
+      Package                     Version
+      --------------------------- ------------------------
+- type: textarea
+  attributes:
+    label: Additional context
+    description: Add any other context about the problem here.
+    placeholder: Additional context

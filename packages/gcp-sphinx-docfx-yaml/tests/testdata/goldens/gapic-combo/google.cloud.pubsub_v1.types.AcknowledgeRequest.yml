@@ -1,0 +1,33 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The subscription whose message is being\n   acknowledged.\
+      \ Format is\n   <code>projects/{project}/subscriptions/{sub}</code>."
+    id: subscription
+    var_type: str
+  - description: "Required. The acknowledgment ID for the messages being\n   acknowledged\
+      \ that was returned by the Pub/Sub system in the\n   <code>Pull</code> response.\
+      \ Must not be empty."
+    id: ack_ids
+    var_type: Sequence[str]
+  children: []
+  class: google.cloud.pubsub_v1.types.AcknowledgeRequest
+  fullName: google.cloud.pubsub_v1.types.AcknowledgeRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: AcknowledgeRequest
+  source:
+    id: AcknowledgeRequest
+    path: null
+    startLine: null
+  summary: 'Request for the Acknowledge method.
+
+    '
+  syntax:
+    content: AcknowledgeRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.AcknowledgeRequest
+references: []

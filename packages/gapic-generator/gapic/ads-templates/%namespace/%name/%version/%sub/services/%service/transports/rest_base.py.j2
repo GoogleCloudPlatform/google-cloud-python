@@ -1,0 +1,183 @@
+{#
+ # Copyright (C) 2024  Google LLC
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #     http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+{#
+ # This file is a copy of `rest_base.py.j2` in standard templates located at
+ # `gapic/templates/%namespace/%name_%version/%sub/services/%service/transports/rest_base.py.j2`
+ # It is intended to be a symlink. 
+ # See https://github.com/googleapis/gapic-generator-python/issues/2028
+ # which contains follow up work to convert it to a symlink.
+ # Do not diverge from the copy of `rest_base.py.j2` in standard templates.
+#}
+
+{% import "%namespace/%name/%version/%sub/services/%service/_shared_macros.j2" as shared_macros %}
+{% extends '_base.py.j2' %}
+
+{% block content %}
+
+import json  # type: ignore
+from google.api_core import path_template
+from google.api_core import gapic_v1
+
+from google.protobuf import json_format
+{% if opts.add_iam_methods or api.has_iam_mixin %}
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+{% endif %}
+{% if api.has_location_mixin %}
+from google.cloud.location import locations_pb2 # type: ignore
+{% endif %}
+from .base import {{service.name}}Transport, DEFAULT_CLIENT_INFO
+
+import re
+from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
+
+{{ shared_macros.operations_mixin_imports(api, service, opts) }}
+
+
+class _Base{{ service.name }}RestTransport({{service.name}}Transport):
+    """Base REST backend transport for {{ service.name }}.
+    
+    Note: This class is not meant to be used directly. Use its sync and 
+    async sub-classes instead.
+
+    This class defines the same methods as the primary client, so the
+    primary client can load the underlying transport implementation
+    and call it.
+
+    It sends JSON representations of protocol buffers over HTTP/1.1
+    """
+
+
+    {# TODO: handle mtls stuff if that is relevant for rest transport #}
+    def __init__(self, *,
+            host: str{% if service.host %} = '{{ service.host }}'{% endif %},
+            credentials: Optional[Any] = None,
+            client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
+            always_use_jwt_access: Optional[bool] = False,
+            url_scheme: str = 'https',
+            api_audience: Optional[str] = None,
+            ) -> None:
+        """Instantiate the transport.
+        Args:
+            host ({% if service.host %}Optional[str]{% else %}str{% endif %}):
+                {{ ' ' }}The hostname to connect to {% if service.host %}(default: '{{ service.host }}'){% endif %}.
+            {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2173): Type hint for credentials is
+             # set to `Any` to support async and sync credential types in the parent rest transport classes. 
+             # However, we should have a stronger type here such as an abstract base credentials
+             # class leveraged by sync and async credential classes.
+            #}
+            credentials (Optional[Any]): The
+                authorization credentials to attach to requests. These
+                credentials identify the application to the service; if none
+                are specified, the client will attempt to ascertain the
+                credentials from the environment.
+            client_info (google.api_core.gapic_v1.client_info.ClientInfo):
+                The client info used to send a user-agent string along with
+                API requests. If ``None``, then default info will be used.
+                Generally, you only need to set this if you are developing
+                your own client library.
+            always_use_jwt_access (Optional[bool]): Whether self signed JWT should
+                be used for service account credentials.
+            url_scheme: the protocol scheme for the API endpoint.  Normally
+                "https", but for testing or local servers,
+                "http" can be specified.
+        """
+        # Run the base constructor
+        maybe_url_match = re.match("^(?P<scheme>http(?:s)?://)?(?P<host>.*)$", host)
+        if maybe_url_match is None:
+            raise ValueError(f"Unexpected hostname structure: {host}")  # pragma: NO COVER
+
+        url_match_items = maybe_url_match.groupdict()
+
+        host = f"{url_scheme}://{host}" if not url_match_items["scheme"] else host
+
+        super().__init__(
+            host=host,
+            credentials=credentials,
+            client_info=client_info,
+            always_use_jwt_access=always_use_jwt_access,
+            api_audience=api_audience
+        )
+
+    {% for method in service.methods.values()|sort(attribute="name") %}
+    class _Base{{method.name}}:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        {% if method.http_options and not method.client_streaming %}
+        {% if method.input.required_fields %}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] =  {
+        {% for req_field in method.input.required_fields if req_field.name in method.query_params %}
+            "{{ req_field.name | camel_case }}" : {% if req_field.field_pb.type == 9 %}"{{req_field.field_pb.default_value }}"{% elif req_field.field_pb.type in [11, 14] %}{}{% else %}{{ req_field.type.python_type(req_field.field_pb.default_value or 0) }}{% endif %},{# default is str #}
+        {% endfor %}
+        }
+        {% endif %}{# required fields #}
+
+        {% set method_http_options = method.http_options %}
+
+        {{ shared_macros.http_options_method(method_http_options)|indent(8) }}
+        
+        @staticmethod
+        def _get_transcoded_request(http_options, request):
+            {% if method.input.ident.is_proto_plus_type %}
+            pb_request = {{method.input.ident}}.pb(request)
+            {% else %}
+            pb_request = request
+            {% endif %}
+            transcoded_request = path_template.transcode(http_options, pb_request)
+            return transcoded_request
+
+        {% set body_spec = method.http_options[0].body %}
+        {%- if body_spec %}
+
+        @staticmethod
+        def _get_request_body_json(transcoded_request):
+            # Jsonify the request body
+
+            body = json_format.MessageToJson(
+                transcoded_request['body'],
+                use_integers_for_enums={{ opts.rest_numeric_enums }}
+            )
+            return body
+
+        {%- endif %}{# body_spec #}
+
+        @staticmethod
+        def _get_query_params_json(transcoded_request):
+            query_params = json.loads(json_format.MessageToJson(
+                transcoded_request['query_params'],
+                use_integers_for_enums={{ opts.rest_numeric_enums }},
+            ))
+            {% if method.input.required_fields %}
+            default_values = _Base{{ service.name }}RestTransport._Base{{method.name}}._Base{{method.name}}__REQUIRED_FIELDS_DEFAULT_VALUES
+            query_params.update({k: v for k, v in default_values.items() if k not in query_params})
+            {% endif %}{# required fields #}
+
+            {% if opts.rest_numeric_enums %}
+            query_params["$alt"] = "json;enum-encoding=int"
+            {% endif %}
+            return query_params
+
+        {% endif %}{# method.http_options and not method.client_streaming #}
+    {% endfor %}
+
+    {% include '%namespace/%name/%version/%sub/services/%service/transports/_rest_mixins_base.py.j2' %}
+
+
+__all__=(
+    '_Base{{ service.name }}RestTransport',
+)
+{% endblock %}

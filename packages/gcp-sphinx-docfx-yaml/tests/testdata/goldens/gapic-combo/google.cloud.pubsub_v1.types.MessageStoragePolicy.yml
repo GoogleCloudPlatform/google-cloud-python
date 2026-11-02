@@ -1,0 +1,33 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "A list of IDs of GCP regions where messages\n   that are published\
+      \ to the topic may be persisted\n   in storage. Messages published by publishers\n\
+      \   running in non-allowed GCP regions (or running\n   outside of GCP altogether)\
+      \ will be routed for\n   storage in one of the allowed regions. An empty\n \
+      \  list means that no regions are allowed, and is\n   not a valid configuration."
+    id: allowed_persistence_regions
+    var_type: Sequence[str]
+  children: []
+  class: google.cloud.pubsub_v1.types.MessageStoragePolicy
+  fullName: google.cloud.pubsub_v1.types.MessageStoragePolicy
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: MessageStoragePolicy
+  source:
+    id: MessageStoragePolicy
+    path: null
+    startLine: null
+  summary: 'A policy constraining the storage of messages published to
+
+    the topic.
+
+    '
+  syntax:
+    content: MessageStoragePolicy(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.MessageStoragePolicy
+references: []

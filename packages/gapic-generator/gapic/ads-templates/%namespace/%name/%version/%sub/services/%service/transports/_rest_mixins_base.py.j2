@@ -1,0 +1,55 @@
+{#
+ # Copyright (C) 2024  Google LLC
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #     http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ # This file is a copy of `_rest_mixins_base.py.j2` in standard templates located at
+ # `gapic/templates/%namespace/%name_%version/%sub/services/%service/transports/_rest_mixins_base.py.j2`
+ # It is intended to be a symlink. 
+ # See https://github.com/googleapis/gapic-generator-python/issues/2028
+ # which contains follow up work to convert it to a symlink.
+ # Do not diverge from the copy of `_rest_mixins_base.py.j2` in standard templates.
+#}
+
+{% import "%namespace/%name/%version/%sub/services/%service/_shared_macros.j2" as shared_macros %}
+
+    {% if "rest" in opts.transport %}
+
+    {% for name, sig in api.mixin_api_signatures.items() %}
+    class _Base{{ name }}:
+
+        {{ shared_macros.http_options_method(api.mixin_http_options["{}".format(name)])|indent(8)}}
+
+        @staticmethod
+        def _get_transcoded_request(http_options, request):
+            request_kwargs = json_format.MessageToDict(request)
+            transcoded_request = path_template.transcode(
+                http_options, **request_kwargs)
+            return transcoded_request
+
+        {% set body_spec = api.mixin_http_options["{}".format(name)][0].body %}
+        {%- if body_spec %}
+
+        @staticmethod
+        def _get_request_body_json(transcoded_request):
+            body = json.dumps(transcoded_request['body'])
+            return body
+
+        {%- endif %} {# body_spec #}
+
+        @staticmethod
+        def _get_query_params_json(transcoded_request):
+            query_params = json.loads(json.dumps(transcoded_request['query_params']))
+            return query_params
+
+    {% endfor %}
+    {% endif %} {# rest in opts.transport #}

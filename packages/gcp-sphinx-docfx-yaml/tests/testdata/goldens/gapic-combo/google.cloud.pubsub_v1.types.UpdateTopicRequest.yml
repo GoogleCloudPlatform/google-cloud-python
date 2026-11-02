@@ -1,0 +1,35 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: Required. The updated topic object.
+    id: topic
+    var_type: google.pubsub_v1.types.Topic
+  - description: "Required. Indicates which fields in the provided topic to\n   update.\
+      \ Must be specified and non-empty. Note that if\n   <code>update_mask</code>\
+      \ contains \"message_storage_policy\" but the\n   <code>message_storage_policy</code>\
+      \ is not set in the <code>topic</code>\n   provided above, then the updated\
+      \ value is determined by the\n   policy configured at the project or organization\
+      \ level."
+    id: update_mask
+    var_type: google.protobuf.field_mask_pb2.FieldMask
+  children: []
+  class: google.cloud.pubsub_v1.types.UpdateTopicRequest
+  fullName: google.cloud.pubsub_v1.types.UpdateTopicRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: UpdateTopicRequest
+  source:
+    id: UpdateTopicRequest
+    path: null
+    startLine: null
+  summary: 'Request for the UpdateTopic method.
+
+    '
+  syntax:
+    content: UpdateTopicRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.UpdateTopicRequest
+references: []

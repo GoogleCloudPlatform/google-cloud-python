@@ -1,0 +1,263 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.recaptchaenterprise_v1",
+  "protoPackage": "google.cloud.recaptchaenterprise.v1",
+  "schema": "1.0",
+  "services": {
+    "RecaptchaEnterpriseService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "RecaptchaEnterpriseServiceClient",
+          "rpcs": {
+            "AddIpOverride": {
+              "methods": [
+                "add_ip_override"
+              ]
+            },
+            "AnnotateAssessment": {
+              "methods": [
+                "annotate_assessment"
+              ]
+            },
+            "CreateAssessment": {
+              "methods": [
+                "create_assessment"
+              ]
+            },
+            "CreateFirewallPolicy": {
+              "methods": [
+                "create_firewall_policy"
+              ]
+            },
+            "CreateKey": {
+              "methods": [
+                "create_key"
+              ]
+            },
+            "DeleteFirewallPolicy": {
+              "methods": [
+                "delete_firewall_policy"
+              ]
+            },
+            "DeleteKey": {
+              "methods": [
+                "delete_key"
+              ]
+            },
+            "GetFirewallPolicy": {
+              "methods": [
+                "get_firewall_policy"
+              ]
+            },
+            "GetKey": {
+              "methods": [
+                "get_key"
+              ]
+            },
+            "GetMetrics": {
+              "methods": [
+                "get_metrics"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "ListFirewallPolicies": {
+              "methods": [
+                "list_firewall_policies"
+              ]
+            },
+            "ListIpOverrides": {
+              "methods": [
+                "list_ip_overrides"
+              ]
+            },
+            "ListKeys": {
+              "methods": [
+                "list_keys"
+              ]
+            },
+            "ListRelatedAccountGroupMemberships": {
+              "methods": [
+                "list_related_account_group_memberships"
+              ]
+            },
+            "ListRelatedAccountGroups": {
+              "methods": [
+                "list_related_account_groups"
+              ]
+            },
+            "MigrateKey": {
+              "methods": [
+                "migrate_key"
+              ]
+            },
+            "RemoveIpOverride": {
+              "methods": [
+                "remove_ip_override"
+              ]
+            },
+            "ReorderFirewallPolicies": {
+              "methods": [
+                "reorder_firewall_policies"
+              ]
+            },
+            "RetrieveLegacySecretKey": {
+              "methods": [
+                "retrieve_legacy_secret_key"
+              ]
+            },
+            "SearchRelatedAccountGroupMemberships": {
+              "methods": [
+                "search_related_account_group_memberships"
+              ]
+            },
+            "UpdateFirewallPolicy": {
+              "methods": [
+                "update_firewall_policy"
+              ]
+            },
+            "UpdateKey": {
+              "methods": [
+                "update_key"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "RecaptchaEnterpriseServiceAsyncClient",
+          "rpcs": {
+            "AddIpOverride": {
+              "methods": [
+                "add_ip_override"
+              ]
+            },
+            "AnnotateAssessment": {
+              "methods": [
+                "annotate_assessment"
+              ]
+            },
+            "CreateAssessment": {
+              "methods": [
+                "create_assessment"
+              ]
+            },
+            "CreateFirewallPolicy": {
+              "methods": [
+                "create_firewall_policy"
+              ]
+            },
+            "CreateKey": {
+              "methods": [
+                "create_key"
+              ]
+            },
+            "DeleteFirewallPolicy": {
+              "methods": [
+                "delete_firewall_policy"
+              ]
+            },
+            "DeleteKey": {
+              "methods": [
+                "delete_key"
+              ]
+            },
+            "GetFirewallPolicy": {
+              "methods": [
+                "get_firewall_policy"
+              ]
+            },
+            "GetKey": {
+              "methods": [
+                "get_key"
+              ]
+            },
+            "GetMetrics": {
+              "methods": [
+                "get_metrics"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "ListFirewallPolicies": {
+              "methods": [
+                "list_firewall_policies"
+              ]
+            },
+            "ListIpOverrides": {
+              "methods": [
+                "list_ip_overrides"
+              ]
+            },
+            "ListKeys": {
+              "methods": [
+                "list_keys"
+              ]
+            },
+            "ListRelatedAccountGroupMemberships": {
+              "methods": [
+                "list_related_account_group_memberships"
+              ]
+            },
+            "ListRelatedAccountGroups": {
+              "methods": [
+                "list_related_account_groups"
+              ]
+            },
+            "MigrateKey": {
+              "methods": [
+                "migrate_key"
+              ]
+            },
+            "RemoveIpOverride": {
+              "methods": [
+                "remove_ip_override"
+              ]
+            },
+            "ReorderFirewallPolicies": {
+              "methods": [
+                "reorder_firewall_policies"
+              ]
+            },
+            "RetrieveLegacySecretKey": {
+              "methods": [
+                "retrieve_legacy_secret_key"
+              ]
+            },
+            "SearchRelatedAccountGroupMemberships": {
+              "methods": [
+                "search_related_account_group_memberships"
+              ]
+            },
+            "UpdateFirewallPolicy": {
+              "methods": [
+                "update_firewall_policy"
+              ]
+            },
+            "UpdateKey": {
+              "methods": [
+                "update_key"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

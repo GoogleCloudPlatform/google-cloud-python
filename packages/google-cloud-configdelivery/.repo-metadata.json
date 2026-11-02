@@ -1,0 +1,16 @@
+{
+    "api_description": "ConfigDelivery service manages the deployment of kubernetes configuration\nto a fleet of kubernetes clusters.",
+    "api_id": "configdelivery.googleapis.com",
+    "api_shortname": "configdelivery",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-configdelivery/latest",
+    "default_version": "v1alpha",
+    "distribution_name": "google-cloud-configdelivery",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1400250",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-configdelivery",
+    "name_pretty": "Config Delivery",
+    "product_documentation": "https://cloud.google.com/kubernetes-engine/enterprise/config-sync/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

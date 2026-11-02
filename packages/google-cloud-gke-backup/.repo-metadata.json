@@ -1,0 +1,16 @@
+{
+    "api_description": "Backup for GKE is a managed Kubernetes workload backup and restore\nservice for GKE clusters.",
+    "api_id": "gkebackup.googleapis.com",
+    "api_shortname": "gkebackup",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/gkebackup/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-gke-backup",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1126471",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "gkebackup",
+    "name_pretty": "Backup for GKE",
+    "product_documentation": "https://cloud.google.com/kubernetes-engine/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

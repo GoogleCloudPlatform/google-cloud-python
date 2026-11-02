@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://googleapis.dev/python/db-dtypes/latest",
+    "distribution_name": "db-dtypes",
+    "language": "python",
+    "library_type": "INTEGRATION",
+    "name": "db-dtypes",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

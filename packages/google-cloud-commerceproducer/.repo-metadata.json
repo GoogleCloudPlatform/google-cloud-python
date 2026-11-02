@@ -1,0 +1,16 @@
+{
+    "api_description": "Partner API for the Cloud Commerce Producer API Early Access.",
+    "api_id": "commerceproducer.googleapis.com",
+    "api_shortname": "commerceproducer",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-commerceproducer/latest",
+    "default_version": "v1beta",
+    "distribution_name": "google-cloud-commerceproducer",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=2163857\u0026template=2342151",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-commerceproducer",
+    "name_pretty": "Cloud Commerce Producer",
+    "product_documentation": "https://docs.cloud.google.com/marketplace/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,27 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the snapshot to get. Format is\n   <code>projects/{project}/snapshots/{snap}</code>."
+    id: snapshot
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.GetSnapshotRequest
+  fullName: google.cloud.pubsub_v1.types.GetSnapshotRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: GetSnapshotRequest
+  source:
+    id: GetSnapshotRequest
+    path: null
+    startLine: null
+  summary: 'Request for the GetSnapshot method.
+
+    '
+  syntax:
+    content: GetSnapshotRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.GetSnapshotRequest
+references: []

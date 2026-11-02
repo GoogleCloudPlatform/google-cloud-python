@@ -1,0 +1,16 @@
+{
+    "api_description": "agentidentitycredentials.googleapis.com API.",
+    "api_id": "agentidentitycredentials.googleapis.com",
+    "api_shortname": "agentidentitycredentials",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-agentidentitycredentials/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-agentidentitycredentials",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=190865\u0026template=1161103",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-agentidentitycredentials",
+    "name_pretty": "agentidentitycredentials.googleapis.com",
+    "product_documentation": "https://cloud.google.com/agentidentitycredentials/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

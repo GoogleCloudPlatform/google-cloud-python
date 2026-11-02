@@ -1,0 +1,268 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.bigquery_datatransfer_v1",
+  "protoPackage": "google.cloud.bigquery.datatransfer.v1",
+  "schema": "1.0",
+  "services": {
+    "DataTransferService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataTransferServiceClient",
+          "rpcs": {
+            "CheckValidCreds": {
+              "methods": [
+                "check_valid_creds"
+              ]
+            },
+            "CreateTransferConfig": {
+              "methods": [
+                "create_transfer_config"
+              ]
+            },
+            "DeleteTransferConfig": {
+              "methods": [
+                "delete_transfer_config"
+              ]
+            },
+            "DeleteTransferRun": {
+              "methods": [
+                "delete_transfer_run"
+              ]
+            },
+            "EnrollDataSources": {
+              "methods": [
+                "enroll_data_sources"
+              ]
+            },
+            "GetDataSource": {
+              "methods": [
+                "get_data_source"
+              ]
+            },
+            "GetTransferConfig": {
+              "methods": [
+                "get_transfer_config"
+              ]
+            },
+            "GetTransferRun": {
+              "methods": [
+                "get_transfer_run"
+              ]
+            },
+            "ListDataSources": {
+              "methods": [
+                "list_data_sources"
+              ]
+            },
+            "ListTransferConfigs": {
+              "methods": [
+                "list_transfer_configs"
+              ]
+            },
+            "ListTransferLogs": {
+              "methods": [
+                "list_transfer_logs"
+              ]
+            },
+            "ListTransferRuns": {
+              "methods": [
+                "list_transfer_runs"
+              ]
+            },
+            "ScheduleTransferRuns": {
+              "methods": [
+                "schedule_transfer_runs"
+              ]
+            },
+            "StartManualTransferRuns": {
+              "methods": [
+                "start_manual_transfer_runs"
+              ]
+            },
+            "UnenrollDataSources": {
+              "methods": [
+                "unenroll_data_sources"
+              ]
+            },
+            "UpdateTransferConfig": {
+              "methods": [
+                "update_transfer_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataTransferServiceAsyncClient",
+          "rpcs": {
+            "CheckValidCreds": {
+              "methods": [
+                "check_valid_creds"
+              ]
+            },
+            "CreateTransferConfig": {
+              "methods": [
+                "create_transfer_config"
+              ]
+            },
+            "DeleteTransferConfig": {
+              "methods": [
+                "delete_transfer_config"
+              ]
+            },
+            "DeleteTransferRun": {
+              "methods": [
+                "delete_transfer_run"
+              ]
+            },
+            "EnrollDataSources": {
+              "methods": [
+                "enroll_data_sources"
+              ]
+            },
+            "GetDataSource": {
+              "methods": [
+                "get_data_source"
+              ]
+            },
+            "GetTransferConfig": {
+              "methods": [
+                "get_transfer_config"
+              ]
+            },
+            "GetTransferRun": {
+              "methods": [
+                "get_transfer_run"
+              ]
+            },
+            "ListDataSources": {
+              "methods": [
+                "list_data_sources"
+              ]
+            },
+            "ListTransferConfigs": {
+              "methods": [
+                "list_transfer_configs"
+              ]
+            },
+            "ListTransferLogs": {
+              "methods": [
+                "list_transfer_logs"
+              ]
+            },
+            "ListTransferRuns": {
+              "methods": [
+                "list_transfer_runs"
+              ]
+            },
+            "ScheduleTransferRuns": {
+              "methods": [
+                "schedule_transfer_runs"
+              ]
+            },
+            "StartManualTransferRuns": {
+              "methods": [
+                "start_manual_transfer_runs"
+              ]
+            },
+            "UnenrollDataSources": {
+              "methods": [
+                "unenroll_data_sources"
+              ]
+            },
+            "UpdateTransferConfig": {
+              "methods": [
+                "update_transfer_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataTransferServiceClient",
+          "rpcs": {
+            "CheckValidCreds": {
+              "methods": [
+                "check_valid_creds"
+              ]
+            },
+            "CreateTransferConfig": {
+              "methods": [
+                "create_transfer_config"
+              ]
+            },
+            "DeleteTransferConfig": {
+              "methods": [
+                "delete_transfer_config"
+              ]
+            },
+            "DeleteTransferRun": {
+              "methods": [
+                "delete_transfer_run"
+              ]
+            },
+            "EnrollDataSources": {
+              "methods": [
+                "enroll_data_sources"
+              ]
+            },
+            "GetDataSource": {
+              "methods": [
+                "get_data_source"
+              ]
+            },
+            "GetTransferConfig": {
+              "methods": [
+                "get_transfer_config"
+              ]
+            },
+            "GetTransferRun": {
+              "methods": [
+                "get_transfer_run"
+              ]
+            },
+            "ListDataSources": {
+              "methods": [
+                "list_data_sources"
+              ]
+            },
+            "ListTransferConfigs": {
+              "methods": [
+                "list_transfer_configs"
+              ]
+            },
+            "ListTransferLogs": {
+              "methods": [
+                "list_transfer_logs"
+              ]
+            },
+            "ListTransferRuns": {
+              "methods": [
+                "list_transfer_runs"
+              ]
+            },
+            "ScheduleTransferRuns": {
+              "methods": [
+                "schedule_transfer_runs"
+              ]
+            },
+            "StartManualTransferRuns": {
+              "methods": [
+                "start_manual_transfer_runs"
+              ]
+            },
+            "UnenrollDataSources": {
+              "methods": [
+                "unenroll_data_sources"
+              ]
+            },
+            "UpdateTransferConfig": {
+              "methods": [
+                "update_transfer_config"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,103 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.maps.places_v1",
+  "protoPackage": "google.maps.places.v1",
+  "schema": "1.0",
+  "services": {
+    "Places": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PlacesClient",
+          "rpcs": {
+            "AutocompletePlaces": {
+              "methods": [
+                "autocomplete_places"
+              ]
+            },
+            "GetPhotoMedia": {
+              "methods": [
+                "get_photo_media"
+              ]
+            },
+            "GetPlace": {
+              "methods": [
+                "get_place"
+              ]
+            },
+            "SearchNearby": {
+              "methods": [
+                "search_nearby"
+              ]
+            },
+            "SearchText": {
+              "methods": [
+                "search_text"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "PlacesAsyncClient",
+          "rpcs": {
+            "AutocompletePlaces": {
+              "methods": [
+                "autocomplete_places"
+              ]
+            },
+            "GetPhotoMedia": {
+              "methods": [
+                "get_photo_media"
+              ]
+            },
+            "GetPlace": {
+              "methods": [
+                "get_place"
+              ]
+            },
+            "SearchNearby": {
+              "methods": [
+                "search_nearby"
+              ]
+            },
+            "SearchText": {
+              "methods": [
+                "search_text"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "PlacesClient",
+          "rpcs": {
+            "AutocompletePlaces": {
+              "methods": [
+                "autocomplete_places"
+              ]
+            },
+            "GetPhotoMedia": {
+              "methods": [
+                "get_photo_media"
+              ]
+            },
+            "GetPlace": {
+              "methods": [
+                "get_place"
+              ]
+            },
+            "SearchNearby": {
+              "methods": [
+                "search_nearby"
+              ]
+            },
+            "SearchText": {
+              "methods": [
+                "search_text"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,2 @@
+# Constraints for Python 3.14
+grpcio >= 1.75.1

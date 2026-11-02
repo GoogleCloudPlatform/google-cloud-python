@@ -1,0 +1,419 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.support_v2beta",
+  "protoPackage": "google.cloud.support.v2beta",
+  "schema": "1.0",
+  "services": {
+    "CaseAttachmentService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CaseAttachmentServiceClient",
+          "rpcs": {
+            "GetAttachment": {
+              "methods": [
+                "get_attachment"
+              ]
+            },
+            "ListAttachments": {
+              "methods": [
+                "list_attachments"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CaseAttachmentServiceAsyncClient",
+          "rpcs": {
+            "GetAttachment": {
+              "methods": [
+                "get_attachment"
+              ]
+            },
+            "ListAttachments": {
+              "methods": [
+                "list_attachments"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CaseAttachmentServiceClient",
+          "rpcs": {
+            "GetAttachment": {
+              "methods": [
+                "get_attachment"
+              ]
+            },
+            "ListAttachments": {
+              "methods": [
+                "list_attachments"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CaseService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CaseServiceClient",
+          "rpcs": {
+            "CloseCase": {
+              "methods": [
+                "close_case"
+              ]
+            },
+            "CreateCase": {
+              "methods": [
+                "create_case"
+              ]
+            },
+            "EscalateCase": {
+              "methods": [
+                "escalate_case"
+              ]
+            },
+            "GetCase": {
+              "methods": [
+                "get_case"
+              ]
+            },
+            "ListCases": {
+              "methods": [
+                "list_cases"
+              ]
+            },
+            "SearchCaseClassifications": {
+              "methods": [
+                "search_case_classifications"
+              ]
+            },
+            "SearchCases": {
+              "methods": [
+                "search_cases"
+              ]
+            },
+            "UpdateCase": {
+              "methods": [
+                "update_case"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CaseServiceAsyncClient",
+          "rpcs": {
+            "CloseCase": {
+              "methods": [
+                "close_case"
+              ]
+            },
+            "CreateCase": {
+              "methods": [
+                "create_case"
+              ]
+            },
+            "EscalateCase": {
+              "methods": [
+                "escalate_case"
+              ]
+            },
+            "GetCase": {
+              "methods": [
+                "get_case"
+              ]
+            },
+            "ListCases": {
+              "methods": [
+                "list_cases"
+              ]
+            },
+            "SearchCaseClassifications": {
+              "methods": [
+                "search_case_classifications"
+              ]
+            },
+            "SearchCases": {
+              "methods": [
+                "search_cases"
+              ]
+            },
+            "UpdateCase": {
+              "methods": [
+                "update_case"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CaseServiceClient",
+          "rpcs": {
+            "CloseCase": {
+              "methods": [
+                "close_case"
+              ]
+            },
+            "CreateCase": {
+              "methods": [
+                "create_case"
+              ]
+            },
+            "EscalateCase": {
+              "methods": [
+                "escalate_case"
+              ]
+            },
+            "GetCase": {
+              "methods": [
+                "get_case"
+              ]
+            },
+            "ListCases": {
+              "methods": [
+                "list_cases"
+              ]
+            },
+            "SearchCaseClassifications": {
+              "methods": [
+                "search_case_classifications"
+              ]
+            },
+            "SearchCases": {
+              "methods": [
+                "search_cases"
+              ]
+            },
+            "UpdateCase": {
+              "methods": [
+                "update_case"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CommentService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CommentServiceClient",
+          "rpcs": {
+            "CreateComment": {
+              "methods": [
+                "create_comment"
+              ]
+            },
+            "GetComment": {
+              "methods": [
+                "get_comment"
+              ]
+            },
+            "ListComments": {
+              "methods": [
+                "list_comments"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CommentServiceAsyncClient",
+          "rpcs": {
+            "CreateComment": {
+              "methods": [
+                "create_comment"
+              ]
+            },
+            "GetComment": {
+              "methods": [
+                "get_comment"
+              ]
+            },
+            "ListComments": {
+              "methods": [
+                "list_comments"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CommentServiceClient",
+          "rpcs": {
+            "CreateComment": {
+              "methods": [
+                "create_comment"
+              ]
+            },
+            "GetComment": {
+              "methods": [
+                "get_comment"
+              ]
+            },
+            "ListComments": {
+              "methods": [
+                "list_comments"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "FeedService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "FeedServiceClient",
+          "rpcs": {
+            "ShowFeed": {
+              "methods": [
+                "show_feed"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "FeedServiceAsyncClient",
+          "rpcs": {
+            "ShowFeed": {
+              "methods": [
+                "show_feed"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "FeedServiceClient",
+          "rpcs": {
+            "ShowFeed": {
+              "methods": [
+                "show_feed"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SupportEventSubscriptionService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SupportEventSubscriptionServiceClient",
+          "rpcs": {
+            "CreateSupportEventSubscription": {
+              "methods": [
+                "create_support_event_subscription"
+              ]
+            },
+            "DeleteSupportEventSubscription": {
+              "methods": [
+                "delete_support_event_subscription"
+              ]
+            },
+            "ExpungeSupportEventSubscription": {
+              "methods": [
+                "expunge_support_event_subscription"
+              ]
+            },
+            "GetSupportEventSubscription": {
+              "methods": [
+                "get_support_event_subscription"
+              ]
+            },
+            "ListSupportEventSubscriptions": {
+              "methods": [
+                "list_support_event_subscriptions"
+              ]
+            },
+            "UndeleteSupportEventSubscription": {
+              "methods": [
+                "undelete_support_event_subscription"
+              ]
+            },
+            "UpdateSupportEventSubscription": {
+              "methods": [
+                "update_support_event_subscription"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SupportEventSubscriptionServiceAsyncClient",
+          "rpcs": {
+            "CreateSupportEventSubscription": {
+              "methods": [
+                "create_support_event_subscription"
+              ]
+            },
+            "DeleteSupportEventSubscription": {
+              "methods": [
+                "delete_support_event_subscription"
+              ]
+            },
+            "ExpungeSupportEventSubscription": {
+              "methods": [
+                "expunge_support_event_subscription"
+              ]
+            },
+            "GetSupportEventSubscription": {
+              "methods": [
+                "get_support_event_subscription"
+              ]
+            },
+            "ListSupportEventSubscriptions": {
+              "methods": [
+                "list_support_event_subscriptions"
+              ]
+            },
+            "UndeleteSupportEventSubscription": {
+              "methods": [
+                "undelete_support_event_subscription"
+              ]
+            },
+            "UpdateSupportEventSubscription": {
+              "methods": [
+                "update_support_event_subscription"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SupportEventSubscriptionServiceClient",
+          "rpcs": {
+            "CreateSupportEventSubscription": {
+              "methods": [
+                "create_support_event_subscription"
+              ]
+            },
+            "DeleteSupportEventSubscription": {
+              "methods": [
+                "delete_support_event_subscription"
+              ]
+            },
+            "ExpungeSupportEventSubscription": {
+              "methods": [
+                "expunge_support_event_subscription"
+              ]
+            },
+            "GetSupportEventSubscription": {
+              "methods": [
+                "get_support_event_subscription"
+              ]
+            },
+            "ListSupportEventSubscriptions": {
+              "methods": [
+                "list_support_event_subscriptions"
+              ]
+            },
+            "UndeleteSupportEventSubscription": {
+              "methods": [
+                "undelete_support_event_subscription"
+              ]
+            },
+            "UpdateSupportEventSubscription": {
+              "methods": [
+                "update_support_event_subscription"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

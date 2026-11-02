@@ -1,0 +1,15 @@
+{
+    "api_id": "datalineage.googleapis.com",
+    "api_shortname": "datalineage",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-datacatalog-lineage-configmanagement/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-datacatalog-lineage-configmanagement",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1530027",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-datacatalog-lineage-configmanagement",
+    "name_pretty": "Data Lineage",
+    "product_documentation": "https://cloud.google.com/dataplex/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

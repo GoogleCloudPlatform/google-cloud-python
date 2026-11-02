@@ -1,0 +1,474 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.eventarc.publishing.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-eventarc-publishing",
+    "version": "0.10.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_publishing_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_publishing_v1.PublisherAsyncClient.publish_channel_connection_events",
+        "method": {
+          "fullName": "google.cloud.eventarc.publishing.v1.Publisher.PublishChannelConnectionEvents",
+          "service": {
+            "fullName": "google.cloud.eventarc.publishing.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "PublishChannelConnectionEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_publishing_v1.types.PublishChannelConnectionEventsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_publishing_v1.types.PublishChannelConnectionEventsResponse",
+        "shortName": "publish_channel_connection_events"
+      },
+      "description": "Sample for PublishChannelConnectionEvents",
+      "file": "eventarcpublishing_v1_generated_publisher_publish_channel_connection_events_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarcpublishing_v1_generated_Publisher_PublishChannelConnectionEvents_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarcpublishing_v1_generated_publisher_publish_channel_connection_events_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_publishing_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.cloud.eventarc_publishing_v1.PublisherClient.publish_channel_connection_events",
+        "method": {
+          "fullName": "google.cloud.eventarc.publishing.v1.Publisher.PublishChannelConnectionEvents",
+          "service": {
+            "fullName": "google.cloud.eventarc.publishing.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "PublishChannelConnectionEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_publishing_v1.types.PublishChannelConnectionEventsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_publishing_v1.types.PublishChannelConnectionEventsResponse",
+        "shortName": "publish_channel_connection_events"
+      },
+      "description": "Sample for PublishChannelConnectionEvents",
+      "file": "eventarcpublishing_v1_generated_publisher_publish_channel_connection_events_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarcpublishing_v1_generated_Publisher_PublishChannelConnectionEvents_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarcpublishing_v1_generated_publisher_publish_channel_connection_events_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_publishing_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_publishing_v1.PublisherAsyncClient.publish_events",
+        "method": {
+          "fullName": "google.cloud.eventarc.publishing.v1.Publisher.PublishEvents",
+          "service": {
+            "fullName": "google.cloud.eventarc.publishing.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "PublishEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_publishing_v1.types.PublishEventsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_publishing_v1.types.PublishEventsResponse",
+        "shortName": "publish_events"
+      },
+      "description": "Sample for PublishEvents",
+      "file": "eventarcpublishing_v1_generated_publisher_publish_events_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarcpublishing_v1_generated_Publisher_PublishEvents_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarcpublishing_v1_generated_publisher_publish_events_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_publishing_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.cloud.eventarc_publishing_v1.PublisherClient.publish_events",
+        "method": {
+          "fullName": "google.cloud.eventarc.publishing.v1.Publisher.PublishEvents",
+          "service": {
+            "fullName": "google.cloud.eventarc.publishing.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "PublishEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_publishing_v1.types.PublishEventsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_publishing_v1.types.PublishEventsResponse",
+        "shortName": "publish_events"
+      },
+      "description": "Sample for PublishEvents",
+      "file": "eventarcpublishing_v1_generated_publisher_publish_events_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarcpublishing_v1_generated_Publisher_PublishEvents_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarcpublishing_v1_generated_publisher_publish_events_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.eventarc_publishing_v1.PublisherAsyncClient",
+          "shortName": "PublisherAsyncClient"
+        },
+        "fullName": "google.cloud.eventarc_publishing_v1.PublisherAsyncClient.publish",
+        "method": {
+          "fullName": "google.cloud.eventarc.publishing.v1.Publisher.Publish",
+          "service": {
+            "fullName": "google.cloud.eventarc.publishing.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "Publish"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_publishing_v1.types.PublishRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_publishing_v1.types.PublishResponse",
+        "shortName": "publish"
+      },
+      "description": "Sample for Publish",
+      "file": "eventarcpublishing_v1_generated_publisher_publish_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarcpublishing_v1_generated_Publisher_Publish_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarcpublishing_v1_generated_publisher_publish_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.eventarc_publishing_v1.PublisherClient",
+          "shortName": "PublisherClient"
+        },
+        "fullName": "google.cloud.eventarc_publishing_v1.PublisherClient.publish",
+        "method": {
+          "fullName": "google.cloud.eventarc.publishing.v1.Publisher.Publish",
+          "service": {
+            "fullName": "google.cloud.eventarc.publishing.v1.Publisher",
+            "shortName": "Publisher"
+          },
+          "shortName": "Publish"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.eventarc_publishing_v1.types.PublishRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.eventarc_publishing_v1.types.PublishResponse",
+        "shortName": "publish"
+      },
+      "description": "Sample for Publish",
+      "file": "eventarcpublishing_v1_generated_publisher_publish_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "eventarcpublishing_v1_generated_Publisher_Publish_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "eventarcpublishing_v1_generated_publisher_publish_sync.py"
+    }
+  ]
+}

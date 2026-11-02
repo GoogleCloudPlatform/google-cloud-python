@@ -1,0 +1,28 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The subscription to detach. Format is\n   <code>projects/{project}/subscriptions/{subscription}</code>."
+    id: subscription
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.DetachSubscriptionRequest
+  fullName: google.cloud.pubsub_v1.types.DetachSubscriptionRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: DetachSubscriptionRequest
+  source:
+    id: DetachSubscriptionRequest
+    path: null
+    startLine: null
+  summary: 'Request for the DetachSubscription method.
+
+    '
+  syntax:
+    content: DetachSubscriptionRequest(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.DetachSubscriptionRequest
+references: []

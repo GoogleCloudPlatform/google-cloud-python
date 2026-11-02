@@ -1,0 +1,25 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.cloud.pubsub_v1.types.SourceCodeInfo.Location
+  class: google.cloud.pubsub_v1.types.SourceCodeInfo
+  fullName: google.cloud.pubsub_v1.types.SourceCodeInfo
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: SourceCodeInfo
+  source:
+    id: SourceCodeInfo
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.SourceCodeInfo` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.SourceCodeInfo
+references:
+- fullName: google.cloud.pubsub_v1.types.SourceCodeInfo.Location
+  isExternal: false
+  name: Location
+  parent: google.cloud.pubsub_v1.types.SourceCodeInfo
+  uid: google.cloud.pubsub_v1.types.SourceCodeInfo.Location

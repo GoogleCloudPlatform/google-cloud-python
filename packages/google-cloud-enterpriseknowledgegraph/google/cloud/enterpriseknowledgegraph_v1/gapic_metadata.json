@@ -1,0 +1,163 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.enterpriseknowledgegraph_v1",
+  "protoPackage": "google.cloud.enterpriseknowledgegraph.v1",
+  "schema": "1.0",
+  "services": {
+    "EnterpriseKnowledgeGraphService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "EnterpriseKnowledgeGraphServiceClient",
+          "rpcs": {
+            "CancelEntityReconciliationJob": {
+              "methods": [
+                "cancel_entity_reconciliation_job"
+              ]
+            },
+            "CreateEntityReconciliationJob": {
+              "methods": [
+                "create_entity_reconciliation_job"
+              ]
+            },
+            "DeleteEntityReconciliationJob": {
+              "methods": [
+                "delete_entity_reconciliation_job"
+              ]
+            },
+            "GetEntityReconciliationJob": {
+              "methods": [
+                "get_entity_reconciliation_job"
+              ]
+            },
+            "ListEntityReconciliationJobs": {
+              "methods": [
+                "list_entity_reconciliation_jobs"
+              ]
+            },
+            "Lookup": {
+              "methods": [
+                "lookup"
+              ]
+            },
+            "LookupPublicKg": {
+              "methods": [
+                "lookup_public_kg"
+              ]
+            },
+            "Search": {
+              "methods": [
+                "search"
+              ]
+            },
+            "SearchPublicKg": {
+              "methods": [
+                "search_public_kg"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "EnterpriseKnowledgeGraphServiceAsyncClient",
+          "rpcs": {
+            "CancelEntityReconciliationJob": {
+              "methods": [
+                "cancel_entity_reconciliation_job"
+              ]
+            },
+            "CreateEntityReconciliationJob": {
+              "methods": [
+                "create_entity_reconciliation_job"
+              ]
+            },
+            "DeleteEntityReconciliationJob": {
+              "methods": [
+                "delete_entity_reconciliation_job"
+              ]
+            },
+            "GetEntityReconciliationJob": {
+              "methods": [
+                "get_entity_reconciliation_job"
+              ]
+            },
+            "ListEntityReconciliationJobs": {
+              "methods": [
+                "list_entity_reconciliation_jobs"
+              ]
+            },
+            "Lookup": {
+              "methods": [
+                "lookup"
+              ]
+            },
+            "LookupPublicKg": {
+              "methods": [
+                "lookup_public_kg"
+              ]
+            },
+            "Search": {
+              "methods": [
+                "search"
+              ]
+            },
+            "SearchPublicKg": {
+              "methods": [
+                "search_public_kg"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "EnterpriseKnowledgeGraphServiceClient",
+          "rpcs": {
+            "CancelEntityReconciliationJob": {
+              "methods": [
+                "cancel_entity_reconciliation_job"
+              ]
+            },
+            "CreateEntityReconciliationJob": {
+              "methods": [
+                "create_entity_reconciliation_job"
+              ]
+            },
+            "DeleteEntityReconciliationJob": {
+              "methods": [
+                "delete_entity_reconciliation_job"
+              ]
+            },
+            "GetEntityReconciliationJob": {
+              "methods": [
+                "get_entity_reconciliation_job"
+              ]
+            },
+            "ListEntityReconciliationJobs": {
+              "methods": [
+                "list_entity_reconciliation_jobs"
+              ]
+            },
+            "Lookup": {
+              "methods": [
+                "lookup"
+              ]
+            },
+            "LookupPublicKg": {
+              "methods": [
+                "lookup_public_kg"
+              ]
+            },
+            "Search": {
+              "methods": [
+                "search"
+              ]
+            },
+            "SearchPublicKg": {
+              "methods": [
+                "search_public_kg"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

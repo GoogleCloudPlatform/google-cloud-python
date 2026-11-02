@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="unknown" lang="unknown">
+<head>
+<title>hocr-escape</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="ocr-system" content="Document AI OCR" />
+<meta name="ocr-langs" content="unknown" />
+<meta name="ocr-scripts" content="unknown" />
+<meta name="ocr-number-of-pages" content="1" />
+<meta name="ocr-capabilities" content="ocrp_lang ocr_page ocr_carea ocr_par ocr_line ocrx_word" />
+</head>
+<body>
+<div class='ocr_page' lang='unknown' title='bbox 0 0 1758 2275'><span class='ocr_carea' id='block_1_0' title='bbox 1310 220 1534 282'><p class='ocr_par' id='par_1_0_0' title='bbox 1310 220 1534 282'><span class='ocr_line' id='line_1_0_0_0' title='bbox 1310 220 1534 282'>&lt;Invoice<span class='ocrx_word' id='word_1_0_0_0_0' title='bbox 1310 220 1534 282'>&lt;Invoice</span></span></p></span></div>
+</body>
+</html>

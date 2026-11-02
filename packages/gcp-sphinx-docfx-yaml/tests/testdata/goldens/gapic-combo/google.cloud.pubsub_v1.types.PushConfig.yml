@@ -1,0 +1,66 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "A URL locating the endpoint to which messages should be\n   pushed.\
+      \ For example, a Webhook endpoint might use\n   <code>https://example.com/push</code>."
+    id: push_endpoint
+    var_type: str
+  - description: "Endpoint configuration attributes that can be used to\n   control\
+      \ different aspects of the message delivery.\n   \n   The only currently supported\
+      \ attribute is\n   <code>x-goog-version</code>, which you can use to change\
+      \ the format\n   of the pushed message. This attribute indicates the version\n\
+      \   of the data expected by the endpoint. This controls the\n   shape of the\
+      \ pushed message (i.e., its fields and metadata).\n   \n   If not present during\
+      \ the <code>CreateSubscription</code> call, it\n   will default to the version\
+      \ of the Pub/Sub API used to make\n   such call. If not present in a <code>ModifyPushConfig</code>\
+      \ call,\n   its value will not be changed. <code>GetSubscription</code> calls\n\
+      \   will always return a valid version, even if the subscription\n   was created\
+      \ without this attribute.\n   \n   The only supported values for the <code>x-goog-version</code>\n\
+      \   attribute are:\n   \n   -  <code>v1beta1</code>: uses the push format defined\
+      \ in the v1beta1\n      Pub/Sub API.\n   -  <code>v1</code> or <code>v1beta2</code>:\
+      \ uses the push format defined in\n      the v1 Pub/Sub API.\n   \n   For example:\n\
+      \   \n   .. raw:: html\n   \n       <pre><code>attributes { \"x-goog-version\"\
+      : \"v1\" } </code></pre>"
+    id: attributes
+    var_type: Mapping[str, str]
+  - description: "If specified, Pub/Sub will generate and attach an OIDC JWT\n   token\
+      \ as an <code>Authorization</code> header in the HTTP request for\n   every\
+      \ pushed message.\n   \n   This field is a member of <code>oneof</code>_ <code>authentication_method</code>."
+    id: oidc_token
+    var_type: google.pubsub_v1.types.PushConfig.OidcToken
+  children:
+  - google.cloud.pubsub_v1.types.PushConfig.AttributesEntry
+  - google.cloud.pubsub_v1.types.PushConfig.OidcToken
+  class: google.cloud.pubsub_v1.types.PushConfig
+  fullName: google.cloud.pubsub_v1.types.PushConfig
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: PushConfig
+  source:
+    id: PushConfig
+    path: null
+    startLine: null
+  summary: 'Configuration for a push delivery endpoint.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    '
+  syntax:
+    content: PushConfig(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.PushConfig
+references:
+- fullName: google.cloud.pubsub_v1.types.PushConfig.AttributesEntry
+  isExternal: false
+  name: AttributesEntry
+  parent: google.cloud.pubsub_v1.types.PushConfig
+  uid: google.cloud.pubsub_v1.types.PushConfig.AttributesEntry
+- fullName: google.cloud.pubsub_v1.types.PushConfig.OidcToken
+  isExternal: false
+  name: OidcToken
+  parent: google.cloud.pubsub_v1.types.PushConfig
+  uid: google.cloud.pubsub_v1.types.PushConfig.OidcToken

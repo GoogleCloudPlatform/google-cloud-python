@@ -1,0 +1,437 @@
+tests:
+  - description: testFieldToFieldArithmetic
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: title
+              - Constant: "Dune"
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.add:
+                - Field: published
+                - Field: rating
+            - "pub_plus_rating"
+    assert_results:
+      - pub_plus_rating: 1969.6
+  - description: testMathFunctionExpressionessions
+    pipeline:
+      - Collection: books
+      - Where:
+        - FunctionExpression.equal:
+          - Field: title
+          - Constant: To Kill a Mockingbird
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.abs:
+                - Field: rating
+            - "abs_rating"
+        - AliasedExpression:
+            - FunctionExpression.ceil:
+                - Field: rating
+            - "ceil_rating"
+        - AliasedExpression:
+            - FunctionExpression.exp:
+                - Field: rating
+            - "exp_rating"
+        - AliasedExpression:
+            - FunctionExpression.floor:
+                - Field: rating
+            - "floor_rating"
+        - AliasedExpression:
+            - FunctionExpression.ln:
+                - Field: rating
+            - "ln_rating"
+        - AliasedExpression:
+            - FunctionExpression.log10:
+                - Field: rating
+            - "log_rating_base10"
+        - AliasedExpression:
+            - FunctionExpression.log:
+                - Field: rating
+                - Constant: 2
+            - "log_rating_base2"
+        - AliasedExpression:
+            - FunctionExpression.pow:
+                - Field: rating
+                - Constant: 2
+            - "pow_rating"
+        - AliasedExpression:
+            - FunctionExpression.sqrt:
+                - Field: rating
+            - "sqrt_rating"
+    assert_results_approximate:
+      - abs_rating: 4.2
+        ceil_rating: 5.0
+        exp_rating: 66.686331
+        floor_rating: 4.0
+        ln_rating: 1.4350845
+        log_rating_base10: 0.623249
+        log_rating_base2: 2.0704
+        pow_rating: 17.64
+        sqrt_rating: 2.049390
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: title
+              - stringValue: To Kill a Mockingbird
+              name: equal
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                abs_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: abs
+                ceil_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: ceil
+                exp_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: exp
+                floor_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: floor
+                ln_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: ln
+                log_rating_base10:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: log10
+                log_rating_base2:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    - integerValue: '2'
+                    name: log
+                pow_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    - integerValue: '2'
+                    name: pow
+                sqrt_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: sqrt
+          name: select
+  - description: testTrunc
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal_any:
+              - Field: title
+              - - Constant: "To Kill a Mockingbird" # rating 4.2
+                - Constant: "Pride and Prejudice" # rating 4.5
+                - Constant: "The Lord of the Rings" # rating 4.7
+      - Select:
+        - title
+        - AliasedExpression:
+            - FunctionExpression.trunc:
+                - Field: rating
+            - "trunc_rating"
+        - AliasedExpression:
+            - FunctionExpression.trunc:
+                - Field: rating
+                - FunctionExpression.add:
+                    - Constant: 0
+                    - Constant: 1
+            - "trunc_rating_with_places"
+      - Sort:
+        - Ordering:
+          - Field: title
+          - ASCENDING
+    assert_results:
+      - title: "Pride and Prejudice"
+        trunc_rating: 4.0
+        trunc_rating_with_places: 4.5
+      - title: "The Lord of the Rings"
+        trunc_rating: 4.0
+        trunc_rating_with_places: 4.7
+      - title: "To Kill a Mockingbird"
+        trunc_rating: 4.0
+        trunc_rating_with_places: 4.2
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: title
+              - functionValue:
+                  args:
+                  - stringValue: "To Kill a Mockingbird"
+                  - stringValue: "Pride and Prejudice"
+                  - stringValue: "The Lord of the Rings"
+                  name: array
+              name: equal_any
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                title:
+                  fieldReferenceValue: title
+                trunc_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: trunc
+                trunc_rating_with_places:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    - functionValue:
+                        args:
+                        - integerValue: '0'
+                        - integerValue: '1'
+                        name: add
+                    name: trunc
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+  - description: testRoundFunctionExpressionessions
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal_any:
+              - Field: title
+              - - Constant: "To Kill a Mockingbird" # rating 4.2
+                - Constant: "Pride and Prejudice" # rating 4.5
+                - Constant: "The Lord of the Rings" # rating 4.7
+      - Select:
+        - title
+        - AliasedExpression:
+            - FunctionExpression.round:
+                - Field: rating
+            - "round_rating"
+      - Sort:
+        - Ordering:
+          - Field: title
+          - ASCENDING
+    assert_results:
+      - title: "Pride and Prejudice"
+        round_rating: 5.0
+      - title: "The Lord of the Rings"
+        round_rating: 5.0
+      - title: "To Kill a Mockingbird"
+        round_rating: 4.0
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: title
+              - functionValue:
+                  args:
+                  - stringValue: "To Kill a Mockingbird"
+                  - stringValue: "Pride and Prejudice"
+                  - stringValue: "The Lord of the Rings"
+                  name: array
+              name: equal_any
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                title:
+                  fieldReferenceValue: title
+                round_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: round
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+  - description: testArithmeticOperations
+    pipeline:
+      - Collection: books
+      - Where:
+        - FunctionExpression.equal:
+          - Field: title
+          - Constant: To Kill a Mockingbird
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.add:
+                - Field: rating
+                - Constant: 1
+            - "ratingPlusOne"
+        - AliasedExpression:
+            - FunctionExpression.subtract:
+                - Field: published
+                - Constant: 1900
+            - "yearsSince1900"
+        - AliasedExpression:
+            - FunctionExpression.multiply:
+                - Field: rating
+                - Constant: 10
+            - "ratingTimesTen"
+        - AliasedExpression:
+            - FunctionExpression.divide:
+                - Field: rating
+                - Constant: 2
+            - "ratingDividedByTwo"
+        - AliasedExpression:
+            - FunctionExpression.multiply:
+                - Field: rating
+                - Constant: 20
+            - "ratingTimes20"
+        - AliasedExpression:
+            - FunctionExpression.add:
+                - Field: rating
+                - Constant: 3
+            - "ratingPlus3"
+        - AliasedExpression:
+            - FunctionExpression.mod:
+                - Field: rating
+                - Constant: 2
+            - "ratingMod2"
+    assert_results:
+      - ratingPlusOne: 5.2
+        yearsSince1900: 60
+        ratingTimesTen: 42.0
+        ratingDividedByTwo: 2.1
+        ratingTimes20: 84
+        ratingPlus3: 7.2
+        ratingMod2: 0.20000000000000018
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: title
+              - stringValue: To Kill a Mockingbird
+              name: equal
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                ratingDividedByTwo:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    - integerValue: '2'
+                    name: divide
+                ratingPlusOne:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    - integerValue: '1'
+                    name: add
+                ratingTimesTen:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    - integerValue: '10'
+                    name: multiply
+                yearsSince1900:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: published
+                    - integerValue: '1900'
+                    name: subtract
+                ratingTimes20:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    - integerValue: '20'
+                    name: multiply
+                ratingPlus3:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    - integerValue: '3'
+                    name: add
+                ratingMod2:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    - integerValue: '2'
+                    name: mod
+          name: select
+  - description: testRand
+    pipeline:
+      - Collection: books
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - And:
+              - FunctionExpression.greater_than_or_equal:
+                  - Rand: []
+                  - Constant: 0.0
+              - FunctionExpression.less_than:
+                  - Rand: []
+                  - Constant: 1.0
+            - "is_valid_rand"
+    assert_results:
+      - is_valid_rand: true
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - integerValue: '1'
+          name: limit
+        - args:
+          - mapValue:
+              fields:
+                is_valid_rand:
+                  functionValue:
+                    name: and
+                    args:
+                    - functionValue:
+                        name: greater_than_or_equal
+                        args:
+                        - functionValue:
+                            name: rand
+                        - doubleValue: 0.0
+                    - functionValue:
+                        name: less_than
+                        args:
+                        - functionValue:
+                            name: rand
+                        - doubleValue: 1.0
+          name: select

@@ -1,0 +1,32 @@
+# Pylint configuration for golden client libraries.
+#
+# These goldens are auto-generated GAPIC client output (see
+# packages/gapic-generator/gapic/templates/). They are checked in as test
+# fixtures so that regressions in the generator are caught at PR time.
+#
+# Pylint is invoked with `--errors-only` from CI so only error/fatal
+# categories run. This file disables the small set of error-class checks
+# that consistently misfire on auto-generated GAPIC output (proto
+# descriptor lookups, dynamic attribute attachment, optional transports).
+# Tighten as the generator's output is cleaned up.
+#
+# See https://github.com/googleapis/google-cloud-python/issues/16393.
+
+[MAIN]
+ignore-patterns=.*_pb2\.py,.*_pb2_grpc\.py
+extension-pkg-allow-list=grpc,google.protobuf
+
+[MESSAGES CONTROL]
+disable=
+    no-name-in-module,
+    no-member,
+    import-error,
+    relative-beyond-top-level,
+    cyclic-import,
+    # Generator emits __hash__ stubs as `return NotImplementedError(...)`
+    # rather than `raise`; the goldens deliberately mirror that template
+    # output so the check is silenced here until the generator is fixed.
+    invalid-hash-returned
+
+[REPORTS]
+score=no

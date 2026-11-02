@@ -1,0 +1,422 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.apps.meet_v2beta",
+  "protoPackage": "google.apps.meet.v2beta",
+  "schema": "1.0",
+  "services": {
+    "ConferenceRecordsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ConferenceRecordsServiceClient",
+          "rpcs": {
+            "GetConferenceRecord": {
+              "methods": [
+                "get_conference_record"
+              ]
+            },
+            "GetParticipant": {
+              "methods": [
+                "get_participant"
+              ]
+            },
+            "GetParticipantSession": {
+              "methods": [
+                "get_participant_session"
+              ]
+            },
+            "GetRecording": {
+              "methods": [
+                "get_recording"
+              ]
+            },
+            "GetSmartNote": {
+              "methods": [
+                "get_smart_note"
+              ]
+            },
+            "GetTranscript": {
+              "methods": [
+                "get_transcript"
+              ]
+            },
+            "GetTranscriptEntry": {
+              "methods": [
+                "get_transcript_entry"
+              ]
+            },
+            "ListConferenceRecords": {
+              "methods": [
+                "list_conference_records"
+              ]
+            },
+            "ListParticipantSessions": {
+              "methods": [
+                "list_participant_sessions"
+              ]
+            },
+            "ListParticipants": {
+              "methods": [
+                "list_participants"
+              ]
+            },
+            "ListRecordings": {
+              "methods": [
+                "list_recordings"
+              ]
+            },
+            "ListSmartNotes": {
+              "methods": [
+                "list_smart_notes"
+              ]
+            },
+            "ListTranscriptEntries": {
+              "methods": [
+                "list_transcript_entries"
+              ]
+            },
+            "ListTranscripts": {
+              "methods": [
+                "list_transcripts"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ConferenceRecordsServiceAsyncClient",
+          "rpcs": {
+            "GetConferenceRecord": {
+              "methods": [
+                "get_conference_record"
+              ]
+            },
+            "GetParticipant": {
+              "methods": [
+                "get_participant"
+              ]
+            },
+            "GetParticipantSession": {
+              "methods": [
+                "get_participant_session"
+              ]
+            },
+            "GetRecording": {
+              "methods": [
+                "get_recording"
+              ]
+            },
+            "GetSmartNote": {
+              "methods": [
+                "get_smart_note"
+              ]
+            },
+            "GetTranscript": {
+              "methods": [
+                "get_transcript"
+              ]
+            },
+            "GetTranscriptEntry": {
+              "methods": [
+                "get_transcript_entry"
+              ]
+            },
+            "ListConferenceRecords": {
+              "methods": [
+                "list_conference_records"
+              ]
+            },
+            "ListParticipantSessions": {
+              "methods": [
+                "list_participant_sessions"
+              ]
+            },
+            "ListParticipants": {
+              "methods": [
+                "list_participants"
+              ]
+            },
+            "ListRecordings": {
+              "methods": [
+                "list_recordings"
+              ]
+            },
+            "ListSmartNotes": {
+              "methods": [
+                "list_smart_notes"
+              ]
+            },
+            "ListTranscriptEntries": {
+              "methods": [
+                "list_transcript_entries"
+              ]
+            },
+            "ListTranscripts": {
+              "methods": [
+                "list_transcripts"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ConferenceRecordsServiceClient",
+          "rpcs": {
+            "GetConferenceRecord": {
+              "methods": [
+                "get_conference_record"
+              ]
+            },
+            "GetParticipant": {
+              "methods": [
+                "get_participant"
+              ]
+            },
+            "GetParticipantSession": {
+              "methods": [
+                "get_participant_session"
+              ]
+            },
+            "GetRecording": {
+              "methods": [
+                "get_recording"
+              ]
+            },
+            "GetSmartNote": {
+              "methods": [
+                "get_smart_note"
+              ]
+            },
+            "GetTranscript": {
+              "methods": [
+                "get_transcript"
+              ]
+            },
+            "GetTranscriptEntry": {
+              "methods": [
+                "get_transcript_entry"
+              ]
+            },
+            "ListConferenceRecords": {
+              "methods": [
+                "list_conference_records"
+              ]
+            },
+            "ListParticipantSessions": {
+              "methods": [
+                "list_participant_sessions"
+              ]
+            },
+            "ListParticipants": {
+              "methods": [
+                "list_participants"
+              ]
+            },
+            "ListRecordings": {
+              "methods": [
+                "list_recordings"
+              ]
+            },
+            "ListSmartNotes": {
+              "methods": [
+                "list_smart_notes"
+              ]
+            },
+            "ListTranscriptEntries": {
+              "methods": [
+                "list_transcript_entries"
+              ]
+            },
+            "ListTranscripts": {
+              "methods": [
+                "list_transcripts"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SpacesService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SpacesServiceClient",
+          "rpcs": {
+            "BatchUpdateMembers": {
+              "methods": [
+                "batch_update_members"
+              ]
+            },
+            "ConnectActiveConference": {
+              "methods": [
+                "connect_active_conference"
+              ]
+            },
+            "CreateMember": {
+              "methods": [
+                "create_member"
+              ]
+            },
+            "CreateSpace": {
+              "methods": [
+                "create_space"
+              ]
+            },
+            "DeleteMember": {
+              "methods": [
+                "delete_member"
+              ]
+            },
+            "EndActiveConference": {
+              "methods": [
+                "end_active_conference"
+              ]
+            },
+            "GetMember": {
+              "methods": [
+                "get_member"
+              ]
+            },
+            "GetSpace": {
+              "methods": [
+                "get_space"
+              ]
+            },
+            "ListMembers": {
+              "methods": [
+                "list_members"
+              ]
+            },
+            "UpdateMember": {
+              "methods": [
+                "update_member"
+              ]
+            },
+            "UpdateSpace": {
+              "methods": [
+                "update_space"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SpacesServiceAsyncClient",
+          "rpcs": {
+            "BatchUpdateMembers": {
+              "methods": [
+                "batch_update_members"
+              ]
+            },
+            "ConnectActiveConference": {
+              "methods": [
+                "connect_active_conference"
+              ]
+            },
+            "CreateMember": {
+              "methods": [
+                "create_member"
+              ]
+            },
+            "CreateSpace": {
+              "methods": [
+                "create_space"
+              ]
+            },
+            "DeleteMember": {
+              "methods": [
+                "delete_member"
+              ]
+            },
+            "EndActiveConference": {
+              "methods": [
+                "end_active_conference"
+              ]
+            },
+            "GetMember": {
+              "methods": [
+                "get_member"
+              ]
+            },
+            "GetSpace": {
+              "methods": [
+                "get_space"
+              ]
+            },
+            "ListMembers": {
+              "methods": [
+                "list_members"
+              ]
+            },
+            "UpdateMember": {
+              "methods": [
+                "update_member"
+              ]
+            },
+            "UpdateSpace": {
+              "methods": [
+                "update_space"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SpacesServiceClient",
+          "rpcs": {
+            "BatchUpdateMembers": {
+              "methods": [
+                "batch_update_members"
+              ]
+            },
+            "ConnectActiveConference": {
+              "methods": [
+                "connect_active_conference"
+              ]
+            },
+            "CreateMember": {
+              "methods": [
+                "create_member"
+              ]
+            },
+            "CreateSpace": {
+              "methods": [
+                "create_space"
+              ]
+            },
+            "DeleteMember": {
+              "methods": [
+                "delete_member"
+              ]
+            },
+            "EndActiveConference": {
+              "methods": [
+                "end_active_conference"
+              ]
+            },
+            "GetMember": {
+              "methods": [
+                "get_member"
+              ]
+            },
+            "GetSpace": {
+              "methods": [
+                "get_space"
+              ]
+            },
+            "ListMembers": {
+              "methods": [
+                "list_members"
+              ]
+            },
+            "UpdateMember": {
+              "methods": [
+                "update_member"
+              ]
+            },
+            "UpdateSpace": {
+              "methods": [
+                "update_space"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

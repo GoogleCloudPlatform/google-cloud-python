@@ -1,0 +1,103 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.workflows_v1beta",
+  "protoPackage": "google.cloud.workflows.v1beta",
+  "schema": "1.0",
+  "services": {
+    "Workflows": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WorkflowsClient",
+          "rpcs": {
+            "CreateWorkflow": {
+              "methods": [
+                "create_workflow"
+              ]
+            },
+            "DeleteWorkflow": {
+              "methods": [
+                "delete_workflow"
+              ]
+            },
+            "GetWorkflow": {
+              "methods": [
+                "get_workflow"
+              ]
+            },
+            "ListWorkflows": {
+              "methods": [
+                "list_workflows"
+              ]
+            },
+            "UpdateWorkflow": {
+              "methods": [
+                "update_workflow"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "WorkflowsAsyncClient",
+          "rpcs": {
+            "CreateWorkflow": {
+              "methods": [
+                "create_workflow"
+              ]
+            },
+            "DeleteWorkflow": {
+              "methods": [
+                "delete_workflow"
+              ]
+            },
+            "GetWorkflow": {
+              "methods": [
+                "get_workflow"
+              ]
+            },
+            "ListWorkflows": {
+              "methods": [
+                "list_workflows"
+              ]
+            },
+            "UpdateWorkflow": {
+              "methods": [
+                "update_workflow"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "WorkflowsClient",
+          "rpcs": {
+            "CreateWorkflow": {
+              "methods": [
+                "create_workflow"
+              ]
+            },
+            "DeleteWorkflow": {
+              "methods": [
+                "delete_workflow"
+              ]
+            },
+            "GetWorkflow": {
+              "methods": [
+                "get_workflow"
+              ]
+            },
+            "ListWorkflows": {
+              "methods": [
+                "list_workflows"
+              ]
+            },
+            "UpdateWorkflow": {
+              "methods": [
+                "update_workflow"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

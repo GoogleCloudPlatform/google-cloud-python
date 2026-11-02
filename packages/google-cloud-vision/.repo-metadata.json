@@ -1,0 +1,16 @@
+{
+    "api_description": "Integrates Google Vision features, including image labeling, face, logo,\nand landmark detection, optical character recognition (OCR), and detection\nof explicit content, into applications.",
+    "api_id": "vision.googleapis.com",
+    "api_shortname": "vision",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/vision/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-vision",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=status:open%20componentid:187174",
+    "language": "python",
+    "library_type": "GAPIC_COMBO",
+    "name": "vision",
+    "name_pretty": "Cloud Vision",
+    "product_documentation": "https://cloud.google.com/vision/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

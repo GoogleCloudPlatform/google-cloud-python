@@ -1,0 +1,172 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - pandas_gbq.Context
+  - pandas_gbq.Context.credentials
+  - pandas_gbq.Context.dialect
+  - pandas_gbq.Context.project
+  class: pandas_gbq.Context
+  fullName: pandas_gbq.Context
+  langs:
+  - python
+  module: pandas_gbq
+  name: Context
+  source:
+    id: Context
+    path: tests/testdata/non-cloud/pandas_gbq/gbq.py
+    startLine: 155
+  summary: 'Storage for objects to be used throughout a session.
+
+
+    A Context object is initialized when the `pandas_gbq` module is
+
+    imported, and can be found at `<xref uid="pandas_gbq.context">pandas_gbq.context</xref>`.
+
+
+    '
+  syntax:
+    content: Context()
+    parameters: []
+  type: class
+  uid: pandas_gbq.Context
+- attributes: []
+  class: pandas_gbq.Context
+  fullName: pandas_gbq.Context
+  langs:
+  - python
+  module: pandas_gbq
+  name: Context
+  source:
+    id: Context
+    path: tests/testdata/non-cloud/pandas_gbq/gbq.py
+    startLine: 155
+  summary: 'Storage for objects to be used throughout a session.
+
+
+    A Context object is initialized when the `pandas_gbq` module is
+
+    imported, and can be found at `<xref uid="pandas_gbq.context">pandas_gbq.context</xref>`.
+
+
+    '
+  syntax:
+    content: Context()
+    parameters: []
+  type: method
+  uid: pandas_gbq.Context
+- &id001
+  attributes: []
+  class: pandas_gbq.Context
+  fullName: pandas_gbq.Context.credentials
+  langs:
+  - python
+  module: pandas_gbq
+  name: credentials
+  source:
+    id: credentials
+    path: null
+    startLine: null
+  summary: "Credentials to use for Google APIs.\n\nThese credentials are automatically\
+    \ cached in memory by calls to\n`<xref uid=\"pandas_gbq.read_gbq\">pandas_gbq.read_gbq</xref>`\
+    \ and `<xref uid=\"pandas_gbq.to_gbq\">pandas_gbq.to_gbq</xref>`. To\nmanually\
+    \ set the credentials, construct an\n`google.auth.credentials.Credentials` object\
+    \ and set it as\nthe context credentials as demonstrated in the example below.\
+    \ See\n`auth docs`_ for more information on obtaining credentials.\n\n.. _auth\
+    \ docs: http://google-auth.readthedocs.io\n    /en/latest/user-guide.html#obtaining-credentials\n\
+    \nReturns\n-------\ngoogle.auth.credentials.Credentials\n\nExamples\n--------\n\
+    \nManually setting the context credentials:\n\n>>> import pandas_gbq\n>>> from\
+    \ google.oauth2 import service_account\n>>> credentials = service_account.Credentials.from_service_account_file(\n\
+    ...     '/path/to/key.json',\n... )\n>>> <xref uid=\"pandas_gbq.context\">pandas_gbq.context</xref>.credentials\
+    \ = credentials\n\n"
+  syntax: {}
+  type: property
+  uid: pandas_gbq.Context.credentials
+- *id001
+- &id002
+  attributes: []
+  class: pandas_gbq.Context
+  fullName: pandas_gbq.Context.dialect
+  langs:
+  - python
+  module: pandas_gbq
+  name: dialect
+  source:
+    id: dialect
+    path: null
+    startLine: null
+  summary: "Default dialect to use in `<xref uid=\"pandas_gbq.read_gbq\">pandas_gbq.read_gbq</xref>`.\n\
+    \nAllowed values for the BigQuery SQL syntax dialect:\n\n`'legacy'`\n    Use BigQuery's\
+    \ legacy SQL dialect. For more information see\n    `BigQuery Legacy SQL Reference\n\
+    \    <https://cloud.google.com/bigquery/docs/reference/legacy-sql>`__.\n`'standard'`\n\
+    \    Use BigQuery's standard SQL, which is\n    compliant with the SQL 2011 standard.\
+    \ For more information\n    see `BigQuery Standard SQL Reference\n    <https://cloud.google.com/bigquery/docs/reference/standard-sql/>`__.\n\
+    \nReturns\n-------\nstr\n\nExamples\n--------\n\nSetting the default syntax to\
+    \ standard:\n\n>>> import pandas_gbq\n>>> <xref uid=\"pandas_gbq.context\">pandas_gbq.context</xref>.dialect\
+    \ = 'standard'\n\n"
+  syntax: {}
+  type: property
+  uid: pandas_gbq.Context.dialect
+- *id002
+- &id003
+  attributes: []
+  class: pandas_gbq.Context
+  fullName: pandas_gbq.Context.project
+  langs:
+  - python
+  module: pandas_gbq
+  name: project
+  source:
+    id: project
+    path: null
+    startLine: null
+  summary: 'Default project to use for calls to Google APIs.
+
+
+    Returns
+
+    -------
+
+    str
+
+
+    Examples
+
+    --------
+
+
+    Manually setting the context project:
+
+
+    >>> import pandas_gbq
+
+    >>> <xref uid="pandas_gbq.context">pandas_gbq.context</xref>.project = ''my-project''
+
+
+    '
+  syntax: {}
+  type: property
+  uid: pandas_gbq.Context.project
+- *id003
+references:
+- fullName: pandas_gbq.Context
+  isExternal: false
+  name: Context
+  parent: pandas_gbq.Context
+  uid: pandas_gbq.Context
+- fullName: pandas_gbq.Context.credentials
+  isExternal: false
+  name: credentials
+  parent: pandas_gbq.Context
+  uid: pandas_gbq.Context.credentials
+- fullName: pandas_gbq.Context.dialect
+  isExternal: false
+  name: dialect
+  parent: pandas_gbq.Context
+  uid: pandas_gbq.Context.dialect
+- fullName: pandas_gbq.Context.project
+  isExternal: false
+  name: project
+  parent: pandas_gbq.Context
+  uid: pandas_gbq.Context.project

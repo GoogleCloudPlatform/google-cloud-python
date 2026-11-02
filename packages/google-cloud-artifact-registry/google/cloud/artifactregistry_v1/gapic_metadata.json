@@ -1,0 +1,778 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.artifactregistry_v1",
+  "protoPackage": "google.devtools.artifactregistry.v1",
+  "schema": "1.0",
+  "services": {
+    "ArtifactRegistry": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ArtifactRegistryClient",
+          "rpcs": {
+            "BatchDeleteVersions": {
+              "methods": [
+                "batch_delete_versions"
+              ]
+            },
+            "CreateAttachment": {
+              "methods": [
+                "create_attachment"
+              ]
+            },
+            "CreateRepository": {
+              "methods": [
+                "create_repository"
+              ]
+            },
+            "CreateRule": {
+              "methods": [
+                "create_rule"
+              ]
+            },
+            "CreateTag": {
+              "methods": [
+                "create_tag"
+              ]
+            },
+            "DeleteAttachment": {
+              "methods": [
+                "delete_attachment"
+              ]
+            },
+            "DeleteFile": {
+              "methods": [
+                "delete_file"
+              ]
+            },
+            "DeletePackage": {
+              "methods": [
+                "delete_package"
+              ]
+            },
+            "DeleteRepository": {
+              "methods": [
+                "delete_repository"
+              ]
+            },
+            "DeleteRule": {
+              "methods": [
+                "delete_rule"
+              ]
+            },
+            "DeleteTag": {
+              "methods": [
+                "delete_tag"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "ExportArtifact": {
+              "methods": [
+                "export_artifact"
+              ]
+            },
+            "GetAttachment": {
+              "methods": [
+                "get_attachment"
+              ]
+            },
+            "GetDockerImage": {
+              "methods": [
+                "get_docker_image"
+              ]
+            },
+            "GetFile": {
+              "methods": [
+                "get_file"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetMavenArtifact": {
+              "methods": [
+                "get_maven_artifact"
+              ]
+            },
+            "GetNpmPackage": {
+              "methods": [
+                "get_npm_package"
+              ]
+            },
+            "GetPackage": {
+              "methods": [
+                "get_package"
+              ]
+            },
+            "GetProjectSettings": {
+              "methods": [
+                "get_project_settings"
+              ]
+            },
+            "GetPythonPackage": {
+              "methods": [
+                "get_python_package"
+              ]
+            },
+            "GetRepository": {
+              "methods": [
+                "get_repository"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "GetTag": {
+              "methods": [
+                "get_tag"
+              ]
+            },
+            "GetVPCSCConfig": {
+              "methods": [
+                "get_vpcsc_config"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ImportAptArtifacts": {
+              "methods": [
+                "import_apt_artifacts"
+              ]
+            },
+            "ImportYumArtifacts": {
+              "methods": [
+                "import_yum_artifacts"
+              ]
+            },
+            "ListAttachments": {
+              "methods": [
+                "list_attachments"
+              ]
+            },
+            "ListDockerImages": {
+              "methods": [
+                "list_docker_images"
+              ]
+            },
+            "ListFiles": {
+              "methods": [
+                "list_files"
+              ]
+            },
+            "ListMavenArtifacts": {
+              "methods": [
+                "list_maven_artifacts"
+              ]
+            },
+            "ListNpmPackages": {
+              "methods": [
+                "list_npm_packages"
+              ]
+            },
+            "ListPackages": {
+              "methods": [
+                "list_packages"
+              ]
+            },
+            "ListPythonPackages": {
+              "methods": [
+                "list_python_packages"
+              ]
+            },
+            "ListRepositories": {
+              "methods": [
+                "list_repositories"
+              ]
+            },
+            "ListRules": {
+              "methods": [
+                "list_rules"
+              ]
+            },
+            "ListTags": {
+              "methods": [
+                "list_tags"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateFile": {
+              "methods": [
+                "update_file"
+              ]
+            },
+            "UpdatePackage": {
+              "methods": [
+                "update_package"
+              ]
+            },
+            "UpdateProjectSettings": {
+              "methods": [
+                "update_project_settings"
+              ]
+            },
+            "UpdateRepository": {
+              "methods": [
+                "update_repository"
+              ]
+            },
+            "UpdateRule": {
+              "methods": [
+                "update_rule"
+              ]
+            },
+            "UpdateTag": {
+              "methods": [
+                "update_tag"
+              ]
+            },
+            "UpdateVPCSCConfig": {
+              "methods": [
+                "update_vpcsc_config"
+              ]
+            },
+            "UpdateVersion": {
+              "methods": [
+                "update_version"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ArtifactRegistryAsyncClient",
+          "rpcs": {
+            "BatchDeleteVersions": {
+              "methods": [
+                "batch_delete_versions"
+              ]
+            },
+            "CreateAttachment": {
+              "methods": [
+                "create_attachment"
+              ]
+            },
+            "CreateRepository": {
+              "methods": [
+                "create_repository"
+              ]
+            },
+            "CreateRule": {
+              "methods": [
+                "create_rule"
+              ]
+            },
+            "CreateTag": {
+              "methods": [
+                "create_tag"
+              ]
+            },
+            "DeleteAttachment": {
+              "methods": [
+                "delete_attachment"
+              ]
+            },
+            "DeleteFile": {
+              "methods": [
+                "delete_file"
+              ]
+            },
+            "DeletePackage": {
+              "methods": [
+                "delete_package"
+              ]
+            },
+            "DeleteRepository": {
+              "methods": [
+                "delete_repository"
+              ]
+            },
+            "DeleteRule": {
+              "methods": [
+                "delete_rule"
+              ]
+            },
+            "DeleteTag": {
+              "methods": [
+                "delete_tag"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "ExportArtifact": {
+              "methods": [
+                "export_artifact"
+              ]
+            },
+            "GetAttachment": {
+              "methods": [
+                "get_attachment"
+              ]
+            },
+            "GetDockerImage": {
+              "methods": [
+                "get_docker_image"
+              ]
+            },
+            "GetFile": {
+              "methods": [
+                "get_file"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetMavenArtifact": {
+              "methods": [
+                "get_maven_artifact"
+              ]
+            },
+            "GetNpmPackage": {
+              "methods": [
+                "get_npm_package"
+              ]
+            },
+            "GetPackage": {
+              "methods": [
+                "get_package"
+              ]
+            },
+            "GetProjectSettings": {
+              "methods": [
+                "get_project_settings"
+              ]
+            },
+            "GetPythonPackage": {
+              "methods": [
+                "get_python_package"
+              ]
+            },
+            "GetRepository": {
+              "methods": [
+                "get_repository"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "GetTag": {
+              "methods": [
+                "get_tag"
+              ]
+            },
+            "GetVPCSCConfig": {
+              "methods": [
+                "get_vpcsc_config"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ImportAptArtifacts": {
+              "methods": [
+                "import_apt_artifacts"
+              ]
+            },
+            "ImportYumArtifacts": {
+              "methods": [
+                "import_yum_artifacts"
+              ]
+            },
+            "ListAttachments": {
+              "methods": [
+                "list_attachments"
+              ]
+            },
+            "ListDockerImages": {
+              "methods": [
+                "list_docker_images"
+              ]
+            },
+            "ListFiles": {
+              "methods": [
+                "list_files"
+              ]
+            },
+            "ListMavenArtifacts": {
+              "methods": [
+                "list_maven_artifacts"
+              ]
+            },
+            "ListNpmPackages": {
+              "methods": [
+                "list_npm_packages"
+              ]
+            },
+            "ListPackages": {
+              "methods": [
+                "list_packages"
+              ]
+            },
+            "ListPythonPackages": {
+              "methods": [
+                "list_python_packages"
+              ]
+            },
+            "ListRepositories": {
+              "methods": [
+                "list_repositories"
+              ]
+            },
+            "ListRules": {
+              "methods": [
+                "list_rules"
+              ]
+            },
+            "ListTags": {
+              "methods": [
+                "list_tags"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateFile": {
+              "methods": [
+                "update_file"
+              ]
+            },
+            "UpdatePackage": {
+              "methods": [
+                "update_package"
+              ]
+            },
+            "UpdateProjectSettings": {
+              "methods": [
+                "update_project_settings"
+              ]
+            },
+            "UpdateRepository": {
+              "methods": [
+                "update_repository"
+              ]
+            },
+            "UpdateRule": {
+              "methods": [
+                "update_rule"
+              ]
+            },
+            "UpdateTag": {
+              "methods": [
+                "update_tag"
+              ]
+            },
+            "UpdateVPCSCConfig": {
+              "methods": [
+                "update_vpcsc_config"
+              ]
+            },
+            "UpdateVersion": {
+              "methods": [
+                "update_version"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ArtifactRegistryClient",
+          "rpcs": {
+            "BatchDeleteVersions": {
+              "methods": [
+                "batch_delete_versions"
+              ]
+            },
+            "CreateAttachment": {
+              "methods": [
+                "create_attachment"
+              ]
+            },
+            "CreateRepository": {
+              "methods": [
+                "create_repository"
+              ]
+            },
+            "CreateRule": {
+              "methods": [
+                "create_rule"
+              ]
+            },
+            "CreateTag": {
+              "methods": [
+                "create_tag"
+              ]
+            },
+            "DeleteAttachment": {
+              "methods": [
+                "delete_attachment"
+              ]
+            },
+            "DeleteFile": {
+              "methods": [
+                "delete_file"
+              ]
+            },
+            "DeletePackage": {
+              "methods": [
+                "delete_package"
+              ]
+            },
+            "DeleteRepository": {
+              "methods": [
+                "delete_repository"
+              ]
+            },
+            "DeleteRule": {
+              "methods": [
+                "delete_rule"
+              ]
+            },
+            "DeleteTag": {
+              "methods": [
+                "delete_tag"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "ExportArtifact": {
+              "methods": [
+                "export_artifact"
+              ]
+            },
+            "GetAttachment": {
+              "methods": [
+                "get_attachment"
+              ]
+            },
+            "GetDockerImage": {
+              "methods": [
+                "get_docker_image"
+              ]
+            },
+            "GetFile": {
+              "methods": [
+                "get_file"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetMavenArtifact": {
+              "methods": [
+                "get_maven_artifact"
+              ]
+            },
+            "GetNpmPackage": {
+              "methods": [
+                "get_npm_package"
+              ]
+            },
+            "GetPackage": {
+              "methods": [
+                "get_package"
+              ]
+            },
+            "GetProjectSettings": {
+              "methods": [
+                "get_project_settings"
+              ]
+            },
+            "GetPythonPackage": {
+              "methods": [
+                "get_python_package"
+              ]
+            },
+            "GetRepository": {
+              "methods": [
+                "get_repository"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "GetTag": {
+              "methods": [
+                "get_tag"
+              ]
+            },
+            "GetVPCSCConfig": {
+              "methods": [
+                "get_vpcsc_config"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ImportAptArtifacts": {
+              "methods": [
+                "import_apt_artifacts"
+              ]
+            },
+            "ImportYumArtifacts": {
+              "methods": [
+                "import_yum_artifacts"
+              ]
+            },
+            "ListAttachments": {
+              "methods": [
+                "list_attachments"
+              ]
+            },
+            "ListDockerImages": {
+              "methods": [
+                "list_docker_images"
+              ]
+            },
+            "ListFiles": {
+              "methods": [
+                "list_files"
+              ]
+            },
+            "ListMavenArtifacts": {
+              "methods": [
+                "list_maven_artifacts"
+              ]
+            },
+            "ListNpmPackages": {
+              "methods": [
+                "list_npm_packages"
+              ]
+            },
+            "ListPackages": {
+              "methods": [
+                "list_packages"
+              ]
+            },
+            "ListPythonPackages": {
+              "methods": [
+                "list_python_packages"
+              ]
+            },
+            "ListRepositories": {
+              "methods": [
+                "list_repositories"
+              ]
+            },
+            "ListRules": {
+              "methods": [
+                "list_rules"
+              ]
+            },
+            "ListTags": {
+              "methods": [
+                "list_tags"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateFile": {
+              "methods": [
+                "update_file"
+              ]
+            },
+            "UpdatePackage": {
+              "methods": [
+                "update_package"
+              ]
+            },
+            "UpdateProjectSettings": {
+              "methods": [
+                "update_project_settings"
+              ]
+            },
+            "UpdateRepository": {
+              "methods": [
+                "update_repository"
+              ]
+            },
+            "UpdateRule": {
+              "methods": [
+                "update_rule"
+              ]
+            },
+            "UpdateTag": {
+              "methods": [
+                "update_tag"
+              ]
+            },
+            "UpdateVPCSCConfig": {
+              "methods": [
+                "update_vpcsc_config"
+              ]
+            },
+            "UpdateVersion": {
+              "methods": [
+                "update_version"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

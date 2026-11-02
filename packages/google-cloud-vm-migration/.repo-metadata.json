@@ -1,0 +1,15 @@
+{
+    "api_description": "Use the Migrate to Virtual Machines API to programmatically migrate\nworkloads.",
+    "api_id": "vmmigration.googleapis.com",
+    "api_shortname": "vmmigration",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/vmmigration/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-vm-migration",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "vmmigration",
+    "name_pretty": "VM Migration",
+    "product_documentation": "https://cloud.google.com/migrate/compute-engine/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

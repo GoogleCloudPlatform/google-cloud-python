@@ -1,0 +1,15 @@
+{
+    "api_description": "Beyondcorp Enterprise provides identity and context aware access controls\nfor enterprise resources and enables zero-trust access. Using the\nBeyondcorp Enterprise APIs, enterprises can set up multi-cloud and on-prem\nconnectivity using the App Connector hybrid connectivity solution.",
+    "api_id": "beyondcorp.googleapis.com",
+    "api_shortname": "beyondcorp",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/beyondcorpclientgateways/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-beyondcorp-clientgateways",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "beyondcorpclientgateways",
+    "name_pretty": "BeyondCorp ClientGateways",
+    "product_documentation": "https://cloud.google.com/beyondcorp/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

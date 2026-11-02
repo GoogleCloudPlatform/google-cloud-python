@@ -1,0 +1,363 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.datalabeling_v1beta1",
+  "protoPackage": "google.cloud.datalabeling.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "DataLabelingService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataLabelingServiceClient",
+          "rpcs": {
+            "CreateAnnotationSpecSet": {
+              "methods": [
+                "create_annotation_spec_set"
+              ]
+            },
+            "CreateDataset": {
+              "methods": [
+                "create_dataset"
+              ]
+            },
+            "CreateEvaluationJob": {
+              "methods": [
+                "create_evaluation_job"
+              ]
+            },
+            "CreateInstruction": {
+              "methods": [
+                "create_instruction"
+              ]
+            },
+            "DeleteAnnotatedDataset": {
+              "methods": [
+                "delete_annotated_dataset"
+              ]
+            },
+            "DeleteAnnotationSpecSet": {
+              "methods": [
+                "delete_annotation_spec_set"
+              ]
+            },
+            "DeleteDataset": {
+              "methods": [
+                "delete_dataset"
+              ]
+            },
+            "DeleteEvaluationJob": {
+              "methods": [
+                "delete_evaluation_job"
+              ]
+            },
+            "DeleteInstruction": {
+              "methods": [
+                "delete_instruction"
+              ]
+            },
+            "ExportData": {
+              "methods": [
+                "export_data"
+              ]
+            },
+            "GetAnnotatedDataset": {
+              "methods": [
+                "get_annotated_dataset"
+              ]
+            },
+            "GetAnnotationSpecSet": {
+              "methods": [
+                "get_annotation_spec_set"
+              ]
+            },
+            "GetDataItem": {
+              "methods": [
+                "get_data_item"
+              ]
+            },
+            "GetDataset": {
+              "methods": [
+                "get_dataset"
+              ]
+            },
+            "GetEvaluation": {
+              "methods": [
+                "get_evaluation"
+              ]
+            },
+            "GetEvaluationJob": {
+              "methods": [
+                "get_evaluation_job"
+              ]
+            },
+            "GetExample": {
+              "methods": [
+                "get_example"
+              ]
+            },
+            "GetInstruction": {
+              "methods": [
+                "get_instruction"
+              ]
+            },
+            "ImportData": {
+              "methods": [
+                "import_data"
+              ]
+            },
+            "LabelImage": {
+              "methods": [
+                "label_image"
+              ]
+            },
+            "LabelText": {
+              "methods": [
+                "label_text"
+              ]
+            },
+            "LabelVideo": {
+              "methods": [
+                "label_video"
+              ]
+            },
+            "ListAnnotatedDatasets": {
+              "methods": [
+                "list_annotated_datasets"
+              ]
+            },
+            "ListAnnotationSpecSets": {
+              "methods": [
+                "list_annotation_spec_sets"
+              ]
+            },
+            "ListDataItems": {
+              "methods": [
+                "list_data_items"
+              ]
+            },
+            "ListDatasets": {
+              "methods": [
+                "list_datasets"
+              ]
+            },
+            "ListEvaluationJobs": {
+              "methods": [
+                "list_evaluation_jobs"
+              ]
+            },
+            "ListExamples": {
+              "methods": [
+                "list_examples"
+              ]
+            },
+            "ListInstructions": {
+              "methods": [
+                "list_instructions"
+              ]
+            },
+            "PauseEvaluationJob": {
+              "methods": [
+                "pause_evaluation_job"
+              ]
+            },
+            "ResumeEvaluationJob": {
+              "methods": [
+                "resume_evaluation_job"
+              ]
+            },
+            "SearchEvaluations": {
+              "methods": [
+                "search_evaluations"
+              ]
+            },
+            "SearchExampleComparisons": {
+              "methods": [
+                "search_example_comparisons"
+              ]
+            },
+            "UpdateEvaluationJob": {
+              "methods": [
+                "update_evaluation_job"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataLabelingServiceAsyncClient",
+          "rpcs": {
+            "CreateAnnotationSpecSet": {
+              "methods": [
+                "create_annotation_spec_set"
+              ]
+            },
+            "CreateDataset": {
+              "methods": [
+                "create_dataset"
+              ]
+            },
+            "CreateEvaluationJob": {
+              "methods": [
+                "create_evaluation_job"
+              ]
+            },
+            "CreateInstruction": {
+              "methods": [
+                "create_instruction"
+              ]
+            },
+            "DeleteAnnotatedDataset": {
+              "methods": [
+                "delete_annotated_dataset"
+              ]
+            },
+            "DeleteAnnotationSpecSet": {
+              "methods": [
+                "delete_annotation_spec_set"
+              ]
+            },
+            "DeleteDataset": {
+              "methods": [
+                "delete_dataset"
+              ]
+            },
+            "DeleteEvaluationJob": {
+              "methods": [
+                "delete_evaluation_job"
+              ]
+            },
+            "DeleteInstruction": {
+              "methods": [
+                "delete_instruction"
+              ]
+            },
+            "ExportData": {
+              "methods": [
+                "export_data"
+              ]
+            },
+            "GetAnnotatedDataset": {
+              "methods": [
+                "get_annotated_dataset"
+              ]
+            },
+            "GetAnnotationSpecSet": {
+              "methods": [
+                "get_annotation_spec_set"
+              ]
+            },
+            "GetDataItem": {
+              "methods": [
+                "get_data_item"
+              ]
+            },
+            "GetDataset": {
+              "methods": [
+                "get_dataset"
+              ]
+            },
+            "GetEvaluation": {
+              "methods": [
+                "get_evaluation"
+              ]
+            },
+            "GetEvaluationJob": {
+              "methods": [
+                "get_evaluation_job"
+              ]
+            },
+            "GetExample": {
+              "methods": [
+                "get_example"
+              ]
+            },
+            "GetInstruction": {
+              "methods": [
+                "get_instruction"
+              ]
+            },
+            "ImportData": {
+              "methods": [
+                "import_data"
+              ]
+            },
+            "LabelImage": {
+              "methods": [
+                "label_image"
+              ]
+            },
+            "LabelText": {
+              "methods": [
+                "label_text"
+              ]
+            },
+            "LabelVideo": {
+              "methods": [
+                "label_video"
+              ]
+            },
+            "ListAnnotatedDatasets": {
+              "methods": [
+                "list_annotated_datasets"
+              ]
+            },
+            "ListAnnotationSpecSets": {
+              "methods": [
+                "list_annotation_spec_sets"
+              ]
+            },
+            "ListDataItems": {
+              "methods": [
+                "list_data_items"
+              ]
+            },
+            "ListDatasets": {
+              "methods": [
+                "list_datasets"
+              ]
+            },
+            "ListEvaluationJobs": {
+              "methods": [
+                "list_evaluation_jobs"
+              ]
+            },
+            "ListExamples": {
+              "methods": [
+                "list_examples"
+              ]
+            },
+            "ListInstructions": {
+              "methods": [
+                "list_instructions"
+              ]
+            },
+            "PauseEvaluationJob": {
+              "methods": [
+                "pause_evaluation_job"
+              ]
+            },
+            "ResumeEvaluationJob": {
+              "methods": [
+                "resume_evaluation_job"
+              ]
+            },
+            "SearchEvaluations": {
+              "methods": [
+                "search_evaluations"
+              ]
+            },
+            "SearchExampleComparisons": {
+              "methods": [
+                "search_example_comparisons"
+              ]
+            },
+            "UpdateEvaluationJob": {
+              "methods": [
+                "update_evaluation_job"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

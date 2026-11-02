@@ -1,0 +1,88 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.beyondcorp_clientgateways_v1",
+  "protoPackage": "google.cloud.beyondcorp.clientgateways.v1",
+  "schema": "1.0",
+  "services": {
+    "ClientGatewaysService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ClientGatewaysServiceClient",
+          "rpcs": {
+            "CreateClientGateway": {
+              "methods": [
+                "create_client_gateway"
+              ]
+            },
+            "DeleteClientGateway": {
+              "methods": [
+                "delete_client_gateway"
+              ]
+            },
+            "GetClientGateway": {
+              "methods": [
+                "get_client_gateway"
+              ]
+            },
+            "ListClientGateways": {
+              "methods": [
+                "list_client_gateways"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ClientGatewaysServiceAsyncClient",
+          "rpcs": {
+            "CreateClientGateway": {
+              "methods": [
+                "create_client_gateway"
+              ]
+            },
+            "DeleteClientGateway": {
+              "methods": [
+                "delete_client_gateway"
+              ]
+            },
+            "GetClientGateway": {
+              "methods": [
+                "get_client_gateway"
+              ]
+            },
+            "ListClientGateways": {
+              "methods": [
+                "list_client_gateways"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ClientGatewaysServiceClient",
+          "rpcs": {
+            "CreateClientGateway": {
+              "methods": [
+                "create_client_gateway"
+              ]
+            },
+            "DeleteClientGateway": {
+              "methods": [
+                "delete_client_gateway"
+              ]
+            },
+            "GetClientGateway": {
+              "methods": [
+                "get_client_gateway"
+              ]
+            },
+            "ListClientGateways": {
+              "methods": [
+                "list_client_gateways"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

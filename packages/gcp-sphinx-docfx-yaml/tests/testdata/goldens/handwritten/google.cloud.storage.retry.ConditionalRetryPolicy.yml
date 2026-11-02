@@ -1,0 +1,55 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children: []
+  class: google.cloud.storage.retry.ConditionalRetryPolicy
+  fullName: google.cloud.storage.retry.ConditionalRetryPolicy
+  langs:
+  - python
+  module: google.cloud.storage.retry
+  name: ConditionalRetryPolicy
+  source:
+    id: ConditionalRetryPolicy
+    path: tests/testdata/handwritten/google/cloud/storage/retry.py
+    startLine: 71
+  summary: 'A class for use when an API call is only conditionally safe to retry.
+
+
+    This class is intended for use in inspecting the API call parameters of an
+
+    API call to verify that any flags necessary to make the API call idempotent
+
+    (such as specifying an `if_generation_match` or related flag) are present.
+
+
+    It can be used in place of a `retry.Retry` object, in which case
+
+    `_http.Connection.api_request` will pass the requested api call keyword
+
+    arguments into the `conditional_predicate` and return the `retry_policy`
+
+    if the conditions are met.
+
+    '
+  syntax:
+    content: ConditionalRetryPolicy(retry_policy, conditional_predicate, required_kwargs)
+    parameters:
+    - description: A retry object defining timeouts, persistence and which exceptions
+        to retry.
+      id: retry_policy
+      var_type: class:<code>google.api_core.retry.Retry</code>
+    - description: A callable that accepts exactly the number of arguments in <code>required_kwargs</code>,
+        in order, and returns True if the arguments have sufficient data to determine
+        that the call is safe to retry (idempotent).
+      id: conditional_predicate
+      var_type: callable
+    - description: A list of keyword argument keys that will be extracted from the
+        API call and passed into the <code>conditional predicate</code> in order.
+        For example, <code>["query_params"]</code> is commmonly used for preconditions
+        in query_params.
+      id: required_kwargs
+      var_type: list(str)
+  type: class
+  uid: google.cloud.storage.retry.ConditionalRetryPolicy
+references: []

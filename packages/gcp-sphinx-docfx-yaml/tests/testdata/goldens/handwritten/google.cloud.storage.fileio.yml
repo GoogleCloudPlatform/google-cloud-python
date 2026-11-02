@@ -1,0 +1,40 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.fileio.BlobReader
+  - google.cloud.storage.fileio.BlobWriter
+  - google.cloud.storage.fileio.SlidingBuffer
+  fullName: google.cloud.storage.fileio
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: fileio
+  source:
+    id: fileio
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 0
+  summary: 'Module for file-like access of blobs, usually invoked via Blob.open().
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google.cloud.storage.fileio
+references:
+- fullName: google.cloud.storage.fileio.BlobReader
+  isExternal: false
+  name: BlobReader
+  parent: google.cloud.storage.fileio
+  uid: google.cloud.storage.fileio.BlobReader
+- fullName: google.cloud.storage.fileio.BlobWriter
+  isExternal: false
+  name: BlobWriter
+  parent: google.cloud.storage.fileio
+  uid: google.cloud.storage.fileio.BlobWriter
+- fullName: google.cloud.storage.fileio.SlidingBuffer
+  isExternal: false
+  name: SlidingBuffer
+  parent: google.cloud.storage.fileio
+  uid: google.cloud.storage.fileio.SlidingBuffer

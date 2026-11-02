@@ -1,0 +1,184 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.security.publicca.v1beta1",
+        "version": "v1beta1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-public-ca",
+    "version": "0.7.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.publicca_v1beta1.PublicCertificateAuthorityServiceAsyncClient",
+          "shortName": "PublicCertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.publicca_v1beta1.PublicCertificateAuthorityServiceAsyncClient.create_external_account_key",
+        "method": {
+          "fullName": "google.cloud.security.publicca.v1beta1.PublicCertificateAuthorityService.CreateExternalAccountKey",
+          "service": {
+            "fullName": "google.cloud.security.publicca.v1beta1.PublicCertificateAuthorityService",
+            "shortName": "PublicCertificateAuthorityService"
+          },
+          "shortName": "CreateExternalAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.publicca_v1beta1.types.CreateExternalAccountKeyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "external_account_key",
+            "type": "google.cloud.security.publicca_v1beta1.types.ExternalAccountKey"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.publicca_v1beta1.types.ExternalAccountKey",
+        "shortName": "create_external_account_key"
+      },
+      "description": "Sample for CreateExternalAccountKey",
+      "file": "publicca_v1beta1_generated_public_certificate_authority_service_create_external_account_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "publicca_v1beta1_generated_PublicCertificateAuthorityService_CreateExternalAccountKey_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "publicca_v1beta1_generated_public_certificate_authority_service_create_external_account_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.publicca_v1beta1.PublicCertificateAuthorityServiceClient",
+          "shortName": "PublicCertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.publicca_v1beta1.PublicCertificateAuthorityServiceClient.create_external_account_key",
+        "method": {
+          "fullName": "google.cloud.security.publicca.v1beta1.PublicCertificateAuthorityService.CreateExternalAccountKey",
+          "service": {
+            "fullName": "google.cloud.security.publicca.v1beta1.PublicCertificateAuthorityService",
+            "shortName": "PublicCertificateAuthorityService"
+          },
+          "shortName": "CreateExternalAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.publicca_v1beta1.types.CreateExternalAccountKeyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "external_account_key",
+            "type": "google.cloud.security.publicca_v1beta1.types.ExternalAccountKey"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.publicca_v1beta1.types.ExternalAccountKey",
+        "shortName": "create_external_account_key"
+      },
+      "description": "Sample for CreateExternalAccountKey",
+      "file": "publicca_v1beta1_generated_public_certificate_authority_service_create_external_account_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "publicca_v1beta1_generated_PublicCertificateAuthorityService_CreateExternalAccountKey_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "publicca_v1beta1_generated_public_certificate_authority_service_create_external_account_key_sync.py"
+    }
+  ]
+}

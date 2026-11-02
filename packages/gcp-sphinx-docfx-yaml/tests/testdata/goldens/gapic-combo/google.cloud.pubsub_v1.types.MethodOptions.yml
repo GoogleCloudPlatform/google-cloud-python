@@ -1,0 +1,19 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.MethodOptions
+  fullName: google.cloud.pubsub_v1.types.MethodOptions
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: MethodOptions
+  source:
+    id: MethodOptions
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.MethodOptions` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.MethodOptions
+references: []

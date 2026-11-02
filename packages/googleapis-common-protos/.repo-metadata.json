@@ -1,0 +1,14 @@
+{
+    "api_description": "Lets you define and config your API service.",
+    "api_id": "serviceconfig.googleapis.com",
+    "api_shortname": "serviceconfig",
+    "client_documentation": "https://github.com/googleapis/google-cloud-python/tree/main/packages/googleapis-common-protos",
+    "default_version": "apiVersion",
+    "distribution_name": "googleapis-common-protos",
+    "language": "python",
+    "library_type": "CORE",
+    "name": "googleapis-common-protos",
+    "name_pretty": "Service Config",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,49 @@
+common:
+  bucket_types:
+    - "regional"
+    - "rapid"
+  file_sizes_mib:
+    - 1024 # 1GiB
+  chunk_sizes_mib: [100]
+  rounds: 10
+
+workload:
+
+  ############# single process single coroutine #########
+  - name: "read_seq"
+    pattern: "seq"
+    coros: [1]
+    processes: [1]
+
+  - name: "read_rand"
+    pattern: "rand"
+    coros: [1]
+    processes: [1]
+
+  ############# single process multi coroutine #########
+
+  - name: "read_seq_multi_coros"
+    pattern: "seq"
+    coros: [2, 4, 8, 16]
+    processes: [1]
+
+  - name: "read_rand_multi_coros"
+    pattern: "rand"
+    coros: [2, 4, 8, 16]
+    processes: [1]
+
+  ############# multi process multi coroutine #########
+  - name: "read_seq_multi_process"
+    pattern: "seq"
+    coros: [1, 2, 4]
+    processes: [2, 16, 48, 96]
+
+  - name: "read_rand_multi_process"
+    pattern: "rand"
+    coros: [1, 2, 4]
+    processes: [2, 16, 48, 96]
+
+
+defaults:
+  DEFAULT_RAPID_BUCKET: "chandrasiri-benchmarks-zb"
+  DEFAULT_STANDARD_BUCKET: "chandrasiri-benchmarks-rb" 

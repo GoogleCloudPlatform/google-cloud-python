@@ -1,0 +1,63 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.workflows.executions_v1",
+  "protoPackage": "google.cloud.workflows.executions.v1",
+  "schema": "1.0",
+  "services": {
+    "Executions": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ExecutionsClient",
+          "rpcs": {
+            "CancelExecution": {
+              "methods": [
+                "cancel_execution"
+              ]
+            },
+            "CreateExecution": {
+              "methods": [
+                "create_execution"
+              ]
+            },
+            "GetExecution": {
+              "methods": [
+                "get_execution"
+              ]
+            },
+            "ListExecutions": {
+              "methods": [
+                "list_executions"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ExecutionsAsyncClient",
+          "rpcs": {
+            "CancelExecution": {
+              "methods": [
+                "cancel_execution"
+              ]
+            },
+            "CreateExecution": {
+              "methods": [
+                "create_execution"
+              ]
+            },
+            "GetExecution": {
+              "methods": [
+                "get_execution"
+              ]
+            },
+            "ListExecutions": {
+              "methods": [
+                "list_executions"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

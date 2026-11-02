@@ -1,0 +1,208 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.workloadmanager_v1",
+  "protoPackage": "google.cloud.workloadmanager.v1",
+  "schema": "1.0",
+  "services": {
+    "WorkloadManager": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WorkloadManagerClient",
+          "rpcs": {
+            "CreateEvaluation": {
+              "methods": [
+                "create_evaluation"
+              ]
+            },
+            "DeleteEvaluation": {
+              "methods": [
+                "delete_evaluation"
+              ]
+            },
+            "DeleteExecution": {
+              "methods": [
+                "delete_execution"
+              ]
+            },
+            "GetEvaluation": {
+              "methods": [
+                "get_evaluation"
+              ]
+            },
+            "GetExecution": {
+              "methods": [
+                "get_execution"
+              ]
+            },
+            "ListEvaluations": {
+              "methods": [
+                "list_evaluations"
+              ]
+            },
+            "ListExecutionResults": {
+              "methods": [
+                "list_execution_results"
+              ]
+            },
+            "ListExecutions": {
+              "methods": [
+                "list_executions"
+              ]
+            },
+            "ListRules": {
+              "methods": [
+                "list_rules"
+              ]
+            },
+            "ListScannedResources": {
+              "methods": [
+                "list_scanned_resources"
+              ]
+            },
+            "RunEvaluation": {
+              "methods": [
+                "run_evaluation"
+              ]
+            },
+            "UpdateEvaluation": {
+              "methods": [
+                "update_evaluation"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "WorkloadManagerAsyncClient",
+          "rpcs": {
+            "CreateEvaluation": {
+              "methods": [
+                "create_evaluation"
+              ]
+            },
+            "DeleteEvaluation": {
+              "methods": [
+                "delete_evaluation"
+              ]
+            },
+            "DeleteExecution": {
+              "methods": [
+                "delete_execution"
+              ]
+            },
+            "GetEvaluation": {
+              "methods": [
+                "get_evaluation"
+              ]
+            },
+            "GetExecution": {
+              "methods": [
+                "get_execution"
+              ]
+            },
+            "ListEvaluations": {
+              "methods": [
+                "list_evaluations"
+              ]
+            },
+            "ListExecutionResults": {
+              "methods": [
+                "list_execution_results"
+              ]
+            },
+            "ListExecutions": {
+              "methods": [
+                "list_executions"
+              ]
+            },
+            "ListRules": {
+              "methods": [
+                "list_rules"
+              ]
+            },
+            "ListScannedResources": {
+              "methods": [
+                "list_scanned_resources"
+              ]
+            },
+            "RunEvaluation": {
+              "methods": [
+                "run_evaluation"
+              ]
+            },
+            "UpdateEvaluation": {
+              "methods": [
+                "update_evaluation"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "WorkloadManagerClient",
+          "rpcs": {
+            "CreateEvaluation": {
+              "methods": [
+                "create_evaluation"
+              ]
+            },
+            "DeleteEvaluation": {
+              "methods": [
+                "delete_evaluation"
+              ]
+            },
+            "DeleteExecution": {
+              "methods": [
+                "delete_execution"
+              ]
+            },
+            "GetEvaluation": {
+              "methods": [
+                "get_evaluation"
+              ]
+            },
+            "GetExecution": {
+              "methods": [
+                "get_execution"
+              ]
+            },
+            "ListEvaluations": {
+              "methods": [
+                "list_evaluations"
+              ]
+            },
+            "ListExecutionResults": {
+              "methods": [
+                "list_execution_results"
+              ]
+            },
+            "ListExecutions": {
+              "methods": [
+                "list_executions"
+              ]
+            },
+            "ListRules": {
+              "methods": [
+                "list_rules"
+              ]
+            },
+            "ListScannedResources": {
+              "methods": [
+                "list_scanned_resources"
+              ]
+            },
+            "RunEvaluation": {
+              "methods": [
+                "run_evaluation"
+              ]
+            },
+            "UpdateEvaluation": {
+              "methods": [
+                "update_evaluation"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

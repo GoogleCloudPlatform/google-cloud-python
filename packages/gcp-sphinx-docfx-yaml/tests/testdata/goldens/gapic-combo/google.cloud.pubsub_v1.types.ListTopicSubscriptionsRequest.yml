@@ -1,0 +1,37 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the topic that subscriptions are\n   attached\
+      \ to. Format is\n   <code>projects/{project}/topics/{topic}</code>."
+    id: topic
+    var_type: str
+  - description: "Maximum number of subscription names to\n   return."
+    id: page_size
+    var_type: int
+  - description: "The value returned by the last\n   <code>ListTopicSubscriptionsResponse</code>;\
+      \ indicates that this is a\n   continuation of a prior <code>ListTopicSubscriptions</code>\
+      \ call, and\n   that the system should return the next page of data."
+    id: page_token
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.ListTopicSubscriptionsRequest
+  fullName: google.cloud.pubsub_v1.types.ListTopicSubscriptionsRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ListTopicSubscriptionsRequest
+  source:
+    id: ListTopicSubscriptionsRequest
+    path: null
+    startLine: null
+  summary: 'Request for the `ListTopicSubscriptions` method.
+
+    '
+  syntax:
+    content: "ListTopicSubscriptionsRequest(\n    mapping=None, *, ignore_unknown_fields=False,\
+      \ **kwargs\n)"
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ListTopicSubscriptionsRequest
+references: []

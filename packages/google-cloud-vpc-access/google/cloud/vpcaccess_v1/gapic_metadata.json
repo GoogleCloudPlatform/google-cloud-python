@@ -1,0 +1,88 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.vpcaccess_v1",
+  "protoPackage": "google.cloud.vpcaccess.v1",
+  "schema": "1.0",
+  "services": {
+    "VpcAccessService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "VpcAccessServiceClient",
+          "rpcs": {
+            "CreateConnector": {
+              "methods": [
+                "create_connector"
+              ]
+            },
+            "DeleteConnector": {
+              "methods": [
+                "delete_connector"
+              ]
+            },
+            "GetConnector": {
+              "methods": [
+                "get_connector"
+              ]
+            },
+            "ListConnectors": {
+              "methods": [
+                "list_connectors"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "VpcAccessServiceAsyncClient",
+          "rpcs": {
+            "CreateConnector": {
+              "methods": [
+                "create_connector"
+              ]
+            },
+            "DeleteConnector": {
+              "methods": [
+                "delete_connector"
+              ]
+            },
+            "GetConnector": {
+              "methods": [
+                "get_connector"
+              ]
+            },
+            "ListConnectors": {
+              "methods": [
+                "list_connectors"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "VpcAccessServiceClient",
+          "rpcs": {
+            "CreateConnector": {
+              "methods": [
+                "create_connector"
+              ]
+            },
+            "DeleteConnector": {
+              "methods": [
+                "delete_connector"
+              ]
+            },
+            "GetConnector": {
+              "methods": [
+                "get_connector"
+              ]
+            },
+            "ListConnectors": {
+              "methods": [
+                "list_connectors"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

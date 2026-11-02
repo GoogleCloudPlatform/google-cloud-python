@@ -1,0 +1,2676 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.firestore.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-firestore",
+    "version": "2.34.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.batch_get_documents",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.BatchGetDocuments",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "BatchGetDocuments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.BatchGetDocumentsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.BatchGetDocumentsResponse]",
+        "shortName": "batch_get_documents"
+      },
+      "description": "Sample for BatchGetDocuments",
+      "file": "firestore_v1_generated_firestore_batch_get_documents_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_BatchGetDocuments_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_batch_get_documents_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.batch_get_documents",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.BatchGetDocuments",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "BatchGetDocuments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.BatchGetDocumentsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.BatchGetDocumentsResponse]",
+        "shortName": "batch_get_documents"
+      },
+      "description": "Sample for BatchGetDocuments",
+      "file": "firestore_v1_generated_firestore_batch_get_documents_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_BatchGetDocuments_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_batch_get_documents_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.batch_write",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.BatchWrite",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "BatchWrite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.BatchWriteRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.BatchWriteResponse",
+        "shortName": "batch_write"
+      },
+      "description": "Sample for BatchWrite",
+      "file": "firestore_v1_generated_firestore_batch_write_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_BatchWrite_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_batch_write_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.batch_write",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.BatchWrite",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "BatchWrite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.BatchWriteRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.BatchWriteResponse",
+        "shortName": "batch_write"
+      },
+      "description": "Sample for BatchWrite",
+      "file": "firestore_v1_generated_firestore_batch_write_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_BatchWrite_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_batch_write_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.begin_transaction",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.BeginTransaction",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "BeginTransaction"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.BeginTransactionRequest"
+          },
+          {
+            "name": "database",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.BeginTransactionResponse",
+        "shortName": "begin_transaction"
+      },
+      "description": "Sample for BeginTransaction",
+      "file": "firestore_v1_generated_firestore_begin_transaction_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_BeginTransaction_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_begin_transaction_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.begin_transaction",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.BeginTransaction",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "BeginTransaction"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.BeginTransactionRequest"
+          },
+          {
+            "name": "database",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.BeginTransactionResponse",
+        "shortName": "begin_transaction"
+      },
+      "description": "Sample for BeginTransaction",
+      "file": "firestore_v1_generated_firestore_begin_transaction_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_BeginTransaction_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_begin_transaction_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.commit",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.Commit",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "Commit"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.CommitRequest"
+          },
+          {
+            "name": "database",
+            "type": "str"
+          },
+          {
+            "name": "writes",
+            "type": "MutableSequence[google.cloud.firestore_v1.types.Write]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.CommitResponse",
+        "shortName": "commit"
+      },
+      "description": "Sample for Commit",
+      "file": "firestore_v1_generated_firestore_commit_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_Commit_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_commit_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.commit",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.Commit",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "Commit"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.CommitRequest"
+          },
+          {
+            "name": "database",
+            "type": "str"
+          },
+          {
+            "name": "writes",
+            "type": "MutableSequence[google.cloud.firestore_v1.types.Write]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.CommitResponse",
+        "shortName": "commit"
+      },
+      "description": "Sample for Commit",
+      "file": "firestore_v1_generated_firestore_commit_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_Commit_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_commit_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.create_document",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.CreateDocument",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "CreateDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.CreateDocumentRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.Document",
+        "shortName": "create_document"
+      },
+      "description": "Sample for CreateDocument",
+      "file": "firestore_v1_generated_firestore_create_document_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_CreateDocument_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_create_document_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.create_document",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.CreateDocument",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "CreateDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.CreateDocumentRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.Document",
+        "shortName": "create_document"
+      },
+      "description": "Sample for CreateDocument",
+      "file": "firestore_v1_generated_firestore_create_document_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_CreateDocument_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_create_document_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.delete_document",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.DeleteDocument",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "DeleteDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.DeleteDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_document"
+      },
+      "description": "Sample for DeleteDocument",
+      "file": "firestore_v1_generated_firestore_delete_document_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_DeleteDocument_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_delete_document_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.delete_document",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.DeleteDocument",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "DeleteDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.DeleteDocumentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_document"
+      },
+      "description": "Sample for DeleteDocument",
+      "file": "firestore_v1_generated_firestore_delete_document_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_DeleteDocument_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_delete_document_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.execute_pipeline",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.ExecutePipeline",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "ExecutePipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.ExecutePipelineRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.ExecutePipelineResponse]",
+        "shortName": "execute_pipeline"
+      },
+      "description": "Sample for ExecutePipeline",
+      "file": "firestore_v1_generated_firestore_execute_pipeline_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_ExecutePipeline_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_execute_pipeline_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.execute_pipeline",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.ExecutePipeline",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "ExecutePipeline"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.ExecutePipelineRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.ExecutePipelineResponse]",
+        "shortName": "execute_pipeline"
+      },
+      "description": "Sample for ExecutePipeline",
+      "file": "firestore_v1_generated_firestore_execute_pipeline_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_ExecutePipeline_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_execute_pipeline_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.get_document",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.GetDocument",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "GetDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.GetDocumentRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.Document",
+        "shortName": "get_document"
+      },
+      "description": "Sample for GetDocument",
+      "file": "firestore_v1_generated_firestore_get_document_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_GetDocument_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_get_document_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.get_document",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.GetDocument",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "GetDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.GetDocumentRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.Document",
+        "shortName": "get_document"
+      },
+      "description": "Sample for GetDocument",
+      "file": "firestore_v1_generated_firestore_get_document_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_GetDocument_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_get_document_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.list_collection_ids",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.ListCollectionIds",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "ListCollectionIds"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.ListCollectionIdsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.services.firestore.pagers.ListCollectionIdsAsyncPager",
+        "shortName": "list_collection_ids"
+      },
+      "description": "Sample for ListCollectionIds",
+      "file": "firestore_v1_generated_firestore_list_collection_ids_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_ListCollectionIds_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_list_collection_ids_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.list_collection_ids",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.ListCollectionIds",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "ListCollectionIds"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.ListCollectionIdsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.services.firestore.pagers.ListCollectionIdsPager",
+        "shortName": "list_collection_ids"
+      },
+      "description": "Sample for ListCollectionIds",
+      "file": "firestore_v1_generated_firestore_list_collection_ids_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_ListCollectionIds_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_list_collection_ids_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.list_documents",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.ListDocuments",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "ListDocuments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.ListDocumentsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.services.firestore.pagers.ListDocumentsAsyncPager",
+        "shortName": "list_documents"
+      },
+      "description": "Sample for ListDocuments",
+      "file": "firestore_v1_generated_firestore_list_documents_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_ListDocuments_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_list_documents_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.list_documents",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.ListDocuments",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "ListDocuments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.ListDocumentsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.services.firestore.pagers.ListDocumentsPager",
+        "shortName": "list_documents"
+      },
+      "description": "Sample for ListDocuments",
+      "file": "firestore_v1_generated_firestore_list_documents_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_ListDocuments_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_list_documents_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.listen",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.Listen",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "Listen"
+        },
+        "parameters": [
+          {
+            "name": "requests",
+            "type": "Iterator[google.cloud.firestore_v1.types.ListenRequest]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.ListenResponse]",
+        "shortName": "listen"
+      },
+      "description": "Sample for Listen",
+      "file": "firestore_v1_generated_firestore_listen_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_Listen_async",
+      "segments": [
+        {
+          "end": 66,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 66,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 62,
+          "start": 60,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 67,
+          "start": 63,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_listen_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.listen",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.Listen",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "Listen"
+        },
+        "parameters": [
+          {
+            "name": "requests",
+            "type": "Iterator[google.cloud.firestore_v1.types.ListenRequest]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.ListenResponse]",
+        "shortName": "listen"
+      },
+      "description": "Sample for Listen",
+      "file": "firestore_v1_generated_firestore_listen_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_Listen_sync",
+      "segments": [
+        {
+          "end": 66,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 66,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 62,
+          "start": 60,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 67,
+          "start": 63,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_listen_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.partition_query",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.PartitionQuery",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "PartitionQuery"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.PartitionQueryRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.services.firestore.pagers.PartitionQueryAsyncPager",
+        "shortName": "partition_query"
+      },
+      "description": "Sample for PartitionQuery",
+      "file": "firestore_v1_generated_firestore_partition_query_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_PartitionQuery_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_partition_query_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.partition_query",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.PartitionQuery",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "PartitionQuery"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.PartitionQueryRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.services.firestore.pagers.PartitionQueryPager",
+        "shortName": "partition_query"
+      },
+      "description": "Sample for PartitionQuery",
+      "file": "firestore_v1_generated_firestore_partition_query_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_PartitionQuery_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_partition_query_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.rollback",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.Rollback",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "Rollback"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.RollbackRequest"
+          },
+          {
+            "name": "database",
+            "type": "str"
+          },
+          {
+            "name": "transaction",
+            "type": "bytes"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "rollback"
+      },
+      "description": "Sample for Rollback",
+      "file": "firestore_v1_generated_firestore_rollback_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_Rollback_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_rollback_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.rollback",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.Rollback",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "Rollback"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.RollbackRequest"
+          },
+          {
+            "name": "database",
+            "type": "str"
+          },
+          {
+            "name": "transaction",
+            "type": "bytes"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "rollback"
+      },
+      "description": "Sample for Rollback",
+      "file": "firestore_v1_generated_firestore_rollback_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_Rollback_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_rollback_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.run_aggregation_query",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.RunAggregationQuery",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "RunAggregationQuery"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.RunAggregationQueryRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.RunAggregationQueryResponse]",
+        "shortName": "run_aggregation_query"
+      },
+      "description": "Sample for RunAggregationQuery",
+      "file": "firestore_v1_generated_firestore_run_aggregation_query_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_RunAggregationQuery_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_run_aggregation_query_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.run_aggregation_query",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.RunAggregationQuery",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "RunAggregationQuery"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.RunAggregationQueryRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.RunAggregationQueryResponse]",
+        "shortName": "run_aggregation_query"
+      },
+      "description": "Sample for RunAggregationQuery",
+      "file": "firestore_v1_generated_firestore_run_aggregation_query_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_RunAggregationQuery_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_run_aggregation_query_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.run_query",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.RunQuery",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "RunQuery"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.RunQueryRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.RunQueryResponse]",
+        "shortName": "run_query"
+      },
+      "description": "Sample for RunQuery",
+      "file": "firestore_v1_generated_firestore_run_query_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_RunQuery_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_run_query_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.run_query",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.RunQuery",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "RunQuery"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.RunQueryRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.RunQueryResponse]",
+        "shortName": "run_query"
+      },
+      "description": "Sample for RunQuery",
+      "file": "firestore_v1_generated_firestore_run_query_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_RunQuery_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_run_query_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.update_document",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.UpdateDocument",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "UpdateDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.UpdateDocumentRequest"
+          },
+          {
+            "name": "document",
+            "type": "google.cloud.firestore_v1.types.Document"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.cloud.firestore_v1.types.DocumentMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.Document",
+        "shortName": "update_document"
+      },
+      "description": "Sample for UpdateDocument",
+      "file": "firestore_v1_generated_firestore_update_document_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_UpdateDocument_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_update_document_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.update_document",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.UpdateDocument",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "UpdateDocument"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.firestore_v1.types.UpdateDocumentRequest"
+          },
+          {
+            "name": "document",
+            "type": "google.cloud.firestore_v1.types.Document"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.cloud.firestore_v1.types.DocumentMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.firestore_v1.types.Document",
+        "shortName": "update_document"
+      },
+      "description": "Sample for UpdateDocument",
+      "file": "firestore_v1_generated_firestore_update_document_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_UpdateDocument_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_update_document_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient",
+          "shortName": "FirestoreAsyncClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreAsyncClient.write",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.Write",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "Write"
+        },
+        "parameters": [
+          {
+            "name": "requests",
+            "type": "Iterator[google.cloud.firestore_v1.types.WriteRequest]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.WriteResponse]",
+        "shortName": "write"
+      },
+      "description": "Sample for Write",
+      "file": "firestore_v1_generated_firestore_write_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_Write_async",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 56,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_write_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.firestore_v1.FirestoreClient",
+          "shortName": "FirestoreClient"
+        },
+        "fullName": "google.cloud.firestore_v1.FirestoreClient.write",
+        "method": {
+          "fullName": "google.firestore.v1.Firestore.Write",
+          "service": {
+            "fullName": "google.firestore.v1.Firestore",
+            "shortName": "Firestore"
+          },
+          "shortName": "Write"
+        },
+        "parameters": [
+          {
+            "name": "requests",
+            "type": "Iterator[google.cloud.firestore_v1.types.WriteRequest]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.firestore_v1.types.WriteResponse]",
+        "shortName": "write"
+      },
+      "description": "Sample for Write",
+      "file": "firestore_v1_generated_firestore_write_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "firestore_v1_generated_Firestore_Write_sync",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 56,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "firestore_v1_generated_firestore_write_sync.py"
+    }
+  ]
+}

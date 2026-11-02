@@ -1,0 +1,14 @@
+click
+google-api-core
+googleapis-common-protos
+jinja2
+MarkupSafe
+protobuf>=6.33.5 # for CVE-2026-0994. See https://github.com/advisories/GHSA-7gcm-g887-7qv7 and https://protobuf.dev/support/version-support/#python
+pypandoc
+PyYAML
+grpc-google-iam-v1
+proto-plus
+pytest-asyncio
+libcst
+inflection
+aiohttp

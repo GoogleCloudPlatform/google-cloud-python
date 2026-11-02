@@ -1,0 +1,776 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.run_v2",
+  "protoPackage": "google.cloud.run.v2",
+  "schema": "1.0",
+  "services": {
+    "Builds": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "BuildsClient",
+          "rpcs": {
+            "SubmitBuild": {
+              "methods": [
+                "submit_build"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "BuildsAsyncClient",
+          "rpcs": {
+            "SubmitBuild": {
+              "methods": [
+                "submit_build"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "BuildsClient",
+          "rpcs": {
+            "SubmitBuild": {
+              "methods": [
+                "submit_build"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Executions": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ExecutionsClient",
+          "rpcs": {
+            "CancelExecution": {
+              "methods": [
+                "cancel_execution"
+              ]
+            },
+            "DeleteExecution": {
+              "methods": [
+                "delete_execution"
+              ]
+            },
+            "GetExecution": {
+              "methods": [
+                "get_execution"
+              ]
+            },
+            "ListExecutions": {
+              "methods": [
+                "list_executions"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ExecutionsAsyncClient",
+          "rpcs": {
+            "CancelExecution": {
+              "methods": [
+                "cancel_execution"
+              ]
+            },
+            "DeleteExecution": {
+              "methods": [
+                "delete_execution"
+              ]
+            },
+            "GetExecution": {
+              "methods": [
+                "get_execution"
+              ]
+            },
+            "ListExecutions": {
+              "methods": [
+                "list_executions"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ExecutionsClient",
+          "rpcs": {
+            "CancelExecution": {
+              "methods": [
+                "cancel_execution"
+              ]
+            },
+            "DeleteExecution": {
+              "methods": [
+                "delete_execution"
+              ]
+            },
+            "GetExecution": {
+              "methods": [
+                "get_execution"
+              ]
+            },
+            "ListExecutions": {
+              "methods": [
+                "list_executions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Instances": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "InstancesClient",
+          "rpcs": {
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "StartInstance": {
+              "methods": [
+                "start_instance"
+              ]
+            },
+            "StopInstance": {
+              "methods": [
+                "stop_instance"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "InstancesAsyncClient",
+          "rpcs": {
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "StartInstance": {
+              "methods": [
+                "start_instance"
+              ]
+            },
+            "StopInstance": {
+              "methods": [
+                "stop_instance"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "InstancesClient",
+          "rpcs": {
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "StartInstance": {
+              "methods": [
+                "start_instance"
+              ]
+            },
+            "StopInstance": {
+              "methods": [
+                "stop_instance"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Jobs": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "JobsClient",
+          "rpcs": {
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "RunJob": {
+              "methods": [
+                "run_job"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "JobsAsyncClient",
+          "rpcs": {
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "RunJob": {
+              "methods": [
+                "run_job"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "JobsClient",
+          "rpcs": {
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "RunJob": {
+              "methods": [
+                "run_job"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Revisions": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "RevisionsClient",
+          "rpcs": {
+            "DeleteRevision": {
+              "methods": [
+                "delete_revision"
+              ]
+            },
+            "GetRevision": {
+              "methods": [
+                "get_revision"
+              ]
+            },
+            "ListRevisions": {
+              "methods": [
+                "list_revisions"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "RevisionsAsyncClient",
+          "rpcs": {
+            "DeleteRevision": {
+              "methods": [
+                "delete_revision"
+              ]
+            },
+            "GetRevision": {
+              "methods": [
+                "get_revision"
+              ]
+            },
+            "ListRevisions": {
+              "methods": [
+                "list_revisions"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "RevisionsClient",
+          "rpcs": {
+            "DeleteRevision": {
+              "methods": [
+                "delete_revision"
+              ]
+            },
+            "GetRevision": {
+              "methods": [
+                "get_revision"
+              ]
+            },
+            "ListRevisions": {
+              "methods": [
+                "list_revisions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Services": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ServicesClient",
+          "rpcs": {
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ServicesAsyncClient",
+          "rpcs": {
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ServicesClient",
+          "rpcs": {
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Tasks": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "TasksClient",
+          "rpcs": {
+            "GetTask": {
+              "methods": [
+                "get_task"
+              ]
+            },
+            "ListTasks": {
+              "methods": [
+                "list_tasks"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "TasksAsyncClient",
+          "rpcs": {
+            "GetTask": {
+              "methods": [
+                "get_task"
+              ]
+            },
+            "ListTasks": {
+              "methods": [
+                "list_tasks"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "TasksClient",
+          "rpcs": {
+            "GetTask": {
+              "methods": [
+                "get_task"
+              ]
+            },
+            "ListTasks": {
+              "methods": [
+                "list_tasks"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "WorkerPools": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WorkerPoolsClient",
+          "rpcs": {
+            "CreateWorkerPool": {
+              "methods": [
+                "create_worker_pool"
+              ]
+            },
+            "DeleteWorkerPool": {
+              "methods": [
+                "delete_worker_pool"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetWorkerPool": {
+              "methods": [
+                "get_worker_pool"
+              ]
+            },
+            "ListWorkerPools": {
+              "methods": [
+                "list_worker_pools"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateWorkerPool": {
+              "methods": [
+                "update_worker_pool"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "WorkerPoolsAsyncClient",
+          "rpcs": {
+            "CreateWorkerPool": {
+              "methods": [
+                "create_worker_pool"
+              ]
+            },
+            "DeleteWorkerPool": {
+              "methods": [
+                "delete_worker_pool"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetWorkerPool": {
+              "methods": [
+                "get_worker_pool"
+              ]
+            },
+            "ListWorkerPools": {
+              "methods": [
+                "list_worker_pools"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateWorkerPool": {
+              "methods": [
+                "update_worker_pool"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "WorkerPoolsClient",
+          "rpcs": {
+            "CreateWorkerPool": {
+              "methods": [
+                "create_worker_pool"
+              ]
+            },
+            "DeleteWorkerPool": {
+              "methods": [
+                "delete_worker_pool"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetWorkerPool": {
+              "methods": [
+                "get_worker_pool"
+              ]
+            },
+            "ListWorkerPools": {
+              "methods": [
+                "list_worker_pools"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateWorkerPool": {
+              "methods": [
+                "update_worker_pool"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

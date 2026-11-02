@@ -1,0 +1,6410 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.storage.control.v2",
+        "version": "v2"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-storage-control",
+    "version": "1.17.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.create_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.CreateAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "CreateAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.CreateAnywhereCacheRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "anywhere_cache",
+            "type": "google.cloud.storage_control_v2.types.AnywhereCache"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_anywhere_cache"
+      },
+      "description": "Sample for CreateAnywhereCache",
+      "file": "storage_v2_generated_storage_control_create_anywhere_cache_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_CreateAnywhereCache_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_create_anywhere_cache_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.create_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.CreateAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "CreateAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.CreateAnywhereCacheRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "anywhere_cache",
+            "type": "google.cloud.storage_control_v2.types.AnywhereCache"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_anywhere_cache"
+      },
+      "description": "Sample for CreateAnywhereCache",
+      "file": "storage_v2_generated_storage_control_create_anywhere_cache_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_CreateAnywhereCache_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_create_anywhere_cache_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.create_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.CreateFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "CreateFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.CreateFolderRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "folder",
+            "type": "google.cloud.storage_control_v2.types.Folder"
+          },
+          {
+            "name": "folder_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.Folder",
+        "shortName": "create_folder"
+      },
+      "description": "Sample for CreateFolder",
+      "file": "storage_v2_generated_storage_control_create_folder_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_CreateFolder_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_create_folder_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.create_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.CreateFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "CreateFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.CreateFolderRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "folder",
+            "type": "google.cloud.storage_control_v2.types.Folder"
+          },
+          {
+            "name": "folder_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.Folder",
+        "shortName": "create_folder"
+      },
+      "description": "Sample for CreateFolder",
+      "file": "storage_v2_generated_storage_control_create_folder_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_CreateFolder_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_create_folder_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.create_managed_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.CreateManagedFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "CreateManagedFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.CreateManagedFolderRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "managed_folder",
+            "type": "google.cloud.storage_control_v2.types.ManagedFolder"
+          },
+          {
+            "name": "managed_folder_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.ManagedFolder",
+        "shortName": "create_managed_folder"
+      },
+      "description": "Sample for CreateManagedFolder",
+      "file": "storage_v2_generated_storage_control_create_managed_folder_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_CreateManagedFolder_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_create_managed_folder_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.create_managed_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.CreateManagedFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "CreateManagedFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.CreateManagedFolderRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "managed_folder",
+            "type": "google.cloud.storage_control_v2.types.ManagedFolder"
+          },
+          {
+            "name": "managed_folder_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.ManagedFolder",
+        "shortName": "create_managed_folder"
+      },
+      "description": "Sample for CreateManagedFolder",
+      "file": "storage_v2_generated_storage_control_create_managed_folder_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_CreateManagedFolder_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_create_managed_folder_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.create_rapid_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.CreateRapidCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "CreateRapidCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.CreateRapidCacheRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "rapid_cache",
+            "type": "google.cloud.storage_control_v2.types.RapidCache"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_rapid_cache"
+      },
+      "description": "Sample for CreateRapidCache",
+      "file": "storage_v2_generated_storage_control_create_rapid_cache_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_CreateRapidCache_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_create_rapid_cache_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.create_rapid_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.CreateRapidCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "CreateRapidCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.CreateRapidCacheRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "rapid_cache",
+            "type": "google.cloud.storage_control_v2.types.RapidCache"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_rapid_cache"
+      },
+      "description": "Sample for CreateRapidCache",
+      "file": "storage_v2_generated_storage_control_create_rapid_cache_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_CreateRapidCache_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_create_rapid_cache_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.delete_folder_recursive",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.DeleteFolderRecursive",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "DeleteFolderRecursive"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.DeleteFolderRecursiveRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_folder_recursive"
+      },
+      "description": "Sample for DeleteFolderRecursive",
+      "file": "storage_v2_generated_storage_control_delete_folder_recursive_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_DeleteFolderRecursive_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_delete_folder_recursive_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.delete_folder_recursive",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.DeleteFolderRecursive",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "DeleteFolderRecursive"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.DeleteFolderRecursiveRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_folder_recursive"
+      },
+      "description": "Sample for DeleteFolderRecursive",
+      "file": "storage_v2_generated_storage_control_delete_folder_recursive_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_DeleteFolderRecursive_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_delete_folder_recursive_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.delete_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.DeleteFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "DeleteFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.DeleteFolderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_folder"
+      },
+      "description": "Sample for DeleteFolder",
+      "file": "storage_v2_generated_storage_control_delete_folder_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_DeleteFolder_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_delete_folder_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.delete_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.DeleteFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "DeleteFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.DeleteFolderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_folder"
+      },
+      "description": "Sample for DeleteFolder",
+      "file": "storage_v2_generated_storage_control_delete_folder_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_DeleteFolder_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_delete_folder_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.delete_managed_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.DeleteManagedFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "DeleteManagedFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.DeleteManagedFolderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_managed_folder"
+      },
+      "description": "Sample for DeleteManagedFolder",
+      "file": "storage_v2_generated_storage_control_delete_managed_folder_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_DeleteManagedFolder_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_delete_managed_folder_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.delete_managed_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.DeleteManagedFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "DeleteManagedFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.DeleteManagedFolderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_managed_folder"
+      },
+      "description": "Sample for DeleteManagedFolder",
+      "file": "storage_v2_generated_storage_control_delete_managed_folder_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_DeleteManagedFolder_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_delete_managed_folder_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.disable_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.DisableAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "DisableAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.DisableAnywhereCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.AnywhereCache",
+        "shortName": "disable_anywhere_cache"
+      },
+      "description": "Sample for DisableAnywhereCache",
+      "file": "storage_v2_generated_storage_control_disable_anywhere_cache_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_DisableAnywhereCache_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_disable_anywhere_cache_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.disable_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.DisableAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "DisableAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.DisableAnywhereCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.AnywhereCache",
+        "shortName": "disable_anywhere_cache"
+      },
+      "description": "Sample for DisableAnywhereCache",
+      "file": "storage_v2_generated_storage_control_disable_anywhere_cache_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_DisableAnywhereCache_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_disable_anywhere_cache_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.disable_rapid_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.DisableRapidCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "DisableRapidCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.DisableRapidCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "disable_rapid_cache"
+      },
+      "description": "Sample for DisableRapidCache",
+      "file": "storage_v2_generated_storage_control_disable_rapid_cache_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_DisableRapidCache_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_disable_rapid_cache_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.disable_rapid_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.DisableRapidCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "DisableRapidCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.DisableRapidCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "disable_rapid_cache"
+      },
+      "description": "Sample for DisableRapidCache",
+      "file": "storage_v2_generated_storage_control_disable_rapid_cache_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_DisableRapidCache_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_disable_rapid_cache_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.get_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetAnywhereCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.AnywhereCache",
+        "shortName": "get_anywhere_cache"
+      },
+      "description": "Sample for GetAnywhereCache",
+      "file": "storage_v2_generated_storage_control_get_anywhere_cache_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetAnywhereCache_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_anywhere_cache_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.get_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetAnywhereCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.AnywhereCache",
+        "shortName": "get_anywhere_cache"
+      },
+      "description": "Sample for GetAnywhereCache",
+      "file": "storage_v2_generated_storage_control_get_anywhere_cache_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetAnywhereCache_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_anywhere_cache_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.get_folder_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetFolderIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetFolderIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetFolderIntelligenceConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "get_folder_intelligence_config"
+      },
+      "description": "Sample for GetFolderIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_get_folder_intelligence_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetFolderIntelligenceConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_folder_intelligence_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.get_folder_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetFolderIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetFolderIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetFolderIntelligenceConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "get_folder_intelligence_config"
+      },
+      "description": "Sample for GetFolderIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_get_folder_intelligence_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetFolderIntelligenceConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_folder_intelligence_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.get_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetFolderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.Folder",
+        "shortName": "get_folder"
+      },
+      "description": "Sample for GetFolder",
+      "file": "storage_v2_generated_storage_control_get_folder_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetFolder_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_folder_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.get_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetFolderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.Folder",
+        "shortName": "get_folder"
+      },
+      "description": "Sample for GetFolder",
+      "file": "storage_v2_generated_storage_control_get_folder_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetFolder_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_folder_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.get_iam_policy",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetIamPolicy",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "storage_v2_generated_storage_control_get_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.get_iam_policy",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetIamPolicy",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "storage_v2_generated_storage_control_get_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.get_intelligence_finding_revision",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetIntelligenceFindingRevision",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetIntelligenceFindingRevision"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetIntelligenceFindingRevisionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceFindingRevision",
+        "shortName": "get_intelligence_finding_revision"
+      },
+      "description": "Sample for GetIntelligenceFindingRevision",
+      "file": "storage_v2_generated_storage_control_get_intelligence_finding_revision_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetIntelligenceFindingRevision_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_intelligence_finding_revision_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.get_intelligence_finding_revision",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetIntelligenceFindingRevision",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetIntelligenceFindingRevision"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetIntelligenceFindingRevisionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceFindingRevision",
+        "shortName": "get_intelligence_finding_revision"
+      },
+      "description": "Sample for GetIntelligenceFindingRevision",
+      "file": "storage_v2_generated_storage_control_get_intelligence_finding_revision_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetIntelligenceFindingRevision_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_intelligence_finding_revision_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.get_intelligence_finding",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetIntelligenceFinding",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetIntelligenceFinding"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetIntelligenceFindingRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceFinding",
+        "shortName": "get_intelligence_finding"
+      },
+      "description": "Sample for GetIntelligenceFinding",
+      "file": "storage_v2_generated_storage_control_get_intelligence_finding_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetIntelligenceFinding_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_intelligence_finding_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.get_intelligence_finding",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetIntelligenceFinding",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetIntelligenceFinding"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetIntelligenceFindingRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceFinding",
+        "shortName": "get_intelligence_finding"
+      },
+      "description": "Sample for GetIntelligenceFinding",
+      "file": "storage_v2_generated_storage_control_get_intelligence_finding_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetIntelligenceFinding_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_intelligence_finding_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.get_managed_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetManagedFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetManagedFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetManagedFolderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.ManagedFolder",
+        "shortName": "get_managed_folder"
+      },
+      "description": "Sample for GetManagedFolder",
+      "file": "storage_v2_generated_storage_control_get_managed_folder_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetManagedFolder_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_managed_folder_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.get_managed_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetManagedFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetManagedFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetManagedFolderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.ManagedFolder",
+        "shortName": "get_managed_folder"
+      },
+      "description": "Sample for GetManagedFolder",
+      "file": "storage_v2_generated_storage_control_get_managed_folder_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetManagedFolder_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_managed_folder_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.get_organization_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetOrganizationIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetOrganizationIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetOrganizationIntelligenceConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "get_organization_intelligence_config"
+      },
+      "description": "Sample for GetOrganizationIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_get_organization_intelligence_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetOrganizationIntelligenceConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_organization_intelligence_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.get_organization_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetOrganizationIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetOrganizationIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetOrganizationIntelligenceConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "get_organization_intelligence_config"
+      },
+      "description": "Sample for GetOrganizationIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_get_organization_intelligence_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetOrganizationIntelligenceConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_organization_intelligence_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.get_project_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetProjectIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetProjectIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetProjectIntelligenceConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "get_project_intelligence_config"
+      },
+      "description": "Sample for GetProjectIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_get_project_intelligence_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetProjectIntelligenceConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_project_intelligence_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.get_project_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetProjectIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetProjectIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetProjectIntelligenceConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "get_project_intelligence_config"
+      },
+      "description": "Sample for GetProjectIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_get_project_intelligence_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetProjectIntelligenceConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_project_intelligence_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.get_rapid_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetRapidCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetRapidCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetRapidCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.RapidCache",
+        "shortName": "get_rapid_cache"
+      },
+      "description": "Sample for GetRapidCache",
+      "file": "storage_v2_generated_storage_control_get_rapid_cache_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetRapidCache_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_rapid_cache_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.get_rapid_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetRapidCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetRapidCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetRapidCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.RapidCache",
+        "shortName": "get_rapid_cache"
+      },
+      "description": "Sample for GetRapidCache",
+      "file": "storage_v2_generated_storage_control_get_rapid_cache_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetRapidCache_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_rapid_cache_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.get_storage_layout",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetStorageLayout",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetStorageLayout"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetStorageLayoutRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.StorageLayout",
+        "shortName": "get_storage_layout"
+      },
+      "description": "Sample for GetStorageLayout",
+      "file": "storage_v2_generated_storage_control_get_storage_layout_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetStorageLayout_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_storage_layout_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.get_storage_layout",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.GetStorageLayout",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "GetStorageLayout"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.GetStorageLayoutRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.StorageLayout",
+        "shortName": "get_storage_layout"
+      },
+      "description": "Sample for GetStorageLayout",
+      "file": "storage_v2_generated_storage_control_get_storage_layout_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_GetStorageLayout_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_get_storage_layout_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.list_anywhere_caches",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListAnywhereCaches",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListAnywhereCaches"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListAnywhereCachesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListAnywhereCachesAsyncPager",
+        "shortName": "list_anywhere_caches"
+      },
+      "description": "Sample for ListAnywhereCaches",
+      "file": "storage_v2_generated_storage_control_list_anywhere_caches_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListAnywhereCaches_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_anywhere_caches_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.list_anywhere_caches",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListAnywhereCaches",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListAnywhereCaches"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListAnywhereCachesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListAnywhereCachesPager",
+        "shortName": "list_anywhere_caches"
+      },
+      "description": "Sample for ListAnywhereCaches",
+      "file": "storage_v2_generated_storage_control_list_anywhere_caches_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListAnywhereCaches_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_anywhere_caches_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.list_folders",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListFolders",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListFolders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListFoldersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListFoldersAsyncPager",
+        "shortName": "list_folders"
+      },
+      "description": "Sample for ListFolders",
+      "file": "storage_v2_generated_storage_control_list_folders_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListFolders_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_folders_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.list_folders",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListFolders",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListFolders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListFoldersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListFoldersPager",
+        "shortName": "list_folders"
+      },
+      "description": "Sample for ListFolders",
+      "file": "storage_v2_generated_storage_control_list_folders_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListFolders_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_folders_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.list_intelligence_finding_revisions",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListIntelligenceFindingRevisions",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListIntelligenceFindingRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListIntelligenceFindingRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListIntelligenceFindingRevisionsAsyncPager",
+        "shortName": "list_intelligence_finding_revisions"
+      },
+      "description": "Sample for ListIntelligenceFindingRevisions",
+      "file": "storage_v2_generated_storage_control_list_intelligence_finding_revisions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListIntelligenceFindingRevisions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_intelligence_finding_revisions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.list_intelligence_finding_revisions",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListIntelligenceFindingRevisions",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListIntelligenceFindingRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListIntelligenceFindingRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListIntelligenceFindingRevisionsPager",
+        "shortName": "list_intelligence_finding_revisions"
+      },
+      "description": "Sample for ListIntelligenceFindingRevisions",
+      "file": "storage_v2_generated_storage_control_list_intelligence_finding_revisions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListIntelligenceFindingRevisions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_intelligence_finding_revisions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.list_intelligence_findings",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListIntelligenceFindings",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListIntelligenceFindings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListIntelligenceFindingsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListIntelligenceFindingsAsyncPager",
+        "shortName": "list_intelligence_findings"
+      },
+      "description": "Sample for ListIntelligenceFindings",
+      "file": "storage_v2_generated_storage_control_list_intelligence_findings_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListIntelligenceFindings_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_intelligence_findings_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.list_intelligence_findings",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListIntelligenceFindings",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListIntelligenceFindings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListIntelligenceFindingsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListIntelligenceFindingsPager",
+        "shortName": "list_intelligence_findings"
+      },
+      "description": "Sample for ListIntelligenceFindings",
+      "file": "storage_v2_generated_storage_control_list_intelligence_findings_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListIntelligenceFindings_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_intelligence_findings_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.list_managed_folders",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListManagedFolders",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListManagedFolders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListManagedFoldersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListManagedFoldersAsyncPager",
+        "shortName": "list_managed_folders"
+      },
+      "description": "Sample for ListManagedFolders",
+      "file": "storage_v2_generated_storage_control_list_managed_folders_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListManagedFolders_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_managed_folders_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.list_managed_folders",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListManagedFolders",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListManagedFolders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListManagedFoldersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListManagedFoldersPager",
+        "shortName": "list_managed_folders"
+      },
+      "description": "Sample for ListManagedFolders",
+      "file": "storage_v2_generated_storage_control_list_managed_folders_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListManagedFolders_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_managed_folders_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.list_rapid_caches",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListRapidCaches",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListRapidCaches"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListRapidCachesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListRapidCachesAsyncPager",
+        "shortName": "list_rapid_caches"
+      },
+      "description": "Sample for ListRapidCaches",
+      "file": "storage_v2_generated_storage_control_list_rapid_caches_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListRapidCaches_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_rapid_caches_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.list_rapid_caches",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ListRapidCaches",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ListRapidCaches"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ListRapidCachesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.ListRapidCachesPager",
+        "shortName": "list_rapid_caches"
+      },
+      "description": "Sample for ListRapidCaches",
+      "file": "storage_v2_generated_storage_control_list_rapid_caches_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ListRapidCaches_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_list_rapid_caches_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.pause_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.PauseAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "PauseAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.PauseAnywhereCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.AnywhereCache",
+        "shortName": "pause_anywhere_cache"
+      },
+      "description": "Sample for PauseAnywhereCache",
+      "file": "storage_v2_generated_storage_control_pause_anywhere_cache_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_PauseAnywhereCache_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_pause_anywhere_cache_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.pause_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.PauseAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "PauseAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.PauseAnywhereCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.AnywhereCache",
+        "shortName": "pause_anywhere_cache"
+      },
+      "description": "Sample for PauseAnywhereCache",
+      "file": "storage_v2_generated_storage_control_pause_anywhere_cache_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_PauseAnywhereCache_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_pause_anywhere_cache_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.rename_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.RenameFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "RenameFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.RenameFolderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "destination_folder_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "rename_folder"
+      },
+      "description": "Sample for RenameFolder",
+      "file": "storage_v2_generated_storage_control_rename_folder_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_RenameFolder_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_rename_folder_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.rename_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.RenameFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "RenameFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.RenameFolderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "destination_folder_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "rename_folder"
+      },
+      "description": "Sample for RenameFolder",
+      "file": "storage_v2_generated_storage_control_rename_folder_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_RenameFolder_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_rename_folder_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.resume_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ResumeAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ResumeAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ResumeAnywhereCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.AnywhereCache",
+        "shortName": "resume_anywhere_cache"
+      },
+      "description": "Sample for ResumeAnywhereCache",
+      "file": "storage_v2_generated_storage_control_resume_anywhere_cache_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ResumeAnywhereCache_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_resume_anywhere_cache_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.resume_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ResumeAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ResumeAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ResumeAnywhereCacheRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.AnywhereCache",
+        "shortName": "resume_anywhere_cache"
+      },
+      "description": "Sample for ResumeAnywhereCache",
+      "file": "storage_v2_generated_storage_control_resume_anywhere_cache_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ResumeAnywhereCache_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_resume_anywhere_cache_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.set_iam_policy",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.SetIamPolicy",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "storage_v2_generated_storage_control_set_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_SetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_set_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.set_iam_policy",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.SetIamPolicy",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "storage_v2_generated_storage_control_set_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_SetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_set_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.summarize_intelligence_findings",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.SummarizeIntelligenceFindings",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "SummarizeIntelligenceFindings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.SummarizeIntelligenceFindingsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.SummarizeIntelligenceFindingsAsyncPager",
+        "shortName": "summarize_intelligence_findings"
+      },
+      "description": "Sample for SummarizeIntelligenceFindings",
+      "file": "storage_v2_generated_storage_control_summarize_intelligence_findings_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_SummarizeIntelligenceFindings_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_summarize_intelligence_findings_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.summarize_intelligence_findings",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.SummarizeIntelligenceFindings",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "SummarizeIntelligenceFindings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.SummarizeIntelligenceFindingsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.services.storage_control.pagers.SummarizeIntelligenceFindingsPager",
+        "shortName": "summarize_intelligence_findings"
+      },
+      "description": "Sample for SummarizeIntelligenceFindings",
+      "file": "storage_v2_generated_storage_control_summarize_intelligence_findings_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_SummarizeIntelligenceFindings_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_summarize_intelligence_findings_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.TestIamPermissions",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "permissions",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "storage_v2_generated_storage_control_test_iam_permissions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_TestIamPermissions_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_test_iam_permissions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.TestIamPermissions",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "permissions",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "storage_v2_generated_storage_control_test_iam_permissions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_TestIamPermissions_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_test_iam_permissions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.update_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateAnywhereCacheRequest"
+          },
+          {
+            "name": "anywhere_cache",
+            "type": "google.cloud.storage_control_v2.types.AnywhereCache"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_anywhere_cache"
+      },
+      "description": "Sample for UpdateAnywhereCache",
+      "file": "storage_v2_generated_storage_control_update_anywhere_cache_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateAnywhereCache_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_anywhere_cache_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.update_anywhere_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateAnywhereCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateAnywhereCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateAnywhereCacheRequest"
+          },
+          {
+            "name": "anywhere_cache",
+            "type": "google.cloud.storage_control_v2.types.AnywhereCache"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_anywhere_cache"
+      },
+      "description": "Sample for UpdateAnywhereCache",
+      "file": "storage_v2_generated_storage_control_update_anywhere_cache_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateAnywhereCache_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_anywhere_cache_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.update_folder_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateFolderIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateFolderIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateFolderIntelligenceConfigRequest"
+          },
+          {
+            "name": "intelligence_config",
+            "type": "google.cloud.storage_control_v2.types.IntelligenceConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "update_folder_intelligence_config"
+      },
+      "description": "Sample for UpdateFolderIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_update_folder_intelligence_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateFolderIntelligenceConfig_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_folder_intelligence_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.update_folder_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateFolderIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateFolderIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateFolderIntelligenceConfigRequest"
+          },
+          {
+            "name": "intelligence_config",
+            "type": "google.cloud.storage_control_v2.types.IntelligenceConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "update_folder_intelligence_config"
+      },
+      "description": "Sample for UpdateFolderIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_update_folder_intelligence_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateFolderIntelligenceConfig_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_folder_intelligence_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.update_managed_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateManagedFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateManagedFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateManagedFolderRequest"
+          },
+          {
+            "name": "managed_folder",
+            "type": "google.cloud.storage_control_v2.types.ManagedFolder"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.ManagedFolder",
+        "shortName": "update_managed_folder"
+      },
+      "description": "Sample for UpdateManagedFolder",
+      "file": "storage_v2_generated_storage_control_update_managed_folder_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateManagedFolder_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_managed_folder_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.update_managed_folder",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateManagedFolder",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateManagedFolder"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateManagedFolderRequest"
+          },
+          {
+            "name": "managed_folder",
+            "type": "google.cloud.storage_control_v2.types.ManagedFolder"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.ManagedFolder",
+        "shortName": "update_managed_folder"
+      },
+      "description": "Sample for UpdateManagedFolder",
+      "file": "storage_v2_generated_storage_control_update_managed_folder_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateManagedFolder_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_managed_folder_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.update_organization_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateOrganizationIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateOrganizationIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateOrganizationIntelligenceConfigRequest"
+          },
+          {
+            "name": "intelligence_config",
+            "type": "google.cloud.storage_control_v2.types.IntelligenceConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "update_organization_intelligence_config"
+      },
+      "description": "Sample for UpdateOrganizationIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_update_organization_intelligence_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateOrganizationIntelligenceConfig_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_organization_intelligence_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.update_organization_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateOrganizationIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateOrganizationIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateOrganizationIntelligenceConfigRequest"
+          },
+          {
+            "name": "intelligence_config",
+            "type": "google.cloud.storage_control_v2.types.IntelligenceConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "update_organization_intelligence_config"
+      },
+      "description": "Sample for UpdateOrganizationIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_update_organization_intelligence_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateOrganizationIntelligenceConfig_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_organization_intelligence_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.update_project_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateProjectIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateProjectIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateProjectIntelligenceConfigRequest"
+          },
+          {
+            "name": "intelligence_config",
+            "type": "google.cloud.storage_control_v2.types.IntelligenceConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "update_project_intelligence_config"
+      },
+      "description": "Sample for UpdateProjectIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_update_project_intelligence_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateProjectIntelligenceConfig_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_project_intelligence_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.update_project_intelligence_config",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateProjectIntelligenceConfig",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateProjectIntelligenceConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateProjectIntelligenceConfigRequest"
+          },
+          {
+            "name": "intelligence_config",
+            "type": "google.cloud.storage_control_v2.types.IntelligenceConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.IntelligenceConfig",
+        "shortName": "update_project_intelligence_config"
+      },
+      "description": "Sample for UpdateProjectIntelligenceConfig",
+      "file": "storage_v2_generated_storage_control_update_project_intelligence_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateProjectIntelligenceConfig_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_project_intelligence_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.update_rapid_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateRapidCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateRapidCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateRapidCacheRequest"
+          },
+          {
+            "name": "rapid_cache",
+            "type": "google.cloud.storage_control_v2.types.RapidCache"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_rapid_cache"
+      },
+      "description": "Sample for UpdateRapidCache",
+      "file": "storage_v2_generated_storage_control_update_rapid_cache_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateRapidCache_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_rapid_cache_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.update_rapid_cache",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.UpdateRapidCache",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "UpdateRapidCache"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.UpdateRapidCacheRequest"
+          },
+          {
+            "name": "rapid_cache",
+            "type": "google.cloud.storage_control_v2.types.RapidCache"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_rapid_cache"
+      },
+      "description": "Sample for UpdateRapidCache",
+      "file": "storage_v2_generated_storage_control_update_rapid_cache_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_UpdateRapidCache_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_update_rapid_cache_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient",
+          "shortName": "StorageControlAsyncClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlAsyncClient.view_object_full_context",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ViewObjectFullContext",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ViewObjectFullContext"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ViewObjectFullContextRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "context_key",
+            "type": "str"
+          },
+          {
+            "name": "generation",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.ObjectFullContext",
+        "shortName": "view_object_full_context"
+      },
+      "description": "Sample for ViewObjectFullContext",
+      "file": "storage_v2_generated_storage_control_view_object_full_context_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ViewObjectFullContext_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_view_object_full_context_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storage_control_v2.StorageControlClient",
+          "shortName": "StorageControlClient"
+        },
+        "fullName": "google.cloud.storage_control_v2.StorageControlClient.view_object_full_context",
+        "method": {
+          "fullName": "google.storage.control.v2.StorageControl.ViewObjectFullContext",
+          "service": {
+            "fullName": "google.storage.control.v2.StorageControl",
+            "shortName": "StorageControl"
+          },
+          "shortName": "ViewObjectFullContext"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storage_control_v2.types.ViewObjectFullContextRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "context_key",
+            "type": "str"
+          },
+          {
+            "name": "generation",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storage_control_v2.types.ObjectFullContext",
+        "shortName": "view_object_full_context"
+      },
+      "description": "Sample for ViewObjectFullContext",
+      "file": "storage_v2_generated_storage_control_view_object_full_context_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storage_v2_generated_StorageControl_ViewObjectFullContext_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storage_v2_generated_storage_control_view_object_full_context_sync.py"
+    }
+  ]
+}

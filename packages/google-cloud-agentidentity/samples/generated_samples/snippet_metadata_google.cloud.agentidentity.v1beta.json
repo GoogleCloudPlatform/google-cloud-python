@@ -1,0 +1,2619 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.agentidentity.v1beta",
+        "version": "v1beta"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-agentidentity",
+    "version": "0.1.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.create_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.CreateAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "CreateAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.CreateAuthProviderRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "auth_provider",
+            "type": "google.cloud.agentidentity_v1beta.types.AuthProvider"
+          },
+          {
+            "name": "auth_provider_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "create_auth_provider"
+      },
+      "description": "Sample for CreateAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_create_auth_provider_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_CreateAuthProvider_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_create_auth_provider_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.create_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.CreateAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "CreateAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.CreateAuthProviderRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "auth_provider",
+            "type": "google.cloud.agentidentity_v1beta.types.AuthProvider"
+          },
+          {
+            "name": "auth_provider_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "create_auth_provider"
+      },
+      "description": "Sample for CreateAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_create_auth_provider_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_CreateAuthProvider_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_create_auth_provider_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.delete_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.DeleteAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "DeleteAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.DeleteAuthProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_auth_provider"
+      },
+      "description": "Sample for DeleteAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_delete_auth_provider_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_DeleteAuthProvider_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_delete_auth_provider_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.delete_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.DeleteAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "DeleteAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.DeleteAuthProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_auth_provider"
+      },
+      "description": "Sample for DeleteAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_delete_auth_provider_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_DeleteAuthProvider_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_delete_auth_provider_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.delete_authorization",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.DeleteAuthorization",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "DeleteAuthorization"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.DeleteAuthorizationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_authorization"
+      },
+      "description": "Sample for DeleteAuthorization",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_delete_authorization_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_DeleteAuthorization_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_delete_authorization_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.delete_authorization",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.DeleteAuthorization",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "DeleteAuthorization"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.DeleteAuthorizationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_authorization"
+      },
+      "description": "Sample for DeleteAuthorization",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_delete_authorization_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_DeleteAuthorization_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_delete_authorization_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.disable_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.DisableAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "DisableAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.DisableAuthProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "disable_auth_provider"
+      },
+      "description": "Sample for DisableAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_disable_auth_provider_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_DisableAuthProvider_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_disable_auth_provider_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.disable_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.DisableAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "DisableAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.DisableAuthProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "disable_auth_provider"
+      },
+      "description": "Sample for DisableAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_disable_auth_provider_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_DisableAuthProvider_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_disable_auth_provider_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.enable_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.EnableAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "EnableAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.EnableAuthProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "enable_auth_provider"
+      },
+      "description": "Sample for EnableAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_enable_auth_provider_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_EnableAuthProvider_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_enable_auth_provider_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.enable_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.EnableAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "EnableAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.EnableAuthProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "enable_auth_provider"
+      },
+      "description": "Sample for EnableAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_enable_auth_provider_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_EnableAuthProvider_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_enable_auth_provider_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.get_access_summary",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.GetAccessSummary",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "GetAccessSummary"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.GetAccessSummaryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AccessSummary",
+        "shortName": "get_access_summary"
+      },
+      "description": "Sample for GetAccessSummary",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_get_access_summary_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_GetAccessSummary_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_get_access_summary_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.get_access_summary",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.GetAccessSummary",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "GetAccessSummary"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.GetAccessSummaryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AccessSummary",
+        "shortName": "get_access_summary"
+      },
+      "description": "Sample for GetAccessSummary",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_get_access_summary_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_GetAccessSummary_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_get_access_summary_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.get_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.GetAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "GetAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.GetAuthProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "get_auth_provider"
+      },
+      "description": "Sample for GetAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_get_auth_provider_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_GetAuthProvider_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_get_auth_provider_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.get_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.GetAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "GetAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.GetAuthProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "get_auth_provider"
+      },
+      "description": "Sample for GetAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_get_auth_provider_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_GetAuthProvider_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_get_auth_provider_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.get_authorization",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.GetAuthorization",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "GetAuthorization"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.GetAuthorizationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.Authorization",
+        "shortName": "get_authorization"
+      },
+      "description": "Sample for GetAuthorization",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_get_authorization_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_GetAuthorization_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_get_authorization_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.get_authorization",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.GetAuthorization",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "GetAuthorization"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.GetAuthorizationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.Authorization",
+        "shortName": "get_authorization"
+      },
+      "description": "Sample for GetAuthorization",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_get_authorization_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_GetAuthorization_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_get_authorization_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.list_access_summaries",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.ListAccessSummaries",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "ListAccessSummaries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.ListAccessSummariesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.services.auth_provider_service.pagers.ListAccessSummariesAsyncPager",
+        "shortName": "list_access_summaries"
+      },
+      "description": "Sample for ListAccessSummaries",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_list_access_summaries_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_ListAccessSummaries_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_list_access_summaries_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.list_access_summaries",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.ListAccessSummaries",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "ListAccessSummaries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.ListAccessSummariesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.services.auth_provider_service.pagers.ListAccessSummariesPager",
+        "shortName": "list_access_summaries"
+      },
+      "description": "Sample for ListAccessSummaries",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_list_access_summaries_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_ListAccessSummaries_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_list_access_summaries_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.list_auth_providers",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.ListAuthProviders",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "ListAuthProviders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.ListAuthProvidersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.services.auth_provider_service.pagers.ListAuthProvidersAsyncPager",
+        "shortName": "list_auth_providers"
+      },
+      "description": "Sample for ListAuthProviders",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_list_auth_providers_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_ListAuthProviders_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_list_auth_providers_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.list_auth_providers",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.ListAuthProviders",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "ListAuthProviders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.ListAuthProvidersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.services.auth_provider_service.pagers.ListAuthProvidersPager",
+        "shortName": "list_auth_providers"
+      },
+      "description": "Sample for ListAuthProviders",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_list_auth_providers_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_ListAuthProviders_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_list_auth_providers_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.list_authorizations",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.ListAuthorizations",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "ListAuthorizations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.ListAuthorizationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.services.auth_provider_service.pagers.ListAuthorizationsAsyncPager",
+        "shortName": "list_authorizations"
+      },
+      "description": "Sample for ListAuthorizations",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_list_authorizations_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_ListAuthorizations_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_list_authorizations_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.list_authorizations",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.ListAuthorizations",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "ListAuthorizations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.ListAuthorizationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.services.auth_provider_service.pagers.ListAuthorizationsPager",
+        "shortName": "list_authorizations"
+      },
+      "description": "Sample for ListAuthorizations",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_list_authorizations_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_ListAuthorizations_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_list_authorizations_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.query_auth_providers",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.QueryAuthProviders",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "QueryAuthProviders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.QueryAuthProvidersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "workload_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.services.auth_provider_service.pagers.QueryAuthProvidersAsyncPager",
+        "shortName": "query_auth_providers"
+      },
+      "description": "Sample for QueryAuthProviders",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_query_auth_providers_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_QueryAuthProviders_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_query_auth_providers_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.query_auth_providers",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.QueryAuthProviders",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "QueryAuthProviders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.QueryAuthProvidersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "workload_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.services.auth_provider_service.pagers.QueryAuthProvidersPager",
+        "shortName": "query_auth_providers"
+      },
+      "description": "Sample for QueryAuthProviders",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_query_auth_providers_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_QueryAuthProviders_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_query_auth_providers_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.query_workloads",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.QueryWorkloads",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "QueryWorkloads"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.QueryWorkloadsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.services.auth_provider_service.pagers.QueryWorkloadsAsyncPager",
+        "shortName": "query_workloads"
+      },
+      "description": "Sample for QueryWorkloads",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_query_workloads_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_QueryWorkloads_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_query_workloads_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.query_workloads",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.QueryWorkloads",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "QueryWorkloads"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.QueryWorkloadsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.services.auth_provider_service.pagers.QueryWorkloadsPager",
+        "shortName": "query_workloads"
+      },
+      "description": "Sample for QueryWorkloads",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_query_workloads_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_QueryWorkloads_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_query_workloads_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.revoke_authorization",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.RevokeAuthorization",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "RevokeAuthorization"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.RevokeAuthorizationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "user_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.RevokeAuthorizationResponse",
+        "shortName": "revoke_authorization"
+      },
+      "description": "Sample for RevokeAuthorization",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_revoke_authorization_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_RevokeAuthorization_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_revoke_authorization_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.revoke_authorization",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.RevokeAuthorization",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "RevokeAuthorization"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.RevokeAuthorizationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "user_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.RevokeAuthorizationResponse",
+        "shortName": "revoke_authorization"
+      },
+      "description": "Sample for RevokeAuthorization",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_revoke_authorization_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_RevokeAuthorization_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_revoke_authorization_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.undelete_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.UndeleteAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "UndeleteAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.UndeleteAuthProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "undelete_auth_provider"
+      },
+      "description": "Sample for UndeleteAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_undelete_auth_provider_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_UndeleteAuthProvider_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_undelete_auth_provider_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.undelete_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.UndeleteAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "UndeleteAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.UndeleteAuthProviderRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "undelete_auth_provider"
+      },
+      "description": "Sample for UndeleteAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_undelete_auth_provider_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_UndeleteAuthProvider_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_undelete_auth_provider_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient",
+          "shortName": "AuthProviderServiceAsyncClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceAsyncClient.update_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.UpdateAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "UpdateAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.UpdateAuthProviderRequest"
+          },
+          {
+            "name": "auth_provider",
+            "type": "google.cloud.agentidentity_v1beta.types.AuthProvider"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "update_auth_provider"
+      },
+      "description": "Sample for UpdateAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_update_auth_provider_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_UpdateAuthProvider_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_update_auth_provider_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient",
+          "shortName": "AuthProviderServiceClient"
+        },
+        "fullName": "google.cloud.agentidentity_v1beta.AuthProviderServiceClient.update_auth_provider",
+        "method": {
+          "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService.UpdateAuthProvider",
+          "service": {
+            "fullName": "google.cloud.agentidentity.v1beta.AuthProviderService",
+            "shortName": "AuthProviderService"
+          },
+          "shortName": "UpdateAuthProvider"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.agentidentity_v1beta.types.UpdateAuthProviderRequest"
+          },
+          {
+            "name": "auth_provider",
+            "type": "google.cloud.agentidentity_v1beta.types.AuthProvider"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.agentidentity_v1beta.types.AuthProvider",
+        "shortName": "update_auth_provider"
+      },
+      "description": "Sample for UpdateAuthProvider",
+      "file": "agentidentity_v1beta_generated_auth_provider_service_update_auth_provider_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "agentidentity_v1beta_generated_AuthProviderService_UpdateAuthProvider_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "agentidentity_v1beta_generated_auth_provider_service_update_auth_provider_sync.py"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.optimization_v1",
+  "protoPackage": "google.cloud.optimization.v1",
+  "schema": "1.0",
+  "services": {
+    "FleetRouting": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "FleetRoutingClient",
+          "rpcs": {
+            "BatchOptimizeTours": {
+              "methods": [
+                "batch_optimize_tours"
+              ]
+            },
+            "OptimizeTours": {
+              "methods": [
+                "optimize_tours"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "FleetRoutingAsyncClient",
+          "rpcs": {
+            "BatchOptimizeTours": {
+              "methods": [
+                "batch_optimize_tours"
+              ]
+            },
+            "OptimizeTours": {
+              "methods": [
+                "optimize_tours"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "FleetRoutingClient",
+          "rpcs": {
+            "BatchOptimizeTours": {
+              "methods": [
+                "batch_optimize_tours"
+              ]
+            },
+            "OptimizeTours": {
+              "methods": [
+                "optimize_tours"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

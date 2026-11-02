@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://googleapis.dev/python/bigquery-magics/latest",
+    "distribution_name": "bigquery-magics",
+    "language": "python",
+    "library_type": "INTEGRATION",
+    "name": "bigquery-magics",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

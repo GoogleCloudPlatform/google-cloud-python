@@ -1,0 +1,8 @@
+Services for {{ api.naming.long_name }} {{ api.naming.version }} API
+{{ '=' * (18 + api.naming.long_name|length + api.naming.version|length) }}
+.. toctree::
+    :maxdepth: 2
+
+    {% for service in api.services.values()|sort(attribute='name') %}
+    {{ service.name|snake_case }}
+    {% endfor %}

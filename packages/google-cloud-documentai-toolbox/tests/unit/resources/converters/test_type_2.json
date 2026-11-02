@@ -1,0 +1,30 @@
+{
+  "document": {
+    "uri": "",
+    "mimeType": "application/pdf",
+    "page_height":1000,
+    "page_width":1000,
+    "entities": [
+      {
+        "type": "invoice_id",
+        "mentionText": "4748",
+        "confidence": 0.980109,
+        "pageAnchor": {
+          "pageRefs": [
+            {
+              "boundingPoly": {
+                "normalizedVertices": {
+                  "width": 0.03,
+                  "height":0.01,
+                  "left": 0.07906712,
+                  "top": 0.36043957
+                }
+              }
+            }
+          ]
+        },
+        "id": "0"
+      }
+    ]
+  }
+}

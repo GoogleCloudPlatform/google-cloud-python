@@ -1,0 +1,1975 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "maps.fleetengine.delivery.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-maps-fleetengine-delivery",
+    "version": "0.6.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.batch_create_tasks",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.BatchCreateTasks",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "BatchCreateTasks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.BatchCreateTasksRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.BatchCreateTasksResponse",
+        "shortName": "batch_create_tasks"
+      },
+      "description": "Sample for BatchCreateTasks",
+      "file": "fleetengine_v1_generated_delivery_service_batch_create_tasks_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_BatchCreateTasks_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_batch_create_tasks_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.batch_create_tasks",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.BatchCreateTasks",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "BatchCreateTasks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.BatchCreateTasksRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.BatchCreateTasksResponse",
+        "shortName": "batch_create_tasks"
+      },
+      "description": "Sample for BatchCreateTasks",
+      "file": "fleetengine_v1_generated_delivery_service_batch_create_tasks_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_BatchCreateTasks_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_batch_create_tasks_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.create_delivery_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.CreateDeliveryVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "CreateDeliveryVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.CreateDeliveryVehicleRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "delivery_vehicle",
+            "type": "google.maps.fleetengine_delivery_v1.types.DeliveryVehicle"
+          },
+          {
+            "name": "delivery_vehicle_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.DeliveryVehicle",
+        "shortName": "create_delivery_vehicle"
+      },
+      "description": "Sample for CreateDeliveryVehicle",
+      "file": "fleetengine_v1_generated_delivery_service_create_delivery_vehicle_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_CreateDeliveryVehicle_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_create_delivery_vehicle_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.create_delivery_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.CreateDeliveryVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "CreateDeliveryVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.CreateDeliveryVehicleRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "delivery_vehicle",
+            "type": "google.maps.fleetengine_delivery_v1.types.DeliveryVehicle"
+          },
+          {
+            "name": "delivery_vehicle_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.DeliveryVehicle",
+        "shortName": "create_delivery_vehicle"
+      },
+      "description": "Sample for CreateDeliveryVehicle",
+      "file": "fleetengine_v1_generated_delivery_service_create_delivery_vehicle_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_CreateDeliveryVehicle_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_create_delivery_vehicle_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.create_task",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.CreateTask",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "CreateTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.CreateTaskRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "task",
+            "type": "google.maps.fleetengine_delivery_v1.types.Task"
+          },
+          {
+            "name": "task_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.Task",
+        "shortName": "create_task"
+      },
+      "description": "Sample for CreateTask",
+      "file": "fleetengine_v1_generated_delivery_service_create_task_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_CreateTask_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_create_task_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.create_task",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.CreateTask",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "CreateTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.CreateTaskRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "task",
+            "type": "google.maps.fleetengine_delivery_v1.types.Task"
+          },
+          {
+            "name": "task_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.Task",
+        "shortName": "create_task"
+      },
+      "description": "Sample for CreateTask",
+      "file": "fleetengine_v1_generated_delivery_service_create_task_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_CreateTask_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_create_task_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.delete_delivery_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.DeleteDeliveryVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "DeleteDeliveryVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.DeleteDeliveryVehicleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_delivery_vehicle"
+      },
+      "description": "Sample for DeleteDeliveryVehicle",
+      "file": "fleetengine_v1_generated_delivery_service_delete_delivery_vehicle_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_DeleteDeliveryVehicle_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_delete_delivery_vehicle_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.delete_delivery_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.DeleteDeliveryVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "DeleteDeliveryVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.DeleteDeliveryVehicleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_delivery_vehicle"
+      },
+      "description": "Sample for DeleteDeliveryVehicle",
+      "file": "fleetengine_v1_generated_delivery_service_delete_delivery_vehicle_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_DeleteDeliveryVehicle_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_delete_delivery_vehicle_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.delete_task",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.DeleteTask",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "DeleteTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.DeleteTaskRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_task"
+      },
+      "description": "Sample for DeleteTask",
+      "file": "fleetengine_v1_generated_delivery_service_delete_task_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_DeleteTask_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_delete_task_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.delete_task",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.DeleteTask",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "DeleteTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.DeleteTaskRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_task"
+      },
+      "description": "Sample for DeleteTask",
+      "file": "fleetengine_v1_generated_delivery_service_delete_task_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_DeleteTask_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_delete_task_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.get_delivery_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.GetDeliveryVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "GetDeliveryVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.GetDeliveryVehicleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.DeliveryVehicle",
+        "shortName": "get_delivery_vehicle"
+      },
+      "description": "Sample for GetDeliveryVehicle",
+      "file": "fleetengine_v1_generated_delivery_service_get_delivery_vehicle_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_GetDeliveryVehicle_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_get_delivery_vehicle_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.get_delivery_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.GetDeliveryVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "GetDeliveryVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.GetDeliveryVehicleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.DeliveryVehicle",
+        "shortName": "get_delivery_vehicle"
+      },
+      "description": "Sample for GetDeliveryVehicle",
+      "file": "fleetengine_v1_generated_delivery_service_get_delivery_vehicle_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_GetDeliveryVehicle_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_get_delivery_vehicle_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.get_task_tracking_info",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.GetTaskTrackingInfo",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "GetTaskTrackingInfo"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.GetTaskTrackingInfoRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.TaskTrackingInfo",
+        "shortName": "get_task_tracking_info"
+      },
+      "description": "Sample for GetTaskTrackingInfo",
+      "file": "fleetengine_v1_generated_delivery_service_get_task_tracking_info_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_GetTaskTrackingInfo_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_get_task_tracking_info_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.get_task_tracking_info",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.GetTaskTrackingInfo",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "GetTaskTrackingInfo"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.GetTaskTrackingInfoRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.TaskTrackingInfo",
+        "shortName": "get_task_tracking_info"
+      },
+      "description": "Sample for GetTaskTrackingInfo",
+      "file": "fleetengine_v1_generated_delivery_service_get_task_tracking_info_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_GetTaskTrackingInfo_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_get_task_tracking_info_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.get_task",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.GetTask",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "GetTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.GetTaskRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.Task",
+        "shortName": "get_task"
+      },
+      "description": "Sample for GetTask",
+      "file": "fleetengine_v1_generated_delivery_service_get_task_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_GetTask_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_get_task_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.get_task",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.GetTask",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "GetTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.GetTaskRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.Task",
+        "shortName": "get_task"
+      },
+      "description": "Sample for GetTask",
+      "file": "fleetengine_v1_generated_delivery_service_get_task_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_GetTask_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_get_task_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.list_delivery_vehicles",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.ListDeliveryVehicles",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "ListDeliveryVehicles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.ListDeliveryVehiclesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.services.delivery_service.pagers.ListDeliveryVehiclesAsyncPager",
+        "shortName": "list_delivery_vehicles"
+      },
+      "description": "Sample for ListDeliveryVehicles",
+      "file": "fleetengine_v1_generated_delivery_service_list_delivery_vehicles_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_ListDeliveryVehicles_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_list_delivery_vehicles_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.list_delivery_vehicles",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.ListDeliveryVehicles",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "ListDeliveryVehicles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.ListDeliveryVehiclesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.services.delivery_service.pagers.ListDeliveryVehiclesPager",
+        "shortName": "list_delivery_vehicles"
+      },
+      "description": "Sample for ListDeliveryVehicles",
+      "file": "fleetengine_v1_generated_delivery_service_list_delivery_vehicles_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_ListDeliveryVehicles_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_list_delivery_vehicles_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.list_tasks",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.ListTasks",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "ListTasks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.ListTasksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.services.delivery_service.pagers.ListTasksAsyncPager",
+        "shortName": "list_tasks"
+      },
+      "description": "Sample for ListTasks",
+      "file": "fleetengine_v1_generated_delivery_service_list_tasks_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_ListTasks_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_list_tasks_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.list_tasks",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.ListTasks",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "ListTasks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.ListTasksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.services.delivery_service.pagers.ListTasksPager",
+        "shortName": "list_tasks"
+      },
+      "description": "Sample for ListTasks",
+      "file": "fleetengine_v1_generated_delivery_service_list_tasks_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_ListTasks_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_list_tasks_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.update_delivery_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.UpdateDeliveryVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "UpdateDeliveryVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.UpdateDeliveryVehicleRequest"
+          },
+          {
+            "name": "delivery_vehicle",
+            "type": "google.maps.fleetengine_delivery_v1.types.DeliveryVehicle"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.DeliveryVehicle",
+        "shortName": "update_delivery_vehicle"
+      },
+      "description": "Sample for UpdateDeliveryVehicle",
+      "file": "fleetengine_v1_generated_delivery_service_update_delivery_vehicle_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_UpdateDeliveryVehicle_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_update_delivery_vehicle_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.update_delivery_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.UpdateDeliveryVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "UpdateDeliveryVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.UpdateDeliveryVehicleRequest"
+          },
+          {
+            "name": "delivery_vehicle",
+            "type": "google.maps.fleetengine_delivery_v1.types.DeliveryVehicle"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.DeliveryVehicle",
+        "shortName": "update_delivery_vehicle"
+      },
+      "description": "Sample for UpdateDeliveryVehicle",
+      "file": "fleetengine_v1_generated_delivery_service_update_delivery_vehicle_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_UpdateDeliveryVehicle_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_update_delivery_vehicle_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient",
+          "shortName": "DeliveryServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceAsyncClient.update_task",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.UpdateTask",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "UpdateTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.UpdateTaskRequest"
+          },
+          {
+            "name": "task",
+            "type": "google.maps.fleetengine_delivery_v1.types.Task"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.Task",
+        "shortName": "update_task"
+      },
+      "description": "Sample for UpdateTask",
+      "file": "fleetengine_v1_generated_delivery_service_update_task_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_UpdateTask_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_update_task_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient",
+          "shortName": "DeliveryServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_delivery_v1.DeliveryServiceClient.update_task",
+        "method": {
+          "fullName": "maps.fleetengine.delivery.v1.DeliveryService.UpdateTask",
+          "service": {
+            "fullName": "maps.fleetengine.delivery.v1.DeliveryService",
+            "shortName": "DeliveryService"
+          },
+          "shortName": "UpdateTask"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_delivery_v1.types.UpdateTaskRequest"
+          },
+          {
+            "name": "task",
+            "type": "google.maps.fleetengine_delivery_v1.types.Task"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_delivery_v1.types.Task",
+        "shortName": "update_task"
+      },
+      "description": "Sample for UpdateTask",
+      "file": "fleetengine_v1_generated_delivery_service_update_task_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_DeliveryService_UpdateTask_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_delivery_service_update_task_sync.py"
+    }
+  ]
+}

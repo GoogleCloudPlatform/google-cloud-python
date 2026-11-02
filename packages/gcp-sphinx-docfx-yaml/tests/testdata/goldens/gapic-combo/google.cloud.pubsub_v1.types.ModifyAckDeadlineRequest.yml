@@ -1,0 +1,41 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the subscription. Format is\n   <code>projects/{project}/subscriptions/{sub}</code>."
+    id: subscription
+    var_type: str
+  - description: Required. List of acknowledgment IDs.
+    id: ack_ids
+    var_type: Sequence[str]
+  - description: "Required. The new ack deadline with respect to the time this\n \
+      \  request was sent to the Pub/Sub system. For example, if the\n   value is\
+      \ 10, the new ack deadline will expire 10 seconds\n   after the <code>ModifyAckDeadline</code>\
+      \ call was made. Specifying\n   zero might immediately make the message available\
+      \ for\n   delivery to another subscriber client. This typically\n   results\
+      \ in an increase in the rate of message redeliveries\n   (that is, duplicates).\
+      \ The minimum deadline you can specify\n   is 0 seconds. The maximum deadline\
+      \ you can specify is 600\n   seconds (10 minutes)."
+    id: ack_deadline_seconds
+    var_type: int
+  children: []
+  class: google.cloud.pubsub_v1.types.ModifyAckDeadlineRequest
+  fullName: google.cloud.pubsub_v1.types.ModifyAckDeadlineRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ModifyAckDeadlineRequest
+  source:
+    id: ModifyAckDeadlineRequest
+    path: null
+    startLine: null
+  summary: 'Request for the ModifyAckDeadline method.
+
+    '
+  syntax:
+    content: ModifyAckDeadlineRequest(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ModifyAckDeadlineRequest
+references: []

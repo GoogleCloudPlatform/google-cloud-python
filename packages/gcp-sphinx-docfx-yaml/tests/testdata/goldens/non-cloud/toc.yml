@@ -1,0 +1,26 @@
+- items:
+  - href: index.md
+    name: Overview
+  - href: api.md
+    name: API Reference
+  - href: changelog.md
+    name: Changelog
+  - href: contributing.md
+    name: Contributing to pandas-gbq
+  - href: install.md
+    name: Installation
+  - href: intro.md
+    name: Introduction
+  - href: oauth.md
+    name: Sign in to BigQuery
+  - href: privacy.md
+    name: Privacy
+  - href: reading.md
+    name: Reading Tables
+  - href: writing.md
+    name: Writing Tables
+  - items:
+    - name: Context
+      uid: pandas_gbq.Context
+    name: Context
+  name: pandas-gbq

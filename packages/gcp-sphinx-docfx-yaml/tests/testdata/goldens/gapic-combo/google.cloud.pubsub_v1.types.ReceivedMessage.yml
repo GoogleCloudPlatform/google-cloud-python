@@ -1,0 +1,43 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "This ID can be used to acknowledge the\n   received message."
+    id: ack_id
+    var_type: str
+  - description: The message.
+    id: message
+    var_type: google.pubsub_v1.types.PubsubMessage
+  - description: "The approximate number of times that Cloud Pub/Sub has\n   attempted\
+      \ to deliver the associated message to a subscriber.\n   \n   More precisely,\
+      \ this is 1 + (number of NACKs) + (number of\n   ack_deadline exceeds) for this\
+      \ message.\n   \n   A NACK is any call to ModifyAckDeadline with a 0 deadline.\n\
+      \   An ack_deadline exceeds event is whenever a message is not\n   acknowledged\
+      \ within ack_deadline. Note that ack_deadline is\n   initially Subscription.ackDeadlineSeconds,\
+      \ but may get\n   extended automatically by the client library.\n   \n   Upon\
+      \ the first delivery of a given message,\n   <code>delivery_attempt</code> will\
+      \ have a value of 1. The value is\n   calculated at best effort and is approximate.\n\
+      \   \n   If a DeadLetterPolicy is not set on the subscription, this\n   will\
+      \ be 0."
+    id: delivery_attempt
+    var_type: int
+  children: []
+  class: google.cloud.pubsub_v1.types.ReceivedMessage
+  fullName: google.cloud.pubsub_v1.types.ReceivedMessage
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ReceivedMessage
+  source:
+    id: ReceivedMessage
+    path: null
+    startLine: null
+  summary: 'A message and its corresponding acknowledgment ID.
+
+    '
+  syntax:
+    content: ReceivedMessage(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ReceivedMessage
+references: []

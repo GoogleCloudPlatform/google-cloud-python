@@ -1,0 +1,16 @@
+{
+    "api_description": "Google Cloud Managed Lustre delivers a high-performance, fully managed parallel file system optimized for AI and HPC applications.",
+    "api_id": "lustre.googleapis.com",
+    "api_shortname": "lustre",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-lustre/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-lustre",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1625664",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-lustre",
+    "name_pretty": "Google Cloud Managed Lustre",
+    "product_documentation": "https://cloud.google.com/managed-lustre/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

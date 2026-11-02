@@ -1,0 +1,4004 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.orchestration.airflow.service.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-orchestration-airflow",
+    "version": "1.23.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.check_upgrade",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.CheckUpgrade",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "CheckUpgrade"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.CheckUpgradeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "check_upgrade"
+      },
+      "description": "Sample for CheckUpgrade",
+      "file": "composer_v1_generated_environments_check_upgrade_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_CheckUpgrade_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_check_upgrade_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.check_upgrade",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.CheckUpgrade",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "CheckUpgrade"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.CheckUpgradeRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "check_upgrade"
+      },
+      "description": "Sample for CheckUpgrade",
+      "file": "composer_v1_generated_environments_check_upgrade_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_CheckUpgrade_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_check_upgrade_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.create_environment",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.CreateEnvironment",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "CreateEnvironment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.CreateEnvironmentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "environment",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.Environment"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_environment"
+      },
+      "description": "Sample for CreateEnvironment",
+      "file": "composer_v1_generated_environments_create_environment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_CreateEnvironment_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_create_environment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.create_environment",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.CreateEnvironment",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "CreateEnvironment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.CreateEnvironmentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "environment",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.Environment"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_environment"
+      },
+      "description": "Sample for CreateEnvironment",
+      "file": "composer_v1_generated_environments_create_environment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_CreateEnvironment_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_create_environment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.create_user_workloads_config_map",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.CreateUserWorkloadsConfigMap",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "CreateUserWorkloadsConfigMap"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.CreateUserWorkloadsConfigMapRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_workloads_config_map",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsConfigMap"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsConfigMap",
+        "shortName": "create_user_workloads_config_map"
+      },
+      "description": "Sample for CreateUserWorkloadsConfigMap",
+      "file": "composer_v1_generated_environments_create_user_workloads_config_map_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_CreateUserWorkloadsConfigMap_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_create_user_workloads_config_map_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.create_user_workloads_config_map",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.CreateUserWorkloadsConfigMap",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "CreateUserWorkloadsConfigMap"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.CreateUserWorkloadsConfigMapRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_workloads_config_map",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsConfigMap"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsConfigMap",
+        "shortName": "create_user_workloads_config_map"
+      },
+      "description": "Sample for CreateUserWorkloadsConfigMap",
+      "file": "composer_v1_generated_environments_create_user_workloads_config_map_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_CreateUserWorkloadsConfigMap_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_create_user_workloads_config_map_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.create_user_workloads_secret",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.CreateUserWorkloadsSecret",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "CreateUserWorkloadsSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.CreateUserWorkloadsSecretRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_workloads_secret",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsSecret"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsSecret",
+        "shortName": "create_user_workloads_secret"
+      },
+      "description": "Sample for CreateUserWorkloadsSecret",
+      "file": "composer_v1_generated_environments_create_user_workloads_secret_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_CreateUserWorkloadsSecret_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_create_user_workloads_secret_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.create_user_workloads_secret",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.CreateUserWorkloadsSecret",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "CreateUserWorkloadsSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.CreateUserWorkloadsSecretRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_workloads_secret",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsSecret"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsSecret",
+        "shortName": "create_user_workloads_secret"
+      },
+      "description": "Sample for CreateUserWorkloadsSecret",
+      "file": "composer_v1_generated_environments_create_user_workloads_secret_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_CreateUserWorkloadsSecret_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_create_user_workloads_secret_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.database_failover",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.DatabaseFailover",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "DatabaseFailover"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.DatabaseFailoverRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "database_failover"
+      },
+      "description": "Sample for DatabaseFailover",
+      "file": "composer_v1_generated_environments_database_failover_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_DatabaseFailover_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_database_failover_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.database_failover",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.DatabaseFailover",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "DatabaseFailover"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.DatabaseFailoverRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "database_failover"
+      },
+      "description": "Sample for DatabaseFailover",
+      "file": "composer_v1_generated_environments_database_failover_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_DatabaseFailover_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_database_failover_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.delete_environment",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.DeleteEnvironment",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "DeleteEnvironment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.DeleteEnvironmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_environment"
+      },
+      "description": "Sample for DeleteEnvironment",
+      "file": "composer_v1_generated_environments_delete_environment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_DeleteEnvironment_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_delete_environment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.delete_environment",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.DeleteEnvironment",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "DeleteEnvironment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.DeleteEnvironmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_environment"
+      },
+      "description": "Sample for DeleteEnvironment",
+      "file": "composer_v1_generated_environments_delete_environment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_DeleteEnvironment_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_delete_environment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.delete_user_workloads_config_map",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.DeleteUserWorkloadsConfigMap",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "DeleteUserWorkloadsConfigMap"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.DeleteUserWorkloadsConfigMapRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_user_workloads_config_map"
+      },
+      "description": "Sample for DeleteUserWorkloadsConfigMap",
+      "file": "composer_v1_generated_environments_delete_user_workloads_config_map_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_DeleteUserWorkloadsConfigMap_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_delete_user_workloads_config_map_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.delete_user_workloads_config_map",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.DeleteUserWorkloadsConfigMap",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "DeleteUserWorkloadsConfigMap"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.DeleteUserWorkloadsConfigMapRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_user_workloads_config_map"
+      },
+      "description": "Sample for DeleteUserWorkloadsConfigMap",
+      "file": "composer_v1_generated_environments_delete_user_workloads_config_map_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_DeleteUserWorkloadsConfigMap_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_delete_user_workloads_config_map_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.delete_user_workloads_secret",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.DeleteUserWorkloadsSecret",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "DeleteUserWorkloadsSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.DeleteUserWorkloadsSecretRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_user_workloads_secret"
+      },
+      "description": "Sample for DeleteUserWorkloadsSecret",
+      "file": "composer_v1_generated_environments_delete_user_workloads_secret_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_DeleteUserWorkloadsSecret_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_delete_user_workloads_secret_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.delete_user_workloads_secret",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.DeleteUserWorkloadsSecret",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "DeleteUserWorkloadsSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.DeleteUserWorkloadsSecretRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_user_workloads_secret"
+      },
+      "description": "Sample for DeleteUserWorkloadsSecret",
+      "file": "composer_v1_generated_environments_delete_user_workloads_secret_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_DeleteUserWorkloadsSecret_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_delete_user_workloads_secret_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.execute_airflow_command",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.ExecuteAirflowCommand",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "ExecuteAirflowCommand"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ExecuteAirflowCommandRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.ExecuteAirflowCommandResponse",
+        "shortName": "execute_airflow_command"
+      },
+      "description": "Sample for ExecuteAirflowCommand",
+      "file": "composer_v1_generated_environments_execute_airflow_command_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_ExecuteAirflowCommand_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_execute_airflow_command_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.execute_airflow_command",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.ExecuteAirflowCommand",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "ExecuteAirflowCommand"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ExecuteAirflowCommandRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.ExecuteAirflowCommandResponse",
+        "shortName": "execute_airflow_command"
+      },
+      "description": "Sample for ExecuteAirflowCommand",
+      "file": "composer_v1_generated_environments_execute_airflow_command_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_ExecuteAirflowCommand_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_execute_airflow_command_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.fetch_database_properties",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.FetchDatabaseProperties",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "FetchDatabaseProperties"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.FetchDatabasePropertiesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.FetchDatabasePropertiesResponse",
+        "shortName": "fetch_database_properties"
+      },
+      "description": "Sample for FetchDatabaseProperties",
+      "file": "composer_v1_generated_environments_fetch_database_properties_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_FetchDatabaseProperties_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_fetch_database_properties_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.fetch_database_properties",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.FetchDatabaseProperties",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "FetchDatabaseProperties"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.FetchDatabasePropertiesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.FetchDatabasePropertiesResponse",
+        "shortName": "fetch_database_properties"
+      },
+      "description": "Sample for FetchDatabaseProperties",
+      "file": "composer_v1_generated_environments_fetch_database_properties_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_FetchDatabaseProperties_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_fetch_database_properties_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.get_environment",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.GetEnvironment",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "GetEnvironment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.GetEnvironmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.Environment",
+        "shortName": "get_environment"
+      },
+      "description": "Sample for GetEnvironment",
+      "file": "composer_v1_generated_environments_get_environment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_GetEnvironment_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_get_environment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.get_environment",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.GetEnvironment",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "GetEnvironment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.GetEnvironmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.Environment",
+        "shortName": "get_environment"
+      },
+      "description": "Sample for GetEnvironment",
+      "file": "composer_v1_generated_environments_get_environment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_GetEnvironment_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_get_environment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.get_user_workloads_config_map",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.GetUserWorkloadsConfigMap",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "GetUserWorkloadsConfigMap"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.GetUserWorkloadsConfigMapRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsConfigMap",
+        "shortName": "get_user_workloads_config_map"
+      },
+      "description": "Sample for GetUserWorkloadsConfigMap",
+      "file": "composer_v1_generated_environments_get_user_workloads_config_map_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_GetUserWorkloadsConfigMap_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_get_user_workloads_config_map_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.get_user_workloads_config_map",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.GetUserWorkloadsConfigMap",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "GetUserWorkloadsConfigMap"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.GetUserWorkloadsConfigMapRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsConfigMap",
+        "shortName": "get_user_workloads_config_map"
+      },
+      "description": "Sample for GetUserWorkloadsConfigMap",
+      "file": "composer_v1_generated_environments_get_user_workloads_config_map_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_GetUserWorkloadsConfigMap_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_get_user_workloads_config_map_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.get_user_workloads_secret",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.GetUserWorkloadsSecret",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "GetUserWorkloadsSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.GetUserWorkloadsSecretRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsSecret",
+        "shortName": "get_user_workloads_secret"
+      },
+      "description": "Sample for GetUserWorkloadsSecret",
+      "file": "composer_v1_generated_environments_get_user_workloads_secret_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_GetUserWorkloadsSecret_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_get_user_workloads_secret_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.get_user_workloads_secret",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.GetUserWorkloadsSecret",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "GetUserWorkloadsSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.GetUserWorkloadsSecretRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsSecret",
+        "shortName": "get_user_workloads_secret"
+      },
+      "description": "Sample for GetUserWorkloadsSecret",
+      "file": "composer_v1_generated_environments_get_user_workloads_secret_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_GetUserWorkloadsSecret_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_get_user_workloads_secret_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.list_environments",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.ListEnvironments",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "ListEnvironments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ListEnvironmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.services.environments.pagers.ListEnvironmentsAsyncPager",
+        "shortName": "list_environments"
+      },
+      "description": "Sample for ListEnvironments",
+      "file": "composer_v1_generated_environments_list_environments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_ListEnvironments_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_list_environments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.list_environments",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.ListEnvironments",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "ListEnvironments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ListEnvironmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.services.environments.pagers.ListEnvironmentsPager",
+        "shortName": "list_environments"
+      },
+      "description": "Sample for ListEnvironments",
+      "file": "composer_v1_generated_environments_list_environments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_ListEnvironments_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_list_environments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.list_user_workloads_config_maps",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.ListUserWorkloadsConfigMaps",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "ListUserWorkloadsConfigMaps"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ListUserWorkloadsConfigMapsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.services.environments.pagers.ListUserWorkloadsConfigMapsAsyncPager",
+        "shortName": "list_user_workloads_config_maps"
+      },
+      "description": "Sample for ListUserWorkloadsConfigMaps",
+      "file": "composer_v1_generated_environments_list_user_workloads_config_maps_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_ListUserWorkloadsConfigMaps_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_list_user_workloads_config_maps_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.list_user_workloads_config_maps",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.ListUserWorkloadsConfigMaps",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "ListUserWorkloadsConfigMaps"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ListUserWorkloadsConfigMapsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.services.environments.pagers.ListUserWorkloadsConfigMapsPager",
+        "shortName": "list_user_workloads_config_maps"
+      },
+      "description": "Sample for ListUserWorkloadsConfigMaps",
+      "file": "composer_v1_generated_environments_list_user_workloads_config_maps_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_ListUserWorkloadsConfigMaps_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_list_user_workloads_config_maps_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.list_user_workloads_secrets",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.ListUserWorkloadsSecrets",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "ListUserWorkloadsSecrets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ListUserWorkloadsSecretsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.services.environments.pagers.ListUserWorkloadsSecretsAsyncPager",
+        "shortName": "list_user_workloads_secrets"
+      },
+      "description": "Sample for ListUserWorkloadsSecrets",
+      "file": "composer_v1_generated_environments_list_user_workloads_secrets_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_ListUserWorkloadsSecrets_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_list_user_workloads_secrets_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.list_user_workloads_secrets",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.ListUserWorkloadsSecrets",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "ListUserWorkloadsSecrets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ListUserWorkloadsSecretsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.services.environments.pagers.ListUserWorkloadsSecretsPager",
+        "shortName": "list_user_workloads_secrets"
+      },
+      "description": "Sample for ListUserWorkloadsSecrets",
+      "file": "composer_v1_generated_environments_list_user_workloads_secrets_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_ListUserWorkloadsSecrets_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_list_user_workloads_secrets_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.list_workloads",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.ListWorkloads",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "ListWorkloads"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ListWorkloadsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.services.environments.pagers.ListWorkloadsAsyncPager",
+        "shortName": "list_workloads"
+      },
+      "description": "Sample for ListWorkloads",
+      "file": "composer_v1_generated_environments_list_workloads_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_ListWorkloads_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_list_workloads_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.list_workloads",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.ListWorkloads",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "ListWorkloads"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ListWorkloadsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.services.environments.pagers.ListWorkloadsPager",
+        "shortName": "list_workloads"
+      },
+      "description": "Sample for ListWorkloads",
+      "file": "composer_v1_generated_environments_list_workloads_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_ListWorkloads_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_list_workloads_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.load_snapshot",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.LoadSnapshot",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "LoadSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.LoadSnapshotRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "load_snapshot"
+      },
+      "description": "Sample for LoadSnapshot",
+      "file": "composer_v1_generated_environments_load_snapshot_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_LoadSnapshot_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_load_snapshot_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.load_snapshot",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.LoadSnapshot",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "LoadSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.LoadSnapshotRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "load_snapshot"
+      },
+      "description": "Sample for LoadSnapshot",
+      "file": "composer_v1_generated_environments_load_snapshot_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_LoadSnapshot_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_load_snapshot_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.poll_airflow_command",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.PollAirflowCommand",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "PollAirflowCommand"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.PollAirflowCommandRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.PollAirflowCommandResponse",
+        "shortName": "poll_airflow_command"
+      },
+      "description": "Sample for PollAirflowCommand",
+      "file": "composer_v1_generated_environments_poll_airflow_command_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_PollAirflowCommand_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_poll_airflow_command_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.poll_airflow_command",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.PollAirflowCommand",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "PollAirflowCommand"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.PollAirflowCommandRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.PollAirflowCommandResponse",
+        "shortName": "poll_airflow_command"
+      },
+      "description": "Sample for PollAirflowCommand",
+      "file": "composer_v1_generated_environments_poll_airflow_command_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_PollAirflowCommand_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_poll_airflow_command_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.save_snapshot",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.SaveSnapshot",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "SaveSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.SaveSnapshotRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "save_snapshot"
+      },
+      "description": "Sample for SaveSnapshot",
+      "file": "composer_v1_generated_environments_save_snapshot_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_SaveSnapshot_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_save_snapshot_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.save_snapshot",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.SaveSnapshot",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "SaveSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.SaveSnapshotRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "save_snapshot"
+      },
+      "description": "Sample for SaveSnapshot",
+      "file": "composer_v1_generated_environments_save_snapshot_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_SaveSnapshot_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_save_snapshot_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.stop_airflow_command",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.StopAirflowCommand",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "StopAirflowCommand"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.StopAirflowCommandRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.StopAirflowCommandResponse",
+        "shortName": "stop_airflow_command"
+      },
+      "description": "Sample for StopAirflowCommand",
+      "file": "composer_v1_generated_environments_stop_airflow_command_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_StopAirflowCommand_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_stop_airflow_command_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.stop_airflow_command",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.StopAirflowCommand",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "StopAirflowCommand"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.StopAirflowCommandRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.StopAirflowCommandResponse",
+        "shortName": "stop_airflow_command"
+      },
+      "description": "Sample for StopAirflowCommand",
+      "file": "composer_v1_generated_environments_stop_airflow_command_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_StopAirflowCommand_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_stop_airflow_command_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.update_environment",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.UpdateEnvironment",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "UpdateEnvironment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UpdateEnvironmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "environment",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.Environment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_environment"
+      },
+      "description": "Sample for UpdateEnvironment",
+      "file": "composer_v1_generated_environments_update_environment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_UpdateEnvironment_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_update_environment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.update_environment",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.UpdateEnvironment",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "UpdateEnvironment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UpdateEnvironmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "environment",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.Environment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_environment"
+      },
+      "description": "Sample for UpdateEnvironment",
+      "file": "composer_v1_generated_environments_update_environment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_UpdateEnvironment_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_update_environment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.update_user_workloads_config_map",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.UpdateUserWorkloadsConfigMap",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "UpdateUserWorkloadsConfigMap"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UpdateUserWorkloadsConfigMapRequest"
+          },
+          {
+            "name": "user_workloads_config_map",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsConfigMap"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsConfigMap",
+        "shortName": "update_user_workloads_config_map"
+      },
+      "description": "Sample for UpdateUserWorkloadsConfigMap",
+      "file": "composer_v1_generated_environments_update_user_workloads_config_map_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_UpdateUserWorkloadsConfigMap_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_update_user_workloads_config_map_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.update_user_workloads_config_map",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.UpdateUserWorkloadsConfigMap",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "UpdateUserWorkloadsConfigMap"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UpdateUserWorkloadsConfigMapRequest"
+          },
+          {
+            "name": "user_workloads_config_map",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsConfigMap"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsConfigMap",
+        "shortName": "update_user_workloads_config_map"
+      },
+      "description": "Sample for UpdateUserWorkloadsConfigMap",
+      "file": "composer_v1_generated_environments_update_user_workloads_config_map_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_UpdateUserWorkloadsConfigMap_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_update_user_workloads_config_map_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient",
+          "shortName": "EnvironmentsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsAsyncClient.update_user_workloads_secret",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.UpdateUserWorkloadsSecret",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "UpdateUserWorkloadsSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UpdateUserWorkloadsSecretRequest"
+          },
+          {
+            "name": "user_workloads_secret",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsSecret"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsSecret",
+        "shortName": "update_user_workloads_secret"
+      },
+      "description": "Sample for UpdateUserWorkloadsSecret",
+      "file": "composer_v1_generated_environments_update_user_workloads_secret_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_UpdateUserWorkloadsSecret_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_update_user_workloads_secret_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient",
+          "shortName": "EnvironmentsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.EnvironmentsClient.update_user_workloads_secret",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.Environments.UpdateUserWorkloadsSecret",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.Environments",
+            "shortName": "Environments"
+          },
+          "shortName": "UpdateUserWorkloadsSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UpdateUserWorkloadsSecretRequest"
+          },
+          {
+            "name": "user_workloads_secret",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsSecret"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.types.UserWorkloadsSecret",
+        "shortName": "update_user_workloads_secret"
+      },
+      "description": "Sample for UpdateUserWorkloadsSecret",
+      "file": "composer_v1_generated_environments_update_user_workloads_secret_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_Environments_UpdateUserWorkloadsSecret_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_environments_update_user_workloads_secret_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.ImageVersionsAsyncClient",
+          "shortName": "ImageVersionsAsyncClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.ImageVersionsAsyncClient.list_image_versions",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.ImageVersions.ListImageVersions",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.ImageVersions",
+            "shortName": "ImageVersions"
+          },
+          "shortName": "ListImageVersions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ListImageVersionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.services.image_versions.pagers.ListImageVersionsAsyncPager",
+        "shortName": "list_image_versions"
+      },
+      "description": "Sample for ListImageVersions",
+      "file": "composer_v1_generated_image_versions_list_image_versions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_ImageVersions_ListImageVersions_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_image_versions_list_image_versions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.orchestration.airflow.service_v1.ImageVersionsClient",
+          "shortName": "ImageVersionsClient"
+        },
+        "fullName": "google.cloud.orchestration.airflow.service_v1.ImageVersionsClient.list_image_versions",
+        "method": {
+          "fullName": "google.cloud.orchestration.airflow.service.v1.ImageVersions.ListImageVersions",
+          "service": {
+            "fullName": "google.cloud.orchestration.airflow.service.v1.ImageVersions",
+            "shortName": "ImageVersions"
+          },
+          "shortName": "ListImageVersions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.orchestration.airflow.service_v1.types.ListImageVersionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.orchestration.airflow.service_v1.services.image_versions.pagers.ListImageVersionsPager",
+        "shortName": "list_image_versions"
+      },
+      "description": "Sample for ListImageVersions",
+      "file": "composer_v1_generated_image_versions_list_image_versions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "composer_v1_generated_ImageVersions_ListImageVersions_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "composer_v1_generated_image_versions_list_image_versions_sync.py"
+    }
+  ]
+}

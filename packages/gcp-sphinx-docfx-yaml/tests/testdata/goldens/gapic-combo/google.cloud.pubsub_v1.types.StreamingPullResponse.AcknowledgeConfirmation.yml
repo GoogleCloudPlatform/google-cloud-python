@@ -1,0 +1,37 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: Successfully processed acknowledgement IDs.
+    id: ack_ids
+    var_type: Sequence[str]
+  - description: "List of acknowledgement IDs that were\n   malformed or whose acknowledgement\
+      \ deadline has\n   expired."
+    id: invalid_ack_ids
+    var_type: Sequence[str]
+  - description: "List of acknowledgement IDs that were out of\n   order."
+    id: unordered_ack_ids
+    var_type: Sequence[str]
+  children: []
+  class: google.cloud.pubsub_v1.types.StreamingPullResponse.AcknowledgeConfirmation
+  fullName: google.cloud.pubsub_v1.types.StreamingPullResponse.AcknowledgeConfirmation
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types.StreamingPullResponse
+  name: AcknowledgeConfirmation
+  source:
+    id: AcknowledgeConfirmation
+    path: tests/testdata/gapic-combo/google/pubsub_v1/types/pubsub.py
+    startLine: 1509
+  summary: 'Acknowledgement IDs sent in one or more previous requests to
+
+    acknowledge a previously received message.
+
+    '
+  syntax:
+    content: AcknowledgeConfirmation(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.StreamingPullResponse.AcknowledgeConfirmation
+references: []

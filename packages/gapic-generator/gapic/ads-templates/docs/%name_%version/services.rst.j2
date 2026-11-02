@@ -1,0 +1,8 @@
+Services for {{ api.naming.long_name }} {{ api.naming.version }} API
+{{ '=' * (18 + api.naming.long_name|length + api.naming.version|length) }}
+
+{% for service in api.services.values()|sort(attribute='name') %}
+.. automodule:: {{ (api.naming.module_namespace + (api.naming.versioned_module_name,) + service.meta.address.subpackage)|join(".") }}.services.{{ service.name|snake_case }}
+    :members:
+    :inherited-members:
+{% endfor %}

@@ -1,0 +1,16 @@
+{
+    "api_description": "Regionally deployed, single-tenant managed source code repository hosted on\nGoogle Cloud.",
+    "api_id": "securesourcemanager.googleapis.com",
+    "api_shortname": "securesourcemanager",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/securesourcemanager/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-securesourcemanager",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1434461",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "securesourcemanager",
+    "name_pretty": "Secure Source Manager",
+    "product_documentation": "https://cloud.google.com/secure-source-manager/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

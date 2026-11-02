@@ -1,0 +1,65 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The format of the audio byte\n   stream."
+    id: audio_encoding
+    var_type: <xref uid="google.cloud.texttospeech_v1.types.AudioEncoding">google.cloud.texttospeech_v1.types.AudioEncoding</xref>
+  - description: "Optional. Input only. Speaking rate/speed, in the range\n   [0.25,\
+      \ 4.0]. 1.0 is the normal native speed supported by the\n   specific voice.\
+      \ 2.0 is twice as fast, and 0.5 is half as\n   fast. If unset(0.0), defaults\
+      \ to the native 1.0 speed. Any\n   other values < 0.25 or > 4.0 will return\
+      \ an error."
+    id: speaking_rate
+    var_type: float
+  - description: "Optional. Input only. Speaking pitch, in the range [-20.0,\n   20.0].\
+      \ 20 means increase 20 semitones from the original\n   pitch. -20 means decrease\
+      \ 20 semitones from the original\n   pitch."
+    id: pitch
+    var_type: float
+  - description: "Optional. Input only. Volume gain (in dB) of the normal\n   native\
+      \ volume supported by the specific voice, in the range\n   [-96.0, 16.0]. If\
+      \ unset, or set to a value of 0.0 (dB), will\n   play at normal native signal\
+      \ amplitude. A value of -6.0 (dB)\n   will play at approximately half the amplitude\
+      \ of the normal\n   native signal amplitude. A value of +6.0 (dB) will play\
+      \ at\n   approximately twice the amplitude of the normal native\n   signal amplitude.\
+      \ Strongly recommend not to exceed +10 (dB)\n   as there's usually no effective\
+      \ increase in loudness for any\n   value greater than that."
+    id: volume_gain_db
+    var_type: float
+  - description: "Optional. The synthesis sample rate (in hertz) for this\n   audio.\
+      \ When this is specified in SynthesizeSpeechRequest, if\n   this is different\
+      \ from the voice's natural sample rate, then\n   the synthesizer will honor\
+      \ this request by converting to the\n   desired sample rate (which might result\
+      \ in worse audio\n   quality), unless the specified sample rate is not supported\n\
+      \   for the encoding chosen, in which case it will fail the\n   request and\
+      \ return [google.rpc.Code.INVALID_ARGUMENT][]."
+    id: sample_rate_hertz
+    var_type: int
+  - description: "Optional. Input only. An identifier which selects 'audio\n   effects'\
+      \ profiles that are applied on (post synthesized)\n   text to speech. Effects\
+      \ are applied on top of each other in\n   the order they are given. See `audio\n\
+      \   profiles <https://cloud.google.com/text-to-speech/docs/audio-profiles>`__\n\
+      \   for current supported profile ids."
+    id: effects_profile_id
+    var_type: Sequence[str]
+  children: []
+  class: google.cloud.texttospeech_v1.types.AudioConfig
+  fullName: google.cloud.texttospeech_v1.types.AudioConfig
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1.types
+  name: AudioConfig
+  source:
+    id: AudioConfig
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1/types/cloud_tts.py
+    startLine: 262
+  summary: 'Description of audio data to be synthesized.
+
+    '
+  syntax:
+    content: AudioConfig(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1.types.AudioConfig
+references: []

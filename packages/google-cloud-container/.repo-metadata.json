@@ -1,0 +1,16 @@
+{
+    "api_description": "Builds and manages container-based applications, powered by the open source\nKubernetes technology.",
+    "api_id": "container.googleapis.com",
+    "api_shortname": "container",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/container/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-container",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559746",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "container",
+    "name_pretty": "Kubernetes Engine",
+    "product_documentation": "https://cloud.google.com/kubernetes-engine/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

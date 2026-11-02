@@ -1,0 +1,19 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.UninterpretedOption.NamePart
+  fullName: google.cloud.pubsub_v1.types.UninterpretedOption.NamePart
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types.UninterpretedOption
+  name: NamePart
+  source:
+    id: NamePart
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.UninterpretedOption.NamePart` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.UninterpretedOption.NamePart
+references: []

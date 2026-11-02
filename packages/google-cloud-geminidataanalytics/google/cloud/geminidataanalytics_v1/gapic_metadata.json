@@ -1,0 +1,347 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.geminidataanalytics_v1",
+  "protoPackage": "google.cloud.geminidataanalytics.v1",
+  "schema": "1.0",
+  "services": {
+    "DataAgentService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataAgentServiceClient",
+          "rpcs": {
+            "CreateDataAgent": {
+              "methods": [
+                "create_data_agent"
+              ]
+            },
+            "CreateDataAgentSync": {
+              "methods": [
+                "create_data_agent_sync"
+              ]
+            },
+            "DeleteDataAgent": {
+              "methods": [
+                "delete_data_agent"
+              ]
+            },
+            "DeleteDataAgentSync": {
+              "methods": [
+                "delete_data_agent_sync"
+              ]
+            },
+            "GetDataAgent": {
+              "methods": [
+                "get_data_agent"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "ListAccessibleDataAgents": {
+              "methods": [
+                "list_accessible_data_agents"
+              ]
+            },
+            "ListDataAgents": {
+              "methods": [
+                "list_data_agents"
+              ]
+            },
+            "RetrieveAgentOpsObservability": {
+              "methods": [
+                "retrieve_agent_ops_observability"
+              ]
+            },
+            "SetAgentOpsObservability": {
+              "methods": [
+                "set_agent_ops_observability"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "UpdateDataAgent": {
+              "methods": [
+                "update_data_agent"
+              ]
+            },
+            "UpdateDataAgentSync": {
+              "methods": [
+                "update_data_agent_sync"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataAgentServiceAsyncClient",
+          "rpcs": {
+            "CreateDataAgent": {
+              "methods": [
+                "create_data_agent"
+              ]
+            },
+            "CreateDataAgentSync": {
+              "methods": [
+                "create_data_agent_sync"
+              ]
+            },
+            "DeleteDataAgent": {
+              "methods": [
+                "delete_data_agent"
+              ]
+            },
+            "DeleteDataAgentSync": {
+              "methods": [
+                "delete_data_agent_sync"
+              ]
+            },
+            "GetDataAgent": {
+              "methods": [
+                "get_data_agent"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "ListAccessibleDataAgents": {
+              "methods": [
+                "list_accessible_data_agents"
+              ]
+            },
+            "ListDataAgents": {
+              "methods": [
+                "list_data_agents"
+              ]
+            },
+            "RetrieveAgentOpsObservability": {
+              "methods": [
+                "retrieve_agent_ops_observability"
+              ]
+            },
+            "SetAgentOpsObservability": {
+              "methods": [
+                "set_agent_ops_observability"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "UpdateDataAgent": {
+              "methods": [
+                "update_data_agent"
+              ]
+            },
+            "UpdateDataAgentSync": {
+              "methods": [
+                "update_data_agent_sync"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataAgentServiceClient",
+          "rpcs": {
+            "CreateDataAgent": {
+              "methods": [
+                "create_data_agent"
+              ]
+            },
+            "CreateDataAgentSync": {
+              "methods": [
+                "create_data_agent_sync"
+              ]
+            },
+            "DeleteDataAgent": {
+              "methods": [
+                "delete_data_agent"
+              ]
+            },
+            "DeleteDataAgentSync": {
+              "methods": [
+                "delete_data_agent_sync"
+              ]
+            },
+            "GetDataAgent": {
+              "methods": [
+                "get_data_agent"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "ListAccessibleDataAgents": {
+              "methods": [
+                "list_accessible_data_agents"
+              ]
+            },
+            "ListDataAgents": {
+              "methods": [
+                "list_data_agents"
+              ]
+            },
+            "RetrieveAgentOpsObservability": {
+              "methods": [
+                "retrieve_agent_ops_observability"
+              ]
+            },
+            "SetAgentOpsObservability": {
+              "methods": [
+                "set_agent_ops_observability"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "UpdateDataAgent": {
+              "methods": [
+                "update_data_agent"
+              ]
+            },
+            "UpdateDataAgentSync": {
+              "methods": [
+                "update_data_agent_sync"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DataChatService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataChatServiceClient",
+          "rpcs": {
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
+            "CreateConversation": {
+              "methods": [
+                "create_conversation"
+              ]
+            },
+            "DeleteConversation": {
+              "methods": [
+                "delete_conversation"
+              ]
+            },
+            "GetConversation": {
+              "methods": [
+                "get_conversation"
+              ]
+            },
+            "ListConversations": {
+              "methods": [
+                "list_conversations"
+              ]
+            },
+            "ListMessages": {
+              "methods": [
+                "list_messages"
+              ]
+            },
+            "UpdateConversation": {
+              "methods": [
+                "update_conversation"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataChatServiceAsyncClient",
+          "rpcs": {
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
+            "CreateConversation": {
+              "methods": [
+                "create_conversation"
+              ]
+            },
+            "DeleteConversation": {
+              "methods": [
+                "delete_conversation"
+              ]
+            },
+            "GetConversation": {
+              "methods": [
+                "get_conversation"
+              ]
+            },
+            "ListConversations": {
+              "methods": [
+                "list_conversations"
+              ]
+            },
+            "ListMessages": {
+              "methods": [
+                "list_messages"
+              ]
+            },
+            "UpdateConversation": {
+              "methods": [
+                "update_conversation"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataChatServiceClient",
+          "rpcs": {
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
+            "CreateConversation": {
+              "methods": [
+                "create_conversation"
+              ]
+            },
+            "DeleteConversation": {
+              "methods": [
+                "delete_conversation"
+              ]
+            },
+            "GetConversation": {
+              "methods": [
+                "get_conversation"
+              ]
+            },
+            "ListConversations": {
+              "methods": [
+                "list_conversations"
+              ]
+            },
+            "ListMessages": {
+              "methods": [
+                "list_messages"
+              ]
+            },
+            "UpdateConversation": {
+              "methods": [
+                "update_conversation"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

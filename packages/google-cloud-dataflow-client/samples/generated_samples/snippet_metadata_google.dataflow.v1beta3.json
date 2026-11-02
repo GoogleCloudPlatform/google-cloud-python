@@ -1,0 +1,2769 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.dataflow.v1beta3",
+        "version": "v1beta3"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-dataflow-client",
+    "version": "0.14.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.FlexTemplatesServiceAsyncClient",
+          "shortName": "FlexTemplatesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.FlexTemplatesServiceAsyncClient.launch_flex_template",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.FlexTemplatesService.LaunchFlexTemplate",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.FlexTemplatesService",
+            "shortName": "FlexTemplatesService"
+          },
+          "shortName": "LaunchFlexTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.LaunchFlexTemplateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.LaunchFlexTemplateResponse",
+        "shortName": "launch_flex_template"
+      },
+      "description": "Sample for LaunchFlexTemplate",
+      "file": "dataflow_v1beta3_generated_flex_templates_service_launch_flex_template_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_FlexTemplatesService_LaunchFlexTemplate_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_flex_templates_service_launch_flex_template_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.FlexTemplatesServiceClient",
+          "shortName": "FlexTemplatesServiceClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.FlexTemplatesServiceClient.launch_flex_template",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.FlexTemplatesService.LaunchFlexTemplate",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.FlexTemplatesService",
+            "shortName": "FlexTemplatesService"
+          },
+          "shortName": "LaunchFlexTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.LaunchFlexTemplateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.LaunchFlexTemplateResponse",
+        "shortName": "launch_flex_template"
+      },
+      "description": "Sample for LaunchFlexTemplate",
+      "file": "dataflow_v1beta3_generated_flex_templates_service_launch_flex_template_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_FlexTemplatesService_LaunchFlexTemplate_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_flex_templates_service_launch_flex_template_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient",
+          "shortName": "JobsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient.aggregated_list_jobs",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.AggregatedListJobs",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "AggregatedListJobs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.ListJobsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.services.jobs_v1_beta3.pagers.AggregatedListJobsAsyncPager",
+        "shortName": "aggregated_list_jobs"
+      },
+      "description": "Sample for AggregatedListJobs",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_aggregated_list_jobs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_AggregatedListJobs_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_aggregated_list_jobs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client",
+          "shortName": "JobsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client.aggregated_list_jobs",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.AggregatedListJobs",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "AggregatedListJobs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.ListJobsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.services.jobs_v1_beta3.pagers.AggregatedListJobsPager",
+        "shortName": "aggregated_list_jobs"
+      },
+      "description": "Sample for AggregatedListJobs",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_aggregated_list_jobs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_AggregatedListJobs_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_aggregated_list_jobs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient",
+          "shortName": "JobsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient.check_active_jobs",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.CheckActiveJobs",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "CheckActiveJobs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.CheckActiveJobsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.CheckActiveJobsResponse",
+        "shortName": "check_active_jobs"
+      },
+      "description": "Sample for CheckActiveJobs",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_check_active_jobs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_CheckActiveJobs_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_check_active_jobs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client",
+          "shortName": "JobsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client.check_active_jobs",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.CheckActiveJobs",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "CheckActiveJobs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.CheckActiveJobsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.CheckActiveJobsResponse",
+        "shortName": "check_active_jobs"
+      },
+      "description": "Sample for CheckActiveJobs",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_check_active_jobs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_CheckActiveJobs_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_check_active_jobs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient",
+          "shortName": "JobsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient.create_job",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.CreateJob",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "CreateJob"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.CreateJobRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Job",
+        "shortName": "create_job"
+      },
+      "description": "Sample for CreateJob",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_create_job_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_CreateJob_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_create_job_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client",
+          "shortName": "JobsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client.create_job",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.CreateJob",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "CreateJob"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.CreateJobRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Job",
+        "shortName": "create_job"
+      },
+      "description": "Sample for CreateJob",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_create_job_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_CreateJob_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_create_job_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient",
+          "shortName": "JobsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient.get_job",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.GetJob",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "GetJob"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetJobRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Job",
+        "shortName": "get_job"
+      },
+      "description": "Sample for GetJob",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_get_job_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_GetJob_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_get_job_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client",
+          "shortName": "JobsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client.get_job",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.GetJob",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "GetJob"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetJobRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Job",
+        "shortName": "get_job"
+      },
+      "description": "Sample for GetJob",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_get_job_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_GetJob_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_get_job_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient",
+          "shortName": "JobsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient.list_jobs",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.ListJobs",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "ListJobs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.ListJobsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.services.jobs_v1_beta3.pagers.ListJobsAsyncPager",
+        "shortName": "list_jobs"
+      },
+      "description": "Sample for ListJobs",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_list_jobs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_ListJobs_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_list_jobs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client",
+          "shortName": "JobsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client.list_jobs",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.ListJobs",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "ListJobs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.ListJobsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.services.jobs_v1_beta3.pagers.ListJobsPager",
+        "shortName": "list_jobs"
+      },
+      "description": "Sample for ListJobs",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_list_jobs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_ListJobs_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_list_jobs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient",
+          "shortName": "JobsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient.snapshot_job",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.SnapshotJob",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "SnapshotJob"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.SnapshotJobRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Snapshot",
+        "shortName": "snapshot_job"
+      },
+      "description": "Sample for SnapshotJob",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_snapshot_job_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_SnapshotJob_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_snapshot_job_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client",
+          "shortName": "JobsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client.snapshot_job",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.SnapshotJob",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "SnapshotJob"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.SnapshotJobRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Snapshot",
+        "shortName": "snapshot_job"
+      },
+      "description": "Sample for SnapshotJob",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_snapshot_job_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_SnapshotJob_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_snapshot_job_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient",
+          "shortName": "JobsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3AsyncClient.update_job",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.UpdateJob",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "UpdateJob"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.UpdateJobRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Job",
+        "shortName": "update_job"
+      },
+      "description": "Sample for UpdateJob",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_update_job_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_UpdateJob_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_update_job_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client",
+          "shortName": "JobsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.JobsV1Beta3Client.update_job",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.JobsV1Beta3.UpdateJob",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.JobsV1Beta3",
+            "shortName": "JobsV1Beta3"
+          },
+          "shortName": "UpdateJob"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.UpdateJobRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Job",
+        "shortName": "update_job"
+      },
+      "description": "Sample for UpdateJob",
+      "file": "dataflow_v1beta3_generated_jobs_v1_beta3_update_job_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_JobsV1Beta3_UpdateJob_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_jobs_v1_beta3_update_job_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.MessagesV1Beta3AsyncClient",
+          "shortName": "MessagesV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.MessagesV1Beta3AsyncClient.list_job_messages",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.MessagesV1Beta3.ListJobMessages",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.MessagesV1Beta3",
+            "shortName": "MessagesV1Beta3"
+          },
+          "shortName": "ListJobMessages"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.ListJobMessagesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.services.messages_v1_beta3.pagers.ListJobMessagesAsyncPager",
+        "shortName": "list_job_messages"
+      },
+      "description": "Sample for ListJobMessages",
+      "file": "dataflow_v1beta3_generated_messages_v1_beta3_list_job_messages_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_MessagesV1Beta3_ListJobMessages_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_messages_v1_beta3_list_job_messages_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.MessagesV1Beta3Client",
+          "shortName": "MessagesV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.MessagesV1Beta3Client.list_job_messages",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.MessagesV1Beta3.ListJobMessages",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.MessagesV1Beta3",
+            "shortName": "MessagesV1Beta3"
+          },
+          "shortName": "ListJobMessages"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.ListJobMessagesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.services.messages_v1_beta3.pagers.ListJobMessagesPager",
+        "shortName": "list_job_messages"
+      },
+      "description": "Sample for ListJobMessages",
+      "file": "dataflow_v1beta3_generated_messages_v1_beta3_list_job_messages_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_MessagesV1Beta3_ListJobMessages_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_messages_v1_beta3_list_job_messages_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3AsyncClient",
+          "shortName": "MetricsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3AsyncClient.get_job_execution_details",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.MetricsV1Beta3.GetJobExecutionDetails",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.MetricsV1Beta3",
+            "shortName": "MetricsV1Beta3"
+          },
+          "shortName": "GetJobExecutionDetails"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetJobExecutionDetailsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.services.metrics_v1_beta3.pagers.GetJobExecutionDetailsAsyncPager",
+        "shortName": "get_job_execution_details"
+      },
+      "description": "Sample for GetJobExecutionDetails",
+      "file": "dataflow_v1beta3_generated_metrics_v1_beta3_get_job_execution_details_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_MetricsV1Beta3_GetJobExecutionDetails_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_metrics_v1_beta3_get_job_execution_details_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3Client",
+          "shortName": "MetricsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3Client.get_job_execution_details",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.MetricsV1Beta3.GetJobExecutionDetails",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.MetricsV1Beta3",
+            "shortName": "MetricsV1Beta3"
+          },
+          "shortName": "GetJobExecutionDetails"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetJobExecutionDetailsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.services.metrics_v1_beta3.pagers.GetJobExecutionDetailsPager",
+        "shortName": "get_job_execution_details"
+      },
+      "description": "Sample for GetJobExecutionDetails",
+      "file": "dataflow_v1beta3_generated_metrics_v1_beta3_get_job_execution_details_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_MetricsV1Beta3_GetJobExecutionDetails_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_metrics_v1_beta3_get_job_execution_details_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3AsyncClient",
+          "shortName": "MetricsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3AsyncClient.get_job_metrics",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.MetricsV1Beta3.GetJobMetrics",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.MetricsV1Beta3",
+            "shortName": "MetricsV1Beta3"
+          },
+          "shortName": "GetJobMetrics"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetJobMetricsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.JobMetrics",
+        "shortName": "get_job_metrics"
+      },
+      "description": "Sample for GetJobMetrics",
+      "file": "dataflow_v1beta3_generated_metrics_v1_beta3_get_job_metrics_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_MetricsV1Beta3_GetJobMetrics_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_metrics_v1_beta3_get_job_metrics_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3Client",
+          "shortName": "MetricsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3Client.get_job_metrics",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.MetricsV1Beta3.GetJobMetrics",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.MetricsV1Beta3",
+            "shortName": "MetricsV1Beta3"
+          },
+          "shortName": "GetJobMetrics"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetJobMetricsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.JobMetrics",
+        "shortName": "get_job_metrics"
+      },
+      "description": "Sample for GetJobMetrics",
+      "file": "dataflow_v1beta3_generated_metrics_v1_beta3_get_job_metrics_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_MetricsV1Beta3_GetJobMetrics_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_metrics_v1_beta3_get_job_metrics_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3AsyncClient",
+          "shortName": "MetricsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3AsyncClient.get_stage_execution_details",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.MetricsV1Beta3.GetStageExecutionDetails",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.MetricsV1Beta3",
+            "shortName": "MetricsV1Beta3"
+          },
+          "shortName": "GetStageExecutionDetails"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetStageExecutionDetailsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.services.metrics_v1_beta3.pagers.GetStageExecutionDetailsAsyncPager",
+        "shortName": "get_stage_execution_details"
+      },
+      "description": "Sample for GetStageExecutionDetails",
+      "file": "dataflow_v1beta3_generated_metrics_v1_beta3_get_stage_execution_details_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_MetricsV1Beta3_GetStageExecutionDetails_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_metrics_v1_beta3_get_stage_execution_details_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3Client",
+          "shortName": "MetricsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.MetricsV1Beta3Client.get_stage_execution_details",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.MetricsV1Beta3.GetStageExecutionDetails",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.MetricsV1Beta3",
+            "shortName": "MetricsV1Beta3"
+          },
+          "shortName": "GetStageExecutionDetails"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetStageExecutionDetailsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.services.metrics_v1_beta3.pagers.GetStageExecutionDetailsPager",
+        "shortName": "get_stage_execution_details"
+      },
+      "description": "Sample for GetStageExecutionDetails",
+      "file": "dataflow_v1beta3_generated_metrics_v1_beta3_get_stage_execution_details_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_MetricsV1Beta3_GetStageExecutionDetails_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_metrics_v1_beta3_get_stage_execution_details_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3AsyncClient",
+          "shortName": "SnapshotsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3AsyncClient.delete_snapshot",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3.DeleteSnapshot",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3",
+            "shortName": "SnapshotsV1Beta3"
+          },
+          "shortName": "DeleteSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.DeleteSnapshotRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.DeleteSnapshotResponse",
+        "shortName": "delete_snapshot"
+      },
+      "description": "Sample for DeleteSnapshot",
+      "file": "dataflow_v1beta3_generated_snapshots_v1_beta3_delete_snapshot_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_SnapshotsV1Beta3_DeleteSnapshot_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_snapshots_v1_beta3_delete_snapshot_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3Client",
+          "shortName": "SnapshotsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3Client.delete_snapshot",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3.DeleteSnapshot",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3",
+            "shortName": "SnapshotsV1Beta3"
+          },
+          "shortName": "DeleteSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.DeleteSnapshotRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.DeleteSnapshotResponse",
+        "shortName": "delete_snapshot"
+      },
+      "description": "Sample for DeleteSnapshot",
+      "file": "dataflow_v1beta3_generated_snapshots_v1_beta3_delete_snapshot_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_SnapshotsV1Beta3_DeleteSnapshot_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_snapshots_v1_beta3_delete_snapshot_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3AsyncClient",
+          "shortName": "SnapshotsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3AsyncClient.get_snapshot",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3.GetSnapshot",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3",
+            "shortName": "SnapshotsV1Beta3"
+          },
+          "shortName": "GetSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetSnapshotRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Snapshot",
+        "shortName": "get_snapshot"
+      },
+      "description": "Sample for GetSnapshot",
+      "file": "dataflow_v1beta3_generated_snapshots_v1_beta3_get_snapshot_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_SnapshotsV1Beta3_GetSnapshot_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_snapshots_v1_beta3_get_snapshot_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3Client",
+          "shortName": "SnapshotsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3Client.get_snapshot",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3.GetSnapshot",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3",
+            "shortName": "SnapshotsV1Beta3"
+          },
+          "shortName": "GetSnapshot"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetSnapshotRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Snapshot",
+        "shortName": "get_snapshot"
+      },
+      "description": "Sample for GetSnapshot",
+      "file": "dataflow_v1beta3_generated_snapshots_v1_beta3_get_snapshot_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_SnapshotsV1Beta3_GetSnapshot_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_snapshots_v1_beta3_get_snapshot_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3AsyncClient",
+          "shortName": "SnapshotsV1Beta3AsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3AsyncClient.list_snapshots",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3.ListSnapshots",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3",
+            "shortName": "SnapshotsV1Beta3"
+          },
+          "shortName": "ListSnapshots"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.ListSnapshotsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.ListSnapshotsResponse",
+        "shortName": "list_snapshots"
+      },
+      "description": "Sample for ListSnapshots",
+      "file": "dataflow_v1beta3_generated_snapshots_v1_beta3_list_snapshots_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_SnapshotsV1Beta3_ListSnapshots_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_snapshots_v1_beta3_list_snapshots_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3Client",
+          "shortName": "SnapshotsV1Beta3Client"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.SnapshotsV1Beta3Client.list_snapshots",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3.ListSnapshots",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.SnapshotsV1Beta3",
+            "shortName": "SnapshotsV1Beta3"
+          },
+          "shortName": "ListSnapshots"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.ListSnapshotsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.ListSnapshotsResponse",
+        "shortName": "list_snapshots"
+      },
+      "description": "Sample for ListSnapshots",
+      "file": "dataflow_v1beta3_generated_snapshots_v1_beta3_list_snapshots_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_SnapshotsV1Beta3_ListSnapshots_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_snapshots_v1_beta3_list_snapshots_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceAsyncClient",
+          "shortName": "TemplatesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceAsyncClient.create_job_from_template",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.TemplatesService.CreateJobFromTemplate",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.TemplatesService",
+            "shortName": "TemplatesService"
+          },
+          "shortName": "CreateJobFromTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.CreateJobFromTemplateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Job",
+        "shortName": "create_job_from_template"
+      },
+      "description": "Sample for CreateJobFromTemplate",
+      "file": "dataflow_v1beta3_generated_templates_service_create_job_from_template_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_TemplatesService_CreateJobFromTemplate_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_templates_service_create_job_from_template_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceClient",
+          "shortName": "TemplatesServiceClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceClient.create_job_from_template",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.TemplatesService.CreateJobFromTemplate",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.TemplatesService",
+            "shortName": "TemplatesService"
+          },
+          "shortName": "CreateJobFromTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.CreateJobFromTemplateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.Job",
+        "shortName": "create_job_from_template"
+      },
+      "description": "Sample for CreateJobFromTemplate",
+      "file": "dataflow_v1beta3_generated_templates_service_create_job_from_template_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_TemplatesService_CreateJobFromTemplate_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_templates_service_create_job_from_template_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceAsyncClient",
+          "shortName": "TemplatesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceAsyncClient.get_template",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.TemplatesService.GetTemplate",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.TemplatesService",
+            "shortName": "TemplatesService"
+          },
+          "shortName": "GetTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetTemplateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.GetTemplateResponse",
+        "shortName": "get_template"
+      },
+      "description": "Sample for GetTemplate",
+      "file": "dataflow_v1beta3_generated_templates_service_get_template_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_TemplatesService_GetTemplate_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_templates_service_get_template_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceClient",
+          "shortName": "TemplatesServiceClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceClient.get_template",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.TemplatesService.GetTemplate",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.TemplatesService",
+            "shortName": "TemplatesService"
+          },
+          "shortName": "GetTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.GetTemplateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.GetTemplateResponse",
+        "shortName": "get_template"
+      },
+      "description": "Sample for GetTemplate",
+      "file": "dataflow_v1beta3_generated_templates_service_get_template_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_TemplatesService_GetTemplate_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_templates_service_get_template_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceAsyncClient",
+          "shortName": "TemplatesServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceAsyncClient.launch_template",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.TemplatesService.LaunchTemplate",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.TemplatesService",
+            "shortName": "TemplatesService"
+          },
+          "shortName": "LaunchTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.LaunchTemplateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.LaunchTemplateResponse",
+        "shortName": "launch_template"
+      },
+      "description": "Sample for LaunchTemplate",
+      "file": "dataflow_v1beta3_generated_templates_service_launch_template_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_TemplatesService_LaunchTemplate_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_templates_service_launch_template_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceClient",
+          "shortName": "TemplatesServiceClient"
+        },
+        "fullName": "google.cloud.dataflow_v1beta3.TemplatesServiceClient.launch_template",
+        "method": {
+          "fullName": "google.dataflow.v1beta3.TemplatesService.LaunchTemplate",
+          "service": {
+            "fullName": "google.dataflow.v1beta3.TemplatesService",
+            "shortName": "TemplatesService"
+          },
+          "shortName": "LaunchTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dataflow_v1beta3.types.LaunchTemplateRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dataflow_v1beta3.types.LaunchTemplateResponse",
+        "shortName": "launch_template"
+      },
+      "description": "Sample for LaunchTemplate",
+      "file": "dataflow_v1beta3_generated_templates_service_launch_template_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dataflow_v1beta3_generated_TemplatesService_LaunchTemplate_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dataflow_v1beta3_generated_templates_service_launch_template_sync.py"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+# This constraints file is used to check that lower bounds
+# are correct in setup.py
+# List all library dependencies and extras in this file,
+# pinning their versions to their lower bounds.
+# For example, if setup.py has "google-cloud-foo >= 1.14.0, < 2.0.0",
+# then this file should have google-cloud-foo==1.14.0
+numpy==1.24.0
+packaging==24.2.0
+pandas==1.5.3
+pyarrow==14.0.1

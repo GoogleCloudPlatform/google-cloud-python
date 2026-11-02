@@ -1,0 +1,999 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.ftp.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-ftp",
+    "version": "0.1.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.create_server",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.CreateServer",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "CreateServer"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.CreateServerRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "server",
+            "type": "google.cloud.ftp_v1.types.Server"
+          },
+          {
+            "name": "server_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_server"
+      },
+      "description": "Sample for CreateServer",
+      "file": "ftp_v1_generated_cloud_ftp_create_server_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_CreateServer_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_create_server_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.create_user",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.CreateUser",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "CreateUser"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.CreateUserRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user",
+            "type": "google.cloud.ftp_v1.types.User"
+          },
+          {
+            "name": "user_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_user"
+      },
+      "description": "Sample for CreateUser",
+      "file": "ftp_v1_generated_cloud_ftp_create_user_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_CreateUser_sync",
+      "segments": [
+        {
+          "end": 65,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 65,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 62,
+          "start": 56,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 66,
+          "start": 63,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_create_user_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.delete_server",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.DeleteServer",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "DeleteServer"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.DeleteServerRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_server"
+      },
+      "description": "Sample for DeleteServer",
+      "file": "ftp_v1_generated_cloud_ftp_delete_server_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_DeleteServer_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_delete_server_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.delete_user",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.DeleteUser",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "DeleteUser"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.DeleteUserRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_user"
+      },
+      "description": "Sample for DeleteUser",
+      "file": "ftp_v1_generated_cloud_ftp_delete_user_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_DeleteUser_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_delete_user_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.get_server",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.GetServer",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "GetServer"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.GetServerRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ftp_v1.types.Server",
+        "shortName": "get_server"
+      },
+      "description": "Sample for GetServer",
+      "file": "ftp_v1_generated_cloud_ftp_get_server_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_GetServer_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_get_server_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.get_user",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.GetUser",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "GetUser"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.GetUserRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ftp_v1.types.User",
+        "shortName": "get_user"
+      },
+      "description": "Sample for GetUser",
+      "file": "ftp_v1_generated_cloud_ftp_get_user_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_GetUser_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_get_user_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.list_servers",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.ListServers",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "ListServers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.ListServersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ftp_v1.services.cloud_ftp.pagers.ListServersPager",
+        "shortName": "list_servers"
+      },
+      "description": "Sample for ListServers",
+      "file": "ftp_v1_generated_cloud_ftp_list_servers_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_ListServers_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_list_servers_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.list_users",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.ListUsers",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "ListUsers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.ListUsersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ftp_v1.services.cloud_ftp.pagers.ListUsersPager",
+        "shortName": "list_users"
+      },
+      "description": "Sample for ListUsers",
+      "file": "ftp_v1_generated_cloud_ftp_list_users_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_ListUsers_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_list_users_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.start_server",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.StartServer",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "StartServer"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.StartServerRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "start_server"
+      },
+      "description": "Sample for StartServer",
+      "file": "ftp_v1_generated_cloud_ftp_start_server_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_StartServer_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_start_server_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.stop_server",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.StopServer",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "StopServer"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.StopServerRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "stop_server"
+      },
+      "description": "Sample for StopServer",
+      "file": "ftp_v1_generated_cloud_ftp_stop_server_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_StopServer_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_stop_server_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.update_server",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.UpdateServer",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "UpdateServer"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.UpdateServerRequest"
+          },
+          {
+            "name": "server",
+            "type": "google.cloud.ftp_v1.types.Server"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_server"
+      },
+      "description": "Sample for UpdateServer",
+      "file": "ftp_v1_generated_cloud_ftp_update_server_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_UpdateServer_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_update_server_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ftp_v1.CloudFtpClient",
+          "shortName": "CloudFtpClient"
+        },
+        "fullName": "google.cloud.ftp_v1.CloudFtpClient.update_user",
+        "method": {
+          "fullName": "google.cloud.ftp.v1.CloudFtp.UpdateUser",
+          "service": {
+            "fullName": "google.cloud.ftp.v1.CloudFtp",
+            "shortName": "CloudFtp"
+          },
+          "shortName": "UpdateUser"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ftp_v1.types.UpdateUserRequest"
+          },
+          {
+            "name": "user",
+            "type": "google.cloud.ftp_v1.types.User"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_user"
+      },
+      "description": "Sample for UpdateUser",
+      "file": "ftp_v1_generated_cloud_ftp_update_user_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ftp_v1_generated_CloudFtp_UpdateUser_sync",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ftp_v1_generated_cloud_ftp_update_user_sync.py"
+    }
+  ]
+}

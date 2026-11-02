@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://googleapis.dev/python/google-auth-oauthlib/latest",
+    "distribution_name": "google-auth-oauthlib",
+    "language": "python",
+    "library_type": "AUTH",
+    "name": "google-auth-oauthlib",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

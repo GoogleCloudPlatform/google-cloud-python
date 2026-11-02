@@ -1,0 +1,159 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.pubsub_v1.types.PublisherOptions
+  - google.cloud.pubsub_v1.types.PublisherOptions.enable_message_ordering
+  - google.cloud.pubsub_v1.types.PublisherOptions.flow_control
+  - google.cloud.pubsub_v1.types.PublisherOptions.retry
+  - google.cloud.pubsub_v1.types.PublisherOptions.timeout
+  class: google.cloud.pubsub_v1.types.PublisherOptions
+  fullName: google.cloud.pubsub_v1.types.PublisherOptions
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: PublisherOptions
+  source:
+    id: PublisherOptions
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/types.py
+    startLine: 112
+  summary: 'The options for the publisher client.
+
+
+    '
+  syntax:
+    content: 'PublisherOptions(enable_message_ordering: bool = False, flow_control:
+      google.cloud.pubsub_v1.types.PublishFlowControl = PublishFlowControl(message_limit=1000,
+      byte_limit=10000000, limit_exceeded_behavior=<LimitExceededBehavior.IGNORE:
+      ''ignore''>), retry: OptionalRetry = _MethodDefault._DEFAULT_VALUE, timeout:
+      OptionalTimeout = _MethodDefault._DEFAULT_VALUE)'
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.PublisherOptions
+- attributes: []
+  class: google.cloud.pubsub_v1.types.PublisherOptions
+  fullName: google.cloud.pubsub_v1.types.PublisherOptions
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: PublisherOptions
+  source:
+    id: PublisherOptions
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/types.py
+    startLine: 112
+  summary: 'Create new instance of PublisherOptions(enable_message_ordering, flow_control,
+    retry, timeout)
+
+
+    '
+  syntax:
+    content: 'PublisherOptions(enable_message_ordering: bool = False, flow_control:
+      google.cloud.pubsub_v1.types.PublishFlowControl = PublishFlowControl(message_limit=1000,
+      byte_limit=10000000, limit_exceeded_behavior=<LimitExceededBehavior.IGNORE:
+      ''ignore''>), retry: OptionalRetry = _MethodDefault._DEFAULT_VALUE, timeout:
+      OptionalTimeout = _MethodDefault._DEFAULT_VALUE)'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.types.PublisherOptions
+- attributes: []
+  class: google.cloud.pubsub_v1.types.PublisherOptions
+  fullName: google.cloud.pubsub_v1.types.PublisherOptions.enable_message_ordering
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: enable_message_ordering
+  source:
+    id: enable_message_ordering
+    path: null
+    startLine: null
+  summary: 'Whether to order messages in a batch by a supplied ordering key.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.PublisherOptions.enable_message_ordering
+- attributes: []
+  class: google.cloud.pubsub_v1.types.PublisherOptions
+  fullName: google.cloud.pubsub_v1.types.PublisherOptions.flow_control
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: flow_control
+  source:
+    id: flow_control
+    path: null
+    startLine: null
+  summary: 'Flow control settings for message publishing by the client. By default
+    the publisher client does not do any throttling.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.PublisherOptions.flow_control
+- attributes: []
+  class: google.cloud.pubsub_v1.types.PublisherOptions
+  fullName: google.cloud.pubsub_v1.types.PublisherOptions.retry
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: retry
+  source:
+    id: retry
+    path: null
+    startLine: null
+  summary: 'Retry settings for message publishing by the client. This should be an
+    instance of `google.api_core.retry.Retry`.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.PublisherOptions.retry
+- attributes: []
+  class: google.cloud.pubsub_v1.types.PublisherOptions
+  fullName: google.cloud.pubsub_v1.types.PublisherOptions.timeout
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: timeout
+  source:
+    id: timeout
+    path: null
+    startLine: null
+  summary: 'Timeout settings for message publishing by the client. It should be compatible
+    with `.pubsub_v1.types.TimeoutType`.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.PublisherOptions.timeout
+references:
+- fullName: google.cloud.pubsub_v1.types.PublisherOptions
+  isExternal: false
+  name: PublisherOptions
+  parent: google.cloud.pubsub_v1.types.PublisherOptions
+  uid: google.cloud.pubsub_v1.types.PublisherOptions
+- fullName: google.cloud.pubsub_v1.types.PublisherOptions.enable_message_ordering
+  isExternal: false
+  name: enable_message_ordering
+  parent: google.cloud.pubsub_v1.types.PublisherOptions
+  uid: google.cloud.pubsub_v1.types.PublisherOptions.enable_message_ordering
+- fullName: google.cloud.pubsub_v1.types.PublisherOptions.flow_control
+  isExternal: false
+  name: flow_control
+  parent: google.cloud.pubsub_v1.types.PublisherOptions
+  uid: google.cloud.pubsub_v1.types.PublisherOptions.flow_control
+- fullName: google.cloud.pubsub_v1.types.PublisherOptions.retry
+  isExternal: false
+  name: retry
+  parent: google.cloud.pubsub_v1.types.PublisherOptions
+  uid: google.cloud.pubsub_v1.types.PublisherOptions.retry
+- fullName: google.cloud.pubsub_v1.types.PublisherOptions.timeout
+  isExternal: false
+  name: timeout
+  parent: google.cloud.pubsub_v1.types.PublisherOptions
+  uid: google.cloud.pubsub_v1.types.PublisherOptions.timeout

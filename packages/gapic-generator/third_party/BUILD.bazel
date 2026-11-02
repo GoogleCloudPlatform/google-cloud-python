@@ -1,0 +1,4 @@
+exports_files(
+    ["grpc_legacy_channel.patch"],
+    visibility = ["//visibility:public"],
+)

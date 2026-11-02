@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.security.publicca_v1beta1",
+  "protoPackage": "google.cloud.security.publicca.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "PublicCertificateAuthorityService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PublicCertificateAuthorityServiceClient",
+          "rpcs": {
+            "CreateExternalAccountKey": {
+              "methods": [
+                "create_external_account_key"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "PublicCertificateAuthorityServiceAsyncClient",
+          "rpcs": {
+            "CreateExternalAccountKey": {
+              "methods": [
+                "create_external_account_key"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "PublicCertificateAuthorityServiceClient",
+          "rpcs": {
+            "CreateExternalAccountKey": {
+              "methods": [
+                "create_external_account_key"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

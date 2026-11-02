@@ -1,0 +1,969 @@
+# Copyright 2016 Google LLC All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""Pools managing shared Session objects."""
+
+__CROSS_SYNC_OUTPUT__ = "google.cloud.spanner_v1.pool"
+import asyncio
+import datetime
+import time
+from warnings import warn
+
+from google.cloud.exceptions import NotFound
+
+from google.cloud.aio._cross_sync import CrossSync
+from google.cloud.spanner_v1._async.session import Session
+from google.cloud.spanner_v1._helpers import (
+    _metadata_with_leader_aware_routing,
+    _metadata_with_prefix,
+    _resource_info_from_database,
+)
+from google.cloud.spanner_v1._opentelemetry_tracing import (
+    add_span_event,
+    get_current_span,
+    trace_call,
+)
+from google.cloud.spanner_v1.metrics.metrics_capture import MetricsCapture
+from google.cloud.spanner_v1.types.spanner import BatchCreateSessionsRequest
+from google.cloud.spanner_v1.types.spanner import Session as SessionProto
+
+
+def _NOW():
+    return datetime.datetime.now(datetime.timezone.utc)
+
+
+@CrossSync.convert_class
+class SessionCheckout(object):
+    """Context manager: hold session checked out from a pool.
+
+    Deprecated. Sessions should be checked out indirectly using context
+    managers or :meth:`~google.cloud.spanner_v1.database.Database.run_in_transaction`,
+    rather than checked out directly from the pool.
+
+    :type pool: concrete subclass of
+        :class:`~google.cloud.spanner_v1.pool.AbstractSessionPool`
+    :param pool: Pool from which to check out a session.
+
+    :param kwargs: extra keyword arguments to be passed to :meth:`pool.get`.
+    """
+
+    _session = None
+
+    def __init__(self, pool, **kwargs):
+        self._pool = pool
+        self._kwargs = kwargs
+        self._timeout = kwargs.get("timeout")
+
+    @CrossSync.convert(sync_name="__enter__")
+    async def __aenter__(self):
+        self._session = await self._pool.get(**self._kwargs)
+        return self._session
+
+    @CrossSync.convert(sync_name="__exit__")
+    async def __aexit__(self, exc_type, exc_value, traceback):
+        await self._pool.put(self._session)
+
+
+@CrossSync.convert_class(
+    docstring_format_vars={
+        "experimental_api": (
+            "\n\n    .. warning::\n        The Spanner AsyncIO API is experimental and may be subject to breaking changes.\n",
+            "",
+        )
+    }
+)
+class AbstractSessionPool(object):
+    """{experimental_api}Specifies required API for concrete session pool implementations.
+
+    :type labels: dict (str -> str) or None
+    :param labels: (Optional) user-assigned labels for sessions created
+                    by the pool.
+
+    :type database_role: str
+    :param database_role: (Optional) user-assigned database_role for the session.
+    """
+
+    _database = None
+
+    def __init__(self, labels=None, database_role=None):
+        if labels is None:
+            labels = {}
+        self._labels = labels
+        self._database_role = database_role
+
+    @property
+    def _resource_info(self):
+        """Resource information for metrics labels."""
+        return _resource_info_from_database(self._database)
+
+    @property
+    def labels(self):
+        """User-assigned labels for sessions created by the pool.
+
+        :rtype: dict (str -> str)
+        :returns: labels assigned by the user
+        """
+        return self._labels
+
+    @property
+    def database_role(self):
+        """User-assigned database_role for sessions created by the pool.
+
+        :rtype: str
+        :returns: database_role assigned by the user
+        """
+        return self._database_role
+
+    def bind(self, database):
+        """Associate the pool with a database.
+
+        :type database: :class:`~google.cloud.spanner_v1.database.Database`
+        :param database: database used by the pool to create sessions
+                         when needed.
+
+        Concrete implementations of this method may pre-fill the pool
+        using the database.
+
+        :raises NotImplementedError: abstract method
+        """
+        raise NotImplementedError()
+
+    def get(self):
+        """Check a session out from the pool.
+
+        Concrete implementations of this method are allowed to raise an
+        error to signal that the pool is exhausted, or to block until a
+        session is available.
+
+        :raises NotImplementedError: abstract method
+        """
+        raise NotImplementedError()
+
+    @CrossSync.convert
+    async def put(self, session):
+        """Return a session to the pool.
+
+        :type session: :class:`~google.cloud.spanner_v1.session.Session`
+        :param session: the session being returned.
+
+        Concrete implementations of this method are allowed to raise an
+        error to signal that the pool is full, or to block until it is
+        not full.
+
+        :raises NotImplementedError: abstract method
+        """
+        raise NotImplementedError()
+
+    def clear(self):
+        """Delete all sessions in the pool.
+
+        Concrete implementations of this method are allowed to raise an
+        error to signal that the pool is full, or to block until it is
+        not full.
+
+        :raises NotImplementedError: abstract method
+        """
+        raise NotImplementedError()
+
+    def _new_session(self):
+        """Helper for concrete methods creating session instances.
+
+        :rtype: :class:`~google.cloud.spanner_v1.session.Session`
+        :returns: new session instance.
+        """
+
+        role = self.database_role or self._database.database_role
+        return Session(database=self._database, labels=self.labels, database_role=role)
+
+    def session(self, **kwargs):
+        """Check out a session from the pool.
+
+        Deprecated. Sessions should be checked out indirectly using context
+        managers or :meth:`~google.cloud.spanner_v1.database.Database.run_in_transaction`,
+        rather than checked out directly from the pool.
+
+        :param kwargs: (optional) keyword arguments, passed through to
+                       the returned checkout.
+
+        :rtype: :class:`~google.cloud.spanner_v1.session.SessionCheckout`
+        :returns: a checkout instance, to be used as a context manager for
+                  accessing the session and returning it to the pool.
+        """
+        import warnings
+
+        warnings.warn(
+            "Sessions should be checked out indirectly using context "
+            "managers or Database.run_in_transaction, rather than "
+            "checked out directly from the pool.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return SessionCheckout(self, **kwargs)
+
+
+@CrossSync.convert_class(
+    docstring_format_vars={
+        "experimental_api": (
+            "\n\n    .. warning::\n        The Spanner AsyncIO API is experimental and may be subject to breaking changes.\n",
+            "",
+        )
+    }
+)
+class FixedSizePool(AbstractSessionPool):
+    """{experimental_api}Concrete session pool implementation:
+
+    - Pre-allocates / creates a fixed number of sessions.
+
+    - "Pings" existing sessions via :meth:`session.exists` before returning
+      sessions that have not been used for more than 55 minutes and replaces
+      expired sessions.
+
+    - Blocks, with a timeout, when :meth:`get` is called on an empty pool.
+      Raises after timing out.
+
+    - Raises when :meth:`put` is called on a full pool.  That error is
+      never expected in normal practice, as users should be calling
+      :meth:`get` followed by :meth:`put` whenever in need of a session.
+
+    :type size: int
+    :param size: fixed pool size
+
+    :type default_timeout: int
+    :param default_timeout: default timeout, in seconds, to wait for
+                                 a returned session.
+
+    :type labels: dict (str -> str) or None
+    :param labels: (Optional) user-assigned labels for sessions created
+                    by the pool.
+
+    :type database_role: str
+    :param database_role: (Optional) user-assigned database_role for the session.
+    """
+
+    DEFAULT_SIZE = 10
+    DEFAULT_TIMEOUT = 10
+    DEFAULT_MAX_AGE_MINUTES = 55
+
+    def __init__(
+        self,
+        size=DEFAULT_SIZE,
+        default_timeout=DEFAULT_TIMEOUT,
+        labels=None,
+        database_role=None,
+        max_age_minutes=DEFAULT_MAX_AGE_MINUTES,
+    ):
+        super(FixedSizePool, self).__init__(labels=labels, database_role=database_role)
+        self.size = size
+        self.default_timeout = default_timeout
+        self._sessions = CrossSync.LifoQueue(size)
+        self._max_age = datetime.timedelta(minutes=max_age_minutes)
+        self._lock = CrossSync.Lock()
+
+    @CrossSync.convert
+    async def bind(self, database):
+        """Associate the pool with a database.
+
+        :type database: :class:`~google.cloud.spanner_v1.database.Database`
+        :param database: database used by the pool to used to create sessions
+                         when needed.
+        """
+        self._database = database
+        self._database_role = self._database_role or self._database.database_role
+        await self._fill_pool()
+
+    @CrossSync.convert
+    async def _fill_pool(self):
+        """Fills the pool with sessions.
+
+        .. note::
+
+            This method is not thread-safe. It should only be called from
+            within a thread-safe context.
+        """
+        database = self._database
+        requested_session_count = self.size - self._sessions.qsize()
+        span = get_current_span()
+        span_event_attributes = {"kind": type(self).__name__}
+
+        if requested_session_count <= 0:
+            add_span_event(
+                span,
+                f"Invalid session pool size({requested_session_count}) <= 0",
+                span_event_attributes,
+            )
+            return
+
+        api = database.spanner_api
+        metadata = _metadata_with_prefix(database.name)
+        if database._route_to_leader_enabled:
+            metadata.append(_metadata_with_leader_aware_routing(True))
+        self._database_role = self._database_role or self._database.database_role
+        if requested_session_count > 0:
+            add_span_event(
+                span,
+                f"Requesting {requested_session_count} sessions",
+                span_event_attributes,
+            )
+
+        if self._sessions.full():
+            add_span_event(span, "Session pool is already full", span_event_attributes)
+            return
+
+        request = BatchCreateSessionsRequest(
+            database=database.name,
+            session_count=requested_session_count,
+            session_template=SessionProto(creator_role=self.database_role),
+        )
+
+        observability_options = getattr(self._database, "observability_options", None)
+        with (
+            trace_call(
+                "CloudSpanner.FixedPool.BatchCreateSessions",
+                observability_options=observability_options,
+                metadata=metadata,
+            ) as span,
+            MetricsCapture(self._resource_info),
+        ):
+            returned_session_count = 0
+            while not self._sessions.full():
+                request.session_count = requested_session_count - self._sessions.qsize()
+                add_span_event(
+                    span,
+                    f"Creating {request.session_count} sessions",
+                    span_event_attributes,
+                )
+                call_metadata, error_augmenter = database.with_error_augmentation(
+                    database._next_nth_request,
+                    1,
+                    metadata,
+                    span,
+                )
+                with error_augmenter:
+                    resp = await api.batch_create_sessions(
+                        request=request,
+                        metadata=call_metadata,
+                    )
+
+                add_span_event(
+                    span,
+                    "Created sessions",
+                    dict(count=len(resp.session)),
+                )
+
+                for session_pb in resp.session:
+                    session = self._new_session()
+                    session._session_id = session_pb.name.split("/")[-1]
+                    await self.put(session)
+                    returned_session_count += 1
+
+            add_span_event(
+                span,
+                f"Requested for {requested_session_count} sessions, returned {returned_session_count}",
+                span_event_attributes,
+            )
+
+    @CrossSync.convert
+    async def ping(self):
+        """Check all sessions in the pool.
+
+        Delete those which are defunct.
+        """
+        current_span = get_current_span()
+        async with self._lock:
+            # Replaced with a list to iterate over sessions since we'll be
+            # putting them back in the pool.
+            sessions_to_ping = []
+            while not self._sessions.empty():
+                sessions_to_ping.append(await CrossSync.queue_get(self._sessions))
+
+            for session in sessions_to_ping:
+                if (_NOW() - session.last_use_time) > self._max_age:
+                    try:
+                        await session.ping()
+                    except NotFound:
+                        session = self._new_session()
+                        await session.create()
+                    except Exception as e:
+                        warn(f"Failed to ping session {session.session_id}: {e}")
+
+                await CrossSync.queue_put(self._sessions, session)
+
+            add_span_event(
+                current_span,
+                "Pinged sessions",
+                {"count": len(sessions_to_ping)},
+            )
+
+    @CrossSync.convert
+    async def get(self, timeout=None):
+        """Check a session out from the pool.
+
+        :type timeout: int
+        :param timeout: seconds to block waiting for an available session
+
+        :rtype: :class:`~google.cloud.spanner_v1.session.Session`
+        :returns: an existing session from the pool, or a newly-created
+                  session.
+        :raises: :exc:`CrossSync.QueueEmpty` if the queue is empty.
+        """
+        if timeout is None:
+            timeout = self.default_timeout
+
+        start_time = time.time()
+        current_span = get_current_span()
+        span_event_attributes = {"kind": type(self).__name__}
+        add_span_event(current_span, "Acquiring session", span_event_attributes)
+
+        session = None
+        try:
+            add_span_event(
+                current_span,
+                "Waiting for a session to become available",
+                span_event_attributes,
+            )
+
+            session = await CrossSync.queue_get(
+                self._sessions, block=True, timeout=timeout
+            )
+            age = _NOW() - session.last_use_time
+
+            if age >= self._max_age and not await session.exists():
+                if not await session.exists():
+                    add_span_event(
+                        current_span,
+                        "Session is not valid, recreating it",
+                        span_event_attributes,
+                    )
+                session = self._new_session()
+                await session.create()
+                # Replacing with the updated session.id.
+                span_event_attributes["session.id"] = session._session_id
+
+            span_event_attributes["session.id"] = session._session_id
+            span_event_attributes["time.elapsed"] = time.time() - start_time
+            add_span_event(current_span, "Acquired session", span_event_attributes)
+
+        except CrossSync.QueueEmpty as e:
+            add_span_event(
+                current_span, "No sessions available in the pool", span_event_attributes
+            )
+            raise e
+
+        return session
+
+    @CrossSync.convert
+    async def put(self, session):
+        """Return a session to the pool.
+
+        Never blocks:  if the pool is full, raises.
+
+        :type session: :class:`~google.cloud.spanner_v1.session.Session`
+        :param session: the session being returned.
+
+        :raises: :exc:`queue.Full` if the queue is full.
+        """
+        await CrossSync.queue_put(self._sessions, session, block=False)
+
+    @CrossSync.convert
+    async def clear(self):
+        """Delete all sessions in the pool."""
+
+        while True:
+            try:
+                session = await CrossSync.queue_get(self._sessions, block=False)
+            except CrossSync.QueueEmpty:
+                break
+            else:
+                await session.delete()
+
+
+@CrossSync.convert_class(
+    docstring_format_vars={
+        "experimental_api": (
+            "\n\n    .. warning::\n        The Spanner AsyncIO API is experimental and may be subject to breaking changes.\n",
+            "",
+        )
+    }
+)
+class BurstyPool(AbstractSessionPool):
+    """{experimental_api}Concrete session pool implementation:
+
+    - "Pings" existing sessions via :meth:`session.exists` before returning
+      them.
+
+    - Creates a new session, rather than blocking, when :meth:`get` is called
+      on an empty pool.
+
+    - Discards the returned session, rather than blocking, when :meth:`put`
+      is called on a full pool.
+
+    :type target_size: int
+    :param target_size: max pool size
+
+    :type labels: dict (str -> str) or None
+    :param labels: (Optional) user-assigned labels for sessions created
+                    by the pool.
+
+    :type database_role: str
+    :param database_role: (Optional) user-assigned database_role for the session.
+    """
+
+    def __init__(self, target_size=10, labels=None, database_role=None):
+        super(BurstyPool, self).__init__(labels=labels, database_role=database_role)
+        self.target_size = target_size
+        self._database = None
+        self._sessions = CrossSync.LifoQueue(target_size)
+
+    @CrossSync.convert
+    async def bind(self, database):
+        """Associate the pool with a database.
+
+        :type database: :class:`~google.cloud.spanner_v1.database.Database`
+        :param database: database used by the pool to create sessions
+                         when needed.
+        """
+        self._database = database
+        self._database_role = self._database_role or self._database.database_role
+
+    @CrossSync.convert
+    async def get(self):
+        """Check a session out from the pool.
+
+        :rtype: :class:`~google.cloud.spanner_v1.session.Session`
+        :returns: an existing session from the pool, or a newly-created
+                  session.
+        """
+        current_span = get_current_span()
+        span_event_attributes = {"kind": type(self).__name__}
+        add_span_event(current_span, "Acquiring session", span_event_attributes)
+
+        try:
+            add_span_event(
+                current_span,
+                "Waiting for a session to become available",
+                span_event_attributes,
+            )
+            session = await CrossSync.queue_get(self._sessions, block=False)
+        except (CrossSync.QueueEmpty, asyncio.QueueEmpty):
+            add_span_event(
+                current_span,
+                "No sessions available in pool. Creating session",
+                span_event_attributes,
+            )
+            session = self._new_session()
+            await session.create()
+        else:
+            if not await session.exists():
+                add_span_event(
+                    current_span,
+                    "Session is not valid, recreating it",
+                    span_event_attributes,
+                )
+                session = self._new_session()
+                await session.create()
+        return session
+
+    @CrossSync.convert
+    async def put(self, session):
+        """Return a session to the pool.
+
+        Never blocks:  if the pool is full, the returned session is
+        discarded.
+
+        :type session: :class:`~google.cloud.spanner_v1.session.Session`
+        :param session: the session being returned.
+        """
+        try:
+            await CrossSync.queue_put(self._sessions, session, block=False)
+        except CrossSync.QueueFull:
+            try:
+                # Sessions from pools are never multiplexed, so we can always delete them
+                await session.delete()
+            except NotFound:
+                pass
+
+    @CrossSync.convert
+    async def clear(self):
+        """Delete all sessions in the pool."""
+
+        while True:
+            try:
+                session = await CrossSync.queue_get(self._sessions, block=False)
+            except CrossSync.QueueEmpty:
+                break
+            else:
+                await session.delete()
+
+
+@CrossSync.convert_class(
+    docstring_format_vars={
+        "experimental_api": (
+            "\n\n    .. warning::\n        The Spanner AsyncIO API is experimental and may be subject to breaking changes.\n",
+            "",
+        )
+    }
+)
+class PingingPool(FixedSizePool):
+    """{experimental_api}Concrete session pool implementation:
+
+    - Pre-allocates / creates a fixed number of sessions.
+
+    - Sessions are used in "round-robin" order (LRU first).
+
+    - "Pings" existing sessions in the background after a specified interval
+      via an API call (``session.ping()``).
+
+    - Blocks, with a timeout, when :meth:`get` is called on an empty pool.
+      Raises after timing out.
+
+    - Raises when :meth:`put` is called on a full pool.  That error is
+      never expected in normal practice, as users should be calling
+      :meth:`get` followed by :meth:`put` whenever in need of a session.
+
+    The application is responsible for calling :meth:`ping` at appropriate
+    times, e.g. from a background thread.
+
+    :type size: int
+    :param size: fixed pool size
+
+    :type default_timeout: int
+    :param default_timeout: default timeout, in seconds, to wait for
+                            a returned session.
+
+    :type ping_interval: int
+    :param ping_interval: interval at which to ping sessions.
+
+    :type labels: dict (str -> str) or None
+    :param labels: (Optional) user-assigned labels for sessions created
+                    by the pool.
+
+    :type database_role: str
+    :param database_role: (Optional) user-assigned database_role for the session.
+    """
+
+    def __init__(
+        self,
+        size=10,
+        default_timeout=10,
+        ping_interval=3000,
+        labels=None,
+        database_role=None,
+    ):
+        super(PingingPool, self).__init__(
+            size=size,
+            default_timeout=default_timeout,
+            labels=labels,
+            database_role=database_role,
+            max_age_minutes=ping_interval // 60,
+        )
+        self._delta = datetime.timedelta(seconds=ping_interval)
+        self._sessions = CrossSync.PriorityQueue(size)
+        self._lock = CrossSync.Lock()
+
+    @CrossSync.convert
+    async def bind(self, database):
+        """Associate the pool with a database.
+
+        :type database: :class:`~google.cloud.spanner_v1.database.Database`
+        :param database: database used by the pool to create sessions
+                         when needed.
+        """
+        self._database = database
+        api = database.spanner_api
+        metadata = _metadata_with_prefix(database.name)
+        if database._route_to_leader_enabled:
+            metadata.append(_metadata_with_leader_aware_routing(True))
+        self._database_role = self._database_role or self._database.database_role
+
+        request = BatchCreateSessionsRequest(
+            database=database.name,
+            session_count=self.size,
+            session_template=SessionProto(creator_role=self.database_role),
+        )
+
+        span_event_attributes = {"kind": type(self).__name__}
+        current_span = get_current_span()
+        requested_session_count = request.session_count
+        if requested_session_count <= 0:
+            add_span_event(
+                current_span,
+                f"Invalid session pool size({requested_session_count}) <= 0",
+                span_event_attributes,
+            )
+            return
+
+        add_span_event(
+            current_span,
+            f"Requesting {requested_session_count} sessions",
+            span_event_attributes,
+        )
+
+        observability_options = getattr(self._database, "observability_options", None)
+        with (
+            trace_call(
+                "CloudSpanner.PingingPool.BatchCreateSessions",
+                observability_options=observability_options,
+                metadata=metadata,
+            ) as span,
+            MetricsCapture(self._resource_info),
+        ):
+            returned_session_count = 0
+            while returned_session_count < self.size:
+                call_metadata, error_augmenter = database.with_error_augmentation(
+                    database._next_nth_request,
+                    1,
+                    metadata,
+                    span,
+                )
+                with error_augmenter:
+                    resp = await api.batch_create_sessions(
+                        request=request,
+                        metadata=call_metadata,
+                    )
+
+                add_span_event(
+                    span,
+                    f"Created {len(resp.session)} sessions",
+                )
+
+                for session_pb in resp.session:
+                    session = self._new_session()
+                    returned_session_count += 1
+                    session._session_id = session_pb.name.split("/")[-1]
+                    await self.put(session)
+
+            add_span_event(
+                span,
+                f"Requested for {requested_session_count} sessions, returned {returned_session_count}",
+                span_event_attributes,
+            )
+
+    @CrossSync.convert
+    async def get(self, timeout=None):
+        """Check a session out from the pool.
+
+        :type timeout: int
+        :param timeout: seconds to block waiting for an available session
+
+        :rtype: :class:`~google.cloud.spanner_v1.session.Session`
+        :returns: an existing session from the pool, or a newly-created
+                  session.
+        :raises: :exc:`queue.Empty` if the queue is empty.
+        """
+        if timeout is None:
+            timeout = self.default_timeout
+
+        start_time = time.time()
+        span_event_attributes = {"kind": type(self).__name__}
+        current_span = get_current_span()
+        add_span_event(
+            current_span,
+            "Waiting for a session to become available",
+            span_event_attributes,
+        )
+
+        ping_after = None
+        session = None
+        try:
+            ping_after, session = await CrossSync.queue_get(
+                self._sessions, block=True, timeout=timeout
+            )
+        except CrossSync.QueueEmpty as e:
+            add_span_event(
+                current_span,
+                "No sessions available in the pool within the specified timeout",
+                span_event_attributes,
+            )
+            # Re-raising CrossSync.QueueEmpty is correct as it's the expected interface
+            raise e
+
+        if _NOW() > ping_after:
+            # Using session.exists() guarantees the returned session exists.
+            # session.ping() uses a cached result in the backend which could
+            # result in a recently deleted session being returned.
+            if not await session.exists():
+                session = self._new_session()
+                await session.create()
+
+        span_event_attributes.update(
+            {
+                "time.elapsed": time.time() - start_time,
+                "session.id": session._session_id,
+                "kind": "pinging_pool",
+            }
+        )
+        add_span_event(current_span, "Acquired session", span_event_attributes)
+        return session
+
+    @CrossSync.convert
+    async def put(self, session):
+        """Return a session to the pool.
+
+        Never blocks:  if the pool is full, raises.
+
+        :type session: :class:`~google.cloud.spanner_v1.session.Session`
+        :param session: the session being returned.
+
+        :raises: :exc:`queue.Full` if the queue is full.
+        """
+        try:
+            await CrossSync.queue_put(
+                self._sessions, (_NOW() + self._delta, session), block=False
+            )
+        except CrossSync.QueueFull:
+            # PingingPool.put doesn't catch queue.Full in sync version either,
+            # but it's better to be safe or follow sync version exactly.
+            # Sync version doesn't have try/except queue.Full in PingingPool.put.
+            raise CrossSync.QueueFull()
+
+    @CrossSync.convert
+    async def clear(self):
+        """Delete all sessions in the pool."""
+        while True:
+            try:
+                _, session = await CrossSync.queue_get(self._sessions, block=False)
+            except CrossSync.QueueEmpty:
+                break
+            else:
+                await session.delete()
+
+    @CrossSync.convert
+    async def ping(self):
+        """Refresh maybe-expired sessions in the pool.
+
+        This method is designed to be called from a background thread,
+        or during the "idle" phase of an event loop.
+        """
+        while True:
+            try:
+                ping_after, session = await CrossSync.queue_get(
+                    self._sessions, block=False
+                )
+            except CrossSync.QueueEmpty:  # all sessions in use
+                break
+            if ping_after > _NOW():  # oldest session is fresh
+                # Re-add to queue with existing expiration
+                await CrossSync.queue_put(self._sessions, (ping_after, session))
+                break
+            try:
+                await session.ping()
+            except NotFound:
+                session = self._new_session()
+                await session.create()
+            # Re-add to queue with new expiration
+            await self.put(session)
+
+
+@CrossSync.convert_class(
+    docstring_format_vars={
+        "experimental_api": (
+            "\n\n    .. warning::\n        The Spanner AsyncIO API is experimental and may be subject to breaking changes.\n",
+            "",
+        )
+    }
+)
+class TransactionPingingPool(PingingPool):
+    """{experimental_api}Concrete session pool implementation:
+
+    Deprecated: TransactionPingingPool no longer begins a transaction for each of its sessions at startup.
+    Hence the TransactionPingingPool is same as :class:`PingingPool` and maybe removed in the future.
+
+
+    In addition to the features of :class:`PingingPool`, this class
+    creates and begins a transaction for each of its sessions at startup.
+
+    When a session is returned to the pool, if its transaction has been
+    committed or rolled back, the pool creates a new transaction for the
+    session and pushes the transaction onto a separate queue of "transactions
+    to begin."  The application is responsible for flushing this queue
+    as appropriate via the pool's :meth:`begin_pending_transactions` method.
+
+    :type size: int
+    :param size: fixed pool size
+
+    :type default_timeout: int
+    :param default_timeout: default timeout, in seconds, to wait for
+                            a returned session.
+
+    :type ping_interval: int
+    :param ping_interval: interval at which to ping sessions.
+
+    :type labels: dict (str -> str) or None
+    :param labels: (Optional) user-assigned labels for sessions created
+                    by the pool.
+
+    :type database_role: str
+    :param database_role: (Optional) user-assigned database_role for the session.
+    """
+
+    def __init__(
+        self,
+        size=10,
+        default_timeout=10,
+        ping_interval=3000,
+        labels=None,
+        database_role=None,
+    ):
+        """This throws a deprecation warning on initialization."""
+        warn(
+            f"{self.__class__.__name__} is deprecated.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+
+        super(TransactionPingingPool, self).__init__(
+            size=size,
+            default_timeout=default_timeout,
+            ping_interval=ping_interval,
+            labels=labels,
+            database_role=database_role,
+        )
+        self._pending_sessions = CrossSync.LifoQueue(size)
+        # self.begin_pending_transactions() # This is now async, so cannot be called here.
+
+    @CrossSync.convert
+    async def bind(self, database):
+        """Associate the pool with a database.
+
+        :type database: :class:`~google.cloud.spanner_v1.database.Database`
+        :param database: database used by the pool to create sessions
+                         when needed.
+        """
+        await super(TransactionPingingPool, self).bind(database)
+        self._database_role = self._database_role or self._database.database_role
+        # await self.begin_pending_transactions() # This is now async, so cannot be called here.
+
+    @CrossSync.convert
+    async def put(self, session):
+        """Return a session to the pool.
+
+        Never blocks:  if the pool is full, raises.
+
+        :type session: :class:`~google.cloud.spanner_v1.session.Session`
+        :param session: the session being returned.
+
+        :raises: :exc:`queue.Full` if the queue is full.
+        """
+        if session.transaction() is None:
+            session.transaction()
+            await CrossSync.queue_put(self._pending_sessions, session)
+        else:
+            await super(TransactionPingingPool, self).put(session)
+
+    @CrossSync.convert
+    async def begin_pending_transactions(self):
+        """Begin all transactions for sessions added to the pool."""
+        while not self._pending_sessions.empty():
+            session = await CrossSync.queue_get(self._pending_sessions)
+            await super(TransactionPingingPool, self).put(session)

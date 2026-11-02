@@ -1,0 +1,20 @@
+[run]
+branch = True
+omit =
+  gapic/cli/*.py
+  *_pb2.py
+
+[report]
+fail_under = 100
+show_missing = True
+exclude_lines =
+    # Re-enable the standard pragma
+    pragma: NO COVER
+    # Enable an English version.
+    Impossible; skip coverage checks.
+    # Ignore debug-only repr
+    def __repr__
+    # Abstract methods by definition are not invoked
+    @abstractmethod
+    @abc.abstractmethod
+    

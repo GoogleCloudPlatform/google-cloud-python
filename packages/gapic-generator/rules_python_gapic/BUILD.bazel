@@ -1,0 +1,4 @@
+exports_files([
+    "test.py",
+    "pytest.py",
+])

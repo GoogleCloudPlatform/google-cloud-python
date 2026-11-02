@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="unknown" lang="unknown">
+<head>
+<title>toolbox_invoice_test-0</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="ocr-system" content="Document AI OCR" />
+<meta name="ocr-langs" content="unknown" />
+<meta name="ocr-scripts" content="unknown" />
+<meta name="ocr-number-of-pages" content="1" />
+<meta name="ocr-capabilities" content="ocrp_lang ocr_page ocr_carea ocr_par ocr_line ocrx_word" />
+</head>
+<body>
+<div class='ocr_page' lang='unknown' title='bbox 0 0 1758 2275'><span class='ocr_carea' id='block_1_0' title='bbox 1310 220 1534 282'><p class='ocr_par' id='par_1_0_0' title='bbox 1310 220 1534 282'><span class='ocr_line' id='line_1_0_0_0' title='bbox 1310 220 1534 282'>Invoice
+<span class='ocrx_word' id='word_1_0_0_0_0' title='bbox 1310 220 1534 282'>Invoice
+</span></span></p></span><span class='ocr_carea' id='block_1_1' title='bbox 1287 322 1547 396'><p class='ocr_par' id='par_1_1_0' title='bbox 1287 322 1547 396'><span class='ocr_line' id='line_1_1_0_0' title='bbox 1288 322 1544 352'>DATE: 01/01/1970
+<span class='ocrx_word' id='word_1_1_0_0_0' title='bbox 1288 322 1369 350'>DATE</span><span class='ocrx_word' id='word_1_1_0_0_1' title='bbox 1374 322 1382 350'>: </span><span class='ocrx_word' id='word_1_1_0_0_2' title='bbox 1390 322 1544 352'>01/01/1970
+</span></span><span class='ocr_line' id='line_1_1_0_1' title='bbox 1287 366 1547 395'>INVOICE: NO. 001
+<span class='ocrx_word' id='word_1_1_0_1_0' title='bbox 1287 366 1410 395'>INVOICE</span><span class='ocrx_word' id='word_1_1_0_1_1' title='bbox 1417 366 1425 395'>: </span><span class='ocrx_word' id='word_1_1_0_1_2' title='bbox 1427 366 1476 395'>NO</span><span class='ocrx_word' id='word_1_1_0_1_3' title='bbox 1481 366 1489 395'>. </span><span class='ocrx_word' id='word_1_1_0_1_4' title='bbox 1498 366 1547 395'>001
+</span></span></p></span><span class='ocr_carea' id='block_1_2' title='bbox 219 512 693 586'><p class='ocr_par' id='par_1_2_0' title='bbox 219 512 693 586'><span class='ocr_line' id='line_1_2_0_0' title='bbox 219 512 551 551'>FROM: Company ABC
+<span class='ocrx_word' id='word_1_2_0_0_0' title='bbox 219 512 308 549'>FROM</span><span class='ocrx_word' id='word_1_2_0_0_1' title='bbox 314 513 324 548'>: </span><span class='ocrx_word' id='word_1_2_0_0_2' title='bbox 348 513 484 550'>Company </span><span class='ocrx_word' id='word_1_2_0_0_3' title='bbox 492 515 551 551'>ABC
+</span></span><span class='ocr_line' id='line_1_2_0_1' title='bbox 352 551 693 585'>user@companyabc.com
+<span class='ocrx_word' id='word_1_2_0_1_0' title='bbox 352 551 693 585'>user@companyabc.com
+</span></span></p></span><span class='ocr_carea' id='block_1_3' title='bbox 895 513 1259 585'><p class='ocr_par' id='par_1_3_0' title='bbox 895 513 1259 585'><span class='ocr_line' id='line_1_3_0_0' title='bbox 895 513 1105 542'>TO: John Doe
+<span class='ocrx_word' id='word_1_3_0_0_0' title='bbox 895 513 928 542'>TO</span><span class='ocrx_word' id='word_1_3_0_0_1' title='bbox 936 513 944 542'>: </span><span class='ocrx_word' id='word_1_3_0_0_2' title='bbox 975 513 1039 542'>John </span><span class='ocrx_word' id='word_1_3_0_0_3' title='bbox 1048 513 1105 542'>Doe
+</span></span><span class='ocr_line' id='line_1_3_0_1' title='bbox 968 551 1259 585'>johndoe@email.com
+<span class='ocrx_word' id='word_1_3_0_1_0' title='bbox 968 551 1259 585'>johndoe@email.com
+</span></span></p></span><span class='ocr_carea' id='block_1_4' title='bbox 219 629 620 702'><p class='ocr_par' id='par_1_4_0' title='bbox 219 629 620 702'><span class='ocr_line' id='line_1_4_0_0' title='bbox 219 629 619 660'>ADDRESS: 111 Main Street
+<span class='ocrx_word' id='word_1_4_0_0_0' title='bbox 219 629 370 660'>ADDRESS</span><span class='ocrx_word' id='word_1_4_0_0_1' title='bbox 375 629 384 660'>: </span><span class='ocrx_word' id='word_1_4_0_0_2' title='bbox 393 629 442 660'>111 </span><span class='ocrx_word' id='word_1_4_0_0_3' title='bbox 453 629 515 660'>Main </span><span class='ocrx_word' id='word_1_4_0_0_4' title='bbox 535 629 619 660'>Street
+</span></span><span class='ocr_line' id='line_1_4_0_1' title='bbox 399 667 599 700'>Anytown, USA
+<span class='ocrx_word' id='word_1_4_0_1_0' title='bbox 399 667 516 702'>Anytown</span><span class='ocrx_word' id='word_1_4_0_1_1' title='bbox 516 665 527 701'>, </span><span class='ocrx_word' id='word_1_4_0_1_2' title='bbox 532 665 599 700'>USA
+</span></span></p></span><span class='ocr_carea' id='block_1_5' title='bbox 892 628 1290 702'><p class='ocr_par' id='par_1_5_0' title='bbox 892 628 1290 702'><span class='ocr_line' id='line_1_5_0_0' title='bbox 892 628 1289 659'>ADDRESS: 222 Main Street
+<span class='ocrx_word' id='word_1_5_0_0_0' title='bbox 892 628 1043 659'>ADDRESS</span><span class='ocrx_word' id='word_1_5_0_0_1' title='bbox 1045 628 1054 659'>: </span><span class='ocrx_word' id='word_1_5_0_0_2' title='bbox 1063 628 1116 659'>222 </span><span class='ocrx_word' id='word_1_5_0_0_3' title='bbox 1123 628 1188 659'>Main </span><span class='ocrx_word' id='word_1_5_0_0_4' title='bbox 1203 628 1289 659'>Street
+</span></span><span class='ocr_line' id='line_1_5_0_1' title='bbox 1062 668 1259 701'>Anytown, USA
+<span class='ocrx_word' id='word_1_5_0_1_0' title='bbox 1062 668 1180 702'>Anytown</span><span class='ocrx_word' id='word_1_5_0_1_1' title='bbox 1183 667 1194 702'>, </span><span class='ocrx_word' id='word_1_5_0_1_2' title='bbox 1199 666 1259 701'>USA
+</span></span></p></span><span class='ocr_carea' id='block_1_6' title='bbox 205 850 571 921'><p class='ocr_par' id='par_1_6_0' title='bbox 205 850 571 921'><span class='ocr_line' id='line_1_6_0_0' title='bbox 207 850 571 879'>TERMS: 6 month contract
+<span class='ocrx_word' id='word_1_6_0_0_0' title='bbox 207 850 315 879'>TERMS</span><span class='ocrx_word' id='word_1_6_0_0_1' title='bbox 318 850 326 879'>: </span><span class='ocrx_word' id='word_1_6_0_0_2' title='bbox 335 850 343 879'>6 </span><span class='ocrx_word' id='word_1_6_0_0_3' title='bbox 364 850 439 879'>month </span><span class='ocrx_word' id='word_1_6_0_0_4' title='bbox 458 850 571 879'>contract
+</span></span><span class='ocr_line' id='line_1_6_0_1' title='bbox 205 893 445 921'>DUE: 01/01/2025
+<span class='ocrx_word' id='word_1_6_0_1_0' title='bbox 205 893 269 921'>DUE</span><span class='ocrx_word' id='word_1_6_0_1_1' title='bbox 274 893 282 921'>: </span><span class='ocrx_word' id='word_1_6_0_1_2' title='bbox 290 893 445 921'>01/01/2025
+</span></span></p></span><span class='ocr_carea' id='block_1_7' title='bbox 219 1035 466 1075'><p class='ocr_par' id='par_1_7_0' title='bbox 219 1035 466 1075'><span class='ocr_line' id='line_1_7_0_0' title='bbox 219 1035 466 1075'>Item Description
+<span class='ocrx_word' id='word_1_7_0_0_0' title='bbox 219 1035 283 1072'>Item </span><span class='ocrx_word' id='word_1_7_0_0_1' title='bbox 296 1036 466 1075'>Description
+</span></span></p></span><span class='ocr_carea' id='block_1_8' title='bbox 554 1039 683 1075'><p class='ocr_par' id='par_1_8_0' title='bbox 554 1039 683 1075'><span class='ocr_line' id='line_1_8_0_0' title='bbox 554 1039 683 1075'>Quantity
+<span class='ocrx_word' id='word_1_8_0_0_0' title='bbox 554 1039 683 1075'>Quantity
+</span></span></p></span><span class='ocr_carea' id='block_1_9' title='bbox 894 1040 968 1067'><p class='ocr_par' id='par_1_9_0' title='bbox 894 1040 968 1067'><span class='ocr_line' id='line_1_9_0_0' title='bbox 894 1040 968 1067'>Price
+<span class='ocrx_word' id='word_1_9_0_0_0' title='bbox 894 1040 968 1067'>Price
+</span></span></p></span><span class='ocr_carea' id='block_1_10' title='bbox 1227 1039 1351 1068'><p class='ocr_par' id='par_1_10_0' title='bbox 1227 1039 1351 1068'><span class='ocr_line' id='line_1_10_0_0' title='bbox 1227 1039 1351 1068'>Amount
+<span class='ocrx_word' id='word_1_10_0_0_0' title='bbox 1227 1039 1351 1068'>Amount
+</span></span></p></span><span class='ocr_carea' id='block_1_11' title='bbox 224 1110 302 1138'><p class='ocr_par' id='par_1_11_0' title='bbox 224 1110 302 1138'><span class='ocr_line' id='line_1_11_0_0' title='bbox 224 1110 302 1138'>Tool A
+<span class='ocrx_word' id='word_1_11_0_0_0' title='bbox 224 1110 285 1138'>Tool </span><span class='ocrx_word' id='word_1_11_0_0_1' title='bbox 294 1110 302 1138'>A
+</span></span></p></span><span class='ocr_carea' id='block_1_12' title='bbox 556 1110 608 1138'><p class='ocr_par' id='par_1_12_0' title='bbox 556 1110 608 1138'><span class='ocr_line' id='line_1_12_0_0' title='bbox 556 1110 608 1138'>500
+<span class='ocrx_word' id='word_1_12_0_0_0' title='bbox 556 1110 608 1138'>500
+</span></span></p></span><span class='ocr_carea' id='block_1_13' title='bbox 896 1109 972 1137'><p class='ocr_par' id='par_1_13_0' title='bbox 896 1109 972 1137'><span class='ocr_line' id='line_1_13_0_0' title='bbox 896 1109 972 1137'>$1.00
+<span class='ocrx_word' id='word_1_13_0_0_0' title='bbox 896 1109 904 1137'>$</span><span class='ocrx_word' id='word_1_13_0_0_1' title='bbox 917 1109 972 1137'>1.00
+</span></span></p></span><span class='ocr_carea' id='block_1_14' title='bbox 1230 1108 1343 1141'><p class='ocr_par' id='par_1_14_0' title='bbox 1230 1108 1343 1141'><span class='ocr_line' id='line_1_14_0_0' title='bbox 1230 1108 1343 1141'>$500.00
+<span class='ocrx_word' id='word_1_14_0_0_0' title='bbox 1230 1108 1239 1139'>$</span><span class='ocrx_word' id='word_1_14_0_0_1' title='bbox 1246 1108 1343 1141'>500.00
+</span></span></p></span><span class='ocr_carea' id='block_1_15' title='bbox 223 1180 345 1207'><p class='ocr_par' id='par_1_15_0' title='bbox 223 1180 345 1207'><span class='ocr_line' id='line_1_15_0_0' title='bbox 223 1180 345 1207'>Service B
+<span class='ocrx_word' id='word_1_15_0_0_0' title='bbox 223 1180 320 1207'>Service </span><span class='ocrx_word' id='word_1_15_0_0_1' title='bbox 337 1180 345 1207'>B
+</span></span></p></span><span class='ocr_carea' id='block_1_16' title='bbox 562 1182 570 1209'><p class='ocr_par' id='par_1_16_0' title='bbox 562 1182 570 1209'><span class='ocr_line' id='line_1_16_0_0' title='bbox 562 1182 570 1209'>1
+<span class='ocrx_word' id='word_1_16_0_0_0' title='bbox 562 1182 570 1209'>1
+</span></span></p></span><span class='ocr_carea' id='block_1_17' title='bbox 896 1181 1005 1210'><p class='ocr_par' id='par_1_17_0' title='bbox 896 1181 1005 1210'><span class='ocr_line' id='line_1_17_0_0' title='bbox 896 1181 1005 1210'>$900.00
+<span class='ocrx_word' id='word_1_17_0_0_0' title='bbox 896 1181 904 1210'>$</span><span class='ocrx_word' id='word_1_17_0_0_1' title='bbox 910 1181 1005 1210'>900.00
+</span></span></p></span><span class='ocr_carea' id='block_1_18' title='bbox 1231 1180 1342 1210'><p class='ocr_par' id='par_1_18_0' title='bbox 1231 1180 1342 1210'><span class='ocr_line' id='line_1_18_0_0' title='bbox 1231 1180 1342 1210'>$900.00
+<span class='ocrx_word' id='word_1_18_0_0_0' title='bbox 1231 1181 1241 1212'>$</span><span class='ocrx_word' id='word_1_18_0_0_1' title='bbox 1248 1180 1342 1210'>900.00
+</span></span></p></span><span class='ocr_carea' id='block_1_19' title='bbox 218 1252 380 1280'><p class='ocr_par' id='par_1_19_0' title='bbox 218 1252 380 1280'><span class='ocr_line' id='line_1_19_0_0' title='bbox 218 1252 380 1280'>Resource C
+<span class='ocrx_word' id='word_1_19_0_0_0' title='bbox 218 1252 352 1280'>Resource </span><span class='ocrx_word' id='word_1_19_0_0_1' title='bbox 372 1252 380 1280'>C
+</span></span></p></span><span class='ocr_carea' id='block_1_20' title='bbox 554 1252 591 1280'><p class='ocr_par' id='par_1_20_0' title='bbox 554 1252 591 1280'><span class='ocr_line' id='line_1_20_0_0' title='bbox 554 1252 591 1280'>50
+<span class='ocrx_word' id='word_1_20_0_0_0' title='bbox 554 1252 591 1280'>50
+</span></span></p></span><span class='ocr_carea' id='block_1_21' title='bbox 896 1253 985 1281'><p class='ocr_par' id='par_1_21_0' title='bbox 896 1253 985 1281'><span class='ocr_line' id='line_1_21_0_0' title='bbox 896 1253 985 1281'>$12.00
+<span class='ocrx_word' id='word_1_21_0_0_0' title='bbox 896 1254 904 1282'>$</span><span class='ocrx_word' id='word_1_21_0_0_1' title='bbox 913 1253 985 1281'>12.00
+</span></span></p></span><span class='ocr_carea' id='block_1_22' title='bbox 1232 1251 1339 1283'><p class='ocr_par' id='par_1_22_0' title='bbox 1232 1251 1339 1283'><span class='ocr_line' id='line_1_22_0_0' title='bbox 1232 1251 1339 1283'>$600.00
+<span class='ocrx_word' id='word_1_22_0_0_0' title='bbox 1232 1251 1241 1283'>$</span><span class='ocrx_word' id='word_1_22_0_0_1' title='bbox 1244 1251 1339 1283'>600.00
+</span></span></p></span><span class='ocr_carea' id='block_1_23' title='bbox 893 1394 1022 1423'><p class='ocr_par' id='par_1_23_0' title='bbox 893 1394 1022 1423'><span class='ocr_line' id='line_1_23_0_0' title='bbox 893 1394 1022 1423'>Subtotal
+<span class='ocrx_word' id='word_1_23_0_0_0' title='bbox 893 1394 1022 1423'>Subtotal
+</span></span></p></span><span class='ocr_carea' id='block_1_24' title='bbox 1230 1394 1357 1427'><p class='ocr_par' id='par_1_24_0' title='bbox 1230 1394 1357 1427'><span class='ocr_line' id='line_1_24_0_0' title='bbox 1230 1394 1357 1427'>$2000.00
+<span class='ocrx_word' id='word_1_24_0_0_0' title='bbox 1230 1394 1239 1425'>$</span><span class='ocrx_word' id='word_1_24_0_0_1' title='bbox 1246 1394 1357 1427'>2000.00
+</span></span></p></span><span class='ocr_carea' id='block_1_25' title='bbox 897 1465 946 1494'><p class='ocr_par' id='par_1_25_0' title='bbox 897 1465 946 1494'><span class='ocr_line' id='line_1_25_0_0' title='bbox 897 1465 946 1494'>Tax
+<span class='ocrx_word' id='word_1_25_0_0_0' title='bbox 897 1465 946 1494'>Tax
+</span></span></p></span><span class='ocr_carea' id='block_1_26' title='bbox 1232 1464 1340 1494'><p class='ocr_par' id='par_1_26_0' title='bbox 1232 1464 1340 1494'><span class='ocr_line' id='line_1_26_0_0' title='bbox 1232 1464 1340 1494'>$140.00
+<span class='ocrx_word' id='word_1_26_0_0_0' title='bbox 1232 1464 1241 1494'>$</span><span class='ocrx_word' id='word_1_26_0_0_1' title='bbox 1249 1464 1340 1494'>140.00
+</span></span></p></span><span class='ocr_carea' id='block_1_27' title='bbox 890 1537 1119 1565'><p class='ocr_par' id='par_1_27_0' title='bbox 890 1537 1119 1565'><span class='ocr_line' id='line_1_27_0_0' title='bbox 890 1537 1119 1565'>BALANCE DUE
+<span class='ocrx_word' id='word_1_27_0_0_0' title='bbox 890 1537 1044 1565'>BALANCE </span><span class='ocrx_word' id='word_1_27_0_0_1' title='bbox 1056 1537 1119 1565'>DUE
+</span></span></p></span><span class='ocr_carea' id='block_1_28' title='bbox 1233 1536 1360 1567'><p class='ocr_par' id='par_1_28_0' title='bbox 1233 1536 1360 1567'><span class='ocr_line' id='line_1_28_0_0' title='bbox 1233 1536 1360 1567'>$2140.00
+<span class='ocrx_word' id='word_1_28_0_0_0' title='bbox 1233 1536 1241 1565'>$</span><span class='ocrx_word' id='word_1_28_0_0_1' title='bbox 1250 1536 1360 1567'>2140.00
+</span></span></p></span><span class='ocr_carea' id='block_1_29' title='bbox 202 1679 323 1707'><p class='ocr_par' id='par_1_29_0' title='bbox 202 1679 323 1707'><span class='ocr_line' id='line_1_29_0_0' title='bbox 202 1679 323 1707'>NOTES:
+<span class='ocrx_word' id='word_1_29_0_0_0' title='bbox 202 1679 312 1707'>NOTES</span><span class='ocrx_word' id='word_1_29_0_0_1' title='bbox 315 1679 323 1707'>:
+</span></span></p></span><span class='ocr_carea' id='block_1_30' title='bbox 223 1781 620 1818'><p class='ocr_par' id='par_1_30_0' title='bbox 223 1781 620 1818'><span class='ocr_line' id='line_1_30_0_0' title='bbox 223 1781 620 1818'>Supplies used for Project Q.
+<span class='ocrx_word' id='word_1_30_0_0_0' title='bbox 223 1781 341 1818'>Supplies </span><span class='ocrx_word' id='word_1_30_0_0_1' title='bbox 349 1781 414 1818'>used </span><span class='ocrx_word' id='word_1_30_0_0_2' title='bbox 429 1781 466 1818'>for </span><span class='ocrx_word' id='word_1_30_0_0_3' title='bbox 474 1781 577 1818'>Project </span><span class='ocrx_word' id='word_1_30_0_0_4' title='bbox 585 1781 620 1818'>Q.
+</span></span></p></span></div>
+</body>
+</html>

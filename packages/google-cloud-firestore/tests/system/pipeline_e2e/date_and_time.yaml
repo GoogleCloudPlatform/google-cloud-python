@@ -1,0 +1,275 @@
+tests:
+  - description: testCurrentTimestamp
+    pipeline:
+      - Collection: books
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - And:
+              - FunctionExpression.greater_than_or_equal:
+                  - CurrentTimestamp: []
+                  - FunctionExpression.unix_seconds_to_timestamp:
+                    - Constant: 1735689600 # 2025-01-01
+              - FunctionExpression.less_than:
+                  - CurrentTimestamp: []
+                  - FunctionExpression.unix_seconds_to_timestamp:
+                    - Constant: 4892438400 # 2125-01-01
+            - "is_between_2025_and_2125"
+    assert_results:
+      - is_between_2025_and_2125: true
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - integerValue: '1'
+          name: limit
+        - args:
+          - mapValue:
+              fields:
+                is_between_2025_and_2125:
+                  functionValue:
+                    name: and
+                    args:
+                    - functionValue:
+                        name: greater_than_or_equal
+                        args:
+                        - functionValue:
+                            name: current_timestamp
+                        - functionValue:
+                            name: unix_seconds_to_timestamp
+                            args:
+                            - integerValue: '1735689600'
+                    - functionValue:
+                        name: less_than
+                        args:
+                        - functionValue:
+                            name: current_timestamp
+                        - functionValue:
+                            name: unix_seconds_to_timestamp
+                            args:
+                            - integerValue: '4892438400'
+          name: select
+  - description: testTimestampFunctionExpressions
+    pipeline:
+      - Collection: timestamps
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.timestamp_to_unix_micros:
+                - Field: time
+            - "micros"
+        - AliasedExpression:
+            - FunctionExpression.timestamp_to_unix_millis:
+                - Field: time
+            - "millis"
+        - AliasedExpression:
+            - FunctionExpression.timestamp_to_unix_seconds:
+                - Field: time
+            - "seconds"
+        - AliasedExpression:
+            - FunctionExpression.unix_micros_to_timestamp:
+                - Field: micros
+            - "from_micros"
+        - AliasedExpression:
+            - FunctionExpression.unix_millis_to_timestamp:
+                - Field: millis
+            - "from_millis"
+        - AliasedExpression:
+            - FunctionExpression.unix_seconds_to_timestamp:
+                - Field: seconds
+            - "from_seconds"
+        - AliasedExpression:
+            - FunctionExpression.timestamp_add:
+                - Field: time
+                - Constant: "day"
+                - Constant: 1
+            - "plus_day"
+        - AliasedExpression:
+            - FunctionExpression.timestamp_subtract:
+                - Field: time
+                - Constant: "hour"
+                - Constant: 1
+            - "minus_hour"
+    assert_results:
+      - micros:  735998460654321
+        millis:  735998460654
+        seconds: 735998460
+        from_micros: "1993-04-28T12:01:00.654321+00:00"
+        from_millis: "1993-04-28T12:01:00.654000+00:00"
+        from_seconds: "1993-04-28T12:01:00.000000+00:00"
+        plus_day: "1993-04-29T12:01:00.654321+00:00"
+        minus_hour: "1993-04-28T11:01:00.654321+00:00"
+  - description: testTimestampTruncExtractDiff
+    pipeline:
+      - Collection: timestamps
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.timestamp_trunc:
+                - Field: time
+                - Constant: "day"
+                - Constant: "America/Los_Angeles"
+            - "trunc_day"
+        - AliasedExpression:
+            - FunctionExpression.timestamp_extract:
+                - Field: time
+                - Constant: "year"
+                - Constant: "America/Los_Angeles"
+            - "extract_year"
+        - AliasedExpression:
+            - FunctionExpression.timestamp_diff:
+                - FunctionExpression.timestamp_add:
+                    - Field: time
+                    - Constant: "day"
+                    - Constant: 1
+                - Field: time
+                - Constant: "hour"
+            - "diff_hours"
+    assert_results:
+      - trunc_day: "1993-04-28T07:00:00.000000+00:00"
+        extract_year: 1993
+        diff_hours: 24
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /timestamps
+          name: collection
+        - args:
+          - integerValue: '1'
+          name: limit
+        - args:
+          - mapValue:
+              fields:
+                trunc_day:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: time
+                    - stringValue: day
+                    - stringValue: America/Los_Angeles
+                    name: timestamp_trunc
+                extract_year:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: time
+                    - stringValue: year
+                    - stringValue: America/Los_Angeles
+                    name: timestamp_extract
+                diff_hours:
+                  functionValue:
+                    args:
+                    - functionValue:
+                        args:
+                        - fieldReferenceValue: time
+                        - stringValue: day
+                        - integerValue: '1'
+                        name: timestamp_add
+                    - fieldReferenceValue: time
+                    - stringValue: hour
+                    name: timestamp_diff
+          name: select
+  - description: testTimestampExtractAndTruncAdvancedParts
+    pipeline:
+      - Collection: timestamps
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.timestamp_extract:
+                - Field: time
+                - Constant: "dayofyear"
+                - Constant: "America/Los_Angeles"
+            - "extract_day_of_year"
+        - AliasedExpression:
+            - FunctionExpression.timestamp_extract:
+                - Field: time
+                - Constant: "week(sunday)"
+                - Constant: "America/Los_Angeles"
+            - "extract_week_sunday"
+        - AliasedExpression:
+            - FunctionExpression.timestamp_extract:
+                - Field: time
+                - Constant: "isoweek"
+                - Constant: "America/Los_Angeles"
+            - "extract_isoweek"
+        - AliasedExpression:
+            - FunctionExpression.timestamp_extract:
+                - Field: time
+                - Constant: "quarter"
+                - Constant: "America/Los_Angeles"
+            - "extract_quarter"
+        - AliasedExpression:
+            - FunctionExpression.timestamp_trunc:
+                - Field: time
+                - Constant: "isoweek"
+                - Constant: "America/Los_Angeles"
+            - "trunc_isoweek"
+        - AliasedExpression:
+            - FunctionExpression.timestamp_trunc:
+                - Field: time
+                - Constant: "quarter"
+                - Constant: "America/Los_Angeles"
+            - "trunc_quarter"
+    assert_results:
+      - extract_day_of_year: 118
+        extract_week_sunday: 17
+        extract_isoweek: 17
+        extract_quarter: 2
+        trunc_isoweek: "1993-04-26T07:00:00.000000+00:00"
+        trunc_quarter: "1993-04-01T08:00:00.000000+00:00"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /timestamps
+          name: collection
+        - args:
+          - integerValue: '1'
+          name: limit
+        - args:
+          - mapValue:
+              fields:
+                extract_day_of_year:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: time
+                    - stringValue: dayofyear
+                    - stringValue: America/Los_Angeles
+                    name: timestamp_extract
+                extract_week_sunday:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: time
+                    - stringValue: week(sunday)
+                    - stringValue: America/Los_Angeles
+                    name: timestamp_extract
+                extract_isoweek:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: time
+                    - stringValue: isoweek
+                    - stringValue: America/Los_Angeles
+                    name: timestamp_extract
+                extract_quarter:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: time
+                    - stringValue: quarter
+                    - stringValue: America/Los_Angeles
+                    name: timestamp_extract
+                trunc_isoweek:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: time
+                    - stringValue: isoweek
+                    - stringValue: America/Los_Angeles
+                    name: timestamp_trunc
+                trunc_quarter:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: time
+                    - stringValue: quarter
+                    - stringValue: America/Los_Angeles
+                    name: timestamp_trunc
+          name: select

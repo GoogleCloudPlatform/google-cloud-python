@@ -1,0 +1,4922 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.iam.admin.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-iam",
+    "version": "2.26.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.create_role",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.CreateRole",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "CreateRole"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.CreateRoleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.Role",
+        "shortName": "create_role"
+      },
+      "description": "Sample for CreateRole",
+      "file": "iam_v1_generated_iam_create_role_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_CreateRole_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_create_role_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.create_role",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.CreateRole",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "CreateRole"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.CreateRoleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.Role",
+        "shortName": "create_role"
+      },
+      "description": "Sample for CreateRole",
+      "file": "iam_v1_generated_iam_create_role_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_CreateRole_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_create_role_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.create_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.CreateServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "CreateServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.CreateServiceAccountKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "private_key_type",
+            "type": "google.cloud.iam_admin_v1.types.ServiceAccountPrivateKeyType"
+          },
+          {
+            "name": "key_algorithm",
+            "type": "google.cloud.iam_admin_v1.types.ServiceAccountKeyAlgorithm"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccountKey",
+        "shortName": "create_service_account_key"
+      },
+      "description": "Sample for CreateServiceAccountKey",
+      "file": "iam_v1_generated_iam_create_service_account_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_CreateServiceAccountKey_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_create_service_account_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.create_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.CreateServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "CreateServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.CreateServiceAccountKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "private_key_type",
+            "type": "google.cloud.iam_admin_v1.types.ServiceAccountPrivateKeyType"
+          },
+          {
+            "name": "key_algorithm",
+            "type": "google.cloud.iam_admin_v1.types.ServiceAccountKeyAlgorithm"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccountKey",
+        "shortName": "create_service_account_key"
+      },
+      "description": "Sample for CreateServiceAccountKey",
+      "file": "iam_v1_generated_iam_create_service_account_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_CreateServiceAccountKey_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_create_service_account_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.create_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.CreateServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "CreateServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.CreateServiceAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "account_id",
+            "type": "str"
+          },
+          {
+            "name": "service_account",
+            "type": "google.cloud.iam_admin_v1.types.ServiceAccount"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccount",
+        "shortName": "create_service_account"
+      },
+      "description": "Sample for CreateServiceAccount",
+      "file": "iam_v1_generated_iam_create_service_account_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_CreateServiceAccount_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_create_service_account_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.create_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.CreateServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "CreateServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.CreateServiceAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "account_id",
+            "type": "str"
+          },
+          {
+            "name": "service_account",
+            "type": "google.cloud.iam_admin_v1.types.ServiceAccount"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccount",
+        "shortName": "create_service_account"
+      },
+      "description": "Sample for CreateServiceAccount",
+      "file": "iam_v1_generated_iam_create_service_account_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_CreateServiceAccount_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_create_service_account_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.delete_role",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.DeleteRole",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "DeleteRole"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.DeleteRoleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.Role",
+        "shortName": "delete_role"
+      },
+      "description": "Sample for DeleteRole",
+      "file": "iam_v1_generated_iam_delete_role_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_DeleteRole_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_delete_role_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.delete_role",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.DeleteRole",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "DeleteRole"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.DeleteRoleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.Role",
+        "shortName": "delete_role"
+      },
+      "description": "Sample for DeleteRole",
+      "file": "iam_v1_generated_iam_delete_role_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_DeleteRole_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_delete_role_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.delete_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.DeleteServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "DeleteServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.DeleteServiceAccountKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_service_account_key"
+      },
+      "description": "Sample for DeleteServiceAccountKey",
+      "file": "iam_v1_generated_iam_delete_service_account_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_DeleteServiceAccountKey_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_delete_service_account_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.delete_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.DeleteServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "DeleteServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.DeleteServiceAccountKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_service_account_key"
+      },
+      "description": "Sample for DeleteServiceAccountKey",
+      "file": "iam_v1_generated_iam_delete_service_account_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_DeleteServiceAccountKey_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_delete_service_account_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.delete_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.DeleteServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "DeleteServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.DeleteServiceAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_service_account"
+      },
+      "description": "Sample for DeleteServiceAccount",
+      "file": "iam_v1_generated_iam_delete_service_account_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_DeleteServiceAccount_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_delete_service_account_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.delete_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.DeleteServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "DeleteServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.DeleteServiceAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_service_account"
+      },
+      "description": "Sample for DeleteServiceAccount",
+      "file": "iam_v1_generated_iam_delete_service_account_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_DeleteServiceAccount_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_delete_service_account_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.disable_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.DisableServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "DisableServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.DisableServiceAccountKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "disable_service_account_key"
+      },
+      "description": "Sample for DisableServiceAccountKey",
+      "file": "iam_v1_generated_iam_disable_service_account_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_DisableServiceAccountKey_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_disable_service_account_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.disable_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.DisableServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "DisableServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.DisableServiceAccountKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "disable_service_account_key"
+      },
+      "description": "Sample for DisableServiceAccountKey",
+      "file": "iam_v1_generated_iam_disable_service_account_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_DisableServiceAccountKey_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_disable_service_account_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.disable_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.DisableServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "DisableServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.DisableServiceAccountRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "disable_service_account"
+      },
+      "description": "Sample for DisableServiceAccount",
+      "file": "iam_v1_generated_iam_disable_service_account_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_DisableServiceAccount_async",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_disable_service_account_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.disable_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.DisableServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "DisableServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.DisableServiceAccountRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "disable_service_account"
+      },
+      "description": "Sample for DisableServiceAccount",
+      "file": "iam_v1_generated_iam_disable_service_account_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_DisableServiceAccount_sync",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_disable_service_account_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.enable_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.EnableServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "EnableServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.EnableServiceAccountKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "enable_service_account_key"
+      },
+      "description": "Sample for EnableServiceAccountKey",
+      "file": "iam_v1_generated_iam_enable_service_account_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_EnableServiceAccountKey_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_enable_service_account_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.enable_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.EnableServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "EnableServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.EnableServiceAccountKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "enable_service_account_key"
+      },
+      "description": "Sample for EnableServiceAccountKey",
+      "file": "iam_v1_generated_iam_enable_service_account_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_EnableServiceAccountKey_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_enable_service_account_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.enable_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.EnableServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "EnableServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.EnableServiceAccountRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "enable_service_account"
+      },
+      "description": "Sample for EnableServiceAccount",
+      "file": "iam_v1_generated_iam_enable_service_account_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_EnableServiceAccount_async",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_enable_service_account_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.enable_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.EnableServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "EnableServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.EnableServiceAccountRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "enable_service_account"
+      },
+      "description": "Sample for EnableServiceAccount",
+      "file": "iam_v1_generated_iam_enable_service_account_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_EnableServiceAccount_sync",
+      "segments": [
+        {
+          "end": 48,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 48,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_enable_service_account_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.get_iam_policy",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.GetIamPolicy",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "iam_v1_generated_iam_get_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_GetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_get_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.get_iam_policy",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.GetIamPolicy",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "GetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.GetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "get_iam_policy"
+      },
+      "description": "Sample for GetIamPolicy",
+      "file": "iam_v1_generated_iam_get_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_GetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_get_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.get_role",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.GetRole",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "GetRole"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.GetRoleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.Role",
+        "shortName": "get_role"
+      },
+      "description": "Sample for GetRole",
+      "file": "iam_v1_generated_iam_get_role_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_GetRole_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_get_role_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.get_role",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.GetRole",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "GetRole"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.GetRoleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.Role",
+        "shortName": "get_role"
+      },
+      "description": "Sample for GetRole",
+      "file": "iam_v1_generated_iam_get_role_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_GetRole_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_get_role_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.get_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.GetServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "GetServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.GetServiceAccountKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "public_key_type",
+            "type": "google.cloud.iam_admin_v1.types.ServiceAccountPublicKeyType"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccountKey",
+        "shortName": "get_service_account_key"
+      },
+      "description": "Sample for GetServiceAccountKey",
+      "file": "iam_v1_generated_iam_get_service_account_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_GetServiceAccountKey_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_get_service_account_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.get_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.GetServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "GetServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.GetServiceAccountKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "public_key_type",
+            "type": "google.cloud.iam_admin_v1.types.ServiceAccountPublicKeyType"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccountKey",
+        "shortName": "get_service_account_key"
+      },
+      "description": "Sample for GetServiceAccountKey",
+      "file": "iam_v1_generated_iam_get_service_account_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_GetServiceAccountKey_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_get_service_account_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.get_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.GetServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "GetServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.GetServiceAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccount",
+        "shortName": "get_service_account"
+      },
+      "description": "Sample for GetServiceAccount",
+      "file": "iam_v1_generated_iam_get_service_account_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_GetServiceAccount_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_get_service_account_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.get_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.GetServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "GetServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.GetServiceAccountRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccount",
+        "shortName": "get_service_account"
+      },
+      "description": "Sample for GetServiceAccount",
+      "file": "iam_v1_generated_iam_get_service_account_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_GetServiceAccount_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_get_service_account_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.lint_policy",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.LintPolicy",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "LintPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.LintPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.LintPolicyResponse",
+        "shortName": "lint_policy"
+      },
+      "description": "Sample for LintPolicy",
+      "file": "iam_v1_generated_iam_lint_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_LintPolicy_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_lint_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.lint_policy",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.LintPolicy",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "LintPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.LintPolicyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.LintPolicyResponse",
+        "shortName": "lint_policy"
+      },
+      "description": "Sample for LintPolicy",
+      "file": "iam_v1_generated_iam_lint_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_LintPolicy_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_lint_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.list_roles",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.ListRoles",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "ListRoles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.ListRolesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.services.iam.pagers.ListRolesAsyncPager",
+        "shortName": "list_roles"
+      },
+      "description": "Sample for ListRoles",
+      "file": "iam_v1_generated_iam_list_roles_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_ListRoles_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_list_roles_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.list_roles",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.ListRoles",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "ListRoles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.ListRolesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.services.iam.pagers.ListRolesPager",
+        "shortName": "list_roles"
+      },
+      "description": "Sample for ListRoles",
+      "file": "iam_v1_generated_iam_list_roles_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_ListRoles_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_list_roles_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.list_service_account_keys",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.ListServiceAccountKeys",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "ListServiceAccountKeys"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.ListServiceAccountKeysRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "key_types",
+            "type": "MutableSequence[google.cloud.iam_admin_v1.types.ListServiceAccountKeysRequest.KeyType]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ListServiceAccountKeysResponse",
+        "shortName": "list_service_account_keys"
+      },
+      "description": "Sample for ListServiceAccountKeys",
+      "file": "iam_v1_generated_iam_list_service_account_keys_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_ListServiceAccountKeys_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_list_service_account_keys_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.list_service_account_keys",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.ListServiceAccountKeys",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "ListServiceAccountKeys"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.ListServiceAccountKeysRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "key_types",
+            "type": "MutableSequence[google.cloud.iam_admin_v1.types.ListServiceAccountKeysRequest.KeyType]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ListServiceAccountKeysResponse",
+        "shortName": "list_service_account_keys"
+      },
+      "description": "Sample for ListServiceAccountKeys",
+      "file": "iam_v1_generated_iam_list_service_account_keys_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_ListServiceAccountKeys_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_list_service_account_keys_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.list_service_accounts",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.ListServiceAccounts",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "ListServiceAccounts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.ListServiceAccountsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.services.iam.pagers.ListServiceAccountsAsyncPager",
+        "shortName": "list_service_accounts"
+      },
+      "description": "Sample for ListServiceAccounts",
+      "file": "iam_v1_generated_iam_list_service_accounts_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_ListServiceAccounts_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_list_service_accounts_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.list_service_accounts",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.ListServiceAccounts",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "ListServiceAccounts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.ListServiceAccountsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.services.iam.pagers.ListServiceAccountsPager",
+        "shortName": "list_service_accounts"
+      },
+      "description": "Sample for ListServiceAccounts",
+      "file": "iam_v1_generated_iam_list_service_accounts_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_ListServiceAccounts_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_list_service_accounts_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.patch_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.PatchServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "PatchServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.PatchServiceAccountRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccount",
+        "shortName": "patch_service_account"
+      },
+      "description": "Sample for PatchServiceAccount",
+      "file": "iam_v1_generated_iam_patch_service_account_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_PatchServiceAccount_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_patch_service_account_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.patch_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.PatchServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "PatchServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.PatchServiceAccountRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccount",
+        "shortName": "patch_service_account"
+      },
+      "description": "Sample for PatchServiceAccount",
+      "file": "iam_v1_generated_iam_patch_service_account_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_PatchServiceAccount_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_patch_service_account_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.query_auditable_services",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.QueryAuditableServices",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "QueryAuditableServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.QueryAuditableServicesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.QueryAuditableServicesResponse",
+        "shortName": "query_auditable_services"
+      },
+      "description": "Sample for QueryAuditableServices",
+      "file": "iam_v1_generated_iam_query_auditable_services_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_QueryAuditableServices_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_query_auditable_services_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.query_auditable_services",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.QueryAuditableServices",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "QueryAuditableServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.QueryAuditableServicesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.QueryAuditableServicesResponse",
+        "shortName": "query_auditable_services"
+      },
+      "description": "Sample for QueryAuditableServices",
+      "file": "iam_v1_generated_iam_query_auditable_services_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_QueryAuditableServices_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_query_auditable_services_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.query_grantable_roles",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.QueryGrantableRoles",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "QueryGrantableRoles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.QueryGrantableRolesRequest"
+          },
+          {
+            "name": "full_resource_name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.services.iam.pagers.QueryGrantableRolesAsyncPager",
+        "shortName": "query_grantable_roles"
+      },
+      "description": "Sample for QueryGrantableRoles",
+      "file": "iam_v1_generated_iam_query_grantable_roles_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_QueryGrantableRoles_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_query_grantable_roles_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.query_grantable_roles",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.QueryGrantableRoles",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "QueryGrantableRoles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.QueryGrantableRolesRequest"
+          },
+          {
+            "name": "full_resource_name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.services.iam.pagers.QueryGrantableRolesPager",
+        "shortName": "query_grantable_roles"
+      },
+      "description": "Sample for QueryGrantableRoles",
+      "file": "iam_v1_generated_iam_query_grantable_roles_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_QueryGrantableRoles_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_query_grantable_roles_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.query_testable_permissions",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.QueryTestablePermissions",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "QueryTestablePermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.QueryTestablePermissionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.services.iam.pagers.QueryTestablePermissionsAsyncPager",
+        "shortName": "query_testable_permissions"
+      },
+      "description": "Sample for QueryTestablePermissions",
+      "file": "iam_v1_generated_iam_query_testable_permissions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_QueryTestablePermissions_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_query_testable_permissions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.query_testable_permissions",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.QueryTestablePermissions",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "QueryTestablePermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.QueryTestablePermissionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.services.iam.pagers.QueryTestablePermissionsPager",
+        "shortName": "query_testable_permissions"
+      },
+      "description": "Sample for QueryTestablePermissions",
+      "file": "iam_v1_generated_iam_query_testable_permissions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_QueryTestablePermissions_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_query_testable_permissions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.set_iam_policy",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.SetIamPolicy",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "iam_v1_generated_iam_set_iam_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_SetIamPolicy_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_set_iam_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.set_iam_policy",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.SetIamPolicy",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "SetIamPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.SetIamPolicyRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.policy_pb2.Policy",
+        "shortName": "set_iam_policy"
+      },
+      "description": "Sample for SetIamPolicy",
+      "file": "iam_v1_generated_iam_set_iam_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_SetIamPolicy_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_set_iam_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.sign_blob",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.SignBlob",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "SignBlob"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.SignBlobRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "bytes_to_sign",
+            "type": "bytes"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.SignBlobResponse",
+        "shortName": "sign_blob"
+      },
+      "description": "Sample for SignBlob",
+      "file": "iam_v1_generated_iam_sign_blob_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_SignBlob_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_sign_blob_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.sign_blob",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.SignBlob",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "SignBlob"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.SignBlobRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "bytes_to_sign",
+            "type": "bytes"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.SignBlobResponse",
+        "shortName": "sign_blob"
+      },
+      "description": "Sample for SignBlob",
+      "file": "iam_v1_generated_iam_sign_blob_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_SignBlob_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_sign_blob_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.sign_jwt",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.SignJwt",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "SignJwt"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.SignJwtRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "payload",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.SignJwtResponse",
+        "shortName": "sign_jwt"
+      },
+      "description": "Sample for SignJwt",
+      "file": "iam_v1_generated_iam_sign_jwt_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_SignJwt_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_sign_jwt_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.sign_jwt",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.SignJwt",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "SignJwt"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.SignJwtRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "payload",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.SignJwtResponse",
+        "shortName": "sign_jwt"
+      },
+      "description": "Sample for SignJwt",
+      "file": "iam_v1_generated_iam_sign_jwt_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_SignJwt_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_sign_jwt_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.TestIamPermissions",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "permissions",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "iam_v1_generated_iam_test_iam_permissions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_TestIamPermissions_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_test_iam_permissions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.test_iam_permissions",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.TestIamPermissions",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "TestIamPermissions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest"
+          },
+          {
+            "name": "resource",
+            "type": "str"
+          },
+          {
+            "name": "permissions",
+            "type": "MutableSequence[str]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse",
+        "shortName": "test_iam_permissions"
+      },
+      "description": "Sample for TestIamPermissions",
+      "file": "iam_v1_generated_iam_test_iam_permissions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_TestIamPermissions_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 41,
+          "start": 39,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 42,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_test_iam_permissions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.undelete_role",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.UndeleteRole",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "UndeleteRole"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.UndeleteRoleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.Role",
+        "shortName": "undelete_role"
+      },
+      "description": "Sample for UndeleteRole",
+      "file": "iam_v1_generated_iam_undelete_role_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_UndeleteRole_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_undelete_role_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.undelete_role",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.UndeleteRole",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "UndeleteRole"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.UndeleteRoleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.Role",
+        "shortName": "undelete_role"
+      },
+      "description": "Sample for UndeleteRole",
+      "file": "iam_v1_generated_iam_undelete_role_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_UndeleteRole_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_undelete_role_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.undelete_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.UndeleteServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "UndeleteServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.UndeleteServiceAccountRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.UndeleteServiceAccountResponse",
+        "shortName": "undelete_service_account"
+      },
+      "description": "Sample for UndeleteServiceAccount",
+      "file": "iam_v1_generated_iam_undelete_service_account_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_UndeleteServiceAccount_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_undelete_service_account_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.undelete_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.UndeleteServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "UndeleteServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.UndeleteServiceAccountRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.UndeleteServiceAccountResponse",
+        "shortName": "undelete_service_account"
+      },
+      "description": "Sample for UndeleteServiceAccount",
+      "file": "iam_v1_generated_iam_undelete_service_account_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_UndeleteServiceAccount_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_undelete_service_account_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.update_role",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.UpdateRole",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "UpdateRole"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.UpdateRoleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.Role",
+        "shortName": "update_role"
+      },
+      "description": "Sample for UpdateRole",
+      "file": "iam_v1_generated_iam_update_role_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_UpdateRole_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_update_role_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.update_role",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.UpdateRole",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "UpdateRole"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.UpdateRoleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.Role",
+        "shortName": "update_role"
+      },
+      "description": "Sample for UpdateRole",
+      "file": "iam_v1_generated_iam_update_role_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_UpdateRole_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_update_role_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.update_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.UpdateServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "UpdateServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.ServiceAccount"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccount",
+        "shortName": "update_service_account"
+      },
+      "description": "Sample for UpdateServiceAccount",
+      "file": "iam_v1_generated_iam_update_service_account_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_UpdateServiceAccount_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_update_service_account_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.update_service_account",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.UpdateServiceAccount",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "UpdateServiceAccount"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.ServiceAccount"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccount",
+        "shortName": "update_service_account"
+      },
+      "description": "Sample for UpdateServiceAccount",
+      "file": "iam_v1_generated_iam_update_service_account_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_UpdateServiceAccount_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_update_service_account_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient",
+          "shortName": "IAMAsyncClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMAsyncClient.upload_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.UploadServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "UploadServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.UploadServiceAccountKeyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccountKey",
+        "shortName": "upload_service_account_key"
+      },
+      "description": "Sample for UploadServiceAccountKey",
+      "file": "iam_v1_generated_iam_upload_service_account_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_UploadServiceAccountKey_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_upload_service_account_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.iam_admin_v1.IAMClient",
+          "shortName": "IAMClient"
+        },
+        "fullName": "google.cloud.iam_admin_v1.IAMClient.upload_service_account_key",
+        "method": {
+          "fullName": "google.iam.admin.v1.IAM.UploadServiceAccountKey",
+          "service": {
+            "fullName": "google.iam.admin.v1.IAM",
+            "shortName": "IAM"
+          },
+          "shortName": "UploadServiceAccountKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.iam_admin_v1.types.UploadServiceAccountKeyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.iam_admin_v1.types.ServiceAccountKey",
+        "shortName": "upload_service_account_key"
+      },
+      "description": "Sample for UploadServiceAccountKey",
+      "file": "iam_v1_generated_iam_upload_service_account_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "iam_v1_generated_IAM_UploadServiceAccountKey_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "iam_v1_generated_iam_upload_service_account_key_sync.py"
+    }
+  ]
+}

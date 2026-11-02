@@ -1,0 +1,113 @@
+# -*- coding: utf-8 -*-
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+from google.ads.marketingplatform_admin import gapic_version as package_version
+
+__version__ = package_version.__version__
+
+
+from google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.async_client import (
+    MarketingplatformAdminServiceAsyncClient,
+)
+from google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.client import (
+    MarketingplatformAdminServiceClient,
+)
+from google.ads.marketingplatform_admin_v1alpha.types.marketingplatform_admin import (
+    CreateAdminAccessBindingRequest,
+    CreateAnalyticsAccountLinkRequest,
+    CreateUserGroupMemberRequest,
+    CreateUserGroupRequest,
+    DeleteAnalyticsAccountLinkRequest,
+    DeleteUserGroupMemberRequest,
+    DeleteUserGroupRequest,
+    FindSalesPartnerManagedClientsRequest,
+    FindSalesPartnerManagedClientsResponse,
+    GetAdminAccessBindingRequest,
+    GetOrganizationRequest,
+    GetUserGroupMemberRequest,
+    GetUserGroupRequest,
+    ListAdminAccessBindingsRequest,
+    ListAdminAccessBindingsResponse,
+    ListAnalyticsAccountLinksRequest,
+    ListAnalyticsAccountLinksResponse,
+    ListOrganizationsRequest,
+    ListOrganizationsResponse,
+    ListUserGroupMembersRequest,
+    ListUserGroupMembersResponse,
+    ListUserGroupsRequest,
+    ListUserGroupsResponse,
+    ReportPropertyUsageRequest,
+    ReportPropertyUsageResponse,
+    SetPropertyServiceLevelRequest,
+    SetPropertyServiceLevelResponse,
+    UpdateAdminAccessBindingRequest,
+    UpdateUserGroupMemberRequest,
+    UpdateUserGroupRequest,
+)
+from google.ads.marketingplatform_admin_v1alpha.types.resources import (
+    AdminAccessBinding,
+    AnalyticsAccountLink,
+    AnalyticsPropertyType,
+    AnalyticsServiceLevel,
+    LinkVerificationState,
+    Organization,
+    OrganizationRole,
+    UserGroup,
+    UserGroupMember,
+)
+
+__all__ = (
+    "MarketingplatformAdminServiceClient",
+    "MarketingplatformAdminServiceAsyncClient",
+    "CreateAdminAccessBindingRequest",
+    "CreateAnalyticsAccountLinkRequest",
+    "CreateUserGroupMemberRequest",
+    "CreateUserGroupRequest",
+    "DeleteAnalyticsAccountLinkRequest",
+    "DeleteUserGroupMemberRequest",
+    "DeleteUserGroupRequest",
+    "FindSalesPartnerManagedClientsRequest",
+    "FindSalesPartnerManagedClientsResponse",
+    "GetAdminAccessBindingRequest",
+    "GetOrganizationRequest",
+    "GetUserGroupMemberRequest",
+    "GetUserGroupRequest",
+    "ListAdminAccessBindingsRequest",
+    "ListAdminAccessBindingsResponse",
+    "ListAnalyticsAccountLinksRequest",
+    "ListAnalyticsAccountLinksResponse",
+    "ListOrganizationsRequest",
+    "ListOrganizationsResponse",
+    "ListUserGroupMembersRequest",
+    "ListUserGroupMembersResponse",
+    "ListUserGroupsRequest",
+    "ListUserGroupsResponse",
+    "ReportPropertyUsageRequest",
+    "ReportPropertyUsageResponse",
+    "SetPropertyServiceLevelRequest",
+    "SetPropertyServiceLevelResponse",
+    "UpdateAdminAccessBindingRequest",
+    "UpdateUserGroupMemberRequest",
+    "UpdateUserGroupRequest",
+    "AdminAccessBinding",
+    "AnalyticsAccountLink",
+    "Organization",
+    "UserGroup",
+    "UserGroupMember",
+    "AnalyticsPropertyType",
+    "AnalyticsServiceLevel",
+    "LinkVerificationState",
+    "OrganizationRole",
+)

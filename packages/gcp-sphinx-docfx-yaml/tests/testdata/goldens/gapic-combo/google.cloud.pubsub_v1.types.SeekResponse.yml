@@ -1,0 +1,25 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children: []
+  class: google.cloud.pubsub_v1.types.SeekResponse
+  fullName: google.cloud.pubsub_v1.types.SeekResponse
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: SeekResponse
+  source:
+    id: SeekResponse
+    path: null
+    startLine: null
+  summary: 'Response for the `Seek` method (this response is empty).
+
+
+    '
+  syntax:
+    content: SeekResponse(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.SeekResponse
+references: []

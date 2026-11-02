@@ -1,0 +1,675 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.pubsub_v1.subscriber.message.Message
+  - google.cloud.pubsub_v1.subscriber.message.Message.ack
+  - google.cloud.pubsub_v1.subscriber.message.Message.ack_id
+  - google.cloud.pubsub_v1.subscriber.message.Message.ack_with_response
+  - google.cloud.pubsub_v1.subscriber.message.Message.attributes
+  - google.cloud.pubsub_v1.subscriber.message.Message.data
+  - google.cloud.pubsub_v1.subscriber.message.Message.delivery_attempt
+  - google.cloud.pubsub_v1.subscriber.message.Message.drop
+  - google.cloud.pubsub_v1.subscriber.message.Message.modify_ack_deadline
+  - google.cloud.pubsub_v1.subscriber.message.Message.modify_ack_deadline_with_response
+  - google.cloud.pubsub_v1.subscriber.message.Message.nack
+  - google.cloud.pubsub_v1.subscriber.message.Message.nack_with_response
+  - google.cloud.pubsub_v1.subscriber.message.Message.ordering_key
+  - google.cloud.pubsub_v1.subscriber.message.Message.publish_time
+  - google.cloud.pubsub_v1.subscriber.message.Message.size
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: Message
+  source:
+    id: Message
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/message.py
+    startLine: 67
+  summary: "A representation of a single Pub/Sub message.\n\nThe common way to interact\
+    \ with\n`.pubsub_v1.subscriber.message.Message` objects is to receive\nthem in\
+    \ callbacks on subscriptions; most users should never have a need\nto instantiate\
+    \ them by hand. (The exception to this is if you are\nimplementing a custom subclass\
+    \ to\n`.pubsub_v1.subscriber._consumer.Consumer`.)\n\n   The data in the message.\
+    \ Note that this will be a `bytes`,\n   not a text string.\n\n   The time that\
+    \ this message was originally published.\n\n"
+  syntax:
+    content: 'Message(message: types.PubsubMessage._meta._pb, ack_id: str, delivery_attempt:
+      int, request_queue: queue.Queue, exactly_once_delivery_enabled_func: typing.Callable[[],
+      bool] = <function Message.<lambda>>)'
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.subscriber.message.Message
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: Message
+  source:
+    id: Message
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/message.py
+    startLine: 67
+  summary: 'Construct the Message.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    This class should not be constructed directly; it is the
+
+    responsibility of `BasePolicy` subclasses to do so.
+
+    </aside>'
+  syntax:
+    content: 'Message(message: types.PubsubMessage._meta._pb, ack_id: str, delivery_attempt:
+      int, request_queue: queue.Queue, exactly_once_delivery_enabled_func: typing.Callable[[],
+      bool] = <function Message.<lambda>>)'
+    parameters:
+    - description: The ack_id received from Pub/Sub.
+      id: ack_id
+      var_type: str
+    - description: The delivery attempt counter received from Pub/Sub if a DeadLetterPolicy
+        is set on the subscription, and zero otherwise.
+      id: delivery_attempt
+      var_type: int
+    - description: A Callable that returns whether exactly-once delivery is currently-enabled.
+        Defaults to a lambda that always returns False.
+      id: exactly_once_delivery_enabled_func
+      var_type: typing.Callable[[], bool]
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.message.Message
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.ack
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: ack
+  source:
+    id: ack
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/message.py
+    startLine: 234
+  summary: 'Acknowledge the given message.
+
+
+    Acknowledging a message in Pub/Sub means that you are done
+
+    with it, and it will not be delivered to this subscription again.
+
+    You should avoid acknowledging messages until you have
+
+    *finished* processing them, so that in the event of a failure,
+
+    you receive the message again.
+
+
+    <aside class="warning">
+
+    <b>Warning:</b>
+
+    Acks in Pub/Sub are best effort. You should always
+
+    ensure that your processing code is idempotent, as you may
+
+    receive any given message more than once. If you need strong
+
+    guarantees about acks and re-deliveres, enable exactly-once
+
+    delivery on your subscription and use the `ack_with_response`
+
+    method instead. Exactly once delivery is a preview feature.
+
+    For more details, see:
+
+    https://cloud.google.com/pubsub/docs/exactly-once-delivery."
+
+    </aside>'
+  syntax:
+    content: ack() -> None
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.ack
+- &id001
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.ack_id
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: ack_id
+  source:
+    id: ack_id
+    path: null
+    startLine: null
+  summary: 'the ID used to ack the message.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.ack_id
+- *id001
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.ack_with_response
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: ack_with_response
+  source:
+    id: ack_with_response
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/message.py
+    startLine: 265
+  summary: 'Acknowledge the given message.
+
+
+    Acknowledging a message in Pub/Sub means that you are done
+
+    with it, and it will not be delivered to this subscription again.
+
+    You should avoid acknowledging messages until you have
+
+    *finished* processing them, so that in the event of a failure,
+
+    you receive the message again.
+
+
+    If exactly-once delivery is NOT enabled on the subscription, the
+
+    future returns immediately with an AcknowledgeStatus.SUCCESS.
+
+    Since acks in Cloud Pub/Sub are best effort when exactly-once
+
+    delivery is disabled, the message may be re-delivered. Because
+
+    re-deliveries are possible, you should ensure that your processing
+
+    code is idempotent, as you may receive any given message more than
+
+    once.
+
+
+    If exactly-once delivery is enabled on the subscription, the
+
+    future returned by this method tracks the state of acknowledgement
+
+    operation. If the future completes successfully, the message is
+
+    guaranteed NOT to be re-delivered. Otherwise, the future will
+
+    contain an exception with more details about the failure and the
+
+    message may be re-delivered.
+
+
+    Exactly once delivery is a preview feature. For more details,
+
+    see https://cloud.google.com/pubsub/docs/exactly-once-delivery."
+
+    '
+  syntax:
+    content: ack_with_response() -> google.cloud.pubsub_v1.subscriber.futures.Future
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.ack_with_response
+- &id002
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.attributes
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: attributes
+  source:
+    id: attributes
+    path: null
+    startLine: null
+  summary: 'Return the attributes of the underlying Pub/Sub Message.
+
+
+    <aside class="warning">
+
+    <b>Warning:</b>
+
+    A `ScalarMap` behaves slightly differently than a
+
+    `dict`. For a Pub / Sub message this is a `string->string` map.
+
+    When trying to access a value via `map[''key'']`, if the key is
+
+    not in the map, then the default value for the string type will
+
+    be returned, which is an empty string. It may be more intuitive
+
+    to just cast the map to a `dict` or to one use `map.get`.
+
+    </aside>'
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.attributes
+- *id002
+- &id003
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.data
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: data
+  source:
+    id: data
+    path: null
+    startLine: null
+  summary: 'Return the data for the underlying Pub/Sub Message.
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.data
+- *id003
+- &id004
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.delivery_attempt
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: delivery_attempt
+  source:
+    id: delivery_attempt
+    path: null
+    startLine: null
+  summary: 'The delivery attempt counter is 1 + (the sum of number of NACKs
+
+    and number of ack_deadline exceeds) for this message. It is set to None
+
+    if a DeadLetterPolicy is not set on the subscription.
+
+
+    A NACK is any call to ModifyAckDeadline with a 0 deadline. An ack_deadline
+
+    exceeds event is whenever a message is not acknowledged within
+
+    ack_deadline. Note that ack_deadline is initially
+
+    Subscription.ackDeadlineSeconds, but may get extended automatically by
+
+    the client library.
+
+
+    The first delivery of a given message will have this value as 1. The value
+
+    is calculated at best effort and is approximate.
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.delivery_attempt
+- *id004
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.drop
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: drop
+  source:
+    id: drop
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/message.py
+    startLine: 322
+  summary: 'Release the message from lease management.
+
+
+    This informs the policy to no longer hold on to the lease for this
+
+    message. Pub/Sub will re-deliver the message if it is not acknowledged
+
+    before the existing lease expires.
+
+
+    <aside class="warning">
+
+    <b>Warning:</b>
+
+    For most use cases, the only reason to drop a message from
+
+    lease management is on `ack` or `nack`; this library
+
+    automatically drop()s the message on `ack` or `nack`. You probably
+
+    do not want to call this method directly.
+
+    </aside>'
+  syntax:
+    content: drop() -> None
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.drop
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.modify_ack_deadline
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: modify_ack_deadline
+  source:
+    id: modify_ack_deadline
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/message.py
+    startLine: 341
+  summary: 'Resets the deadline for acknowledgement.
+
+
+    New deadline will be the given value of seconds from now.
+
+
+    The default implementation handles automatically modacking received messages for
+    you;
+
+    you should not need to manually deal with setting ack deadlines. The exception
+    case is
+
+    if you are implementing your own custom subclass of
+
+    `.pubsub_v1.subcriber._consumer.Consumer`.
+
+    '
+  syntax:
+    content: 'modify_ack_deadline(seconds: int) -> None'
+    parameters:
+    - description: The number of seconds to set the lease deadline to. This should
+        be between 0 and 600. Due to network latency, values below 10 are advised
+        against.
+      id: seconds
+      var_type: int
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.modify_ack_deadline
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.modify_ack_deadline_with_response
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: modify_ack_deadline_with_response
+  source:
+    id: modify_ack_deadline_with_response
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/message.py
+    startLine: 361
+  summary: 'Resets the deadline for acknowledgement and returns the response
+
+    status via a future.
+
+
+    New deadline will be the given value of seconds from now.
+
+
+    The default implementation handles automatically modacking received messages for
+    you;
+
+    you should not need to manually deal with setting ack deadlines. The exception
+    case is
+
+    if you are implementing your own custom subclass of
+
+    `.pubsub_v1.subcriber._consumer.Consumer`.
+
+
+    If exactly-once delivery is NOT enabled on the subscription, the
+
+    future returns immediately with an AcknowledgeStatus.SUCCESS.
+
+    Since modify-ack-deadline operations in Cloud Pub/Sub are best effort
+
+    when exactly-once delivery is disabled, the message may be re-delivered
+
+    within the set deadline.
+
+
+    If exactly-once delivery is enabled on the subscription, the
+
+    future returned by this method tracks the state of the
+
+    modify-ack-deadline operation. If the future completes successfully,
+
+    the message is guaranteed NOT to be re-delivered within the new deadline.
+
+    Otherwise, the future will contain an exception with more details about
+
+    the failure and the message will be redelivered according to its
+
+    currently-set ack deadline.
+
+
+    Exactly once delivery is a preview feature. For more details,
+
+    see https://cloud.google.com/pubsub/docs/exactly-once-delivery."
+
+    '
+  syntax:
+    content: "modify_ack_deadline_with_response(\n    seconds: int,\n) -> google.cloud.pubsub_v1.subscriber.futures.Future"
+    parameters:
+    - description: The number of seconds to set the lease deadline to. This should
+        be between 0 and 600. Due to network latency, values below 10 are advised
+        against.
+      id: seconds
+      var_type: int
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.modify_ack_deadline_with_response
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.nack
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: nack
+  source:
+    id: nack
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/message.py
+    startLine: 422
+  summary: 'Decline to acknowledge the given message.
+
+
+    This will cause the message to be re-delivered to subscribers. Re-deliveries
+
+    may take place immediately or after a delay, and may arrive at this subscriber
+
+    or another.
+
+
+    '
+  syntax:
+    content: nack() -> None
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.nack
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.nack_with_response
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: nack_with_response
+  source:
+    id: nack_with_response
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/message.py
+    startLine: 438
+  summary: 'Decline to acknowledge the given message, returning the response status
+    via
+
+    a future.
+
+
+    This will cause the message to be re-delivered to subscribers. Re-deliveries
+
+    may take place immediately or after a delay, and may arrive at this subscriber
+
+    or another.
+
+
+    If exactly-once delivery is NOT enabled on the subscription, the
+
+    future returns immediately with an AcknowledgeStatus.SUCCESS.
+
+
+    If exactly-once delivery is enabled on the subscription, the
+
+    future returned by this method tracks the state of the
+
+    nack operation. If the future completes successfully,
+
+    the future''s result will be an AcknowledgeStatus.SUCCESS.
+
+    Otherwise, the future will contain an exception with more details about
+
+    the failure.
+
+
+    Exactly once delivery is a preview feature. For more details,
+
+    see https://cloud.google.com/pubsub/docs/exactly-once-delivery."
+
+    '
+  syntax:
+    content: nack_with_response() -> google.cloud.pubsub_v1.subscriber.futures.Future
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.nack_with_response
+- &id005
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.ordering_key
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: ordering_key
+  source:
+    id: ordering_key
+    path: null
+    startLine: null
+  summary: 'The ordering key used to publish the message.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.ordering_key
+- *id005
+- &id006
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.publish_time
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: publish_time
+  source:
+    id: publish_time
+    path: null
+    startLine: null
+  summary: 'Return the time that the message was originally published.
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.publish_time
+- *id006
+- &id007
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.message.Message
+  fullName: google.cloud.pubsub_v1.subscriber.message.Message.size
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.message
+  name: size
+  source:
+    id: size
+    path: null
+    startLine: null
+  summary: 'Return the size of the underlying message, in bytes.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.size
+- *id007
+references:
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message
+  isExternal: false
+  name: Message
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.ack
+  isExternal: false
+  name: ack
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.ack
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.ack_id
+  isExternal: false
+  name: ack_id
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.ack_id
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.ack_with_response
+  isExternal: false
+  name: ack_with_response
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.ack_with_response
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.attributes
+  isExternal: false
+  name: attributes
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.attributes
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.data
+  isExternal: false
+  name: data
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.data
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.delivery_attempt
+  isExternal: false
+  name: delivery_attempt
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.delivery_attempt
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.drop
+  isExternal: false
+  name: drop
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.drop
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.modify_ack_deadline
+  isExternal: false
+  name: modify_ack_deadline
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.modify_ack_deadline
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.modify_ack_deadline_with_response
+  isExternal: false
+  name: modify_ack_deadline_with_response
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.modify_ack_deadline_with_response
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.nack
+  isExternal: false
+  name: nack
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.nack
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.nack_with_response
+  isExternal: false
+  name: nack_with_response
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.nack_with_response
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.ordering_key
+  isExternal: false
+  name: ordering_key
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.ordering_key
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.publish_time
+  isExternal: false
+  name: publish_time
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.publish_time
+- fullName: google.cloud.pubsub_v1.subscriber.message.Message.size
+  isExternal: false
+  name: size
+  parent: google.cloud.pubsub_v1.subscriber.message.Message
+  uid: google.cloud.pubsub_v1.subscriber.message.Message.size

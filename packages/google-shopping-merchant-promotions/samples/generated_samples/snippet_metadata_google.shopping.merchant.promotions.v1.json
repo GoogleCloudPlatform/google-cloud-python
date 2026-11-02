@@ -1,0 +1,490 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.shopping.merchant.promotions.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-shopping-merchant-promotions",
+    "version": "1.5.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceAsyncClient",
+          "shortName": "PromotionsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceAsyncClient.get_promotion",
+        "method": {
+          "fullName": "google.shopping.merchant.promotions.v1.PromotionsService.GetPromotion",
+          "service": {
+            "fullName": "google.shopping.merchant.promotions.v1.PromotionsService",
+            "shortName": "PromotionsService"
+          },
+          "shortName": "GetPromotion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_promotions_v1.types.GetPromotionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_promotions_v1.types.Promotion",
+        "shortName": "get_promotion"
+      },
+      "description": "Sample for GetPromotion",
+      "file": "merchantapi_v1_generated_promotions_service_get_promotion_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_PromotionsService_GetPromotion_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_promotions_service_get_promotion_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceClient",
+          "shortName": "PromotionsServiceClient"
+        },
+        "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceClient.get_promotion",
+        "method": {
+          "fullName": "google.shopping.merchant.promotions.v1.PromotionsService.GetPromotion",
+          "service": {
+            "fullName": "google.shopping.merchant.promotions.v1.PromotionsService",
+            "shortName": "PromotionsService"
+          },
+          "shortName": "GetPromotion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_promotions_v1.types.GetPromotionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_promotions_v1.types.Promotion",
+        "shortName": "get_promotion"
+      },
+      "description": "Sample for GetPromotion",
+      "file": "merchantapi_v1_generated_promotions_service_get_promotion_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_PromotionsService_GetPromotion_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_promotions_service_get_promotion_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceAsyncClient",
+          "shortName": "PromotionsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceAsyncClient.insert_promotion",
+        "method": {
+          "fullName": "google.shopping.merchant.promotions.v1.PromotionsService.InsertPromotion",
+          "service": {
+            "fullName": "google.shopping.merchant.promotions.v1.PromotionsService",
+            "shortName": "PromotionsService"
+          },
+          "shortName": "InsertPromotion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_promotions_v1.types.InsertPromotionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_promotions_v1.types.Promotion",
+        "shortName": "insert_promotion"
+      },
+      "description": "Sample for InsertPromotion",
+      "file": "merchantapi_v1_generated_promotions_service_insert_promotion_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_PromotionsService_InsertPromotion_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_promotions_service_insert_promotion_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceClient",
+          "shortName": "PromotionsServiceClient"
+        },
+        "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceClient.insert_promotion",
+        "method": {
+          "fullName": "google.shopping.merchant.promotions.v1.PromotionsService.InsertPromotion",
+          "service": {
+            "fullName": "google.shopping.merchant.promotions.v1.PromotionsService",
+            "shortName": "PromotionsService"
+          },
+          "shortName": "InsertPromotion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_promotions_v1.types.InsertPromotionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_promotions_v1.types.Promotion",
+        "shortName": "insert_promotion"
+      },
+      "description": "Sample for InsertPromotion",
+      "file": "merchantapi_v1_generated_promotions_service_insert_promotion_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_PromotionsService_InsertPromotion_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_promotions_service_insert_promotion_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceAsyncClient",
+          "shortName": "PromotionsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceAsyncClient.list_promotions",
+        "method": {
+          "fullName": "google.shopping.merchant.promotions.v1.PromotionsService.ListPromotions",
+          "service": {
+            "fullName": "google.shopping.merchant.promotions.v1.PromotionsService",
+            "shortName": "PromotionsService"
+          },
+          "shortName": "ListPromotions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_promotions_v1.types.ListPromotionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_promotions_v1.services.promotions_service.pagers.ListPromotionsAsyncPager",
+        "shortName": "list_promotions"
+      },
+      "description": "Sample for ListPromotions",
+      "file": "merchantapi_v1_generated_promotions_service_list_promotions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_PromotionsService_ListPromotions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_promotions_service_list_promotions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceClient",
+          "shortName": "PromotionsServiceClient"
+        },
+        "fullName": "google.shopping.merchant_promotions_v1.PromotionsServiceClient.list_promotions",
+        "method": {
+          "fullName": "google.shopping.merchant.promotions.v1.PromotionsService.ListPromotions",
+          "service": {
+            "fullName": "google.shopping.merchant.promotions.v1.PromotionsService",
+            "shortName": "PromotionsService"
+          },
+          "shortName": "ListPromotions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_promotions_v1.types.ListPromotionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_promotions_v1.services.promotions_service.pagers.ListPromotionsPager",
+        "shortName": "list_promotions"
+      },
+      "description": "Sample for ListPromotions",
+      "file": "merchantapi_v1_generated_promotions_service_list_promotions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_PromotionsService_ListPromotions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_promotions_service_list_promotions_sync.py"
+    }
+  ]
+}

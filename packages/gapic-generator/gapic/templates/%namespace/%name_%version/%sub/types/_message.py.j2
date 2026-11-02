@@ -1,0 +1,98 @@
+class {{ message.name }}({{ p }}.Message):
+    r"""{{ message.meta.doc|rst(indent=4) }}
+    {% if message.fields|length %}
+    {# Only include note if a oneof has more than one member field. #} 
+    {% if message.oneof_fields() %}
+    {% if message.oneof_fields().values() | map('length') | max > 1 %}
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    {% endif %}
+    {% endif %}
+    {# Use select filter to capture nested values. See https://github.com/googleapis/gapic-generator-python/issues/1083 #} 
+    {%- if message.fields.values() | map(attribute="oneof", default="") | select | list %}
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    {% endif %}
+    Attributes:
+    {% for field in message.fields.values() %}
+        {{ field.name }} ({{ field.ident.sphinx }}):
+            {{ field.meta.doc|rst(indent=12, nl=False) }}
+            {% if field.oneof %}
+
+            This field is a member of `oneof`_ ``{{ field.oneof }}``.
+            {% endif %}
+    {% endfor %}
+    {% endif %}
+    """
+    {# Iterate over nested enums. -#}
+    {% for enum in message.nested_enums.values() %}
+        {% filter indent(first=True) %}
+            {% include '%namespace/%name_%version/%sub/types/_enum.py.j2' %}
+        {% endfilter %}
+    {% endfor %}
+
+    {# Iterate over nested messages. -#}
+    {% for submessage in message.nested_messages.values() %}
+        {% if not submessage.map %}
+        {% with message = submessage %}{% filter indent(first=True) %}
+            {% include '%namespace/%name_%version/%sub/types/_message.py.j2' %}
+        {% endfilter %}{% endwith %}
+        {% endif %}
+    {% endfor %}
+
+    {% if "next_page_token" in message.fields.values()|map(attribute='name', default="") %}
+    @property
+    def raw_page(self):
+        return self
+    {% endif %}
+
+    {# Iterate over fields. -#}
+    {% for field in message.fields.values() %}
+    {% if field.map %}
+    {% with key_field = field.message.fields['key'], value_field = field.message.fields['value'] %}
+    {{ field.name }}: MutableMapping[{{ key_field.type.ident.rel(message.ident) }}, {{ value_field.type.ident.rel(message.ident) }}] = {{ p }}.MapField(
+        {{ p }}.{{ key_field.proto_type }},
+        {{ p }}.{{ value_field.proto_type }},
+        number={{ field.number }},
+    {% if value_field.enum or value_field.message %}
+        {{ value_field.proto_type.lower() }}={{ value_field.type.ident.rel(message.ident) }},
+    {% endif %}{# enum or message#}
+    )
+    {% endwith %}
+    {% else %}{# field.map #}
+    {{ field.name }}: {% if field.is_primitive %}{{ field.ident }}{% else %}{% if field.repeated %}MutableSequence[{% endif %}{{ field.type.ident.rel(message.ident) }}{% if field.repeated %}]{% endif %}{% endif %} = {{ p }}.{% if field.repeated %}Repeated{% endif %}Field(
+        {{ p }}.{{ field.proto_type }},
+        number={{ field.number }},
+    {% if field.proto3_optional %}
+        optional=True,
+    {% elif field.oneof %}
+        oneof='{{ field.oneof }}',
+    {% endif %}
+    {% if field.enum or field.message %}
+        {{ field.proto_type.lower() }}={{ field.type.ident.rel(message.ident) }},
+    {% endif %}{# enum or message #}
+    )
+    {% endif %}{# field.map #}
+    {% endfor %}{# for field in message.fields.values#}
+
+    {% if message.extended_operation_status_field %}
+    {% with status_field = message.extended_operation_status_field %}
+    @property
+    def done(self) -> bool:
+        """Return True if the backing extended operation is completed, False otherwise."""
+        {% if status_field.enum %}
+        return self.{{ status_field.name }} == type(self.{{ status_field.name }}).DONE
+        {% elif status_field.is_primitive and status_field.type.python_type == str %}
+        return self.{{ status_field.name }} == "DONE"
+        {% elif status_field.is_primitive and status_field.type.python_type == bool %}
+        return self.{{ status_field.name }}
+        {% else %}
+        raise ValueError("Unexpected type for field {{ status_field.name }}: {{ status_field.type }}")
+        {% endif %}
+    {% endwith %}
+    {% endif %}
+
+{{ '\n\n' }}

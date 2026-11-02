@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_quota_v1beta",
+  "protoPackage": "google.shopping.merchant.quota.v1beta",
+  "schema": "1.0",
+  "services": {
+    "QuotaService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "QuotaServiceClient",
+          "rpcs": {
+            "ListQuotaGroups": {
+              "methods": [
+                "list_quota_groups"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "QuotaServiceAsyncClient",
+          "rpcs": {
+            "ListQuotaGroups": {
+              "methods": [
+                "list_quota_groups"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "QuotaServiceClient",
+          "rpcs": {
+            "ListQuotaGroups": {
+              "methods": [
+                "list_quota_groups"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

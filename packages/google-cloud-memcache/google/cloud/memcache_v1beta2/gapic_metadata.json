@@ -1,0 +1,163 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.memcache_v1beta2",
+  "protoPackage": "google.cloud.memcache.v1beta2",
+  "schema": "1.0",
+  "services": {
+    "CloudMemcache": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudMemcacheClient",
+          "rpcs": {
+            "ApplyParameters": {
+              "methods": [
+                "apply_parameters"
+              ]
+            },
+            "ApplySoftwareUpdate": {
+              "methods": [
+                "apply_software_update"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateParameters": {
+              "methods": [
+                "update_parameters"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudMemcacheAsyncClient",
+          "rpcs": {
+            "ApplyParameters": {
+              "methods": [
+                "apply_parameters"
+              ]
+            },
+            "ApplySoftwareUpdate": {
+              "methods": [
+                "apply_software_update"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateParameters": {
+              "methods": [
+                "update_parameters"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudMemcacheClient",
+          "rpcs": {
+            "ApplyParameters": {
+              "methods": [
+                "apply_parameters"
+              ]
+            },
+            "ApplySoftwareUpdate": {
+              "methods": [
+                "apply_software_update"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateParameters": {
+              "methods": [
+                "update_parameters"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

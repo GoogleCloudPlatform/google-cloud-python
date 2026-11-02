@@ -1,0 +1,9 @@
+# When testing with `pandas >= 3.1.0` (currently in pre-release as `pandas==3.1.0rc0`),
+# the `db-dtypes` compliance test suite (`tests/compliance`) fails due to upstream
+# changes in pandas internal utilities and ExtensionArray interface contracts.
+# To prevent presubmit PR CI from failing unexpectedly on developer branches, a
+# temporary ceiling constraint (`pandas < 3.1.0dev0`) was added.
+#
+# Forward-looking tests against upcoming, unreleased versions of pandas and other
+# dependencies continue to run in our dedicated pre-release test suite.
+

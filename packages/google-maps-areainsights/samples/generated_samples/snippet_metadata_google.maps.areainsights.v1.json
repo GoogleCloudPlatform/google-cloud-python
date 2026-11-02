@@ -1,0 +1,168 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.maps.areainsights.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-maps-areainsights",
+    "version": "0.5.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.areainsights_v1.AreaInsightsAsyncClient",
+          "shortName": "AreaInsightsAsyncClient"
+        },
+        "fullName": "google.maps.areainsights_v1.AreaInsightsAsyncClient.compute_insights",
+        "method": {
+          "fullName": "google.maps.areainsights.v1.AreaInsights.ComputeInsights",
+          "service": {
+            "fullName": "google.maps.areainsights.v1.AreaInsights",
+            "shortName": "AreaInsights"
+          },
+          "shortName": "ComputeInsights"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.areainsights_v1.types.ComputeInsightsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.areainsights_v1.types.ComputeInsightsResponse",
+        "shortName": "compute_insights"
+      },
+      "description": "Sample for ComputeInsights",
+      "file": "areainsights_v1_generated_area_insights_compute_insights_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "areainsights_v1_generated_AreaInsights_ComputeInsights_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "areainsights_v1_generated_area_insights_compute_insights_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.areainsights_v1.AreaInsightsClient",
+          "shortName": "AreaInsightsClient"
+        },
+        "fullName": "google.maps.areainsights_v1.AreaInsightsClient.compute_insights",
+        "method": {
+          "fullName": "google.maps.areainsights.v1.AreaInsights.ComputeInsights",
+          "service": {
+            "fullName": "google.maps.areainsights.v1.AreaInsights",
+            "shortName": "AreaInsights"
+          },
+          "shortName": "ComputeInsights"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.areainsights_v1.types.ComputeInsightsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.areainsights_v1.types.ComputeInsightsResponse",
+        "shortName": "compute_insights"
+      },
+      "description": "Sample for ComputeInsights",
+      "file": "areainsights_v1_generated_area_insights_compute_insights_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "areainsights_v1_generated_AreaInsights_ComputeInsights_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "areainsights_v1_generated_area_insights_compute_insights_sync.py"
+    }
+  ]
+}

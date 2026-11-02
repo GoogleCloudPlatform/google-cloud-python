@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright 2020 Google LLC
+#
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file or at
+# https://developers.google.com/open-source/licenses/bsd
+
+[run]
+branch = True
+source =
+    django_spanner
+
+[paths]
+source =
+    django_spanner
+    */site-packages/django_spanner
+
+[report]
+fail_under = 68
+show_missing = True
+exclude_lines =
+    # Re-enable the standard pragma
+    pragma: NO COVER
+    # Ignore debug-only repr
+    def __repr__
+    # Ignore abstract methods
+    raise NotImplementedError
+omit =
+  tests/*
+  */tests/*

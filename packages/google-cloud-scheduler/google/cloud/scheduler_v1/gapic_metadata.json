@@ -1,0 +1,148 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.scheduler_v1",
+  "protoPackage": "google.cloud.scheduler.v1",
+  "schema": "1.0",
+  "services": {
+    "CloudScheduler": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudSchedulerClient",
+          "rpcs": {
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "PauseJob": {
+              "methods": [
+                "pause_job"
+              ]
+            },
+            "ResumeJob": {
+              "methods": [
+                "resume_job"
+              ]
+            },
+            "RunJob": {
+              "methods": [
+                "run_job"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudSchedulerAsyncClient",
+          "rpcs": {
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "PauseJob": {
+              "methods": [
+                "pause_job"
+              ]
+            },
+            "ResumeJob": {
+              "methods": [
+                "resume_job"
+              ]
+            },
+            "RunJob": {
+              "methods": [
+                "run_job"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudSchedulerClient",
+          "rpcs": {
+            "CreateJob": {
+              "methods": [
+                "create_job"
+              ]
+            },
+            "DeleteJob": {
+              "methods": [
+                "delete_job"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "PauseJob": {
+              "methods": [
+                "pause_job"
+              ]
+            },
+            "ResumeJob": {
+              "methods": [
+                "resume_job"
+              ]
+            },
+            "RunJob": {
+              "methods": [
+                "run_job"
+              ]
+            },
+            "UpdateJob": {
+              "methods": [
+                "update_job"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

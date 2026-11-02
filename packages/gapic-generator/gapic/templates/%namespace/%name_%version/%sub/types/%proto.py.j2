@@ -1,0 +1,47 @@
+{% extends "_base.py.j2" %}
+
+{% block content %}
+
+{% with p = proto.disambiguate('proto') %}
+{% if proto.messages|length or proto.all_enums|length %}
+from __future__ import annotations
+
+from typing import MutableMapping, MutableSequence
+
+{% endif %}
+import proto{% if p != 'proto' %} as {{ p }}{% endif %}  # type: ignore
+
+{% filter sort_lines %}
+{% for import_ in proto.python_modules %}
+{{ import_ }}
+{% endfor %}
+{% endfilter %}
+
+
+__protobuf__ = {{ p }}.module(
+    package='{{ '.'.join(proto.meta.address.package) }}',
+    {% if api.naming.proto_package != '.'.join(proto.meta.address.package) %}
+    marshal='{{ api.naming.proto_package }}',
+    {% endif %}
+    manifest={
+    {% for enum in proto.enums.values() %}
+        '{{ enum.name }}',
+    {% endfor %}
+    {% for message in proto.messages.values() %}
+        '{{ message.name }}',
+    {% endfor %}
+    },
+)
+
+
+{% for enum in proto.enums.values() %}
+    {% include '%namespace/%name_%version/%sub/types/_enum.py.j2' with context %}
+{% endfor %}
+
+{% for message in proto.messages.values() %}
+    {% include "%namespace/%name_%version/%sub/types/_message.py.j2" with context %}
+{% endfor %}
+{% endwith %}
+
+__all__ = tuple(sorted(__protobuf__.manifest))
+{% endblock %}

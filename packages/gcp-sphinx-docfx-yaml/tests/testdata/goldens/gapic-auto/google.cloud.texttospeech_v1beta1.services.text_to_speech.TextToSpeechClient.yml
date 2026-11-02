@@ -1,0 +1,771 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.__exit__
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_billing_account_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_folder_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_location_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_organization_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_project_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_file
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_info
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_json
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.get_mtls_endpoint_and_cert_source
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.list_voices
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.model_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_billing_account_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_folder_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_location_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_organization_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_project_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_model_path
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.synthesize_speech
+  - google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.transport
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: TextToSpeechClient
+  source:
+    id: TextToSpeechClient
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 78
+  summary: 'Service that implements Google Cloud Text-to-Speech API.
+
+
+    '
+  syntax:
+    content: 'TextToSpeechClient(*, credentials: typing.Optional[google.auth.credentials.Credentials]
+      = None, transport: typing.Optional[typing.Union[str, google.cloud.texttospeech_v1beta1.services.text_to_speech.transports.base.TextToSpeechTransport]]
+      = None, client_options: typing.Optional[google.api_core.client_options.ClientOptions]
+      = None, client_info: google.api_core.gapic_v1.client_info.ClientInfo = <google.api_core.gapic_v1.client_info.ClientInfo
+      object>)'
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: TextToSpeechClient
+  source:
+    id: TextToSpeechClient
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 78
+  summary: 'Instantiates the text to speech client.
+
+    '
+  syntax:
+    content: 'TextToSpeechClient(*, credentials: typing.Optional[google.auth.credentials.Credentials]
+      = None, transport: typing.Optional[typing.Union[str, google.cloud.texttospeech_v1beta1.services.text_to_speech.transports.base.TextToSpeechTransport]]
+      = None, client_options: typing.Optional[google.api_core.client_options.ClientOptions]
+      = None, client_info: google.api_core.gapic_v1.client_info.ClientInfo = <google.api_core.gapic_v1.client_info.ClientInfo
+      object>)'
+    exceptions:
+    - description: If mutual TLS transport creation failed for any reason.
+      var_type: google.auth.exceptions.MutualTLSChannelError
+    parameters:
+    - description: The authorization credentials to attach to requests. These credentials
+        identify the application to the service; if none are specified, the client
+        will attempt to ascertain the credentials from the environment.
+      id: credentials
+      var_type: Optional[google.auth.credentials.Credentials]
+    - description: The transport to use. If set to None, a transport is chosen automatically.
+      id: transport
+      var_type: Union[str, TextToSpeechTransport]
+    - description: 'Custom options for the client. It won''t take effect if a <code>transport</code>
+        instance is provided. (1) The <code>api_endpoint</code> property can be used
+        to override the default endpoint provided by the client. GOOGLE_API_USE_MTLS_ENDPOINT
+        environment variable can also be used to override the endpoint: "always" (always
+        use the default mTLS endpoint), "never" (always use the default regular endpoint)
+        and "auto" (auto switch to the default mTLS endpoint if client certificate
+        is present, this is the default value). However, the <code>api_endpoint</code>
+        property takes precedence if provided. (2) If GOOGLE_API_USE_CLIENT_CERTIFICATE
+        environment variable is "true", then the <code>client_cert_source</code> property
+        can be used to provide client certificate for mutual TLS transport. If not
+        provided, the default SSL client certificate will be used if present. If GOOGLE_API_USE_CLIENT_CERTIFICATE
+        is "false" or not set, no client certificate will be used.'
+      id: client_options
+      var_type: google.api_core.client_options.ClientOptions
+    - description: The client info used to send a user-agent string along with API
+        requests. If <code>None</code>, then default info will be used. Generally,
+        you only need to set this if you're developing your own client library.
+      id: client_info
+      var_type: google.api_core.gapic_v1.client_info.ClientInfo
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.__exit__
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: __exit__
+  source:
+    id: __exit__
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 661
+  summary: 'Releases underlying transport''s resources.
+
+
+    <aside class="warning">
+
+    <b>Warning:</b>
+
+    ONLY use as a context manager if the transport is NOT shared
+
+    with other clients! Exiting the with block will CLOSE the transport
+
+    and may cause errors in other clients!
+
+    </aside>'
+  syntax:
+    content: __exit__(type, value, traceback)
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.__exit__
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_billing_account_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: common_billing_account_path
+  source:
+    id: common_billing_account_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 185
+  summary: 'Returns a fully-qualified billing_account string.
+
+
+    '
+  syntax:
+    content: 'common_billing_account_path(billing_account: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_billing_account_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_folder_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: common_folder_path
+  source:
+    id: common_folder_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 200
+  summary: 'Returns a fully-qualified folder string.
+
+
+    '
+  syntax:
+    content: 'common_folder_path(folder: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_folder_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_location_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: common_location_path
+  source:
+    id: common_location_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 245
+  summary: 'Returns a fully-qualified location string.
+
+
+    '
+  syntax:
+    content: 'common_location_path(project: str, location: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_location_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_organization_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: common_organization_path
+  source:
+    id: common_organization_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 215
+  summary: 'Returns a fully-qualified organization string.
+
+
+    '
+  syntax:
+    content: 'common_organization_path(organization: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_organization_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_project_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: common_project_path
+  source:
+    id: common_project_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 230
+  summary: 'Returns a fully-qualified project string.
+
+
+    '
+  syntax:
+    content: 'common_project_path(project: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_project_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_file
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: from_service_account_file
+  source:
+    id: from_service_account_file
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 133
+  summary: "Creates an instance of this client using the provided credentials\n  \
+    \  file.\n"
+  syntax:
+    content: 'from_service_account_file(filename: str, *args, **kwargs)'
+    parameters:
+    - description: The path to the service account private key json file.
+      id: filename
+      var_type: str
+    returns:
+    - description: The constructed client.
+      var_type: TextToSpeechClient
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_file
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_info
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: from_service_account_info
+  source:
+    id: from_service_account_info
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 116
+  summary: "Creates an instance of this client using the provided credentials\n  \
+    \  info.\n"
+  syntax:
+    content: 'from_service_account_info(info: dict, *args, **kwargs)'
+    parameters:
+    - description: The service account private key info.
+      id: info
+      var_type: dict
+    returns:
+    - description: The constructed client.
+      var_type: TextToSpeechClient
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_info
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_json
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: from_service_account_json
+  source:
+    id: from_service_account_json
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 133
+  summary: "Creates an instance of this client using the provided credentials\n  \
+    \  file.\n"
+  syntax:
+    content: 'from_service_account_json(filename: str, *args, **kwargs)'
+    parameters:
+    - description: The path to the service account private key json file.
+      id: filename
+      var_type: str
+    returns:
+    - description: The constructed client.
+      var_type: TextToSpeechClient
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_json
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.get_mtls_endpoint_and_cert_source
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: get_mtls_endpoint_and_cert_source
+  source:
+    id: get_mtls_endpoint_and_cert_source
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 262
+  summary: 'Return the API endpoint and client cert source for mutual TLS.
+
+
+    The client cert source is determined in the following order:
+
+    (1) if `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not "true",
+    the
+
+    client cert source is None.
+
+    (2) if `client_options.client_cert_source` is provided, use the provided one;
+    if the
+
+    default client cert source exists, use the default one; otherwise the client cert
+
+    source is None.
+
+
+    The API endpoint is determined in the following order:
+
+    (1) if `client_options.api_endpoint` if provided, use the provided one.
+
+    (2) if `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is "always", use
+    the
+
+    default mTLS endpoint; if the environment variabel is "never", use the default
+    API
+
+    endpoint; otherwise if client cert source exists, use the default mTLS endpoint,
+    otherwise
+
+    use the default API endpoint.
+
+
+    More details can be found at https://google.aip.dev/auth/4114.
+
+    '
+  syntax:
+    content: "get_mtls_endpoint_and_cert_source(\n    client_options: typing.Optional[\n\
+      \        google.api_core.client_options.ClientOptions\n    ] = None,\n)"
+    exceptions:
+    - description: If any errors happen.
+      var_type: google.auth.exceptions.MutualTLSChannelError
+    parameters:
+    - defaultValue: None
+      description: Custom options for the client. Only the <code>api_endpoint</code>
+        and <code>client_cert_source</code> properties may be used in this method.
+      id: client_options
+      var_type: google.api_core.client_options.ClientOptions
+    returns:
+    - description: returns the API endpoint and the client cert source to use.
+      var_type: Tuple[str, Callable[[], Tuple[bytes, bytes]]]
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.get_mtls_endpoint_and_cert_source
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.list_voices
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: list_voices
+  source:
+    id: list_voices
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 428
+  summary: "Returns a list of Voice supported for synthesis.\n\n```python\n# This\
+    \ snippet has been automatically generated and should be regarded as a\n# code\
+    \ template only.\n# It will require modifications to work:\n# - It may require\
+    \ correct/in-range values for request initialization.\n# - It may require specifying\
+    \ regional endpoints when creating the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google.cloud import texttospeech_v1beta1\n\ndef sample_list_voices():\n \
+    \   # Create a client\n    client = texttospeech_v1beta1.TextToSpeechClient()\n\
+    \n    # Initialize request argument(s)\n    request = texttospeech_v1beta1.ListVoicesRequest(\n\
+    \    )\n\n    # Make the request\n    response = client.list_voices(request=request)\n\
+    \n    # Handle the response\n    print(response)\n```\n"
+  syntax:
+    content: "list_voices(\n    request: typing.Optional[\n        typing.Union[\n\
+      \            google.cloud.texttospeech_v1beta1.types.cloud_tts.ListVoicesRequest,\
+      \ dict\n        ]\n    ] = None,\n    *,\n    language_code: typing.Optional[str]\
+      \ = None,\n    retry: typing.Union[\n        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ google.cloud.texttospeech_v1beta1.types.cloud_tts.ListVoicesResponse"
+    parameters:
+    - defaultValue: None
+      description: The request object. The top-level message sent by the client for
+        the <code>ListVoices</code> method.
+      id: request
+      var_type: Union[<xref uid="google.cloud.texttospeech_v1beta1.types.ListVoicesRequest">google.cloud.texttospeech_v1beta1.types.ListVoicesRequest</xref>,
+        dict]
+    - description: Optional. Recommended. <code>BCP-47 <https://www.rfc-editor.org/rfc/bcp/bcp47.txt></code>__
+        language tag. If not specified, the API will return all supported voices.
+        If specified, the ListVoices call will only return voices that can be used
+        to synthesize this language_code. For example, if you specify <code>"en-NZ"</code>,
+        all <code>"en-NZ"</code> voices will be returned. If you specify <code>"no"</code>,
+        both <code>"no-\*"</code> (Norwegian) and <code>"nb-\*"</code> (Norwegian
+        Bokmal) voices will be returned. This corresponds to the <code>language_code</code>
+        field on the <code>request</code> instance; if <code>request</code> is provided,
+        this should not be set.
+      id: language_code
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: The message returned to the client by the ListVoices method.
+      var_type: <xref uid="google.cloud.texttospeech_v1beta1.types.ListVoicesResponse">google.cloud.texttospeech_v1beta1.types.ListVoicesResponse</xref>
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.list_voices
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.model_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: model_path
+  source:
+    id: model_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 163
+  summary: 'Returns a fully-qualified model string.
+
+
+    '
+  syntax:
+    content: 'model_path(project: str, location: str, model: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.model_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_billing_account_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: parse_common_billing_account_path
+  source:
+    id: parse_common_billing_account_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 194
+  summary: 'Parse a billing_account path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_billing_account_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_billing_account_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_folder_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: parse_common_folder_path
+  source:
+    id: parse_common_folder_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 209
+  summary: 'Parse a folder path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_folder_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_folder_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_location_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: parse_common_location_path
+  source:
+    id: parse_common_location_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 256
+  summary: 'Parse a location path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_location_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_location_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_organization_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: parse_common_organization_path
+  source:
+    id: parse_common_organization_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 224
+  summary: 'Parse a organization path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_organization_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_organization_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_project_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: parse_common_project_path
+  source:
+    id: parse_common_project_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 239
+  summary: 'Parse a project path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_project_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_project_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_model_path
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: parse_model_path
+  source:
+    id: parse_model_path
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 176
+  summary: 'Parses a model path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_model_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_model_path
+- attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.synthesize_speech
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: synthesize_speech
+  source:
+    id: synthesize_speech
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/services/text_to_speech/client.py
+    startLine: 530
+  summary: "Synthesizes speech synchronously: receive results\nafter all text input\
+    \ has been processed.\n\n```python\n# This snippet has been automatically generated\
+    \ and should be regarded as a\n# code template only.\n# It will require modifications\
+    \ to work:\n# - It may require correct/in-range values for request initialization.\n\
+    # - It may require specifying regional endpoints when creating the service\n#\
+    \   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google.cloud import texttospeech_v1beta1\n\ndef sample_synthesize_speech():\n\
+    \    # Create a client\n    client = texttospeech_v1beta1.TextToSpeechClient()\n\
+    \n    # Initialize request argument(s)\n    input = texttospeech_v1beta1.SynthesisInput()\n\
+    \    input.text = \"text_value\"\n\n    voice = texttospeech_v1beta1.VoiceSelectionParams()\n\
+    \    voice.language_code = \"language_code_value\"\n\n    audio_config = texttospeech_v1beta1.AudioConfig()\n\
+    \    audio_config.audio_encoding = \"ALAW\"\n\n    request = texttospeech_v1beta1.SynthesizeSpeechRequest(\n\
+    \        input=input,\n        voice=voice,\n        audio_config=audio_config,\n\
+    \    )\n\n    # Make the request\n    response = client.synthesize_speech(request=request)\n\
+    \n    # Handle the response\n    print(response)\n```\n"
+  syntax:
+    content: "synthesize_speech(\n    request: typing.Optional[\n        typing.Union[\n\
+      \            google.cloud.texttospeech_v1beta1.types.cloud_tts.SynthesizeSpeechRequest,\n\
+      \            dict,\n        ]\n    ] = None,\n    *,\n    input: typing.Optional[\n\
+      \        google.cloud.texttospeech_v1beta1.types.cloud_tts.SynthesisInput\n\
+      \    ] = None,\n    voice: typing.Optional[\n        google.cloud.texttospeech_v1beta1.types.cloud_tts.VoiceSelectionParams\n\
+      \    ] = None,\n    audio_config: typing.Optional[\n        google.cloud.texttospeech_v1beta1.types.cloud_tts.AudioConfig\n\
+      \    ] = None,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Optional[float] = None,\n    metadata: typing.Sequence[typing.Tuple[str,\
+      \ str]] = ()\n) -> google.cloud.texttospeech_v1beta1.types.cloud_tts.SynthesizeSpeechResponse"
+    parameters:
+    - defaultValue: None
+      description: The request object. The top-level message sent by the client for
+        the <code>SynthesizeSpeech</code> method.
+      id: request
+      var_type: Union[<xref uid="google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest">google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest</xref>,
+        dict]
+    - description: Required. The Synthesizer requires either plain text or SSML as
+        input. This corresponds to the <code>input</code> field on the <code>request</code>
+        instance; if <code>request</code> is provided, this should not be set.
+      id: input
+      var_type: <xref uid="google.cloud.texttospeech_v1beta1.types.SynthesisInput">google.cloud.texttospeech_v1beta1.types.SynthesisInput</xref>
+    - description: Required. The desired voice of the synthesized audio. This corresponds
+        to the <code>voice</code> field on the <code>request</code> instance; if <code>request</code>
+        is provided, this should not be set.
+      id: voice
+      var_type: <xref uid="google.cloud.texttospeech_v1beta1.types.VoiceSelectionParams">google.cloud.texttospeech_v1beta1.types.VoiceSelectionParams</xref>
+    - description: Required. The configuration of the synthesized audio. This corresponds
+        to the <code>audio_config</code> field on the <code>request</code> instance;
+        if <code>request</code> is provided, this should not be set.
+      id: audio_config
+      var_type: <xref uid="google.cloud.texttospeech_v1beta1.types.AudioConfig">google.cloud.texttospeech_v1beta1.types.AudioConfig</xref>
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: The message returned to the client by the SynthesizeSpeech method.
+      var_type: <xref uid="google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechResponse">google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechResponse</xref>
+  type: method
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.synthesize_speech
+- &id001
+  attributes: []
+  class: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.transport
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.services.text_to_speech
+  name: transport
+  source:
+    id: transport
+    path: null
+    startLine: null
+  summary: 'Returns the transport used by the client instance.
+
+    '
+  syntax:
+    returns:
+    - description: The transport used by the client instance.
+      var_type: TextToSpeechTransport
+  type: property
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.transport
+- *id001
+references:
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  isExternal: false
+  name: TextToSpeechClient
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.__exit__
+  isExternal: false
+  name: __exit__
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.__exit__
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_billing_account_path
+  isExternal: false
+  name: common_billing_account_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_billing_account_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_folder_path
+  isExternal: false
+  name: common_folder_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_folder_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_location_path
+  isExternal: false
+  name: common_location_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_location_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_organization_path
+  isExternal: false
+  name: common_organization_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_organization_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_project_path
+  isExternal: false
+  name: common_project_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.common_project_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_file
+  isExternal: false
+  name: from_service_account_file
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_file
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_info
+  isExternal: false
+  name: from_service_account_info
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_info
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_json
+  isExternal: false
+  name: from_service_account_json
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.from_service_account_json
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.get_mtls_endpoint_and_cert_source
+  isExternal: false
+  name: get_mtls_endpoint_and_cert_source
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.get_mtls_endpoint_and_cert_source
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.list_voices
+  isExternal: false
+  name: list_voices
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.list_voices
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.model_path
+  isExternal: false
+  name: model_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.model_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_billing_account_path
+  isExternal: false
+  name: parse_common_billing_account_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_billing_account_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_folder_path
+  isExternal: false
+  name: parse_common_folder_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_folder_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_location_path
+  isExternal: false
+  name: parse_common_location_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_location_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_organization_path
+  isExternal: false
+  name: parse_common_organization_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_organization_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_project_path
+  isExternal: false
+  name: parse_common_project_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_common_project_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_model_path
+  isExternal: false
+  name: parse_model_path
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.parse_model_path
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.synthesize_speech
+  isExternal: false
+  name: synthesize_speech
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.synthesize_speech
+- fullName: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.transport
+  isExternal: false
+  name: transport
+  parent: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient
+  uid: google.cloud.texttospeech_v1beta1.services.text_to_speech.TextToSpeechClient.transport

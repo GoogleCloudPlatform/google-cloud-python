@@ -1,0 +1,16 @@
+{
+    "api_description": "APIs to automate management of cloud infrastructure for network functions.",
+    "api_id": "telcoautomation.googleapis.com",
+    "api_shortname": "telcoautomation",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-telcoautomation/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-telcoautomation",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=190865\u0026template=1161103",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-telcoautomation",
+    "name_pretty": "Telco Automation",
+    "product_documentation": "https://cloud.google.com/telecom-network-automation",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

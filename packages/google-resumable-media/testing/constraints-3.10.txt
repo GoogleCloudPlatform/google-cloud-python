@@ -1,0 +1,11 @@
+# This constraints file is used to check that lower bounds
+# are correct in setup.py
+# List *all* library dependencies and extras in this file.
+# Pin the version to the lower bound.
+#
+# e.g., if setup.py has "foo >= 1.14.0, < 2.0.0dev",
+# Then this file should have foo==1.14.0
+crcmod==1.7
+google-crc32c==1.0
+aiohttp==3.6.2
+requests==2.23.0

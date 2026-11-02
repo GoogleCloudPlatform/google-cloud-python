@@ -1,0 +1,1662 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.pubsub_v1.publisher.client.Client
+  - google.cloud.pubsub_v1.publisher.client.Client.__exit__
+  - google.cloud.pubsub_v1.publisher.client.Client.api
+  - google.cloud.pubsub_v1.publisher.client.Client.common_billing_account_path
+  - google.cloud.pubsub_v1.publisher.client.Client.common_folder_path
+  - google.cloud.pubsub_v1.publisher.client.Client.common_location_path
+  - google.cloud.pubsub_v1.publisher.client.Client.common_organization_path
+  - google.cloud.pubsub_v1.publisher.client.Client.common_project_path
+  - google.cloud.pubsub_v1.publisher.client.Client.create_topic
+  - google.cloud.pubsub_v1.publisher.client.Client.delete_topic
+  - google.cloud.pubsub_v1.publisher.client.Client.detach_subscription
+  - google.cloud.pubsub_v1.publisher.client.Client.ensure_cleanup_and_commit_timer_runs
+  - google.cloud.pubsub_v1.publisher.client.Client.from_service_account_file
+  - google.cloud.pubsub_v1.publisher.client.Client.from_service_account_info
+  - google.cloud.pubsub_v1.publisher.client.Client.from_service_account_json
+  - google.cloud.pubsub_v1.publisher.client.Client.get_iam_policy
+  - google.cloud.pubsub_v1.publisher.client.Client.get_mtls_endpoint_and_cert_source
+  - google.cloud.pubsub_v1.publisher.client.Client.get_topic
+  - google.cloud.pubsub_v1.publisher.client.Client.list_topic_snapshots
+  - google.cloud.pubsub_v1.publisher.client.Client.list_topic_subscriptions
+  - google.cloud.pubsub_v1.publisher.client.Client.list_topics
+  - google.cloud.pubsub_v1.publisher.client.Client.parse_common_billing_account_path
+  - google.cloud.pubsub_v1.publisher.client.Client.parse_common_folder_path
+  - google.cloud.pubsub_v1.publisher.client.Client.parse_common_location_path
+  - google.cloud.pubsub_v1.publisher.client.Client.parse_common_organization_path
+  - google.cloud.pubsub_v1.publisher.client.Client.parse_common_project_path
+  - google.cloud.pubsub_v1.publisher.client.Client.parse_schema_path
+  - google.cloud.pubsub_v1.publisher.client.Client.parse_subscription_path
+  - google.cloud.pubsub_v1.publisher.client.Client.parse_topic_path
+  - google.cloud.pubsub_v1.publisher.client.Client.publish
+  - google.cloud.pubsub_v1.publisher.client.Client.resume_publish
+  - google.cloud.pubsub_v1.publisher.client.Client.schema_path
+  - google.cloud.pubsub_v1.publisher.client.Client.set_iam_policy
+  - google.cloud.pubsub_v1.publisher.client.Client.stop
+  - google.cloud.pubsub_v1.publisher.client.Client.subscription_path
+  - google.cloud.pubsub_v1.publisher.client.Client.target
+  - google.cloud.pubsub_v1.publisher.client.Client.test_iam_permissions
+  - google.cloud.pubsub_v1.publisher.client.Client.topic_path
+  - google.cloud.pubsub_v1.publisher.client.Client.transport
+  - google.cloud.pubsub_v1.publisher.client.Client.update_topic
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: Client
+  source:
+    id: Client
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/publisher/client.py
+    startLine: 65
+  summary: 'A publisher client for Google Cloud Pub/Sub.
+
+
+    This creates an object that is capable of publishing messages.
+
+    Generally, you can instantiate this client with no arguments, and you
+
+    get sensible defaults.
+
+    '
+  syntax:
+    content: "Client(\n    batch_settings: typing.Union[\n        google.cloud.pubsub_v1.types.BatchSettings,\
+      \ typing.Sequence\n    ] = (),\n    publisher_options: typing.Union[\n     \
+      \   google.cloud.pubsub_v1.types.PublisherOptions, typing.Sequence\n    ] =\
+      \ (),\n    **kwargs: typing.Any\n)"
+    parameters:
+    - description: The settings for batch publishing.
+      id: batch_settings
+      var_type: typing.Union[<xref uid="google.cloud.pubsub_v1.types.BatchSettings">google.cloud.pubsub_v1.types.BatchSettings</xref>,
+        typing.Sequence]
+    - defaultValue: ()
+      description: The options for the publisher client. Note that enabling message
+        ordering will override the publish retry timeout to be infinite.
+      id: publisher_options
+      var_type: typing.Union[<xref uid="google.cloud.pubsub_v1.types.PublisherOptions">google.cloud.pubsub_v1.types.PublisherOptions</xref>,
+        typing.Sequence]
+  type: class
+  uid: google.cloud.pubsub_v1.publisher.client.Client
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: Client
+  source:
+    id: Client
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/publisher/client.py
+    startLine: 65
+  summary: 'Instantiates the publisher client.
+
+    '
+  syntax:
+    content: "Client(\n    batch_settings: typing.Union[\n        google.cloud.pubsub_v1.types.BatchSettings,\
+      \ typing.Sequence\n    ] = (),\n    publisher_options: typing.Union[\n     \
+      \   google.cloud.pubsub_v1.types.PublisherOptions, typing.Sequence\n    ] =\
+      \ (),\n    **kwargs: typing.Any\n)"
+    exceptions:
+    - description: If mutual TLS transport creation failed for any reason.
+      var_type: google.auth.exceptions.MutualTLSChannelError
+    parameters:
+    - description: The authorization credentials to attach to requests. These credentials
+        identify the application to the service; if none are specified, the client
+        will attempt to ascertain the credentials from the environment.
+      id: credentials
+      var_type: Optional[google.auth.credentials.Credentials]
+    - description: The transport to use. If set to None, a transport is chosen automatically.
+      id: transport
+      var_type: Union[str, PublisherTransport]
+    - description: 'Custom options for the client. It won''t take effect if a <code>transport</code>
+        instance is provided. (1) The <code>api_endpoint</code> property can be used
+        to override the default endpoint provided by the client. GOOGLE_API_USE_MTLS_ENDPOINT
+        environment variable can also be used to override the endpoint: "always" (always
+        use the default mTLS endpoint), "never" (always use the default regular endpoint)
+        and "auto" (auto switch to the default mTLS endpoint if client certificate
+        is present, this is the default value). However, the <code>api_endpoint</code>
+        property takes precedence if provided. (2) If GOOGLE_API_USE_CLIENT_CERTIFICATE
+        environment variable is "true", then the <code>client_cert_source</code> property
+        can be used to provide client certificate for mutual TLS transport. If not
+        provided, the default SSL client certificate will be used if present. If GOOGLE_API_USE_CLIENT_CERTIFICATE
+        is "false" or not set, no client certificate will be used.'
+      id: client_options
+      var_type: google.api_core.client_options.ClientOptions
+    - description: The client info used to send a user-agent string along with API
+        requests. If <code>None</code>, then default info will be used. Generally,
+        you only need to set this if you're developing your own client library.
+      id: client_info
+      var_type: google.api_core.gapic_v1.client_info.ClientInfo
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.__exit__
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: __exit__
+  source:
+    id: __exit__
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 1430
+  summary: 'Releases underlying transport''s resources.
+
+
+    <aside class="warning">
+
+    <b>Warning:</b>
+
+    ONLY use as a context manager if the transport is NOT shared
+
+    with other clients! Exiting the with block will CLOSE the transport
+
+    and may cause errors in other clients!
+
+    </aside>'
+  syntax:
+    content: __exit__(type, value, traceback)
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.__exit__
+- &id001
+  attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.api
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: api
+  source:
+    id: api
+    path: null
+    startLine: null
+  summary: "The underlying gapic API client.\n\n.. versionchanged:: 2.10.0\n    Instead\
+    \ of a GAPIC `PublisherClient` client instance, this property is a\n    proxy\
+    \ object to it with the same interface.\n\n<aside class=\"deprecated\">\n<b>deprecated:</b>\n\
+    Use the GAPIC methods and properties on the client instance directly\ninstead\
+    \ of through the `api` attribute.\n</aside>"
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.publisher.client.Client.api
+- *id001
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.common_billing_account_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: common_billing_account_path
+  source:
+    id: common_billing_account_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 236
+  summary: 'Returns a fully-qualified billing_account string.
+
+
+    '
+  syntax:
+    content: 'common_billing_account_path(billing_account: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.common_billing_account_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.common_folder_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: common_folder_path
+  source:
+    id: common_folder_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 251
+  summary: 'Returns a fully-qualified folder string.
+
+
+    '
+  syntax:
+    content: 'common_folder_path(folder: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.common_folder_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.common_location_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: common_location_path
+  source:
+    id: common_location_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 296
+  summary: 'Returns a fully-qualified location string.
+
+
+    '
+  syntax:
+    content: 'common_location_path(project: str, location: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.common_location_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.common_organization_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: common_organization_path
+  source:
+    id: common_organization_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 266
+  summary: 'Returns a fully-qualified organization string.
+
+
+    '
+  syntax:
+    content: 'common_organization_path(organization: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.common_organization_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.common_project_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: common_project_path
+  source:
+    id: common_project_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 281
+  summary: 'Returns a fully-qualified project string.
+
+
+    '
+  syntax:
+    content: 'common_project_path(project: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.common_project_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.create_topic
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: create_topic
+  source:
+    id: create_topic
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 488
+  summary: "Creates the given topic with the given name. See the [resource\nname rules]\n\
+    (https://cloud.google.com/pubsub/docs/admin#resource_names).\n\n```python\n# This\
+    \ snippet has been automatically generated and should be regarded as a\n# code\
+    \ template only.\n# It will require modifications to work:\n# - It may require\
+    \ correct/in-range values for request initialization.\n# - It may require specifying\
+    \ regional endpoints when creating the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_create_topic():\n    # Create a client\n\
+    \    client = pubsub_v1.PublisherClient()\n\n    # Initialize request argument(s)\n\
+    \    request = pubsub_v1.Topic(\n        name=\"name_value\",\n    )\n\n    #\
+    \ Make the request\n    response = client.create_topic(request=request)\n\n  \
+    \  # Handle the response\n    print(response)\n```\n"
+  syntax:
+    content: "create_topic(\n    request: typing.Union[google.cloud.pubsub_v1.types.Topic,\
+      \ dict] = None,\n    *,\n    name: str = None,\n    retry: typing.Union[\n \
+      \       google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Union[\n      \
+      \  int,\n        float,\n        google.api_core.timeout.ConstantTimeout,\n\
+      \        google.api_core.timeout.ExponentialTimeout,\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) -> google.cloud.pubsub_v1.types.Topic"
+    parameters:
+    - defaultValue: None
+      description: The request object. A topic resource.
+      id: request
+      var_type: Union[google.pubsub_v1.types.Topic, dict]
+    - description: Required. The name of the topic. It must have the format <code>"projects/{project}/topics/{topic}"</code>.
+        <code>{topic}</code> must start with a letter, and contain only letters (<code>[A-Za-z]</code>),
+        numbers (<code>[0-9]</code>), dashes (<code>-</code>), underscores (`<code>_</code><code>),
+        periods (</code><code>.</code><code>), tildes (<pre></pre>), plus (</code>+<code>)
+        or percent signs (</code>%<code>). It must be between 3 and 255 characters
+        in length, and it must not start with </code>"goog"<code>. This corresponds
+        to the </code>name<code> field on the </code>request<code> instance; if </code>request`
+        is provided, this should not be set.
+      id: name
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: TimeoutType
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: A topic resource.
+      var_type: google.pubsub_v1.types.Topic
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.create_topic
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.delete_topic
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: delete_topic
+  source:
+    id: delete_topic
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 1243
+  summary: "Deletes the topic with the given name. Returns `NOT_FOUND` if\nthe topic\
+    \ does not exist. After a topic is deleted, a new topic\nmay be created with the\
+    \ same name; this is an entirely new topic\nwith none of the old configuration\
+    \ or subscriptions. Existing\nsubscriptions to this topic are not deleted, but\
+    \ their `topic`\nfield is set to `_deleted-topic_`.\n\n```python\n# This snippet\
+    \ has been automatically generated and should be regarded as a\n# code template\
+    \ only.\n# It will require modifications to work:\n# - It may require correct/in-range\
+    \ values for request initialization.\n# - It may require specifying regional endpoints\
+    \ when creating the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_delete_topic():\n    # Create a client\n\
+    \    client = pubsub_v1.PublisherClient()\n\n    # Initialize request argument(s)\n\
+    \    request = pubsub_v1.DeleteTopicRequest(\n        topic=\"topic_value\",\n\
+    \    )\n\n    # Make the request\n    client.delete_topic(request=request)\n```\n"
+  syntax:
+    content: "delete_topic(\n    request: typing.Union[google.cloud.pubsub_v1.types.DeleteTopicRequest,\
+      \ dict] = None,\n    *,\n    topic: str = None,\n    retry: typing.Union[\n\
+      \        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Union[\n      \
+      \  int,\n        float,\n        google.api_core.timeout.ConstantTimeout,\n\
+      \        google.api_core.timeout.ExponentialTimeout,\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) -> None"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the <code>DeleteTopic</code> method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.DeleteTopicRequest, dict]
+    - description: Required. Name of the topic to delete. Format is <code>projects/{project}/topics/{topic}</code>.
+        This corresponds to the <code>topic</code> field on the <code>request</code>
+        instance; if <code>request</code> is provided, this should not be set.
+      id: topic
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: TimeoutType
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.delete_topic
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.detach_subscription
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: detach_subscription
+  source:
+    id: detach_subscription
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 1339
+  summary: "Detaches a subscription from this topic. All messages retained\nin the\
+    \ subscription are dropped. Subsequent `Pull` and\n`StreamingPull` requests will\
+    \ return FAILED_PRECONDITION. If\nthe subscription is a push subscription, pushes\
+    \ to the endpoint\nwill stop.\n\n```python\n# This snippet has been automatically\
+    \ generated and should be regarded as a\n# code template only.\n# It will require\
+    \ modifications to work:\n# - It may require correct/in-range values for request\
+    \ initialization.\n# - It may require specifying regional endpoints when creating\
+    \ the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_detach_subscription():\n    # Create\
+    \ a client\n    client = pubsub_v1.PublisherClient()\n\n    # Initialize request\
+    \ argument(s)\n    request = pubsub_v1.DetachSubscriptionRequest(\n        subscription=\"\
+    subscription_value\",\n    )\n\n    # Make the request\n    response = client.detach_subscription(request=request)\n\
+    \n    # Handle the response\n    print(response)\n```\n"
+  syntax:
+    content: "detach_subscription(\n    request: typing.Union[\n        google.cloud.pubsub_v1.types.DetachSubscriptionRequest,\
+      \ dict\n    ] = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Union[\n        int,\n        float,\n        google.api_core.timeout.ConstantTimeout,\n\
+      \        google.api_core.timeout.ExponentialTimeout,\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) -> google.cloud.pubsub_v1.types.DetachSubscriptionResponse"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the DetachSubscription method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.DetachSubscriptionRequest, dict]
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: TimeoutType
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: Response for the DetachSubscription method. Reserved for future
+        use.
+      var_type: google.pubsub_v1.types.DetachSubscriptionResponse
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.detach_subscription
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.ensure_cleanup_and_commit_timer_runs
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: ensure_cleanup_and_commit_timer_runs
+  source:
+    id: ensure_cleanup_and_commit_timer_runs
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/publisher/client.py
+    startLine: 421
+  summary: 'Ensure a cleanup/commit timer thread is running.
+
+
+    If a cleanup/commit timer thread is already running, this does nothing.
+
+
+    '
+  syntax:
+    content: ensure_cleanup_and_commit_timer_runs() -> None
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.ensure_cleanup_and_commit_timer_runs
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_file
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: from_service_account_file
+  source:
+    id: from_service_account_file
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/publisher/client.py
+    startLine: 161
+  summary: 'Creates an instance of this client using the provided credentials
+
+    file.
+
+    '
+  syntax:
+    content: "from_service_account_file(\n    filename: str,\n    batch_settings:\
+      \ typing.Union[\n        google.cloud.pubsub_v1.types.BatchSettings, typing.Sequence\n\
+      \    ] = (),\n    **kwargs: typing.Any\n) -> google.cloud.pubsub_v1.publisher.client.Client"
+    parameters:
+    - description: The path to the service account private key JSON file.
+      id: filename
+      var_type: str
+    - description: The settings for batch publishing.
+      id: batch_settings
+      var_type: typing.Union[<xref uid="google.cloud.pubsub_v1.types.BatchSettings">google.cloud.pubsub_v1.types.BatchSettings</xref>,
+        typing.Sequence]
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_file
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_info
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: from_service_account_info
+  source:
+    id: from_service_account_info
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 136
+  summary: "Creates an instance of this client using the provided credentials\n  \
+    \  info.\n"
+  syntax:
+    content: 'from_service_account_info(info: dict, *args, **kwargs)'
+    parameters:
+    - description: The service account private key info.
+      id: info
+      var_type: dict
+    returns:
+    - description: The constructed client.
+      var_type: PublisherClient
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_info
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_json
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: from_service_account_json
+  source:
+    id: from_service_account_json
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/publisher/client.py
+    startLine: 161
+  summary: 'Creates an instance of this client using the provided credentials
+
+    file.
+
+    '
+  syntax:
+    content: "from_service_account_json(\n    filename: str,\n    batch_settings:\
+      \ typing.Union[\n        google.cloud.pubsub_v1.types.BatchSettings, typing.Sequence\n\
+      \    ] = (),\n    **kwargs: typing.Any\n) -> google.cloud.pubsub_v1.publisher.client.Client"
+    parameters:
+    - description: The path to the service account private key JSON file.
+      id: filename
+      var_type: str
+    - description: The settings for batch publishing.
+      id: batch_settings
+      var_type: typing.Union[<xref uid="google.cloud.pubsub_v1.types.BatchSettings">google.cloud.pubsub_v1.types.BatchSettings</xref>,
+        typing.Sequence]
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_json
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.get_iam_policy
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: get_iam_policy
+  source:
+    id: get_iam_policy
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 1561
+  summary: 'Gets the IAM access control policy for a function.
+
+
+    Returns an empty policy if the function exists and does not have a
+
+    policy set.
+
+    '
+  syntax:
+    content: "get_iam_policy(\n    request: google.iam.v1.iam_policy_pb2.GetIamPolicyRequest\
+      \ = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Union[\n        int,\n        float,\n        google.api_core.timeout.ConstantTimeout,\n\
+      \        google.api_core.timeout.ExponentialTimeout,\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) -> google.iam.v1.policy_pb2.Policy"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request message for <code>GetIamPolicy</code>
+        method.
+      id: request
+      var_type: <code>.iam_policy_pb2.GetIamPolicyRequest</code>
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: TimeoutType
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: 'Defines an Identity and Access Management (IAM) policy. It is
+        used to specify access control policies for Cloud Platform resources. A <code>Policy</code>
+        is a collection of <code>bindings</code>. A <code>binding</code> binds one
+        or more <code>members</code> to a single <code>role</code>. Members can be
+        user accounts, service accounts, Google groups, and domains (such as G Suite).
+        A <code>role</code> is a named list of permissions (defined by IAM or configured
+        by users). A <code>binding</code> can optionally specify a <code>condition</code>,
+        which is a logic expression that further constrains the role binding based
+        on attributes about the request and/or target resource. **JSON Example** ::
+        { "bindings": [ { "role": "roles/resourcemanager.organizationAdmin", "members":
+        [ "user:mike@example.com", "group:admins@example.com", "domain:google.com",
+        "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, { "role":
+        "roles/resourcemanager.organizationViewer", "members": ["user:eve@example.com"],
+        "condition": { "title": "expirable access", "description": "Does not grant
+        access after Sep 2020", "expression": "request.time < timestamp(''2020-10-01T00:00:00.000Z'')",
+        } } ] } **YAML Example** :: bindings: - members: - user:mike@example.com -
+        group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com
+        role: roles/resourcemanager.organizationViewer condition: title: expirable
+        access description: Does not grant access after Sep 2020 expression: request.time
+        < timestamp(''2020-10-01T00:00:00.000Z'') For a description of IAM and its
+        features, see the <code>IAM developer''s guide <https://cloud.google.com/iam/docs></code>__.'
+      var_type: <code>.policy_pb2.Policy</code>
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.get_iam_policy
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.get_mtls_endpoint_and_cert_source
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: get_mtls_endpoint_and_cert_source
+  source:
+    id: get_mtls_endpoint_and_cert_source
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 313
+  summary: 'Return the API endpoint and client cert source for mutual TLS.
+
+
+    The client cert source is determined in the following order:
+
+    (1) if `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not "true",
+    the
+
+    client cert source is None.
+
+    (2) if `client_options.client_cert_source` is provided, use the provided one;
+    if the
+
+    default client cert source exists, use the default one; otherwise the client cert
+
+    source is None.
+
+
+    The API endpoint is determined in the following order:
+
+    (1) if `client_options.api_endpoint` if provided, use the provided one.
+
+    (2) if `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is "always", use
+    the
+
+    default mTLS endpoint; if the environment variabel is "never", use the default
+    API
+
+    endpoint; otherwise if client cert source exists, use the default mTLS endpoint,
+    otherwise
+
+    use the default API endpoint.
+
+
+    More details can be found at https://google.aip.dev/auth/4114.
+
+    '
+  syntax:
+    content: "get_mtls_endpoint_and_cert_source(\n    client_options: typing.Optional[\n\
+      \        google.api_core.client_options.ClientOptions\n    ] = None,\n)"
+    exceptions:
+    - description: If any errors happen.
+      var_type: google.auth.exceptions.MutualTLSChannelError
+    parameters:
+    - defaultValue: None
+      description: Custom options for the client. Only the <code>api_endpoint</code>
+        and <code>client_cert_source</code> properties may be used in this method.
+      id: client_options
+      var_type: google.api_core.client_options.ClientOptions
+    returns:
+    - description: returns the API endpoint and the client cert source to use.
+      var_type: Tuple[str, Callable[[], Tuple[bytes, bytes]]]
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.get_mtls_endpoint_and_cert_source
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.get_topic
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: get_topic
+  source:
+    id: get_topic
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 791
+  summary: "Gets the configuration of a topic.\n\n```python\n# This snippet has been\
+    \ automatically generated and should be regarded as a\n# code template only.\n\
+    # It will require modifications to work:\n# - It may require correct/in-range\
+    \ values for request initialization.\n# - It may require specifying regional endpoints\
+    \ when creating the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_get_topic():\n    # Create a client\n\
+    \    client = pubsub_v1.PublisherClient()\n\n    # Initialize request argument(s)\n\
+    \    request = pubsub_v1.GetTopicRequest(\n        topic=\"topic_value\",\n  \
+    \  )\n\n    # Make the request\n    response = client.get_topic(request=request)\n\
+    \n    # Handle the response\n    print(response)\n```\n"
+  syntax:
+    content: "get_topic(\n    request: typing.Union[google.cloud.pubsub_v1.types.GetTopicRequest,\
+      \ dict] = None,\n    *,\n    topic: str = None,\n    retry: typing.Union[\n\
+      \        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Union[\n      \
+      \  int,\n        float,\n        google.api_core.timeout.ConstantTimeout,\n\
+      \        google.api_core.timeout.ExponentialTimeout,\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) -> google.cloud.pubsub_v1.types.Topic"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the GetTopic method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.GetTopicRequest, dict]
+    - description: Required. The name of the topic to get. Format is <code>projects/{project}/topics/{topic}</code>.
+        This corresponds to the <code>topic</code> field on the <code>request</code>
+        instance; if <code>request</code> is provided, this should not be set.
+      id: topic
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: TimeoutType
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: A topic resource.
+      var_type: google.pubsub_v1.types.Topic
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.get_topic
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.list_topic_snapshots
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: list_topic_snapshots
+  source:
+    id: list_topic_snapshots
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 1122
+  summary: "Lists the names of the snapshots on this topic. Snapshots are\nused in\n\
+    `Seek <https://cloud.google.com/pubsub/docs/replay-overview>`__\noperations, which\
+    \ allow you to manage message acknowledgments in\nbulk. That is, you can set the\
+    \ acknowledgment state of messages\nin an existing subscription to the state captured\
+    \ by a snapshot.\n\n```python\n# This snippet has been automatically generated\
+    \ and should be regarded as a\n# code template only.\n# It will require modifications\
+    \ to work:\n# - It may require correct/in-range values for request initialization.\n\
+    # - It may require specifying regional endpoints when creating the service\n#\
+    \   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_list_topic_snapshots():\n    # Create\
+    \ a client\n    client = pubsub_v1.PublisherClient()\n\n    # Initialize request\
+    \ argument(s)\n    request = pubsub_v1.ListTopicSnapshotsRequest(\n        topic=\"\
+    topic_value\",\n    )\n\n    # Make the request\n    page_result = client.list_topic_snapshots(request=request)\n\
+    \n    # Handle the response\n    for response in page_result:\n        print(response)\n\
+    ```\n"
+  syntax:
+    content: "list_topic_snapshots(\n    request: typing.Union[\n        google.cloud.pubsub_v1.types.ListTopicSnapshotsRequest,\
+      \ dict\n    ] = None,\n    *,\n    topic: str = None,\n    retry: typing.Union[\n\
+      \        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Union[\n      \
+      \  int,\n        float,\n        google.api_core.timeout.ConstantTimeout,\n\
+      \        google.api_core.timeout.ExponentialTimeout,\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) -> google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsPager"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the <code>ListTopicSnapshots</code>
+        method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.ListTopicSnapshotsRequest, dict]
+    - description: Required. The name of the topic that snapshots are attached to.
+        Format is <code>projects/{project}/topics/{topic}</code>. This corresponds
+        to the <code>topic</code> field on the <code>request</code> instance; if <code>request</code>
+        is provided, this should not be set.
+      id: topic
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: TimeoutType
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: Response for the ListTopicSnapshots method. Iterating over this
+        object will yield results and resolve additional pages automatically.
+      var_type: <xref uid="google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsPager">google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsPager</xref>
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.list_topic_snapshots
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.list_topic_subscriptions
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: list_topic_subscriptions
+  source:
+    id: list_topic_subscriptions
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 1005
+  summary: "Lists the names of the attached subscriptions on this\ntopic.\n\n```python\n\
+    # This snippet has been automatically generated and should be regarded as a\n\
+    # code template only.\n# It will require modifications to work:\n# - It may require\
+    \ correct/in-range values for request initialization.\n# - It may require specifying\
+    \ regional endpoints when creating the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_list_topic_subscriptions():\n    #\
+    \ Create a client\n    client = pubsub_v1.PublisherClient()\n\n    # Initialize\
+    \ request argument(s)\n    request = pubsub_v1.ListTopicSubscriptionsRequest(\n\
+    \        topic=\"topic_value\",\n    )\n\n    # Make the request\n    page_result\
+    \ = client.list_topic_subscriptions(request=request)\n\n    # Handle the response\n\
+    \    for response in page_result:\n        print(response)\n```\n"
+  syntax:
+    content: "list_topic_subscriptions(\n    request: typing.Union[\n        google.cloud.pubsub_v1.types.ListTopicSubscriptionsRequest,\
+      \ dict\n    ] = None,\n    *,\n    topic: str = None,\n    retry: typing.Union[\n\
+      \        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Union[\n      \
+      \  int,\n        float,\n        google.api_core.timeout.ConstantTimeout,\n\
+      \        google.api_core.timeout.ExponentialTimeout,\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) -> google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the <code>ListTopicSubscriptions</code>
+        method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.ListTopicSubscriptionsRequest, dict]
+    - description: Required. The name of the topic that subscriptions are attached
+        to. Format is <code>projects/{project}/topics/{topic}</code>. This corresponds
+        to the <code>topic</code> field on the <code>request</code> instance; if <code>request</code>
+        is provided, this should not be set.
+      id: topic
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: TimeoutType
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: Response for the ListTopicSubscriptions method. Iterating over
+        this object will yield results and resolve additional pages automatically.
+      var_type: <xref uid="google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager">google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager</xref>
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.list_topic_subscriptions
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.list_topics
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: list_topics
+  source:
+    id: list_topics
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 891
+  summary: "Lists matching topics.\n\n```python\n# This snippet has been automatically\
+    \ generated and should be regarded as a\n# code template only.\n# It will require\
+    \ modifications to work:\n# - It may require correct/in-range values for request\
+    \ initialization.\n# - It may require specifying regional endpoints when creating\
+    \ the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_list_topics():\n    # Create a client\n\
+    \    client = pubsub_v1.PublisherClient()\n\n    # Initialize request argument(s)\n\
+    \    request = pubsub_v1.ListTopicsRequest(\n        project=\"project_value\"\
+    ,\n    )\n\n    # Make the request\n    page_result = client.list_topics(request=request)\n\
+    \n    # Handle the response\n    for response in page_result:\n        print(response)\n\
+    ```\n"
+  syntax:
+    content: "list_topics(\n    request: typing.Union[google.cloud.pubsub_v1.types.ListTopicsRequest,\
+      \ dict] = None,\n    *,\n    project: str = None,\n    retry: typing.Union[\n\
+      \        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Union[\n      \
+      \  int,\n        float,\n        google.api_core.timeout.ConstantTimeout,\n\
+      \        google.api_core.timeout.ExponentialTimeout,\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) -> google.pubsub_v1.services.publisher.pagers.ListTopicsPager"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the <code>ListTopics</code> method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.ListTopicsRequest, dict]
+    - description: Required. The name of the project in which to list topics. Format
+        is <code>projects/{project-id}</code>. This corresponds to the <code>project</code>
+        field on the <code>request</code> instance; if <code>request</code> is provided,
+        this should not be set.
+      id: project
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: TimeoutType
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: Response for the ListTopics method. Iterating over this object
+        will yield results and resolve additional pages automatically.
+      var_type: <xref uid="google.pubsub_v1.services.publisher.pagers.ListTopicsPager">google.pubsub_v1.services.publisher.pagers.ListTopicsPager</xref>
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.list_topics
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_common_billing_account_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: parse_common_billing_account_path
+  source:
+    id: parse_common_billing_account_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 245
+  summary: 'Parse a billing_account path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_billing_account_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_common_billing_account_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_common_folder_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: parse_common_folder_path
+  source:
+    id: parse_common_folder_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 260
+  summary: 'Parse a folder path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_folder_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_common_folder_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_common_location_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: parse_common_location_path
+  source:
+    id: parse_common_location_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 307
+  summary: 'Parse a location path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_location_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_common_location_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_common_organization_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: parse_common_organization_path
+  source:
+    id: parse_common_organization_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 275
+  summary: 'Parse a organization path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_organization_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_common_organization_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_common_project_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: parse_common_project_path
+  source:
+    id: parse_common_project_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 290
+  summary: 'Parse a project path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_project_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_common_project_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_schema_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: parse_schema_path
+  source:
+    id: parse_schema_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 194
+  summary: 'Parses a schema path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_schema_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_schema_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_subscription_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: parse_subscription_path
+  source:
+    id: parse_subscription_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 211
+  summary: 'Parses a subscription path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_subscription_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_subscription_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_topic_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: parse_topic_path
+  source:
+    id: parse_topic_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 230
+  summary: 'Parses a topic path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_topic_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_topic_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.publish
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: publish
+  source:
+    id: publish
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/publisher/client.py
+    startLine: 274
+  summary: "Publish a single message.\n\n<aside class=\"note\">\n<b>Note:</b>\nMessages\
+    \ in Pub/Sub are blobs of bytes. They are *binary* data,\nnot text. You must send\
+    \ data as a bytestring\n(`bytes` in Python 3; `str` in Python 2), and this library\n\
+    will raise an exception if you send a text string.\n</aside>\n    The reason that\
+    \ this is so important (and why we do not try to\n    coerce for you) is because\
+    \ Pub/Sub is also platform independent\n    and there is no way to know how to\
+    \ decode messages properly on\n    the other side; therefore, encoding and decoding\
+    \ is a required\n    exercise for the developer.\n\nAdd the given message to this\
+    \ object; this will cause it to be\npublished once the batch either has enough\
+    \ messages or a sufficient\nperiod of time has elapsed.\nThis method may block\
+    \ if LimitExceededBehavior.BLOCK is used in the\nflow control settings.\n\n..\
+    \ rubric:: Example\n\n>>> from google.cloud import pubsub_v1\n>>> client = pubsub_v1.PublisherClient()\n\
+    >>> topic = client.topic_path('[PROJECT]', '[TOPIC]')\n>>> data = b'The rain in\
+    \ Wales falls mainly on the snails.'\n>>> response = client.publish(topic, data,\
+    \ username='guido')\n"
+  syntax:
+    content: "publish(\n    topic: str,\n    data: bytes,\n    ordering_key: str =\
+      \ \"\",\n    retry: OptionalRetry = _MethodDefault._DEFAULT_VALUE,\n    timeout:\
+      \ types.OptionalTimeout = _MethodDefault._DEFAULT_VALUE,\n    **attrs: typing.Union[bytes,\
+      \ str]\n) -> pubsub_v1.publisher.futures.Future"
+    exceptions:
+    - description: If called after publisher has been stopped by a <code>stop()</code>
+        method call.
+      var_type: RuntimeError
+    - description: If publishing the <code>message</code> would exceed the max size
+        limit on the backend.
+      var_type: pubsub_v1.publisher.exceptions.MessageTooLargeError
+    parameters:
+    - description: The topic to publish messages to.
+      id: topic
+      var_type: str
+    - defaultValue: ''
+      description: A bytestring representing the message body. This must be a bytestring.
+      id: data
+      var_type: bytes
+    - defaultValue: _MethodDefault._DEFAULT_VALUE
+      description: A string that identifies related messages for which publish order
+        should be respected. Message ordering must be enabled for this client to use
+        this feature.
+      id: ordering_key
+      var_type: str
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.publish
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.resume_publish
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: resume_publish
+  source:
+    id: resume_publish
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/publisher/client.py
+    startLine: 234
+  summary: 'Resume publish on an ordering key that has had unrecoverable errors.
+
+    '
+  syntax:
+    content: 'resume_publish(topic: str, ordering_key: str) -> None'
+    exceptions:
+    - description: If called after publisher has been stopped by a <code>stop()</code>
+        method call.
+      var_type: RuntimeError
+    - description: If the topic/ordering key combination has not been seen before
+        by this client.
+      var_type: ValueError
+    parameters:
+    - description: The topic to publish messages to.
+      id: topic
+      var_type: str
+    - description: A string that identifies related messages for which publish order
+        should be respected.
+      id: ordering_key
+      var_type: str
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.resume_publish
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.schema_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: schema_path
+  source:
+    id: schema_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 183
+  summary: 'Returns a fully-qualified schema string.
+
+
+    '
+  syntax:
+    content: 'schema_path(project: str, schema: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.schema_path
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.set_iam_policy
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: set_iam_policy
+  source:
+    id: set_iam_policy
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 1440
+  summary: 'Sets the IAM access control policy on the specified function.
+
+
+    Replaces any existing policy.
+
+    '
+  syntax:
+    content: "set_iam_policy(\n    request: google.iam.v1.iam_policy_pb2.SetIamPolicyRequest\
+      \ = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Union[\n        int,\n        float,\n        google.api_core.timeout.ConstantTimeout,\n\
+      \        google.api_core.timeout.ExponentialTimeout,\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) -> google.iam.v1.policy_pb2.Policy"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request message for <code>SetIamPolicy</code>
+        method.
+      id: request
+      var_type: <code>.iam_policy_pb2.SetIamPolicyRequest</code>
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: TimeoutType
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: 'Defines an Identity and Access Management (IAM) policy. It is
+        used to specify access control policies for Cloud Platform resources. A <code>Policy</code>
+        is a collection of <code>bindings</code>. A <code>binding</code> binds one
+        or more <code>members</code> to a single <code>role</code>. Members can be
+        user accounts, service accounts, Google groups, and domains (such as G Suite).
+        A <code>role</code> is a named list of permissions (defined by IAM or configured
+        by users). A <code>binding</code> can optionally specify a <code>condition</code>,
+        which is a logic expression that further constrains the role binding based
+        on attributes about the request and/or target resource. **JSON Example** ::
+        { "bindings": [ { "role": "roles/resourcemanager.organizationAdmin", "members":
+        [ "user:mike@example.com", "group:admins@example.com", "domain:google.com",
+        "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, { "role":
+        "roles/resourcemanager.organizationViewer", "members": ["user:eve@example.com"],
+        "condition": { "title": "expirable access", "description": "Does not grant
+        access after Sep 2020", "expression": "request.time < timestamp(''2020-10-01T00:00:00.000Z'')",
+        } } ] } **YAML Example** :: bindings: - members: - user:mike@example.com -
+        group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com
+        role: roles/resourcemanager.organizationViewer condition: title: expirable
+        access description: Does not grant access after Sep 2020 expression: request.time
+        < timestamp(''2020-10-01T00:00:00.000Z'') For a description of IAM and its
+        features, see the <code>IAM developer''s guide <https://cloud.google.com/iam/docs></code>__.'
+      var_type: <code>.policy_pb2.Policy</code>
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.set_iam_policy
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.stop
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: stop
+  source:
+    id: stop
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/publisher/client.py
+    startLine: 475
+  summary: 'Immediately publish all outstanding messages.
+
+
+    Asynchronously sends all outstanding messages and
+
+    prevents future calls to `publish()`. Method should
+
+    be invoked prior to deleting this `Client()` object
+
+    in order to ensure that no pending messages are lost.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    This method is non-blocking. Use `Future()` objects
+
+    returned by `publish()` to make sure all publish
+
+    requests completed, either in success or error.
+
+    </aside>'
+  syntax:
+    content: stop() -> None
+    exceptions:
+    - description: If called after publisher has been stopped by a <code>stop()</code>
+        method call.
+      var_type: RuntimeError
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.stop
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.subscription_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: subscription_path
+  source:
+    id: subscription_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 200
+  summary: 'Returns a fully-qualified subscription string.
+
+
+    '
+  syntax:
+    content: 'subscription_path(project: str, subscription: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.subscription_path
+- &id002
+  attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.target
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: target
+  source:
+    id: target
+    path: null
+    startLine: null
+  summary: 'Return the target (where the API is).
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.publisher.client.Client.target
+- *id002
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.test_iam_permissions
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: test_iam_permissions
+  source:
+    id: test_iam_permissions
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 1683
+  summary: "Tests the specified IAM permissions against the IAM access control\n \
+    \   policy for a function.\n\nIf the function does not exist, this will return\
+    \ an empty set\nof permissions, not a NOT_FOUND error.\n"
+  syntax:
+    content: "test_iam_permissions(\n    request: google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest\
+      \ = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Union[\n        int,\n        float,\n        google.api_core.timeout.ConstantTimeout,\n\
+      \        google.api_core.timeout.ExponentialTimeout,\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) -> google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request message for <code>TestIamPermissions</code>
+        method.
+      id: request
+      var_type: <code>.iam_policy_pb2.TestIamPermissionsRequest</code>
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: TimeoutType
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: Response message for <code>TestIamPermissions</code> method.
+      var_type: <code>.iam_policy_pb2.TestIamPermissionsResponse</code>
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.test_iam_permissions
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.topic_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: topic_path
+  source:
+    id: topic_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 219
+  summary: 'Returns a fully-qualified topic string.
+
+
+    '
+  syntax:
+    content: 'topic_path(project: str, topic: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.topic_path
+- &id003
+  attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.transport
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: transport
+  source:
+    id: transport
+    path: null
+    startLine: null
+  summary: 'Returns the transport used by the client instance.
+
+    '
+  syntax:
+    returns:
+    - description: The transport used by the client instance.
+      var_type: PublisherTransport
+  type: property
+  uid: google.cloud.pubsub_v1.publisher.client.Client.transport
+- *id003
+- attributes: []
+  class: google.cloud.pubsub_v1.publisher.client.Client
+  fullName: google.cloud.pubsub_v1.publisher.client.Client.update_topic
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.client
+  name: update_topic
+  source:
+    id: update_topic
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/publisher/client.py
+    startLine: 596
+  summary: "Updates an existing topic. Note that certain\nproperties of a topic are\
+    \ not modifiable.\n\n```python\n# This snippet has been automatically generated\
+    \ and should be regarded as a\n# code template only.\n# It will require modifications\
+    \ to work:\n# - It may require correct/in-range values for request initialization.\n\
+    # - It may require specifying regional endpoints when creating the service\n#\
+    \   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_update_topic():\n    # Create a client\n\
+    \    client = pubsub_v1.PublisherClient()\n\n    # Initialize request argument(s)\n\
+    \    topic = pubsub_v1.Topic()\n    topic.name = \"name_value\"\n\n    request\
+    \ = pubsub_v1.UpdateTopicRequest(\n        topic=topic,\n    )\n\n    # Make the\
+    \ request\n    response = client.update_topic(request=request)\n\n    # Handle\
+    \ the response\n    print(response)\n```\n"
+  syntax:
+    content: "update_topic(\n    request: typing.Union[google.cloud.pubsub_v1.types.UpdateTopicRequest,\
+      \ dict] = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Union[\n        int,\n        float,\n        google.api_core.timeout.ConstantTimeout,\n\
+      \        google.api_core.timeout.ExponentialTimeout,\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) -> google.cloud.pubsub_v1.types.Topic"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the UpdateTopic method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.UpdateTopicRequest, dict]
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: TimeoutType
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: A topic resource.
+      var_type: google.pubsub_v1.types.Topic
+  type: method
+  uid: google.cloud.pubsub_v1.publisher.client.Client.update_topic
+references:
+- fullName: google.cloud.pubsub_v1.publisher.client.Client
+  isExternal: false
+  name: Client
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.__exit__
+  isExternal: false
+  name: __exit__
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.__exit__
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.api
+  isExternal: false
+  name: api
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.api
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.common_billing_account_path
+  isExternal: false
+  name: common_billing_account_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.common_billing_account_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.common_folder_path
+  isExternal: false
+  name: common_folder_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.common_folder_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.common_location_path
+  isExternal: false
+  name: common_location_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.common_location_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.common_organization_path
+  isExternal: false
+  name: common_organization_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.common_organization_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.common_project_path
+  isExternal: false
+  name: common_project_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.common_project_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.create_topic
+  isExternal: false
+  name: create_topic
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.create_topic
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.delete_topic
+  isExternal: false
+  name: delete_topic
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.delete_topic
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.detach_subscription
+  isExternal: false
+  name: detach_subscription
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.detach_subscription
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.ensure_cleanup_and_commit_timer_runs
+  isExternal: false
+  name: ensure_cleanup_and_commit_timer_runs
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.ensure_cleanup_and_commit_timer_runs
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_file
+  isExternal: false
+  name: from_service_account_file
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_file
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_info
+  isExternal: false
+  name: from_service_account_info
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_info
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_json
+  isExternal: false
+  name: from_service_account_json
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.from_service_account_json
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.get_iam_policy
+  isExternal: false
+  name: get_iam_policy
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.get_iam_policy
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.get_mtls_endpoint_and_cert_source
+  isExternal: false
+  name: get_mtls_endpoint_and_cert_source
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.get_mtls_endpoint_and_cert_source
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.get_topic
+  isExternal: false
+  name: get_topic
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.get_topic
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.list_topic_snapshots
+  isExternal: false
+  name: list_topic_snapshots
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.list_topic_snapshots
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.list_topic_subscriptions
+  isExternal: false
+  name: list_topic_subscriptions
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.list_topic_subscriptions
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.list_topics
+  isExternal: false
+  name: list_topics
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.list_topics
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_common_billing_account_path
+  isExternal: false
+  name: parse_common_billing_account_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_common_billing_account_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_common_folder_path
+  isExternal: false
+  name: parse_common_folder_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_common_folder_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_common_location_path
+  isExternal: false
+  name: parse_common_location_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_common_location_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_common_organization_path
+  isExternal: false
+  name: parse_common_organization_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_common_organization_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_common_project_path
+  isExternal: false
+  name: parse_common_project_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_common_project_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_schema_path
+  isExternal: false
+  name: parse_schema_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_schema_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_subscription_path
+  isExternal: false
+  name: parse_subscription_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_subscription_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.parse_topic_path
+  isExternal: false
+  name: parse_topic_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.parse_topic_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.publish
+  isExternal: false
+  name: publish
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.publish
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.resume_publish
+  isExternal: false
+  name: resume_publish
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.resume_publish
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.schema_path
+  isExternal: false
+  name: schema_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.schema_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.set_iam_policy
+  isExternal: false
+  name: set_iam_policy
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.set_iam_policy
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.stop
+  isExternal: false
+  name: stop
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.stop
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.subscription_path
+  isExternal: false
+  name: subscription_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.subscription_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.target
+  isExternal: false
+  name: target
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.target
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.test_iam_permissions
+  isExternal: false
+  name: test_iam_permissions
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.test_iam_permissions
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.topic_path
+  isExternal: false
+  name: topic_path
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.topic_path
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.transport
+  isExternal: false
+  name: transport
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.transport
+- fullName: google.cloud.pubsub_v1.publisher.client.Client.update_topic
+  isExternal: false
+  name: update_topic
+  parent: google.cloud.pubsub_v1.publisher.client.Client
+  uid: google.cloud.pubsub_v1.publisher.client.Client.update_topic

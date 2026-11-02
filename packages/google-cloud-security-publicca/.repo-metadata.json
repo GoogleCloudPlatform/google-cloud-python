@@ -1,0 +1,16 @@
+{
+    "api_description": "The Public Certificate Authority API may be used to create and manage ACME\nexternal account binding keys associated with Google Trust Services'\npublicly trusted certificate authority.",
+    "api_id": "publicca.googleapis.com",
+    "api_shortname": "publicca",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/publicca/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-security-publicca",
+    "issue_tracker": "https://cloud.google.com/certificate-manager/docs/getting-support",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "publicca",
+    "name_pretty": "Public Certificate Authority",
+    "product_documentation": "https://cloud.google.com/certificate-manager/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

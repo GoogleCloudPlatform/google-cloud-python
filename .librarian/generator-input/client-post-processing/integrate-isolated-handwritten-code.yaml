@@ -1,0 +1,476 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+description: Integrate isolated handwritten helpers/mixin code
+url: https://github.com/googleapis/gapic-generator-python/issues/1642
+replacements:
+  - paths: [
+      packages/google-cloud-vision/google/cloud/vision/__init__.py
+    ]
+    before: |
+      from google.cloud.vision_v1.services.image_annotator.client import ImageAnnotatorClient
+    after:  |
+      from google.cloud.vision_v1 import ImageAnnotatorClient
+    count: 1
+  - paths: [
+      packages/google-cloud-vision/google/cloud/vision_v1/__init__.py,
+      packages/google-cloud-vision/google/cloud/vision_v1p1beta1/__init__.py,
+      packages/google-cloud-vision/google/cloud/vision_v1p2beta1/__init__.py,
+      packages/google-cloud-vision/google/cloud/vision_v1p3beta1/__init__.py,
+      packages/google-cloud-vision/google/cloud/vision_v1p4beta1/__init__.py,
+    ]
+    before: |
+      from .services.image_annotator import ImageAnnotatorAsyncClient, ImageAnnotatorClient
+    after: |
+      from google.cloud.vision_helpers import VisionHelpers
+      from google.cloud.vision_helpers.decorators import add_single_feature_methods\n
+      from .services.image_annotator import ImageAnnotatorAsyncClient
+      from .services.image_annotator import ImageAnnotatorClient as IacImageAnnotatorClient
+    count: 5
+  - paths: [
+      packages/google-cloud-vision/google/cloud/vision_v1/__init__.py,
+      packages/google-cloud-vision/google/cloud/vision_v1p1beta1/__init__.py,
+      packages/google-cloud-vision/google/cloud/vision_v1p2beta1/__init__.py,
+      packages/google-cloud-vision/google/cloud/vision_v1p3beta1/__init__.py,
+      packages/google-cloud-vision/google/cloud/vision_v1p4beta1/__init__.py,
+    ]    
+    before: |
+      from .types.web_detection import WebDetection\n
+      __all__ = \(
+    after: |
+      from .types.web_detection import WebDetection\n\n
+      @add_single_feature_methods
+      class ImageAnnotatorClient(VisionHelpers, IacImageAnnotatorClient):
+          __doc__ = IacImageAnnotatorClient.__doc__
+          Feature = Feature\n\n
+      __all__ = (
+    count: 5
+  - paths: [
+      "packages/google-cloud-translate/setup.py"
+    ]
+    before: |
+      dependencies = \[
+          "google-api-core\[grpc\] >= 2.28.0, <3.0.0",
+          # Exclude incompatible versions of `google-auth`
+          # See https://github.com/googleapis/google-cloud-python/issues/12364
+          "google-auth >= 2.14.1, <3.0.0,!=2.24.0,!=2.25.0",
+          "grpcio >= 1.59.0, < 2.0.0",
+    after: |
+      dependencies = [
+          "google-api-core[grpc] >= 2.28.0, <3.0.0",
+          # Exclude incompatible versions of `google-auth`
+          # See https://github.com/googleapis/google-cloud-python/issues/12364
+          "google-auth >= 2.14.1, <3.0.0,!=2.24.0,!=2.25.0",
+          "google-cloud-core >= 2.0.0, <3.0.0",
+          "grpcio >= 1.59.0, < 2.0.0",
+    count: 1
+  - paths: [
+      "packages/google-cloud-translate/docs/index.rst",
+    ]
+    before: |
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          translate_v3/services_
+          translate_v3/types_
+
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          translate_v2/services_
+          translate_v2/types_
+    
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          translate_v3beta1/services_
+          translate_v3beta1/types_
+
+    after: |
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          translate_v3/services_
+          translate_v3/types_
+
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          v2
+
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          translate_v3beta1/services_
+          translate_v3beta1/types_
+    count: 1
+  - paths: [
+      packages/google-cloud-speech/google/cloud/speech_v1/__init__.py,
+      packages/google-cloud-speech/google/cloud/speech_v1p1beta1/__init__.py,
+    ]    
+    before: |
+      \)
+
+      __all__ = \(
+    after: |
+      )
+
+      from google.cloud.speech_v1.helpers import SpeechHelpers\n\n
+      # This class merges the auto-generated GAPIC client with handwritten helper methods.
+      # We ignore [misc] because mypy is flagging that both parent classes have a method
+      # named `streaming_recognize`,
+      # but their type signatures don't match.
+      # We ignore [no-redef] because of the name shadow with SpeechClient. We don't want
+      # to expose the GAPIC client without the helpers.
+      class SpeechClient(SpeechHelpers, SpeechClient):  # type: ignore[no-redef, misc]
+          __doc__ = SpeechClient.__doc__\n\n
+      __all__ = (
+    count: 2
+  - paths: [
+      packages/google-cloud-speech/google/cloud/speech/__init__.py,
+    ]    
+    before: |
+      from google.cloud.speech_v1.services.speech.client import SpeechClient
+    after: |
+      from google.cloud.speech_v1 import SpeechClient
+    count: 1
+  - paths: [
+      packages/google-cloud-monitoring/setup.py,
+    ]
+    before: extras = \{\}
+    after: |
+      extras = {"pandas": "pandas >= 1.3.4"}
+    count: 1
+  - paths: [
+      packages/google-cloud-monitoring/noxfile.py,
+    ]
+    before: |
+      UNIT_TEST_EXTRAS: List\[str\] = \[\]
+    after: |
+      UNIT_TEST_EXTRAS: List[str] = ["pandas"]
+    count: 1
+  - paths: [
+      packages/google-cloud-monitoring/docs/index.rst,
+    ]
+    before: |
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          monitoring_v3/services_
+          monitoring_v3/types_
+    after: |
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          query.rst
+          monitoring_v3/services_
+          monitoring_v3/types_
+    count: 1
+  - paths: [
+      packages/google-cloud-automl/setup.py,
+    ]
+    before: extras = \{\}
+    after: |
+      extras = {
+          "pandas": ["pandas>=1.3.4"],
+          "storage": [
+            "google-cloud-storage >=2.14.0, <4.0.0",
+            "google-auth >= 2.23.3, <3.0.0"
+          ],
+      }
+    count: 1
+  - paths: [
+      packages/google-cloud-automl/testing/constraints-3.10.txt,
+    ]
+    before: |
+      google-api-core==2.28.0
+      google-auth==2.14.1
+    after: |
+      google-api-core==2.28.0
+      google-cloud-storage==2.14.0
+      pandas==1.3.4
+      # numpy is a dependency of pandas
+      numpy==1.21.3
+      google-auth==2.23.3
+    count: 1
+  - paths: [
+      packages/google-cloud-automl/docs/automl_v1beta1/services_.rst,
+    ]
+    before: |
+      Services for Google Cloud Automl v1beta1 API
+      ============================================
+      .. toctree::
+          :maxdepth: 2
+
+          auto_ml
+          prediction_service
+    after: |
+      Services for Google Cloud Automl v1beta1 API
+      ============================================
+      .. toctree::
+          :maxdepth: 2
+
+          tables
+          auto_ml
+          prediction_service
+    count: 1
+  - paths: [
+      packages/google-cloud-automl/google/cloud/automl_v1beta1/__init__.py,
+    ]
+    before: |
+      \)
+      from .types.annotation_payload import AnnotationPayload
+    after: |
+      )
+      from .services.tables.gcs_client import GcsClient
+      from .services.tables.tables_client import TablesClient
+      from .types.annotation_payload import AnnotationPayload
+    count: 1
+  - paths: [
+      packages/google-cloud-automl/google/cloud/automl_v1beta1/__init__.py,
+    ]
+    before: |
+      __all__ = \(
+          "AutoMlAsyncClient",
+    after: |
+      __all__ = (
+          "GcsClient",
+          "TablesClient",
+          "AutoMlAsyncClient",
+    count: 1
+  - paths: [
+      packages/google-cloud-automl/noxfile.py,
+    ]
+    before: |
+      UNIT_TEST_EXTRAS: List\[str\] = \[\]
+    after: |
+      UNIT_TEST_EXTRAS: List[str] = ["pandas", "storage"]
+    count: 1
+  - paths: [
+      packages/google-cloud-logging/noxfile.py,
+    ]
+    before: |
+      SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List\[str\] = \[\]
+    after: |
+      SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List[str] = [
+          "google-cloud-bigquery",
+          "google-cloud-pubsub",
+          "google-cloud-storage",
+          "google-cloud-testutils",
+          "opentelemetry-sdk",
+      ]
+    count: 1
+  - paths: [
+      packages/google-cloud-automl/noxfile.py,
+    ]
+    before: |
+      "types-protobuf",
+      \    \)
+    after: |
+      "types-protobuf",
+              "pandas-stubs",
+          )
+    count: 1
+  - paths: [
+      packages/google-cloud-monitoring/noxfile.py,
+    ]
+    before: |
+      "types-protobuf",
+      \    \)
+    after: |
+      "types-protobuf",
+              "pandas-stubs",
+          )
+    count: 1
+  - paths: [
+      packages/google-cloud-bigquery-storage/noxfile.py,
+    ]
+    before: |
+      "types-protobuf",
+      \    \)
+      \    session.install\("."\)
+    after: |
+      "types-protobuf",
+              "pandas-stubs",
+          )
+          session.install(".[fastavro]")
+    count: 1
+  - paths: [
+      "packages/google-cloud-error-reporting/setup.py"
+    ]
+    before: |
+      "google-auth >= 2.14.1, <3.0.0,!=2.24.0,!=2.25.0",
+          "grpcio >= 1.59.0, < 2.0.0",
+    after: |
+      "google-auth >= 2.14.1, <3.0.0,!=2.24.0,!=2.25.0",
+          "google-cloud-logging>=3.12.0, <4.0.0",
+          "grpcio >= 1.59.0, < 2.0.0",
+    count: 1
+  - paths: [
+      "packages/google-cloud-error-reporting/docs/index.rst",
+    ]
+    before: |
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          errorreporting_v1beta1/services_
+          errorreporting_v1beta1/types_
+
+
+      Changelog
+    after: |
+      Usage Documentation
+      -------------------
+
+      .. toctree::
+        :maxdepth: 2
+
+        usage
+        
+
+      API Reference
+      -------------
+      .. toctree::
+        :maxdepth: 2
+
+
+        client
+        util
+        errorreporting_v1beta1/services_
+        errorreporting_v1beta1/types_
+
+
+      Changelog
+    count: 1 
+  - paths: [
+      "packages/google-cloud-bigquery-storage/noxfile.py",
+    ]
+    before: '\n        "--check-untyped-defs",'
+    after: '\n        # TODO(https://github.com/googleapis/google-cloud-python/issues/16083)\n        # "--check-untyped-defs",'
+    count: 1
+  - paths: [
+      "packages/google-cloud-datastore/noxfile.py",
+    ]
+    before: '\n        "--check-untyped-defs",'
+    after: '\n        # TODO(https://github.com/googleapis/google-cloud-python/issues/16083)\n        # "--check-untyped-defs",'
+    count: 1
+  - paths: [
+      "packages/google-cloud-error-reporting/noxfile.py",
+    ]
+    before: '\n        "--check-untyped-defs",'
+    after: '\n        # TODO(https://github.com/googleapis/google-cloud-python/issues/16083)\n        # "--check-untyped-defs",'
+    count: 1
+  - paths: [
+      "packages/google-cloud-error-reporting/noxfile.py",
+    ]
+    before: 'RUFF_VERSION = "ruff==0\.14\.14"\n\nLINT_PATHS ='
+    after: |-
+      RUFF_VERSION = "ruff==0.14.14"
+      # Temporarily pin pytest<9.2 because pytest 9.2.0 applies filterwarnings=error
+      # before pytest_configure hooks run, turning pytest-asyncio's unset
+      # asyncio_default_fixture_loop_scope warning into an error. Remove once
+      # pytest 9.2+ warning and fixture scope deprecations are resolved.
+      PYTEST_VERSION = "pytest<9.2"
+
+      LINT_PATHS =
+    count: 1
+  - paths: [
+      "packages/google-cloud-error-reporting/noxfile.py",
+    ]
+    before: '"pytest",'
+    after: 'PYTEST_VERSION,'
+    count: 2
+  - paths: [
+      "packages/google-cloud-monitoring-dashboards/noxfile.py",
+    ]
+    before: '\n        "--check-untyped-defs",'
+    after: '\n        # TODO(https://github.com/googleapis/google-cloud-python/issues/16083)\n        # "--check-untyped-defs",'
+    count: 1
+  - paths: [
+      "packages/google-cloud-monitoring/noxfile.py",
+    ]
+    before: '\n        "--check-untyped-defs",'
+    after: '\n        # TODO(https://github.com/googleapis/google-cloud-python/issues/16083)\n        # "--check-untyped-defs",'
+    count: 1
+  - paths: [
+      "packages/google-cloud-speech/noxfile.py",
+    ]
+    before: '\n        "--check-untyped-defs",'
+    after: '\n        # TODO(https://github.com/googleapis/google-cloud-python/issues/16083)\n        # "--check-untyped-defs",'
+    count: 1
+  - paths: [
+      "packages/google-cloud-vision/noxfile.py",
+    ]
+    before: '\n        "--check-untyped-defs",'
+    after: '\n        # TODO(https://github.com/googleapis/google-cloud-python/issues/16083)\n        # "--check-untyped-defs",'
+    count: 1
+  - paths: [
+      "packages/google-cloud-monitoring/noxfile.py",
+    ]
+    before: '\n    # Install all dependencies\n    session.install\("-e", "\."\)'
+    after: '\n    # Install all dependencies\n    session.install("-e", ".[pandas]")'
+    count: 2
+  - paths: [
+      "packages/google-cloud-monitoring/testing/constraints-3.10.txt",
+    ]
+    before: |
+      google-api-core==2.28.0
+      google-auth==2.14.1
+    after: |
+      google-api-core==2.28.0
+      pandas==1.3.4
+      numpy==1.21.3
+      google-auth==2.14.1
+    count: 1
+  - paths: [
+      "packages/google-cloud-error-reporting/testing/constraints-3.10.txt",
+    ]
+    before: |
+      google-auth==2.14.1
+      grpcio==1.59.0
+    after: |
+      google-auth==2.14.1
+      google-cloud-logging==3.12.0
+      grpcio==1.59.0
+    count: 1
+  - paths: [
+      "packages/google-cloud-error-reporting/testing/constraints-3.13.txt",
+      "packages/google-cloud-error-reporting/testing/constraints-3.14.txt",
+    ]
+    before: |
+      google-auth>=2
+      grpcio>=1
+    after: |
+      google-auth>=2
+      google-cloud-logging>=3
+      grpcio>=1
+    count: 2
+

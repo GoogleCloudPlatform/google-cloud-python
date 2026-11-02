@@ -1,0 +1,16 @@
+{
+    "api_description": "Provides programmatic access to Capacity Planner features.",
+    "api_id": "capacityplanner.googleapis.com",
+    "api_shortname": "capacityplanner",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-capacityplanner/latest",
+    "default_version": "v1beta",
+    "distribution_name": "google-cloud-capacityplanner",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1194830",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-capacityplanner",
+    "name_pretty": "Capacity Planner",
+    "product_documentation": "https://cloud.google.com/capacity-planner/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,1311 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.api.apikeys.v2",
+        "version": "v2"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-api-keys",
+    "version": "0.9.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient",
+          "shortName": "ApiKeysAsyncClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient.create_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.CreateKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "CreateKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.CreateKeyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "key",
+            "type": "google.cloud.api_keys_v2.types.Key"
+          },
+          {
+            "name": "key_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_key"
+      },
+      "description": "Sample for CreateKey",
+      "file": "apikeys_v2_generated_api_keys_create_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_CreateKey_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_create_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysClient",
+          "shortName": "ApiKeysClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysClient.create_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.CreateKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "CreateKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.CreateKeyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "key",
+            "type": "google.cloud.api_keys_v2.types.Key"
+          },
+          {
+            "name": "key_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_key"
+      },
+      "description": "Sample for CreateKey",
+      "file": "apikeys_v2_generated_api_keys_create_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_CreateKey_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_create_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient",
+          "shortName": "ApiKeysAsyncClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient.delete_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.DeleteKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "DeleteKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.DeleteKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_key"
+      },
+      "description": "Sample for DeleteKey",
+      "file": "apikeys_v2_generated_api_keys_delete_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_DeleteKey_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_delete_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysClient",
+          "shortName": "ApiKeysClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysClient.delete_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.DeleteKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "DeleteKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.DeleteKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_key"
+      },
+      "description": "Sample for DeleteKey",
+      "file": "apikeys_v2_generated_api_keys_delete_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_DeleteKey_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_delete_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient",
+          "shortName": "ApiKeysAsyncClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient.get_key_string",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.GetKeyString",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "GetKeyString"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.GetKeyStringRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.api_keys_v2.types.GetKeyStringResponse",
+        "shortName": "get_key_string"
+      },
+      "description": "Sample for GetKeyString",
+      "file": "apikeys_v2_generated_api_keys_get_key_string_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_GetKeyString_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_get_key_string_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysClient",
+          "shortName": "ApiKeysClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysClient.get_key_string",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.GetKeyString",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "GetKeyString"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.GetKeyStringRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.api_keys_v2.types.GetKeyStringResponse",
+        "shortName": "get_key_string"
+      },
+      "description": "Sample for GetKeyString",
+      "file": "apikeys_v2_generated_api_keys_get_key_string_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_GetKeyString_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_get_key_string_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient",
+          "shortName": "ApiKeysAsyncClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient.get_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.GetKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "GetKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.GetKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.api_keys_v2.types.Key",
+        "shortName": "get_key"
+      },
+      "description": "Sample for GetKey",
+      "file": "apikeys_v2_generated_api_keys_get_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_GetKey_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_get_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysClient",
+          "shortName": "ApiKeysClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysClient.get_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.GetKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "GetKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.GetKeyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.api_keys_v2.types.Key",
+        "shortName": "get_key"
+      },
+      "description": "Sample for GetKey",
+      "file": "apikeys_v2_generated_api_keys_get_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_GetKey_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_get_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient",
+          "shortName": "ApiKeysAsyncClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient.list_keys",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.ListKeys",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "ListKeys"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.ListKeysRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.api_keys_v2.services.api_keys.pagers.ListKeysAsyncPager",
+        "shortName": "list_keys"
+      },
+      "description": "Sample for ListKeys",
+      "file": "apikeys_v2_generated_api_keys_list_keys_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_ListKeys_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_list_keys_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysClient",
+          "shortName": "ApiKeysClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysClient.list_keys",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.ListKeys",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "ListKeys"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.ListKeysRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.api_keys_v2.services.api_keys.pagers.ListKeysPager",
+        "shortName": "list_keys"
+      },
+      "description": "Sample for ListKeys",
+      "file": "apikeys_v2_generated_api_keys_list_keys_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_ListKeys_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_list_keys_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient",
+          "shortName": "ApiKeysAsyncClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient.lookup_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.LookupKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "LookupKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.LookupKeyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.api_keys_v2.types.LookupKeyResponse",
+        "shortName": "lookup_key"
+      },
+      "description": "Sample for LookupKey",
+      "file": "apikeys_v2_generated_api_keys_lookup_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_LookupKey_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_lookup_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysClient",
+          "shortName": "ApiKeysClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysClient.lookup_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.LookupKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "LookupKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.LookupKeyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.api_keys_v2.types.LookupKeyResponse",
+        "shortName": "lookup_key"
+      },
+      "description": "Sample for LookupKey",
+      "file": "apikeys_v2_generated_api_keys_lookup_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_LookupKey_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_lookup_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient",
+          "shortName": "ApiKeysAsyncClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient.undelete_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.UndeleteKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "UndeleteKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.UndeleteKeyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "undelete_key"
+      },
+      "description": "Sample for UndeleteKey",
+      "file": "apikeys_v2_generated_api_keys_undelete_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_UndeleteKey_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_undelete_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysClient",
+          "shortName": "ApiKeysClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysClient.undelete_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.UndeleteKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "UndeleteKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.UndeleteKeyRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "undelete_key"
+      },
+      "description": "Sample for UndeleteKey",
+      "file": "apikeys_v2_generated_api_keys_undelete_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_UndeleteKey_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_undelete_key_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient",
+          "shortName": "ApiKeysAsyncClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysAsyncClient.update_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.UpdateKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "UpdateKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.UpdateKeyRequest"
+          },
+          {
+            "name": "key",
+            "type": "google.cloud.api_keys_v2.types.Key"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_key"
+      },
+      "description": "Sample for UpdateKey",
+      "file": "apikeys_v2_generated_api_keys_update_key_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_UpdateKey_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_update_key_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.api_keys_v2.ApiKeysClient",
+          "shortName": "ApiKeysClient"
+        },
+        "fullName": "google.cloud.api_keys_v2.ApiKeysClient.update_key",
+        "method": {
+          "fullName": "google.api.apikeys.v2.ApiKeys.UpdateKey",
+          "service": {
+            "fullName": "google.api.apikeys.v2.ApiKeys",
+            "shortName": "ApiKeys"
+          },
+          "shortName": "UpdateKey"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.api_keys_v2.types.UpdateKeyRequest"
+          },
+          {
+            "name": "key",
+            "type": "google.cloud.api_keys_v2.types.Key"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_key"
+      },
+      "description": "Sample for UpdateKey",
+      "file": "apikeys_v2_generated_api_keys_update_key_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apikeys_v2_generated_ApiKeys_UpdateKey_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apikeys_v2_generated_api_keys_update_key_sync.py"
+    }
+  ]
+}

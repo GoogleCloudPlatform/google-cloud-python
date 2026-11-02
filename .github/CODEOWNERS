@@ -1,0 +1,45 @@
+# Code owners file.
+# This file controls who is tagged for review for any given pull request.
+#
+# To add a new package or team:
+# 1. Add any new team names to the list of teams below. This allows us to
+#    quickly view which teams are present in this repo.
+# 2. Add the package path and corresponding team
+# 3. The new team must have "Write" access to google-cloud-python
+#    See go/cloud-sdk-googleapis#aod for instructions on requesting
+#    access to modify repo settings.
+
+# List of teams in this repo
+# - @googleapis/aion-team
+# - @googleapis/bigquery-dataframe-team
+# - @googleapis/bigquery-team
+# - @googleapis/bigtable-team
+# - @googleapis/cloud-sdk-auth-team
+# - @googleapis/cloud-sdk-python-team
+# - @googleapis/firestore-team
+# - @googleapis/gcs-team
+# - @googleapis/pubsub-team
+# - @googleapis/spanner-team
+# - @googleapis/cloud-sdk-librarian-team
+
+# As per the above, the following list is only used for notifications, not for approvals.
+# Googlers see b/477912165 and corresponding design doc
+
+# Catch all. @googleapis/cloud-sdk-python-team is notified on every change for packages not owned by other teams.
+*                                             @googleapis/cloud-sdk-python-team
+
+/packages/bigquery-magics/                    @googleapis/bigquery-team @googleapis/bigquery-dataframe-team
+/packages/db-dtypes/                          @googleapis/bigquery-team @googleapis/bigquery-dataframe-team
+/packages/django-google-spanner/              @googleapis/spanner-team
+/packages/google-auth/                        @googleapis/cloud-sdk-auth-team @googleapis/aion-team
+/packages/google-cloud-bigquery*/             @googleapis/bigquery-team @googleapis/bigquery-dataframe-team
+/packages/google-cloud-bigtable/              @googleapis/bigtable-team
+/packages/google-cloud-firestore/             @googleapis/firestore-team
+/packages/google-cloud-pubsub/                @googleapis/pubsub-team
+/packages/google-cloud-spanner/               @googleapis/spanner-team
+/packages/google-cloud-storage/               @googleapis/gcs-team @googleapis/gcs-fs-team
+/packages/google-resumable-media/             @googleapis/gcs-team @googleapis/bigquery-team @googleapis/bigquery-dataframe-team
+/packages/pandas-gbq/                         @googleapis/bigquery-team @googleapis/bigquery-dataframe-team
+/packages/sqlalchemy-bigquery/                @googleapis/bigquery-team @googleapis/bigquery-dataframe-team
+/packages/sqlalchemy-spanner/                 @googleapis/spanner-team
+/librarian.yaml                               @googleapis/cloud-sdk-librarian-team

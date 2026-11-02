@@ -1,0 +1,15 @@
+{
+    "api_description": "Manage Cloud Database Migration Service resources on Google Cloud Platform.",
+    "api_id": "datamigration.googleapis.com",
+    "api_shortname": "datamigration",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/datamigration/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-dms",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "datamigration",
+    "name_pretty": "Database Migration",
+    "product_documentation": "https://cloud.google.com/database-migration/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

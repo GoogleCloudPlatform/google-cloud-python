@@ -1,0 +1,6324 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.compute_v1",
+  "protoPackage": "google.cloud.compute.v1",
+  "schema": "1.0",
+  "services": {
+    "AcceleratorTypes": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "AcceleratorTypesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Addresses": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "AddressesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Move": {
+              "methods": [
+                "move"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Advice": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "AdviceClient",
+          "rpcs": {
+            "CalendarMode": {
+              "methods": [
+                "calendar_mode"
+              ]
+            },
+            "Capacity": {
+              "methods": [
+                "capacity"
+              ]
+            },
+            "CapacityHistory": {
+              "methods": [
+                "capacity_history"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Autoscalers": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "AutoscalersClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "BackendBuckets": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "BackendBucketsClient",
+          "rpcs": {
+            "AddSignedUrlKey": {
+              "methods": [
+                "add_signed_url_key"
+              ]
+            },
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "DeleteSignedUrlKey": {
+              "methods": [
+                "delete_signed_url_key"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListUsable": {
+              "methods": [
+                "list_usable"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetEdgeSecurityPolicy": {
+              "methods": [
+                "set_edge_security_policy"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "BackendServices": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "BackendServicesClient",
+          "rpcs": {
+            "AddSignedUrlKey": {
+              "methods": [
+                "add_signed_url_key"
+              ]
+            },
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "DeleteSignedUrlKey": {
+              "methods": [
+                "delete_signed_url_key"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetEffectiveSecurityPolicies": {
+              "methods": [
+                "get_effective_security_policies"
+              ]
+            },
+            "GetHealth": {
+              "methods": [
+                "get_health"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListUsable": {
+              "methods": [
+                "list_usable"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetEdgeSecurityPolicy": {
+              "methods": [
+                "set_edge_security_policy"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetSecurityPolicy": {
+              "methods": [
+                "set_security_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CrossSiteNetworks": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "CrossSiteNetworksClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DiskTypes": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "DiskTypesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Disks": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "DisksClient",
+          "rpcs": {
+            "AddResourcePolicies": {
+              "methods": [
+                "add_resource_policies"
+              ]
+            },
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "BulkInsert": {
+              "methods": [
+                "bulk_insert"
+              ]
+            },
+            "BulkSetLabels": {
+              "methods": [
+                "bulk_set_labels"
+              ]
+            },
+            "CreateSnapshot": {
+              "methods": [
+                "create_snapshot"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "RemoveResourcePolicies": {
+              "methods": [
+                "remove_resource_policies"
+              ]
+            },
+            "Resize": {
+              "methods": [
+                "resize"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "StartAsyncReplication": {
+              "methods": [
+                "start_async_replication"
+              ]
+            },
+            "StopAsyncReplication": {
+              "methods": [
+                "stop_async_replication"
+              ]
+            },
+            "StopGroupAsyncReplication": {
+              "methods": [
+                "stop_group_async_replication"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            },
+            "UpdateKmsKey": {
+              "methods": [
+                "update_kms_key"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ExternalVpnGateways": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ExternalVpnGatewaysClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "FirewallPolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "FirewallPoliciesClient",
+          "rpcs": {
+            "AddAssociation": {
+              "methods": [
+                "add_association"
+              ]
+            },
+            "AddRule": {
+              "methods": [
+                "add_rule"
+              ]
+            },
+            "CloneRules": {
+              "methods": [
+                "clone_rules"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetAssociation": {
+              "methods": [
+                "get_association"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListAssociations": {
+              "methods": [
+                "list_associations"
+              ]
+            },
+            "Move": {
+              "methods": [
+                "move"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "PatchRule": {
+              "methods": [
+                "patch_rule"
+              ]
+            },
+            "RemoveAssociation": {
+              "methods": [
+                "remove_association"
+              ]
+            },
+            "RemoveRule": {
+              "methods": [
+                "remove_rule"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Firewalls": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "FirewallsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ForwardingRules": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ForwardingRulesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "SetTarget": {
+              "methods": [
+                "set_target"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "FutureReservations": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "FutureReservationsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Cancel": {
+              "methods": [
+                "cancel"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GlobalAddresses": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "GlobalAddressesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Move": {
+              "methods": [
+                "move"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GlobalForwardingRules": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "GlobalForwardingRulesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "SetTarget": {
+              "methods": [
+                "set_target"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GlobalFrontendSettingsService": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "GlobalFrontendSettingsServiceClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GlobalNetworkEndpointGroups": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "GlobalNetworkEndpointGroupsClient",
+          "rpcs": {
+            "AttachNetworkEndpoints": {
+              "methods": [
+                "attach_network_endpoints"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "DetachNetworkEndpoints": {
+              "methods": [
+                "detach_network_endpoints"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListNetworkEndpoints": {
+              "methods": [
+                "list_network_endpoints"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GlobalOperations": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "GlobalOperationsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Wait": {
+              "methods": [
+                "wait"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GlobalOrganizationOperations": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "GlobalOrganizationOperationsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GlobalPublicDelegatedPrefixes": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "GlobalPublicDelegatedPrefixesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GlobalVmExtensionPolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "GlobalVmExtensionPoliciesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "HealthChecks": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "HealthChecksClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Hosts": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "HostsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ImageFamilyViews": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ImageFamilyViewsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ImageViews": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ImageViewsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Images": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ImagesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Deprecate": {
+              "methods": [
+                "deprecate"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetFromFamily": {
+              "methods": [
+                "get_from_family"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InstanceGroupManagerResizeRequests": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InstanceGroupManagerResizeRequestsClient",
+          "rpcs": {
+            "Cancel": {
+              "methods": [
+                "cancel"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InstanceGroupManagers": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InstanceGroupManagersClient",
+          "rpcs": {
+            "AbandonInstances": {
+              "methods": [
+                "abandon_instances"
+              ]
+            },
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "ApplyUpdatesToInstances": {
+              "methods": [
+                "apply_updates_to_instances"
+              ]
+            },
+            "CreateInstances": {
+              "methods": [
+                "create_instances"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "DeleteInstances": {
+              "methods": [
+                "delete_instances"
+              ]
+            },
+            "DeletePerInstanceConfigs": {
+              "methods": [
+                "delete_per_instance_configs"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListErrors": {
+              "methods": [
+                "list_errors"
+              ]
+            },
+            "ListManagedInstances": {
+              "methods": [
+                "list_managed_instances"
+              ]
+            },
+            "ListPerInstanceConfigs": {
+              "methods": [
+                "list_per_instance_configs"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "PatchPerInstanceConfigs": {
+              "methods": [
+                "patch_per_instance_configs"
+              ]
+            },
+            "RecreateInstances": {
+              "methods": [
+                "recreate_instances"
+              ]
+            },
+            "Resize": {
+              "methods": [
+                "resize"
+              ]
+            },
+            "ResumeInstances": {
+              "methods": [
+                "resume_instances"
+              ]
+            },
+            "SetInstanceTemplate": {
+              "methods": [
+                "set_instance_template"
+              ]
+            },
+            "SetTargetPools": {
+              "methods": [
+                "set_target_pools"
+              ]
+            },
+            "StartInstances": {
+              "methods": [
+                "start_instances"
+              ]
+            },
+            "StopInstances": {
+              "methods": [
+                "stop_instances"
+              ]
+            },
+            "SuspendInstances": {
+              "methods": [
+                "suspend_instances"
+              ]
+            },
+            "UpdatePerInstanceConfigs": {
+              "methods": [
+                "update_per_instance_configs"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InstanceGroups": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InstanceGroupsClient",
+          "rpcs": {
+            "AddInstances": {
+              "methods": [
+                "add_instances"
+              ]
+            },
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "RemoveInstances": {
+              "methods": [
+                "remove_instances"
+              ]
+            },
+            "SetNamedPorts": {
+              "methods": [
+                "set_named_ports"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InstanceSettingsService": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InstanceSettingsServiceClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InstanceTemplates": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InstanceTemplatesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Instances": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InstancesClient",
+          "rpcs": {
+            "AddAccessConfig": {
+              "methods": [
+                "add_access_config"
+              ]
+            },
+            "AddNetworkInterface": {
+              "methods": [
+                "add_network_interface"
+              ]
+            },
+            "AddResourcePolicies": {
+              "methods": [
+                "add_resource_policies"
+              ]
+            },
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "AttachDisk": {
+              "methods": [
+                "attach_disk"
+              ]
+            },
+            "BulkInsert": {
+              "methods": [
+                "bulk_insert"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "DeleteAccessConfig": {
+              "methods": [
+                "delete_access_config"
+              ]
+            },
+            "DeleteNetworkInterface": {
+              "methods": [
+                "delete_network_interface"
+              ]
+            },
+            "DetachDisk": {
+              "methods": [
+                "detach_disk"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetEffectiveFirewalls": {
+              "methods": [
+                "get_effective_firewalls"
+              ]
+            },
+            "GetGuestAttributes": {
+              "methods": [
+                "get_guest_attributes"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetScreenshot": {
+              "methods": [
+                "get_screenshot"
+              ]
+            },
+            "GetSerialPortOutput": {
+              "methods": [
+                "get_serial_port_output"
+              ]
+            },
+            "GetShieldedInstanceIdentity": {
+              "methods": [
+                "get_shielded_instance_identity"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListReferrers": {
+              "methods": [
+                "list_referrers"
+              ]
+            },
+            "PerformMaintenance": {
+              "methods": [
+                "perform_maintenance"
+              ]
+            },
+            "RemoveResourcePolicies": {
+              "methods": [
+                "remove_resource_policies"
+              ]
+            },
+            "ReportHostAsFaulty": {
+              "methods": [
+                "report_host_as_faulty"
+              ]
+            },
+            "Reset": {
+              "methods": [
+                "reset"
+              ]
+            },
+            "Resume": {
+              "methods": [
+                "resume"
+              ]
+            },
+            "SendDiagnosticInterrupt": {
+              "methods": [
+                "send_diagnostic_interrupt"
+              ]
+            },
+            "SetDeletionProtection": {
+              "methods": [
+                "set_deletion_protection"
+              ]
+            },
+            "SetDiskAutoDelete": {
+              "methods": [
+                "set_disk_auto_delete"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "SetMachineResources": {
+              "methods": [
+                "set_machine_resources"
+              ]
+            },
+            "SetMachineType": {
+              "methods": [
+                "set_machine_type"
+              ]
+            },
+            "SetMetadata": {
+              "methods": [
+                "set_metadata"
+              ]
+            },
+            "SetMinCpuPlatform": {
+              "methods": [
+                "set_min_cpu_platform"
+              ]
+            },
+            "SetName": {
+              "methods": [
+                "set_name"
+              ]
+            },
+            "SetScheduling": {
+              "methods": [
+                "set_scheduling"
+              ]
+            },
+            "SetSecurityPolicy": {
+              "methods": [
+                "set_security_policy"
+              ]
+            },
+            "SetServiceAccount": {
+              "methods": [
+                "set_service_account"
+              ]
+            },
+            "SetShieldedInstanceIntegrityPolicy": {
+              "methods": [
+                "set_shielded_instance_integrity_policy"
+              ]
+            },
+            "SetTags": {
+              "methods": [
+                "set_tags"
+              ]
+            },
+            "SimulateMaintenanceEvent": {
+              "methods": [
+                "simulate_maintenance_event"
+              ]
+            },
+            "Start": {
+              "methods": [
+                "start"
+              ]
+            },
+            "StartWithEncryptionKey": {
+              "methods": [
+                "start_with_encryption_key"
+              ]
+            },
+            "Stop": {
+              "methods": [
+                "stop"
+              ]
+            },
+            "Suspend": {
+              "methods": [
+                "suspend"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            },
+            "UpdateAccessConfig": {
+              "methods": [
+                "update_access_config"
+              ]
+            },
+            "UpdateDisplayDevice": {
+              "methods": [
+                "update_display_device"
+              ]
+            },
+            "UpdateNetworkInterface": {
+              "methods": [
+                "update_network_interface"
+              ]
+            },
+            "UpdateShieldedInstanceConfig": {
+              "methods": [
+                "update_shielded_instance_config"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InstantSnapshotGroups": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InstantSnapshotGroupsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InstantSnapshots": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InstantSnapshotsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InterconnectAttachmentGroups": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InterconnectAttachmentGroupsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetOperationalStatus": {
+              "methods": [
+                "get_operational_status"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InterconnectAttachments": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InterconnectAttachmentsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InterconnectGroups": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InterconnectGroupsClient",
+          "rpcs": {
+            "CreateMembers": {
+              "methods": [
+                "create_members"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetOperationalStatus": {
+              "methods": [
+                "get_operational_status"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InterconnectLocations": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InterconnectLocationsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InterconnectRemoteLocations": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InterconnectRemoteLocationsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Interconnects": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "InterconnectsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetDiagnostics": {
+              "methods": [
+                "get_diagnostics"
+              ]
+            },
+            "GetMacsecConfig": {
+              "methods": [
+                "get_macsec_config"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "SetName": {
+              "methods": [
+                "set_name"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "LicenseCodes": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "LicenseCodesClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Licenses": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "LicensesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "MachineImages": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "MachineImagesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "MachineTypes": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "MachineTypesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ManagedRulesets": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ManagedRulesetsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NetworkAttachments": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "NetworkAttachmentsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NetworkEdgeSecurityServices": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "NetworkEdgeSecurityServicesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NetworkEndpointGroups": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "NetworkEndpointGroupsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "AttachNetworkEndpoints": {
+              "methods": [
+                "attach_network_endpoints"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "DetachNetworkEndpoints": {
+              "methods": [
+                "detach_network_endpoints"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListNetworkEndpoints": {
+              "methods": [
+                "list_network_endpoints"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NetworkFirewallPolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "NetworkFirewallPoliciesClient",
+          "rpcs": {
+            "AddAssociation": {
+              "methods": [
+                "add_association"
+              ]
+            },
+            "AddPacketMirroringRule": {
+              "methods": [
+                "add_packet_mirroring_rule"
+              ]
+            },
+            "AddRule": {
+              "methods": [
+                "add_rule"
+              ]
+            },
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "CloneRules": {
+              "methods": [
+                "clone_rules"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetAssociation": {
+              "methods": [
+                "get_association"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetPacketMirroringRule": {
+              "methods": [
+                "get_packet_mirroring_rule"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "PatchPacketMirroringRule": {
+              "methods": [
+                "patch_packet_mirroring_rule"
+              ]
+            },
+            "PatchRule": {
+              "methods": [
+                "patch_rule"
+              ]
+            },
+            "RemoveAssociation": {
+              "methods": [
+                "remove_association"
+              ]
+            },
+            "RemovePacketMirroringRule": {
+              "methods": [
+                "remove_packet_mirroring_rule"
+              ]
+            },
+            "RemoveRule": {
+              "methods": [
+                "remove_rule"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NetworkProfiles": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "NetworkProfilesClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Networks": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "NetworksClient",
+          "rpcs": {
+            "AddPeering": {
+              "methods": [
+                "add_peering"
+              ]
+            },
+            "CancelRequestRemovePeering": {
+              "methods": [
+                "cancel_request_remove_peering"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetEffectiveFirewalls": {
+              "methods": [
+                "get_effective_firewalls"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListPeeringRoutes": {
+              "methods": [
+                "list_peering_routes"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "RemovePeering": {
+              "methods": [
+                "remove_peering"
+              ]
+            },
+            "RequestRemovePeering": {
+              "methods": [
+                "request_remove_peering"
+              ]
+            },
+            "SwitchToCustomMode": {
+              "methods": [
+                "switch_to_custom_mode"
+              ]
+            },
+            "UpdatePeering": {
+              "methods": [
+                "update_peering"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NodeGroups": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "NodeGroupsClient",
+          "rpcs": {
+            "AddNodes": {
+              "methods": [
+                "add_nodes"
+              ]
+            },
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "DeleteNodes": {
+              "methods": [
+                "delete_nodes"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListNodes": {
+              "methods": [
+                "list_nodes"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "PerformMaintenance": {
+              "methods": [
+                "perform_maintenance"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetNodeTemplate": {
+              "methods": [
+                "set_node_template"
+              ]
+            },
+            "SimulateMaintenanceEvent": {
+              "methods": [
+                "simulate_maintenance_event"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NodeTemplates": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "NodeTemplatesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NodeTypes": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "NodeTypesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "OrganizationSecurityPolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "OrganizationSecurityPoliciesClient",
+          "rpcs": {
+            "AddAssociation": {
+              "methods": [
+                "add_association"
+              ]
+            },
+            "AddRule": {
+              "methods": [
+                "add_rule"
+              ]
+            },
+            "CopyRules": {
+              "methods": [
+                "copy_rules"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetAssociation": {
+              "methods": [
+                "get_association"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListAssociations": {
+              "methods": [
+                "list_associations"
+              ]
+            },
+            "ListPreconfiguredExpressionSets": {
+              "methods": [
+                "list_preconfigured_expression_sets"
+              ]
+            },
+            "Move": {
+              "methods": [
+                "move"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "PatchRule": {
+              "methods": [
+                "patch_rule"
+              ]
+            },
+            "RemoveAssociation": {
+              "methods": [
+                "remove_association"
+              ]
+            },
+            "RemoveRule": {
+              "methods": [
+                "remove_rule"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PacketMirrorings": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "PacketMirroringsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PreviewFeatures": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "PreviewFeaturesClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ProjectViews": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ProjectViewsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Projects": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ProjectsClient",
+          "rpcs": {
+            "DisableXpnHost": {
+              "methods": [
+                "disable_xpn_host"
+              ]
+            },
+            "DisableXpnResource": {
+              "methods": [
+                "disable_xpn_resource"
+              ]
+            },
+            "EnableXpnHost": {
+              "methods": [
+                "enable_xpn_host"
+              ]
+            },
+            "EnableXpnResource": {
+              "methods": [
+                "enable_xpn_resource"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetXpnHost": {
+              "methods": [
+                "get_xpn_host"
+              ]
+            },
+            "GetXpnResources": {
+              "methods": [
+                "get_xpn_resources"
+              ]
+            },
+            "ListXpnHosts": {
+              "methods": [
+                "list_xpn_hosts"
+              ]
+            },
+            "MoveDisk": {
+              "methods": [
+                "move_disk"
+              ]
+            },
+            "MoveInstance": {
+              "methods": [
+                "move_instance"
+              ]
+            },
+            "SetCloudArmorTier": {
+              "methods": [
+                "set_cloud_armor_tier"
+              ]
+            },
+            "SetCommonInstanceMetadata": {
+              "methods": [
+                "set_common_instance_metadata"
+              ]
+            },
+            "SetDefaultNetworkTier": {
+              "methods": [
+                "set_default_network_tier"
+              ]
+            },
+            "SetUsageExportBucket": {
+              "methods": [
+                "set_usage_export_bucket"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PublicAdvertisedPrefixes": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "PublicAdvertisedPrefixesClient",
+          "rpcs": {
+            "Announce": {
+              "methods": [
+                "announce"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "Withdraw": {
+              "methods": [
+                "withdraw"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PublicDelegatedPrefixes": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "PublicDelegatedPrefixesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Announce": {
+              "methods": [
+                "announce"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "Withdraw": {
+              "methods": [
+                "withdraw"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionAutoscalers": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionAutoscalersClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionBackendBuckets": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionBackendBucketsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListUsable": {
+              "methods": [
+                "list_usable"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionBackendServices": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionBackendServicesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetHealth": {
+              "methods": [
+                "get_health"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListUsable": {
+              "methods": [
+                "list_usable"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetSecurityPolicy": {
+              "methods": [
+                "set_security_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionCommitments": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionCommitmentsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionCompositeHealthChecks": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionCompositeHealthChecksClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetHealth": {
+              "methods": [
+                "get_health"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionDiskTypes": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionDiskTypesClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionDisks": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionDisksClient",
+          "rpcs": {
+            "AddResourcePolicies": {
+              "methods": [
+                "add_resource_policies"
+              ]
+            },
+            "BulkInsert": {
+              "methods": [
+                "bulk_insert"
+              ]
+            },
+            "CreateSnapshot": {
+              "methods": [
+                "create_snapshot"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "RemoveResourcePolicies": {
+              "methods": [
+                "remove_resource_policies"
+              ]
+            },
+            "Resize": {
+              "methods": [
+                "resize"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "StartAsyncReplication": {
+              "methods": [
+                "start_async_replication"
+              ]
+            },
+            "StopAsyncReplication": {
+              "methods": [
+                "stop_async_replication"
+              ]
+            },
+            "StopGroupAsyncReplication": {
+              "methods": [
+                "stop_group_async_replication"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            },
+            "UpdateKmsKey": {
+              "methods": [
+                "update_kms_key"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionHealthAggregationPolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionHealthAggregationPoliciesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionHealthCheckServices": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionHealthCheckServicesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionHealthChecks": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionHealthChecksClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionHealthSources": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionHealthSourcesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetHealth": {
+              "methods": [
+                "get_health"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionInstanceGroupManagerResizeRequests": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionInstanceGroupManagerResizeRequestsClient",
+          "rpcs": {
+            "Cancel": {
+              "methods": [
+                "cancel"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionInstanceGroupManagers": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionInstanceGroupManagersClient",
+          "rpcs": {
+            "AbandonInstances": {
+              "methods": [
+                "abandon_instances"
+              ]
+            },
+            "ApplyUpdatesToInstances": {
+              "methods": [
+                "apply_updates_to_instances"
+              ]
+            },
+            "CreateInstances": {
+              "methods": [
+                "create_instances"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "DeleteInstances": {
+              "methods": [
+                "delete_instances"
+              ]
+            },
+            "DeletePerInstanceConfigs": {
+              "methods": [
+                "delete_per_instance_configs"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListErrors": {
+              "methods": [
+                "list_errors"
+              ]
+            },
+            "ListManagedInstances": {
+              "methods": [
+                "list_managed_instances"
+              ]
+            },
+            "ListPerInstanceConfigs": {
+              "methods": [
+                "list_per_instance_configs"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "PatchPerInstanceConfigs": {
+              "methods": [
+                "patch_per_instance_configs"
+              ]
+            },
+            "RecreateInstances": {
+              "methods": [
+                "recreate_instances"
+              ]
+            },
+            "Resize": {
+              "methods": [
+                "resize"
+              ]
+            },
+            "ResumeInstances": {
+              "methods": [
+                "resume_instances"
+              ]
+            },
+            "SetInstanceTemplate": {
+              "methods": [
+                "set_instance_template"
+              ]
+            },
+            "SetTargetPools": {
+              "methods": [
+                "set_target_pools"
+              ]
+            },
+            "StartInstances": {
+              "methods": [
+                "start_instances"
+              ]
+            },
+            "StopInstances": {
+              "methods": [
+                "stop_instances"
+              ]
+            },
+            "SuspendInstances": {
+              "methods": [
+                "suspend_instances"
+              ]
+            },
+            "UpdatePerInstanceConfigs": {
+              "methods": [
+                "update_per_instance_configs"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionInstanceGroups": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionInstanceGroupsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "SetNamedPorts": {
+              "methods": [
+                "set_named_ports"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionInstanceTemplates": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionInstanceTemplatesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionInstances": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionInstancesClient",
+          "rpcs": {
+            "BulkInsert": {
+              "methods": [
+                "bulk_insert"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionInstantSnapshotGroups": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionInstantSnapshotGroupsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionInstantSnapshots": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionInstantSnapshotsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionNetworkEndpointGroups": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionNetworkEndpointGroupsClient",
+          "rpcs": {
+            "AttachNetworkEndpoints": {
+              "methods": [
+                "attach_network_endpoints"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "DetachNetworkEndpoints": {
+              "methods": [
+                "detach_network_endpoints"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListNetworkEndpoints": {
+              "methods": [
+                "list_network_endpoints"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionNetworkFirewallPolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionNetworkFirewallPoliciesClient",
+          "rpcs": {
+            "AddAssociation": {
+              "methods": [
+                "add_association"
+              ]
+            },
+            "AddRule": {
+              "methods": [
+                "add_rule"
+              ]
+            },
+            "CloneRules": {
+              "methods": [
+                "clone_rules"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetAssociation": {
+              "methods": [
+                "get_association"
+              ]
+            },
+            "GetEffectiveFirewalls": {
+              "methods": [
+                "get_effective_firewalls"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "PatchAssociation": {
+              "methods": [
+                "patch_association"
+              ]
+            },
+            "PatchRule": {
+              "methods": [
+                "patch_rule"
+              ]
+            },
+            "RemoveAssociation": {
+              "methods": [
+                "remove_association"
+              ]
+            },
+            "RemoveRule": {
+              "methods": [
+                "remove_rule"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionNotificationEndpoints": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionNotificationEndpointsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionOperations": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionOperationsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Wait": {
+              "methods": [
+                "wait"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionSecurityPolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionSecurityPoliciesClient",
+          "rpcs": {
+            "AddRule": {
+              "methods": [
+                "add_rule"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "PatchRule": {
+              "methods": [
+                "patch_rule"
+              ]
+            },
+            "RemoveRule": {
+              "methods": [
+                "remove_rule"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionSnapshotSettings": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionSnapshotSettingsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionSnapshots": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionSnapshotsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateKmsKey": {
+              "methods": [
+                "update_kms_key"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionSslCertificates": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionSslCertificatesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionSslPolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionSslPoliciesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListAvailableFeatures": {
+              "methods": [
+                "list_available_features"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionTargetHttpProxies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionTargetHttpProxiesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetUrlMap": {
+              "methods": [
+                "set_url_map"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionTargetHttpsProxies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionTargetHttpsProxiesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetSslCertificates": {
+              "methods": [
+                "set_ssl_certificates"
+              ]
+            },
+            "SetUrlMap": {
+              "methods": [
+                "set_url_map"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionTargetTcpProxies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionTargetTcpProxiesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionUrlMaps": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionUrlMapsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            },
+            "Validate": {
+              "methods": [
+                "validate"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegionZones": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionZonesClient",
+          "rpcs": {
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Regions": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RegionsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ReliabilityRisks": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ReliabilityRisksClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ReservationBlocks": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ReservationBlocksClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "PerformMaintenance": {
+              "methods": [
+                "perform_maintenance"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ReservationSlots": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ReservationSlotsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetHealth": {
+              "methods": [
+                "get_health"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ReservationSubBlocks": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ReservationSubBlocksClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "PerformMaintenance": {
+              "methods": [
+                "perform_maintenance"
+              ]
+            },
+            "ReportFaulty": {
+              "methods": [
+                "report_faulty"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Reservations": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ReservationsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "PerformMaintenance": {
+              "methods": [
+                "perform_maintenance"
+              ]
+            },
+            "Resize": {
+              "methods": [
+                "resize"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ResourcePolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ResourcePoliciesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RolloutPlans": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RolloutPlansClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Rollouts": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RolloutsClient",
+          "rpcs": {
+            "Advance": {
+              "methods": [
+                "advance"
+              ]
+            },
+            "Cancel": {
+              "methods": [
+                "cancel"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Pause": {
+              "methods": [
+                "pause"
+              ]
+            },
+            "Resume": {
+              "methods": [
+                "resume"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Routers": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RoutersClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "DeleteNamedSet": {
+              "methods": [
+                "delete_named_set"
+              ]
+            },
+            "DeleteRoutePolicy": {
+              "methods": [
+                "delete_route_policy"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetNamedSet": {
+              "methods": [
+                "get_named_set"
+              ]
+            },
+            "GetNatIpInfo": {
+              "methods": [
+                "get_nat_ip_info"
+              ]
+            },
+            "GetNatMappingInfo": {
+              "methods": [
+                "get_nat_mapping_info"
+              ]
+            },
+            "GetRoutePolicy": {
+              "methods": [
+                "get_route_policy"
+              ]
+            },
+            "GetRouterStatus": {
+              "methods": [
+                "get_router_status"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListBgpRoutes": {
+              "methods": [
+                "list_bgp_routes"
+              ]
+            },
+            "ListNamedSets": {
+              "methods": [
+                "list_named_sets"
+              ]
+            },
+            "ListRoutePolicies": {
+              "methods": [
+                "list_route_policies"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "PatchNamedSet": {
+              "methods": [
+                "patch_named_set"
+              ]
+            },
+            "PatchRoutePolicy": {
+              "methods": [
+                "patch_route_policy"
+              ]
+            },
+            "Preview": {
+              "methods": [
+                "preview"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            },
+            "UpdateNamedSet": {
+              "methods": [
+                "update_named_set"
+              ]
+            },
+            "UpdateRoutePolicy": {
+              "methods": [
+                "update_route_policy"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Routes": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "RoutesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SecurityPolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "SecurityPoliciesClient",
+          "rpcs": {
+            "AddRule": {
+              "methods": [
+                "add_rule"
+              ]
+            },
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListPreconfiguredExpressionSets": {
+              "methods": [
+                "list_preconfigured_expression_sets"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "PatchRule": {
+              "methods": [
+                "patch_rule"
+              ]
+            },
+            "RemoveRule": {
+              "methods": [
+                "remove_rule"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ServiceAttachments": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ServiceAttachmentsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SnapshotSettingsService": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "SnapshotSettingsServiceClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Snapshots": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "SnapshotsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateKmsKey": {
+              "methods": [
+                "update_kms_key"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SslCertificates": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "SslCertificatesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SslPolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "SslPoliciesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListAvailableFeatures": {
+              "methods": [
+                "list_available_features"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "StoragePoolTypes": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "StoragePoolTypesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "StoragePools": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "StoragePoolsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListDisks": {
+              "methods": [
+                "list_disks"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Subnetworks": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "SubnetworksClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "ExpandIpCidrRange": {
+              "methods": [
+                "expand_ip_cidr_range"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListUsable": {
+              "methods": [
+                "list_usable"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SetPrivateIpGoogleAccess": {
+              "methods": [
+                "set_private_ip_google_access"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TargetGrpcProxies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "TargetGrpcProxiesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TargetHttpProxies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "TargetHttpProxiesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetUrlMap": {
+              "methods": [
+                "set_url_map"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TargetHttpsProxies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "TargetHttpsProxiesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "SetCertificateMap": {
+              "methods": [
+                "set_certificate_map"
+              ]
+            },
+            "SetQuicOverride": {
+              "methods": [
+                "set_quic_override"
+              ]
+            },
+            "SetSslCertificates": {
+              "methods": [
+                "set_ssl_certificates"
+              ]
+            },
+            "SetSslPolicy": {
+              "methods": [
+                "set_ssl_policy"
+              ]
+            },
+            "SetUrlMap": {
+              "methods": [
+                "set_url_map"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TargetInstances": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "TargetInstancesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetSecurityPolicy": {
+              "methods": [
+                "set_security_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TargetPools": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "TargetPoolsClient",
+          "rpcs": {
+            "AddHealthCheck": {
+              "methods": [
+                "add_health_check"
+              ]
+            },
+            "AddInstance": {
+              "methods": [
+                "add_instance"
+              ]
+            },
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetHealth": {
+              "methods": [
+                "get_health"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "RemoveHealthCheck": {
+              "methods": [
+                "remove_health_check"
+              ]
+            },
+            "RemoveInstance": {
+              "methods": [
+                "remove_instance"
+              ]
+            },
+            "SetBackup": {
+              "methods": [
+                "set_backup"
+              ]
+            },
+            "SetSecurityPolicy": {
+              "methods": [
+                "set_security_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TargetSslProxies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "TargetSslProxiesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetBackendService": {
+              "methods": [
+                "set_backend_service"
+              ]
+            },
+            "SetCertificateMap": {
+              "methods": [
+                "set_certificate_map"
+              ]
+            },
+            "SetProxyHeader": {
+              "methods": [
+                "set_proxy_header"
+              ]
+            },
+            "SetSslCertificates": {
+              "methods": [
+                "set_ssl_certificates"
+              ]
+            },
+            "SetSslPolicy": {
+              "methods": [
+                "set_ssl_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TargetTcpProxies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "TargetTcpProxiesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetBackendService": {
+              "methods": [
+                "set_backend_service"
+              ]
+            },
+            "SetProxyHeader": {
+              "methods": [
+                "set_proxy_header"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TargetVpnGateways": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "TargetVpnGatewaysClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "UrlMaps": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "UrlMapsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "InvalidateCache": {
+              "methods": [
+                "invalidate_cache"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            },
+            "Validate": {
+              "methods": [
+                "validate"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "VpnGateways": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "VpnGatewaysClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetStatus": {
+              "methods": [
+                "get_status"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "VpnTunnels": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "VpnTunnelsClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "SetLabels": {
+              "methods": [
+                "set_labels"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "WireGroups": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "WireGroupsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Patch": {
+              "methods": [
+                "patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ZoneOperations": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ZoneOperationsClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Wait": {
+              "methods": [
+                "wait"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ZoneVmExtensionPolicies": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ZoneVmExtensionPoliciesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Zones": {
+      "apiVersion": "2026-09-01",
+      "clients": {
+        "rest": {
+          "libraryClient": "ZonesClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

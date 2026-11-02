@@ -1,0 +1,3390 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.support.v2beta",
+        "version": "v2beta"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-support",
+    "version": "0.5.4"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseAttachmentServiceAsyncClient",
+          "shortName": "CaseAttachmentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseAttachmentServiceAsyncClient.get_attachment",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseAttachmentService.GetAttachment",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseAttachmentService",
+            "shortName": "CaseAttachmentService"
+          },
+          "shortName": "GetAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.GetAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Attachment",
+        "shortName": "get_attachment"
+      },
+      "description": "Sample for GetAttachment",
+      "file": "cloudsupport_v2beta_generated_case_attachment_service_get_attachment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseAttachmentService_GetAttachment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_attachment_service_get_attachment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseAttachmentServiceClient",
+          "shortName": "CaseAttachmentServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseAttachmentServiceClient.get_attachment",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseAttachmentService.GetAttachment",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseAttachmentService",
+            "shortName": "CaseAttachmentService"
+          },
+          "shortName": "GetAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.GetAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Attachment",
+        "shortName": "get_attachment"
+      },
+      "description": "Sample for GetAttachment",
+      "file": "cloudsupport_v2beta_generated_case_attachment_service_get_attachment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseAttachmentService_GetAttachment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_attachment_service_get_attachment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseAttachmentServiceAsyncClient",
+          "shortName": "CaseAttachmentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseAttachmentServiceAsyncClient.list_attachments",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseAttachmentService.ListAttachments",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseAttachmentService",
+            "shortName": "CaseAttachmentService"
+          },
+          "shortName": "ListAttachments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ListAttachmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.case_attachment_service.pagers.ListAttachmentsAsyncPager",
+        "shortName": "list_attachments"
+      },
+      "description": "Sample for ListAttachments",
+      "file": "cloudsupport_v2beta_generated_case_attachment_service_list_attachments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseAttachmentService_ListAttachments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_attachment_service_list_attachments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseAttachmentServiceClient",
+          "shortName": "CaseAttachmentServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseAttachmentServiceClient.list_attachments",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseAttachmentService.ListAttachments",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseAttachmentService",
+            "shortName": "CaseAttachmentService"
+          },
+          "shortName": "ListAttachments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ListAttachmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.case_attachment_service.pagers.ListAttachmentsPager",
+        "shortName": "list_attachments"
+      },
+      "description": "Sample for ListAttachments",
+      "file": "cloudsupport_v2beta_generated_case_attachment_service_list_attachments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseAttachmentService_ListAttachments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_attachment_service_list_attachments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient",
+          "shortName": "CaseServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient.close_case",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.CloseCase",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "CloseCase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.CloseCaseRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Case",
+        "shortName": "close_case"
+      },
+      "description": "Sample for CloseCase",
+      "file": "cloudsupport_v2beta_generated_case_service_close_case_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_CloseCase_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_close_case_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceClient",
+          "shortName": "CaseServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceClient.close_case",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.CloseCase",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "CloseCase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.CloseCaseRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Case",
+        "shortName": "close_case"
+      },
+      "description": "Sample for CloseCase",
+      "file": "cloudsupport_v2beta_generated_case_service_close_case_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_CloseCase_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_close_case_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient",
+          "shortName": "CaseServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient.create_case",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.CreateCase",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "CreateCase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.CreateCaseRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "case",
+            "type": "google.cloud.support_v2beta.types.Case"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Case",
+        "shortName": "create_case"
+      },
+      "description": "Sample for CreateCase",
+      "file": "cloudsupport_v2beta_generated_case_service_create_case_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_CreateCase_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_create_case_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceClient",
+          "shortName": "CaseServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceClient.create_case",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.CreateCase",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "CreateCase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.CreateCaseRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "case",
+            "type": "google.cloud.support_v2beta.types.Case"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Case",
+        "shortName": "create_case"
+      },
+      "description": "Sample for CreateCase",
+      "file": "cloudsupport_v2beta_generated_case_service_create_case_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_CreateCase_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_create_case_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient",
+          "shortName": "CaseServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient.escalate_case",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.EscalateCase",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "EscalateCase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.EscalateCaseRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Case",
+        "shortName": "escalate_case"
+      },
+      "description": "Sample for EscalateCase",
+      "file": "cloudsupport_v2beta_generated_case_service_escalate_case_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_EscalateCase_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_escalate_case_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceClient",
+          "shortName": "CaseServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceClient.escalate_case",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.EscalateCase",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "EscalateCase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.EscalateCaseRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Case",
+        "shortName": "escalate_case"
+      },
+      "description": "Sample for EscalateCase",
+      "file": "cloudsupport_v2beta_generated_case_service_escalate_case_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_EscalateCase_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_escalate_case_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient",
+          "shortName": "CaseServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient.get_case",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.GetCase",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "GetCase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.GetCaseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Case",
+        "shortName": "get_case"
+      },
+      "description": "Sample for GetCase",
+      "file": "cloudsupport_v2beta_generated_case_service_get_case_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_GetCase_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_get_case_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceClient",
+          "shortName": "CaseServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceClient.get_case",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.GetCase",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "GetCase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.GetCaseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Case",
+        "shortName": "get_case"
+      },
+      "description": "Sample for GetCase",
+      "file": "cloudsupport_v2beta_generated_case_service_get_case_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_GetCase_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_get_case_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient",
+          "shortName": "CaseServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient.list_cases",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.ListCases",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "ListCases"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ListCasesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.case_service.pagers.ListCasesAsyncPager",
+        "shortName": "list_cases"
+      },
+      "description": "Sample for ListCases",
+      "file": "cloudsupport_v2beta_generated_case_service_list_cases_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_ListCases_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_list_cases_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceClient",
+          "shortName": "CaseServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceClient.list_cases",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.ListCases",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "ListCases"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ListCasesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.case_service.pagers.ListCasesPager",
+        "shortName": "list_cases"
+      },
+      "description": "Sample for ListCases",
+      "file": "cloudsupport_v2beta_generated_case_service_list_cases_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_ListCases_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_list_cases_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient",
+          "shortName": "CaseServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient.search_case_classifications",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.SearchCaseClassifications",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "SearchCaseClassifications"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.SearchCaseClassificationsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.case_service.pagers.SearchCaseClassificationsAsyncPager",
+        "shortName": "search_case_classifications"
+      },
+      "description": "Sample for SearchCaseClassifications",
+      "file": "cloudsupport_v2beta_generated_case_service_search_case_classifications_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_SearchCaseClassifications_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_search_case_classifications_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceClient",
+          "shortName": "CaseServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceClient.search_case_classifications",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.SearchCaseClassifications",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "SearchCaseClassifications"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.SearchCaseClassificationsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.case_service.pagers.SearchCaseClassificationsPager",
+        "shortName": "search_case_classifications"
+      },
+      "description": "Sample for SearchCaseClassifications",
+      "file": "cloudsupport_v2beta_generated_case_service_search_case_classifications_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_SearchCaseClassifications_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_search_case_classifications_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient",
+          "shortName": "CaseServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient.search_cases",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.SearchCases",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "SearchCases"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.SearchCasesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.case_service.pagers.SearchCasesAsyncPager",
+        "shortName": "search_cases"
+      },
+      "description": "Sample for SearchCases",
+      "file": "cloudsupport_v2beta_generated_case_service_search_cases_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_SearchCases_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_search_cases_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceClient",
+          "shortName": "CaseServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceClient.search_cases",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.SearchCases",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "SearchCases"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.SearchCasesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.case_service.pagers.SearchCasesPager",
+        "shortName": "search_cases"
+      },
+      "description": "Sample for SearchCases",
+      "file": "cloudsupport_v2beta_generated_case_service_search_cases_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_SearchCases_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_search_cases_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient",
+          "shortName": "CaseServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceAsyncClient.update_case",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.UpdateCase",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "UpdateCase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.UpdateCaseRequest"
+          },
+          {
+            "name": "case",
+            "type": "google.cloud.support_v2beta.types.Case"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Case",
+        "shortName": "update_case"
+      },
+      "description": "Sample for UpdateCase",
+      "file": "cloudsupport_v2beta_generated_case_service_update_case_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_UpdateCase_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_update_case_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CaseServiceClient",
+          "shortName": "CaseServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CaseServiceClient.update_case",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CaseService.UpdateCase",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CaseService",
+            "shortName": "CaseService"
+          },
+          "shortName": "UpdateCase"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.UpdateCaseRequest"
+          },
+          {
+            "name": "case",
+            "type": "google.cloud.support_v2beta.types.Case"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Case",
+        "shortName": "update_case"
+      },
+      "description": "Sample for UpdateCase",
+      "file": "cloudsupport_v2beta_generated_case_service_update_case_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CaseService_UpdateCase_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_case_service_update_case_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CommentServiceAsyncClient",
+          "shortName": "CommentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CommentServiceAsyncClient.create_comment",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CommentService.CreateComment",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CommentService",
+            "shortName": "CommentService"
+          },
+          "shortName": "CreateComment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.CreateCommentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "comment",
+            "type": "google.cloud.support_v2beta.types.Comment"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Comment",
+        "shortName": "create_comment"
+      },
+      "description": "Sample for CreateComment",
+      "file": "cloudsupport_v2beta_generated_comment_service_create_comment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CommentService_CreateComment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_comment_service_create_comment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CommentServiceClient",
+          "shortName": "CommentServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CommentServiceClient.create_comment",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CommentService.CreateComment",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CommentService",
+            "shortName": "CommentService"
+          },
+          "shortName": "CreateComment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.CreateCommentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "comment",
+            "type": "google.cloud.support_v2beta.types.Comment"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Comment",
+        "shortName": "create_comment"
+      },
+      "description": "Sample for CreateComment",
+      "file": "cloudsupport_v2beta_generated_comment_service_create_comment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CommentService_CreateComment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_comment_service_create_comment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CommentServiceAsyncClient",
+          "shortName": "CommentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CommentServiceAsyncClient.get_comment",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CommentService.GetComment",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CommentService",
+            "shortName": "CommentService"
+          },
+          "shortName": "GetComment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.GetCommentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Comment",
+        "shortName": "get_comment"
+      },
+      "description": "Sample for GetComment",
+      "file": "cloudsupport_v2beta_generated_comment_service_get_comment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CommentService_GetComment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_comment_service_get_comment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CommentServiceClient",
+          "shortName": "CommentServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CommentServiceClient.get_comment",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CommentService.GetComment",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CommentService",
+            "shortName": "CommentService"
+          },
+          "shortName": "GetComment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.GetCommentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.Comment",
+        "shortName": "get_comment"
+      },
+      "description": "Sample for GetComment",
+      "file": "cloudsupport_v2beta_generated_comment_service_get_comment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CommentService_GetComment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_comment_service_get_comment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CommentServiceAsyncClient",
+          "shortName": "CommentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CommentServiceAsyncClient.list_comments",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CommentService.ListComments",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CommentService",
+            "shortName": "CommentService"
+          },
+          "shortName": "ListComments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ListCommentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.comment_service.pagers.ListCommentsAsyncPager",
+        "shortName": "list_comments"
+      },
+      "description": "Sample for ListComments",
+      "file": "cloudsupport_v2beta_generated_comment_service_list_comments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CommentService_ListComments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_comment_service_list_comments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.CommentServiceClient",
+          "shortName": "CommentServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.CommentServiceClient.list_comments",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.CommentService.ListComments",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.CommentService",
+            "shortName": "CommentService"
+          },
+          "shortName": "ListComments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ListCommentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.comment_service.pagers.ListCommentsPager",
+        "shortName": "list_comments"
+      },
+      "description": "Sample for ListComments",
+      "file": "cloudsupport_v2beta_generated_comment_service_list_comments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_CommentService_ListComments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_comment_service_list_comments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.FeedServiceAsyncClient",
+          "shortName": "FeedServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.FeedServiceAsyncClient.show_feed",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.FeedService.ShowFeed",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.FeedService",
+            "shortName": "FeedService"
+          },
+          "shortName": "ShowFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ShowFeedRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.feed_service.pagers.ShowFeedAsyncPager",
+        "shortName": "show_feed"
+      },
+      "description": "Sample for ShowFeed",
+      "file": "cloudsupport_v2beta_generated_feed_service_show_feed_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_FeedService_ShowFeed_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_feed_service_show_feed_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.FeedServiceClient",
+          "shortName": "FeedServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.FeedServiceClient.show_feed",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.FeedService.ShowFeed",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.FeedService",
+            "shortName": "FeedService"
+          },
+          "shortName": "ShowFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ShowFeedRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.feed_service.pagers.ShowFeedPager",
+        "shortName": "show_feed"
+      },
+      "description": "Sample for ShowFeed",
+      "file": "cloudsupport_v2beta_generated_feed_service_show_feed_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_FeedService_ShowFeed_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_feed_service_show_feed_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient",
+          "shortName": "SupportEventSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient.create_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.CreateSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "CreateSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.CreateSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "support_event_subscription",
+            "type": "google.cloud.support_v2beta.types.SupportEventSubscription"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.SupportEventSubscription",
+        "shortName": "create_support_event_subscription"
+      },
+      "description": "Sample for CreateSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_create_support_event_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_CreateSupportEventSubscription_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_create_support_event_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient",
+          "shortName": "SupportEventSubscriptionServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient.create_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.CreateSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "CreateSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.CreateSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "support_event_subscription",
+            "type": "google.cloud.support_v2beta.types.SupportEventSubscription"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.SupportEventSubscription",
+        "shortName": "create_support_event_subscription"
+      },
+      "description": "Sample for CreateSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_create_support_event_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_CreateSupportEventSubscription_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_create_support_event_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient",
+          "shortName": "SupportEventSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient.delete_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.DeleteSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "DeleteSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.DeleteSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.SupportEventSubscription",
+        "shortName": "delete_support_event_subscription"
+      },
+      "description": "Sample for DeleteSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_delete_support_event_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_DeleteSupportEventSubscription_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_delete_support_event_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient",
+          "shortName": "SupportEventSubscriptionServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient.delete_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.DeleteSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "DeleteSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.DeleteSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.SupportEventSubscription",
+        "shortName": "delete_support_event_subscription"
+      },
+      "description": "Sample for DeleteSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_delete_support_event_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_DeleteSupportEventSubscription_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_delete_support_event_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient",
+          "shortName": "SupportEventSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient.expunge_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.ExpungeSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "ExpungeSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ExpungeSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "expunge_support_event_subscription"
+      },
+      "description": "Sample for ExpungeSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_expunge_support_event_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_ExpungeSupportEventSubscription_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_expunge_support_event_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient",
+          "shortName": "SupportEventSubscriptionServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient.expunge_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.ExpungeSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "ExpungeSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ExpungeSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "expunge_support_event_subscription"
+      },
+      "description": "Sample for ExpungeSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_expunge_support_event_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_ExpungeSupportEventSubscription_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_expunge_support_event_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient",
+          "shortName": "SupportEventSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient.get_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.GetSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "GetSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.GetSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.SupportEventSubscription",
+        "shortName": "get_support_event_subscription"
+      },
+      "description": "Sample for GetSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_get_support_event_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_GetSupportEventSubscription_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_get_support_event_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient",
+          "shortName": "SupportEventSubscriptionServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient.get_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.GetSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "GetSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.GetSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.SupportEventSubscription",
+        "shortName": "get_support_event_subscription"
+      },
+      "description": "Sample for GetSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_get_support_event_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_GetSupportEventSubscription_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_get_support_event_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient",
+          "shortName": "SupportEventSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient.list_support_event_subscriptions",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.ListSupportEventSubscriptions",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "ListSupportEventSubscriptions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ListSupportEventSubscriptionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.support_event_subscription_service.pagers.ListSupportEventSubscriptionsAsyncPager",
+        "shortName": "list_support_event_subscriptions"
+      },
+      "description": "Sample for ListSupportEventSubscriptions",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_list_support_event_subscriptions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_ListSupportEventSubscriptions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_list_support_event_subscriptions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient",
+          "shortName": "SupportEventSubscriptionServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient.list_support_event_subscriptions",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.ListSupportEventSubscriptions",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "ListSupportEventSubscriptions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.ListSupportEventSubscriptionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.services.support_event_subscription_service.pagers.ListSupportEventSubscriptionsPager",
+        "shortName": "list_support_event_subscriptions"
+      },
+      "description": "Sample for ListSupportEventSubscriptions",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_list_support_event_subscriptions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_ListSupportEventSubscriptions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_list_support_event_subscriptions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient",
+          "shortName": "SupportEventSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient.undelete_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.UndeleteSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "UndeleteSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.UndeleteSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.SupportEventSubscription",
+        "shortName": "undelete_support_event_subscription"
+      },
+      "description": "Sample for UndeleteSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_undelete_support_event_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_UndeleteSupportEventSubscription_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_undelete_support_event_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient",
+          "shortName": "SupportEventSubscriptionServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient.undelete_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.UndeleteSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "UndeleteSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.UndeleteSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.SupportEventSubscription",
+        "shortName": "undelete_support_event_subscription"
+      },
+      "description": "Sample for UndeleteSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_undelete_support_event_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_UndeleteSupportEventSubscription_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_undelete_support_event_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient",
+          "shortName": "SupportEventSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceAsyncClient.update_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.UpdateSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "UpdateSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.UpdateSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "support_event_subscription",
+            "type": "google.cloud.support_v2beta.types.SupportEventSubscription"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.SupportEventSubscription",
+        "shortName": "update_support_event_subscription"
+      },
+      "description": "Sample for UpdateSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_update_support_event_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_UpdateSupportEventSubscription_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_update_support_event_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient",
+          "shortName": "SupportEventSubscriptionServiceClient"
+        },
+        "fullName": "google.cloud.support_v2beta.SupportEventSubscriptionServiceClient.update_support_event_subscription",
+        "method": {
+          "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService.UpdateSupportEventSubscription",
+          "service": {
+            "fullName": "google.cloud.support.v2beta.SupportEventSubscriptionService",
+            "shortName": "SupportEventSubscriptionService"
+          },
+          "shortName": "UpdateSupportEventSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.support_v2beta.types.UpdateSupportEventSubscriptionRequest"
+          },
+          {
+            "name": "support_event_subscription",
+            "type": "google.cloud.support_v2beta.types.SupportEventSubscription"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.support_v2beta.types.SupportEventSubscription",
+        "shortName": "update_support_event_subscription"
+      },
+      "description": "Sample for UpdateSupportEventSubscription",
+      "file": "cloudsupport_v2beta_generated_support_event_subscription_service_update_support_event_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsupport_v2beta_generated_SupportEventSubscriptionService_UpdateSupportEventSubscription_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsupport_v2beta_generated_support_event_subscription_service_update_support_event_subscription_sync.py"
+    }
+  ]
+}

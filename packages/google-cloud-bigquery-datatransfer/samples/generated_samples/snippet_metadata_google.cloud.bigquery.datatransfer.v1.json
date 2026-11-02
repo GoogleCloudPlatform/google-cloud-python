@@ -1,0 +1,2575 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.bigquery.datatransfer.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-bigquery-datatransfer",
+    "version": "3.24.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.check_valid_creds",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.CheckValidCreds",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "CheckValidCreds"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.CheckValidCredsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.CheckValidCredsResponse",
+        "shortName": "check_valid_creds"
+      },
+      "description": "Sample for CheckValidCreds",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_check_valid_creds_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_CheckValidCreds_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_check_valid_creds_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.check_valid_creds",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.CheckValidCreds",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "CheckValidCreds"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.CheckValidCredsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.CheckValidCredsResponse",
+        "shortName": "check_valid_creds"
+      },
+      "description": "Sample for CheckValidCreds",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_check_valid_creds_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_CheckValidCreds_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_check_valid_creds_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.create_transfer_config",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.CreateTransferConfig",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "CreateTransferConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.CreateTransferConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "transfer_config",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.TransferConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.TransferConfig",
+        "shortName": "create_transfer_config"
+      },
+      "description": "Sample for CreateTransferConfig",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_create_transfer_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_CreateTransferConfig_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_create_transfer_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.create_transfer_config",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.CreateTransferConfig",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "CreateTransferConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.CreateTransferConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "transfer_config",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.TransferConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.TransferConfig",
+        "shortName": "create_transfer_config"
+      },
+      "description": "Sample for CreateTransferConfig",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_create_transfer_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_CreateTransferConfig_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_create_transfer_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.delete_transfer_config",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.DeleteTransferConfig",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "DeleteTransferConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.DeleteTransferConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_transfer_config"
+      },
+      "description": "Sample for DeleteTransferConfig",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_delete_transfer_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_DeleteTransferConfig_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_delete_transfer_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.delete_transfer_config",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.DeleteTransferConfig",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "DeleteTransferConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.DeleteTransferConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_transfer_config"
+      },
+      "description": "Sample for DeleteTransferConfig",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_delete_transfer_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_DeleteTransferConfig_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_delete_transfer_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.delete_transfer_run",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.DeleteTransferRun",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "DeleteTransferRun"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.DeleteTransferRunRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_transfer_run"
+      },
+      "description": "Sample for DeleteTransferRun",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_delete_transfer_run_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_DeleteTransferRun_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_delete_transfer_run_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.delete_transfer_run",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.DeleteTransferRun",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "DeleteTransferRun"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.DeleteTransferRunRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_transfer_run"
+      },
+      "description": "Sample for DeleteTransferRun",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_delete_transfer_run_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_DeleteTransferRun_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_delete_transfer_run_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.enroll_data_sources",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.EnrollDataSources",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "EnrollDataSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.EnrollDataSourcesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "enroll_data_sources"
+      },
+      "description": "Sample for EnrollDataSources",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_enroll_data_sources_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_EnrollDataSources_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_enroll_data_sources_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.enroll_data_sources",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.EnrollDataSources",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "EnrollDataSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.EnrollDataSourcesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "enroll_data_sources"
+      },
+      "description": "Sample for EnrollDataSources",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_enroll_data_sources_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_EnrollDataSources_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_enroll_data_sources_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.get_data_source",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.GetDataSource",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "GetDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.GetDataSourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.DataSource",
+        "shortName": "get_data_source"
+      },
+      "description": "Sample for GetDataSource",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_get_data_source_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_GetDataSource_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_get_data_source_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.get_data_source",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.GetDataSource",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "GetDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.GetDataSourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.DataSource",
+        "shortName": "get_data_source"
+      },
+      "description": "Sample for GetDataSource",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_get_data_source_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_GetDataSource_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_get_data_source_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.get_transfer_config",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.GetTransferConfig",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "GetTransferConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.GetTransferConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.TransferConfig",
+        "shortName": "get_transfer_config"
+      },
+      "description": "Sample for GetTransferConfig",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_get_transfer_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_GetTransferConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_get_transfer_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.get_transfer_config",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.GetTransferConfig",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "GetTransferConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.GetTransferConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.TransferConfig",
+        "shortName": "get_transfer_config"
+      },
+      "description": "Sample for GetTransferConfig",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_get_transfer_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_GetTransferConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_get_transfer_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.get_transfer_run",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.GetTransferRun",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "GetTransferRun"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.GetTransferRunRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.TransferRun",
+        "shortName": "get_transfer_run"
+      },
+      "description": "Sample for GetTransferRun",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_get_transfer_run_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_GetTransferRun_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_get_transfer_run_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.get_transfer_run",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.GetTransferRun",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "GetTransferRun"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.GetTransferRunRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.TransferRun",
+        "shortName": "get_transfer_run"
+      },
+      "description": "Sample for GetTransferRun",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_get_transfer_run_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_GetTransferRun_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_get_transfer_run_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.list_data_sources",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.ListDataSources",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "ListDataSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.ListDataSourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.services.data_transfer_service.pagers.ListDataSourcesAsyncPager",
+        "shortName": "list_data_sources"
+      },
+      "description": "Sample for ListDataSources",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_list_data_sources_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_ListDataSources_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_list_data_sources_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.list_data_sources",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.ListDataSources",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "ListDataSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.ListDataSourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.services.data_transfer_service.pagers.ListDataSourcesPager",
+        "shortName": "list_data_sources"
+      },
+      "description": "Sample for ListDataSources",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_list_data_sources_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_ListDataSources_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_list_data_sources_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.list_transfer_configs",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.ListTransferConfigs",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "ListTransferConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.ListTransferConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.services.data_transfer_service.pagers.ListTransferConfigsAsyncPager",
+        "shortName": "list_transfer_configs"
+      },
+      "description": "Sample for ListTransferConfigs",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_configs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_ListTransferConfigs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_configs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.list_transfer_configs",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.ListTransferConfigs",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "ListTransferConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.ListTransferConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.services.data_transfer_service.pagers.ListTransferConfigsPager",
+        "shortName": "list_transfer_configs"
+      },
+      "description": "Sample for ListTransferConfigs",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_configs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_ListTransferConfigs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_configs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.list_transfer_logs",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.ListTransferLogs",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "ListTransferLogs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.ListTransferLogsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.services.data_transfer_service.pagers.ListTransferLogsAsyncPager",
+        "shortName": "list_transfer_logs"
+      },
+      "description": "Sample for ListTransferLogs",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_logs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_ListTransferLogs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_logs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.list_transfer_logs",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.ListTransferLogs",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "ListTransferLogs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.ListTransferLogsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.services.data_transfer_service.pagers.ListTransferLogsPager",
+        "shortName": "list_transfer_logs"
+      },
+      "description": "Sample for ListTransferLogs",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_logs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_ListTransferLogs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_logs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.list_transfer_runs",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.ListTransferRuns",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "ListTransferRuns"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.ListTransferRunsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.services.data_transfer_service.pagers.ListTransferRunsAsyncPager",
+        "shortName": "list_transfer_runs"
+      },
+      "description": "Sample for ListTransferRuns",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_runs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_ListTransferRuns_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_runs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.list_transfer_runs",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.ListTransferRuns",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "ListTransferRuns"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.ListTransferRunsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.services.data_transfer_service.pagers.ListTransferRunsPager",
+        "shortName": "list_transfer_runs"
+      },
+      "description": "Sample for ListTransferRuns",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_runs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_ListTransferRuns_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_list_transfer_runs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.schedule_transfer_runs",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.ScheduleTransferRuns",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "ScheduleTransferRuns"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.ScheduleTransferRunsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "start_time",
+            "type": "google.protobuf.timestamp_pb2.Timestamp"
+          },
+          {
+            "name": "end_time",
+            "type": "google.protobuf.timestamp_pb2.Timestamp"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.ScheduleTransferRunsResponse",
+        "shortName": "schedule_transfer_runs"
+      },
+      "description": "Sample for ScheduleTransferRuns",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_schedule_transfer_runs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_ScheduleTransferRuns_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_schedule_transfer_runs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.schedule_transfer_runs",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.ScheduleTransferRuns",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "ScheduleTransferRuns"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.ScheduleTransferRunsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "start_time",
+            "type": "google.protobuf.timestamp_pb2.Timestamp"
+          },
+          {
+            "name": "end_time",
+            "type": "google.protobuf.timestamp_pb2.Timestamp"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.ScheduleTransferRunsResponse",
+        "shortName": "schedule_transfer_runs"
+      },
+      "description": "Sample for ScheduleTransferRuns",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_schedule_transfer_runs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_ScheduleTransferRuns_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_schedule_transfer_runs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.start_manual_transfer_runs",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.StartManualTransferRuns",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "StartManualTransferRuns"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.StartManualTransferRunsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.StartManualTransferRunsResponse",
+        "shortName": "start_manual_transfer_runs"
+      },
+      "description": "Sample for StartManualTransferRuns",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_start_manual_transfer_runs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_StartManualTransferRuns_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_start_manual_transfer_runs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.start_manual_transfer_runs",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.StartManualTransferRuns",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "StartManualTransferRuns"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.StartManualTransferRunsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.StartManualTransferRunsResponse",
+        "shortName": "start_manual_transfer_runs"
+      },
+      "description": "Sample for StartManualTransferRuns",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_start_manual_transfer_runs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_StartManualTransferRuns_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_start_manual_transfer_runs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.unenroll_data_sources",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.UnenrollDataSources",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "UnenrollDataSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.UnenrollDataSourcesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "unenroll_data_sources"
+      },
+      "description": "Sample for UnenrollDataSources",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_unenroll_data_sources_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_UnenrollDataSources_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_unenroll_data_sources_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.unenroll_data_sources",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.UnenrollDataSources",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "UnenrollDataSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.UnenrollDataSourcesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "unenroll_data_sources"
+      },
+      "description": "Sample for UnenrollDataSources",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_unenroll_data_sources_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_UnenrollDataSources_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_unenroll_data_sources_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient",
+          "shortName": "DataTransferServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceAsyncClient.update_transfer_config",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.UpdateTransferConfig",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "UpdateTransferConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.UpdateTransferConfigRequest"
+          },
+          {
+            "name": "transfer_config",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.TransferConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.TransferConfig",
+        "shortName": "update_transfer_config"
+      },
+      "description": "Sample for UpdateTransferConfig",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_update_transfer_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_UpdateTransferConfig_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_update_transfer_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient",
+          "shortName": "DataTransferServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_datatransfer_v1.DataTransferServiceClient.update_transfer_config",
+        "method": {
+          "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService.UpdateTransferConfig",
+          "service": {
+            "fullName": "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+            "shortName": "DataTransferService"
+          },
+          "shortName": "UpdateTransferConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.UpdateTransferConfigRequest"
+          },
+          {
+            "name": "transfer_config",
+            "type": "google.cloud.bigquery_datatransfer_v1.types.TransferConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_datatransfer_v1.types.TransferConfig",
+        "shortName": "update_transfer_config"
+      },
+      "description": "Sample for UpdateTransferConfig",
+      "file": "bigquerydatatransfer_v1_generated_data_transfer_service_update_transfer_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigquerydatatransfer_v1_generated_DataTransferService_UpdateTransferConfig_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigquerydatatransfer_v1_generated_data_transfer_service_update_transfer_config_sync.py"
+    }
+  ]
+}

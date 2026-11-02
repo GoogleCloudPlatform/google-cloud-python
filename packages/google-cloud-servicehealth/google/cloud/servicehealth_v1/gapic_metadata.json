@@ -1,0 +1,118 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.servicehealth_v1",
+  "protoPackage": "google.cloud.servicehealth.v1",
+  "schema": "1.0",
+  "services": {
+    "ServiceHealth": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ServiceHealthClient",
+          "rpcs": {
+            "GetEvent": {
+              "methods": [
+                "get_event"
+              ]
+            },
+            "GetOrganizationEvent": {
+              "methods": [
+                "get_organization_event"
+              ]
+            },
+            "GetOrganizationImpact": {
+              "methods": [
+                "get_organization_impact"
+              ]
+            },
+            "ListEvents": {
+              "methods": [
+                "list_events"
+              ]
+            },
+            "ListOrganizationEvents": {
+              "methods": [
+                "list_organization_events"
+              ]
+            },
+            "ListOrganizationImpacts": {
+              "methods": [
+                "list_organization_impacts"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ServiceHealthAsyncClient",
+          "rpcs": {
+            "GetEvent": {
+              "methods": [
+                "get_event"
+              ]
+            },
+            "GetOrganizationEvent": {
+              "methods": [
+                "get_organization_event"
+              ]
+            },
+            "GetOrganizationImpact": {
+              "methods": [
+                "get_organization_impact"
+              ]
+            },
+            "ListEvents": {
+              "methods": [
+                "list_events"
+              ]
+            },
+            "ListOrganizationEvents": {
+              "methods": [
+                "list_organization_events"
+              ]
+            },
+            "ListOrganizationImpacts": {
+              "methods": [
+                "list_organization_impacts"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ServiceHealthClient",
+          "rpcs": {
+            "GetEvent": {
+              "methods": [
+                "get_event"
+              ]
+            },
+            "GetOrganizationEvent": {
+              "methods": [
+                "get_organization_event"
+              ]
+            },
+            "GetOrganizationImpact": {
+              "methods": [
+                "get_organization_impact"
+              ]
+            },
+            "ListEvents": {
+              "methods": [
+                "list_events"
+              ]
+            },
+            "ListOrganizationEvents": {
+              "methods": [
+                "list_organization_events"
+              ]
+            },
+            "ListOrganizationImpacts": {
+              "methods": [
+                "list_organization_impacts"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

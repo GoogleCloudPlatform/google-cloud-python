@@ -1,0 +1,238 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.privilegedaccessmanager_v1",
+  "protoPackage": "google.cloud.privilegedaccessmanager.v1",
+  "schema": "1.0",
+  "services": {
+    "PrivilegedAccessManager": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PrivilegedAccessManagerClient",
+          "rpcs": {
+            "ApproveGrant": {
+              "methods": [
+                "approve_grant"
+              ]
+            },
+            "CheckOnboardingStatus": {
+              "methods": [
+                "check_onboarding_status"
+              ]
+            },
+            "CreateEntitlement": {
+              "methods": [
+                "create_entitlement"
+              ]
+            },
+            "CreateGrant": {
+              "methods": [
+                "create_grant"
+              ]
+            },
+            "DeleteEntitlement": {
+              "methods": [
+                "delete_entitlement"
+              ]
+            },
+            "DenyGrant": {
+              "methods": [
+                "deny_grant"
+              ]
+            },
+            "GetEntitlement": {
+              "methods": [
+                "get_entitlement"
+              ]
+            },
+            "GetGrant": {
+              "methods": [
+                "get_grant"
+              ]
+            },
+            "ListEntitlements": {
+              "methods": [
+                "list_entitlements"
+              ]
+            },
+            "ListGrants": {
+              "methods": [
+                "list_grants"
+              ]
+            },
+            "RevokeGrant": {
+              "methods": [
+                "revoke_grant"
+              ]
+            },
+            "SearchEntitlements": {
+              "methods": [
+                "search_entitlements"
+              ]
+            },
+            "SearchGrants": {
+              "methods": [
+                "search_grants"
+              ]
+            },
+            "UpdateEntitlement": {
+              "methods": [
+                "update_entitlement"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "PrivilegedAccessManagerAsyncClient",
+          "rpcs": {
+            "ApproveGrant": {
+              "methods": [
+                "approve_grant"
+              ]
+            },
+            "CheckOnboardingStatus": {
+              "methods": [
+                "check_onboarding_status"
+              ]
+            },
+            "CreateEntitlement": {
+              "methods": [
+                "create_entitlement"
+              ]
+            },
+            "CreateGrant": {
+              "methods": [
+                "create_grant"
+              ]
+            },
+            "DeleteEntitlement": {
+              "methods": [
+                "delete_entitlement"
+              ]
+            },
+            "DenyGrant": {
+              "methods": [
+                "deny_grant"
+              ]
+            },
+            "GetEntitlement": {
+              "methods": [
+                "get_entitlement"
+              ]
+            },
+            "GetGrant": {
+              "methods": [
+                "get_grant"
+              ]
+            },
+            "ListEntitlements": {
+              "methods": [
+                "list_entitlements"
+              ]
+            },
+            "ListGrants": {
+              "methods": [
+                "list_grants"
+              ]
+            },
+            "RevokeGrant": {
+              "methods": [
+                "revoke_grant"
+              ]
+            },
+            "SearchEntitlements": {
+              "methods": [
+                "search_entitlements"
+              ]
+            },
+            "SearchGrants": {
+              "methods": [
+                "search_grants"
+              ]
+            },
+            "UpdateEntitlement": {
+              "methods": [
+                "update_entitlement"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "PrivilegedAccessManagerClient",
+          "rpcs": {
+            "ApproveGrant": {
+              "methods": [
+                "approve_grant"
+              ]
+            },
+            "CheckOnboardingStatus": {
+              "methods": [
+                "check_onboarding_status"
+              ]
+            },
+            "CreateEntitlement": {
+              "methods": [
+                "create_entitlement"
+              ]
+            },
+            "CreateGrant": {
+              "methods": [
+                "create_grant"
+              ]
+            },
+            "DeleteEntitlement": {
+              "methods": [
+                "delete_entitlement"
+              ]
+            },
+            "DenyGrant": {
+              "methods": [
+                "deny_grant"
+              ]
+            },
+            "GetEntitlement": {
+              "methods": [
+                "get_entitlement"
+              ]
+            },
+            "GetGrant": {
+              "methods": [
+                "get_grant"
+              ]
+            },
+            "ListEntitlements": {
+              "methods": [
+                "list_entitlements"
+              ]
+            },
+            "ListGrants": {
+              "methods": [
+                "list_grants"
+              ]
+            },
+            "RevokeGrant": {
+              "methods": [
+                "revoke_grant"
+              ]
+            },
+            "SearchEntitlements": {
+              "methods": [
+                "search_entitlements"
+              ]
+            },
+            "SearchGrants": {
+              "methods": [
+                "search_grants"
+              ]
+            },
+            "UpdateEntitlement": {
+              "methods": [
+                "update_entitlement"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

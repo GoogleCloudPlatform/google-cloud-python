@@ -1,0 +1,193 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.redis_v1",
+  "protoPackage": "google.cloud.redis.v1",
+  "schema": "1.0",
+  "services": {
+    "CloudRedis": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudRedisClient",
+          "rpcs": {
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "ExportInstance": {
+              "methods": [
+                "export_instance"
+              ]
+            },
+            "FailoverInstance": {
+              "methods": [
+                "failover_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetInstanceAuthString": {
+              "methods": [
+                "get_instance_auth_string"
+              ]
+            },
+            "ImportInstance": {
+              "methods": [
+                "import_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpgradeInstance": {
+              "methods": [
+                "upgrade_instance"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudRedisAsyncClient",
+          "rpcs": {
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "ExportInstance": {
+              "methods": [
+                "export_instance"
+              ]
+            },
+            "FailoverInstance": {
+              "methods": [
+                "failover_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetInstanceAuthString": {
+              "methods": [
+                "get_instance_auth_string"
+              ]
+            },
+            "ImportInstance": {
+              "methods": [
+                "import_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpgradeInstance": {
+              "methods": [
+                "upgrade_instance"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudRedisClient",
+          "rpcs": {
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "ExportInstance": {
+              "methods": [
+                "export_instance"
+              ]
+            },
+            "FailoverInstance": {
+              "methods": [
+                "failover_instance"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetInstanceAuthString": {
+              "methods": [
+                "get_instance_auth_string"
+              ]
+            },
+            "ImportInstance": {
+              "methods": [
+                "import_instance"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpgradeInstance": {
+              "methods": [
+                "upgrade_instance"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

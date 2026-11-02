@@ -1,0 +1,118 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.gkerecommender_v1",
+  "protoPackage": "google.cloud.gkerecommender.v1",
+  "schema": "1.0",
+  "services": {
+    "GkeInferenceQuickstart": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "GkeInferenceQuickstartClient",
+          "rpcs": {
+            "FetchBenchmarkingData": {
+              "methods": [
+                "fetch_benchmarking_data"
+              ]
+            },
+            "FetchModelServerVersions": {
+              "methods": [
+                "fetch_model_server_versions"
+              ]
+            },
+            "FetchModelServers": {
+              "methods": [
+                "fetch_model_servers"
+              ]
+            },
+            "FetchModels": {
+              "methods": [
+                "fetch_models"
+              ]
+            },
+            "FetchProfiles": {
+              "methods": [
+                "fetch_profiles"
+              ]
+            },
+            "GenerateOptimizedManifest": {
+              "methods": [
+                "generate_optimized_manifest"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "GkeInferenceQuickstartAsyncClient",
+          "rpcs": {
+            "FetchBenchmarkingData": {
+              "methods": [
+                "fetch_benchmarking_data"
+              ]
+            },
+            "FetchModelServerVersions": {
+              "methods": [
+                "fetch_model_server_versions"
+              ]
+            },
+            "FetchModelServers": {
+              "methods": [
+                "fetch_model_servers"
+              ]
+            },
+            "FetchModels": {
+              "methods": [
+                "fetch_models"
+              ]
+            },
+            "FetchProfiles": {
+              "methods": [
+                "fetch_profiles"
+              ]
+            },
+            "GenerateOptimizedManifest": {
+              "methods": [
+                "generate_optimized_manifest"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "GkeInferenceQuickstartClient",
+          "rpcs": {
+            "FetchBenchmarkingData": {
+              "methods": [
+                "fetch_benchmarking_data"
+              ]
+            },
+            "FetchModelServerVersions": {
+              "methods": [
+                "fetch_model_server_versions"
+              ]
+            },
+            "FetchModelServers": {
+              "methods": [
+                "fetch_model_servers"
+              ]
+            },
+            "FetchModels": {
+              "methods": [
+                "fetch_models"
+              ]
+            },
+            "FetchProfiles": {
+              "methods": [
+                "fetch_profiles"
+              ]
+            },
+            "GenerateOptimizedManifest": {
+              "methods": [
+                "generate_optimized_manifest"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

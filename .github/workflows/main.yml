@@ -1,0 +1,69 @@
+# Copyright 2021 Google LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     https://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: A workflow for updating the api list in README.rst
+# Controls when the action will run.
+
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    # Run this Github Action every Tuesday at 7 AM UTC
+    - cron:  '0 7 * * 2'
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  build:
+    permissions:
+      pull-requests: write # for googleapis/code-suggester
+    name: Update API List PR
+    runs-on: ubuntu-26.04
+    # don't run the workflow on forks of googleapis/google-cloud-python
+    if: ${{github.repository == 'googleapis/google-cloud-python'}}
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "current_date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        # Use a fetch-depth of 2
+        # See https://github.com/googleapis/google-cloud-python/issues/12013
+        # and https://github.com/actions/checkout#checkout-head.
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Set up Python 3.10
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.15"
+      - name: Install script dependencies
+        run: pip3 install -r requirements.txt
+        working-directory: ./scripts
+      - name: Run python script to update the api list in README.rst
+        run: python3 scripts/updateapilist.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: googleapis/code-suggester@f9fef85aa02459e30e62526abe950341cbbd768b # v5
+        env:
+          ACCESS_TOKEN: ${{ secrets.YOSHI_CODE_BOT_TOKEN }}
+        with:
+          command: pr
+          force: true
+          upstream_owner: googleapis
+          upstream_repo: google-cloud-python
+          description: 'Update the list of available APIs in the README.'
+          title: 'docs: update the list of available APIs'
+          message: 'docs: update the list of available APIs'
+          branch: update-api-list-${{ steps.date.outputs.current_date }}
+          git_dir: '.'

@@ -1,0 +1,118 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.service_usage_v1",
+  "protoPackage": "google.api.serviceusage.v1",
+  "schema": "1.0",
+  "services": {
+    "ServiceUsage": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ServiceUsageClient",
+          "rpcs": {
+            "BatchEnableServices": {
+              "methods": [
+                "batch_enable_services"
+              ]
+            },
+            "BatchGetServices": {
+              "methods": [
+                "batch_get_services"
+              ]
+            },
+            "DisableService": {
+              "methods": [
+                "disable_service"
+              ]
+            },
+            "EnableService": {
+              "methods": [
+                "enable_service"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ServiceUsageAsyncClient",
+          "rpcs": {
+            "BatchEnableServices": {
+              "methods": [
+                "batch_enable_services"
+              ]
+            },
+            "BatchGetServices": {
+              "methods": [
+                "batch_get_services"
+              ]
+            },
+            "DisableService": {
+              "methods": [
+                "disable_service"
+              ]
+            },
+            "EnableService": {
+              "methods": [
+                "enable_service"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ServiceUsageClient",
+          "rpcs": {
+            "BatchEnableServices": {
+              "methods": [
+                "batch_enable_services"
+              ]
+            },
+            "BatchGetServices": {
+              "methods": [
+                "batch_get_services"
+              ]
+            },
+            "DisableService": {
+              "methods": [
+                "disable_service"
+              ]
+            },
+            "EnableService": {
+              "methods": [
+                "enable_service"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

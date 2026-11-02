@@ -1,0 +1,16 @@
+{
+    "api_description": "Google Cloud NetApp Volumes is a fully-managed, cloud-based data storage\nservice that provides advanced data management capabilities and highly\nscalable performance with global availability.",
+    "api_id": "netapp.googleapis.com",
+    "api_shortname": "netapp",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/netapp/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-netapp",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1144971",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "netapp",
+    "name_pretty": "NetApp",
+    "product_documentation": "https://cloud.google.com/netapp/volumes/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

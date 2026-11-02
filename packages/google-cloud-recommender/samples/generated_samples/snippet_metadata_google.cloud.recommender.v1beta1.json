@@ -1,0 +1,2341 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.recommender.v1beta1",
+        "version": "v1beta1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-recommender",
+    "version": "2.23.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.get_insight_type_config",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.GetInsightTypeConfig",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "GetInsightTypeConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.GetInsightTypeConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.InsightTypeConfig",
+        "shortName": "get_insight_type_config"
+      },
+      "description": "Sample for GetInsightTypeConfig",
+      "file": "recommender_v1beta1_generated_recommender_get_insight_type_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_GetInsightTypeConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_get_insight_type_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.get_insight_type_config",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.GetInsightTypeConfig",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "GetInsightTypeConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.GetInsightTypeConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.InsightTypeConfig",
+        "shortName": "get_insight_type_config"
+      },
+      "description": "Sample for GetInsightTypeConfig",
+      "file": "recommender_v1beta1_generated_recommender_get_insight_type_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_GetInsightTypeConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_get_insight_type_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.get_insight",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.GetInsight",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "GetInsight"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.GetInsightRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Insight",
+        "shortName": "get_insight"
+      },
+      "description": "Sample for GetInsight",
+      "file": "recommender_v1beta1_generated_recommender_get_insight_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_GetInsight_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_get_insight_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.get_insight",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.GetInsight",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "GetInsight"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.GetInsightRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Insight",
+        "shortName": "get_insight"
+      },
+      "description": "Sample for GetInsight",
+      "file": "recommender_v1beta1_generated_recommender_get_insight_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_GetInsight_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_get_insight_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.get_recommendation",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.GetRecommendation",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "GetRecommendation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.GetRecommendationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Recommendation",
+        "shortName": "get_recommendation"
+      },
+      "description": "Sample for GetRecommendation",
+      "file": "recommender_v1beta1_generated_recommender_get_recommendation_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_GetRecommendation_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_get_recommendation_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.get_recommendation",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.GetRecommendation",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "GetRecommendation"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.GetRecommendationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Recommendation",
+        "shortName": "get_recommendation"
+      },
+      "description": "Sample for GetRecommendation",
+      "file": "recommender_v1beta1_generated_recommender_get_recommendation_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_GetRecommendation_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_get_recommendation_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.get_recommender_config",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.GetRecommenderConfig",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "GetRecommenderConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.GetRecommenderConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.RecommenderConfig",
+        "shortName": "get_recommender_config"
+      },
+      "description": "Sample for GetRecommenderConfig",
+      "file": "recommender_v1beta1_generated_recommender_get_recommender_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_GetRecommenderConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_get_recommender_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.get_recommender_config",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.GetRecommenderConfig",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "GetRecommenderConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.GetRecommenderConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.RecommenderConfig",
+        "shortName": "get_recommender_config"
+      },
+      "description": "Sample for GetRecommenderConfig",
+      "file": "recommender_v1beta1_generated_recommender_get_recommender_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_GetRecommenderConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_get_recommender_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.list_insight_types",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.ListInsightTypes",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "ListInsightTypes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.ListInsightTypesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.services.recommender.pagers.ListInsightTypesAsyncPager",
+        "shortName": "list_insight_types"
+      },
+      "description": "Sample for ListInsightTypes",
+      "file": "recommender_v1beta1_generated_recommender_list_insight_types_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_ListInsightTypes_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_list_insight_types_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.list_insight_types",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.ListInsightTypes",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "ListInsightTypes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.ListInsightTypesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.services.recommender.pagers.ListInsightTypesPager",
+        "shortName": "list_insight_types"
+      },
+      "description": "Sample for ListInsightTypes",
+      "file": "recommender_v1beta1_generated_recommender_list_insight_types_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_ListInsightTypes_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_list_insight_types_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.list_insights",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.ListInsights",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "ListInsights"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.ListInsightsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.services.recommender.pagers.ListInsightsAsyncPager",
+        "shortName": "list_insights"
+      },
+      "description": "Sample for ListInsights",
+      "file": "recommender_v1beta1_generated_recommender_list_insights_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_ListInsights_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_list_insights_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.list_insights",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.ListInsights",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "ListInsights"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.ListInsightsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.services.recommender.pagers.ListInsightsPager",
+        "shortName": "list_insights"
+      },
+      "description": "Sample for ListInsights",
+      "file": "recommender_v1beta1_generated_recommender_list_insights_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_ListInsights_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_list_insights_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.list_recommendations",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.ListRecommendations",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "ListRecommendations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.ListRecommendationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.services.recommender.pagers.ListRecommendationsAsyncPager",
+        "shortName": "list_recommendations"
+      },
+      "description": "Sample for ListRecommendations",
+      "file": "recommender_v1beta1_generated_recommender_list_recommendations_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_ListRecommendations_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_list_recommendations_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.list_recommendations",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.ListRecommendations",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "ListRecommendations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.ListRecommendationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "filter",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.services.recommender.pagers.ListRecommendationsPager",
+        "shortName": "list_recommendations"
+      },
+      "description": "Sample for ListRecommendations",
+      "file": "recommender_v1beta1_generated_recommender_list_recommendations_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_ListRecommendations_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_list_recommendations_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.list_recommenders",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.ListRecommenders",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "ListRecommenders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.ListRecommendersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.services.recommender.pagers.ListRecommendersAsyncPager",
+        "shortName": "list_recommenders"
+      },
+      "description": "Sample for ListRecommenders",
+      "file": "recommender_v1beta1_generated_recommender_list_recommenders_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_ListRecommenders_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_list_recommenders_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.list_recommenders",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.ListRecommenders",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "ListRecommenders"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.ListRecommendersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.services.recommender.pagers.ListRecommendersPager",
+        "shortName": "list_recommenders"
+      },
+      "description": "Sample for ListRecommenders",
+      "file": "recommender_v1beta1_generated_recommender_list_recommenders_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_ListRecommenders_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_list_recommenders_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.mark_insight_accepted",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.MarkInsightAccepted",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "MarkInsightAccepted"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.MarkInsightAcceptedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "state_metadata",
+            "type": "MutableMapping[str, str]"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Insight",
+        "shortName": "mark_insight_accepted"
+      },
+      "description": "Sample for MarkInsightAccepted",
+      "file": "recommender_v1beta1_generated_recommender_mark_insight_accepted_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_MarkInsightAccepted_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_mark_insight_accepted_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.mark_insight_accepted",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.MarkInsightAccepted",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "MarkInsightAccepted"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.MarkInsightAcceptedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "state_metadata",
+            "type": "MutableMapping[str, str]"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Insight",
+        "shortName": "mark_insight_accepted"
+      },
+      "description": "Sample for MarkInsightAccepted",
+      "file": "recommender_v1beta1_generated_recommender_mark_insight_accepted_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_MarkInsightAccepted_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_mark_insight_accepted_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.mark_recommendation_claimed",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.MarkRecommendationClaimed",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "MarkRecommendationClaimed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.MarkRecommendationClaimedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "state_metadata",
+            "type": "MutableMapping[str, str]"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Recommendation",
+        "shortName": "mark_recommendation_claimed"
+      },
+      "description": "Sample for MarkRecommendationClaimed",
+      "file": "recommender_v1beta1_generated_recommender_mark_recommendation_claimed_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_MarkRecommendationClaimed_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_mark_recommendation_claimed_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.mark_recommendation_claimed",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.MarkRecommendationClaimed",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "MarkRecommendationClaimed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.MarkRecommendationClaimedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "state_metadata",
+            "type": "MutableMapping[str, str]"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Recommendation",
+        "shortName": "mark_recommendation_claimed"
+      },
+      "description": "Sample for MarkRecommendationClaimed",
+      "file": "recommender_v1beta1_generated_recommender_mark_recommendation_claimed_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_MarkRecommendationClaimed_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_mark_recommendation_claimed_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.mark_recommendation_failed",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.MarkRecommendationFailed",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "MarkRecommendationFailed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.MarkRecommendationFailedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "state_metadata",
+            "type": "MutableMapping[str, str]"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Recommendation",
+        "shortName": "mark_recommendation_failed"
+      },
+      "description": "Sample for MarkRecommendationFailed",
+      "file": "recommender_v1beta1_generated_recommender_mark_recommendation_failed_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_MarkRecommendationFailed_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_mark_recommendation_failed_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.mark_recommendation_failed",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.MarkRecommendationFailed",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "MarkRecommendationFailed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.MarkRecommendationFailedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "state_metadata",
+            "type": "MutableMapping[str, str]"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Recommendation",
+        "shortName": "mark_recommendation_failed"
+      },
+      "description": "Sample for MarkRecommendationFailed",
+      "file": "recommender_v1beta1_generated_recommender_mark_recommendation_failed_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_MarkRecommendationFailed_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_mark_recommendation_failed_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.mark_recommendation_succeeded",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.MarkRecommendationSucceeded",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "MarkRecommendationSucceeded"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.MarkRecommendationSucceededRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "state_metadata",
+            "type": "MutableMapping[str, str]"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Recommendation",
+        "shortName": "mark_recommendation_succeeded"
+      },
+      "description": "Sample for MarkRecommendationSucceeded",
+      "file": "recommender_v1beta1_generated_recommender_mark_recommendation_succeeded_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_MarkRecommendationSucceeded_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_mark_recommendation_succeeded_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.mark_recommendation_succeeded",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.MarkRecommendationSucceeded",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "MarkRecommendationSucceeded"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.MarkRecommendationSucceededRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "state_metadata",
+            "type": "MutableMapping[str, str]"
+          },
+          {
+            "name": "etag",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.Recommendation",
+        "shortName": "mark_recommendation_succeeded"
+      },
+      "description": "Sample for MarkRecommendationSucceeded",
+      "file": "recommender_v1beta1_generated_recommender_mark_recommendation_succeeded_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_MarkRecommendationSucceeded_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_mark_recommendation_succeeded_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.update_insight_type_config",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.UpdateInsightTypeConfig",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "UpdateInsightTypeConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.UpdateInsightTypeConfigRequest"
+          },
+          {
+            "name": "insight_type_config",
+            "type": "google.cloud.recommender_v1beta1.types.InsightTypeConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.InsightTypeConfig",
+        "shortName": "update_insight_type_config"
+      },
+      "description": "Sample for UpdateInsightTypeConfig",
+      "file": "recommender_v1beta1_generated_recommender_update_insight_type_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_UpdateInsightTypeConfig_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_update_insight_type_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.update_insight_type_config",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.UpdateInsightTypeConfig",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "UpdateInsightTypeConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.UpdateInsightTypeConfigRequest"
+          },
+          {
+            "name": "insight_type_config",
+            "type": "google.cloud.recommender_v1beta1.types.InsightTypeConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.InsightTypeConfig",
+        "shortName": "update_insight_type_config"
+      },
+      "description": "Sample for UpdateInsightTypeConfig",
+      "file": "recommender_v1beta1_generated_recommender_update_insight_type_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_UpdateInsightTypeConfig_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_update_insight_type_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient",
+          "shortName": "RecommenderAsyncClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderAsyncClient.update_recommender_config",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.UpdateRecommenderConfig",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "UpdateRecommenderConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.UpdateRecommenderConfigRequest"
+          },
+          {
+            "name": "recommender_config",
+            "type": "google.cloud.recommender_v1beta1.types.RecommenderConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.RecommenderConfig",
+        "shortName": "update_recommender_config"
+      },
+      "description": "Sample for UpdateRecommenderConfig",
+      "file": "recommender_v1beta1_generated_recommender_update_recommender_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_UpdateRecommenderConfig_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_update_recommender_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.recommender_v1beta1.RecommenderClient",
+          "shortName": "RecommenderClient"
+        },
+        "fullName": "google.cloud.recommender_v1beta1.RecommenderClient.update_recommender_config",
+        "method": {
+          "fullName": "google.cloud.recommender.v1beta1.Recommender.UpdateRecommenderConfig",
+          "service": {
+            "fullName": "google.cloud.recommender.v1beta1.Recommender",
+            "shortName": "Recommender"
+          },
+          "shortName": "UpdateRecommenderConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.recommender_v1beta1.types.UpdateRecommenderConfigRequest"
+          },
+          {
+            "name": "recommender_config",
+            "type": "google.cloud.recommender_v1beta1.types.RecommenderConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.recommender_v1beta1.types.RecommenderConfig",
+        "shortName": "update_recommender_config"
+      },
+      "description": "Sample for UpdateRecommenderConfig",
+      "file": "recommender_v1beta1_generated_recommender_update_recommender_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "recommender_v1beta1_generated_Recommender_UpdateRecommenderConfig_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "recommender_v1beta1_generated_recommender_update_recommender_config_sync.py"
+    }
+  ]
+}

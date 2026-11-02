@@ -1,0 +1,16 @@
+{
+    "api_description": "Provides reliable, many-to-many, asynchronous messaging between\napplications.",
+    "api_id": "pubsub.googleapis.com",
+    "api_shortname": "pubsub",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/pubsub/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-pubsub",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=187173",
+    "language": "python",
+    "library_type": "GAPIC_COMBO",
+    "name": "pubsub",
+    "name_pretty": "Cloud Pub/Sub",
+    "product_documentation": "https://cloud.google.com/pubsub/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

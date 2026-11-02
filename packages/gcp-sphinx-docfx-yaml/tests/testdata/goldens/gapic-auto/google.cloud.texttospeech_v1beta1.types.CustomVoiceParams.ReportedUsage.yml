@@ -1,0 +1,29 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children: []
+  class: google.cloud.texttospeech_v1beta1.types.CustomVoiceParams.ReportedUsage
+  fullName: google.cloud.texttospeech_v1beta1.types.CustomVoiceParams.ReportedUsage
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.types.CustomVoiceParams
+  name: ReportedUsage
+  source:
+    id: ReportedUsage
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/types/cloud_tts.py
+    startLine: 365
+  summary: 'The usage of the synthesized audio. You must report your
+
+    honest and correct usage of the service as it''s regulated by
+
+    contract and will cause significant difference in billing.
+
+
+    '
+  syntax:
+    content: ReportedUsage(value)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1beta1.types.CustomVoiceParams.ReportedUsage
+references: []

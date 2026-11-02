@@ -1,0 +1,319 @@
+// Copyright 2021 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// NOTE(busunkim): This is a temporary home for this file and the corresponding
+// snippet_metadata_pb2.py.
+
+syntax = "proto3";
+
+package google.cloud.tools.snippetgen.snippetindex.v1;
+
+option csharp_namespace = "Google.Cloud.Tools.SnippetGen.SnippetIndex.V1";
+option php_namespace = "Google\\Cloud\\Tools\\SnippetGen\\SnippetIndex\\V1";
+option ruby_package = "Google::Cloud::Tools::SnippetGen::SnippetIndex::V1";
+
+// The snippet index for a single client library.
+message Index {
+  // The Client Library these snippets are for.
+  ClientLibrary client_library = 1;
+
+  // The list of snippets.
+  repeated Snippet snippets = 2;
+}
+
+// One sample.
+// Parts of this information will be language specific.
+message Snippet {
+  // The region tag name. Does not include the square brackets or the START or
+  // END indicators.
+  string region_tag = 1;
+
+  // The title of the snippet, for human consumption mostly. For generated
+  // snippets this may be the snippet method or file name, or obtained from
+  /// snippet configuration.
+  string title = 2;
+
+  // A description of the snippet, for human consumption mostly. For generated
+  // snippets this may be the description of the service method, or obtained
+  // from snippet configuration.
+  string description = 3;
+
+  // The file where the snippet code lives.
+  // The path should be relative to where this metadata file is stored on the
+  // GitHub repo root and should not include branch, tag, commitish, etc.,
+  // as those will be the same as for the metadata file.
+  string file = 4;
+
+  // The programming language the snippet is written in.
+  // This will match the client library language most of the time, but not
+  // always. For instance, in .NET, libraries are written in C# but some samples
+  // may be written in F# or VB .NET.
+  // Note that this does not contain information about the snippet supported
+  // platforms or language versions, etc. This is just a quick way to identify
+  // the generally supported language.
+  Language language = 5;
+
+  // The client library method this snippet is for.
+  ClientMethod client_method = 6;
+
+  // Whether this is the canonical snippet for the corresponding service method.
+  // This is to be interpreted in conjunction with origin as follows:
+  // For a given service method:
+  // - A handwritten canonical takes precedence over
+  // - A config canonical which in turn takes precedence over
+  // - A baseline canonical.
+  bool canonical = 7;
+
+  // The origin of the snippet.
+  Origin origin = 8;
+
+  // The different segments of the snippet.
+  // Must contain the FULL segment always.
+  // There may be overlap between segments.
+  repeated Segment segments = 9;
+
+  // The origin of the snippet.
+  enum Origin {
+    // The origin has not been specified. Consumers should not see this value.
+    ORIGIN_UNSPECIFIED = 0;
+
+    // The snippet is generated from the API definition only, including protos
+    // and descriptive information, i.e. the same information used to generate
+    // the client libraries themselves.
+    // No snippet configuration has been specified. This refers to SnippetGen
+    // phase 1.
+    API_DEFINITION = 1;
+
+    // The snippet is generated from the API definition and a specific snippet
+    // configuration. This refers to SnippetGen phase 2.
+    CONFIG = 2;
+
+    // The snippet is handwritten.
+    HANDWRITTEN = 3;
+  }
+
+  // A segment of the snippet.
+  message Segment {
+    // The line where this segment begins, inclusive.
+    // For the FULL segment, this will be the START region tag line + 1.
+    int32 start = 1;
+
+    // The line where this segment ends, inclusive.
+    // For the FULL segment, this will be the END region tag line - 1.
+    int32 end = 2;
+
+    // The type of the segment.
+    SegmentType type = 3;
+
+    // The type of the segment.
+    // Basically describes what this segment shows.
+    enum SegmentType {
+      // The segment type has not been specified. Consumers should not see this
+      // value.
+      SEGMENT_TYPE_UNSPECIFIED = 0;
+
+      // The full sample including import statements.
+      // This corresponds to the sample as determined by the region tags.
+      FULL = 1;
+
+      // A shorter version of the full sample, may not include imports and some
+      // language specific initialization code. This is to be used in contexts
+      // in which the full aspects of the sample are made clear outside the
+      // code.
+      SHORT = 2;
+
+      // The segment contains the service client initialization code only.
+      // To be used in tutorials, codelabs, etc.
+      CLIENT_INITIALIZATION = 3;
+
+      // The segment contains the request initialization code only.
+      // To be used in tutorials, codelabs, etc.
+      REQUEST_INITIALIZATION = 4;
+
+      // The segment contains the request execution code only.
+      // To be used in tutorials, codelabs, etc.
+      REQUEST_EXECUTION = 5;
+
+      // The segment contains the response handling code only.
+      // To be used in tutorials, codelabs, etc.
+      RESPONSE_HANDLING = 6;
+    }
+  }
+}
+
+// A client library method.
+// Will contain language specific information.
+message ClientMethod {
+  // The short name of the method, usually the name it is declared with.
+  // This may not be unique within the service client because of overloads.
+  string short_name = 1;
+
+  // The fully qualified name of the method, which is the short_name qualified
+  // by the full_name of the service client.
+  // This value is redundant, but present to make it easier for consumers to
+  // obtain it.
+  // This may not be unique within the service client because of overloads.
+  string full_name = 2;
+
+  // Indicates whether this method is synchronous or asynchronous.
+  // Some languages may support only one of the variants, in which case, this
+  // field will always have the same value (for that language).
+  bool async = 3;
+
+  // Parameters of this method in the same order as they appear on the method
+  // declaration. Must be empty if the method has no parameters.
+  repeated Parameter parameters = 4;
+
+  // Fully qualified type name of this method result, if any.
+  string result_type = 5;
+
+  // The service client this method is declared in.
+  ServiceClient client = 6;
+
+  // The service method this client method is for.
+  Method method = 7;
+
+  // A method parameter as described by its type and name.
+  message Parameter {
+    // Fully qualified type name of this parameter.
+    // May be empty for languages that don't specify a type.
+    string type = 1;
+
+    // Name of the parameter as it appears on the method declaration.
+    string name = 2;
+  }
+}
+
+// A service client defined in the client library specified in Index.
+// Will contain language specific information.
+message ServiceClient {
+  // The short name of the service client, usually the name it is declared with.
+  // This may not be unique within the client library because of
+  // namespaces/packages.
+  string short_name = 1;
+
+  // The fully qualified name of the service client, which is the short_name
+  // qualified by the namespace/package/type name this client is declared in.
+  // This will be unique within the client library.
+  string full_name = 2;
+}
+
+// A client library.
+// Will contain language specific information.
+message ClientLibrary {
+  // The name of the client library. This value will be language dependent
+  // and may or may not include the library version.
+  // Usually this will be the name used to identify the library on per-language
+  // package managers.
+  // Examples: "Google.Cloud.Translate.V3",
+  // "cloud.google.com/go/translate/apiv3".
+  string name = 1;
+
+  // The full version of the client library. May also be language dependent.
+  // Cannot be updated on metadata generation, but on library release.
+  // Examples: "4.3.0", "2.5.2-beta01"
+  string version = 2;
+
+  // The programming language the library is written in.
+  // Note that this does not contain information about the library supported
+  // platforms or language versions, etc. This is just a quick way to identify
+  // the generally supported language.
+  Language language = 3;
+
+  // The APIs this client library is for.
+  // Some languages bundle several APIs on the same client library.
+  repeated Api apis = 4;
+}
+
+message Method {
+  // The short name of the method, which is the name used to
+  // declare it within the proto file. This is unique within the service,
+  // but may not be unique within the API.
+  string short_name = 1;
+
+  // The full name of the method, which is the short name qualified
+  // by the full name of the service in which it is declared.
+  // This is globally unique.
+  string full_name = 2;
+
+  // The service this method is declared in.
+  Service service = 3;
+}
+
+// A service defined in the API the client library referenced in Index is for.
+message Service {
+  // The short name of the service, which is the name used to
+  // declare it within the proto file. This is usually, but not
+  // absolutely necessarily, unique within an API.
+  // Example: "TranslationService"
+  string short_name = 1;
+
+  // The full name of the service, which is the short name qualified
+  // by the package of the proto in which it is declared.
+  // This is globally unique.
+  // Example: "google.cloud.translate.v3.TranslationService"
+  string full_name = 2;
+}
+
+// An API
+message Api {
+  // The ID of the API, identical to the protobuf package
+  // ending with a version number.
+  // Example: "google.cloud.translate.v3"
+  string id = 1;
+
+  // The full version inferred from the end of the ID.
+  // Examples: "v3", "v2beta1", "v1beta"
+  string version = 2;
+}
+
+// A programming language
+enum Language {
+  // The language has not been specified. Consumers should not see this value.
+  LANGUAGE_UNSPECIFIED = 0;
+
+  C_PLUS_PLUS = 1;
+
+  C_SHARP = 2;
+
+  DART = 3;
+
+  ELIXIR = 4;
+
+  ERLANG = 5;
+
+  F_SHARP = 6;
+
+  GO = 7;
+
+  JAVA = 8;
+
+  JAVASCRIPT = 9;
+
+  KOTLIN = 10;
+
+  PHP = 11;
+
+  PYTHON = 12;
+
+  RUBY = 13;
+
+  RUST = 14;
+
+  SWIFT = 15;
+
+  TYPESCRIPT = 16;
+
+  VB_NET = 17;
+}

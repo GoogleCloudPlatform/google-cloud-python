@@ -1,0 +1,163 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.accessapproval_v1",
+  "protoPackage": "google.cloud.accessapproval.v1",
+  "schema": "1.0",
+  "services": {
+    "AccessApproval": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AccessApprovalClient",
+          "rpcs": {
+            "ApproveApprovalRequest": {
+              "methods": [
+                "approve_approval_request"
+              ]
+            },
+            "DeleteAccessApprovalSettings": {
+              "methods": [
+                "delete_access_approval_settings"
+              ]
+            },
+            "DismissApprovalRequest": {
+              "methods": [
+                "dismiss_approval_request"
+              ]
+            },
+            "GetAccessApprovalServiceAccount": {
+              "methods": [
+                "get_access_approval_service_account"
+              ]
+            },
+            "GetAccessApprovalSettings": {
+              "methods": [
+                "get_access_approval_settings"
+              ]
+            },
+            "GetApprovalRequest": {
+              "methods": [
+                "get_approval_request"
+              ]
+            },
+            "InvalidateApprovalRequest": {
+              "methods": [
+                "invalidate_approval_request"
+              ]
+            },
+            "ListApprovalRequests": {
+              "methods": [
+                "list_approval_requests"
+              ]
+            },
+            "UpdateAccessApprovalSettings": {
+              "methods": [
+                "update_access_approval_settings"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AccessApprovalAsyncClient",
+          "rpcs": {
+            "ApproveApprovalRequest": {
+              "methods": [
+                "approve_approval_request"
+              ]
+            },
+            "DeleteAccessApprovalSettings": {
+              "methods": [
+                "delete_access_approval_settings"
+              ]
+            },
+            "DismissApprovalRequest": {
+              "methods": [
+                "dismiss_approval_request"
+              ]
+            },
+            "GetAccessApprovalServiceAccount": {
+              "methods": [
+                "get_access_approval_service_account"
+              ]
+            },
+            "GetAccessApprovalSettings": {
+              "methods": [
+                "get_access_approval_settings"
+              ]
+            },
+            "GetApprovalRequest": {
+              "methods": [
+                "get_approval_request"
+              ]
+            },
+            "InvalidateApprovalRequest": {
+              "methods": [
+                "invalidate_approval_request"
+              ]
+            },
+            "ListApprovalRequests": {
+              "methods": [
+                "list_approval_requests"
+              ]
+            },
+            "UpdateAccessApprovalSettings": {
+              "methods": [
+                "update_access_approval_settings"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AccessApprovalClient",
+          "rpcs": {
+            "ApproveApprovalRequest": {
+              "methods": [
+                "approve_approval_request"
+              ]
+            },
+            "DeleteAccessApprovalSettings": {
+              "methods": [
+                "delete_access_approval_settings"
+              ]
+            },
+            "DismissApprovalRequest": {
+              "methods": [
+                "dismiss_approval_request"
+              ]
+            },
+            "GetAccessApprovalServiceAccount": {
+              "methods": [
+                "get_access_approval_service_account"
+              ]
+            },
+            "GetAccessApprovalSettings": {
+              "methods": [
+                "get_access_approval_settings"
+              ]
+            },
+            "GetApprovalRequest": {
+              "methods": [
+                "get_approval_request"
+              ]
+            },
+            "InvalidateApprovalRequest": {
+              "methods": [
+                "invalidate_approval_request"
+              ]
+            },
+            "ListApprovalRequests": {
+              "methods": [
+                "list_approval_requests"
+              ]
+            },
+            "UpdateAccessApprovalSettings": {
+              "methods": [
+                "update_access_approval_settings"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

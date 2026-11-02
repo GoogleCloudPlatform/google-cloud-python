@@ -1,0 +1,107 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.maps.geocode_v4",
+  "protoPackage": "google.maps.geocode.v4",
+  "schema": "1.0",
+  "services": {
+    "DestinationService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DestinationServiceClient",
+          "rpcs": {
+            "SearchDestinations": {
+              "methods": [
+                "search_destinations"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DestinationServiceAsyncClient",
+          "rpcs": {
+            "SearchDestinations": {
+              "methods": [
+                "search_destinations"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DestinationServiceClient",
+          "rpcs": {
+            "SearchDestinations": {
+              "methods": [
+                "search_destinations"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GeocodeService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "GeocodeServiceClient",
+          "rpcs": {
+            "GeocodeAddress": {
+              "methods": [
+                "geocode_address"
+              ]
+            },
+            "GeocodeLocation": {
+              "methods": [
+                "geocode_location"
+              ]
+            },
+            "GeocodePlace": {
+              "methods": [
+                "geocode_place"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "GeocodeServiceAsyncClient",
+          "rpcs": {
+            "GeocodeAddress": {
+              "methods": [
+                "geocode_address"
+              ]
+            },
+            "GeocodeLocation": {
+              "methods": [
+                "geocode_location"
+              ]
+            },
+            "GeocodePlace": {
+              "methods": [
+                "geocode_place"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "GeocodeServiceClient",
+          "rpcs": {
+            "GeocodeAddress": {
+              "methods": [
+                "geocode_address"
+              ]
+            },
+            "GeocodeLocation": {
+              "methods": [
+                "geocode_location"
+              ]
+            },
+            "GeocodePlace": {
+              "methods": [
+                "geocode_place"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

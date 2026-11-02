@@ -1,0 +1,218 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.fileio.SlidingBuffer.__len__
+  - google.cloud.storage.fileio.SlidingBuffer.flush
+  - google.cloud.storage.fileio.SlidingBuffer.read
+  - google.cloud.storage.fileio.SlidingBuffer.seek
+  - google.cloud.storage.fileio.SlidingBuffer.tell
+  - google.cloud.storage.fileio.SlidingBuffer.write
+  class: google.cloud.storage.fileio.SlidingBuffer
+  fullName: google.cloud.storage.fileio.SlidingBuffer
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: SlidingBuffer
+  source:
+    id: SlidingBuffer
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 448
+  summary: 'A non-rewindable buffer that frees memory of chunks already consumed.
+
+
+    This class is necessary because `google-resumable-media-python` expects
+
+    `tell()` to work relative to the start of the file, not relative to a place
+
+    in an intermediate buffer. Using this class, we present an external
+
+    interface with consistent seek and tell behavior without having to actually
+
+    store bytes already sent.
+
+
+    Behavior of this class differs from an ordinary BytesIO buffer. `write()`
+
+    will always append to the end of the file only and not change the seek
+
+    position otherwise. `flush()` will delete all data already read (data to the
+
+    left of the seek position). `tell()` will report the seek position of the
+
+    buffer including all deleted data. Additionally the class implements
+
+    __len__() which will report the size of the actual underlying buffer.
+
+
+    This class does not attempt to implement the entire Python I/O interface.
+
+
+    '
+  syntax:
+    content: SlidingBuffer()
+    parameters: []
+  type: class
+  uid: google.cloud.storage.fileio.SlidingBuffer
+- attributes: []
+  class: google.cloud.storage.fileio.SlidingBuffer
+  fullName: google.cloud.storage.fileio.SlidingBuffer.__len__
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: __len__
+  source:
+    id: __len__
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 531
+  summary: 'Determine the size of the buffer by seeking to the end.
+
+
+    '
+  syntax:
+    content: __len__()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.SlidingBuffer.__len__
+- attributes: []
+  class: google.cloud.storage.fileio.SlidingBuffer
+  fullName: google.cloud.storage.fileio.SlidingBuffer.flush
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: flush
+  source:
+    id: flush
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 489
+  summary: 'Delete already-read data (all data to the left of the position).
+
+
+    '
+  syntax:
+    content: flush()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.SlidingBuffer.flush
+- attributes: []
+  class: google.cloud.storage.fileio.SlidingBuffer
+  fullName: google.cloud.storage.fileio.SlidingBuffer.read
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: read
+  source:
+    id: read
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 481
+  summary: 'Read and move the cursor.
+
+
+    '
+  syntax:
+    content: read(size=-1)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.SlidingBuffer.read
+- attributes: []
+  class: google.cloud.storage.fileio.SlidingBuffer
+  fullName: google.cloud.storage.fileio.SlidingBuffer.seek
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: seek
+  source:
+    id: seek
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 505
+  summary: 'Seek to a position (backwards only) within the internal buffer.
+
+
+    This implementation of seek() verifies that the seek destination is
+
+    contained in _buffer. It will raise ValueError if the destination byte
+
+    has already been purged from the buffer.
+
+
+    The "whence" argument is not supported in this implementation.
+
+
+    '
+  syntax:
+    content: seek(pos)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.SlidingBuffer.seek
+- attributes: []
+  class: google.cloud.storage.fileio.SlidingBuffer
+  fullName: google.cloud.storage.fileio.SlidingBuffer.tell
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: tell
+  source:
+    id: tell
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 501
+  summary: 'Report how many bytes have been read from the buffer in total.
+
+
+    '
+  syntax:
+    content: tell()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.SlidingBuffer.tell
+- attributes: []
+  class: google.cloud.storage.fileio.SlidingBuffer
+  fullName: google.cloud.storage.fileio.SlidingBuffer.write
+  langs:
+  - python
+  module: google.cloud.storage.fileio
+  name: write
+  source:
+    id: write
+    path: tests/testdata/handwritten/google/cloud/storage/fileio.py
+    startLine: 471
+  summary: 'Append to the end of the buffer without changing the position.
+
+
+    '
+  syntax:
+    content: write(b)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.fileio.SlidingBuffer.write
+references:
+- fullName: google.cloud.storage.fileio.SlidingBuffer.__len__
+  isExternal: false
+  name: __len__
+  parent: google.cloud.storage.fileio.SlidingBuffer
+  uid: google.cloud.storage.fileio.SlidingBuffer.__len__
+- fullName: google.cloud.storage.fileio.SlidingBuffer.flush
+  isExternal: false
+  name: flush
+  parent: google.cloud.storage.fileio.SlidingBuffer
+  uid: google.cloud.storage.fileio.SlidingBuffer.flush
+- fullName: google.cloud.storage.fileio.SlidingBuffer.read
+  isExternal: false
+  name: read
+  parent: google.cloud.storage.fileio.SlidingBuffer
+  uid: google.cloud.storage.fileio.SlidingBuffer.read
+- fullName: google.cloud.storage.fileio.SlidingBuffer.seek
+  isExternal: false
+  name: seek
+  parent: google.cloud.storage.fileio.SlidingBuffer
+  uid: google.cloud.storage.fileio.SlidingBuffer.seek
+- fullName: google.cloud.storage.fileio.SlidingBuffer.tell
+  isExternal: false
+  name: tell
+  parent: google.cloud.storage.fileio.SlidingBuffer
+  uid: google.cloud.storage.fileio.SlidingBuffer.tell
+- fullName: google.cloud.storage.fileio.SlidingBuffer.write
+  isExternal: false
+  name: write
+  parent: google.cloud.storage.fileio.SlidingBuffer
+  uid: google.cloud.storage.fileio.SlidingBuffer.write

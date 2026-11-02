@@ -1,0 +1,118 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.maps.mapsplatformdatasets_v1",
+  "protoPackage": "google.maps.mapsplatformdatasets.v1",
+  "schema": "1.0",
+  "services": {
+    "MapsPlatformDatasets": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MapsPlatformDatasetsClient",
+          "rpcs": {
+            "CreateDataset": {
+              "methods": [
+                "create_dataset"
+              ]
+            },
+            "DeleteDataset": {
+              "methods": [
+                "delete_dataset"
+              ]
+            },
+            "FetchDatasetErrors": {
+              "methods": [
+                "fetch_dataset_errors"
+              ]
+            },
+            "GetDataset": {
+              "methods": [
+                "get_dataset"
+              ]
+            },
+            "ListDatasets": {
+              "methods": [
+                "list_datasets"
+              ]
+            },
+            "UpdateDatasetMetadata": {
+              "methods": [
+                "update_dataset_metadata"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MapsPlatformDatasetsAsyncClient",
+          "rpcs": {
+            "CreateDataset": {
+              "methods": [
+                "create_dataset"
+              ]
+            },
+            "DeleteDataset": {
+              "methods": [
+                "delete_dataset"
+              ]
+            },
+            "FetchDatasetErrors": {
+              "methods": [
+                "fetch_dataset_errors"
+              ]
+            },
+            "GetDataset": {
+              "methods": [
+                "get_dataset"
+              ]
+            },
+            "ListDatasets": {
+              "methods": [
+                "list_datasets"
+              ]
+            },
+            "UpdateDatasetMetadata": {
+              "methods": [
+                "update_dataset_metadata"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "MapsPlatformDatasetsClient",
+          "rpcs": {
+            "CreateDataset": {
+              "methods": [
+                "create_dataset"
+              ]
+            },
+            "DeleteDataset": {
+              "methods": [
+                "delete_dataset"
+              ]
+            },
+            "FetchDatasetErrors": {
+              "methods": [
+                "fetch_dataset_errors"
+              ]
+            },
+            "GetDataset": {
+              "methods": [
+                "get_dataset"
+              ]
+            },
+            "ListDatasets": {
+              "methods": [
+                "list_datasets"
+              ]
+            },
+            "UpdateDatasetMetadata": {
+              "methods": [
+                "update_dataset_metadata"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

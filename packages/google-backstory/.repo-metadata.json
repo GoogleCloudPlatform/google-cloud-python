@@ -1,0 +1,16 @@
+{
+    "api_description": "Common Universal Data Model (UDM) and Entity protos used by Chronicle.",
+    "api_id": "backstory.googleapis.com",
+    "api_shortname": "backstory",
+    "client_documentation": "https://googleapis.dev/python/google-backstory/latest",
+    "default_version": "apiVersion",
+    "distribution_name": "google-backstory",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1387895",
+    "language": "python",
+    "library_type": "CORE",
+    "name": "google-backstory",
+    "name_pretty": "Malachite Common Protos",
+    "product_documentation": "https://cloud.google.com/chronicle/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,16 @@
+{
+    "api_description": "Writes log entries and manages your Cloud Logging configuration.",
+    "api_id": "logging.googleapis.com",
+    "api_shortname": "logging",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/logging/latest",
+    "default_version": "v2",
+    "distribution_name": "google-cloud-logging",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559764",
+    "language": "python",
+    "library_type": "GAPIC_COMBO",
+    "name": "logging",
+    "name_pretty": "Cloud Logging",
+    "product_documentation": "https://cloud.google.com/logging/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

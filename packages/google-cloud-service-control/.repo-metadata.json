@@ -1,0 +1,15 @@
+{
+    "api_description": "Provides admission control and telemetry reporting for services integrated\nwith Service Infrastructure.",
+    "api_id": "servicecontrol.googleapis.com",
+    "api_shortname": "servicecontrol",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/servicecontrol/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-service-control",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "servicecontrol",
+    "name_pretty": "Service Control",
+    "product_documentation": "https://cloud.google.com/service-infrastructure/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

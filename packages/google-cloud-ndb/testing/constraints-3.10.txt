@@ -1,0 +1,15 @@
+# This constraints file is used to check that lower bounds
+# are correct in setup.py
+# List *all* library dependencies and extras in this file.
+# Pin the version to the lower bound.
+#
+# e.g., if setup.py has "foo >= 1.14.0, < 2.0.0dev",
+# Then this file should have foo==1.14.0
+google-cloud-datastore==2.21.0
+google-api-core==2.28.0
+protobuf==6.33.5
+pymemcache==2.1.0
+redis==3.0.0
+pytz==2022.1
+# TODO(https://github.com/googleapis/python-ndb/issues/913) remove this dependency once six is no longer used in the codebase
+six==1.12.0

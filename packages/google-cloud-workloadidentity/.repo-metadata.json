@@ -1,0 +1,15 @@
+{
+    "api_id": "workloadidentity.googleapis.com",
+    "api_shortname": "workloadidentity",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-workloadidentity/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-workloadidentity",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=943104\u0026template=2144157",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-workloadidentity",
+    "name_pretty": "Workload Identity",
+    "product_documentation": "https://cloud.google.com/iam/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

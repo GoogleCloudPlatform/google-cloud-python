@@ -1,0 +1,16 @@
+{
+    "api_description": "Service to develop, version control, and operationalize SQL pipelines in\nBigQuery.",
+    "api_id": "dataform.googleapis.com",
+    "api_shortname": "dataform",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/dataform/latest",
+    "default_version": "v1beta1",
+    "distribution_name": "google-cloud-dataform",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=994183",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "dataform",
+    "name_pretty": "Dataform",
+    "product_documentation": "https://cloud.google.com/dataform/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

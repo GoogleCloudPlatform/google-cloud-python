@@ -1,0 +1,73 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.maps.solar_v1",
+  "protoPackage": "google.maps.solar.v1",
+  "schema": "1.0",
+  "services": {
+    "Solar": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SolarClient",
+          "rpcs": {
+            "FindClosestBuildingInsights": {
+              "methods": [
+                "find_closest_building_insights"
+              ]
+            },
+            "GetDataLayers": {
+              "methods": [
+                "get_data_layers"
+              ]
+            },
+            "GetGeoTiff": {
+              "methods": [
+                "get_geo_tiff"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SolarAsyncClient",
+          "rpcs": {
+            "FindClosestBuildingInsights": {
+              "methods": [
+                "find_closest_building_insights"
+              ]
+            },
+            "GetDataLayers": {
+              "methods": [
+                "get_data_layers"
+              ]
+            },
+            "GetGeoTiff": {
+              "methods": [
+                "get_geo_tiff"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SolarClient",
+          "rpcs": {
+            "FindClosestBuildingInsights": {
+              "methods": [
+                "find_closest_building_insights"
+              ]
+            },
+            "GetDataLayers": {
+              "methods": [
+                "get_data_layers"
+              ]
+            },
+            "GetGeoTiff": {
+              "methods": [
+                "get_geo_tiff"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

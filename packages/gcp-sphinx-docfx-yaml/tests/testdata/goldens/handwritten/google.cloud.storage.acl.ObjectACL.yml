@@ -1,0 +1,131 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.acl.ObjectACL.client
+  - google.cloud.storage.acl.ObjectACL.reload_path
+  - google.cloud.storage.acl.ObjectACL.save_path
+  - google.cloud.storage.acl.ObjectACL.user_project
+  class: google.cloud.storage.acl.ObjectACL
+  fullName: google.cloud.storage.acl.ObjectACL
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: ObjectACL
+  source:
+    id: ObjectACL
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 721
+  summary: 'An ACL specifically for a Cloud Storage object / blob.
+
+    '
+  syntax:
+    content: ObjectACL(blob)
+    parameters:
+    - description: The blob that this ACL corresponds to.
+      id: blob
+      var_type: <xref uid="google.cloud.storage.blob.Blob">Blob</xref>
+  type: class
+  uid: google.cloud.storage.acl.ObjectACL
+- &id001
+  attributes: []
+  class: google.cloud.storage.acl.ObjectACL
+  fullName: google.cloud.storage.acl.ObjectACL.client
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: client
+  source:
+    id: client
+    path: null
+    startLine: null
+  summary: 'The client bound to this ACL''s blob.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.acl.ObjectACL.client
+- *id001
+- &id002
+  attributes: []
+  class: google.cloud.storage.acl.ObjectACL
+  fullName: google.cloud.storage.acl.ObjectACL.reload_path
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: reload_path
+  source:
+    id: reload_path
+    path: null
+    startLine: null
+  summary: 'Compute the path for GET API requests for this ACL.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.acl.ObjectACL.reload_path
+- *id002
+- &id003
+  attributes: []
+  class: google.cloud.storage.acl.ObjectACL
+  fullName: google.cloud.storage.acl.ObjectACL.save_path
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: save_path
+  source:
+    id: save_path
+    path: null
+    startLine: null
+  summary: 'Compute the path for PATCH API requests for this ACL.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.acl.ObjectACL.save_path
+- *id003
+- &id004
+  attributes: []
+  class: google.cloud.storage.acl.ObjectACL
+  fullName: google.cloud.storage.acl.ObjectACL.user_project
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: user_project
+  source:
+    id: user_project
+    path: null
+    startLine: null
+  summary: 'Compute the user project charged for API requests for this ACL.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.acl.ObjectACL.user_project
+- *id004
+references:
+- fullName: google.cloud.storage.acl.ObjectACL.client
+  isExternal: false
+  name: client
+  parent: google.cloud.storage.acl.ObjectACL
+  uid: google.cloud.storage.acl.ObjectACL.client
+- fullName: google.cloud.storage.acl.ObjectACL.reload_path
+  isExternal: false
+  name: reload_path
+  parent: google.cloud.storage.acl.ObjectACL
+  uid: google.cloud.storage.acl.ObjectACL.reload_path
+- fullName: google.cloud.storage.acl.ObjectACL.save_path
+  isExternal: false
+  name: save_path
+  parent: google.cloud.storage.acl.ObjectACL
+  uid: google.cloud.storage.acl.ObjectACL.save_path
+- fullName: google.cloud.storage.acl.ObjectACL.user_project
+  isExternal: false
+  name: user_project
+  parent: google.cloud.storage.acl.ObjectACL
+  uid: google.cloud.storage.acl.ObjectACL.user_project

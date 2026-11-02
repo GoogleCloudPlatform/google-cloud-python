@@ -1,0 +1,167 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.binaryauthorization_v1beta1",
+  "protoPackage": "google.cloud.binaryauthorization.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "BinauthzManagementServiceV1Beta1": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "BinauthzManagementServiceV1Beta1Client",
+          "rpcs": {
+            "CreateAttestor": {
+              "methods": [
+                "create_attestor"
+              ]
+            },
+            "DeleteAttestor": {
+              "methods": [
+                "delete_attestor"
+              ]
+            },
+            "GetAttestor": {
+              "methods": [
+                "get_attestor"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "ListAttestors": {
+              "methods": [
+                "list_attestors"
+              ]
+            },
+            "UpdateAttestor": {
+              "methods": [
+                "update_attestor"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "BinauthzManagementServiceV1Beta1AsyncClient",
+          "rpcs": {
+            "CreateAttestor": {
+              "methods": [
+                "create_attestor"
+              ]
+            },
+            "DeleteAttestor": {
+              "methods": [
+                "delete_attestor"
+              ]
+            },
+            "GetAttestor": {
+              "methods": [
+                "get_attestor"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "ListAttestors": {
+              "methods": [
+                "list_attestors"
+              ]
+            },
+            "UpdateAttestor": {
+              "methods": [
+                "update_attestor"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "BinauthzManagementServiceV1Beta1Client",
+          "rpcs": {
+            "CreateAttestor": {
+              "methods": [
+                "create_attestor"
+              ]
+            },
+            "DeleteAttestor": {
+              "methods": [
+                "delete_attestor"
+              ]
+            },
+            "GetAttestor": {
+              "methods": [
+                "get_attestor"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "ListAttestors": {
+              "methods": [
+                "list_attestors"
+              ]
+            },
+            "UpdateAttestor": {
+              "methods": [
+                "update_attestor"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SystemPolicyV1Beta1": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SystemPolicyV1Beta1Client",
+          "rpcs": {
+            "GetSystemPolicy": {
+              "methods": [
+                "get_system_policy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SystemPolicyV1Beta1AsyncClient",
+          "rpcs": {
+            "GetSystemPolicy": {
+              "methods": [
+                "get_system_policy"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SystemPolicyV1Beta1Client",
+          "rpcs": {
+            "GetSystemPolicy": {
+              "methods": [
+                "get_system_policy"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

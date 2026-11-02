@@ -1,0 +1,101 @@
+// Copyright (C) 2021  Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.fragment;
+
+import "google/api/client.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+
+service SmallCompute {
+  option (google.api.default_host) = "my.example.com";
+
+  rpc MyMethod(MethodRequest) returns (MethodResponse) {
+    option (google.api.http) = {
+      body: "method_body"
+      post: "/computation/v1/first_name/{first_name}/last_name/{last_name}"
+    };
+  };
+
+  rpc EnumBody(EnumBodyRequest) returns (EnumBodyResponse) {
+    option (google.api.http) = {
+      body: "resource"
+      post: "/enum_body/v1/names/{name}"
+    };
+  }
+
+  rpc RecursiveBody(RecursiveBodyRequest) returns (RecursiveBodyResponse) {
+    option (google.api.http) = {
+      body: "resource"
+      post: "/recursive_body/v1/names/{name}"
+    };
+  }
+}
+
+message SerialNumber {
+  int32 number = 1;
+}
+
+message MethodRequest {
+  message MethodBody {
+    int32 mass_kg = 1;
+    int32 length_cm = 2;
+    repeated SerialNumber serial_numbers = 3;
+    map<string, SerialNumber> word_associations = 4;
+  }
+
+  string first_name = 1 [(google.api.field_behavior) = REQUIRED];
+  string last_name = 2 [(google.api.field_behavior) = REQUIRED];
+  MethodBody method_body = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+message MethodResponse {
+  string name = 1;
+}
+
+message EnumBodyRequest {
+  message Resource{
+    enum Ordering {
+      UNKNOWN = 0;
+      CHRONOLOGICAL = 1;
+      ALPHABETICAL = 2;
+      DIFFICULTY = 3;
+    }
+
+    Ordering ordering = 1;
+  }
+
+  string name = 1;
+  Resource resource = 2;
+}
+
+message EnumBodyResponse {
+  string data = 1;
+}
+
+message RecursiveBodyRequest {
+  message Resource {
+    int32 depth = 1;
+    Resource child_resource = 2;
+  }
+
+  string name = 1;
+  Resource resource = 2;
+}
+
+message RecursiveBodyResponse {
+  string data = 1;
+}

@@ -1,0 +1,107 @@
+- items:
+  - href: index.md
+    name: Overview
+  - href: changelog.md
+    name: Changelog
+  - href: upgrading.md
+    name: 3.0.0 Migration Guide
+  - items:
+    - href: blobs.md
+      name: Blobs / Objects
+    - href: buckets.md
+      name: Buckets
+    - href: generation_metageneration.md
+      name: Conditional Requests Via ETag / Generation / Metageneration Preconditions
+    - href: modules.md
+      name: Modules for Python Storage
+    - href: retry_timeout.md
+      name: Configuring Timeouts and Retries
+    - items:
+      - name: Overview
+        uid: google.cloud.storage.acl
+      - name: ACL
+        uid: google.cloud.storage.acl.ACL
+      - name: BucketACL
+        uid: google.cloud.storage.acl.BucketACL
+      - name: DefaultObjectACL
+        uid: google.cloud.storage.acl.DefaultObjectACL
+      - name: ObjectACL
+        uid: google.cloud.storage.acl.ObjectACL
+      name: acl
+      uid: google.cloud.storage.acl
+    - items:
+      - name: Overview
+        uid: google.cloud.storage.batch
+      - name: Batch
+        uid: google.cloud.storage.batch.Batch
+      - name: MIMEApplicationHTTP
+        uid: google.cloud.storage.batch.MIMEApplicationHTTP
+      name: batch
+      uid: google.cloud.storage.batch
+    - items:
+      - name: Overview
+        uid: google.cloud.storage.blob
+      - name: Blob
+        uid: google.cloud.storage.blob.Blob
+      name: blob
+      uid: google.cloud.storage.blob
+    - items:
+      - name: Overview
+        uid: google.cloud.storage.bucket
+      - name: Bucket
+        uid: google.cloud.storage.bucket.Bucket
+      - name: IAMConfiguration
+        uid: google.cloud.storage.bucket.IAMConfiguration
+      - name: LifecycleRuleAbortIncompleteMultipartUpload
+        uid: google.cloud.storage.bucket.LifecycleRuleAbortIncompleteMultipartUpload
+      - name: LifecycleRuleConditions
+        uid: google.cloud.storage.bucket.LifecycleRuleConditions
+      - name: LifecycleRuleDelete
+        uid: google.cloud.storage.bucket.LifecycleRuleDelete
+      - name: LifecycleRuleSetStorageClass
+        uid: google.cloud.storage.bucket.LifecycleRuleSetStorageClass
+      name: bucket
+      uid: google.cloud.storage.bucket
+    - items:
+      - name: Overview
+        uid: google.cloud.storage.client
+      - name: Client
+        uid: google.cloud.storage.client.Client
+      name: client
+      uid: google.cloud.storage.client
+    - name: constants
+      uid: google.cloud.storage.constants
+    - items:
+      - name: Overview
+        uid: google.cloud.storage.fileio
+      - name: BlobReader
+        uid: google.cloud.storage.fileio.BlobReader
+      - name: BlobWriter
+        uid: google.cloud.storage.fileio.BlobWriter
+      - name: SlidingBuffer
+        uid: google.cloud.storage.fileio.SlidingBuffer
+      name: fileio
+      uid: google.cloud.storage.fileio
+    - items:
+      - name: Overview
+        uid: google.cloud.storage.hmac_key
+      - name: HMACKeyMetadata
+        uid: google.cloud.storage.hmac_key.HMACKeyMetadata
+      name: hmac_key
+      uid: google.cloud.storage.hmac_key
+    - items:
+      - name: Overview
+        uid: google.cloud.storage.notification
+      - name: BucketNotification
+        uid: google.cloud.storage.notification.BucketNotification
+      name: notification
+      uid: google.cloud.storage.notification
+    - items:
+      - name: Overview
+        uid: google.cloud.storage.retry
+      - name: ConditionalRetryPolicy
+        uid: google.cloud.storage.retry.ConditionalRetryPolicy
+      name: retry
+      uid: google.cloud.storage.retry
+    name: Storage
+  name: google-cloud-storage

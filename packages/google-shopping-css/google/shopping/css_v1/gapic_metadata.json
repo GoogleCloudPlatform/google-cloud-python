@@ -1,0 +1,299 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.css_v1",
+  "protoPackage": "google.shopping.css.v1",
+  "schema": "1.0",
+  "services": {
+    "AccountLabelsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AccountLabelsServiceClient",
+          "rpcs": {
+            "CreateAccountLabel": {
+              "methods": [
+                "create_account_label"
+              ]
+            },
+            "DeleteAccountLabel": {
+              "methods": [
+                "delete_account_label"
+              ]
+            },
+            "ListAccountLabels": {
+              "methods": [
+                "list_account_labels"
+              ]
+            },
+            "UpdateAccountLabel": {
+              "methods": [
+                "update_account_label"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AccountLabelsServiceAsyncClient",
+          "rpcs": {
+            "CreateAccountLabel": {
+              "methods": [
+                "create_account_label"
+              ]
+            },
+            "DeleteAccountLabel": {
+              "methods": [
+                "delete_account_label"
+              ]
+            },
+            "ListAccountLabels": {
+              "methods": [
+                "list_account_labels"
+              ]
+            },
+            "UpdateAccountLabel": {
+              "methods": [
+                "update_account_label"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AccountLabelsServiceClient",
+          "rpcs": {
+            "CreateAccountLabel": {
+              "methods": [
+                "create_account_label"
+              ]
+            },
+            "DeleteAccountLabel": {
+              "methods": [
+                "delete_account_label"
+              ]
+            },
+            "ListAccountLabels": {
+              "methods": [
+                "list_account_labels"
+              ]
+            },
+            "UpdateAccountLabel": {
+              "methods": [
+                "update_account_label"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "AccountsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AccountsServiceClient",
+          "rpcs": {
+            "GetAccount": {
+              "methods": [
+                "get_account"
+              ]
+            },
+            "ListChildAccounts": {
+              "methods": [
+                "list_child_accounts"
+              ]
+            },
+            "UpdateLabels": {
+              "methods": [
+                "update_labels"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AccountsServiceAsyncClient",
+          "rpcs": {
+            "GetAccount": {
+              "methods": [
+                "get_account"
+              ]
+            },
+            "ListChildAccounts": {
+              "methods": [
+                "list_child_accounts"
+              ]
+            },
+            "UpdateLabels": {
+              "methods": [
+                "update_labels"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AccountsServiceClient",
+          "rpcs": {
+            "GetAccount": {
+              "methods": [
+                "get_account"
+              ]
+            },
+            "ListChildAccounts": {
+              "methods": [
+                "list_child_accounts"
+              ]
+            },
+            "UpdateLabels": {
+              "methods": [
+                "update_labels"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CssProductInputsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CssProductInputsServiceClient",
+          "rpcs": {
+            "DeleteCssProductInput": {
+              "methods": [
+                "delete_css_product_input"
+              ]
+            },
+            "InsertCssProductInput": {
+              "methods": [
+                "insert_css_product_input"
+              ]
+            },
+            "UpdateCssProductInput": {
+              "methods": [
+                "update_css_product_input"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CssProductInputsServiceAsyncClient",
+          "rpcs": {
+            "DeleteCssProductInput": {
+              "methods": [
+                "delete_css_product_input"
+              ]
+            },
+            "InsertCssProductInput": {
+              "methods": [
+                "insert_css_product_input"
+              ]
+            },
+            "UpdateCssProductInput": {
+              "methods": [
+                "update_css_product_input"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CssProductInputsServiceClient",
+          "rpcs": {
+            "DeleteCssProductInput": {
+              "methods": [
+                "delete_css_product_input"
+              ]
+            },
+            "InsertCssProductInput": {
+              "methods": [
+                "insert_css_product_input"
+              ]
+            },
+            "UpdateCssProductInput": {
+              "methods": [
+                "update_css_product_input"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CssProductsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CssProductsServiceClient",
+          "rpcs": {
+            "GetCssProduct": {
+              "methods": [
+                "get_css_product"
+              ]
+            },
+            "ListCssProducts": {
+              "methods": [
+                "list_css_products"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CssProductsServiceAsyncClient",
+          "rpcs": {
+            "GetCssProduct": {
+              "methods": [
+                "get_css_product"
+              ]
+            },
+            "ListCssProducts": {
+              "methods": [
+                "list_css_products"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CssProductsServiceClient",
+          "rpcs": {
+            "GetCssProduct": {
+              "methods": [
+                "get_css_product"
+              ]
+            },
+            "ListCssProducts": {
+              "methods": [
+                "list_css_products"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "QuotaService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "QuotaServiceClient",
+          "rpcs": {
+            "ListQuotaGroups": {
+              "methods": [
+                "list_quota_groups"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "QuotaServiceAsyncClient",
+          "rpcs": {
+            "ListQuotaGroups": {
+              "methods": [
+                "list_quota_groups"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "QuotaServiceClient",
+          "rpcs": {
+            "ListQuotaGroups": {
+              "methods": [
+                "list_quota_groups"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

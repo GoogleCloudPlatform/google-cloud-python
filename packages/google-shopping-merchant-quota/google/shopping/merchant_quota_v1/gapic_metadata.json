@@ -1,0 +1,92 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_quota_v1",
+  "protoPackage": "google.shopping.merchant.quota.v1",
+  "schema": "1.0",
+  "services": {
+    "AccountLimitsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AccountLimitsServiceClient",
+          "rpcs": {
+            "GetAccountLimit": {
+              "methods": [
+                "get_account_limit"
+              ]
+            },
+            "ListAccountLimits": {
+              "methods": [
+                "list_account_limits"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AccountLimitsServiceAsyncClient",
+          "rpcs": {
+            "GetAccountLimit": {
+              "methods": [
+                "get_account_limit"
+              ]
+            },
+            "ListAccountLimits": {
+              "methods": [
+                "list_account_limits"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AccountLimitsServiceClient",
+          "rpcs": {
+            "GetAccountLimit": {
+              "methods": [
+                "get_account_limit"
+              ]
+            },
+            "ListAccountLimits": {
+              "methods": [
+                "list_account_limits"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "QuotaService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "QuotaServiceClient",
+          "rpcs": {
+            "ListQuotaGroups": {
+              "methods": [
+                "list_quota_groups"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "QuotaServiceAsyncClient",
+          "rpcs": {
+            "ListQuotaGroups": {
+              "methods": [
+                "list_quota_groups"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "QuotaServiceClient",
+          "rpcs": {
+            "ListQuotaGroups": {
+              "methods": [
+                "list_quota_groups"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,118 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.apps.events_subscriptions_v1",
+  "protoPackage": "google.apps.events.subscriptions.v1",
+  "schema": "1.0",
+  "services": {
+    "SubscriptionsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SubscriptionsServiceClient",
+          "rpcs": {
+            "CreateSubscription": {
+              "methods": [
+                "create_subscription"
+              ]
+            },
+            "DeleteSubscription": {
+              "methods": [
+                "delete_subscription"
+              ]
+            },
+            "GetSubscription": {
+              "methods": [
+                "get_subscription"
+              ]
+            },
+            "ListSubscriptions": {
+              "methods": [
+                "list_subscriptions"
+              ]
+            },
+            "ReactivateSubscription": {
+              "methods": [
+                "reactivate_subscription"
+              ]
+            },
+            "UpdateSubscription": {
+              "methods": [
+                "update_subscription"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SubscriptionsServiceAsyncClient",
+          "rpcs": {
+            "CreateSubscription": {
+              "methods": [
+                "create_subscription"
+              ]
+            },
+            "DeleteSubscription": {
+              "methods": [
+                "delete_subscription"
+              ]
+            },
+            "GetSubscription": {
+              "methods": [
+                "get_subscription"
+              ]
+            },
+            "ListSubscriptions": {
+              "methods": [
+                "list_subscriptions"
+              ]
+            },
+            "ReactivateSubscription": {
+              "methods": [
+                "reactivate_subscription"
+              ]
+            },
+            "UpdateSubscription": {
+              "methods": [
+                "update_subscription"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SubscriptionsServiceClient",
+          "rpcs": {
+            "CreateSubscription": {
+              "methods": [
+                "create_subscription"
+              ]
+            },
+            "DeleteSubscription": {
+              "methods": [
+                "delete_subscription"
+              ]
+            },
+            "GetSubscription": {
+              "methods": [
+                "get_subscription"
+              ]
+            },
+            "ListSubscriptions": {
+              "methods": [
+                "list_subscriptions"
+              ]
+            },
+            "ReactivateSubscription": {
+              "methods": [
+                "reactivate_subscription"
+              ]
+            },
+            "UpdateSubscription": {
+              "methods": [
+                "update_subscription"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

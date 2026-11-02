@@ -1,0 +1,15 @@
+{
+    "api_description": "API Gateway enables you to provide secure access to your backend services through a well-defined REST API that is consistent across all of your services, regardless of the service implementation.",
+    "api_id": "apigateway.googleapis.com",
+    "api_shortname": "apigateway",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/apigateway/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-api-gateway",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "apigateway",
+    "name_pretty": "API Gateway",
+    "product_documentation": "https://cloud.google.com/api-gateway",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

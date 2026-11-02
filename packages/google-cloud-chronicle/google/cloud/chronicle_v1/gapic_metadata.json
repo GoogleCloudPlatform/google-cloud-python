@@ -1,0 +1,1700 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.chronicle_v1",
+  "protoPackage": "google.cloud.chronicle.v1",
+  "schema": "1.0",
+  "services": {
+    "BigQueryExportService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "BigQueryExportServiceClient",
+          "rpcs": {
+            "GetBigQueryExport": {
+              "methods": [
+                "get_big_query_export"
+              ]
+            },
+            "ProvisionBigQueryExport": {
+              "methods": [
+                "provision_big_query_export"
+              ]
+            },
+            "UpdateBigQueryExport": {
+              "methods": [
+                "update_big_query_export"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "BigQueryExportServiceAsyncClient",
+          "rpcs": {
+            "GetBigQueryExport": {
+              "methods": [
+                "get_big_query_export"
+              ]
+            },
+            "ProvisionBigQueryExport": {
+              "methods": [
+                "provision_big_query_export"
+              ]
+            },
+            "UpdateBigQueryExport": {
+              "methods": [
+                "update_big_query_export"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "BigQueryExportServiceClient",
+          "rpcs": {
+            "GetBigQueryExport": {
+              "methods": [
+                "get_big_query_export"
+              ]
+            },
+            "ProvisionBigQueryExport": {
+              "methods": [
+                "provision_big_query_export"
+              ]
+            },
+            "UpdateBigQueryExport": {
+              "methods": [
+                "update_big_query_export"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DashboardChartService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DashboardChartServiceClient",
+          "rpcs": {
+            "BatchGetDashboardCharts": {
+              "methods": [
+                "batch_get_dashboard_charts"
+              ]
+            },
+            "GetDashboardChart": {
+              "methods": [
+                "get_dashboard_chart"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DashboardChartServiceAsyncClient",
+          "rpcs": {
+            "BatchGetDashboardCharts": {
+              "methods": [
+                "batch_get_dashboard_charts"
+              ]
+            },
+            "GetDashboardChart": {
+              "methods": [
+                "get_dashboard_chart"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DashboardChartServiceClient",
+          "rpcs": {
+            "BatchGetDashboardCharts": {
+              "methods": [
+                "batch_get_dashboard_charts"
+              ]
+            },
+            "GetDashboardChart": {
+              "methods": [
+                "get_dashboard_chart"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DashboardQueryService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DashboardQueryServiceClient",
+          "rpcs": {
+            "ExecuteDashboardQuery": {
+              "methods": [
+                "execute_dashboard_query"
+              ]
+            },
+            "GetDashboardQuery": {
+              "methods": [
+                "get_dashboard_query"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DashboardQueryServiceAsyncClient",
+          "rpcs": {
+            "ExecuteDashboardQuery": {
+              "methods": [
+                "execute_dashboard_query"
+              ]
+            },
+            "GetDashboardQuery": {
+              "methods": [
+                "get_dashboard_query"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DashboardQueryServiceClient",
+          "rpcs": {
+            "ExecuteDashboardQuery": {
+              "methods": [
+                "execute_dashboard_query"
+              ]
+            },
+            "GetDashboardQuery": {
+              "methods": [
+                "get_dashboard_query"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DataAccessControlService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataAccessControlServiceClient",
+          "rpcs": {
+            "CreateDataAccessLabel": {
+              "methods": [
+                "create_data_access_label"
+              ]
+            },
+            "CreateDataAccessScope": {
+              "methods": [
+                "create_data_access_scope"
+              ]
+            },
+            "DeleteDataAccessLabel": {
+              "methods": [
+                "delete_data_access_label"
+              ]
+            },
+            "DeleteDataAccessScope": {
+              "methods": [
+                "delete_data_access_scope"
+              ]
+            },
+            "GetDataAccessLabel": {
+              "methods": [
+                "get_data_access_label"
+              ]
+            },
+            "GetDataAccessScope": {
+              "methods": [
+                "get_data_access_scope"
+              ]
+            },
+            "ListDataAccessLabels": {
+              "methods": [
+                "list_data_access_labels"
+              ]
+            },
+            "ListDataAccessScopes": {
+              "methods": [
+                "list_data_access_scopes"
+              ]
+            },
+            "UpdateDataAccessLabel": {
+              "methods": [
+                "update_data_access_label"
+              ]
+            },
+            "UpdateDataAccessScope": {
+              "methods": [
+                "update_data_access_scope"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataAccessControlServiceAsyncClient",
+          "rpcs": {
+            "CreateDataAccessLabel": {
+              "methods": [
+                "create_data_access_label"
+              ]
+            },
+            "CreateDataAccessScope": {
+              "methods": [
+                "create_data_access_scope"
+              ]
+            },
+            "DeleteDataAccessLabel": {
+              "methods": [
+                "delete_data_access_label"
+              ]
+            },
+            "DeleteDataAccessScope": {
+              "methods": [
+                "delete_data_access_scope"
+              ]
+            },
+            "GetDataAccessLabel": {
+              "methods": [
+                "get_data_access_label"
+              ]
+            },
+            "GetDataAccessScope": {
+              "methods": [
+                "get_data_access_scope"
+              ]
+            },
+            "ListDataAccessLabels": {
+              "methods": [
+                "list_data_access_labels"
+              ]
+            },
+            "ListDataAccessScopes": {
+              "methods": [
+                "list_data_access_scopes"
+              ]
+            },
+            "UpdateDataAccessLabel": {
+              "methods": [
+                "update_data_access_label"
+              ]
+            },
+            "UpdateDataAccessScope": {
+              "methods": [
+                "update_data_access_scope"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataAccessControlServiceClient",
+          "rpcs": {
+            "CreateDataAccessLabel": {
+              "methods": [
+                "create_data_access_label"
+              ]
+            },
+            "CreateDataAccessScope": {
+              "methods": [
+                "create_data_access_scope"
+              ]
+            },
+            "DeleteDataAccessLabel": {
+              "methods": [
+                "delete_data_access_label"
+              ]
+            },
+            "DeleteDataAccessScope": {
+              "methods": [
+                "delete_data_access_scope"
+              ]
+            },
+            "GetDataAccessLabel": {
+              "methods": [
+                "get_data_access_label"
+              ]
+            },
+            "GetDataAccessScope": {
+              "methods": [
+                "get_data_access_scope"
+              ]
+            },
+            "ListDataAccessLabels": {
+              "methods": [
+                "list_data_access_labels"
+              ]
+            },
+            "ListDataAccessScopes": {
+              "methods": [
+                "list_data_access_scopes"
+              ]
+            },
+            "UpdateDataAccessLabel": {
+              "methods": [
+                "update_data_access_label"
+              ]
+            },
+            "UpdateDataAccessScope": {
+              "methods": [
+                "update_data_access_scope"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DataTableService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataTableServiceClient",
+          "rpcs": {
+            "BulkCreateDataTableRows": {
+              "methods": [
+                "bulk_create_data_table_rows"
+              ]
+            },
+            "BulkGetDataTableRows": {
+              "methods": [
+                "bulk_get_data_table_rows"
+              ]
+            },
+            "BulkReplaceDataTableRows": {
+              "methods": [
+                "bulk_replace_data_table_rows"
+              ]
+            },
+            "BulkUpdateDataTableRows": {
+              "methods": [
+                "bulk_update_data_table_rows"
+              ]
+            },
+            "CreateDataTable": {
+              "methods": [
+                "create_data_table"
+              ]
+            },
+            "CreateDataTableRow": {
+              "methods": [
+                "create_data_table_row"
+              ]
+            },
+            "DeleteDataTable": {
+              "methods": [
+                "delete_data_table"
+              ]
+            },
+            "DeleteDataTableRow": {
+              "methods": [
+                "delete_data_table_row"
+              ]
+            },
+            "GetDataTable": {
+              "methods": [
+                "get_data_table"
+              ]
+            },
+            "GetDataTableOperationErrors": {
+              "methods": [
+                "get_data_table_operation_errors"
+              ]
+            },
+            "GetDataTableRow": {
+              "methods": [
+                "get_data_table_row"
+              ]
+            },
+            "ListDataTableRows": {
+              "methods": [
+                "list_data_table_rows"
+              ]
+            },
+            "ListDataTables": {
+              "methods": [
+                "list_data_tables"
+              ]
+            },
+            "UpdateDataTable": {
+              "methods": [
+                "update_data_table"
+              ]
+            },
+            "UpdateDataTableRow": {
+              "methods": [
+                "update_data_table_row"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataTableServiceAsyncClient",
+          "rpcs": {
+            "BulkCreateDataTableRows": {
+              "methods": [
+                "bulk_create_data_table_rows"
+              ]
+            },
+            "BulkGetDataTableRows": {
+              "methods": [
+                "bulk_get_data_table_rows"
+              ]
+            },
+            "BulkReplaceDataTableRows": {
+              "methods": [
+                "bulk_replace_data_table_rows"
+              ]
+            },
+            "BulkUpdateDataTableRows": {
+              "methods": [
+                "bulk_update_data_table_rows"
+              ]
+            },
+            "CreateDataTable": {
+              "methods": [
+                "create_data_table"
+              ]
+            },
+            "CreateDataTableRow": {
+              "methods": [
+                "create_data_table_row"
+              ]
+            },
+            "DeleteDataTable": {
+              "methods": [
+                "delete_data_table"
+              ]
+            },
+            "DeleteDataTableRow": {
+              "methods": [
+                "delete_data_table_row"
+              ]
+            },
+            "GetDataTable": {
+              "methods": [
+                "get_data_table"
+              ]
+            },
+            "GetDataTableOperationErrors": {
+              "methods": [
+                "get_data_table_operation_errors"
+              ]
+            },
+            "GetDataTableRow": {
+              "methods": [
+                "get_data_table_row"
+              ]
+            },
+            "ListDataTableRows": {
+              "methods": [
+                "list_data_table_rows"
+              ]
+            },
+            "ListDataTables": {
+              "methods": [
+                "list_data_tables"
+              ]
+            },
+            "UpdateDataTable": {
+              "methods": [
+                "update_data_table"
+              ]
+            },
+            "UpdateDataTableRow": {
+              "methods": [
+                "update_data_table_row"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataTableServiceClient",
+          "rpcs": {
+            "BulkCreateDataTableRows": {
+              "methods": [
+                "bulk_create_data_table_rows"
+              ]
+            },
+            "BulkGetDataTableRows": {
+              "methods": [
+                "bulk_get_data_table_rows"
+              ]
+            },
+            "BulkReplaceDataTableRows": {
+              "methods": [
+                "bulk_replace_data_table_rows"
+              ]
+            },
+            "BulkUpdateDataTableRows": {
+              "methods": [
+                "bulk_update_data_table_rows"
+              ]
+            },
+            "CreateDataTable": {
+              "methods": [
+                "create_data_table"
+              ]
+            },
+            "CreateDataTableRow": {
+              "methods": [
+                "create_data_table_row"
+              ]
+            },
+            "DeleteDataTable": {
+              "methods": [
+                "delete_data_table"
+              ]
+            },
+            "DeleteDataTableRow": {
+              "methods": [
+                "delete_data_table_row"
+              ]
+            },
+            "GetDataTable": {
+              "methods": [
+                "get_data_table"
+              ]
+            },
+            "GetDataTableOperationErrors": {
+              "methods": [
+                "get_data_table_operation_errors"
+              ]
+            },
+            "GetDataTableRow": {
+              "methods": [
+                "get_data_table_row"
+              ]
+            },
+            "ListDataTableRows": {
+              "methods": [
+                "list_data_table_rows"
+              ]
+            },
+            "ListDataTables": {
+              "methods": [
+                "list_data_tables"
+              ]
+            },
+            "UpdateDataTable": {
+              "methods": [
+                "update_data_table"
+              ]
+            },
+            "UpdateDataTableRow": {
+              "methods": [
+                "update_data_table_row"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "EntityService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "EntityServiceClient",
+          "rpcs": {
+            "CreateWatchlist": {
+              "methods": [
+                "create_watchlist"
+              ]
+            },
+            "DeleteWatchlist": {
+              "methods": [
+                "delete_watchlist"
+              ]
+            },
+            "GetWatchlist": {
+              "methods": [
+                "get_watchlist"
+              ]
+            },
+            "ListWatchlists": {
+              "methods": [
+                "list_watchlists"
+              ]
+            },
+            "UpdateWatchlist": {
+              "methods": [
+                "update_watchlist"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "EntityServiceAsyncClient",
+          "rpcs": {
+            "CreateWatchlist": {
+              "methods": [
+                "create_watchlist"
+              ]
+            },
+            "DeleteWatchlist": {
+              "methods": [
+                "delete_watchlist"
+              ]
+            },
+            "GetWatchlist": {
+              "methods": [
+                "get_watchlist"
+              ]
+            },
+            "ListWatchlists": {
+              "methods": [
+                "list_watchlists"
+              ]
+            },
+            "UpdateWatchlist": {
+              "methods": [
+                "update_watchlist"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "EntityServiceClient",
+          "rpcs": {
+            "CreateWatchlist": {
+              "methods": [
+                "create_watchlist"
+              ]
+            },
+            "DeleteWatchlist": {
+              "methods": [
+                "delete_watchlist"
+              ]
+            },
+            "GetWatchlist": {
+              "methods": [
+                "get_watchlist"
+              ]
+            },
+            "ListWatchlists": {
+              "methods": [
+                "list_watchlists"
+              ]
+            },
+            "UpdateWatchlist": {
+              "methods": [
+                "update_watchlist"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "FeaturedContentNativeDashboardService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "FeaturedContentNativeDashboardServiceClient",
+          "rpcs": {
+            "GetFeaturedContentNativeDashboard": {
+              "methods": [
+                "get_featured_content_native_dashboard"
+              ]
+            },
+            "InstallFeaturedContentNativeDashboard": {
+              "methods": [
+                "install_featured_content_native_dashboard"
+              ]
+            },
+            "ListFeaturedContentNativeDashboards": {
+              "methods": [
+                "list_featured_content_native_dashboards"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "FeaturedContentNativeDashboardServiceAsyncClient",
+          "rpcs": {
+            "GetFeaturedContentNativeDashboard": {
+              "methods": [
+                "get_featured_content_native_dashboard"
+              ]
+            },
+            "InstallFeaturedContentNativeDashboard": {
+              "methods": [
+                "install_featured_content_native_dashboard"
+              ]
+            },
+            "ListFeaturedContentNativeDashboards": {
+              "methods": [
+                "list_featured_content_native_dashboards"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "FeaturedContentNativeDashboardServiceClient",
+          "rpcs": {
+            "GetFeaturedContentNativeDashboard": {
+              "methods": [
+                "get_featured_content_native_dashboard"
+              ]
+            },
+            "InstallFeaturedContentNativeDashboard": {
+              "methods": [
+                "install_featured_content_native_dashboard"
+              ]
+            },
+            "ListFeaturedContentNativeDashboards": {
+              "methods": [
+                "list_featured_content_native_dashboards"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "FeedsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "FeedsServiceClient",
+          "rpcs": {
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "DisableFeed": {
+              "methods": [
+                "disable_feed"
+              ]
+            },
+            "EnableFeed": {
+              "methods": [
+                "enable_feed"
+              ]
+            },
+            "FetchServiceAccountForCustomer": {
+              "methods": [
+                "fetch_service_account_for_customer"
+              ]
+            },
+            "GenerateSecret": {
+              "methods": [
+                "generate_secret"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "GetFeedPack": {
+              "methods": [
+                "get_feed_pack"
+              ]
+            },
+            "ImportPushLogs": {
+              "methods": [
+                "import_push_logs"
+              ]
+            },
+            "ListFeedPacks": {
+              "methods": [
+                "list_feed_packs"
+              ]
+            },
+            "ListFeedSourceTypeSchemas": {
+              "methods": [
+                "list_feed_source_type_schemas"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "ListLogTypeSchemas": {
+              "methods": [
+                "list_log_type_schemas"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "FeedsServiceAsyncClient",
+          "rpcs": {
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "DisableFeed": {
+              "methods": [
+                "disable_feed"
+              ]
+            },
+            "EnableFeed": {
+              "methods": [
+                "enable_feed"
+              ]
+            },
+            "FetchServiceAccountForCustomer": {
+              "methods": [
+                "fetch_service_account_for_customer"
+              ]
+            },
+            "GenerateSecret": {
+              "methods": [
+                "generate_secret"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "GetFeedPack": {
+              "methods": [
+                "get_feed_pack"
+              ]
+            },
+            "ImportPushLogs": {
+              "methods": [
+                "import_push_logs"
+              ]
+            },
+            "ListFeedPacks": {
+              "methods": [
+                "list_feed_packs"
+              ]
+            },
+            "ListFeedSourceTypeSchemas": {
+              "methods": [
+                "list_feed_source_type_schemas"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "ListLogTypeSchemas": {
+              "methods": [
+                "list_log_type_schemas"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "FeedsServiceClient",
+          "rpcs": {
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "DisableFeed": {
+              "methods": [
+                "disable_feed"
+              ]
+            },
+            "EnableFeed": {
+              "methods": [
+                "enable_feed"
+              ]
+            },
+            "FetchServiceAccountForCustomer": {
+              "methods": [
+                "fetch_service_account_for_customer"
+              ]
+            },
+            "GenerateSecret": {
+              "methods": [
+                "generate_secret"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "GetFeedPack": {
+              "methods": [
+                "get_feed_pack"
+              ]
+            },
+            "ImportPushLogs": {
+              "methods": [
+                "import_push_logs"
+              ]
+            },
+            "ListFeedPacks": {
+              "methods": [
+                "list_feed_packs"
+              ]
+            },
+            "ListFeedSourceTypeSchemas": {
+              "methods": [
+                "list_feed_source_type_schemas"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "ListLogTypeSchemas": {
+              "methods": [
+                "list_log_type_schemas"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "FindingsRefinementService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "FindingsRefinementServiceClient",
+          "rpcs": {
+            "ComputeAllFindingsRefinementActivities": {
+              "methods": [
+                "compute_all_findings_refinement_activities"
+              ]
+            },
+            "ComputeFindingsRefinementActivity": {
+              "methods": [
+                "compute_findings_refinement_activity"
+              ]
+            },
+            "CreateFindingsRefinement": {
+              "methods": [
+                "create_findings_refinement"
+              ]
+            },
+            "GetFindingsRefinement": {
+              "methods": [
+                "get_findings_refinement"
+              ]
+            },
+            "GetFindingsRefinementDeployment": {
+              "methods": [
+                "get_findings_refinement_deployment"
+              ]
+            },
+            "ListAllFindingsRefinementDeployments": {
+              "methods": [
+                "list_all_findings_refinement_deployments"
+              ]
+            },
+            "ListFindingsRefinements": {
+              "methods": [
+                "list_findings_refinements"
+              ]
+            },
+            "UpdateFindingsRefinement": {
+              "methods": [
+                "update_findings_refinement"
+              ]
+            },
+            "UpdateFindingsRefinementDeployment": {
+              "methods": [
+                "update_findings_refinement_deployment"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "FindingsRefinementServiceAsyncClient",
+          "rpcs": {
+            "ComputeAllFindingsRefinementActivities": {
+              "methods": [
+                "compute_all_findings_refinement_activities"
+              ]
+            },
+            "ComputeFindingsRefinementActivity": {
+              "methods": [
+                "compute_findings_refinement_activity"
+              ]
+            },
+            "CreateFindingsRefinement": {
+              "methods": [
+                "create_findings_refinement"
+              ]
+            },
+            "GetFindingsRefinement": {
+              "methods": [
+                "get_findings_refinement"
+              ]
+            },
+            "GetFindingsRefinementDeployment": {
+              "methods": [
+                "get_findings_refinement_deployment"
+              ]
+            },
+            "ListAllFindingsRefinementDeployments": {
+              "methods": [
+                "list_all_findings_refinement_deployments"
+              ]
+            },
+            "ListFindingsRefinements": {
+              "methods": [
+                "list_findings_refinements"
+              ]
+            },
+            "UpdateFindingsRefinement": {
+              "methods": [
+                "update_findings_refinement"
+              ]
+            },
+            "UpdateFindingsRefinementDeployment": {
+              "methods": [
+                "update_findings_refinement_deployment"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "FindingsRefinementServiceClient",
+          "rpcs": {
+            "ComputeAllFindingsRefinementActivities": {
+              "methods": [
+                "compute_all_findings_refinement_activities"
+              ]
+            },
+            "ComputeFindingsRefinementActivity": {
+              "methods": [
+                "compute_findings_refinement_activity"
+              ]
+            },
+            "CreateFindingsRefinement": {
+              "methods": [
+                "create_findings_refinement"
+              ]
+            },
+            "GetFindingsRefinement": {
+              "methods": [
+                "get_findings_refinement"
+              ]
+            },
+            "GetFindingsRefinementDeployment": {
+              "methods": [
+                "get_findings_refinement_deployment"
+              ]
+            },
+            "ListAllFindingsRefinementDeployments": {
+              "methods": [
+                "list_all_findings_refinement_deployments"
+              ]
+            },
+            "ListFindingsRefinements": {
+              "methods": [
+                "list_findings_refinements"
+              ]
+            },
+            "UpdateFindingsRefinement": {
+              "methods": [
+                "update_findings_refinement"
+              ]
+            },
+            "UpdateFindingsRefinementDeployment": {
+              "methods": [
+                "update_findings_refinement_deployment"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "InstanceService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "InstanceServiceClient",
+          "rpcs": {
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "InstanceServiceAsyncClient",
+          "rpcs": {
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "InstanceServiceClient",
+          "rpcs": {
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NativeDashboardService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "NativeDashboardServiceClient",
+          "rpcs": {
+            "AddChart": {
+              "methods": [
+                "add_chart"
+              ]
+            },
+            "CreateNativeDashboard": {
+              "methods": [
+                "create_native_dashboard"
+              ]
+            },
+            "DeleteNativeDashboard": {
+              "methods": [
+                "delete_native_dashboard"
+              ]
+            },
+            "DuplicateChart": {
+              "methods": [
+                "duplicate_chart"
+              ]
+            },
+            "DuplicateNativeDashboard": {
+              "methods": [
+                "duplicate_native_dashboard"
+              ]
+            },
+            "EditChart": {
+              "methods": [
+                "edit_chart"
+              ]
+            },
+            "ExportNativeDashboards": {
+              "methods": [
+                "export_native_dashboards"
+              ]
+            },
+            "GetNativeDashboard": {
+              "methods": [
+                "get_native_dashboard"
+              ]
+            },
+            "ImportNativeDashboards": {
+              "methods": [
+                "import_native_dashboards"
+              ]
+            },
+            "ListNativeDashboards": {
+              "methods": [
+                "list_native_dashboards"
+              ]
+            },
+            "RemoveChart": {
+              "methods": [
+                "remove_chart"
+              ]
+            },
+            "UpdateNativeDashboard": {
+              "methods": [
+                "update_native_dashboard"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "NativeDashboardServiceAsyncClient",
+          "rpcs": {
+            "AddChart": {
+              "methods": [
+                "add_chart"
+              ]
+            },
+            "CreateNativeDashboard": {
+              "methods": [
+                "create_native_dashboard"
+              ]
+            },
+            "DeleteNativeDashboard": {
+              "methods": [
+                "delete_native_dashboard"
+              ]
+            },
+            "DuplicateChart": {
+              "methods": [
+                "duplicate_chart"
+              ]
+            },
+            "DuplicateNativeDashboard": {
+              "methods": [
+                "duplicate_native_dashboard"
+              ]
+            },
+            "EditChart": {
+              "methods": [
+                "edit_chart"
+              ]
+            },
+            "ExportNativeDashboards": {
+              "methods": [
+                "export_native_dashboards"
+              ]
+            },
+            "GetNativeDashboard": {
+              "methods": [
+                "get_native_dashboard"
+              ]
+            },
+            "ImportNativeDashboards": {
+              "methods": [
+                "import_native_dashboards"
+              ]
+            },
+            "ListNativeDashboards": {
+              "methods": [
+                "list_native_dashboards"
+              ]
+            },
+            "RemoveChart": {
+              "methods": [
+                "remove_chart"
+              ]
+            },
+            "UpdateNativeDashboard": {
+              "methods": [
+                "update_native_dashboard"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "NativeDashboardServiceClient",
+          "rpcs": {
+            "AddChart": {
+              "methods": [
+                "add_chart"
+              ]
+            },
+            "CreateNativeDashboard": {
+              "methods": [
+                "create_native_dashboard"
+              ]
+            },
+            "DeleteNativeDashboard": {
+              "methods": [
+                "delete_native_dashboard"
+              ]
+            },
+            "DuplicateChart": {
+              "methods": [
+                "duplicate_chart"
+              ]
+            },
+            "DuplicateNativeDashboard": {
+              "methods": [
+                "duplicate_native_dashboard"
+              ]
+            },
+            "EditChart": {
+              "methods": [
+                "edit_chart"
+              ]
+            },
+            "ExportNativeDashboards": {
+              "methods": [
+                "export_native_dashboards"
+              ]
+            },
+            "GetNativeDashboard": {
+              "methods": [
+                "get_native_dashboard"
+              ]
+            },
+            "ImportNativeDashboards": {
+              "methods": [
+                "import_native_dashboards"
+              ]
+            },
+            "ListNativeDashboards": {
+              "methods": [
+                "list_native_dashboards"
+              ]
+            },
+            "RemoveChart": {
+              "methods": [
+                "remove_chart"
+              ]
+            },
+            "UpdateNativeDashboard": {
+              "methods": [
+                "update_native_dashboard"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ReferenceListService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ReferenceListServiceClient",
+          "rpcs": {
+            "CreateReferenceList": {
+              "methods": [
+                "create_reference_list"
+              ]
+            },
+            "GetReferenceList": {
+              "methods": [
+                "get_reference_list"
+              ]
+            },
+            "ListReferenceLists": {
+              "methods": [
+                "list_reference_lists"
+              ]
+            },
+            "UpdateReferenceList": {
+              "methods": [
+                "update_reference_list"
+              ]
+            },
+            "VerifyReferenceList": {
+              "methods": [
+                "verify_reference_list"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ReferenceListServiceAsyncClient",
+          "rpcs": {
+            "CreateReferenceList": {
+              "methods": [
+                "create_reference_list"
+              ]
+            },
+            "GetReferenceList": {
+              "methods": [
+                "get_reference_list"
+              ]
+            },
+            "ListReferenceLists": {
+              "methods": [
+                "list_reference_lists"
+              ]
+            },
+            "UpdateReferenceList": {
+              "methods": [
+                "update_reference_list"
+              ]
+            },
+            "VerifyReferenceList": {
+              "methods": [
+                "verify_reference_list"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ReferenceListServiceClient",
+          "rpcs": {
+            "CreateReferenceList": {
+              "methods": [
+                "create_reference_list"
+              ]
+            },
+            "GetReferenceList": {
+              "methods": [
+                "get_reference_list"
+              ]
+            },
+            "ListReferenceLists": {
+              "methods": [
+                "list_reference_lists"
+              ]
+            },
+            "UpdateReferenceList": {
+              "methods": [
+                "update_reference_list"
+              ]
+            },
+            "VerifyReferenceList": {
+              "methods": [
+                "verify_reference_list"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RuleExecutionErrorService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "RuleExecutionErrorServiceClient",
+          "rpcs": {
+            "ListRuleExecutionErrors": {
+              "methods": [
+                "list_rule_execution_errors"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "RuleExecutionErrorServiceAsyncClient",
+          "rpcs": {
+            "ListRuleExecutionErrors": {
+              "methods": [
+                "list_rule_execution_errors"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "RuleExecutionErrorServiceClient",
+          "rpcs": {
+            "ListRuleExecutionErrors": {
+              "methods": [
+                "list_rule_execution_errors"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RuleService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "RuleServiceClient",
+          "rpcs": {
+            "CreateRetrohunt": {
+              "methods": [
+                "create_retrohunt"
+              ]
+            },
+            "CreateRule": {
+              "methods": [
+                "create_rule"
+              ]
+            },
+            "DeleteRule": {
+              "methods": [
+                "delete_rule"
+              ]
+            },
+            "GetRetrohunt": {
+              "methods": [
+                "get_retrohunt"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "GetRuleDeployment": {
+              "methods": [
+                "get_rule_deployment"
+              ]
+            },
+            "ListRetrohunts": {
+              "methods": [
+                "list_retrohunts"
+              ]
+            },
+            "ListRuleDeployments": {
+              "methods": [
+                "list_rule_deployments"
+              ]
+            },
+            "ListRuleRevisions": {
+              "methods": [
+                "list_rule_revisions"
+              ]
+            },
+            "ListRules": {
+              "methods": [
+                "list_rules"
+              ]
+            },
+            "UpdateRule": {
+              "methods": [
+                "update_rule"
+              ]
+            },
+            "UpdateRuleDeployment": {
+              "methods": [
+                "update_rule_deployment"
+              ]
+            },
+            "VerifyRuleText": {
+              "methods": [
+                "verify_rule_text"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "RuleServiceAsyncClient",
+          "rpcs": {
+            "CreateRetrohunt": {
+              "methods": [
+                "create_retrohunt"
+              ]
+            },
+            "CreateRule": {
+              "methods": [
+                "create_rule"
+              ]
+            },
+            "DeleteRule": {
+              "methods": [
+                "delete_rule"
+              ]
+            },
+            "GetRetrohunt": {
+              "methods": [
+                "get_retrohunt"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "GetRuleDeployment": {
+              "methods": [
+                "get_rule_deployment"
+              ]
+            },
+            "ListRetrohunts": {
+              "methods": [
+                "list_retrohunts"
+              ]
+            },
+            "ListRuleDeployments": {
+              "methods": [
+                "list_rule_deployments"
+              ]
+            },
+            "ListRuleRevisions": {
+              "methods": [
+                "list_rule_revisions"
+              ]
+            },
+            "ListRules": {
+              "methods": [
+                "list_rules"
+              ]
+            },
+            "UpdateRule": {
+              "methods": [
+                "update_rule"
+              ]
+            },
+            "UpdateRuleDeployment": {
+              "methods": [
+                "update_rule_deployment"
+              ]
+            },
+            "VerifyRuleText": {
+              "methods": [
+                "verify_rule_text"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "RuleServiceClient",
+          "rpcs": {
+            "CreateRetrohunt": {
+              "methods": [
+                "create_retrohunt"
+              ]
+            },
+            "CreateRule": {
+              "methods": [
+                "create_rule"
+              ]
+            },
+            "DeleteRule": {
+              "methods": [
+                "delete_rule"
+              ]
+            },
+            "GetRetrohunt": {
+              "methods": [
+                "get_retrohunt"
+              ]
+            },
+            "GetRule": {
+              "methods": [
+                "get_rule"
+              ]
+            },
+            "GetRuleDeployment": {
+              "methods": [
+                "get_rule_deployment"
+              ]
+            },
+            "ListRetrohunts": {
+              "methods": [
+                "list_retrohunts"
+              ]
+            },
+            "ListRuleDeployments": {
+              "methods": [
+                "list_rule_deployments"
+              ]
+            },
+            "ListRuleRevisions": {
+              "methods": [
+                "list_rule_revisions"
+              ]
+            },
+            "ListRules": {
+              "methods": [
+                "list_rules"
+              ]
+            },
+            "UpdateRule": {
+              "methods": [
+                "update_rule"
+              ]
+            },
+            "UpdateRuleDeployment": {
+              "methods": [
+                "update_rule_deployment"
+              ]
+            },
+            "VerifyRuleText": {
+              "methods": [
+                "verify_rule_text"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

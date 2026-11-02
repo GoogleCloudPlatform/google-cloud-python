@@ -1,0 +1,15 @@
+{
+    "api_id": "networksecurity.googleapis.com",
+    "api_shortname": "networksecurity",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/networksecurity/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-network-security",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1132189\u0026template=1639113",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "networksecurity",
+    "name_pretty": "Network Security",
+    "product_documentation": "https://cloud.google.com/traffic-director/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,10 @@
+{% extends '_base.py.j2' %}
+
+{% block content %}
+
+from .client import {{ service.client_name }}
+
+__all__ = (
+    '{{ service.client_name }}',
+)
+{% endblock %}

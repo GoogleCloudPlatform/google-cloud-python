@@ -1,0 +1,364 @@
+- items:
+  - href: index.md
+    name: Overview
+  - href: changelog.md
+    name: Changelog
+  - href: multiprocessing.md
+    name: Multiprocessing
+  - href: upgrading.md
+    name: 2.0.0 Migration Guide
+  - items:
+    - items:
+      - name: Overview
+        uid: google.cloud.pubsub_v1.publisher.client
+      - name: Client
+        uid: google.cloud.pubsub_v1.publisher.client.Client
+      name: publisher.client
+      uid: google.cloud.pubsub_v1.publisher.client
+    - items:
+      - name: Overview
+        uid: google.cloud.pubsub_v1.publisher.futures
+      - name: Future
+        uid: google.cloud.pubsub_v1.publisher.futures.Future
+      name: publisher.futures
+      uid: google.cloud.pubsub_v1.publisher.futures
+    - items:
+      - name: Overview
+        uid: google.cloud.pubsub_v1.subscriber.client
+      - name: Client
+        uid: google.cloud.pubsub_v1.subscriber.client.Client
+      name: subscriber.client
+      uid: google.cloud.pubsub_v1.subscriber.client
+    - items:
+      - name: Overview
+        uid: google.cloud.pubsub_v1.subscriber.futures
+      - name: Future
+        uid: google.cloud.pubsub_v1.subscriber.futures.Future
+      - name: StreamingPullFuture
+        uid: google.cloud.pubsub_v1.subscriber.futures.StreamingPullFuture
+      name: subscriber.futures
+      uid: google.cloud.pubsub_v1.subscriber.futures
+    - items:
+      - name: Overview
+        uid: google.cloud.pubsub_v1.subscriber.scheduler
+      - name: Scheduler
+        uid: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+      - name: ThreadScheduler
+        uid: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+      name: scheduler
+      uid: google.cloud.pubsub_v1.subscriber.scheduler
+    - items:
+      - name: Overview
+        uid: google.cloud.pubsub_v1.types
+      - name: AcknowledgeRequest
+        uid: google.cloud.pubsub_v1.types.AcknowledgeRequest
+      - name: AuditConfig
+        uid: google.cloud.pubsub_v1.types.AuditConfig
+      - name: AuditConfigDelta
+        uid: google.cloud.pubsub_v1.types.AuditConfigDelta
+      - name: AuditData
+        uid: google.cloud.pubsub_v1.types.AuditData
+      - name: AuditLogConfig
+        uid: google.cloud.pubsub_v1.types.AuditLogConfig
+      - name: BatchSettings
+        uid: google.cloud.pubsub_v1.types.BatchSettings
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.BigQueryConfig
+        - name: State
+          uid: google.cloud.pubsub_v1.types.BigQueryConfig.State
+        name: BigQueryConfig
+        uid: google.cloud.pubsub_v1.types.BigQueryConfig
+      - name: Binding
+        uid: google.cloud.pubsub_v1.types.Binding
+      - name: BindingDelta
+        uid: google.cloud.pubsub_v1.types.BindingDelta
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.CreateSnapshotRequest
+        - name: LabelsEntry
+          uid: google.cloud.pubsub_v1.types.CreateSnapshotRequest.LabelsEntry
+        name: CreateSnapshotRequest
+        uid: google.cloud.pubsub_v1.types.CreateSnapshotRequest
+      - name: CustomHttpPattern
+        uid: google.cloud.pubsub_v1.types.CustomHttpPattern
+      - name: DeadLetterPolicy
+        uid: google.cloud.pubsub_v1.types.DeadLetterPolicy
+      - name: DeleteSnapshotRequest
+        uid: google.cloud.pubsub_v1.types.DeleteSnapshotRequest
+      - name: DeleteSubscriptionRequest
+        uid: google.cloud.pubsub_v1.types.DeleteSubscriptionRequest
+      - name: DeleteTopicRequest
+        uid: google.cloud.pubsub_v1.types.DeleteTopicRequest
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.DescriptorProto
+        - name: ExtensionRange
+          uid: google.cloud.pubsub_v1.types.DescriptorProto.ExtensionRange
+        - name: ReservedRange
+          uid: google.cloud.pubsub_v1.types.DescriptorProto.ReservedRange
+        name: DescriptorProto
+        uid: google.cloud.pubsub_v1.types.DescriptorProto
+      - name: DetachSubscriptionRequest
+        uid: google.cloud.pubsub_v1.types.DetachSubscriptionRequest
+      - name: DetachSubscriptionResponse
+        uid: google.cloud.pubsub_v1.types.DetachSubscriptionResponse
+      - name: Duration
+        uid: google.cloud.pubsub_v1.types.Duration
+      - name: Empty
+        uid: google.cloud.pubsub_v1.types.Empty
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.EnumDescriptorProto
+        - name: EnumReservedRange
+          uid: google.cloud.pubsub_v1.types.EnumDescriptorProto.EnumReservedRange
+        name: EnumDescriptorProto
+        uid: google.cloud.pubsub_v1.types.EnumDescriptorProto
+      - name: EnumOptions
+        uid: google.cloud.pubsub_v1.types.EnumOptions
+      - name: EnumValueDescriptorProto
+        uid: google.cloud.pubsub_v1.types.EnumValueDescriptorProto
+      - name: EnumValueOptions
+        uid: google.cloud.pubsub_v1.types.EnumValueOptions
+      - name: ExpirationPolicy
+        uid: google.cloud.pubsub_v1.types.ExpirationPolicy
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.ExtensionRangeOptions
+        - name: Declaration
+          uid: google.cloud.pubsub_v1.types.ExtensionRangeOptions.Declaration
+        name: ExtensionRangeOptions
+        uid: google.cloud.pubsub_v1.types.ExtensionRangeOptions
+      - name: FeatureSet
+        uid: google.cloud.pubsub_v1.types.FeatureSet
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.FeatureSetDefaults
+        - name: FeatureSetEditionDefault
+          uid: google.cloud.pubsub_v1.types.FeatureSetDefaults.FeatureSetEditionDefault
+        name: FeatureSetDefaults
+        uid: google.cloud.pubsub_v1.types.FeatureSetDefaults
+      - name: FieldDescriptorProto
+        uid: google.cloud.pubsub_v1.types.FieldDescriptorProto
+      - name: FieldMask
+        uid: google.cloud.pubsub_v1.types.FieldMask
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.FieldOptions
+        - name: EditionDefault
+          uid: google.cloud.pubsub_v1.types.FieldOptions.EditionDefault
+        name: FieldOptions
+        uid: google.cloud.pubsub_v1.types.FieldOptions
+      - name: FileDescriptorProto
+        uid: google.cloud.pubsub_v1.types.FileDescriptorProto
+      - name: FileDescriptorSet
+        uid: google.cloud.pubsub_v1.types.FileDescriptorSet
+      - name: FileOptions
+        uid: google.cloud.pubsub_v1.types.FileOptions
+      - name: FlowControl
+        uid: google.cloud.pubsub_v1.types.FlowControl
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.GeneratedCodeInfo
+        - name: Annotation
+          uid: google.cloud.pubsub_v1.types.GeneratedCodeInfo.Annotation
+        name: GeneratedCodeInfo
+        uid: google.cloud.pubsub_v1.types.GeneratedCodeInfo
+      - name: GetIamPolicyRequest
+        uid: google.cloud.pubsub_v1.types.GetIamPolicyRequest
+      - name: GetSnapshotRequest
+        uid: google.cloud.pubsub_v1.types.GetSnapshotRequest
+      - name: GetSubscriptionRequest
+        uid: google.cloud.pubsub_v1.types.GetSubscriptionRequest
+      - name: GetTopicRequest
+        uid: google.cloud.pubsub_v1.types.GetTopicRequest
+      - name: Http
+        uid: google.cloud.pubsub_v1.types.Http
+      - name: HttpRule
+        uid: google.cloud.pubsub_v1.types.HttpRule
+      - name: LimitExceededBehavior
+        uid: google.cloud.pubsub_v1.types.LimitExceededBehavior
+      - name: ListSnapshotsRequest
+        uid: google.cloud.pubsub_v1.types.ListSnapshotsRequest
+      - name: ListSnapshotsResponse
+        uid: google.cloud.pubsub_v1.types.ListSnapshotsResponse
+      - name: ListSubscriptionsRequest
+        uid: google.cloud.pubsub_v1.types.ListSubscriptionsRequest
+      - name: ListSubscriptionsResponse
+        uid: google.cloud.pubsub_v1.types.ListSubscriptionsResponse
+      - name: ListTopicSnapshotsRequest
+        uid: google.cloud.pubsub_v1.types.ListTopicSnapshotsRequest
+      - name: ListTopicSnapshotsResponse
+        uid: google.cloud.pubsub_v1.types.ListTopicSnapshotsResponse
+      - name: ListTopicSubscriptionsRequest
+        uid: google.cloud.pubsub_v1.types.ListTopicSubscriptionsRequest
+      - name: ListTopicSubscriptionsResponse
+        uid: google.cloud.pubsub_v1.types.ListTopicSubscriptionsResponse
+      - name: ListTopicsRequest
+        uid: google.cloud.pubsub_v1.types.ListTopicsRequest
+      - name: ListTopicsResponse
+        uid: google.cloud.pubsub_v1.types.ListTopicsResponse
+      - name: MessageOptions
+        uid: google.cloud.pubsub_v1.types.MessageOptions
+      - name: MessageStoragePolicy
+        uid: google.cloud.pubsub_v1.types.MessageStoragePolicy
+      - name: MethodDescriptorProto
+        uid: google.cloud.pubsub_v1.types.MethodDescriptorProto
+      - name: MethodOptions
+        uid: google.cloud.pubsub_v1.types.MethodOptions
+      - name: ModifyAckDeadlineRequest
+        uid: google.cloud.pubsub_v1.types.ModifyAckDeadlineRequest
+      - name: ModifyPushConfigRequest
+        uid: google.cloud.pubsub_v1.types.ModifyPushConfigRequest
+      - name: OneofDescriptorProto
+        uid: google.cloud.pubsub_v1.types.OneofDescriptorProto
+      - name: OneofOptions
+        uid: google.cloud.pubsub_v1.types.OneofOptions
+      - name: Policy
+        uid: google.cloud.pubsub_v1.types.Policy
+      - name: PolicyDelta
+        uid: google.cloud.pubsub_v1.types.PolicyDelta
+      - name: PublishFlowControl
+        uid: google.cloud.pubsub_v1.types.PublishFlowControl
+      - name: PublishRequest
+        uid: google.cloud.pubsub_v1.types.PublishRequest
+      - name: PublishResponse
+        uid: google.cloud.pubsub_v1.types.PublishResponse
+      - name: PublisherOptions
+        uid: google.cloud.pubsub_v1.types.PublisherOptions
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.PubsubMessage
+        - name: AttributesEntry
+          uid: google.cloud.pubsub_v1.types.PubsubMessage.AttributesEntry
+        name: PubsubMessage
+        uid: google.cloud.pubsub_v1.types.PubsubMessage
+      - name: PullRequest
+        uid: google.cloud.pubsub_v1.types.PullRequest
+      - name: PullResponse
+        uid: google.cloud.pubsub_v1.types.PullResponse
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.PushConfig
+        - name: AttributesEntry
+          uid: google.cloud.pubsub_v1.types.PushConfig.AttributesEntry
+        - name: OidcToken
+          uid: google.cloud.pubsub_v1.types.PushConfig.OidcToken
+        name: PushConfig
+        uid: google.cloud.pubsub_v1.types.PushConfig
+      - name: ReceivedMessage
+        uid: google.cloud.pubsub_v1.types.ReceivedMessage
+      - name: RetryPolicy
+        uid: google.cloud.pubsub_v1.types.RetryPolicy
+      - name: SchemaSettings
+        uid: google.cloud.pubsub_v1.types.SchemaSettings
+      - name: SeekRequest
+        uid: google.cloud.pubsub_v1.types.SeekRequest
+      - name: SeekResponse
+        uid: google.cloud.pubsub_v1.types.SeekResponse
+      - name: ServiceDescriptorProto
+        uid: google.cloud.pubsub_v1.types.ServiceDescriptorProto
+      - name: ServiceOptions
+        uid: google.cloud.pubsub_v1.types.ServiceOptions
+      - name: SetIamPolicyRequest
+        uid: google.cloud.pubsub_v1.types.SetIamPolicyRequest
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.Snapshot
+        - name: LabelsEntry
+          uid: google.cloud.pubsub_v1.types.Snapshot.LabelsEntry
+        name: Snapshot
+        uid: google.cloud.pubsub_v1.types.Snapshot
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.SourceCodeInfo
+        - name: Location
+          uid: google.cloud.pubsub_v1.types.SourceCodeInfo.Location
+        name: SourceCodeInfo
+        uid: google.cloud.pubsub_v1.types.SourceCodeInfo
+      - name: StreamingPullRequest
+        uid: google.cloud.pubsub_v1.types.StreamingPullRequest
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.StreamingPullResponse
+        - name: AcknowledgeConfirmation
+          uid: google.cloud.pubsub_v1.types.StreamingPullResponse.AcknowledgeConfirmation
+        - name: ModifyAckDeadlineConfirmation
+          uid: google.cloud.pubsub_v1.types.StreamingPullResponse.ModifyAckDeadlineConfirmation
+        - name: SubscriptionProperties
+          uid: google.cloud.pubsub_v1.types.StreamingPullResponse.SubscriptionProperties
+        name: StreamingPullResponse
+        uid: google.cloud.pubsub_v1.types.StreamingPullResponse
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.Subscription
+        - name: LabelsEntry
+          uid: google.cloud.pubsub_v1.types.Subscription.LabelsEntry
+        - name: State
+          uid: google.cloud.pubsub_v1.types.Subscription.State
+        name: Subscription
+        uid: google.cloud.pubsub_v1.types.Subscription
+      - name: TestIamPermissionsRequest
+        uid: google.cloud.pubsub_v1.types.TestIamPermissionsRequest
+      - name: TestIamPermissionsResponse
+        uid: google.cloud.pubsub_v1.types.TestIamPermissionsResponse
+      - name: Timestamp
+        uid: google.cloud.pubsub_v1.types.Timestamp
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.Topic
+        - name: LabelsEntry
+          uid: google.cloud.pubsub_v1.types.Topic.LabelsEntry
+        name: Topic
+        uid: google.cloud.pubsub_v1.types.Topic
+      - items:
+        - name: Overview
+          uid: google.cloud.pubsub_v1.types.UninterpretedOption
+        - name: NamePart
+          uid: google.cloud.pubsub_v1.types.UninterpretedOption.NamePart
+        name: UninterpretedOption
+        uid: google.cloud.pubsub_v1.types.UninterpretedOption
+      - name: UpdateSnapshotRequest
+        uid: google.cloud.pubsub_v1.types.UpdateSnapshotRequest
+      - name: UpdateSubscriptionRequest
+        uid: google.cloud.pubsub_v1.types.UpdateSubscriptionRequest
+      - name: UpdateTopicRequest
+        uid: google.cloud.pubsub_v1.types.UpdateTopicRequest
+      name: types
+      uid: google.cloud.pubsub_v1.types
+    - name: Message
+      uid: google.cloud.pubsub_v1.subscriber.message.Message
+    name: Pubsub V1
+  - items:
+    - items:
+      - name: Overview
+        uid: google.pubsub_v1.services.publisher.pagers
+      - name: ListTopicSnapshotsAsyncPager
+        uid: google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsAsyncPager
+      - name: ListTopicSnapshotsPager
+        uid: google.pubsub_v1.services.publisher.pagers.ListTopicSnapshotsPager
+      - name: ListTopicSubscriptionsAsyncPager
+        uid: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsAsyncPager
+      - name: ListTopicSubscriptionsPager
+        uid: google.pubsub_v1.services.publisher.pagers.ListTopicSubscriptionsPager
+      - name: ListTopicsAsyncPager
+        uid: google.pubsub_v1.services.publisher.pagers.ListTopicsAsyncPager
+      - name: ListTopicsPager
+        uid: google.pubsub_v1.services.publisher.pagers.ListTopicsPager
+      name: publisher.pagers
+      uid: google.pubsub_v1.services.publisher.pagers
+    - items:
+      - name: Overview
+        uid: google.pubsub_v1.services.subscriber.pagers
+      - name: ListSnapshotsAsyncPager
+        uid: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsAsyncPager
+      - name: ListSnapshotsPager
+        uid: google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager
+      - name: ListSubscriptionsAsyncPager
+        uid: google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsAsyncPager
+      - name: ListSubscriptionsPager
+        uid: google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsPager
+      name: subscriber.pagers
+      uid: google.pubsub_v1.services.subscriber.pagers
+    name: Services
+  name: google-cloud-pubsub

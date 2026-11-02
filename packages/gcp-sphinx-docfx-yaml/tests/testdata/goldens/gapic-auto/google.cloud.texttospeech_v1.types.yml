@@ -1,0 +1,84 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.cloud.texttospeech_v1.types.AudioConfig
+  - google.cloud.texttospeech_v1.types.AudioEncoding
+  - google.cloud.texttospeech_v1.types.CustomVoiceParams
+  - google.cloud.texttospeech_v1.types.ListVoicesRequest
+  - google.cloud.texttospeech_v1.types.ListVoicesResponse
+  - google.cloud.texttospeech_v1.types.SsmlVoiceGender
+  - google.cloud.texttospeech_v1.types.SynthesisInput
+  - google.cloud.texttospeech_v1.types.SynthesizeSpeechRequest
+  - google.cloud.texttospeech_v1.types.SynthesizeSpeechResponse
+  - google.cloud.texttospeech_v1.types.Voice
+  - google.cloud.texttospeech_v1.types.VoiceSelectionParams
+  fullName: google.cloud.texttospeech_v1.types
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1.types
+  name: types
+  source:
+    id: types
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1/types/__init__.py
+    startLine: 0
+  summary: API documentation for `texttospeech_v1.types` package.
+  syntax: {}
+  type: subPackage
+  uid: google.cloud.texttospeech_v1.types
+references:
+- fullName: google.cloud.texttospeech_v1.types.AudioConfig
+  isExternal: false
+  name: AudioConfig
+  parent: google.cloud.texttospeech_v1.types
+  uid: google.cloud.texttospeech_v1.types.AudioConfig
+- fullName: google.cloud.texttospeech_v1.types.AudioEncoding
+  isExternal: false
+  name: AudioEncoding
+  parent: google.cloud.texttospeech_v1.types
+  uid: google.cloud.texttospeech_v1.types.AudioEncoding
+- fullName: google.cloud.texttospeech_v1.types.CustomVoiceParams
+  isExternal: false
+  name: CustomVoiceParams
+  parent: google.cloud.texttospeech_v1.types
+  uid: google.cloud.texttospeech_v1.types.CustomVoiceParams
+- fullName: google.cloud.texttospeech_v1.types.ListVoicesRequest
+  isExternal: false
+  name: ListVoicesRequest
+  parent: google.cloud.texttospeech_v1.types
+  uid: google.cloud.texttospeech_v1.types.ListVoicesRequest
+- fullName: google.cloud.texttospeech_v1.types.ListVoicesResponse
+  isExternal: false
+  name: ListVoicesResponse
+  parent: google.cloud.texttospeech_v1.types
+  uid: google.cloud.texttospeech_v1.types.ListVoicesResponse
+- fullName: google.cloud.texttospeech_v1.types.SsmlVoiceGender
+  isExternal: false
+  name: SsmlVoiceGender
+  parent: google.cloud.texttospeech_v1.types
+  uid: google.cloud.texttospeech_v1.types.SsmlVoiceGender
+- fullName: google.cloud.texttospeech_v1.types.SynthesisInput
+  isExternal: false
+  name: SynthesisInput
+  parent: google.cloud.texttospeech_v1.types
+  uid: google.cloud.texttospeech_v1.types.SynthesisInput
+- fullName: google.cloud.texttospeech_v1.types.SynthesizeSpeechRequest
+  isExternal: false
+  name: SynthesizeSpeechRequest
+  parent: google.cloud.texttospeech_v1.types
+  uid: google.cloud.texttospeech_v1.types.SynthesizeSpeechRequest
+- fullName: google.cloud.texttospeech_v1.types.SynthesizeSpeechResponse
+  isExternal: false
+  name: SynthesizeSpeechResponse
+  parent: google.cloud.texttospeech_v1.types
+  uid: google.cloud.texttospeech_v1.types.SynthesizeSpeechResponse
+- fullName: google.cloud.texttospeech_v1.types.Voice
+  isExternal: false
+  name: Voice
+  parent: google.cloud.texttospeech_v1.types
+  uid: google.cloud.texttospeech_v1.types.Voice
+- fullName: google.cloud.texttospeech_v1.types.VoiceSelectionParams
+  isExternal: false
+  name: VoiceSelectionParams
+  parent: google.cloud.texttospeech_v1.types
+  uid: google.cloud.texttospeech_v1.types.VoiceSelectionParams

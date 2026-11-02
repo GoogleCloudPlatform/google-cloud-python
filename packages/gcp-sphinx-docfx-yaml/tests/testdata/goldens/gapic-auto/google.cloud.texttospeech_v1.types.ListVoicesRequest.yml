@@ -1,0 +1,35 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Optional. Recommended.\n   <code>BCP-47 <https://www.rfc-editor.org/rfc/bcp/bcp47.txt></code>__\n\
+      \   language tag. If not specified, the API will return all\n   supported voices.\
+      \ If specified, the ListVoices call will\n   only return voices that can be\
+      \ used to synthesize this\n   language_code. For example, if you specify <code>\"\
+      en-NZ\"</code>, all\n   <code>\"en-NZ\"</code> voices will be returned. If you\
+      \ specify\n   <code>\"no\"</code>, both <code>\"no-\\*\"</code> (Norwegian)\
+      \ and <code>\"nb-\\*\"</code>\n   (Norwegian Bokmal) voices will be returned."
+    id: language_code
+    var_type: str
+  children: []
+  class: google.cloud.texttospeech_v1.types.ListVoicesRequest
+  fullName: google.cloud.texttospeech_v1.types.ListVoicesRequest
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1.types
+  name: ListVoicesRequest
+  source:
+    id: ListVoicesRequest
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1/types/cloud_tts.py
+    startLine: 58
+  summary: 'The top-level message sent by the client for the `ListVoices`
+
+    method.
+
+    '
+  syntax:
+    content: ListVoicesRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1.types.ListVoicesRequest
+references: []

@@ -1,0 +1,298 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.datacatalog_lineage_v1",
+  "protoPackage": "google.cloud.datacatalog.lineage.v1",
+  "schema": "1.0",
+  "services": {
+    "Lineage": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "LineageClient",
+          "rpcs": {
+            "BatchSearchLinkProcesses": {
+              "methods": [
+                "batch_search_link_processes"
+              ]
+            },
+            "CreateLineageEvent": {
+              "methods": [
+                "create_lineage_event"
+              ]
+            },
+            "CreateProcess": {
+              "methods": [
+                "create_process"
+              ]
+            },
+            "CreateRun": {
+              "methods": [
+                "create_run"
+              ]
+            },
+            "DeleteLineageEvent": {
+              "methods": [
+                "delete_lineage_event"
+              ]
+            },
+            "DeleteProcess": {
+              "methods": [
+                "delete_process"
+              ]
+            },
+            "DeleteRun": {
+              "methods": [
+                "delete_run"
+              ]
+            },
+            "GetLineageEvent": {
+              "methods": [
+                "get_lineage_event"
+              ]
+            },
+            "GetProcess": {
+              "methods": [
+                "get_process"
+              ]
+            },
+            "GetRun": {
+              "methods": [
+                "get_run"
+              ]
+            },
+            "ListLineageEvents": {
+              "methods": [
+                "list_lineage_events"
+              ]
+            },
+            "ListProcesses": {
+              "methods": [
+                "list_processes"
+              ]
+            },
+            "ListRuns": {
+              "methods": [
+                "list_runs"
+              ]
+            },
+            "ProcessOpenLineageRunEvent": {
+              "methods": [
+                "process_open_lineage_run_event"
+              ]
+            },
+            "SearchLineageStreaming": {
+              "methods": [
+                "search_lineage_streaming"
+              ]
+            },
+            "SearchLinks": {
+              "methods": [
+                "search_links"
+              ]
+            },
+            "UpdateProcess": {
+              "methods": [
+                "update_process"
+              ]
+            },
+            "UpdateRun": {
+              "methods": [
+                "update_run"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "LineageAsyncClient",
+          "rpcs": {
+            "BatchSearchLinkProcesses": {
+              "methods": [
+                "batch_search_link_processes"
+              ]
+            },
+            "CreateLineageEvent": {
+              "methods": [
+                "create_lineage_event"
+              ]
+            },
+            "CreateProcess": {
+              "methods": [
+                "create_process"
+              ]
+            },
+            "CreateRun": {
+              "methods": [
+                "create_run"
+              ]
+            },
+            "DeleteLineageEvent": {
+              "methods": [
+                "delete_lineage_event"
+              ]
+            },
+            "DeleteProcess": {
+              "methods": [
+                "delete_process"
+              ]
+            },
+            "DeleteRun": {
+              "methods": [
+                "delete_run"
+              ]
+            },
+            "GetLineageEvent": {
+              "methods": [
+                "get_lineage_event"
+              ]
+            },
+            "GetProcess": {
+              "methods": [
+                "get_process"
+              ]
+            },
+            "GetRun": {
+              "methods": [
+                "get_run"
+              ]
+            },
+            "ListLineageEvents": {
+              "methods": [
+                "list_lineage_events"
+              ]
+            },
+            "ListProcesses": {
+              "methods": [
+                "list_processes"
+              ]
+            },
+            "ListRuns": {
+              "methods": [
+                "list_runs"
+              ]
+            },
+            "ProcessOpenLineageRunEvent": {
+              "methods": [
+                "process_open_lineage_run_event"
+              ]
+            },
+            "SearchLineageStreaming": {
+              "methods": [
+                "search_lineage_streaming"
+              ]
+            },
+            "SearchLinks": {
+              "methods": [
+                "search_links"
+              ]
+            },
+            "UpdateProcess": {
+              "methods": [
+                "update_process"
+              ]
+            },
+            "UpdateRun": {
+              "methods": [
+                "update_run"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "LineageClient",
+          "rpcs": {
+            "BatchSearchLinkProcesses": {
+              "methods": [
+                "batch_search_link_processes"
+              ]
+            },
+            "CreateLineageEvent": {
+              "methods": [
+                "create_lineage_event"
+              ]
+            },
+            "CreateProcess": {
+              "methods": [
+                "create_process"
+              ]
+            },
+            "CreateRun": {
+              "methods": [
+                "create_run"
+              ]
+            },
+            "DeleteLineageEvent": {
+              "methods": [
+                "delete_lineage_event"
+              ]
+            },
+            "DeleteProcess": {
+              "methods": [
+                "delete_process"
+              ]
+            },
+            "DeleteRun": {
+              "methods": [
+                "delete_run"
+              ]
+            },
+            "GetLineageEvent": {
+              "methods": [
+                "get_lineage_event"
+              ]
+            },
+            "GetProcess": {
+              "methods": [
+                "get_process"
+              ]
+            },
+            "GetRun": {
+              "methods": [
+                "get_run"
+              ]
+            },
+            "ListLineageEvents": {
+              "methods": [
+                "list_lineage_events"
+              ]
+            },
+            "ListProcesses": {
+              "methods": [
+                "list_processes"
+              ]
+            },
+            "ListRuns": {
+              "methods": [
+                "list_runs"
+              ]
+            },
+            "ProcessOpenLineageRunEvent": {
+              "methods": [
+                "process_open_lineage_run_event"
+              ]
+            },
+            "SearchLineageStreaming": {
+              "methods": [
+                "search_lineage_streaming"
+              ]
+            },
+            "SearchLinks": {
+              "methods": [
+                "search_links"
+              ]
+            },
+            "UpdateProcess": {
+              "methods": [
+                "update_process"
+              ]
+            },
+            "UpdateRun": {
+              "methods": [
+                "update_run"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

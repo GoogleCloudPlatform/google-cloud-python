@@ -1,0 +1,15 @@
+{
+    "api_id": "cloudapiregistry.googleapis.com",
+    "api_shortname": "cloudapiregistry",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-apiregistry/latest",
+    "default_version": "v1beta",
+    "distribution_name": "google-cloud-apiregistry",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1979613\u0026template=2231768",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-apiregistry",
+    "name_pretty": "Cloud API Registry",
+    "product_documentation": "https://docs.cloud.google.com/api-registry/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,1168 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.netapp_v1",
+  "protoPackage": "google.cloud.netapp.v1",
+  "schema": "1.0",
+  "services": {
+    "NetApp": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "NetAppClient",
+          "rpcs": {
+            "CreateActiveDirectory": {
+              "methods": [
+                "create_active_directory"
+              ]
+            },
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateBackupPolicy": {
+              "methods": [
+                "create_backup_policy"
+              ]
+            },
+            "CreateBackupVault": {
+              "methods": [
+                "create_backup_vault"
+              ]
+            },
+            "CreateHostGroup": {
+              "methods": [
+                "create_host_group"
+              ]
+            },
+            "CreateKmsConfig": {
+              "methods": [
+                "create_kms_config"
+              ]
+            },
+            "CreateQuotaRule": {
+              "methods": [
+                "create_quota_rule"
+              ]
+            },
+            "CreateReplication": {
+              "methods": [
+                "create_replication"
+              ]
+            },
+            "CreateSnapshot": {
+              "methods": [
+                "create_snapshot"
+              ]
+            },
+            "CreateStoragePool": {
+              "methods": [
+                "create_storage_pool"
+              ]
+            },
+            "CreateVolume": {
+              "methods": [
+                "create_volume"
+              ]
+            },
+            "DeleteActiveDirectory": {
+              "methods": [
+                "delete_active_directory"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteBackupPolicy": {
+              "methods": [
+                "delete_backup_policy"
+              ]
+            },
+            "DeleteBackupVault": {
+              "methods": [
+                "delete_backup_vault"
+              ]
+            },
+            "DeleteHostGroup": {
+              "methods": [
+                "delete_host_group"
+              ]
+            },
+            "DeleteKmsConfig": {
+              "methods": [
+                "delete_kms_config"
+              ]
+            },
+            "DeleteQuotaRule": {
+              "methods": [
+                "delete_quota_rule"
+              ]
+            },
+            "DeleteReplication": {
+              "methods": [
+                "delete_replication"
+              ]
+            },
+            "DeleteSnapshot": {
+              "methods": [
+                "delete_snapshot"
+              ]
+            },
+            "DeleteStoragePool": {
+              "methods": [
+                "delete_storage_pool"
+              ]
+            },
+            "DeleteVolume": {
+              "methods": [
+                "delete_volume"
+              ]
+            },
+            "EncryptVolumes": {
+              "methods": [
+                "encrypt_volumes"
+              ]
+            },
+            "EstablishPeering": {
+              "methods": [
+                "establish_peering"
+              ]
+            },
+            "EstablishVolumePeering": {
+              "methods": [
+                "establish_volume_peering"
+              ]
+            },
+            "ExecuteOntapDelete": {
+              "methods": [
+                "execute_ontap_delete"
+              ]
+            },
+            "ExecuteOntapGet": {
+              "methods": [
+                "execute_ontap_get"
+              ]
+            },
+            "ExecuteOntapPatch": {
+              "methods": [
+                "execute_ontap_patch"
+              ]
+            },
+            "ExecuteOntapPost": {
+              "methods": [
+                "execute_ontap_post"
+              ]
+            },
+            "GetActiveDirectory": {
+              "methods": [
+                "get_active_directory"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupPolicy": {
+              "methods": [
+                "get_backup_policy"
+              ]
+            },
+            "GetBackupVault": {
+              "methods": [
+                "get_backup_vault"
+              ]
+            },
+            "GetHostGroup": {
+              "methods": [
+                "get_host_group"
+              ]
+            },
+            "GetKmsConfig": {
+              "methods": [
+                "get_kms_config"
+              ]
+            },
+            "GetQuotaRule": {
+              "methods": [
+                "get_quota_rule"
+              ]
+            },
+            "GetReplication": {
+              "methods": [
+                "get_replication"
+              ]
+            },
+            "GetSnapshot": {
+              "methods": [
+                "get_snapshot"
+              ]
+            },
+            "GetSplitStatus": {
+              "methods": [
+                "get_split_status"
+              ]
+            },
+            "GetStoragePool": {
+              "methods": [
+                "get_storage_pool"
+              ]
+            },
+            "GetVolume": {
+              "methods": [
+                "get_volume"
+              ]
+            },
+            "ListActiveDirectories": {
+              "methods": [
+                "list_active_directories"
+              ]
+            },
+            "ListBackupConfigs": {
+              "methods": [
+                "list_backup_configs"
+              ]
+            },
+            "ListBackupPolicies": {
+              "methods": [
+                "list_backup_policies"
+              ]
+            },
+            "ListBackupVaults": {
+              "methods": [
+                "list_backup_vaults"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListHostGroups": {
+              "methods": [
+                "list_host_groups"
+              ]
+            },
+            "ListKmsConfigs": {
+              "methods": [
+                "list_kms_configs"
+              ]
+            },
+            "ListQuotaRules": {
+              "methods": [
+                "list_quota_rules"
+              ]
+            },
+            "ListReplications": {
+              "methods": [
+                "list_replications"
+              ]
+            },
+            "ListSnapshots": {
+              "methods": [
+                "list_snapshots"
+              ]
+            },
+            "ListStoragePools": {
+              "methods": [
+                "list_storage_pools"
+              ]
+            },
+            "ListVolumes": {
+              "methods": [
+                "list_volumes"
+              ]
+            },
+            "RestoreBackupFiles": {
+              "methods": [
+                "restore_backup_files"
+              ]
+            },
+            "RestoreVolume": {
+              "methods": [
+                "restore_volume"
+              ]
+            },
+            "ResumeReplication": {
+              "methods": [
+                "resume_replication"
+              ]
+            },
+            "ReverseReplicationDirection": {
+              "methods": [
+                "reverse_replication_direction"
+              ]
+            },
+            "RevertVolume": {
+              "methods": [
+                "revert_volume"
+              ]
+            },
+            "StartSplit": {
+              "methods": [
+                "start_split"
+              ]
+            },
+            "StopReplication": {
+              "methods": [
+                "stop_replication"
+              ]
+            },
+            "SwitchActiveReplicaZone": {
+              "methods": [
+                "switch_active_replica_zone"
+              ]
+            },
+            "SyncReplication": {
+              "methods": [
+                "sync_replication"
+              ]
+            },
+            "UpdateActiveDirectory": {
+              "methods": [
+                "update_active_directory"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateBackupConfig": {
+              "methods": [
+                "update_backup_config"
+              ]
+            },
+            "UpdateBackupPolicy": {
+              "methods": [
+                "update_backup_policy"
+              ]
+            },
+            "UpdateBackupVault": {
+              "methods": [
+                "update_backup_vault"
+              ]
+            },
+            "UpdateHostGroup": {
+              "methods": [
+                "update_host_group"
+              ]
+            },
+            "UpdateKmsConfig": {
+              "methods": [
+                "update_kms_config"
+              ]
+            },
+            "UpdateQuotaRule": {
+              "methods": [
+                "update_quota_rule"
+              ]
+            },
+            "UpdateReplication": {
+              "methods": [
+                "update_replication"
+              ]
+            },
+            "UpdateSnapshot": {
+              "methods": [
+                "update_snapshot"
+              ]
+            },
+            "UpdateStoragePool": {
+              "methods": [
+                "update_storage_pool"
+              ]
+            },
+            "UpdateVolume": {
+              "methods": [
+                "update_volume"
+              ]
+            },
+            "ValidateDirectoryService": {
+              "methods": [
+                "validate_directory_service"
+              ]
+            },
+            "VerifyKmsConfig": {
+              "methods": [
+                "verify_kms_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "NetAppAsyncClient",
+          "rpcs": {
+            "CreateActiveDirectory": {
+              "methods": [
+                "create_active_directory"
+              ]
+            },
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateBackupPolicy": {
+              "methods": [
+                "create_backup_policy"
+              ]
+            },
+            "CreateBackupVault": {
+              "methods": [
+                "create_backup_vault"
+              ]
+            },
+            "CreateHostGroup": {
+              "methods": [
+                "create_host_group"
+              ]
+            },
+            "CreateKmsConfig": {
+              "methods": [
+                "create_kms_config"
+              ]
+            },
+            "CreateQuotaRule": {
+              "methods": [
+                "create_quota_rule"
+              ]
+            },
+            "CreateReplication": {
+              "methods": [
+                "create_replication"
+              ]
+            },
+            "CreateSnapshot": {
+              "methods": [
+                "create_snapshot"
+              ]
+            },
+            "CreateStoragePool": {
+              "methods": [
+                "create_storage_pool"
+              ]
+            },
+            "CreateVolume": {
+              "methods": [
+                "create_volume"
+              ]
+            },
+            "DeleteActiveDirectory": {
+              "methods": [
+                "delete_active_directory"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteBackupPolicy": {
+              "methods": [
+                "delete_backup_policy"
+              ]
+            },
+            "DeleteBackupVault": {
+              "methods": [
+                "delete_backup_vault"
+              ]
+            },
+            "DeleteHostGroup": {
+              "methods": [
+                "delete_host_group"
+              ]
+            },
+            "DeleteKmsConfig": {
+              "methods": [
+                "delete_kms_config"
+              ]
+            },
+            "DeleteQuotaRule": {
+              "methods": [
+                "delete_quota_rule"
+              ]
+            },
+            "DeleteReplication": {
+              "methods": [
+                "delete_replication"
+              ]
+            },
+            "DeleteSnapshot": {
+              "methods": [
+                "delete_snapshot"
+              ]
+            },
+            "DeleteStoragePool": {
+              "methods": [
+                "delete_storage_pool"
+              ]
+            },
+            "DeleteVolume": {
+              "methods": [
+                "delete_volume"
+              ]
+            },
+            "EncryptVolumes": {
+              "methods": [
+                "encrypt_volumes"
+              ]
+            },
+            "EstablishPeering": {
+              "methods": [
+                "establish_peering"
+              ]
+            },
+            "EstablishVolumePeering": {
+              "methods": [
+                "establish_volume_peering"
+              ]
+            },
+            "ExecuteOntapDelete": {
+              "methods": [
+                "execute_ontap_delete"
+              ]
+            },
+            "ExecuteOntapGet": {
+              "methods": [
+                "execute_ontap_get"
+              ]
+            },
+            "ExecuteOntapPatch": {
+              "methods": [
+                "execute_ontap_patch"
+              ]
+            },
+            "ExecuteOntapPost": {
+              "methods": [
+                "execute_ontap_post"
+              ]
+            },
+            "GetActiveDirectory": {
+              "methods": [
+                "get_active_directory"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupPolicy": {
+              "methods": [
+                "get_backup_policy"
+              ]
+            },
+            "GetBackupVault": {
+              "methods": [
+                "get_backup_vault"
+              ]
+            },
+            "GetHostGroup": {
+              "methods": [
+                "get_host_group"
+              ]
+            },
+            "GetKmsConfig": {
+              "methods": [
+                "get_kms_config"
+              ]
+            },
+            "GetQuotaRule": {
+              "methods": [
+                "get_quota_rule"
+              ]
+            },
+            "GetReplication": {
+              "methods": [
+                "get_replication"
+              ]
+            },
+            "GetSnapshot": {
+              "methods": [
+                "get_snapshot"
+              ]
+            },
+            "GetSplitStatus": {
+              "methods": [
+                "get_split_status"
+              ]
+            },
+            "GetStoragePool": {
+              "methods": [
+                "get_storage_pool"
+              ]
+            },
+            "GetVolume": {
+              "methods": [
+                "get_volume"
+              ]
+            },
+            "ListActiveDirectories": {
+              "methods": [
+                "list_active_directories"
+              ]
+            },
+            "ListBackupConfigs": {
+              "methods": [
+                "list_backup_configs"
+              ]
+            },
+            "ListBackupPolicies": {
+              "methods": [
+                "list_backup_policies"
+              ]
+            },
+            "ListBackupVaults": {
+              "methods": [
+                "list_backup_vaults"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListHostGroups": {
+              "methods": [
+                "list_host_groups"
+              ]
+            },
+            "ListKmsConfigs": {
+              "methods": [
+                "list_kms_configs"
+              ]
+            },
+            "ListQuotaRules": {
+              "methods": [
+                "list_quota_rules"
+              ]
+            },
+            "ListReplications": {
+              "methods": [
+                "list_replications"
+              ]
+            },
+            "ListSnapshots": {
+              "methods": [
+                "list_snapshots"
+              ]
+            },
+            "ListStoragePools": {
+              "methods": [
+                "list_storage_pools"
+              ]
+            },
+            "ListVolumes": {
+              "methods": [
+                "list_volumes"
+              ]
+            },
+            "RestoreBackupFiles": {
+              "methods": [
+                "restore_backup_files"
+              ]
+            },
+            "RestoreVolume": {
+              "methods": [
+                "restore_volume"
+              ]
+            },
+            "ResumeReplication": {
+              "methods": [
+                "resume_replication"
+              ]
+            },
+            "ReverseReplicationDirection": {
+              "methods": [
+                "reverse_replication_direction"
+              ]
+            },
+            "RevertVolume": {
+              "methods": [
+                "revert_volume"
+              ]
+            },
+            "StartSplit": {
+              "methods": [
+                "start_split"
+              ]
+            },
+            "StopReplication": {
+              "methods": [
+                "stop_replication"
+              ]
+            },
+            "SwitchActiveReplicaZone": {
+              "methods": [
+                "switch_active_replica_zone"
+              ]
+            },
+            "SyncReplication": {
+              "methods": [
+                "sync_replication"
+              ]
+            },
+            "UpdateActiveDirectory": {
+              "methods": [
+                "update_active_directory"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateBackupConfig": {
+              "methods": [
+                "update_backup_config"
+              ]
+            },
+            "UpdateBackupPolicy": {
+              "methods": [
+                "update_backup_policy"
+              ]
+            },
+            "UpdateBackupVault": {
+              "methods": [
+                "update_backup_vault"
+              ]
+            },
+            "UpdateHostGroup": {
+              "methods": [
+                "update_host_group"
+              ]
+            },
+            "UpdateKmsConfig": {
+              "methods": [
+                "update_kms_config"
+              ]
+            },
+            "UpdateQuotaRule": {
+              "methods": [
+                "update_quota_rule"
+              ]
+            },
+            "UpdateReplication": {
+              "methods": [
+                "update_replication"
+              ]
+            },
+            "UpdateSnapshot": {
+              "methods": [
+                "update_snapshot"
+              ]
+            },
+            "UpdateStoragePool": {
+              "methods": [
+                "update_storage_pool"
+              ]
+            },
+            "UpdateVolume": {
+              "methods": [
+                "update_volume"
+              ]
+            },
+            "ValidateDirectoryService": {
+              "methods": [
+                "validate_directory_service"
+              ]
+            },
+            "VerifyKmsConfig": {
+              "methods": [
+                "verify_kms_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "NetAppClient",
+          "rpcs": {
+            "CreateActiveDirectory": {
+              "methods": [
+                "create_active_directory"
+              ]
+            },
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateBackupPolicy": {
+              "methods": [
+                "create_backup_policy"
+              ]
+            },
+            "CreateBackupVault": {
+              "methods": [
+                "create_backup_vault"
+              ]
+            },
+            "CreateHostGroup": {
+              "methods": [
+                "create_host_group"
+              ]
+            },
+            "CreateKmsConfig": {
+              "methods": [
+                "create_kms_config"
+              ]
+            },
+            "CreateQuotaRule": {
+              "methods": [
+                "create_quota_rule"
+              ]
+            },
+            "CreateReplication": {
+              "methods": [
+                "create_replication"
+              ]
+            },
+            "CreateSnapshot": {
+              "methods": [
+                "create_snapshot"
+              ]
+            },
+            "CreateStoragePool": {
+              "methods": [
+                "create_storage_pool"
+              ]
+            },
+            "CreateVolume": {
+              "methods": [
+                "create_volume"
+              ]
+            },
+            "DeleteActiveDirectory": {
+              "methods": [
+                "delete_active_directory"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteBackupPolicy": {
+              "methods": [
+                "delete_backup_policy"
+              ]
+            },
+            "DeleteBackupVault": {
+              "methods": [
+                "delete_backup_vault"
+              ]
+            },
+            "DeleteHostGroup": {
+              "methods": [
+                "delete_host_group"
+              ]
+            },
+            "DeleteKmsConfig": {
+              "methods": [
+                "delete_kms_config"
+              ]
+            },
+            "DeleteQuotaRule": {
+              "methods": [
+                "delete_quota_rule"
+              ]
+            },
+            "DeleteReplication": {
+              "methods": [
+                "delete_replication"
+              ]
+            },
+            "DeleteSnapshot": {
+              "methods": [
+                "delete_snapshot"
+              ]
+            },
+            "DeleteStoragePool": {
+              "methods": [
+                "delete_storage_pool"
+              ]
+            },
+            "DeleteVolume": {
+              "methods": [
+                "delete_volume"
+              ]
+            },
+            "EncryptVolumes": {
+              "methods": [
+                "encrypt_volumes"
+              ]
+            },
+            "EstablishPeering": {
+              "methods": [
+                "establish_peering"
+              ]
+            },
+            "EstablishVolumePeering": {
+              "methods": [
+                "establish_volume_peering"
+              ]
+            },
+            "ExecuteOntapDelete": {
+              "methods": [
+                "execute_ontap_delete"
+              ]
+            },
+            "ExecuteOntapGet": {
+              "methods": [
+                "execute_ontap_get"
+              ]
+            },
+            "ExecuteOntapPatch": {
+              "methods": [
+                "execute_ontap_patch"
+              ]
+            },
+            "ExecuteOntapPost": {
+              "methods": [
+                "execute_ontap_post"
+              ]
+            },
+            "GetActiveDirectory": {
+              "methods": [
+                "get_active_directory"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupPolicy": {
+              "methods": [
+                "get_backup_policy"
+              ]
+            },
+            "GetBackupVault": {
+              "methods": [
+                "get_backup_vault"
+              ]
+            },
+            "GetHostGroup": {
+              "methods": [
+                "get_host_group"
+              ]
+            },
+            "GetKmsConfig": {
+              "methods": [
+                "get_kms_config"
+              ]
+            },
+            "GetQuotaRule": {
+              "methods": [
+                "get_quota_rule"
+              ]
+            },
+            "GetReplication": {
+              "methods": [
+                "get_replication"
+              ]
+            },
+            "GetSnapshot": {
+              "methods": [
+                "get_snapshot"
+              ]
+            },
+            "GetSplitStatus": {
+              "methods": [
+                "get_split_status"
+              ]
+            },
+            "GetStoragePool": {
+              "methods": [
+                "get_storage_pool"
+              ]
+            },
+            "GetVolume": {
+              "methods": [
+                "get_volume"
+              ]
+            },
+            "ListActiveDirectories": {
+              "methods": [
+                "list_active_directories"
+              ]
+            },
+            "ListBackupConfigs": {
+              "methods": [
+                "list_backup_configs"
+              ]
+            },
+            "ListBackupPolicies": {
+              "methods": [
+                "list_backup_policies"
+              ]
+            },
+            "ListBackupVaults": {
+              "methods": [
+                "list_backup_vaults"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListHostGroups": {
+              "methods": [
+                "list_host_groups"
+              ]
+            },
+            "ListKmsConfigs": {
+              "methods": [
+                "list_kms_configs"
+              ]
+            },
+            "ListQuotaRules": {
+              "methods": [
+                "list_quota_rules"
+              ]
+            },
+            "ListReplications": {
+              "methods": [
+                "list_replications"
+              ]
+            },
+            "ListSnapshots": {
+              "methods": [
+                "list_snapshots"
+              ]
+            },
+            "ListStoragePools": {
+              "methods": [
+                "list_storage_pools"
+              ]
+            },
+            "ListVolumes": {
+              "methods": [
+                "list_volumes"
+              ]
+            },
+            "RestoreBackupFiles": {
+              "methods": [
+                "restore_backup_files"
+              ]
+            },
+            "RestoreVolume": {
+              "methods": [
+                "restore_volume"
+              ]
+            },
+            "ResumeReplication": {
+              "methods": [
+                "resume_replication"
+              ]
+            },
+            "ReverseReplicationDirection": {
+              "methods": [
+                "reverse_replication_direction"
+              ]
+            },
+            "RevertVolume": {
+              "methods": [
+                "revert_volume"
+              ]
+            },
+            "StartSplit": {
+              "methods": [
+                "start_split"
+              ]
+            },
+            "StopReplication": {
+              "methods": [
+                "stop_replication"
+              ]
+            },
+            "SwitchActiveReplicaZone": {
+              "methods": [
+                "switch_active_replica_zone"
+              ]
+            },
+            "SyncReplication": {
+              "methods": [
+                "sync_replication"
+              ]
+            },
+            "UpdateActiveDirectory": {
+              "methods": [
+                "update_active_directory"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateBackupConfig": {
+              "methods": [
+                "update_backup_config"
+              ]
+            },
+            "UpdateBackupPolicy": {
+              "methods": [
+                "update_backup_policy"
+              ]
+            },
+            "UpdateBackupVault": {
+              "methods": [
+                "update_backup_vault"
+              ]
+            },
+            "UpdateHostGroup": {
+              "methods": [
+                "update_host_group"
+              ]
+            },
+            "UpdateKmsConfig": {
+              "methods": [
+                "update_kms_config"
+              ]
+            },
+            "UpdateQuotaRule": {
+              "methods": [
+                "update_quota_rule"
+              ]
+            },
+            "UpdateReplication": {
+              "methods": [
+                "update_replication"
+              ]
+            },
+            "UpdateSnapshot": {
+              "methods": [
+                "update_snapshot"
+              ]
+            },
+            "UpdateStoragePool": {
+              "methods": [
+                "update_storage_pool"
+              ]
+            },
+            "UpdateVolume": {
+              "methods": [
+                "update_volume"
+              ]
+            },
+            "ValidateDirectoryService": {
+              "methods": [
+                "validate_directory_service"
+              ]
+            },
+            "VerifyKmsConfig": {
+              "methods": [
+                "verify_kms_config"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

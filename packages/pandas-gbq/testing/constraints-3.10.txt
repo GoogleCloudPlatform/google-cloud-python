@@ -1,0 +1,23 @@
+# This constraints file is used to check that lower bounds
+# are correct in setup.py
+# List *all* library dependencies and extras in this file.
+# Pin the version to the lower bound.
+#
+# e.g., if setup.py has "foo >= 1.14.0, < 2.0.0dev",
+# Then this file should have foo==1.14.0
+db-dtypes==1.1.1
+numpy==1.26.4
+pandas==1.5.3
+psutil==5.9.8
+pyarrow==12.0.0
+pydata-google-auth==1.5.0
+google-api-core==2.25.0
+google-auth==2.14.1
+google-auth-oauthlib==0.7.0
+google-cloud-bigquery==3.20.0
+packaging==22.0.0
+# Extras
+google-cloud-bigquery-storage==2.29.0
+tqdm==4.23.0
+geopandas==0.14.4
+Shapely==1.8.5

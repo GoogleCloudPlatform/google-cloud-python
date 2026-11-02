@@ -1,0 +1,245 @@
+{#
+ # Copyright (C) 2022  Google LLC
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #     http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+
+{% import "%namespace/%name_%version/%sub/services/%service/_shared_macros.j2" as shared_macros %}
+
+{% macro client_method(method, name, snippet_index, api, service, full_extended_lro=False) %}
+    def {{ name }}(self,
+            {% if not method.client_streaming %}
+            request: Optional[Union[{{ method.input.ident }}, dict]] = None,
+            *,
+            {% for field in method.flattened_fields.values() %}
+            {{ field.name }}: Optional[{{ field.ident }}] = None,
+            {% endfor %}
+            {% else %}
+            requests: Optional[Iterator[{{ method.input.ident }}]] = None,
+            *,
+            {% endif %}
+            {% if method.is_resumable_upload %}
+            config: Optional[ResumableUploadConfig] = None,
+            {% endif %}
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+            {{ shared_macros.client_method_metadata_argument()|indent(8) }} = {{ shared_macros.client_method_metadata_default_value() }},
+            {% if method.extended_lro and not full_extended_lro %}{# This is a hack to preserve backwards compatibility with the "unary" surfaces #}
+            ) -> {{ method.extended_lro.operation_type.ident }}:
+            {% elif not method.server_streaming %}
+            ) -> {{ method.client_output.ident }}:
+            {% else %}
+            ) -> Iterable[{{ method.client_output.ident }}]:
+            {% endif %}
+        r"""{{ method.meta.doc|rst(width=72, indent=8)|trim }}
+
+        {% with snippet = snippet_index.get_snippet(service.name, method.name, sync=True) %}
+        {% if snippet is not none %}
+        .. code-block:: python
+
+{{ snippet.full_snippet|indent(width=12, first=True) }}
+        {% endif %}
+        {% endwith %}
+
+        Args:
+            {% if not method.client_streaming %}
+            request (Union[{{ method.input.ident.sphinx }}, dict]):
+                The request object.{{ " " }}
+                {{- method.input.meta.doc|rst(width=72, indent=16, nl=False) }}
+            {% for key, field in method.flattened_fields.items() %}
+            {{ field.name }} ({{ field.ident.sphinx }}):
+                {{ field.meta.doc|rst(width=72, indent=16) }}
+                This corresponds to the ``{{ key }}`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            {% endfor %}
+            {% else %}
+            requests (Iterator[{{ method.input.ident.sphinx }}]):
+                The request object iterator.{{ " " }}
+                {{- method.input.meta.doc|rst(width=72, indent=16, nl=False) }}
+            {% endif %}
+            {% if method.is_resumable_upload %}
+            config (Optional[google.api_core.resumable_transfer.ResumableUploadConfig]):
+                Optional configuration for the resumable upload session.
+            {% endif %}
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            {{ shared_macros.client_method_metadata_argument_doc()|indent(4) }}
+        {% if not method.void %}
+
+        Returns:
+            {% if not method.server_streaming %}
+            {{ method.client_output.ident.sphinx }}:
+            {% else %}
+            Iterable[{{ method.client_output.ident.sphinx }}]:
+            {% endif %}
+                {{ method.client_output.meta.doc|rst(width=72, indent=16, source_format="rst") }}
+        {% endif %}
+        """
+        {% if method.is_deprecated %}
+        warnings.warn("{{ service.client_name }}.{{ method.name|snake_case }} is deprecated",
+            DeprecationWarning)
+
+        {% endif %}
+        {% if not method.client_streaming %}
+        # Create or coerce a protobuf request object.
+        {% if method.flattened_fields %}
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [{{ method.flattened_fields.values()|join(", ", attribute="name") }}]
+        has_flattened_params = len([param for param in flattened_params if param is not None]) > 0
+        if request is not None and has_flattened_params:
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
+
+        {% endif %}
+        {% if method.input.ident.package != method.ident.package %}{# request lives in a different package, so there is no proto wrapper #}
+        if isinstance(request, dict):
+            # - The request isn't a proto-plus wrapped type,
+            #   so it must be constructed via keyword expansion.
+            request = {{ method.input.ident }}(**request)
+        elif not request:
+            # Null request, just make one.
+            request = {{ method.input.ident }}()
+        {% else %}
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, {{ method.input.ident }}):
+            request = {{ method.input.ident }}(request)
+        {% endif %}{# different request package #}
+
+            {#- Vanilla python protobuf wrapper types cannot _set_ repeated fields #}
+            {% if method.flattened_fields and method.input.ident.package == method.ident.package %}
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            {% endif %}
+            {% for key, field in method.flattened_fields.items() if not field.repeated or method.input.ident.package == method.ident.package %}
+            if {{ field.name }} is not None:
+                {# Repeated values is a special case, because values can be lists. #}
+                {# In order to not confuse the marshalling logic, extend these fields instead of assigning #}
+                {% if field.ident.ident|string() == "struct_pb2.Value" and field.repeated %}
+                request.{{ key }}.extend({{ field.name }})
+                {% else %}
+                request.{{ key }} = {{ field.name }}
+                {% endif %}{# struct_pb2.Value #}
+            {% endfor %}
+            {# Map-y fields can be _updated_, however #}
+            {% for key, field in method.flattened_fields.items() if field.repeated and method.input.ident.package != method.ident.package %}
+            {% if field.map %} {# map implies repeated, but repeated does NOT imply map#}
+            if {{ field.name }}:
+                request.{{ key }}.update({{ field.name }})
+            {% else %}
+            {# And list-y fields can be _extended_ #}
+            if {{ field.name }}:
+                request.{{ key }}.extend({{ field.name }})
+            {% endif %} {# field.map #}
+            {% endfor %} {# method.flattened_fields.items() #}
+            {% endif %} {# method.client_streaming #}
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.{{ method.transport_safe_name|snake_case}}]
+
+{{ shared_macros.create_metadata(method) }}
+{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
+{{ shared_macros.auto_populate_uuid4_fields(api, method) }}
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        {%+ if not method.void %}response = {% endif %}rpc(
+            {% if not method.client_streaming %}
+            request,
+            {% else %}
+            requests,
+            {% endif %}
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+            {% if method.is_resumable_upload %}
+            config=config,
+            start_retry=retry,
+            {% endif %}
+        )
+        {% if method.lro %}
+
+        # Wrap the response in an operation future.
+        response = {{ method.client_output.ident.module_alias or method.client_output.ident.module }}.from_gapic(
+            response,
+            self._transport.operations_client,
+            {{ method.lro.response_type.ident }},
+            metadata_type={{ method.lro.metadata_type.ident }},
+        )
+        {% elif method.paged_result_field %}
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = {{ method.client_output.ident }}(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+        {% elif method.extended_lro and full_extended_lro %}
+{{ extended_operation_service_setup(api, method) }}
+        {% endif %}
+        {% if not method.void %}
+
+        # Done; return the response.
+        return response
+        {% endif %}
+        {{ "\n" }}
+
+{% endmacro %}
+
+{% macro extended_operation_service_setup(api, method) %}
+{% with op_service = api.get_custom_operation_service(method) %}
+
+        operation_service = self._transport._{{ op_service.client_name|snake_case }}
+        operation_request = {{ op_service.operation_polling_method.input.ident }}()
+{% for field in method.input.extended_operation_request_fields %}
+        operation_request.{{ field.operation_request_field }} = request.{{ field.name }}
+{% endfor %}
+{% for field in op_service.operation_polling_method.input.extended_operation_response_fields %}
+        operation_request.{{ field.name }} = response.{{ field.operation_response_field }}
+{% endfor %}
+
+        get_operation = functools.partial(operation_service.{{ op_service.operation_polling_method.name|snake_case }}, operation_request)
+        # Cancel is not part of extended operations yet.
+        cancel_operation = lambda: None
+
+        {% if method.output.differently_named_extended_operation_fields %}
+        # Note: this class is an implementation detail to provide a uniform
+        # set of names for certain fields in the extended operation proto message.
+        # See google.api_core.extended_operation.ExtendedOperation for details
+        # on these properties and the  expected interface.
+        class _CustomOperation(extended_operation.ExtendedOperation):
+            {% for default_name, field in method.output.differently_named_extended_operation_fields.items() %}
+            @property
+            def {{ default_name }}(self):
+                return self._extended_operation.{{ field.name }}
+
+            {% endfor %}
+        {% endif %}
+
+        response = {{ "_CustomOperation" if method.output.differently_named_extended_operation_fields else "extended_operation.ExtendedOperation" }}.make(get_operation, cancel_operation, response)
+
+{% endwith %}
+{% endmacro %}
+
+{% macro define_extended_operation_subclass(extended_operation) %}
+{% endmacro %}

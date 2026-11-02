@@ -1,0 +1,284 @@
+{
+  "text": "<Invoice>",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "dimension": {
+        "width": 1758.0,
+        "height": 2275.0,
+        "unit": "pixels"
+      },
+      "layout": {
+        "textAnchor": {
+          "textSegments": [
+            {
+              "endIndex": "435"
+            }
+          ]
+        },
+        "boundingPoly": {
+          "vertices": [
+            {},
+            {
+              "x": 1758
+            },
+            {
+              "x": 1758,
+              "y": 2275
+            },
+            {
+              "y": 2275
+            }
+          ],
+          "normalizedVertices": [
+            {},
+            {
+              "x": 1.0
+            },
+            {
+              "x": 1.0,
+              "y": 1.0
+            },
+            {
+              "y": 1.0
+            }
+          ]
+        },
+        "orientation": 1
+      },
+      "detectedLanguages": [
+        {
+          "languageCode": "en"
+        },
+        {
+          "languageCode": "und"
+        }
+      ],
+      "blocks": [
+        {
+          "layout": {
+            "textAnchor": {
+              "textSegments": [
+                {
+                  "endIndex": "8"
+                }
+              ]
+            },
+            "confidence": 0.99258333,
+            "boundingPoly": {
+              "vertices": [
+                {
+                  "x": 1310,
+                  "y": 220
+                },
+                {
+                  "x": 1534,
+                  "y": 220
+                },
+                {
+                  "x": 1534,
+                  "y": 282
+                },
+                {
+                  "x": 1310,
+                  "y": 282
+                }
+              ],
+              "normalizedVertices": [
+                {
+                  "x": 0.74516493,
+                  "y": 0.0967033
+                },
+                {
+                  "x": 0.8725825,
+                  "y": 0.0967033
+                },
+                {
+                  "x": 0.8725825,
+                  "y": 0.12395605
+                },
+                {
+                  "x": 0.74516493,
+                  "y": 0.12395605
+                }
+              ]
+            },
+            "orientation": 1
+          }
+        }
+      ],
+      "paragraphs": [
+        {
+          "layout": {
+            "textAnchor": {
+              "textSegments": [
+                {
+                  "endIndex": "8"
+                }
+              ]
+            },
+            "confidence": 0.99258333,
+            "boundingPoly": {
+              "vertices": [
+                {
+                  "x": 1310,
+                  "y": 220
+                },
+                {
+                  "x": 1534,
+                  "y": 220
+                },
+                {
+                  "x": 1534,
+                  "y": 282
+                },
+                {
+                  "x": 1310,
+                  "y": 282
+                }
+              ],
+              "normalizedVertices": [
+                {
+                  "x": 0.74516493,
+                  "y": 0.0967033
+                },
+                {
+                  "x": 0.8725825,
+                  "y": 0.0967033
+                },
+                {
+                  "x": 0.8725825,
+                  "y": 0.12395605
+                },
+                {
+                  "x": 0.74516493,
+                  "y": 0.12395605
+                }
+              ]
+            },
+            "orientation": 1
+          }
+        }
+      ],
+      "lines": [
+        {
+          "layout": {
+            "textAnchor": {
+              "textSegments": [
+                {
+                  "endIndex": "8"
+                }
+              ]
+            },
+            "confidence": 0.99258333,
+            "boundingPoly": {
+              "vertices": [
+                {
+                  "x": 1310,
+                  "y": 220
+                },
+                {
+                  "x": 1534,
+                  "y": 220
+                },
+                {
+                  "x": 1534,
+                  "y": 282
+                },
+                {
+                  "x": 1310,
+                  "y": 282
+                }
+              ],
+              "normalizedVertices": [
+                {
+                  "x": 0.74516493,
+                  "y": 0.0967033
+                },
+                {
+                  "x": 0.8725825,
+                  "y": 0.0967033
+                },
+                {
+                  "x": 0.8725825,
+                  "y": 0.12395605
+                },
+                {
+                  "x": 0.74516493,
+                  "y": 0.12395605
+                }
+              ]
+            },
+            "orientation": 1
+          },
+          "detectedLanguages": [
+            {
+              "languageCode": "en"
+            }
+          ]
+        }
+      ],
+      "tokens": [
+        {
+          "layout": {
+            "textAnchor": {
+              "textSegments": [
+                {
+                  "endIndex": "8"
+                }
+              ]
+            },
+            "confidence": 0.99258333,
+            "boundingPoly": {
+              "vertices": [
+                {
+                  "x": 1310,
+                  "y": 220
+                },
+                {
+                  "x": 1534,
+                  "y": 220
+                },
+                {
+                  "x": 1534,
+                  "y": 282
+                },
+                {
+                  "x": 1310,
+                  "y": 282
+                }
+              ],
+              "normalizedVertices": [
+                {
+                  "x": 0.74516493,
+                  "y": 0.0967033
+                },
+                {
+                  "x": 0.8725825,
+                  "y": 0.0967033
+                },
+                {
+                  "x": 0.8725825,
+                  "y": 0.12395605
+                },
+                {
+                  "x": 0.74516493,
+                  "y": 0.12395605
+                }
+              ]
+            },
+            "orientation": 1
+          },
+          "detectedLanguages": [
+            {
+              "languageCode": "en"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "shardInfo": {
+    "shardCount": "1"
+  }
+}

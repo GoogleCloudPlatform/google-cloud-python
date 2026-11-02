@@ -1,0 +1,403 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.configdelivery_v1alpha",
+  "protoPackage": "google.cloud.configdelivery.v1alpha",
+  "schema": "1.0",
+  "services": {
+    "ConfigDelivery": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ConfigDeliveryClient",
+          "rpcs": {
+            "AbortRollout": {
+              "methods": [
+                "abort_rollout"
+              ]
+            },
+            "CreateFleetPackage": {
+              "methods": [
+                "create_fleet_package"
+              ]
+            },
+            "CreateRelease": {
+              "methods": [
+                "create_release"
+              ]
+            },
+            "CreateResourceBundle": {
+              "methods": [
+                "create_resource_bundle"
+              ]
+            },
+            "CreateVariant": {
+              "methods": [
+                "create_variant"
+              ]
+            },
+            "DeleteFleetPackage": {
+              "methods": [
+                "delete_fleet_package"
+              ]
+            },
+            "DeleteRelease": {
+              "methods": [
+                "delete_release"
+              ]
+            },
+            "DeleteResourceBundle": {
+              "methods": [
+                "delete_resource_bundle"
+              ]
+            },
+            "DeleteVariant": {
+              "methods": [
+                "delete_variant"
+              ]
+            },
+            "GetFleetPackage": {
+              "methods": [
+                "get_fleet_package"
+              ]
+            },
+            "GetRelease": {
+              "methods": [
+                "get_release"
+              ]
+            },
+            "GetResourceBundle": {
+              "methods": [
+                "get_resource_bundle"
+              ]
+            },
+            "GetRollout": {
+              "methods": [
+                "get_rollout"
+              ]
+            },
+            "GetVariant": {
+              "methods": [
+                "get_variant"
+              ]
+            },
+            "ListFleetPackages": {
+              "methods": [
+                "list_fleet_packages"
+              ]
+            },
+            "ListReleases": {
+              "methods": [
+                "list_releases"
+              ]
+            },
+            "ListResourceBundles": {
+              "methods": [
+                "list_resource_bundles"
+              ]
+            },
+            "ListRollouts": {
+              "methods": [
+                "list_rollouts"
+              ]
+            },
+            "ListVariants": {
+              "methods": [
+                "list_variants"
+              ]
+            },
+            "ResumeRollout": {
+              "methods": [
+                "resume_rollout"
+              ]
+            },
+            "SuspendRollout": {
+              "methods": [
+                "suspend_rollout"
+              ]
+            },
+            "UpdateFleetPackage": {
+              "methods": [
+                "update_fleet_package"
+              ]
+            },
+            "UpdateRelease": {
+              "methods": [
+                "update_release"
+              ]
+            },
+            "UpdateResourceBundle": {
+              "methods": [
+                "update_resource_bundle"
+              ]
+            },
+            "UpdateVariant": {
+              "methods": [
+                "update_variant"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ConfigDeliveryAsyncClient",
+          "rpcs": {
+            "AbortRollout": {
+              "methods": [
+                "abort_rollout"
+              ]
+            },
+            "CreateFleetPackage": {
+              "methods": [
+                "create_fleet_package"
+              ]
+            },
+            "CreateRelease": {
+              "methods": [
+                "create_release"
+              ]
+            },
+            "CreateResourceBundle": {
+              "methods": [
+                "create_resource_bundle"
+              ]
+            },
+            "CreateVariant": {
+              "methods": [
+                "create_variant"
+              ]
+            },
+            "DeleteFleetPackage": {
+              "methods": [
+                "delete_fleet_package"
+              ]
+            },
+            "DeleteRelease": {
+              "methods": [
+                "delete_release"
+              ]
+            },
+            "DeleteResourceBundle": {
+              "methods": [
+                "delete_resource_bundle"
+              ]
+            },
+            "DeleteVariant": {
+              "methods": [
+                "delete_variant"
+              ]
+            },
+            "GetFleetPackage": {
+              "methods": [
+                "get_fleet_package"
+              ]
+            },
+            "GetRelease": {
+              "methods": [
+                "get_release"
+              ]
+            },
+            "GetResourceBundle": {
+              "methods": [
+                "get_resource_bundle"
+              ]
+            },
+            "GetRollout": {
+              "methods": [
+                "get_rollout"
+              ]
+            },
+            "GetVariant": {
+              "methods": [
+                "get_variant"
+              ]
+            },
+            "ListFleetPackages": {
+              "methods": [
+                "list_fleet_packages"
+              ]
+            },
+            "ListReleases": {
+              "methods": [
+                "list_releases"
+              ]
+            },
+            "ListResourceBundles": {
+              "methods": [
+                "list_resource_bundles"
+              ]
+            },
+            "ListRollouts": {
+              "methods": [
+                "list_rollouts"
+              ]
+            },
+            "ListVariants": {
+              "methods": [
+                "list_variants"
+              ]
+            },
+            "ResumeRollout": {
+              "methods": [
+                "resume_rollout"
+              ]
+            },
+            "SuspendRollout": {
+              "methods": [
+                "suspend_rollout"
+              ]
+            },
+            "UpdateFleetPackage": {
+              "methods": [
+                "update_fleet_package"
+              ]
+            },
+            "UpdateRelease": {
+              "methods": [
+                "update_release"
+              ]
+            },
+            "UpdateResourceBundle": {
+              "methods": [
+                "update_resource_bundle"
+              ]
+            },
+            "UpdateVariant": {
+              "methods": [
+                "update_variant"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ConfigDeliveryClient",
+          "rpcs": {
+            "AbortRollout": {
+              "methods": [
+                "abort_rollout"
+              ]
+            },
+            "CreateFleetPackage": {
+              "methods": [
+                "create_fleet_package"
+              ]
+            },
+            "CreateRelease": {
+              "methods": [
+                "create_release"
+              ]
+            },
+            "CreateResourceBundle": {
+              "methods": [
+                "create_resource_bundle"
+              ]
+            },
+            "CreateVariant": {
+              "methods": [
+                "create_variant"
+              ]
+            },
+            "DeleteFleetPackage": {
+              "methods": [
+                "delete_fleet_package"
+              ]
+            },
+            "DeleteRelease": {
+              "methods": [
+                "delete_release"
+              ]
+            },
+            "DeleteResourceBundle": {
+              "methods": [
+                "delete_resource_bundle"
+              ]
+            },
+            "DeleteVariant": {
+              "methods": [
+                "delete_variant"
+              ]
+            },
+            "GetFleetPackage": {
+              "methods": [
+                "get_fleet_package"
+              ]
+            },
+            "GetRelease": {
+              "methods": [
+                "get_release"
+              ]
+            },
+            "GetResourceBundle": {
+              "methods": [
+                "get_resource_bundle"
+              ]
+            },
+            "GetRollout": {
+              "methods": [
+                "get_rollout"
+              ]
+            },
+            "GetVariant": {
+              "methods": [
+                "get_variant"
+              ]
+            },
+            "ListFleetPackages": {
+              "methods": [
+                "list_fleet_packages"
+              ]
+            },
+            "ListReleases": {
+              "methods": [
+                "list_releases"
+              ]
+            },
+            "ListResourceBundles": {
+              "methods": [
+                "list_resource_bundles"
+              ]
+            },
+            "ListRollouts": {
+              "methods": [
+                "list_rollouts"
+              ]
+            },
+            "ListVariants": {
+              "methods": [
+                "list_variants"
+              ]
+            },
+            "ResumeRollout": {
+              "methods": [
+                "resume_rollout"
+              ]
+            },
+            "SuspendRollout": {
+              "methods": [
+                "suspend_rollout"
+              ]
+            },
+            "UpdateFleetPackage": {
+              "methods": [
+                "update_fleet_package"
+              ]
+            },
+            "UpdateRelease": {
+              "methods": [
+                "update_release"
+              ]
+            },
+            "UpdateResourceBundle": {
+              "methods": [
+                "update_resource_bundle"
+              ]
+            },
+            "UpdateVariant": {
+              "methods": [
+                "update_variant"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

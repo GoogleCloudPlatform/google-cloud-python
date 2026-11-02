@@ -1,0 +1,512 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.bucket.IAMConfiguration.bucket
+  - google.cloud.storage.bucket.IAMConfiguration.bucket_policy_only_enabled
+  - google.cloud.storage.bucket.IAMConfiguration.bucket_policy_only_locked_time
+  - google.cloud.storage.bucket.IAMConfiguration.clear
+  - google.cloud.storage.bucket.IAMConfiguration.copy
+  - google.cloud.storage.bucket.IAMConfiguration.from_api_repr
+  - google.cloud.storage.bucket.IAMConfiguration.fromkeys
+  - google.cloud.storage.bucket.IAMConfiguration.get
+  - google.cloud.storage.bucket.IAMConfiguration.items
+  - google.cloud.storage.bucket.IAMConfiguration.keys
+  - google.cloud.storage.bucket.IAMConfiguration.pop
+  - google.cloud.storage.bucket.IAMConfiguration.popitem
+  - google.cloud.storage.bucket.IAMConfiguration.public_access_prevention
+  - google.cloud.storage.bucket.IAMConfiguration.setdefault
+  - google.cloud.storage.bucket.IAMConfiguration.uniform_bucket_level_access_enabled
+  - google.cloud.storage.bucket.IAMConfiguration.uniform_bucket_level_access_locked_time
+  - google.cloud.storage.bucket.IAMConfiguration.update
+  - google.cloud.storage.bucket.IAMConfiguration.values
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: IAMConfiguration
+  source:
+    id: IAMConfiguration
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 438
+  summary: 'Map a bucket''s IAM configuration.
+
+    '
+  syntax:
+    content: IAMConfiguration(bucket, public_access_prevention=<object object>, uniform_bucket_level_access_enabled=<object
+      object>, uniform_bucket_level_access_locked_time=<object object>, bucket_policy_only_enabled=<object
+      object>, bucket_policy_only_locked_time=<object object>)
+    parameters: []
+  type: class
+  uid: google.cloud.storage.bucket.IAMConfiguration
+- &id001
+  attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.bucket
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: bucket
+  source:
+    id: bucket
+    path: null
+    startLine: null
+  summary: 'Bucket for which this instance is the policy.
+
+    '
+  syntax:
+    returns:
+    - description: the instance's bucket.
+      var_type: <code>Bucket</code>
+  type: property
+  uid: google.cloud.storage.bucket.IAMConfiguration.bucket
+- *id001
+- &id002
+  attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.bucket_policy_only_enabled
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: bucket_policy_only_enabled
+  source:
+    id: bucket_policy_only_enabled
+    path: null
+    startLine: null
+  summary: 'Deprecated alias for `uniform_bucket_level_access_enabled`.
+
+    '
+  syntax:
+    returns:
+    - description: whether the bucket is configured to allow only IAM.
+      var_type: bool
+  type: property
+  uid: google.cloud.storage.bucket.IAMConfiguration.bucket_policy_only_enabled
+- *id002
+- &id003
+  attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.bucket_policy_only_locked_time
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: bucket_policy_only_locked_time
+  source:
+    id: bucket_policy_only_locked_time
+    path: null
+    startLine: null
+  summary: 'Deprecated alias for `uniform_bucket_level_access_locked_time`.
+
+    '
+  syntax:
+    returns:
+    - description: (readonly) Time after which <code>bucket_policy_only_enabled</code>
+        will be frozen as true.
+      var_type: Union[<code>datetime.datetime</code>, None]
+  type: property
+  uid: google.cloud.storage.bucket.IAMConfiguration.bucket_policy_only_locked_time
+- *id003
+- class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.clear
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: clear
+  source:
+    id: clear
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.IAMConfiguration.clear` method.
+  syntax:
+    content: clear()
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.clear
+- class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.copy
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: copy
+  source:
+    id: copy
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.IAMConfiguration.copy` method.
+  syntax:
+    content: copy()
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.copy
+- attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.from_api_repr
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: from_api_repr
+  source:
+    id: from_api_repr
+    path: tests/testdata/handwritten/google/cloud/storage/bucket.py
+    startLine: 511
+  summary: 'Factory:  construct instance from resource.
+
+    '
+  syntax:
+    content: from_api_repr(resource, bucket)
+    parameters:
+    - description: mapping as returned from API call.
+      id: resource
+      var_type: dict
+    returns:
+    - description: Instance created from resource.
+      var_type: <code>IAMConfiguration</code>
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.from_api_repr
+- attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.fromkeys
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: fromkeys
+  source:
+    id: fromkeys
+    path: null
+    startLine: null
+  summary: 'Create a new dictionary with keys from iterable and values set to value.
+
+
+    '
+  syntax:
+    content: fromkeys(value=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.fromkeys
+- attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.get
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: get
+  source:
+    id: get
+    path: null
+    startLine: null
+  summary: 'Return the value for key if key is in the dictionary, else default.
+
+
+    '
+  syntax:
+    content: get(key, default=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.get
+- class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.items
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: items
+  source:
+    id: items
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.IAMConfiguration.items` method.
+  syntax:
+    content: items()
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.items
+- class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.keys
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: keys
+  source:
+    id: keys
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.IAMConfiguration.keys` method.
+  syntax:
+    content: keys()
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.keys
+- attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.pop
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: pop
+  source:
+    id: pop
+    path: null
+    startLine: null
+  summary: 'If the key is not found, return the default if given; otherwise,
+
+    raise a KeyError.
+
+
+    '
+  syntax:
+    content: pop(k[,d])
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.pop
+- attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.popitem
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: popitem
+  source:
+    id: popitem
+    path: null
+    startLine: null
+  summary: 'Remove and return a (key, value) pair as a 2-tuple.
+
+
+    Pairs are returned in LIFO (last-in, first-out) order.
+
+    Raises KeyError if the dict is empty.
+
+
+    '
+  syntax:
+    content: popitem()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.popitem
+- &id004
+  attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.public_access_prevention
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: public_access_prevention
+  source:
+    id: public_access_prevention
+    path: null
+    startLine: null
+  summary: "Setting for public access prevention policy. Options are 'inherited' (default)\
+    \ or 'enforced'.\n\n    See: https://cloud.google.com/storage/docs/public-access-prevention\n"
+  syntax:
+    returns:
+    - description: the public access prevention status, either 'enforced' or 'inherited'.
+      var_type: string
+  type: property
+  uid: google.cloud.storage.bucket.IAMConfiguration.public_access_prevention
+- *id004
+- attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.setdefault
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: setdefault
+  source:
+    id: setdefault
+    path: null
+    startLine: null
+  summary: 'Insert key with a value of default if key is not in the dictionary.
+
+
+    Return the value for key if key is in the dictionary, else default.
+
+
+    '
+  syntax:
+    content: setdefault(key, default=None, /)
+    parameters: []
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.setdefault
+- &id005
+  attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.uniform_bucket_level_access_enabled
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: uniform_bucket_level_access_enabled
+  source:
+    id: uniform_bucket_level_access_enabled
+    path: null
+    startLine: null
+  summary: 'If set, access checks only use bucket-level IAM policies or above.
+
+    '
+  syntax:
+    returns:
+    - description: whether the bucket is configured to allow only IAM.
+      var_type: bool
+  type: property
+  uid: google.cloud.storage.bucket.IAMConfiguration.uniform_bucket_level_access_enabled
+- *id005
+- &id006
+  attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.uniform_bucket_level_access_locked_time
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: uniform_bucket_level_access_locked_time
+  source:
+    id: uniform_bucket_level_access_locked_time
+    path: null
+    startLine: null
+  summary: 'Deadline for changing `uniform_bucket_level_access_enabled` from true
+    to false.
+
+
+    If the bucket''s `uniform_bucket_level_access_enabled` is true, this property
+
+    is time time after which that setting becomes immutable.
+
+
+    If the bucket''s `uniform_bucket_level_access_enabled` is false, this property
+
+    is `None`.
+
+    '
+  syntax:
+    returns:
+    - description: (readonly) Time after which <code>uniform_bucket_level_access_enabled</code>
+        will be frozen as true.
+      var_type: Union[<code>datetime.datetime</code>, None]
+  type: property
+  uid: google.cloud.storage.bucket.IAMConfiguration.uniform_bucket_level_access_locked_time
+- *id006
+- attributes: []
+  class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.update
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: update
+  source:
+    id: update
+    path: null
+    startLine: null
+  summary: 'If E is present and has a .keys() method, then does:  for k in E: D[k]
+    = E[k]
+
+    If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] =
+    v
+
+    In either case, this is followed by: for k in F:  D[k] = F[k]
+
+
+    '
+  syntax:
+    content: update([E, ]**F)
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.update
+- class: google.cloud.storage.bucket.IAMConfiguration
+  fullName: google.cloud.storage.bucket.IAMConfiguration.values
+  langs:
+  - python
+  module: google.cloud.storage.bucket
+  name: values
+  source:
+    id: values
+    path: null
+    startLine: null
+  summary: API documentation for `storage.bucket.IAMConfiguration.values` method.
+  syntax:
+    content: values()
+  type: method
+  uid: google.cloud.storage.bucket.IAMConfiguration.values
+references:
+- fullName: google.cloud.storage.bucket.IAMConfiguration.bucket
+  isExternal: false
+  name: bucket
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.bucket
+- fullName: google.cloud.storage.bucket.IAMConfiguration.bucket_policy_only_enabled
+  isExternal: false
+  name: bucket_policy_only_enabled
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.bucket_policy_only_enabled
+- fullName: google.cloud.storage.bucket.IAMConfiguration.bucket_policy_only_locked_time
+  isExternal: false
+  name: bucket_policy_only_locked_time
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.bucket_policy_only_locked_time
+- fullName: google.cloud.storage.bucket.IAMConfiguration.clear
+  isExternal: false
+  name: clear
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.clear
+- fullName: google.cloud.storage.bucket.IAMConfiguration.copy
+  isExternal: false
+  name: copy
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.copy
+- fullName: google.cloud.storage.bucket.IAMConfiguration.from_api_repr
+  isExternal: false
+  name: from_api_repr
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.from_api_repr
+- fullName: google.cloud.storage.bucket.IAMConfiguration.fromkeys
+  isExternal: false
+  name: fromkeys
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.fromkeys
+- fullName: google.cloud.storage.bucket.IAMConfiguration.get
+  isExternal: false
+  name: get
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.get
+- fullName: google.cloud.storage.bucket.IAMConfiguration.items
+  isExternal: false
+  name: items
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.items
+- fullName: google.cloud.storage.bucket.IAMConfiguration.keys
+  isExternal: false
+  name: keys
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.keys
+- fullName: google.cloud.storage.bucket.IAMConfiguration.pop
+  isExternal: false
+  name: pop
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.pop
+- fullName: google.cloud.storage.bucket.IAMConfiguration.popitem
+  isExternal: false
+  name: popitem
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.popitem
+- fullName: google.cloud.storage.bucket.IAMConfiguration.public_access_prevention
+  isExternal: false
+  name: public_access_prevention
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.public_access_prevention
+- fullName: google.cloud.storage.bucket.IAMConfiguration.setdefault
+  isExternal: false
+  name: setdefault
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.setdefault
+- fullName: google.cloud.storage.bucket.IAMConfiguration.uniform_bucket_level_access_enabled
+  isExternal: false
+  name: uniform_bucket_level_access_enabled
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.uniform_bucket_level_access_enabled
+- fullName: google.cloud.storage.bucket.IAMConfiguration.uniform_bucket_level_access_locked_time
+  isExternal: false
+  name: uniform_bucket_level_access_locked_time
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.uniform_bucket_level_access_locked_time
+- fullName: google.cloud.storage.bucket.IAMConfiguration.update
+  isExternal: false
+  name: update
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.update
+- fullName: google.cloud.storage.bucket.IAMConfiguration.values
+  isExternal: false
+  name: values
+  parent: google.cloud.storage.bucket.IAMConfiguration
+  uid: google.cloud.storage.bucket.IAMConfiguration.values

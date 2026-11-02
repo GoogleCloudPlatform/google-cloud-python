@@ -1,0 +1,158 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google_auth_oauthlib.helpers.credentials_from_session
+  - google_auth_oauthlib.helpers.session_from_client_config
+  - google_auth_oauthlib.helpers.session_from_client_secrets_file
+  fullName: google_auth_oauthlib.helpers
+  langs:
+  - python
+  module: google_auth_oauthlib.helpers
+  name: helpers
+  source:
+    id: helpers
+    path: tests/testdata/auth/google_auth_oauthlib/helpers.py
+    startLine: 0
+  summary: 'Integration helpers.
+
+
+    This module provides helpers for integrating with `requests-oauthlib`_.
+
+    Typically, you''ll want to use the higher-level helpers in
+
+    `<xref uid="google_auth_oauthlib.flow">google_auth_oauthlib.flow</xref>`.
+
+
+    .. _requests-oauthlib: http://requests-oauthlib.readthedocs.io/en/latest/
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google_auth_oauthlib.helpers
+- attributes: []
+  fullName: google_auth_oauthlib.helpers.credentials_from_session
+  langs:
+  - python
+  module: google_auth_oauthlib.helpers
+  name: credentials_from_session
+  source:
+    id: credentials_from_session
+    path: tests/testdata/auth/google_auth_oauthlib/helpers.py
+    startLine: 100
+  summary: 'Creates `google.oauth2.credentials.Credentials` from a
+
+    `requests_oauthlib.OAuth2Session`.
+
+
+    `fetch_token` must be called on the session before before calling
+
+    this. This uses the session''s auth token and the provided client
+
+    configuration to create `google.oauth2.credentials.Credentials`.
+
+    This allows you to use the credentials from the session with Google
+
+    API client libraries.
+
+    '
+  syntax:
+    content: credentials_from_session(session, client_config=None)
+    exceptions:
+    - description: If there is no access token in the session.
+      var_type: ValueError
+    parameters:
+    - description: The OAuth 2.0 session.
+      id: session
+      var_type: requests_oauthlib.OAuth2Session
+    - description: The subset of the client configuration to use. For example, if
+        you have a web client you would pass in <code>client_config['web']</code>.
+      id: client_config
+      var_type: Mapping[str, Any]
+    returns:
+    - description: The constructed credentials.
+      var_type: google.oauth2.credentials.Credentials
+  type: function
+  uid: google_auth_oauthlib.helpers.credentials_from_session
+- attributes: []
+  fullName: google_auth_oauthlib.helpers.session_from_client_config
+  langs:
+  - python
+  module: google_auth_oauthlib.helpers
+  name: session_from_client_config
+  source:
+    id: session_from_client_config
+    path: tests/testdata/auth/google_auth_oauthlib/helpers.py
+    startLine: 34
+  summary: 'Creates a `requests_oauthlib.OAuth2Session` from client
+
+    configuration loaded from a Google-format client secrets file.
+
+    '
+  syntax:
+    content: session_from_client_config(client_config, scopes, **kwargs)
+    exceptions:
+    - description: If the client configuration is not in the correct format.
+      var_type: ValueError
+    parameters:
+    - description: The client configuration in the Google <code>client secrets</code>_
+        format.
+      id: client_config
+      var_type: Mapping[str, Any]
+    - description: The list of scopes to request during the flow.
+      id: scopes
+      var_type: Sequence[str]
+    returns:
+    - description: The new oauthlib session and the validated client configuration.
+      var_type: 'Tuple[requests_oauthlib.OAuth2Session, Mapping[str, Any]] .. _client
+        secrets: https://github.com/googleapis/google-api-python-client/blob/main/docs/client-secrets.md'
+  type: function
+  uid: google_auth_oauthlib.helpers.session_from_client_config
+- attributes: []
+  fullName: google_auth_oauthlib.helpers.session_from_client_secrets_file
+  langs:
+  - python
+  module: google_auth_oauthlib.helpers
+  name: session_from_client_secrets_file
+  source:
+    id: session_from_client_secrets_file
+    path: tests/testdata/auth/google_auth_oauthlib/helpers.py
+    startLine: 75
+  summary: 'Creates a `requests_oauthlib.OAuth2Session` instance from a
+
+    Google-format client secrets file.
+
+    '
+  syntax:
+    content: session_from_client_secrets_file(client_secrets_file, scopes, **kwargs)
+    parameters:
+    - description: The path to the <code>client secrets</code>_ .json file.
+      id: client_secrets_file
+      var_type: str
+    - description: The list of scopes to request during the flow.
+      id: scopes
+      var_type: Sequence[str]
+    returns:
+    - description: The new oauthlib session and the validated client configuration.
+      var_type: 'Tuple[requests_oauthlib.OAuth2Session, Mapping[str, Any]] .. _client
+        secrets: https://github.com/googleapis/google-api-python-client/blob/main/docs/client-secrets.md'
+  type: function
+  uid: google_auth_oauthlib.helpers.session_from_client_secrets_file
+references:
+- fullName: google_auth_oauthlib.helpers.credentials_from_session
+  isExternal: false
+  name: credentials_from_session
+  parent: google_auth_oauthlib.helpers
+  uid: google_auth_oauthlib.helpers.credentials_from_session
+- fullName: google_auth_oauthlib.helpers.session_from_client_config
+  isExternal: false
+  name: session_from_client_config
+  parent: google_auth_oauthlib.helpers
+  uid: google_auth_oauthlib.helpers.session_from_client_config
+- fullName: google_auth_oauthlib.helpers.session_from_client_secrets_file
+  isExternal: false
+  name: session_from_client_secrets_file
+  parent: google_auth_oauthlib.helpers
+  uid: google_auth_oauthlib.helpers.session_from_client_secrets_file

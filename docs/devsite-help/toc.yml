@@ -1,0 +1,6 @@
+- uid: product-neutral-guides
+  name: 'Client library help'
+  items:
+    -
+      name: 'Getting Started'
+      href: 'getting-started.md'

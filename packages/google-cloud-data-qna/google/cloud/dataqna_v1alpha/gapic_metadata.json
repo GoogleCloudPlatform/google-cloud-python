@@ -1,0 +1,137 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.dataqna_v1alpha",
+  "protoPackage": "google.cloud.dataqna.v1alpha",
+  "schema": "1.0",
+  "services": {
+    "AutoSuggestionService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AutoSuggestionServiceClient",
+          "rpcs": {
+            "SuggestQueries": {
+              "methods": [
+                "suggest_queries"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AutoSuggestionServiceAsyncClient",
+          "rpcs": {
+            "SuggestQueries": {
+              "methods": [
+                "suggest_queries"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AutoSuggestionServiceClient",
+          "rpcs": {
+            "SuggestQueries": {
+              "methods": [
+                "suggest_queries"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "QuestionService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "QuestionServiceClient",
+          "rpcs": {
+            "CreateQuestion": {
+              "methods": [
+                "create_question"
+              ]
+            },
+            "ExecuteQuestion": {
+              "methods": [
+                "execute_question"
+              ]
+            },
+            "GetQuestion": {
+              "methods": [
+                "get_question"
+              ]
+            },
+            "GetUserFeedback": {
+              "methods": [
+                "get_user_feedback"
+              ]
+            },
+            "UpdateUserFeedback": {
+              "methods": [
+                "update_user_feedback"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "QuestionServiceAsyncClient",
+          "rpcs": {
+            "CreateQuestion": {
+              "methods": [
+                "create_question"
+              ]
+            },
+            "ExecuteQuestion": {
+              "methods": [
+                "execute_question"
+              ]
+            },
+            "GetQuestion": {
+              "methods": [
+                "get_question"
+              ]
+            },
+            "GetUserFeedback": {
+              "methods": [
+                "get_user_feedback"
+              ]
+            },
+            "UpdateUserFeedback": {
+              "methods": [
+                "update_user_feedback"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "QuestionServiceClient",
+          "rpcs": {
+            "CreateQuestion": {
+              "methods": [
+                "create_question"
+              ]
+            },
+            "ExecuteQuestion": {
+              "methods": [
+                "execute_question"
+              ]
+            },
+            "GetQuestion": {
+              "methods": [
+                "get_question"
+              ]
+            },
+            "GetUserFeedback": {
+              "methods": [
+                "get_user_feedback"
+              ]
+            },
+            "UpdateUserFeedback": {
+              "methods": [
+                "update_user_feedback"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+name: Feature request
+description: Request a feature to help us make the libraries more useful
+labels: ["type: feature request","triage me"]
+body:
+- type: markdown
+  attributes:
+    value: |
+        _**PLEASE READ**: If you have a support contract with Google, please create an issue in the [support console](https://cloud.google.com/support/) instead of filing on GitHub. This will ensure a timely response._
+- type: checkboxes
+  attributes:
+    label: Determine this is the right repository
+    description: Please follow the steps in [the SUPPORT guide](https://github.com/googleapis/google-cloud-python/blob/main/SUPPORT.md) and determine that this is likely a client library issue and this is the correct repository in which to report it.
+    options:
+      - label: I determined this is the correct repository in which to report this feature request.
+        required: true
+- type: textarea
+  attributes:
+    label: Summary of the feature request
+    description: Describe succinctly what feature you would like the client library to add.
+    placeholder: Feature request summary
+    value: |
+        _e.g. I would like to easily be able to do FOO by simply coding BAR._ 
+- type: textarea
+  attributes:
+    label: 'Desired code experience'
+    description: Include a minimal code snippet of how your requested feature might look in actual code, including how you would use the results.
+    value: |
+      file: main.py
+      ```python
+         def my_ideal_code():
+           ...
+           some_data = my_new_feature()
+           do_something_with(some_data))
+      ```
+
+      <any additional py files>
+- type: textarea
+  attributes:
+    label: 'Expected results'
+    description: Describe the results you would expect with the code above.
+    value: |
+      _e.g. `my_new_feature()` should return FOO_
+- type: input
+  attributes:
+    label: API client name and version
+    description: If there's a particular API client for which this feature would be helpful, enter it here. Try `pip list | grep google`, which should give you a name corresponding to one of the packages listed [here](https://github.com/googleapis/google-cloud-python/tree/main/packages).
+    placeholder: e.g. google-cloud-vision v3.7.2
+- type: textarea
+  attributes:
+    label: 'Use case'
+    description: Describe the use case or scenario where this feature would be helpful.
+    value: |
+      _e.g. This feature would be useful in a scenario where I need to process large amounts of data efficiently._
+- type: textarea
+  attributes:
+    label: 'Additional context'
+    description: Add any other context or information about the feature request here.
+    value: |
+      _e.g. This feature would help improve the performance of my application._

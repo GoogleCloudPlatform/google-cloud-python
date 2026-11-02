@@ -1,0 +1,12 @@
+[run]
+branch = True
+
+[report]
+show_missing = True
+omit =
+    proto/marshal/compat.py
+exclude_lines =
+    # Re-enable the standard pragma
+    pragma: NO COVER
+    # Ignore debug-only repr
+    def __repr__

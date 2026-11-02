@@ -1,0 +1,16 @@
+{
+    "api_description": "Manages Google Cloud technical support cases for Customer Care support\nofferings.",
+    "api_id": "cloudsupport.googleapis.com",
+    "api_shortname": "cloudsupport",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/support/latest",
+    "default_version": "v2",
+    "distribution_name": "google-cloud-support",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1051180",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "support",
+    "name_pretty": "Google Cloud Support",
+    "product_documentation": "https://cloud.google.com/support/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

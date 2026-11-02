@@ -1,0 +1,16 @@
+{
+    "api_description": "The App Optimize API provides developers and platform teams with tools to\nmonitor, analyze, and improve the performance and cost-efficiency of their\ncloud applications.",
+    "api_id": "appoptimize.googleapis.com",
+    "api_shortname": "appoptimize",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-appoptimize/latest",
+    "default_version": "v1beta",
+    "distribution_name": "google-cloud-appoptimize",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=190865\u0026template=1161103",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-appoptimize",
+    "name_pretty": "App Optimize",
+    "product_documentation": "https://docs.cloud.google.com/app-optimize/overview",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,228 @@
+data:
+  books:
+    book1:
+      title: "The Hitchhiker's Guide to the Galaxy"
+      author: "Douglas Adams"
+      genre: "Science Fiction"
+      published: 1979
+      rating: 4.2
+      tags:
+        - comedy
+        - space
+        - adventure
+      awards:
+        hugo: true
+        nebula: false
+    book2:
+      title: "Pride and Prejudice"
+      author: "Jane Austen"
+      genre: "Romance"
+      published: 1813
+      rating: 4.5
+      tags:
+        - classic
+        - social commentary
+        - love
+      awards:
+        none: true
+    book3:
+      title: "One Hundred Years of Solitude"
+      author: "Gabriel García Márquez"
+      genre: "Magical Realism"
+      published: 1967
+      rating: 4.3
+      tags:
+        - family
+        - history
+        - fantasy
+      awards:
+        nobel: true
+        nebula: false
+    book4:
+      title: "The Lord of the Rings"
+      author: "J.R.R. Tolkien"
+      genre: "Fantasy"
+      published: 1954
+      rating: 4.7
+      tags:
+        - adventure
+        - magic
+        - epic
+      awards:
+        hugo: false
+        nebula: false
+    book5:
+      title: "The Handmaid's Tale"
+      author: "Margaret Atwood"
+      genre: "Dystopian"
+      published: 1985
+      rating: 4.1
+      tags:
+        - feminism
+        - totalitarianism
+        - resistance
+      awards:
+        arthur c. clarke: true
+        booker prize: false
+    book6:
+      title: "Crime and Punishment"
+      author: "Fyodor Dostoevsky"
+      genre: "Psychological Thriller"
+      published: 1866
+      rating: 4.3
+      tags:
+        - philosophy
+        - crime
+        - redemption
+      awards:
+        none: true
+    book7:
+      title: "To Kill a Mockingbird"
+      author: "Harper Lee"
+      genre: "Southern Gothic"
+      published: 1960
+      rating: 4.2
+      tags:
+        - racism
+        - injustice
+        - coming-of-age
+      awards:
+        pulitzer: true
+    book8:
+      title: "1984"
+      author: "George Orwell"
+      genre: "Dystopian"
+      published: 1949
+      rating: 4.2
+      tags:
+        - surveillance
+        - totalitarianism
+        - propaganda
+      awards:
+        prometheus: true
+    book9:
+      title: "The Great Gatsby"
+      author: "F. Scott Fitzgerald"
+      genre: "Modernist"
+      published: 1925
+      rating: 4.0
+      tags:
+        - wealth
+        - american dream
+        - love
+      awards:
+        none: true
+    book10:
+      title: "Dune"
+      author: "Frank Herbert"
+      genre: "Science Fiction"
+      published: 1965
+      rating: 4.6
+      tags:
+        - politics
+        - desert
+        - ecology
+      awards:
+        hugo: true
+        nebula: true
+  timestamps:
+    ts1:
+      time: "1993-04-28T12:01:00.654321+00:00"
+      micros:  735998460654321
+      millis:  735998460654
+      seconds: 735998460
+  vectors:
+    vec1:
+      embedding: [1.0, 2.0, 3.0]
+    vec2:
+      embedding: [4.0, 5.0, 6.0, 7.0]
+    vec3:
+      embedding: [5.0, 6.0, 7.0]
+    vec4:
+      embedding: [1.0, 2.0, 4.0]
+  errors:
+    doc_with_nan:
+      value: "NaN"
+    doc_with_null:
+      value: null
+  cities:
+    city1:
+      name: "San Francisco"
+      location: GEOPOINT(37.7749,-122.4194)
+    city2:
+      name: "New York"
+      location: GEOPOINT(40.7128,-74.0060)
+    city3:
+      name: "Saskatoon"
+      location: GEOPOINT(52.1579,-106.6702)
+  "cities/city1/landmarks":
+    lm1:
+      name: "Golden Gate Bridge"
+      type: "Bridge"
+    lm2:
+      name: "Alcatraz"
+      type: "Island"
+  "cities/city2/landmarks":
+    lm3:
+      name: "Statue of Liberty"
+      type: "Monument"
+  "cities/city1/landmarks/lm1/reviews":
+    rev1:
+      author: "Alice"
+      rating: 5
+    rev2:
+      author: "Bob"
+      rating: 4
+  "cities/city3/landmarks":
+    lm4:
+      name: "Western Development Museum"
+      type: "Museum"
+  restaurants:
+    sunnySideUp:
+      name: "The Sunny Side Up"
+      description: "A cozy neighborhood diner serving classic breakfast favorites all day long, from fluffy pancakes to savory omelets."
+      location: GEOPOINT(39.7541,-105.0002)
+      menu: "<h3>Breakfast Classics</h3><ul><li>Denver Omelet - $12</li><li>Buttermilk Pancakes - $10</li><li>Steak and Eggs - $16</li></ul><h3>Sides</h3><ul><li>Hash Browns - $4</li><li>Thick-cut Bacon - $5</li><li>Drip Coffee - $2</li></ul>"
+      average_price_per_person: 15
+    goldenWaffle:
+      name: "The Golden Waffle"
+      description: "Specializing exclusively in Belgian-style waffles. Open daily from 6:00 AM to 11:00 AM."
+      location: GEOPOINT(39.7183,-104.9621)
+      menu: "<h3>Signature Waffles</h3><ul><li>Strawberry Delight - $11</li><li>Chicken and Waffles - $14</li><li>Chocolate Chip Crunch - $10</li></ul><h3>Drinks</h3><ul><li>Fresh OJ - $4</li><li>Artisan Coffee - $3</li></ul>"
+      average_price_per_person: 13
+    lotusBlossomThai:
+      name: "Lotus Blossom Thai"
+      description: "Authentic Thai cuisine featuring hand-crushed spices and traditional family recipes from the Chiang Mai region."
+      location: GEOPOINT(39.7315,-104.9847)
+      menu: "<h3>Appetizers</h3><ul><li>Spring Rolls - $7</li><li>Chicken Satay - $9</li></ul><h3>Main Course</h3><ul><li>Pad Thai - $15</li><li>Green Curry - $16</li><li>Drunken Noodles - $15</li></ul>"
+      average_price_per_person: 22
+    mileHighCatch:
+      name: "Mile High Catch"
+      description: "Freshly sourced seafood offering a wide variety of Pacific fish and Atlantic shellfish in an upscale atmosphere."
+      location: GEOPOINT(39.7401,-104.9903)
+      menu: "<h3>From the Raw Bar</h3><ul><li>Oysters (Half Dozen) - $18</li><li>Lobster Cocktail - $22</li></ul><h3>Entrees</h3><ul><li>Pan-Seared Salmon - $28</li><li>King Crab Legs - $45</li><li>Fish and Chips - $19</li></ul>"
+      average_price_per_person: 45
+    peakBurgers:
+      name: "Peak Burgers"
+      description: "Casual burger joint focused on locally sourced Colorado beef and hand-cut fries."
+      location: GEOPOINT(39.7622,-105.0125)
+      menu: "<h3>Burgers</h3><ul><li>The Peak Double - $12</li><li>Bison Burger - $15</li><li>Veggie Stack - $11</li></ul><h3>Sides</h3><ul><li>Truffle Fries - $6</li><li>Onion Rings - $5</li></ul>"
+      average_price_per_person: 18
+    solTacos:
+      name: "El Sol Tacos"
+      description: "A vibrant street-side taco stand serving up quick, delicious, and traditional Mexican street food."
+      location: GEOPOINT(39.6952,-105.0274)
+      menu: "<h3>Tacos ($3.50 each)</h3><ul><li>Al Pastor</li><li>Carne Asada</li><li>Pollo Asado</li><li>Nopales (Cactus)</li></ul><h3>Beverages</h3><ul><li>Horchata - $4</li><li>Mexican Coke - $3</li></ul>"
+      average_price_per_person: 12
+    eastsideTacos:
+      name: "Eastside Cantina"
+      description: "Authentic street tacos and hand-shaken margaritas on the vibrant east side of the city."
+      location: GEOPOINT(39.735,-104.885)
+      menu: "<h3>Tacos</h3><ul><li>Carnitas Tacos - $4</li><li>Barbacoa Tacos - $4.50</li><li>Shrimp Tacos - $5</li></ul><h3>Drinks</h3><ul><li>House Margarita - $9</li><li>Jarritos - $3</li></ul>"
+      average_price_per_person: 18
+    eastsideChicken:
+      name: "Eastside Chicken"
+      description: "Fried chicken to go - next to Eastside Cantina."
+      location: GEOPOINT(39.735,-104.885)
+      menu: "<h3>Fried Chicken</h3><ul><li>Drumstick - $4</li><li>Wings - $1</li><li>Sandwich - $9</li></ul><h3>Drinks</h3><ul><li>House Margarita - $9</li><li>Jarritos - $3</li></ul>"
+      average_price_per_person: 12

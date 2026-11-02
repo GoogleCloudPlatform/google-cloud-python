@@ -1,0 +1,16 @@
+{
+    "api_description": "Lets you store and retrieve potentially-large, immutable data objects.",
+    "api_id": "storage.googleapis.com",
+    "api_shortname": "storage",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/storage/latest",
+    "default_version": "v2",
+    "distribution_name": "google-cloud-storage",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=187243\u0026template=1162869",
+    "language": "python",
+    "library_type": "GAPIC_MANUAL",
+    "name": "storage",
+    "name_pretty": "Cloud Storage",
+    "product_documentation": "https://cloud.google.com/storage/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

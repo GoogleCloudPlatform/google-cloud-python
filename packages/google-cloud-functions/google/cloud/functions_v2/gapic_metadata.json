@@ -1,0 +1,148 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.functions_v2",
+  "protoPackage": "google.cloud.functions.v2",
+  "schema": "1.0",
+  "services": {
+    "FunctionService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "FunctionServiceClient",
+          "rpcs": {
+            "CreateFunction": {
+              "methods": [
+                "create_function"
+              ]
+            },
+            "DeleteFunction": {
+              "methods": [
+                "delete_function"
+              ]
+            },
+            "GenerateDownloadUrl": {
+              "methods": [
+                "generate_download_url"
+              ]
+            },
+            "GenerateUploadUrl": {
+              "methods": [
+                "generate_upload_url"
+              ]
+            },
+            "GetFunction": {
+              "methods": [
+                "get_function"
+              ]
+            },
+            "ListFunctions": {
+              "methods": [
+                "list_functions"
+              ]
+            },
+            "ListRuntimes": {
+              "methods": [
+                "list_runtimes"
+              ]
+            },
+            "UpdateFunction": {
+              "methods": [
+                "update_function"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "FunctionServiceAsyncClient",
+          "rpcs": {
+            "CreateFunction": {
+              "methods": [
+                "create_function"
+              ]
+            },
+            "DeleteFunction": {
+              "methods": [
+                "delete_function"
+              ]
+            },
+            "GenerateDownloadUrl": {
+              "methods": [
+                "generate_download_url"
+              ]
+            },
+            "GenerateUploadUrl": {
+              "methods": [
+                "generate_upload_url"
+              ]
+            },
+            "GetFunction": {
+              "methods": [
+                "get_function"
+              ]
+            },
+            "ListFunctions": {
+              "methods": [
+                "list_functions"
+              ]
+            },
+            "ListRuntimes": {
+              "methods": [
+                "list_runtimes"
+              ]
+            },
+            "UpdateFunction": {
+              "methods": [
+                "update_function"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "FunctionServiceClient",
+          "rpcs": {
+            "CreateFunction": {
+              "methods": [
+                "create_function"
+              ]
+            },
+            "DeleteFunction": {
+              "methods": [
+                "delete_function"
+              ]
+            },
+            "GenerateDownloadUrl": {
+              "methods": [
+                "generate_download_url"
+              ]
+            },
+            "GenerateUploadUrl": {
+              "methods": [
+                "generate_upload_url"
+              ]
+            },
+            "GetFunction": {
+              "methods": [
+                "get_function"
+              ]
+            },
+            "ListFunctions": {
+              "methods": [
+                "list_functions"
+              ]
+            },
+            "ListRuntimes": {
+              "methods": [
+                "list_runtimes"
+              ]
+            },
+            "UpdateFunction": {
+              "methods": [
+                "update_function"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

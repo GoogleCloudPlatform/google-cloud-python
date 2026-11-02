@@ -1,0 +1,55 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "The name of the table to which to write data,\n   of the form {projectId}:{datasetId}.{tableId}"
+    id: table
+    var_type: str
+  - description: "When true, use the topic's schema as the\n   columns to write to\
+      \ in BigQuery, if it exists."
+    id: use_topic_schema
+    var_type: bool
+  - description: "When true, write the subscription name, message_id,\n   publish_time,\
+      \ attributes, and ordering_key to additional\n   columns in the table. The subscription\
+      \ name, message_id, and\n   publish_time fields are put in their own columns\
+      \ while all\n   other message properties (other than data) are written to a\n\
+      \   JSON object in the attributes column."
+    id: write_metadata
+    var_type: bool
+  - description: "When true and use_topic_schema is true, any fields that are\n  \
+      \ a part of the topic schema that are not part of the BigQuery\n   table schema\
+      \ are dropped when writing to BigQuery.\n   Otherwise, the schemas must be kept\
+      \ in sync and any messages\n   with extra fields are not written and remain\
+      \ in the\n   subscription's backlog."
+    id: drop_unknown_fields
+    var_type: bool
+  - description: "Output only. An output-only field that\n   indicates whether or\
+      \ not the subscription can\n   receive messages."
+    id: state
+    var_type: google.pubsub_v1.types.BigQueryConfig.State
+  children:
+  - google.cloud.pubsub_v1.types.BigQueryConfig.State
+  class: google.cloud.pubsub_v1.types.BigQueryConfig
+  fullName: google.cloud.pubsub_v1.types.BigQueryConfig
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: BigQueryConfig
+  source:
+    id: BigQueryConfig
+    path: null
+    startLine: null
+  summary: 'Configuration for a BigQuery subscription.
+
+    '
+  syntax:
+    content: BigQueryConfig(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.BigQueryConfig
+references:
+- fullName: google.cloud.pubsub_v1.types.BigQueryConfig.State
+  isExternal: false
+  name: State
+  parent: google.cloud.pubsub_v1.types.BigQueryConfig
+  uid: google.cloud.pubsub_v1.types.BigQueryConfig.State

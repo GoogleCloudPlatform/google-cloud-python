@@ -1,0 +1,74 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+description: Unable to generate client if it has a proto-plus dependency with a modified namespace
+url: https://github.com/googleapis/gapic-generator-python/issues/1796
+replacements:
+  - paths: [
+      packages/google-cloud-binary-authorization/google/cloud/binaryauthorization_v1/types/service.py,
+    ]
+    before: |
+      import grafeas.v1.attestation_pb2 as attestation_pb2  # type: ignore
+    after: |
+      import grafeas.grafeas_v1.types  # type: ignore
+    count: 1
+  - paths: [
+      packages/google-cloud-binary-authorization/google/cloud/binaryauthorization_v1/types/service.py,
+    ]
+    before: attestation_pb2
+    after: grafeas.grafeas_v1.types
+    count: 3
+  - paths: [
+      packages/google-cloud-binary-authorization/google/cloud/binaryauthorization_v1/types/service.py,
+    ]
+    before: grafeas.v1.grafeas.grafeas_v1.types.AttestationOccurrence
+    after: grafeas.grafeas_v1.types.AttestationOccurrence
+    count: 1
+  - paths: [
+      packages/google-cloud-policytroubleshooter-iam/google/cloud/policytroubleshooter_iam_v3/types/troubleshooter.py,
+    ]
+    before: import google.iam.v2.policy_pb2 as policy_pb2  # type: ignore
+    after: from google.cloud.iam_v2 import Policy  # type: ignore
+    count: 1
+  - paths: [
+      packages/google-cloud-policytroubleshooter-iam/google/cloud/policytroubleshooter_iam_v3/types/troubleshooter.py,
+    ]
+    before: |
+      deny_access_state: "DenyAccessState" = proto.Field\(
+              proto.ENUM,
+              number=1,
+              enum="DenyAccessState",
+          \)
+          policy: policy_pb2.Policy = proto.Field\(
+              proto.MESSAGE,
+              number=2,
+              message=policy_pb2.Policy,
+          \)
+    after: |
+      deny_access_state: "DenyAccessState" = proto.Field(
+              proto.ENUM,
+              number=1,
+              enum="DenyAccessState",
+          )
+          policy: Policy = proto.Field(
+              proto.MESSAGE,
+              number=2,
+              message=Policy,
+          )
+    count: 1
+  - paths: [
+      packages/google-cloud-policytroubleshooter-iam/google/cloud/policytroubleshooter_iam_v3/types/troubleshooter.py,
+    ]
+    before: google.iam.v2.policy_pb2.Policy
+    after: google.cloud.iam_v2.Policy
+    count: 1

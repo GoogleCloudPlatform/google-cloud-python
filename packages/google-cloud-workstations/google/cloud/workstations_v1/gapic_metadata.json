@@ -1,0 +1,328 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.workstations_v1",
+  "protoPackage": "google.cloud.workstations.v1",
+  "schema": "1.0",
+  "services": {
+    "Workstations": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WorkstationsClient",
+          "rpcs": {
+            "CreateWorkstation": {
+              "methods": [
+                "create_workstation"
+              ]
+            },
+            "CreateWorkstationCluster": {
+              "methods": [
+                "create_workstation_cluster"
+              ]
+            },
+            "CreateWorkstationConfig": {
+              "methods": [
+                "create_workstation_config"
+              ]
+            },
+            "DeleteWorkstation": {
+              "methods": [
+                "delete_workstation"
+              ]
+            },
+            "DeleteWorkstationCluster": {
+              "methods": [
+                "delete_workstation_cluster"
+              ]
+            },
+            "DeleteWorkstationConfig": {
+              "methods": [
+                "delete_workstation_config"
+              ]
+            },
+            "GenerateAccessToken": {
+              "methods": [
+                "generate_access_token"
+              ]
+            },
+            "GetWorkstation": {
+              "methods": [
+                "get_workstation"
+              ]
+            },
+            "GetWorkstationCluster": {
+              "methods": [
+                "get_workstation_cluster"
+              ]
+            },
+            "GetWorkstationConfig": {
+              "methods": [
+                "get_workstation_config"
+              ]
+            },
+            "ListUsableWorkstationConfigs": {
+              "methods": [
+                "list_usable_workstation_configs"
+              ]
+            },
+            "ListUsableWorkstations": {
+              "methods": [
+                "list_usable_workstations"
+              ]
+            },
+            "ListWorkstationClusters": {
+              "methods": [
+                "list_workstation_clusters"
+              ]
+            },
+            "ListWorkstationConfigs": {
+              "methods": [
+                "list_workstation_configs"
+              ]
+            },
+            "ListWorkstations": {
+              "methods": [
+                "list_workstations"
+              ]
+            },
+            "StartWorkstation": {
+              "methods": [
+                "start_workstation"
+              ]
+            },
+            "StopWorkstation": {
+              "methods": [
+                "stop_workstation"
+              ]
+            },
+            "UpdateWorkstation": {
+              "methods": [
+                "update_workstation"
+              ]
+            },
+            "UpdateWorkstationCluster": {
+              "methods": [
+                "update_workstation_cluster"
+              ]
+            },
+            "UpdateWorkstationConfig": {
+              "methods": [
+                "update_workstation_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "WorkstationsAsyncClient",
+          "rpcs": {
+            "CreateWorkstation": {
+              "methods": [
+                "create_workstation"
+              ]
+            },
+            "CreateWorkstationCluster": {
+              "methods": [
+                "create_workstation_cluster"
+              ]
+            },
+            "CreateWorkstationConfig": {
+              "methods": [
+                "create_workstation_config"
+              ]
+            },
+            "DeleteWorkstation": {
+              "methods": [
+                "delete_workstation"
+              ]
+            },
+            "DeleteWorkstationCluster": {
+              "methods": [
+                "delete_workstation_cluster"
+              ]
+            },
+            "DeleteWorkstationConfig": {
+              "methods": [
+                "delete_workstation_config"
+              ]
+            },
+            "GenerateAccessToken": {
+              "methods": [
+                "generate_access_token"
+              ]
+            },
+            "GetWorkstation": {
+              "methods": [
+                "get_workstation"
+              ]
+            },
+            "GetWorkstationCluster": {
+              "methods": [
+                "get_workstation_cluster"
+              ]
+            },
+            "GetWorkstationConfig": {
+              "methods": [
+                "get_workstation_config"
+              ]
+            },
+            "ListUsableWorkstationConfigs": {
+              "methods": [
+                "list_usable_workstation_configs"
+              ]
+            },
+            "ListUsableWorkstations": {
+              "methods": [
+                "list_usable_workstations"
+              ]
+            },
+            "ListWorkstationClusters": {
+              "methods": [
+                "list_workstation_clusters"
+              ]
+            },
+            "ListWorkstationConfigs": {
+              "methods": [
+                "list_workstation_configs"
+              ]
+            },
+            "ListWorkstations": {
+              "methods": [
+                "list_workstations"
+              ]
+            },
+            "StartWorkstation": {
+              "methods": [
+                "start_workstation"
+              ]
+            },
+            "StopWorkstation": {
+              "methods": [
+                "stop_workstation"
+              ]
+            },
+            "UpdateWorkstation": {
+              "methods": [
+                "update_workstation"
+              ]
+            },
+            "UpdateWorkstationCluster": {
+              "methods": [
+                "update_workstation_cluster"
+              ]
+            },
+            "UpdateWorkstationConfig": {
+              "methods": [
+                "update_workstation_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "WorkstationsClient",
+          "rpcs": {
+            "CreateWorkstation": {
+              "methods": [
+                "create_workstation"
+              ]
+            },
+            "CreateWorkstationCluster": {
+              "methods": [
+                "create_workstation_cluster"
+              ]
+            },
+            "CreateWorkstationConfig": {
+              "methods": [
+                "create_workstation_config"
+              ]
+            },
+            "DeleteWorkstation": {
+              "methods": [
+                "delete_workstation"
+              ]
+            },
+            "DeleteWorkstationCluster": {
+              "methods": [
+                "delete_workstation_cluster"
+              ]
+            },
+            "DeleteWorkstationConfig": {
+              "methods": [
+                "delete_workstation_config"
+              ]
+            },
+            "GenerateAccessToken": {
+              "methods": [
+                "generate_access_token"
+              ]
+            },
+            "GetWorkstation": {
+              "methods": [
+                "get_workstation"
+              ]
+            },
+            "GetWorkstationCluster": {
+              "methods": [
+                "get_workstation_cluster"
+              ]
+            },
+            "GetWorkstationConfig": {
+              "methods": [
+                "get_workstation_config"
+              ]
+            },
+            "ListUsableWorkstationConfigs": {
+              "methods": [
+                "list_usable_workstation_configs"
+              ]
+            },
+            "ListUsableWorkstations": {
+              "methods": [
+                "list_usable_workstations"
+              ]
+            },
+            "ListWorkstationClusters": {
+              "methods": [
+                "list_workstation_clusters"
+              ]
+            },
+            "ListWorkstationConfigs": {
+              "methods": [
+                "list_workstation_configs"
+              ]
+            },
+            "ListWorkstations": {
+              "methods": [
+                "list_workstations"
+              ]
+            },
+            "StartWorkstation": {
+              "methods": [
+                "start_workstation"
+              ]
+            },
+            "StopWorkstation": {
+              "methods": [
+                "stop_workstation"
+              ]
+            },
+            "UpdateWorkstation": {
+              "methods": [
+                "update_workstation"
+              ]
+            },
+            "UpdateWorkstationCluster": {
+              "methods": [
+                "update_workstation_cluster"
+              ]
+            },
+            "UpdateWorkstationConfig": {
+              "methods": [
+                "update_workstation_config"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

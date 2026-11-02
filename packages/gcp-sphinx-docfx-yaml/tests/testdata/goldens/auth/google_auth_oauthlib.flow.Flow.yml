@@ -1,0 +1,427 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google_auth_oauthlib.flow.Flow
+  - google_auth_oauthlib.flow.Flow.authorization_url
+  - google_auth_oauthlib.flow.Flow.authorized_session
+  - google_auth_oauthlib.flow.Flow.client_config
+  - google_auth_oauthlib.flow.Flow.client_type
+  - google_auth_oauthlib.flow.Flow.credentials
+  - google_auth_oauthlib.flow.Flow.fetch_token
+  - google_auth_oauthlib.flow.Flow.from_client_config
+  - google_auth_oauthlib.flow.Flow.from_client_secrets_file
+  - google_auth_oauthlib.flow.Flow.oauth2session
+  - google_auth_oauthlib.flow.Flow.redirect_uri
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: Flow
+  source:
+    id: Flow
+    path: tests/testdata/auth/google_auth_oauthlib/flow.py
+    startLine: 74
+  summary: "OAuth 2.0 Authorization Flow\n\nThis class uses a `requests_oauthlib.OAuth2Session`\
+    \ instance at\n`oauth2session` to perform all of the OAuth 2.0 logic. This class\n\
+    just provides convenience methods and sane defaults for doing Google's\nparticular\
+    \ flavors of OAuth 2.0.\n\nTypically you'll construct an instance of this flow\
+    \ using\n`from_client_secrets_file` and a `client secrets file`_ obtained\nfrom\
+    \ the `Google API Console`_.\n\n.. _client secrets file:\n    https://developers.google.com/identity/protocols/oauth2/web-server\n\
+    \    #creatingcred\n.. _Google API Console:\n    https://console.developers.google.com/apis/credentials\n\
+    \n"
+  syntax:
+    content: "Flow(\n    oauth2session,\n    client_type,\n    client_config,\n  \
+      \  redirect_uri=None,\n    code_verifier=None,\n    autogenerate_code_verifier=True,\n\
+      )"
+    parameters: []
+  type: class
+  uid: google_auth_oauthlib.flow.Flow
+- attributes: []
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: Flow
+  source:
+    id: Flow
+    path: tests/testdata/auth/google_auth_oauthlib/flow.py
+    startLine: 74
+  summary: ''
+  syntax:
+    content: "Flow(\n    oauth2session,\n    client_type,\n    client_config,\n  \
+      \  redirect_uri=None,\n    code_verifier=None,\n    autogenerate_code_verifier=True,\n\
+      )"
+    parameters:
+    - description: The OAuth 2.0 session from <code>requests-oauthlib</code>.
+      id: oauth2session
+      var_type: requests_oauthlib.OAuth2Session
+    - description: The client type, either <code>web</code> or <code>installed</code>.
+      id: client_type
+      var_type: str
+    - description: The client configuration in the Google <code>client secrets</code>_
+        format.
+      id: client_config
+      var_type: Mapping[str, Any]
+    - description: The OAuth 2.0 redirect URI if known at flow creation time. Otherwise,
+        it will need to be set using <code>redirect_uri</code>.
+      id: redirect_uri
+      var_type: str
+    - description: random string of 43-128 chars used to verify the key exchange.using
+        PKCE.
+      id: code_verifier
+      var_type: str
+    - description: If true, auto-generate a code_verifier.
+      id: autogenerate_code_verifier
+      var_type: 'bool .. _client secrets: https://github.com/googleapis/google-api-python-client/blob
+        /main/docs/client-secrets.md'
+  type: method
+  uid: google_auth_oauthlib.flow.Flow
+- attributes: []
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow.authorization_url
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: authorization_url
+  source:
+    id: authorization_url
+    path: tests/testdata/auth/google_auth_oauthlib/flow.py
+    startLine: 215
+  summary: 'Generates an authorization URL.
+
+
+    This is the first step in the OAuth 2.0 Authorization Flow. The user''s
+
+    browser should be redirected to the returned URL.
+
+
+    This method calls
+
+    `requests_oauthlib.OAuth2Session.authorization_url`
+
+    and specifies the client configuration''s authorization URI (usually
+
+    Google''s authorization server) and specifies that "offline" access is
+
+    desired. This is required in order to obtain a refresh token.
+
+    '
+  syntax:
+    content: authorization_url(**kwargs)
+    parameters: []
+    returns:
+    - description: The generated authorization URL and state. The user must visit
+        the URL to complete the flow. The state is used when completing the flow to
+        verify that the request originated from your application. If your application
+        is using a different <code>Flow</code> instance to obtain the token, you will
+        need to specify the <code>state</code> when constructing the <code>Flow</code>.
+      var_type: Tuple[str, str]
+  type: method
+  uid: google_auth_oauthlib.flow.Flow.authorization_url
+- attributes: []
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow.authorized_session
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: authorized_session
+  source:
+    id: authorized_session
+    path: tests/testdata/auth/google_auth_oauthlib/flow.py
+    startLine: 305
+  summary: 'Returns a `requests.Session` authorized with credentials.
+
+
+    `fetch_token` must be called before this method. This method
+
+    constructs a `google.auth.transport.requests.AuthorizedSession`
+
+    class using this flow''s `credentials`.
+
+    '
+  syntax:
+    content: authorized_session()
+    parameters: []
+    returns:
+    - description: The constructed session.
+      var_type: google.auth.transport.requests.AuthorizedSession
+  type: method
+  uid: google_auth_oauthlib.flow.Flow.authorized_session
+- attributes: []
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow.client_config
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: client_config
+  source:
+    id: client_config
+    path: null
+    startLine: null
+  summary: 'The OAuth 2.0 client configuration.
+
+
+    :type: Mapping[str, Any]
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google_auth_oauthlib.flow.Flow.client_config
+- attributes: []
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow.client_type
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: client_type
+  source:
+    id: client_type
+    path: null
+    startLine: null
+  summary: 'The client type, either `''web''` or `''installed''`
+
+
+    :type: str
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google_auth_oauthlib.flow.Flow.client_type
+- &id001
+  attributes: []
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow.credentials
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: credentials
+  source:
+    id: credentials
+    path: null
+    startLine: null
+  summary: 'Returns credentials from the OAuth 2.0 session.
+
+
+    `fetch_token` must be called before accessing this. This method
+
+    constructs a `google.oauth2.credentials.Credentials` class using
+
+    the session''s token and the client config.
+
+    '
+  syntax:
+    exceptions:
+    - description: If there is no access token in the session.
+      var_type: ValueError
+    returns:
+    - description: The constructed credentials.
+      var_type: google.oauth2.credentials.Credentials
+  type: property
+  uid: google_auth_oauthlib.flow.Flow.credentials
+- *id001
+- attributes: []
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow.fetch_token
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: fetch_token
+  source:
+    id: fetch_token
+    path: tests/testdata/auth/google_auth_oauthlib/flow.py
+    startLine: 260
+  summary: 'Completes the Authorization Flow and obtains an access token.
+
+
+    This is the final step in the OAuth 2.0 Authorization Flow. This is
+
+    called after the user consents.
+
+
+    This method calls
+
+    `requests_oauthlib.OAuth2Session.fetch_token`
+
+    and specifies the client configuration''s token URI (usually Google''s
+
+    token server).
+
+    '
+  syntax:
+    content: fetch_token(**kwargs)
+    parameters: []
+    returns:
+    - description: The obtained tokens. Typically, you will not use return value of
+        this function and instead use <code>credentials</code> to obtain a <code>google.auth.credentials.Credentials</code>
+        instance.
+      var_type: Mapping[str, str]
+  type: method
+  uid: google_auth_oauthlib.flow.Flow.fetch_token
+- attributes: []
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow.from_client_config
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: from_client_config
+  source:
+    id: from_client_config
+    path: tests/testdata/auth/google_auth_oauthlib/flow.py
+    startLine: 131
+  summary: 'Creates a `requests_oauthlib.OAuth2Session` from client
+
+    configuration loaded from a Google-format client secrets file.
+
+    '
+  syntax:
+    content: from_client_config(client_config, scopes, **kwargs)
+    exceptions:
+    - description: 'If the client configuration is not in the correct format. .. _client
+        secrets: https://github.com/googleapis/google-api-python-client/blob/main/docs/client-secrets.md'
+      var_type: ValueError
+    parameters:
+    - description: The client configuration in the Google <code>client secrets</code>_
+        format.
+      id: client_config
+      var_type: Mapping[str, Any]
+    - description: The list of scopes to request during the flow.
+      id: scopes
+      var_type: Sequence[str]
+    returns:
+    - description: The constructed Flow instance.
+      var_type: Flow
+  type: method
+  uid: google_auth_oauthlib.flow.Flow.from_client_config
+- attributes: []
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow.from_client_secrets_file
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: from_client_secrets_file
+  source:
+    id: from_client_secrets_file
+    path: tests/testdata/auth/google_auth_oauthlib/flow.py
+    startLine: 183
+  summary: 'Creates a `Flow` instance from a Google client secrets file.
+
+    '
+  syntax:
+    content: from_client_secrets_file(client_secrets_file, scopes, **kwargs)
+    parameters:
+    - description: The path to the client secrets .json file.
+      id: client_secrets_file
+      var_type: str
+    - description: The list of scopes to request during the flow.
+      id: scopes
+      var_type: Sequence[str]
+    returns:
+    - description: The constructed Flow instance.
+      var_type: Flow
+  type: method
+  uid: google_auth_oauthlib.flow.Flow.from_client_secrets_file
+- attributes: []
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow.oauth2session
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: oauth2session
+  source:
+    id: oauth2session
+    path: null
+    startLine: null
+  summary: 'The OAuth 2.0 session.
+
+
+    :type: requests_oauthlib.OAuth2Session
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google_auth_oauthlib.flow.Flow.oauth2session
+- &id002
+  attributes: []
+  class: google_auth_oauthlib.flow.Flow
+  fullName: google_auth_oauthlib.flow.Flow.redirect_uri
+  langs:
+  - python
+  module: google_auth_oauthlib.flow
+  name: redirect_uri
+  source:
+    id: redirect_uri
+    path: null
+    startLine: null
+  summary: 'The OAuth 2.0 redirect URI. Pass-through to
+
+    `self.oauth2session.redirect_uri`.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google_auth_oauthlib.flow.Flow.redirect_uri
+- *id002
+references:
+- fullName: google_auth_oauthlib.flow.Flow
+  isExternal: false
+  name: Flow
+  parent: google_auth_oauthlib.flow.Flow
+  uid: google_auth_oauthlib.flow.Flow
+- fullName: google_auth_oauthlib.flow.Flow.authorization_url
+  isExternal: false
+  name: authorization_url
+  parent: google_auth_oauthlib.flow.Flow
+  uid: google_auth_oauthlib.flow.Flow.authorization_url
+- fullName: google_auth_oauthlib.flow.Flow.authorized_session
+  isExternal: false
+  name: authorized_session
+  parent: google_auth_oauthlib.flow.Flow
+  uid: google_auth_oauthlib.flow.Flow.authorized_session
+- fullName: google_auth_oauthlib.flow.Flow.client_config
+  isExternal: false
+  name: client_config
+  parent: google_auth_oauthlib.flow.Flow
+  uid: google_auth_oauthlib.flow.Flow.client_config
+- fullName: google_auth_oauthlib.flow.Flow.client_type
+  isExternal: false
+  name: client_type
+  parent: google_auth_oauthlib.flow.Flow
+  uid: google_auth_oauthlib.flow.Flow.client_type
+- fullName: google_auth_oauthlib.flow.Flow.credentials
+  isExternal: false
+  name: credentials
+  parent: google_auth_oauthlib.flow.Flow
+  uid: google_auth_oauthlib.flow.Flow.credentials
+- fullName: google_auth_oauthlib.flow.Flow.fetch_token
+  isExternal: false
+  name: fetch_token
+  parent: google_auth_oauthlib.flow.Flow
+  uid: google_auth_oauthlib.flow.Flow.fetch_token
+- fullName: google_auth_oauthlib.flow.Flow.from_client_config
+  isExternal: false
+  name: from_client_config
+  parent: google_auth_oauthlib.flow.Flow
+  uid: google_auth_oauthlib.flow.Flow.from_client_config
+- fullName: google_auth_oauthlib.flow.Flow.from_client_secrets_file
+  isExternal: false
+  name: from_client_secrets_file
+  parent: google_auth_oauthlib.flow.Flow
+  uid: google_auth_oauthlib.flow.Flow.from_client_secrets_file
+- fullName: google_auth_oauthlib.flow.Flow.oauth2session
+  isExternal: false
+  name: oauth2session
+  parent: google_auth_oauthlib.flow.Flow
+  uid: google_auth_oauthlib.flow.Flow.oauth2session
+- fullName: google_auth_oauthlib.flow.Flow.redirect_uri
+  isExternal: false
+  name: redirect_uri
+  parent: google_auth_oauthlib.flow.Flow
+  uid: google_auth_oauthlib.flow.Flow.redirect_uri

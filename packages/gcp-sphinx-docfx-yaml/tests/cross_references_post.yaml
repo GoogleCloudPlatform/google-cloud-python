@@ -1,0 +1,52 @@
+## YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "SQL text filtering statement, similar to a WHERE clause in a\n \
+      \  query. Aggregates are not supported.\n   \n   Examples: \"int_field > 5\"\
+      \ \"date_field = CAST('2014-9-27' as\n   DATE)\" \"nullable_field is not NULL\"\
+      \ \"st_equals(geo_field,\n   st_geofromtext(\"POINT(2, 2)\"))\" \"numeric_field\
+      \ BETWEEN 1.0\n   AND 5.0\"\n   \n   Restricted to a maximum length for 1 MB."
+    id: <xref uid="google.cloud.bigquery_storage_v1.types.StreamStats">google.cloud.bigquery_storage_v1.types.StreamStats</xref>
+    var_type: str
+  - description: "Optional. Options specific to the Apache\n   Arrow output format."
+    id: arrow_serialization_options
+    var_type: <xref uid="google.cloud.bigquery_storage_v1.types.ArrowSerializationOptions">google.cloud.bigquery_storage_v1.types.ArrowSerializationOptions</xref>
+  children: []
+  class: google.cloud.bigquery_storage_v1.types.ReadSession.TableReadOptions
+  fullName: google.cloud.bigquery_storage_v1.types.ReadSession.TableReadOptions
+  inheritance:
+  - inheritance:
+    - type: builtins.object
+    type: proto.message.Message
+  langs:
+  - python
+  module: google.cloud.bigquery_storage_v1.types.ReadSession
+  name: TableReadOptions
+  source:
+    id: TableReadOptions
+    path: google/cloud/bigquery_storage_v1/types/stream.py
+    remote:
+      branch: main
+      path: google/cloud/bigquery_storage_v1/types/stream.py
+      repo: git@github.com:googleapis/python-bigquery-storage.git
+    startLine: 85
+  summary: "Options dictating how we read a table.\n\
+    \nNames of the fields in the table that should be read in google.cloud.bigquery_storage_v1.types.ReadSession.TableReadOptions."
+  syntax:
+    content: TableReadOptions(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    exceptions:
+    - description: If the request failed for any reason.
+      var_type: google.api_core.exceptions.GoogleAPICallError
+    parameters:
+    - description: Required. Name of the stream to start reading from, of the form
+        <code>projects/{project_id}/locations/{location}/sessions/{session_id}/streams/{stream_id}</code>
+        with <xref uid="google.cloud.bigquery_storage_v1.types.SplitReadStreamResponse">google.cloud.bigquery_storage_v1.types.SplitReadStreamResponse</xref>
+      id: row
+      var_type: <xref uid="google.cloud.bigquery_storage_v1.types.AvroRows">google.cloud.bigquery_storage_v1.types.AvroRows</xref>
+    returns:
+    - description: An iterable of <xref uid="google.cloud.bigquery_storage_v1.types.ReadRowsResponse">ReadRowsResponse</xref>.
+      var_type: <xref uid="google.cloud.bigquery_storage_v1.reader.ReadRowsStream">ReadRowsStream</xref>
+  type: class
+  uid: google.cloud.bigquery_storage_v1.types.ReadSession.TableReadOptions
+references: []

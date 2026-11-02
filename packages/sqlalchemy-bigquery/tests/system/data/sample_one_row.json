@@ -1,0 +1,1 @@
+{"integer":"588","timestamp":"1381404436","string":"W 52 St & 11 Ave","float":"40.76727216","numeric":"40.76727216","boolean":"false","date":"2013-10-10","datetime":"2013-10-10T11:27:16","time":"11:27:16","bytes":"7w==","record":{"name": "John Doe","age":"100"},"nested_record":{"record":{"name": "John Doe 2","age":"200"}},"array":[1,2,3]}

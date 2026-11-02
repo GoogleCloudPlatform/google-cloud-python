@@ -1,0 +1,493 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.apphub_v1",
+  "protoPackage": "google.cloud.apphub.v1",
+  "schema": "1.0",
+  "services": {
+    "AppHub": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AppHubClient",
+          "rpcs": {
+            "CreateApplication": {
+              "methods": [
+                "create_application"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "CreateServiceProjectAttachment": {
+              "methods": [
+                "create_service_project_attachment"
+              ]
+            },
+            "CreateWorkload": {
+              "methods": [
+                "create_workload"
+              ]
+            },
+            "DeleteApplication": {
+              "methods": [
+                "delete_application"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "DeleteServiceProjectAttachment": {
+              "methods": [
+                "delete_service_project_attachment"
+              ]
+            },
+            "DeleteWorkload": {
+              "methods": [
+                "delete_workload"
+              ]
+            },
+            "DetachServiceProjectAttachment": {
+              "methods": [
+                "detach_service_project_attachment"
+              ]
+            },
+            "GetApplication": {
+              "methods": [
+                "get_application"
+              ]
+            },
+            "GetBoundary": {
+              "methods": [
+                "get_boundary"
+              ]
+            },
+            "GetDiscoveredService": {
+              "methods": [
+                "get_discovered_service"
+              ]
+            },
+            "GetDiscoveredWorkload": {
+              "methods": [
+                "get_discovered_workload"
+              ]
+            },
+            "GetExtendedMetadataSchema": {
+              "methods": [
+                "get_extended_metadata_schema"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "GetServiceProjectAttachment": {
+              "methods": [
+                "get_service_project_attachment"
+              ]
+            },
+            "GetWorkload": {
+              "methods": [
+                "get_workload"
+              ]
+            },
+            "ListApplications": {
+              "methods": [
+                "list_applications"
+              ]
+            },
+            "ListDiscoveredServices": {
+              "methods": [
+                "list_discovered_services"
+              ]
+            },
+            "ListDiscoveredWorkloads": {
+              "methods": [
+                "list_discovered_workloads"
+              ]
+            },
+            "ListExtendedMetadataSchemas": {
+              "methods": [
+                "list_extended_metadata_schemas"
+              ]
+            },
+            "ListServiceProjectAttachments": {
+              "methods": [
+                "list_service_project_attachments"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "ListWorkloads": {
+              "methods": [
+                "list_workloads"
+              ]
+            },
+            "LookupDiscoveredService": {
+              "methods": [
+                "lookup_discovered_service"
+              ]
+            },
+            "LookupDiscoveredWorkload": {
+              "methods": [
+                "lookup_discovered_workload"
+              ]
+            },
+            "LookupServiceProjectAttachment": {
+              "methods": [
+                "lookup_service_project_attachment"
+              ]
+            },
+            "UpdateApplication": {
+              "methods": [
+                "update_application"
+              ]
+            },
+            "UpdateBoundary": {
+              "methods": [
+                "update_boundary"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            },
+            "UpdateWorkload": {
+              "methods": [
+                "update_workload"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AppHubAsyncClient",
+          "rpcs": {
+            "CreateApplication": {
+              "methods": [
+                "create_application"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "CreateServiceProjectAttachment": {
+              "methods": [
+                "create_service_project_attachment"
+              ]
+            },
+            "CreateWorkload": {
+              "methods": [
+                "create_workload"
+              ]
+            },
+            "DeleteApplication": {
+              "methods": [
+                "delete_application"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "DeleteServiceProjectAttachment": {
+              "methods": [
+                "delete_service_project_attachment"
+              ]
+            },
+            "DeleteWorkload": {
+              "methods": [
+                "delete_workload"
+              ]
+            },
+            "DetachServiceProjectAttachment": {
+              "methods": [
+                "detach_service_project_attachment"
+              ]
+            },
+            "GetApplication": {
+              "methods": [
+                "get_application"
+              ]
+            },
+            "GetBoundary": {
+              "methods": [
+                "get_boundary"
+              ]
+            },
+            "GetDiscoveredService": {
+              "methods": [
+                "get_discovered_service"
+              ]
+            },
+            "GetDiscoveredWorkload": {
+              "methods": [
+                "get_discovered_workload"
+              ]
+            },
+            "GetExtendedMetadataSchema": {
+              "methods": [
+                "get_extended_metadata_schema"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "GetServiceProjectAttachment": {
+              "methods": [
+                "get_service_project_attachment"
+              ]
+            },
+            "GetWorkload": {
+              "methods": [
+                "get_workload"
+              ]
+            },
+            "ListApplications": {
+              "methods": [
+                "list_applications"
+              ]
+            },
+            "ListDiscoveredServices": {
+              "methods": [
+                "list_discovered_services"
+              ]
+            },
+            "ListDiscoveredWorkloads": {
+              "methods": [
+                "list_discovered_workloads"
+              ]
+            },
+            "ListExtendedMetadataSchemas": {
+              "methods": [
+                "list_extended_metadata_schemas"
+              ]
+            },
+            "ListServiceProjectAttachments": {
+              "methods": [
+                "list_service_project_attachments"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "ListWorkloads": {
+              "methods": [
+                "list_workloads"
+              ]
+            },
+            "LookupDiscoveredService": {
+              "methods": [
+                "lookup_discovered_service"
+              ]
+            },
+            "LookupDiscoveredWorkload": {
+              "methods": [
+                "lookup_discovered_workload"
+              ]
+            },
+            "LookupServiceProjectAttachment": {
+              "methods": [
+                "lookup_service_project_attachment"
+              ]
+            },
+            "UpdateApplication": {
+              "methods": [
+                "update_application"
+              ]
+            },
+            "UpdateBoundary": {
+              "methods": [
+                "update_boundary"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            },
+            "UpdateWorkload": {
+              "methods": [
+                "update_workload"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AppHubClient",
+          "rpcs": {
+            "CreateApplication": {
+              "methods": [
+                "create_application"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "CreateServiceProjectAttachment": {
+              "methods": [
+                "create_service_project_attachment"
+              ]
+            },
+            "CreateWorkload": {
+              "methods": [
+                "create_workload"
+              ]
+            },
+            "DeleteApplication": {
+              "methods": [
+                "delete_application"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "DeleteServiceProjectAttachment": {
+              "methods": [
+                "delete_service_project_attachment"
+              ]
+            },
+            "DeleteWorkload": {
+              "methods": [
+                "delete_workload"
+              ]
+            },
+            "DetachServiceProjectAttachment": {
+              "methods": [
+                "detach_service_project_attachment"
+              ]
+            },
+            "GetApplication": {
+              "methods": [
+                "get_application"
+              ]
+            },
+            "GetBoundary": {
+              "methods": [
+                "get_boundary"
+              ]
+            },
+            "GetDiscoveredService": {
+              "methods": [
+                "get_discovered_service"
+              ]
+            },
+            "GetDiscoveredWorkload": {
+              "methods": [
+                "get_discovered_workload"
+              ]
+            },
+            "GetExtendedMetadataSchema": {
+              "methods": [
+                "get_extended_metadata_schema"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "GetServiceProjectAttachment": {
+              "methods": [
+                "get_service_project_attachment"
+              ]
+            },
+            "GetWorkload": {
+              "methods": [
+                "get_workload"
+              ]
+            },
+            "ListApplications": {
+              "methods": [
+                "list_applications"
+              ]
+            },
+            "ListDiscoveredServices": {
+              "methods": [
+                "list_discovered_services"
+              ]
+            },
+            "ListDiscoveredWorkloads": {
+              "methods": [
+                "list_discovered_workloads"
+              ]
+            },
+            "ListExtendedMetadataSchemas": {
+              "methods": [
+                "list_extended_metadata_schemas"
+              ]
+            },
+            "ListServiceProjectAttachments": {
+              "methods": [
+                "list_service_project_attachments"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "ListWorkloads": {
+              "methods": [
+                "list_workloads"
+              ]
+            },
+            "LookupDiscoveredService": {
+              "methods": [
+                "lookup_discovered_service"
+              ]
+            },
+            "LookupDiscoveredWorkload": {
+              "methods": [
+                "lookup_discovered_workload"
+              ]
+            },
+            "LookupServiceProjectAttachment": {
+              "methods": [
+                "lookup_service_project_attachment"
+              ]
+            },
+            "UpdateApplication": {
+              "methods": [
+                "update_application"
+              ]
+            },
+            "UpdateBoundary": {
+              "methods": [
+                "update_boundary"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            },
+            "UpdateWorkload": {
+              "methods": [
+                "update_workload"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

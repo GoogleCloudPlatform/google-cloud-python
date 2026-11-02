@@ -1,0 +1,133 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.tpu_v1",
+  "protoPackage": "google.cloud.tpu.v1",
+  "schema": "1.0",
+  "services": {
+    "Tpu": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "TpuClient",
+          "rpcs": {
+            "CreateNode": {
+              "methods": [
+                "create_node"
+              ]
+            },
+            "DeleteNode": {
+              "methods": [
+                "delete_node"
+              ]
+            },
+            "GetAcceleratorType": {
+              "methods": [
+                "get_accelerator_type"
+              ]
+            },
+            "GetNode": {
+              "methods": [
+                "get_node"
+              ]
+            },
+            "GetTensorFlowVersion": {
+              "methods": [
+                "get_tensor_flow_version"
+              ]
+            },
+            "ListAcceleratorTypes": {
+              "methods": [
+                "list_accelerator_types"
+              ]
+            },
+            "ListNodes": {
+              "methods": [
+                "list_nodes"
+              ]
+            },
+            "ListTensorFlowVersions": {
+              "methods": [
+                "list_tensor_flow_versions"
+              ]
+            },
+            "ReimageNode": {
+              "methods": [
+                "reimage_node"
+              ]
+            },
+            "StartNode": {
+              "methods": [
+                "start_node"
+              ]
+            },
+            "StopNode": {
+              "methods": [
+                "stop_node"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "TpuAsyncClient",
+          "rpcs": {
+            "CreateNode": {
+              "methods": [
+                "create_node"
+              ]
+            },
+            "DeleteNode": {
+              "methods": [
+                "delete_node"
+              ]
+            },
+            "GetAcceleratorType": {
+              "methods": [
+                "get_accelerator_type"
+              ]
+            },
+            "GetNode": {
+              "methods": [
+                "get_node"
+              ]
+            },
+            "GetTensorFlowVersion": {
+              "methods": [
+                "get_tensor_flow_version"
+              ]
+            },
+            "ListAcceleratorTypes": {
+              "methods": [
+                "list_accelerator_types"
+              ]
+            },
+            "ListNodes": {
+              "methods": [
+                "list_nodes"
+              ]
+            },
+            "ListTensorFlowVersions": {
+              "methods": [
+                "list_tensor_flow_versions"
+              ]
+            },
+            "ReimageNode": {
+              "methods": [
+                "reimage_node"
+              ]
+            },
+            "StartNode": {
+              "methods": [
+                "start_node"
+              ]
+            },
+            "StopNode": {
+              "methods": [
+                "stop_node"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

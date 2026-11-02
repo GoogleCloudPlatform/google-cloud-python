@@ -1,0 +1,58 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.iamconnectorcredentials_v1alpha",
+  "protoPackage": "google.cloud.iamconnectorcredentials.v1alpha",
+  "schema": "1.0",
+  "services": {
+    "IAMConnectorCredentialsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "IAMConnectorCredentialsServiceClient",
+          "rpcs": {
+            "FinalizeCredentials": {
+              "methods": [
+                "finalize_credentials"
+              ]
+            },
+            "RetrieveCredentials": {
+              "methods": [
+                "retrieve_credentials"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "IAMConnectorCredentialsServiceAsyncClient",
+          "rpcs": {
+            "FinalizeCredentials": {
+              "methods": [
+                "finalize_credentials"
+              ]
+            },
+            "RetrieveCredentials": {
+              "methods": [
+                "retrieve_credentials"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "IAMConnectorCredentialsServiceClient",
+          "rpcs": {
+            "FinalizeCredentials": {
+              "methods": [
+                "finalize_credentials"
+              ]
+            },
+            "RetrieveCredentials": {
+              "methods": [
+                "retrieve_credentials"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

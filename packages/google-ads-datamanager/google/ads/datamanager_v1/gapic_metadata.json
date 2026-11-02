@@ -1,0 +1,513 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.ads.datamanager_v1",
+  "protoPackage": "google.ads.datamanager.v1",
+  "schema": "1.0",
+  "services": {
+    "IngestionService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "IngestionServiceClient",
+          "rpcs": {
+            "IngestAdEvents": {
+              "methods": [
+                "ingest_ad_events"
+              ]
+            },
+            "IngestAudienceMembers": {
+              "methods": [
+                "ingest_audience_members"
+              ]
+            },
+            "IngestEvents": {
+              "methods": [
+                "ingest_events"
+              ]
+            },
+            "IngestUsers": {
+              "methods": [
+                "ingest_users"
+              ]
+            },
+            "RemoveAllAudienceMembers": {
+              "methods": [
+                "remove_all_audience_members"
+              ]
+            },
+            "RemoveAudienceMembers": {
+              "methods": [
+                "remove_audience_members"
+              ]
+            },
+            "RemoveUsers": {
+              "methods": [
+                "remove_users"
+              ]
+            },
+            "RetrieveRequestStatus": {
+              "methods": [
+                "retrieve_request_status"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "IngestionServiceAsyncClient",
+          "rpcs": {
+            "IngestAdEvents": {
+              "methods": [
+                "ingest_ad_events"
+              ]
+            },
+            "IngestAudienceMembers": {
+              "methods": [
+                "ingest_audience_members"
+              ]
+            },
+            "IngestEvents": {
+              "methods": [
+                "ingest_events"
+              ]
+            },
+            "IngestUsers": {
+              "methods": [
+                "ingest_users"
+              ]
+            },
+            "RemoveAllAudienceMembers": {
+              "methods": [
+                "remove_all_audience_members"
+              ]
+            },
+            "RemoveAudienceMembers": {
+              "methods": [
+                "remove_audience_members"
+              ]
+            },
+            "RemoveUsers": {
+              "methods": [
+                "remove_users"
+              ]
+            },
+            "RetrieveRequestStatus": {
+              "methods": [
+                "retrieve_request_status"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "IngestionServiceClient",
+          "rpcs": {
+            "IngestAdEvents": {
+              "methods": [
+                "ingest_ad_events"
+              ]
+            },
+            "IngestAudienceMembers": {
+              "methods": [
+                "ingest_audience_members"
+              ]
+            },
+            "IngestEvents": {
+              "methods": [
+                "ingest_events"
+              ]
+            },
+            "IngestUsers": {
+              "methods": [
+                "ingest_users"
+              ]
+            },
+            "RemoveAllAudienceMembers": {
+              "methods": [
+                "remove_all_audience_members"
+              ]
+            },
+            "RemoveAudienceMembers": {
+              "methods": [
+                "remove_audience_members"
+              ]
+            },
+            "RemoveUsers": {
+              "methods": [
+                "remove_users"
+              ]
+            },
+            "RetrieveRequestStatus": {
+              "methods": [
+                "retrieve_request_status"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "MarketingDataInsightsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MarketingDataInsightsServiceClient",
+          "rpcs": {
+            "RetrieveInsights": {
+              "methods": [
+                "retrieve_insights"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MarketingDataInsightsServiceAsyncClient",
+          "rpcs": {
+            "RetrieveInsights": {
+              "methods": [
+                "retrieve_insights"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "MarketingDataInsightsServiceClient",
+          "rpcs": {
+            "RetrieveInsights": {
+              "methods": [
+                "retrieve_insights"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PartnerLinkService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PartnerLinkServiceClient",
+          "rpcs": {
+            "CreatePartnerLink": {
+              "methods": [
+                "create_partner_link"
+              ]
+            },
+            "DeletePartnerLink": {
+              "methods": [
+                "delete_partner_link"
+              ]
+            },
+            "SearchPartnerLinks": {
+              "methods": [
+                "search_partner_links"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "PartnerLinkServiceAsyncClient",
+          "rpcs": {
+            "CreatePartnerLink": {
+              "methods": [
+                "create_partner_link"
+              ]
+            },
+            "DeletePartnerLink": {
+              "methods": [
+                "delete_partner_link"
+              ]
+            },
+            "SearchPartnerLinks": {
+              "methods": [
+                "search_partner_links"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "PartnerLinkServiceClient",
+          "rpcs": {
+            "CreatePartnerLink": {
+              "methods": [
+                "create_partner_link"
+              ]
+            },
+            "DeletePartnerLink": {
+              "methods": [
+                "delete_partner_link"
+              ]
+            },
+            "SearchPartnerLinks": {
+              "methods": [
+                "search_partner_links"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "UserListDirectLicenseService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "UserListDirectLicenseServiceClient",
+          "rpcs": {
+            "CreateUserListDirectLicense": {
+              "methods": [
+                "create_user_list_direct_license"
+              ]
+            },
+            "GetUserListDirectLicense": {
+              "methods": [
+                "get_user_list_direct_license"
+              ]
+            },
+            "ListUserListDirectLicenses": {
+              "methods": [
+                "list_user_list_direct_licenses"
+              ]
+            },
+            "UpdateUserListDirectLicense": {
+              "methods": [
+                "update_user_list_direct_license"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "UserListDirectLicenseServiceAsyncClient",
+          "rpcs": {
+            "CreateUserListDirectLicense": {
+              "methods": [
+                "create_user_list_direct_license"
+              ]
+            },
+            "GetUserListDirectLicense": {
+              "methods": [
+                "get_user_list_direct_license"
+              ]
+            },
+            "ListUserListDirectLicenses": {
+              "methods": [
+                "list_user_list_direct_licenses"
+              ]
+            },
+            "UpdateUserListDirectLicense": {
+              "methods": [
+                "update_user_list_direct_license"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "UserListDirectLicenseServiceClient",
+          "rpcs": {
+            "CreateUserListDirectLicense": {
+              "methods": [
+                "create_user_list_direct_license"
+              ]
+            },
+            "GetUserListDirectLicense": {
+              "methods": [
+                "get_user_list_direct_license"
+              ]
+            },
+            "ListUserListDirectLicenses": {
+              "methods": [
+                "list_user_list_direct_licenses"
+              ]
+            },
+            "UpdateUserListDirectLicense": {
+              "methods": [
+                "update_user_list_direct_license"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "UserListGlobalLicenseService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "UserListGlobalLicenseServiceClient",
+          "rpcs": {
+            "CreateUserListGlobalLicense": {
+              "methods": [
+                "create_user_list_global_license"
+              ]
+            },
+            "GetUserListGlobalLicense": {
+              "methods": [
+                "get_user_list_global_license"
+              ]
+            },
+            "ListUserListGlobalLicenseCustomerInfos": {
+              "methods": [
+                "list_user_list_global_license_customer_infos"
+              ]
+            },
+            "ListUserListGlobalLicenses": {
+              "methods": [
+                "list_user_list_global_licenses"
+              ]
+            },
+            "UpdateUserListGlobalLicense": {
+              "methods": [
+                "update_user_list_global_license"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "UserListGlobalLicenseServiceAsyncClient",
+          "rpcs": {
+            "CreateUserListGlobalLicense": {
+              "methods": [
+                "create_user_list_global_license"
+              ]
+            },
+            "GetUserListGlobalLicense": {
+              "methods": [
+                "get_user_list_global_license"
+              ]
+            },
+            "ListUserListGlobalLicenseCustomerInfos": {
+              "methods": [
+                "list_user_list_global_license_customer_infos"
+              ]
+            },
+            "ListUserListGlobalLicenses": {
+              "methods": [
+                "list_user_list_global_licenses"
+              ]
+            },
+            "UpdateUserListGlobalLicense": {
+              "methods": [
+                "update_user_list_global_license"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "UserListGlobalLicenseServiceClient",
+          "rpcs": {
+            "CreateUserListGlobalLicense": {
+              "methods": [
+                "create_user_list_global_license"
+              ]
+            },
+            "GetUserListGlobalLicense": {
+              "methods": [
+                "get_user_list_global_license"
+              ]
+            },
+            "ListUserListGlobalLicenseCustomerInfos": {
+              "methods": [
+                "list_user_list_global_license_customer_infos"
+              ]
+            },
+            "ListUserListGlobalLicenses": {
+              "methods": [
+                "list_user_list_global_licenses"
+              ]
+            },
+            "UpdateUserListGlobalLicense": {
+              "methods": [
+                "update_user_list_global_license"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "UserListService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "UserListServiceClient",
+          "rpcs": {
+            "CreateUserList": {
+              "methods": [
+                "create_user_list"
+              ]
+            },
+            "DeleteUserList": {
+              "methods": [
+                "delete_user_list"
+              ]
+            },
+            "GetUserList": {
+              "methods": [
+                "get_user_list"
+              ]
+            },
+            "ListUserLists": {
+              "methods": [
+                "list_user_lists"
+              ]
+            },
+            "UpdateUserList": {
+              "methods": [
+                "update_user_list"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "UserListServiceAsyncClient",
+          "rpcs": {
+            "CreateUserList": {
+              "methods": [
+                "create_user_list"
+              ]
+            },
+            "DeleteUserList": {
+              "methods": [
+                "delete_user_list"
+              ]
+            },
+            "GetUserList": {
+              "methods": [
+                "get_user_list"
+              ]
+            },
+            "ListUserLists": {
+              "methods": [
+                "list_user_lists"
+              ]
+            },
+            "UpdateUserList": {
+              "methods": [
+                "update_user_list"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "UserListServiceClient",
+          "rpcs": {
+            "CreateUserList": {
+              "methods": [
+                "create_user_list"
+              ]
+            },
+            "DeleteUserList": {
+              "methods": [
+                "delete_user_list"
+              ]
+            },
+            "GetUserList": {
+              "methods": [
+                "get_user_list"
+              ]
+            },
+            "ListUserLists": {
+              "methods": [
+                "list_user_lists"
+              ]
+            },
+            "UpdateUserList": {
+              "methods": [
+                "update_user_list"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

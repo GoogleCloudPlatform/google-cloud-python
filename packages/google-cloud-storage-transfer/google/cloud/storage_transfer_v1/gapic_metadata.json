@@ -1,0 +1,238 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.storage_transfer_v1",
+  "protoPackage": "google.storagetransfer.v1",
+  "schema": "1.0",
+  "services": {
+    "StorageTransferService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "StorageTransferServiceClient",
+          "rpcs": {
+            "CreateAgentPool": {
+              "methods": [
+                "create_agent_pool"
+              ]
+            },
+            "CreateTransferJob": {
+              "methods": [
+                "create_transfer_job"
+              ]
+            },
+            "DeleteAgentPool": {
+              "methods": [
+                "delete_agent_pool"
+              ]
+            },
+            "DeleteTransferJob": {
+              "methods": [
+                "delete_transfer_job"
+              ]
+            },
+            "GetAgentPool": {
+              "methods": [
+                "get_agent_pool"
+              ]
+            },
+            "GetGoogleServiceAccount": {
+              "methods": [
+                "get_google_service_account"
+              ]
+            },
+            "GetTransferJob": {
+              "methods": [
+                "get_transfer_job"
+              ]
+            },
+            "ListAgentPools": {
+              "methods": [
+                "list_agent_pools"
+              ]
+            },
+            "ListTransferJobs": {
+              "methods": [
+                "list_transfer_jobs"
+              ]
+            },
+            "PauseTransferOperation": {
+              "methods": [
+                "pause_transfer_operation"
+              ]
+            },
+            "ResumeTransferOperation": {
+              "methods": [
+                "resume_transfer_operation"
+              ]
+            },
+            "RunTransferJob": {
+              "methods": [
+                "run_transfer_job"
+              ]
+            },
+            "UpdateAgentPool": {
+              "methods": [
+                "update_agent_pool"
+              ]
+            },
+            "UpdateTransferJob": {
+              "methods": [
+                "update_transfer_job"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "StorageTransferServiceAsyncClient",
+          "rpcs": {
+            "CreateAgentPool": {
+              "methods": [
+                "create_agent_pool"
+              ]
+            },
+            "CreateTransferJob": {
+              "methods": [
+                "create_transfer_job"
+              ]
+            },
+            "DeleteAgentPool": {
+              "methods": [
+                "delete_agent_pool"
+              ]
+            },
+            "DeleteTransferJob": {
+              "methods": [
+                "delete_transfer_job"
+              ]
+            },
+            "GetAgentPool": {
+              "methods": [
+                "get_agent_pool"
+              ]
+            },
+            "GetGoogleServiceAccount": {
+              "methods": [
+                "get_google_service_account"
+              ]
+            },
+            "GetTransferJob": {
+              "methods": [
+                "get_transfer_job"
+              ]
+            },
+            "ListAgentPools": {
+              "methods": [
+                "list_agent_pools"
+              ]
+            },
+            "ListTransferJobs": {
+              "methods": [
+                "list_transfer_jobs"
+              ]
+            },
+            "PauseTransferOperation": {
+              "methods": [
+                "pause_transfer_operation"
+              ]
+            },
+            "ResumeTransferOperation": {
+              "methods": [
+                "resume_transfer_operation"
+              ]
+            },
+            "RunTransferJob": {
+              "methods": [
+                "run_transfer_job"
+              ]
+            },
+            "UpdateAgentPool": {
+              "methods": [
+                "update_agent_pool"
+              ]
+            },
+            "UpdateTransferJob": {
+              "methods": [
+                "update_transfer_job"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "StorageTransferServiceClient",
+          "rpcs": {
+            "CreateAgentPool": {
+              "methods": [
+                "create_agent_pool"
+              ]
+            },
+            "CreateTransferJob": {
+              "methods": [
+                "create_transfer_job"
+              ]
+            },
+            "DeleteAgentPool": {
+              "methods": [
+                "delete_agent_pool"
+              ]
+            },
+            "DeleteTransferJob": {
+              "methods": [
+                "delete_transfer_job"
+              ]
+            },
+            "GetAgentPool": {
+              "methods": [
+                "get_agent_pool"
+              ]
+            },
+            "GetGoogleServiceAccount": {
+              "methods": [
+                "get_google_service_account"
+              ]
+            },
+            "GetTransferJob": {
+              "methods": [
+                "get_transfer_job"
+              ]
+            },
+            "ListAgentPools": {
+              "methods": [
+                "list_agent_pools"
+              ]
+            },
+            "ListTransferJobs": {
+              "methods": [
+                "list_transfer_jobs"
+              ]
+            },
+            "PauseTransferOperation": {
+              "methods": [
+                "pause_transfer_operation"
+              ]
+            },
+            "ResumeTransferOperation": {
+              "methods": [
+                "resume_transfer_operation"
+              ]
+            },
+            "RunTransferJob": {
+              "methods": [
+                "run_transfer_job"
+              ]
+            },
+            "UpdateAgentPool": {
+              "methods": [
+                "update_agent_pool"
+              ]
+            },
+            "UpdateTransferJob": {
+              "methods": [
+                "update_transfer_job"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

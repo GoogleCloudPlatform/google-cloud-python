@@ -1,0 +1,328 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.biglake_hive_v1beta",
+  "protoPackage": "google.cloud.biglake.hive.v1beta",
+  "schema": "1.0",
+  "services": {
+    "HiveMetastoreService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "HiveMetastoreServiceClient",
+          "rpcs": {
+            "BatchCreatePartitions": {
+              "methods": [
+                "batch_create_partitions"
+              ]
+            },
+            "BatchDeletePartitions": {
+              "methods": [
+                "batch_delete_partitions"
+              ]
+            },
+            "BatchUpdatePartitions": {
+              "methods": [
+                "batch_update_partitions"
+              ]
+            },
+            "CreateHiveCatalog": {
+              "methods": [
+                "create_hive_catalog"
+              ]
+            },
+            "CreateHiveDatabase": {
+              "methods": [
+                "create_hive_database"
+              ]
+            },
+            "CreateHiveTable": {
+              "methods": [
+                "create_hive_table"
+              ]
+            },
+            "DeleteHiveCatalog": {
+              "methods": [
+                "delete_hive_catalog"
+              ]
+            },
+            "DeleteHiveDatabase": {
+              "methods": [
+                "delete_hive_database"
+              ]
+            },
+            "DeleteHiveTable": {
+              "methods": [
+                "delete_hive_table"
+              ]
+            },
+            "FailoverHiveCatalog": {
+              "methods": [
+                "failover_hive_catalog"
+              ]
+            },
+            "GetHiveCatalog": {
+              "methods": [
+                "get_hive_catalog"
+              ]
+            },
+            "GetHiveDatabase": {
+              "methods": [
+                "get_hive_database"
+              ]
+            },
+            "GetHiveTable": {
+              "methods": [
+                "get_hive_table"
+              ]
+            },
+            "ListHiveCatalogs": {
+              "methods": [
+                "list_hive_catalogs"
+              ]
+            },
+            "ListHiveDatabases": {
+              "methods": [
+                "list_hive_databases"
+              ]
+            },
+            "ListHiveTables": {
+              "methods": [
+                "list_hive_tables"
+              ]
+            },
+            "ListPartitions": {
+              "methods": [
+                "list_partitions"
+              ]
+            },
+            "UpdateHiveCatalog": {
+              "methods": [
+                "update_hive_catalog"
+              ]
+            },
+            "UpdateHiveDatabase": {
+              "methods": [
+                "update_hive_database"
+              ]
+            },
+            "UpdateHiveTable": {
+              "methods": [
+                "update_hive_table"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "HiveMetastoreServiceAsyncClient",
+          "rpcs": {
+            "BatchCreatePartitions": {
+              "methods": [
+                "batch_create_partitions"
+              ]
+            },
+            "BatchDeletePartitions": {
+              "methods": [
+                "batch_delete_partitions"
+              ]
+            },
+            "BatchUpdatePartitions": {
+              "methods": [
+                "batch_update_partitions"
+              ]
+            },
+            "CreateHiveCatalog": {
+              "methods": [
+                "create_hive_catalog"
+              ]
+            },
+            "CreateHiveDatabase": {
+              "methods": [
+                "create_hive_database"
+              ]
+            },
+            "CreateHiveTable": {
+              "methods": [
+                "create_hive_table"
+              ]
+            },
+            "DeleteHiveCatalog": {
+              "methods": [
+                "delete_hive_catalog"
+              ]
+            },
+            "DeleteHiveDatabase": {
+              "methods": [
+                "delete_hive_database"
+              ]
+            },
+            "DeleteHiveTable": {
+              "methods": [
+                "delete_hive_table"
+              ]
+            },
+            "FailoverHiveCatalog": {
+              "methods": [
+                "failover_hive_catalog"
+              ]
+            },
+            "GetHiveCatalog": {
+              "methods": [
+                "get_hive_catalog"
+              ]
+            },
+            "GetHiveDatabase": {
+              "methods": [
+                "get_hive_database"
+              ]
+            },
+            "GetHiveTable": {
+              "methods": [
+                "get_hive_table"
+              ]
+            },
+            "ListHiveCatalogs": {
+              "methods": [
+                "list_hive_catalogs"
+              ]
+            },
+            "ListHiveDatabases": {
+              "methods": [
+                "list_hive_databases"
+              ]
+            },
+            "ListHiveTables": {
+              "methods": [
+                "list_hive_tables"
+              ]
+            },
+            "ListPartitions": {
+              "methods": [
+                "list_partitions"
+              ]
+            },
+            "UpdateHiveCatalog": {
+              "methods": [
+                "update_hive_catalog"
+              ]
+            },
+            "UpdateHiveDatabase": {
+              "methods": [
+                "update_hive_database"
+              ]
+            },
+            "UpdateHiveTable": {
+              "methods": [
+                "update_hive_table"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "HiveMetastoreServiceClient",
+          "rpcs": {
+            "BatchCreatePartitions": {
+              "methods": [
+                "batch_create_partitions"
+              ]
+            },
+            "BatchDeletePartitions": {
+              "methods": [
+                "batch_delete_partitions"
+              ]
+            },
+            "BatchUpdatePartitions": {
+              "methods": [
+                "batch_update_partitions"
+              ]
+            },
+            "CreateHiveCatalog": {
+              "methods": [
+                "create_hive_catalog"
+              ]
+            },
+            "CreateHiveDatabase": {
+              "methods": [
+                "create_hive_database"
+              ]
+            },
+            "CreateHiveTable": {
+              "methods": [
+                "create_hive_table"
+              ]
+            },
+            "DeleteHiveCatalog": {
+              "methods": [
+                "delete_hive_catalog"
+              ]
+            },
+            "DeleteHiveDatabase": {
+              "methods": [
+                "delete_hive_database"
+              ]
+            },
+            "DeleteHiveTable": {
+              "methods": [
+                "delete_hive_table"
+              ]
+            },
+            "FailoverHiveCatalog": {
+              "methods": [
+                "failover_hive_catalog"
+              ]
+            },
+            "GetHiveCatalog": {
+              "methods": [
+                "get_hive_catalog"
+              ]
+            },
+            "GetHiveDatabase": {
+              "methods": [
+                "get_hive_database"
+              ]
+            },
+            "GetHiveTable": {
+              "methods": [
+                "get_hive_table"
+              ]
+            },
+            "ListHiveCatalogs": {
+              "methods": [
+                "list_hive_catalogs"
+              ]
+            },
+            "ListHiveDatabases": {
+              "methods": [
+                "list_hive_databases"
+              ]
+            },
+            "ListHiveTables": {
+              "methods": [
+                "list_hive_tables"
+              ]
+            },
+            "ListPartitions": {
+              "methods": [
+                "list_partitions"
+              ]
+            },
+            "UpdateHiveCatalog": {
+              "methods": [
+                "update_hive_catalog"
+              ]
+            },
+            "UpdateHiveDatabase": {
+              "methods": [
+                "update_hive_database"
+              ]
+            },
+            "UpdateHiveTable": {
+              "methods": [
+                "update_hive_table"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

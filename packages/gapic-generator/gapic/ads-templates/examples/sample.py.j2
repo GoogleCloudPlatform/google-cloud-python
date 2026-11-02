@@ -1,0 +1,49 @@
+{#
+ # Copyright (C) 2019  Google LLC
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #     http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+{% extends "_base.py.j2" %}
+
+{% block content %}
+
+{# Input parameters: sample #}
+{#                   callingForm #}
+{% import "examples/feature_fragments.j2" as frags %}
+{{ frags.sample_header(sample, calling_form) }}
+
+# [START {{ sample.id }}]
+{# python code is responsible for all transformations: all we do here is render #}
+{% for import_statement in imports %}
+{{ import_statement }}
+{% endfor %}
+from {{ (api.naming.module_namespace + (api.naming.versioned_module_name,) + service.meta.address.subpackage)|join(".") }}.services.{{ service.name|snake_case }} import {{ service.client_name }}
+
+{# also need calling form #}
+def sample_{{ frags.render_method_name(sample.rpc)|trim }}({{ frags.print_input_params(sample.request)|trim }}):
+    """{{ sample.description }}"""
+
+    client = {{ service.client_name }}(
+        credentials=credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    {{ frags.render_request_setup(sample.request) }}
+{% with method_call = frags.render_method_call(sample, calling_form, calling_form_enum) %}
+    {{ frags.render_calling_form(method_call, calling_form, calling_form_enum, sample.response, )|indent }}
+{% endwith %}
+
+# [END {{ sample.id }}]
+
+{{ frags.render_main_block(sample.rpc, sample.request) }}
+{% endblock %}

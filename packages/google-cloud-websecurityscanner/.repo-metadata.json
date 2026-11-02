@@ -1,0 +1,16 @@
+{
+    "api_description": "Scans your Compute and App Engine apps for common web vulnerabilities.",
+    "api_id": "websecurityscanner.googleapis.com",
+    "api_shortname": "websecurityscanner",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/websecurityscanner/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-websecurityscanner",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559748",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "websecurityscanner",
+    "name_pretty": "Web Security Scanner",
+    "product_documentation": "https://cloud.google.com/security-scanner/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

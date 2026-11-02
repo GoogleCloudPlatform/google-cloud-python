@@ -1,0 +1,238 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.storageinsights_v1",
+  "protoPackage": "google.cloud.storageinsights.v1",
+  "schema": "1.0",
+  "services": {
+    "StorageInsights": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "StorageInsightsClient",
+          "rpcs": {
+            "CreateDatasetConfig": {
+              "methods": [
+                "create_dataset_config"
+              ]
+            },
+            "CreateReportConfig": {
+              "methods": [
+                "create_report_config"
+              ]
+            },
+            "DeleteDatasetConfig": {
+              "methods": [
+                "delete_dataset_config"
+              ]
+            },
+            "DeleteReportConfig": {
+              "methods": [
+                "delete_report_config"
+              ]
+            },
+            "GetDatasetConfig": {
+              "methods": [
+                "get_dataset_config"
+              ]
+            },
+            "GetReportConfig": {
+              "methods": [
+                "get_report_config"
+              ]
+            },
+            "GetReportDetail": {
+              "methods": [
+                "get_report_detail"
+              ]
+            },
+            "LinkDataset": {
+              "methods": [
+                "link_dataset"
+              ]
+            },
+            "ListDatasetConfigs": {
+              "methods": [
+                "list_dataset_configs"
+              ]
+            },
+            "ListReportConfigs": {
+              "methods": [
+                "list_report_configs"
+              ]
+            },
+            "ListReportDetails": {
+              "methods": [
+                "list_report_details"
+              ]
+            },
+            "UnlinkDataset": {
+              "methods": [
+                "unlink_dataset"
+              ]
+            },
+            "UpdateDatasetConfig": {
+              "methods": [
+                "update_dataset_config"
+              ]
+            },
+            "UpdateReportConfig": {
+              "methods": [
+                "update_report_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "StorageInsightsAsyncClient",
+          "rpcs": {
+            "CreateDatasetConfig": {
+              "methods": [
+                "create_dataset_config"
+              ]
+            },
+            "CreateReportConfig": {
+              "methods": [
+                "create_report_config"
+              ]
+            },
+            "DeleteDatasetConfig": {
+              "methods": [
+                "delete_dataset_config"
+              ]
+            },
+            "DeleteReportConfig": {
+              "methods": [
+                "delete_report_config"
+              ]
+            },
+            "GetDatasetConfig": {
+              "methods": [
+                "get_dataset_config"
+              ]
+            },
+            "GetReportConfig": {
+              "methods": [
+                "get_report_config"
+              ]
+            },
+            "GetReportDetail": {
+              "methods": [
+                "get_report_detail"
+              ]
+            },
+            "LinkDataset": {
+              "methods": [
+                "link_dataset"
+              ]
+            },
+            "ListDatasetConfigs": {
+              "methods": [
+                "list_dataset_configs"
+              ]
+            },
+            "ListReportConfigs": {
+              "methods": [
+                "list_report_configs"
+              ]
+            },
+            "ListReportDetails": {
+              "methods": [
+                "list_report_details"
+              ]
+            },
+            "UnlinkDataset": {
+              "methods": [
+                "unlink_dataset"
+              ]
+            },
+            "UpdateDatasetConfig": {
+              "methods": [
+                "update_dataset_config"
+              ]
+            },
+            "UpdateReportConfig": {
+              "methods": [
+                "update_report_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "StorageInsightsClient",
+          "rpcs": {
+            "CreateDatasetConfig": {
+              "methods": [
+                "create_dataset_config"
+              ]
+            },
+            "CreateReportConfig": {
+              "methods": [
+                "create_report_config"
+              ]
+            },
+            "DeleteDatasetConfig": {
+              "methods": [
+                "delete_dataset_config"
+              ]
+            },
+            "DeleteReportConfig": {
+              "methods": [
+                "delete_report_config"
+              ]
+            },
+            "GetDatasetConfig": {
+              "methods": [
+                "get_dataset_config"
+              ]
+            },
+            "GetReportConfig": {
+              "methods": [
+                "get_report_config"
+              ]
+            },
+            "GetReportDetail": {
+              "methods": [
+                "get_report_detail"
+              ]
+            },
+            "LinkDataset": {
+              "methods": [
+                "link_dataset"
+              ]
+            },
+            "ListDatasetConfigs": {
+              "methods": [
+                "list_dataset_configs"
+              ]
+            },
+            "ListReportConfigs": {
+              "methods": [
+                "list_report_configs"
+              ]
+            },
+            "ListReportDetails": {
+              "methods": [
+                "list_report_details"
+              ]
+            },
+            "UnlinkDataset": {
+              "methods": [
+                "unlink_dataset"
+              ]
+            },
+            "UpdateDatasetConfig": {
+              "methods": [
+                "update_dataset_config"
+              ]
+            },
+            "UpdateReportConfig": {
+              "methods": [
+                "update_report_config"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

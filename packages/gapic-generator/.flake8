@@ -1,0 +1,44 @@
+[flake8]
+ignore =
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): E123, E124
+  # Closing bracket mismatches opening bracket's line.
+  # This works poorly with type annotations in method declarations.
+  E123, E124
+  # Line over-indented for visual indent.
+  # This works poorly with type annotations in method declarations.
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): E126, E128, E131
+  E126, E128, E131
+  # Line break after binary operator.
+  # This catches line breaks after "and" / "or" as a means of breaking up
+  # long if statements, which PEP 8 explicitly encourages.
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): W504
+  W504
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): E203
+  E203
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): E501
+  E501
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): E712
+  E712
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): E711
+  E711
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): E722
+  E722
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): E741
+  E741
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): F401
+  F401
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): F541
+  F541
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): F841
+  F841
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): F811
+  F811
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): W503
+  W503
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): W291
+  W291
+exclude =
+  # Exclude golden files
+  tests/integration
+  # Exclude generated protobuf code
+  *_pb2.py

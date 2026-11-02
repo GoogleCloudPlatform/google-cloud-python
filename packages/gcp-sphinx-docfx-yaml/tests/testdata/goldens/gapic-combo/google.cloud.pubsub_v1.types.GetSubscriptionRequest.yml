@@ -1,0 +1,28 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the subscription to get. Format is\n   <code>projects/{project}/subscriptions/{sub}</code>."
+    id: subscription
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.GetSubscriptionRequest
+  fullName: google.cloud.pubsub_v1.types.GetSubscriptionRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: GetSubscriptionRequest
+  source:
+    id: GetSubscriptionRequest
+    path: null
+    startLine: null
+  summary: 'Request for the GetSubscription method.
+
+    '
+  syntax:
+    content: GetSubscriptionRequest(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.GetSubscriptionRequest
+references: []

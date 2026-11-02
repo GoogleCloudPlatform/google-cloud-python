@@ -1,0 +1,15 @@
+{
+    "api_description": "Allows developers to manage billing for their Google Cloud Platform\nprojects     programmatically.",
+    "api_id": "cloudbilling.googleapis.com",
+    "api_shortname": "cloudbilling",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/cloudbilling/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-billing",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "cloudbilling",
+    "name_pretty": "Cloud Billing",
+    "product_documentation": "https://cloud.google.com/billing",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_ordertracking_v1beta",
+  "protoPackage": "google.shopping.merchant.ordertracking.v1beta",
+  "schema": "1.0",
+  "services": {
+    "OrderTrackingSignalsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "OrderTrackingSignalsServiceClient",
+          "rpcs": {
+            "CreateOrderTrackingSignal": {
+              "methods": [
+                "create_order_tracking_signal"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "OrderTrackingSignalsServiceAsyncClient",
+          "rpcs": {
+            "CreateOrderTrackingSignal": {
+              "methods": [
+                "create_order_tracking_signal"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "OrderTrackingSignalsServiceClient",
+          "rpcs": {
+            "CreateOrderTrackingSignal": {
+              "methods": [
+                "create_order_tracking_signal"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

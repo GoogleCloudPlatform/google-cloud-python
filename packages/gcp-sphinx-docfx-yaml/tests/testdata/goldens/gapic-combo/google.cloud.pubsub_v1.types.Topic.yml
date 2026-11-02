@@ -1,0 +1,69 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the topic. It must have the format\n   <code>\"\
+      projects/{project}/topics/{topic}\"</code>. <code>{topic}</code> must\n   start\
+      \ with a letter, and contain only letters\n   (<code>[A-Za-z]</code>), numbers\
+      \ (<code>[0-9]</code>), dashes (<code>-</code>),\n   underscores (`<code>_</code><code>),\
+      \ periods (</code><code>.</code>`), tildes (<pre></pre>), plus\n   (<code>+</code>)\
+      \ or percent signs (<code>%</code>). It must be between 3 and\n   255 characters\
+      \ in length, and it must not start with\n   <code>\"goog\"</code>."
+    id: name
+    var_type: str
+  - description: "See [Creating and managing labels]\n   (https://cloud.google.com/pubsub/docs/labels)."
+    id: labels
+    var_type: Mapping[str, str]
+  - description: "Policy constraining the set of Google Cloud\n   Platform regions\
+      \ where messages published to the\n   topic may be stored. If not present, then\
+      \ no\n   constraints are in effect."
+    id: message_storage_policy
+    var_type: google.pubsub_v1.types.MessageStoragePolicy
+  - description: "The resource name of the Cloud KMS CryptoKey to be used to\n   protect\
+      \ access to messages published on this topic.\n   \n   The expected format is\n\
+      \   <code>projects/*/locations/*/keyRings/*/cryptoKeys/*</code>."
+    id: kms_key_name
+    var_type: str
+  - description: "Settings for validating messages published\n   against a schema."
+    id: schema_settings
+    var_type: google.pubsub_v1.types.SchemaSettings
+  - description: "Reserved for future use. This field is set\n   only in responses\
+      \ from the server; it is ignored\n   if it is set in any requests."
+    id: satisfies_pzs
+    var_type: bool
+  - description: "Indicates the minimum duration to retain a message after it\n  \
+      \ is published to the topic. If this field is set, messages\n   published to\
+      \ the topic in the last\n   <code>message_retention_duration</code> are always\
+      \ available to\n   subscribers. For instance, it allows any attached\n   subscription\
+      \ to `seek to a\n   timestamp <https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time>`__\n\
+      \   that is up to <code>message_retention_duration</code> in the past. If\n\
+      \   this field is not set, message retention is controlled by\n   settings on\
+      \ individual subscriptions. Cannot be more than 7\n   days or less than 10 minutes."
+    id: message_retention_duration
+    var_type: google.protobuf.duration_pb2.Duration
+  children:
+  - google.cloud.pubsub_v1.types.Topic.LabelsEntry
+  class: google.cloud.pubsub_v1.types.Topic
+  fullName: google.cloud.pubsub_v1.types.Topic
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: Topic
+  source:
+    id: Topic
+    path: null
+    startLine: null
+  summary: 'A topic resource.
+
+    '
+  syntax:
+    content: Topic(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.Topic
+references:
+- fullName: google.cloud.pubsub_v1.types.Topic.LabelsEntry
+  isExternal: false
+  name: LabelsEntry
+  parent: google.cloud.pubsub_v1.types.Topic
+  uid: google.cloud.pubsub_v1.types.Topic.LabelsEntry

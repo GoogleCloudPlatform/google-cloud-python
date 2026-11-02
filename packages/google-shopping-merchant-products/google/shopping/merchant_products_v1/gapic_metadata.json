@@ -1,0 +1,122 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_products_v1",
+  "protoPackage": "google.shopping.merchant.products.v1",
+  "schema": "1.0",
+  "services": {
+    "ProductInputsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ProductInputsServiceClient",
+          "rpcs": {
+            "DeleteProductInput": {
+              "methods": [
+                "delete_product_input"
+              ]
+            },
+            "InsertProductInput": {
+              "methods": [
+                "insert_product_input"
+              ]
+            },
+            "UpdateProductInput": {
+              "methods": [
+                "update_product_input"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ProductInputsServiceAsyncClient",
+          "rpcs": {
+            "DeleteProductInput": {
+              "methods": [
+                "delete_product_input"
+              ]
+            },
+            "InsertProductInput": {
+              "methods": [
+                "insert_product_input"
+              ]
+            },
+            "UpdateProductInput": {
+              "methods": [
+                "update_product_input"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ProductInputsServiceClient",
+          "rpcs": {
+            "DeleteProductInput": {
+              "methods": [
+                "delete_product_input"
+              ]
+            },
+            "InsertProductInput": {
+              "methods": [
+                "insert_product_input"
+              ]
+            },
+            "UpdateProductInput": {
+              "methods": [
+                "update_product_input"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ProductsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ProductsServiceClient",
+          "rpcs": {
+            "GetProduct": {
+              "methods": [
+                "get_product"
+              ]
+            },
+            "ListProducts": {
+              "methods": [
+                "list_products"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ProductsServiceAsyncClient",
+          "rpcs": {
+            "GetProduct": {
+              "methods": [
+                "get_product"
+              ]
+            },
+            "ListProducts": {
+              "methods": [
+                "list_products"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ProductsServiceClient",
+          "rpcs": {
+            "GetProduct": {
+              "methods": [
+                "get_product"
+              ]
+            },
+            "ListProducts": {
+              "methods": [
+                "list_products"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

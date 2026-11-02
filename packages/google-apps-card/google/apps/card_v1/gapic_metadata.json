@@ -1,0 +1,7 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.apps.card_v1",
+  "protoPackage": "google.apps.card.v1",
+  "schema": "1.0"
+}

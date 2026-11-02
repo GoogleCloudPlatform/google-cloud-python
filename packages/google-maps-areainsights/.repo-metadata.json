@@ -1,0 +1,16 @@
+{
+    "api_description": "Places Aggregate API.",
+    "api_id": "areainsights.googleapis.com",
+    "api_shortname": "area-insights",
+    "client_documentation": "https://googleapis.dev/python/google-maps-areainsights/latest",
+    "default_version": "v1",
+    "distribution_name": "google-maps-areainsights",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1624013\u0026template=2026178",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-maps-areainsights",
+    "name_pretty": "Places Aggregate",
+    "product_documentation": "https://developers.google.com/maps/documentation/places-insights",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

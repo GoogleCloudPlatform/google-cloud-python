@@ -1,0 +1,343 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.datastream_v1alpha1",
+  "protoPackage": "google.cloud.datastream.v1alpha1",
+  "schema": "1.0",
+  "services": {
+    "Datastream": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DatastreamClient",
+          "rpcs": {
+            "CreateConnectionProfile": {
+              "methods": [
+                "create_connection_profile"
+              ]
+            },
+            "CreatePrivateConnection": {
+              "methods": [
+                "create_private_connection"
+              ]
+            },
+            "CreateRoute": {
+              "methods": [
+                "create_route"
+              ]
+            },
+            "CreateStream": {
+              "methods": [
+                "create_stream"
+              ]
+            },
+            "DeleteConnectionProfile": {
+              "methods": [
+                "delete_connection_profile"
+              ]
+            },
+            "DeletePrivateConnection": {
+              "methods": [
+                "delete_private_connection"
+              ]
+            },
+            "DeleteRoute": {
+              "methods": [
+                "delete_route"
+              ]
+            },
+            "DeleteStream": {
+              "methods": [
+                "delete_stream"
+              ]
+            },
+            "DiscoverConnectionProfile": {
+              "methods": [
+                "discover_connection_profile"
+              ]
+            },
+            "FetchErrors": {
+              "methods": [
+                "fetch_errors"
+              ]
+            },
+            "FetchStaticIps": {
+              "methods": [
+                "fetch_static_ips"
+              ]
+            },
+            "GetConnectionProfile": {
+              "methods": [
+                "get_connection_profile"
+              ]
+            },
+            "GetPrivateConnection": {
+              "methods": [
+                "get_private_connection"
+              ]
+            },
+            "GetRoute": {
+              "methods": [
+                "get_route"
+              ]
+            },
+            "GetStream": {
+              "methods": [
+                "get_stream"
+              ]
+            },
+            "ListConnectionProfiles": {
+              "methods": [
+                "list_connection_profiles"
+              ]
+            },
+            "ListPrivateConnections": {
+              "methods": [
+                "list_private_connections"
+              ]
+            },
+            "ListRoutes": {
+              "methods": [
+                "list_routes"
+              ]
+            },
+            "ListStreams": {
+              "methods": [
+                "list_streams"
+              ]
+            },
+            "UpdateConnectionProfile": {
+              "methods": [
+                "update_connection_profile"
+              ]
+            },
+            "UpdateStream": {
+              "methods": [
+                "update_stream"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DatastreamAsyncClient",
+          "rpcs": {
+            "CreateConnectionProfile": {
+              "methods": [
+                "create_connection_profile"
+              ]
+            },
+            "CreatePrivateConnection": {
+              "methods": [
+                "create_private_connection"
+              ]
+            },
+            "CreateRoute": {
+              "methods": [
+                "create_route"
+              ]
+            },
+            "CreateStream": {
+              "methods": [
+                "create_stream"
+              ]
+            },
+            "DeleteConnectionProfile": {
+              "methods": [
+                "delete_connection_profile"
+              ]
+            },
+            "DeletePrivateConnection": {
+              "methods": [
+                "delete_private_connection"
+              ]
+            },
+            "DeleteRoute": {
+              "methods": [
+                "delete_route"
+              ]
+            },
+            "DeleteStream": {
+              "methods": [
+                "delete_stream"
+              ]
+            },
+            "DiscoverConnectionProfile": {
+              "methods": [
+                "discover_connection_profile"
+              ]
+            },
+            "FetchErrors": {
+              "methods": [
+                "fetch_errors"
+              ]
+            },
+            "FetchStaticIps": {
+              "methods": [
+                "fetch_static_ips"
+              ]
+            },
+            "GetConnectionProfile": {
+              "methods": [
+                "get_connection_profile"
+              ]
+            },
+            "GetPrivateConnection": {
+              "methods": [
+                "get_private_connection"
+              ]
+            },
+            "GetRoute": {
+              "methods": [
+                "get_route"
+              ]
+            },
+            "GetStream": {
+              "methods": [
+                "get_stream"
+              ]
+            },
+            "ListConnectionProfiles": {
+              "methods": [
+                "list_connection_profiles"
+              ]
+            },
+            "ListPrivateConnections": {
+              "methods": [
+                "list_private_connections"
+              ]
+            },
+            "ListRoutes": {
+              "methods": [
+                "list_routes"
+              ]
+            },
+            "ListStreams": {
+              "methods": [
+                "list_streams"
+              ]
+            },
+            "UpdateConnectionProfile": {
+              "methods": [
+                "update_connection_profile"
+              ]
+            },
+            "UpdateStream": {
+              "methods": [
+                "update_stream"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DatastreamClient",
+          "rpcs": {
+            "CreateConnectionProfile": {
+              "methods": [
+                "create_connection_profile"
+              ]
+            },
+            "CreatePrivateConnection": {
+              "methods": [
+                "create_private_connection"
+              ]
+            },
+            "CreateRoute": {
+              "methods": [
+                "create_route"
+              ]
+            },
+            "CreateStream": {
+              "methods": [
+                "create_stream"
+              ]
+            },
+            "DeleteConnectionProfile": {
+              "methods": [
+                "delete_connection_profile"
+              ]
+            },
+            "DeletePrivateConnection": {
+              "methods": [
+                "delete_private_connection"
+              ]
+            },
+            "DeleteRoute": {
+              "methods": [
+                "delete_route"
+              ]
+            },
+            "DeleteStream": {
+              "methods": [
+                "delete_stream"
+              ]
+            },
+            "DiscoverConnectionProfile": {
+              "methods": [
+                "discover_connection_profile"
+              ]
+            },
+            "FetchErrors": {
+              "methods": [
+                "fetch_errors"
+              ]
+            },
+            "FetchStaticIps": {
+              "methods": [
+                "fetch_static_ips"
+              ]
+            },
+            "GetConnectionProfile": {
+              "methods": [
+                "get_connection_profile"
+              ]
+            },
+            "GetPrivateConnection": {
+              "methods": [
+                "get_private_connection"
+              ]
+            },
+            "GetRoute": {
+              "methods": [
+                "get_route"
+              ]
+            },
+            "GetStream": {
+              "methods": [
+                "get_stream"
+              ]
+            },
+            "ListConnectionProfiles": {
+              "methods": [
+                "list_connection_profiles"
+              ]
+            },
+            "ListPrivateConnections": {
+              "methods": [
+                "list_private_connections"
+              ]
+            },
+            "ListRoutes": {
+              "methods": [
+                "list_routes"
+              ]
+            },
+            "ListStreams": {
+              "methods": [
+                "list_streams"
+              ]
+            },
+            "UpdateConnectionProfile": {
+              "methods": [
+                "update_connection_profile"
+              ]
+            },
+            "UpdateStream": {
+              "methods": [
+                "update_stream"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

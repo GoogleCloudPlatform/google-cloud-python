@@ -1,0 +1,2303 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.storageinsights.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-storageinsights",
+    "version": "0.5.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.create_dataset_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.CreateDatasetConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "CreateDatasetConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.CreateDatasetConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "dataset_config",
+            "type": "google.cloud.storageinsights_v1.types.DatasetConfig"
+          },
+          {
+            "name": "dataset_config_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_dataset_config"
+      },
+      "description": "Sample for CreateDatasetConfig",
+      "file": "storageinsights_v1_generated_storage_insights_create_dataset_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_CreateDatasetConfig_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_create_dataset_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.create_dataset_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.CreateDatasetConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "CreateDatasetConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.CreateDatasetConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "dataset_config",
+            "type": "google.cloud.storageinsights_v1.types.DatasetConfig"
+          },
+          {
+            "name": "dataset_config_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_dataset_config"
+      },
+      "description": "Sample for CreateDatasetConfig",
+      "file": "storageinsights_v1_generated_storage_insights_create_dataset_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_CreateDatasetConfig_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_create_dataset_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.create_report_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.CreateReportConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "CreateReportConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.CreateReportConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "report_config",
+            "type": "google.cloud.storageinsights_v1.types.ReportConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.types.ReportConfig",
+        "shortName": "create_report_config"
+      },
+      "description": "Sample for CreateReportConfig",
+      "file": "storageinsights_v1_generated_storage_insights_create_report_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_CreateReportConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_create_report_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.create_report_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.CreateReportConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "CreateReportConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.CreateReportConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "report_config",
+            "type": "google.cloud.storageinsights_v1.types.ReportConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.types.ReportConfig",
+        "shortName": "create_report_config"
+      },
+      "description": "Sample for CreateReportConfig",
+      "file": "storageinsights_v1_generated_storage_insights_create_report_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_CreateReportConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_create_report_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.delete_dataset_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.DeleteDatasetConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "DeleteDatasetConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.DeleteDatasetConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_dataset_config"
+      },
+      "description": "Sample for DeleteDatasetConfig",
+      "file": "storageinsights_v1_generated_storage_insights_delete_dataset_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_DeleteDatasetConfig_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_delete_dataset_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.delete_dataset_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.DeleteDatasetConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "DeleteDatasetConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.DeleteDatasetConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_dataset_config"
+      },
+      "description": "Sample for DeleteDatasetConfig",
+      "file": "storageinsights_v1_generated_storage_insights_delete_dataset_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_DeleteDatasetConfig_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_delete_dataset_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.delete_report_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.DeleteReportConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "DeleteReportConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.DeleteReportConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_report_config"
+      },
+      "description": "Sample for DeleteReportConfig",
+      "file": "storageinsights_v1_generated_storage_insights_delete_report_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_DeleteReportConfig_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_delete_report_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.delete_report_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.DeleteReportConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "DeleteReportConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.DeleteReportConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_report_config"
+      },
+      "description": "Sample for DeleteReportConfig",
+      "file": "storageinsights_v1_generated_storage_insights_delete_report_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_DeleteReportConfig_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_delete_report_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.get_dataset_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.GetDatasetConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "GetDatasetConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.GetDatasetConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.types.DatasetConfig",
+        "shortName": "get_dataset_config"
+      },
+      "description": "Sample for GetDatasetConfig",
+      "file": "storageinsights_v1_generated_storage_insights_get_dataset_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_GetDatasetConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_get_dataset_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.get_dataset_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.GetDatasetConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "GetDatasetConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.GetDatasetConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.types.DatasetConfig",
+        "shortName": "get_dataset_config"
+      },
+      "description": "Sample for GetDatasetConfig",
+      "file": "storageinsights_v1_generated_storage_insights_get_dataset_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_GetDatasetConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_get_dataset_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.get_report_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.GetReportConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "GetReportConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.GetReportConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.types.ReportConfig",
+        "shortName": "get_report_config"
+      },
+      "description": "Sample for GetReportConfig",
+      "file": "storageinsights_v1_generated_storage_insights_get_report_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_GetReportConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_get_report_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.get_report_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.GetReportConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "GetReportConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.GetReportConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.types.ReportConfig",
+        "shortName": "get_report_config"
+      },
+      "description": "Sample for GetReportConfig",
+      "file": "storageinsights_v1_generated_storage_insights_get_report_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_GetReportConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_get_report_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.get_report_detail",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.GetReportDetail",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "GetReportDetail"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.GetReportDetailRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.types.ReportDetail",
+        "shortName": "get_report_detail"
+      },
+      "description": "Sample for GetReportDetail",
+      "file": "storageinsights_v1_generated_storage_insights_get_report_detail_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_GetReportDetail_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_get_report_detail_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.get_report_detail",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.GetReportDetail",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "GetReportDetail"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.GetReportDetailRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.types.ReportDetail",
+        "shortName": "get_report_detail"
+      },
+      "description": "Sample for GetReportDetail",
+      "file": "storageinsights_v1_generated_storage_insights_get_report_detail_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_GetReportDetail_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_get_report_detail_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.link_dataset",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.LinkDataset",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "LinkDataset"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.LinkDatasetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "link_dataset"
+      },
+      "description": "Sample for LinkDataset",
+      "file": "storageinsights_v1_generated_storage_insights_link_dataset_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_LinkDataset_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_link_dataset_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.link_dataset",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.LinkDataset",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "LinkDataset"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.LinkDatasetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "link_dataset"
+      },
+      "description": "Sample for LinkDataset",
+      "file": "storageinsights_v1_generated_storage_insights_link_dataset_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_LinkDataset_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_link_dataset_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.list_dataset_configs",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.ListDatasetConfigs",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "ListDatasetConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.ListDatasetConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.services.storage_insights.pagers.ListDatasetConfigsAsyncPager",
+        "shortName": "list_dataset_configs"
+      },
+      "description": "Sample for ListDatasetConfigs",
+      "file": "storageinsights_v1_generated_storage_insights_list_dataset_configs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_ListDatasetConfigs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_list_dataset_configs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.list_dataset_configs",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.ListDatasetConfigs",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "ListDatasetConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.ListDatasetConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.services.storage_insights.pagers.ListDatasetConfigsPager",
+        "shortName": "list_dataset_configs"
+      },
+      "description": "Sample for ListDatasetConfigs",
+      "file": "storageinsights_v1_generated_storage_insights_list_dataset_configs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_ListDatasetConfigs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_list_dataset_configs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.list_report_configs",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.ListReportConfigs",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "ListReportConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.ListReportConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.services.storage_insights.pagers.ListReportConfigsAsyncPager",
+        "shortName": "list_report_configs"
+      },
+      "description": "Sample for ListReportConfigs",
+      "file": "storageinsights_v1_generated_storage_insights_list_report_configs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_ListReportConfigs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_list_report_configs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.list_report_configs",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.ListReportConfigs",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "ListReportConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.ListReportConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.services.storage_insights.pagers.ListReportConfigsPager",
+        "shortName": "list_report_configs"
+      },
+      "description": "Sample for ListReportConfigs",
+      "file": "storageinsights_v1_generated_storage_insights_list_report_configs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_ListReportConfigs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_list_report_configs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.list_report_details",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.ListReportDetails",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "ListReportDetails"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.ListReportDetailsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.services.storage_insights.pagers.ListReportDetailsAsyncPager",
+        "shortName": "list_report_details"
+      },
+      "description": "Sample for ListReportDetails",
+      "file": "storageinsights_v1_generated_storage_insights_list_report_details_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_ListReportDetails_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_list_report_details_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.list_report_details",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.ListReportDetails",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "ListReportDetails"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.ListReportDetailsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.services.storage_insights.pagers.ListReportDetailsPager",
+        "shortName": "list_report_details"
+      },
+      "description": "Sample for ListReportDetails",
+      "file": "storageinsights_v1_generated_storage_insights_list_report_details_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_ListReportDetails_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_list_report_details_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.unlink_dataset",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.UnlinkDataset",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "UnlinkDataset"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.UnlinkDatasetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "unlink_dataset"
+      },
+      "description": "Sample for UnlinkDataset",
+      "file": "storageinsights_v1_generated_storage_insights_unlink_dataset_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_UnlinkDataset_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_unlink_dataset_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.unlink_dataset",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.UnlinkDataset",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "UnlinkDataset"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.UnlinkDatasetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "unlink_dataset"
+      },
+      "description": "Sample for UnlinkDataset",
+      "file": "storageinsights_v1_generated_storage_insights_unlink_dataset_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_UnlinkDataset_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_unlink_dataset_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.update_dataset_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.UpdateDatasetConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "UpdateDatasetConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.UpdateDatasetConfigRequest"
+          },
+          {
+            "name": "dataset_config",
+            "type": "google.cloud.storageinsights_v1.types.DatasetConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_dataset_config"
+      },
+      "description": "Sample for UpdateDatasetConfig",
+      "file": "storageinsights_v1_generated_storage_insights_update_dataset_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_UpdateDatasetConfig_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_update_dataset_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.update_dataset_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.UpdateDatasetConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "UpdateDatasetConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.UpdateDatasetConfigRequest"
+          },
+          {
+            "name": "dataset_config",
+            "type": "google.cloud.storageinsights_v1.types.DatasetConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_dataset_config"
+      },
+      "description": "Sample for UpdateDatasetConfig",
+      "file": "storageinsights_v1_generated_storage_insights_update_dataset_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_UpdateDatasetConfig_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_update_dataset_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient",
+          "shortName": "StorageInsightsAsyncClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsAsyncClient.update_report_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.UpdateReportConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "UpdateReportConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.UpdateReportConfigRequest"
+          },
+          {
+            "name": "report_config",
+            "type": "google.cloud.storageinsights_v1.types.ReportConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.types.ReportConfig",
+        "shortName": "update_report_config"
+      },
+      "description": "Sample for UpdateReportConfig",
+      "file": "storageinsights_v1_generated_storage_insights_update_report_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_UpdateReportConfig_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_update_report_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient",
+          "shortName": "StorageInsightsClient"
+        },
+        "fullName": "google.cloud.storageinsights_v1.StorageInsightsClient.update_report_config",
+        "method": {
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights.UpdateReportConfig",
+          "service": {
+            "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+            "shortName": "StorageInsights"
+          },
+          "shortName": "UpdateReportConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.storageinsights_v1.types.UpdateReportConfigRequest"
+          },
+          {
+            "name": "report_config",
+            "type": "google.cloud.storageinsights_v1.types.ReportConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.storageinsights_v1.types.ReportConfig",
+        "shortName": "update_report_config"
+      },
+      "description": "Sample for UpdateReportConfig",
+      "file": "storageinsights_v1_generated_storage_insights_update_report_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "storageinsights_v1_generated_StorageInsights_UpdateReportConfig_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "storageinsights_v1_generated_storage_insights_update_report_config_sync.py"
+    }
+  ]
+}

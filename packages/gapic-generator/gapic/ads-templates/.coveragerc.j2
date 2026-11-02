@@ -1,0 +1,16 @@
+[run]
+branch = True
+
+[report]
+fail_under = 100
+show_missing = True
+omit =
+    {{ api.naming.module_namespace|join("/") }}/{{ api.naming.module_name }}/__init__.py
+exclude_lines =
+    # Re-enable the standard pragma
+    pragma: NO COVER
+    # Ignore debug-only repr
+    def __repr__
+    # This is used to indicate a python version mismatch,
+    # which is not easily tested in unit tests.
+    raise ImportError

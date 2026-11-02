@@ -1,0 +1,253 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.bigquery_biglake_v1",
+  "protoPackage": "google.cloud.bigquery.biglake.v1",
+  "schema": "1.0",
+  "services": {
+    "MetastoreService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MetastoreServiceClient",
+          "rpcs": {
+            "CreateCatalog": {
+              "methods": [
+                "create_catalog"
+              ]
+            },
+            "CreateDatabase": {
+              "methods": [
+                "create_database"
+              ]
+            },
+            "CreateTable": {
+              "methods": [
+                "create_table"
+              ]
+            },
+            "DeleteCatalog": {
+              "methods": [
+                "delete_catalog"
+              ]
+            },
+            "DeleteDatabase": {
+              "methods": [
+                "delete_database"
+              ]
+            },
+            "DeleteTable": {
+              "methods": [
+                "delete_table"
+              ]
+            },
+            "GetCatalog": {
+              "methods": [
+                "get_catalog"
+              ]
+            },
+            "GetDatabase": {
+              "methods": [
+                "get_database"
+              ]
+            },
+            "GetTable": {
+              "methods": [
+                "get_table"
+              ]
+            },
+            "ListCatalogs": {
+              "methods": [
+                "list_catalogs"
+              ]
+            },
+            "ListDatabases": {
+              "methods": [
+                "list_databases"
+              ]
+            },
+            "ListTables": {
+              "methods": [
+                "list_tables"
+              ]
+            },
+            "RenameTable": {
+              "methods": [
+                "rename_table"
+              ]
+            },
+            "UpdateDatabase": {
+              "methods": [
+                "update_database"
+              ]
+            },
+            "UpdateTable": {
+              "methods": [
+                "update_table"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MetastoreServiceAsyncClient",
+          "rpcs": {
+            "CreateCatalog": {
+              "methods": [
+                "create_catalog"
+              ]
+            },
+            "CreateDatabase": {
+              "methods": [
+                "create_database"
+              ]
+            },
+            "CreateTable": {
+              "methods": [
+                "create_table"
+              ]
+            },
+            "DeleteCatalog": {
+              "methods": [
+                "delete_catalog"
+              ]
+            },
+            "DeleteDatabase": {
+              "methods": [
+                "delete_database"
+              ]
+            },
+            "DeleteTable": {
+              "methods": [
+                "delete_table"
+              ]
+            },
+            "GetCatalog": {
+              "methods": [
+                "get_catalog"
+              ]
+            },
+            "GetDatabase": {
+              "methods": [
+                "get_database"
+              ]
+            },
+            "GetTable": {
+              "methods": [
+                "get_table"
+              ]
+            },
+            "ListCatalogs": {
+              "methods": [
+                "list_catalogs"
+              ]
+            },
+            "ListDatabases": {
+              "methods": [
+                "list_databases"
+              ]
+            },
+            "ListTables": {
+              "methods": [
+                "list_tables"
+              ]
+            },
+            "RenameTable": {
+              "methods": [
+                "rename_table"
+              ]
+            },
+            "UpdateDatabase": {
+              "methods": [
+                "update_database"
+              ]
+            },
+            "UpdateTable": {
+              "methods": [
+                "update_table"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "MetastoreServiceClient",
+          "rpcs": {
+            "CreateCatalog": {
+              "methods": [
+                "create_catalog"
+              ]
+            },
+            "CreateDatabase": {
+              "methods": [
+                "create_database"
+              ]
+            },
+            "CreateTable": {
+              "methods": [
+                "create_table"
+              ]
+            },
+            "DeleteCatalog": {
+              "methods": [
+                "delete_catalog"
+              ]
+            },
+            "DeleteDatabase": {
+              "methods": [
+                "delete_database"
+              ]
+            },
+            "DeleteTable": {
+              "methods": [
+                "delete_table"
+              ]
+            },
+            "GetCatalog": {
+              "methods": [
+                "get_catalog"
+              ]
+            },
+            "GetDatabase": {
+              "methods": [
+                "get_database"
+              ]
+            },
+            "GetTable": {
+              "methods": [
+                "get_table"
+              ]
+            },
+            "ListCatalogs": {
+              "methods": [
+                "list_catalogs"
+              ]
+            },
+            "ListDatabases": {
+              "methods": [
+                "list_databases"
+              ]
+            },
+            "ListTables": {
+              "methods": [
+                "list_tables"
+              ]
+            },
+            "RenameTable": {
+              "methods": [
+                "rename_table"
+              ]
+            },
+            "UpdateDatabase": {
+              "methods": [
+                "update_database"
+              ]
+            },
+            "UpdateTable": {
+              "methods": [
+                "update_table"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

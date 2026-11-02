@@ -1,0 +1,478 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.video.stitcher_v1",
+  "protoPackage": "google.cloud.video.stitcher.v1",
+  "schema": "1.0",
+  "services": {
+    "VideoStitcherService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "VideoStitcherServiceClient",
+          "rpcs": {
+            "CreateCdnKey": {
+              "methods": [
+                "create_cdn_key"
+              ]
+            },
+            "CreateLiveConfig": {
+              "methods": [
+                "create_live_config"
+              ]
+            },
+            "CreateLiveSession": {
+              "methods": [
+                "create_live_session"
+              ]
+            },
+            "CreateSlate": {
+              "methods": [
+                "create_slate"
+              ]
+            },
+            "CreateVodConfig": {
+              "methods": [
+                "create_vod_config"
+              ]
+            },
+            "CreateVodSession": {
+              "methods": [
+                "create_vod_session"
+              ]
+            },
+            "DeleteCdnKey": {
+              "methods": [
+                "delete_cdn_key"
+              ]
+            },
+            "DeleteLiveConfig": {
+              "methods": [
+                "delete_live_config"
+              ]
+            },
+            "DeleteSlate": {
+              "methods": [
+                "delete_slate"
+              ]
+            },
+            "DeleteVodConfig": {
+              "methods": [
+                "delete_vod_config"
+              ]
+            },
+            "GetCdnKey": {
+              "methods": [
+                "get_cdn_key"
+              ]
+            },
+            "GetLiveAdTagDetail": {
+              "methods": [
+                "get_live_ad_tag_detail"
+              ]
+            },
+            "GetLiveConfig": {
+              "methods": [
+                "get_live_config"
+              ]
+            },
+            "GetLiveSession": {
+              "methods": [
+                "get_live_session"
+              ]
+            },
+            "GetSlate": {
+              "methods": [
+                "get_slate"
+              ]
+            },
+            "GetVodAdTagDetail": {
+              "methods": [
+                "get_vod_ad_tag_detail"
+              ]
+            },
+            "GetVodConfig": {
+              "methods": [
+                "get_vod_config"
+              ]
+            },
+            "GetVodSession": {
+              "methods": [
+                "get_vod_session"
+              ]
+            },
+            "GetVodStitchDetail": {
+              "methods": [
+                "get_vod_stitch_detail"
+              ]
+            },
+            "ListCdnKeys": {
+              "methods": [
+                "list_cdn_keys"
+              ]
+            },
+            "ListLiveAdTagDetails": {
+              "methods": [
+                "list_live_ad_tag_details"
+              ]
+            },
+            "ListLiveConfigs": {
+              "methods": [
+                "list_live_configs"
+              ]
+            },
+            "ListSlates": {
+              "methods": [
+                "list_slates"
+              ]
+            },
+            "ListVodAdTagDetails": {
+              "methods": [
+                "list_vod_ad_tag_details"
+              ]
+            },
+            "ListVodConfigs": {
+              "methods": [
+                "list_vod_configs"
+              ]
+            },
+            "ListVodStitchDetails": {
+              "methods": [
+                "list_vod_stitch_details"
+              ]
+            },
+            "UpdateCdnKey": {
+              "methods": [
+                "update_cdn_key"
+              ]
+            },
+            "UpdateLiveConfig": {
+              "methods": [
+                "update_live_config"
+              ]
+            },
+            "UpdateSlate": {
+              "methods": [
+                "update_slate"
+              ]
+            },
+            "UpdateVodConfig": {
+              "methods": [
+                "update_vod_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "VideoStitcherServiceAsyncClient",
+          "rpcs": {
+            "CreateCdnKey": {
+              "methods": [
+                "create_cdn_key"
+              ]
+            },
+            "CreateLiveConfig": {
+              "methods": [
+                "create_live_config"
+              ]
+            },
+            "CreateLiveSession": {
+              "methods": [
+                "create_live_session"
+              ]
+            },
+            "CreateSlate": {
+              "methods": [
+                "create_slate"
+              ]
+            },
+            "CreateVodConfig": {
+              "methods": [
+                "create_vod_config"
+              ]
+            },
+            "CreateVodSession": {
+              "methods": [
+                "create_vod_session"
+              ]
+            },
+            "DeleteCdnKey": {
+              "methods": [
+                "delete_cdn_key"
+              ]
+            },
+            "DeleteLiveConfig": {
+              "methods": [
+                "delete_live_config"
+              ]
+            },
+            "DeleteSlate": {
+              "methods": [
+                "delete_slate"
+              ]
+            },
+            "DeleteVodConfig": {
+              "methods": [
+                "delete_vod_config"
+              ]
+            },
+            "GetCdnKey": {
+              "methods": [
+                "get_cdn_key"
+              ]
+            },
+            "GetLiveAdTagDetail": {
+              "methods": [
+                "get_live_ad_tag_detail"
+              ]
+            },
+            "GetLiveConfig": {
+              "methods": [
+                "get_live_config"
+              ]
+            },
+            "GetLiveSession": {
+              "methods": [
+                "get_live_session"
+              ]
+            },
+            "GetSlate": {
+              "methods": [
+                "get_slate"
+              ]
+            },
+            "GetVodAdTagDetail": {
+              "methods": [
+                "get_vod_ad_tag_detail"
+              ]
+            },
+            "GetVodConfig": {
+              "methods": [
+                "get_vod_config"
+              ]
+            },
+            "GetVodSession": {
+              "methods": [
+                "get_vod_session"
+              ]
+            },
+            "GetVodStitchDetail": {
+              "methods": [
+                "get_vod_stitch_detail"
+              ]
+            },
+            "ListCdnKeys": {
+              "methods": [
+                "list_cdn_keys"
+              ]
+            },
+            "ListLiveAdTagDetails": {
+              "methods": [
+                "list_live_ad_tag_details"
+              ]
+            },
+            "ListLiveConfigs": {
+              "methods": [
+                "list_live_configs"
+              ]
+            },
+            "ListSlates": {
+              "methods": [
+                "list_slates"
+              ]
+            },
+            "ListVodAdTagDetails": {
+              "methods": [
+                "list_vod_ad_tag_details"
+              ]
+            },
+            "ListVodConfigs": {
+              "methods": [
+                "list_vod_configs"
+              ]
+            },
+            "ListVodStitchDetails": {
+              "methods": [
+                "list_vod_stitch_details"
+              ]
+            },
+            "UpdateCdnKey": {
+              "methods": [
+                "update_cdn_key"
+              ]
+            },
+            "UpdateLiveConfig": {
+              "methods": [
+                "update_live_config"
+              ]
+            },
+            "UpdateSlate": {
+              "methods": [
+                "update_slate"
+              ]
+            },
+            "UpdateVodConfig": {
+              "methods": [
+                "update_vod_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "VideoStitcherServiceClient",
+          "rpcs": {
+            "CreateCdnKey": {
+              "methods": [
+                "create_cdn_key"
+              ]
+            },
+            "CreateLiveConfig": {
+              "methods": [
+                "create_live_config"
+              ]
+            },
+            "CreateLiveSession": {
+              "methods": [
+                "create_live_session"
+              ]
+            },
+            "CreateSlate": {
+              "methods": [
+                "create_slate"
+              ]
+            },
+            "CreateVodConfig": {
+              "methods": [
+                "create_vod_config"
+              ]
+            },
+            "CreateVodSession": {
+              "methods": [
+                "create_vod_session"
+              ]
+            },
+            "DeleteCdnKey": {
+              "methods": [
+                "delete_cdn_key"
+              ]
+            },
+            "DeleteLiveConfig": {
+              "methods": [
+                "delete_live_config"
+              ]
+            },
+            "DeleteSlate": {
+              "methods": [
+                "delete_slate"
+              ]
+            },
+            "DeleteVodConfig": {
+              "methods": [
+                "delete_vod_config"
+              ]
+            },
+            "GetCdnKey": {
+              "methods": [
+                "get_cdn_key"
+              ]
+            },
+            "GetLiveAdTagDetail": {
+              "methods": [
+                "get_live_ad_tag_detail"
+              ]
+            },
+            "GetLiveConfig": {
+              "methods": [
+                "get_live_config"
+              ]
+            },
+            "GetLiveSession": {
+              "methods": [
+                "get_live_session"
+              ]
+            },
+            "GetSlate": {
+              "methods": [
+                "get_slate"
+              ]
+            },
+            "GetVodAdTagDetail": {
+              "methods": [
+                "get_vod_ad_tag_detail"
+              ]
+            },
+            "GetVodConfig": {
+              "methods": [
+                "get_vod_config"
+              ]
+            },
+            "GetVodSession": {
+              "methods": [
+                "get_vod_session"
+              ]
+            },
+            "GetVodStitchDetail": {
+              "methods": [
+                "get_vod_stitch_detail"
+              ]
+            },
+            "ListCdnKeys": {
+              "methods": [
+                "list_cdn_keys"
+              ]
+            },
+            "ListLiveAdTagDetails": {
+              "methods": [
+                "list_live_ad_tag_details"
+              ]
+            },
+            "ListLiveConfigs": {
+              "methods": [
+                "list_live_configs"
+              ]
+            },
+            "ListSlates": {
+              "methods": [
+                "list_slates"
+              ]
+            },
+            "ListVodAdTagDetails": {
+              "methods": [
+                "list_vod_ad_tag_details"
+              ]
+            },
+            "ListVodConfigs": {
+              "methods": [
+                "list_vod_configs"
+              ]
+            },
+            "ListVodStitchDetails": {
+              "methods": [
+                "list_vod_stitch_details"
+              ]
+            },
+            "UpdateCdnKey": {
+              "methods": [
+                "update_cdn_key"
+              ]
+            },
+            "UpdateLiveConfig": {
+              "methods": [
+                "update_live_config"
+              ]
+            },
+            "UpdateSlate": {
+              "methods": [
+                "update_slate"
+              ]
+            },
+            "UpdateVodConfig": {
+              "methods": [
+                "update_vod_config"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

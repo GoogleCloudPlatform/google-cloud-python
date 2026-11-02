@@ -1,0 +1,403 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.artifactregistry_v1beta2",
+  "protoPackage": "google.devtools.artifactregistry.v1beta2",
+  "schema": "1.0",
+  "services": {
+    "ArtifactRegistry": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ArtifactRegistryClient",
+          "rpcs": {
+            "CreateRepository": {
+              "methods": [
+                "create_repository"
+              ]
+            },
+            "CreateTag": {
+              "methods": [
+                "create_tag"
+              ]
+            },
+            "DeletePackage": {
+              "methods": [
+                "delete_package"
+              ]
+            },
+            "DeleteRepository": {
+              "methods": [
+                "delete_repository"
+              ]
+            },
+            "DeleteTag": {
+              "methods": [
+                "delete_tag"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "GetFile": {
+              "methods": [
+                "get_file"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetPackage": {
+              "methods": [
+                "get_package"
+              ]
+            },
+            "GetProjectSettings": {
+              "methods": [
+                "get_project_settings"
+              ]
+            },
+            "GetRepository": {
+              "methods": [
+                "get_repository"
+              ]
+            },
+            "GetTag": {
+              "methods": [
+                "get_tag"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ImportAptArtifacts": {
+              "methods": [
+                "import_apt_artifacts"
+              ]
+            },
+            "ImportYumArtifacts": {
+              "methods": [
+                "import_yum_artifacts"
+              ]
+            },
+            "ListFiles": {
+              "methods": [
+                "list_files"
+              ]
+            },
+            "ListPackages": {
+              "methods": [
+                "list_packages"
+              ]
+            },
+            "ListRepositories": {
+              "methods": [
+                "list_repositories"
+              ]
+            },
+            "ListTags": {
+              "methods": [
+                "list_tags"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateProjectSettings": {
+              "methods": [
+                "update_project_settings"
+              ]
+            },
+            "UpdateRepository": {
+              "methods": [
+                "update_repository"
+              ]
+            },
+            "UpdateTag": {
+              "methods": [
+                "update_tag"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ArtifactRegistryAsyncClient",
+          "rpcs": {
+            "CreateRepository": {
+              "methods": [
+                "create_repository"
+              ]
+            },
+            "CreateTag": {
+              "methods": [
+                "create_tag"
+              ]
+            },
+            "DeletePackage": {
+              "methods": [
+                "delete_package"
+              ]
+            },
+            "DeleteRepository": {
+              "methods": [
+                "delete_repository"
+              ]
+            },
+            "DeleteTag": {
+              "methods": [
+                "delete_tag"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "GetFile": {
+              "methods": [
+                "get_file"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetPackage": {
+              "methods": [
+                "get_package"
+              ]
+            },
+            "GetProjectSettings": {
+              "methods": [
+                "get_project_settings"
+              ]
+            },
+            "GetRepository": {
+              "methods": [
+                "get_repository"
+              ]
+            },
+            "GetTag": {
+              "methods": [
+                "get_tag"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ImportAptArtifacts": {
+              "methods": [
+                "import_apt_artifacts"
+              ]
+            },
+            "ImportYumArtifacts": {
+              "methods": [
+                "import_yum_artifacts"
+              ]
+            },
+            "ListFiles": {
+              "methods": [
+                "list_files"
+              ]
+            },
+            "ListPackages": {
+              "methods": [
+                "list_packages"
+              ]
+            },
+            "ListRepositories": {
+              "methods": [
+                "list_repositories"
+              ]
+            },
+            "ListTags": {
+              "methods": [
+                "list_tags"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateProjectSettings": {
+              "methods": [
+                "update_project_settings"
+              ]
+            },
+            "UpdateRepository": {
+              "methods": [
+                "update_repository"
+              ]
+            },
+            "UpdateTag": {
+              "methods": [
+                "update_tag"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ArtifactRegistryClient",
+          "rpcs": {
+            "CreateRepository": {
+              "methods": [
+                "create_repository"
+              ]
+            },
+            "CreateTag": {
+              "methods": [
+                "create_tag"
+              ]
+            },
+            "DeletePackage": {
+              "methods": [
+                "delete_package"
+              ]
+            },
+            "DeleteRepository": {
+              "methods": [
+                "delete_repository"
+              ]
+            },
+            "DeleteTag": {
+              "methods": [
+                "delete_tag"
+              ]
+            },
+            "DeleteVersion": {
+              "methods": [
+                "delete_version"
+              ]
+            },
+            "GetFile": {
+              "methods": [
+                "get_file"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetPackage": {
+              "methods": [
+                "get_package"
+              ]
+            },
+            "GetProjectSettings": {
+              "methods": [
+                "get_project_settings"
+              ]
+            },
+            "GetRepository": {
+              "methods": [
+                "get_repository"
+              ]
+            },
+            "GetTag": {
+              "methods": [
+                "get_tag"
+              ]
+            },
+            "GetVersion": {
+              "methods": [
+                "get_version"
+              ]
+            },
+            "ImportAptArtifacts": {
+              "methods": [
+                "import_apt_artifacts"
+              ]
+            },
+            "ImportYumArtifacts": {
+              "methods": [
+                "import_yum_artifacts"
+              ]
+            },
+            "ListFiles": {
+              "methods": [
+                "list_files"
+              ]
+            },
+            "ListPackages": {
+              "methods": [
+                "list_packages"
+              ]
+            },
+            "ListRepositories": {
+              "methods": [
+                "list_repositories"
+              ]
+            },
+            "ListTags": {
+              "methods": [
+                "list_tags"
+              ]
+            },
+            "ListVersions": {
+              "methods": [
+                "list_versions"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateProjectSettings": {
+              "methods": [
+                "update_project_settings"
+              ]
+            },
+            "UpdateRepository": {
+              "methods": [
+                "update_repository"
+              ]
+            },
+            "UpdateTag": {
+              "methods": [
+                "update_tag"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

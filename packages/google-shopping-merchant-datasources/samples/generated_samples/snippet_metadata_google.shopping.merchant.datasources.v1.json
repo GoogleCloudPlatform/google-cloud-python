@@ -1,0 +1,1138 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.shopping.merchant.datasources.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-shopping-merchant-datasources",
+    "version": "1.6.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient",
+          "shortName": "DataSourcesServiceAsyncClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient.create_data_source",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.CreateDataSource",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "CreateDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.CreateDataSourceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "data_source",
+            "type": "google.shopping.merchant_datasources_v1.types.DataSource"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_datasources_v1.types.DataSource",
+        "shortName": "create_data_source"
+      },
+      "description": "Sample for CreateDataSource",
+      "file": "merchantapi_v1_generated_data_sources_service_create_data_source_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_CreateDataSource_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_create_data_source_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient",
+          "shortName": "DataSourcesServiceClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient.create_data_source",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.CreateDataSource",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "CreateDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.CreateDataSourceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "data_source",
+            "type": "google.shopping.merchant_datasources_v1.types.DataSource"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_datasources_v1.types.DataSource",
+        "shortName": "create_data_source"
+      },
+      "description": "Sample for CreateDataSource",
+      "file": "merchantapi_v1_generated_data_sources_service_create_data_source_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_CreateDataSource_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_create_data_source_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient",
+          "shortName": "DataSourcesServiceAsyncClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient.delete_data_source",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.DeleteDataSource",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "DeleteDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.DeleteDataSourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_data_source"
+      },
+      "description": "Sample for DeleteDataSource",
+      "file": "merchantapi_v1_generated_data_sources_service_delete_data_source_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_DeleteDataSource_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_delete_data_source_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient",
+          "shortName": "DataSourcesServiceClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient.delete_data_source",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.DeleteDataSource",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "DeleteDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.DeleteDataSourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_data_source"
+      },
+      "description": "Sample for DeleteDataSource",
+      "file": "merchantapi_v1_generated_data_sources_service_delete_data_source_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_DeleteDataSource_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_delete_data_source_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient",
+          "shortName": "DataSourcesServiceAsyncClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient.fetch_data_source",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.FetchDataSource",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "FetchDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.FetchDataSourceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "fetch_data_source"
+      },
+      "description": "Sample for FetchDataSource",
+      "file": "merchantapi_v1_generated_data_sources_service_fetch_data_source_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_FetchDataSource_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_fetch_data_source_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient",
+          "shortName": "DataSourcesServiceClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient.fetch_data_source",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.FetchDataSource",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "FetchDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.FetchDataSourceRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "fetch_data_source"
+      },
+      "description": "Sample for FetchDataSource",
+      "file": "merchantapi_v1_generated_data_sources_service_fetch_data_source_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_FetchDataSource_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_fetch_data_source_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient",
+          "shortName": "DataSourcesServiceAsyncClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient.get_data_source",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.GetDataSource",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "GetDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.GetDataSourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_datasources_v1.types.DataSource",
+        "shortName": "get_data_source"
+      },
+      "description": "Sample for GetDataSource",
+      "file": "merchantapi_v1_generated_data_sources_service_get_data_source_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_GetDataSource_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_get_data_source_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient",
+          "shortName": "DataSourcesServiceClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient.get_data_source",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.GetDataSource",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "GetDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.GetDataSourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_datasources_v1.types.DataSource",
+        "shortName": "get_data_source"
+      },
+      "description": "Sample for GetDataSource",
+      "file": "merchantapi_v1_generated_data_sources_service_get_data_source_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_GetDataSource_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_get_data_source_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient",
+          "shortName": "DataSourcesServiceAsyncClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient.list_data_sources",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.ListDataSources",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "ListDataSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.ListDataSourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_datasources_v1.services.data_sources_service.pagers.ListDataSourcesAsyncPager",
+        "shortName": "list_data_sources"
+      },
+      "description": "Sample for ListDataSources",
+      "file": "merchantapi_v1_generated_data_sources_service_list_data_sources_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_ListDataSources_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_list_data_sources_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient",
+          "shortName": "DataSourcesServiceClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient.list_data_sources",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.ListDataSources",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "ListDataSources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.ListDataSourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_datasources_v1.services.data_sources_service.pagers.ListDataSourcesPager",
+        "shortName": "list_data_sources"
+      },
+      "description": "Sample for ListDataSources",
+      "file": "merchantapi_v1_generated_data_sources_service_list_data_sources_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_ListDataSources_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_list_data_sources_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient",
+          "shortName": "DataSourcesServiceAsyncClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceAsyncClient.update_data_source",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.UpdateDataSource",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "UpdateDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.UpdateDataSourceRequest"
+          },
+          {
+            "name": "data_source",
+            "type": "google.shopping.merchant_datasources_v1.types.DataSource"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_datasources_v1.types.DataSource",
+        "shortName": "update_data_source"
+      },
+      "description": "Sample for UpdateDataSource",
+      "file": "merchantapi_v1_generated_data_sources_service_update_data_source_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_UpdateDataSource_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_update_data_source_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient",
+          "shortName": "DataSourcesServiceClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.DataSourcesServiceClient.update_data_source",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService.UpdateDataSource",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.DataSourcesService",
+            "shortName": "DataSourcesService"
+          },
+          "shortName": "UpdateDataSource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.UpdateDataSourceRequest"
+          },
+          {
+            "name": "data_source",
+            "type": "google.shopping.merchant_datasources_v1.types.DataSource"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_datasources_v1.types.DataSource",
+        "shortName": "update_data_source"
+      },
+      "description": "Sample for UpdateDataSource",
+      "file": "merchantapi_v1_generated_data_sources_service_update_data_source_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_DataSourcesService_UpdateDataSource_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_data_sources_service_update_data_source_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.FileUploadsServiceAsyncClient",
+          "shortName": "FileUploadsServiceAsyncClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.FileUploadsServiceAsyncClient.get_file_upload",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.FileUploadsService.GetFileUpload",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.FileUploadsService",
+            "shortName": "FileUploadsService"
+          },
+          "shortName": "GetFileUpload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.GetFileUploadRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_datasources_v1.types.FileUpload",
+        "shortName": "get_file_upload"
+      },
+      "description": "Sample for GetFileUpload",
+      "file": "merchantapi_v1_generated_file_uploads_service_get_file_upload_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_FileUploadsService_GetFileUpload_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_file_uploads_service_get_file_upload_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.merchant_datasources_v1.FileUploadsServiceClient",
+          "shortName": "FileUploadsServiceClient"
+        },
+        "fullName": "google.shopping.merchant_datasources_v1.FileUploadsServiceClient.get_file_upload",
+        "method": {
+          "fullName": "google.shopping.merchant.datasources.v1.FileUploadsService.GetFileUpload",
+          "service": {
+            "fullName": "google.shopping.merchant.datasources.v1.FileUploadsService",
+            "shortName": "FileUploadsService"
+          },
+          "shortName": "GetFileUpload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_datasources_v1.types.GetFileUploadRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_datasources_v1.types.FileUpload",
+        "shortName": "get_file_upload"
+      },
+      "description": "Sample for GetFileUpload",
+      "file": "merchantapi_v1_generated_file_uploads_service_get_file_upload_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_FileUploadsService_GetFileUpload_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_file_uploads_service_get_file_upload_sync.py"
+    }
+  ]
+}

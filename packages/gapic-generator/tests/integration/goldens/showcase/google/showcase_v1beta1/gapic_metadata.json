@@ -1,0 +1,799 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.showcase_v1beta1",
+  "protoPackage": "google.showcase.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "Echo": {
+      "apiVersion": "v1_20240408",
+      "clients": {
+        "grpc": {
+          "libraryClient": "EchoClient",
+          "rpcs": {
+            "Block": {
+              "methods": [
+                "block"
+              ]
+            },
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
+            "Collect": {
+              "methods": [
+                "collect"
+              ]
+            },
+            "Echo": {
+              "methods": [
+                "echo"
+              ]
+            },
+            "EchoErrorDetails": {
+              "methods": [
+                "echo_error_details"
+              ]
+            },
+            "Expand": {
+              "methods": [
+                "expand"
+              ]
+            },
+            "FailEchoWithDetails": {
+              "methods": [
+                "fail_echo_with_details"
+              ]
+            },
+            "PagedExpand": {
+              "methods": [
+                "paged_expand"
+              ]
+            },
+            "PagedExpandLegacy": {
+              "methods": [
+                "paged_expand_legacy"
+              ]
+            },
+            "PagedExpandLegacyMapped": {
+              "methods": [
+                "paged_expand_legacy_mapped"
+              ]
+            },
+            "Wait": {
+              "methods": [
+                "wait"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "EchoAsyncClient",
+          "rpcs": {
+            "Block": {
+              "methods": [
+                "block"
+              ]
+            },
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
+            "Collect": {
+              "methods": [
+                "collect"
+              ]
+            },
+            "Echo": {
+              "methods": [
+                "echo"
+              ]
+            },
+            "EchoErrorDetails": {
+              "methods": [
+                "echo_error_details"
+              ]
+            },
+            "Expand": {
+              "methods": [
+                "expand"
+              ]
+            },
+            "FailEchoWithDetails": {
+              "methods": [
+                "fail_echo_with_details"
+              ]
+            },
+            "PagedExpand": {
+              "methods": [
+                "paged_expand"
+              ]
+            },
+            "PagedExpandLegacy": {
+              "methods": [
+                "paged_expand_legacy"
+              ]
+            },
+            "PagedExpandLegacyMapped": {
+              "methods": [
+                "paged_expand_legacy_mapped"
+              ]
+            },
+            "Wait": {
+              "methods": [
+                "wait"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "EchoClient",
+          "rpcs": {
+            "Block": {
+              "methods": [
+                "block"
+              ]
+            },
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
+            "Collect": {
+              "methods": [
+                "collect"
+              ]
+            },
+            "Echo": {
+              "methods": [
+                "echo"
+              ]
+            },
+            "EchoErrorDetails": {
+              "methods": [
+                "echo_error_details"
+              ]
+            },
+            "Expand": {
+              "methods": [
+                "expand"
+              ]
+            },
+            "FailEchoWithDetails": {
+              "methods": [
+                "fail_echo_with_details"
+              ]
+            },
+            "PagedExpand": {
+              "methods": [
+                "paged_expand"
+              ]
+            },
+            "PagedExpandLegacy": {
+              "methods": [
+                "paged_expand_legacy"
+              ]
+            },
+            "PagedExpandLegacyMapped": {
+              "methods": [
+                "paged_expand_legacy_mapped"
+              ]
+            },
+            "Wait": {
+              "methods": [
+                "wait"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Identity": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "IdentityClient",
+          "rpcs": {
+            "CreateUser": {
+              "methods": [
+                "create_user"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "delete_user"
+              ]
+            },
+            "GetUser": {
+              "methods": [
+                "get_user"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "list_users"
+              ]
+            },
+            "UpdateUser": {
+              "methods": [
+                "update_user"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "IdentityAsyncClient",
+          "rpcs": {
+            "CreateUser": {
+              "methods": [
+                "create_user"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "delete_user"
+              ]
+            },
+            "GetUser": {
+              "methods": [
+                "get_user"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "list_users"
+              ]
+            },
+            "UpdateUser": {
+              "methods": [
+                "update_user"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "IdentityClient",
+          "rpcs": {
+            "CreateUser": {
+              "methods": [
+                "create_user"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "delete_user"
+              ]
+            },
+            "GetUser": {
+              "methods": [
+                "get_user"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "list_users"
+              ]
+            },
+            "UpdateUser": {
+              "methods": [
+                "update_user"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Messaging": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MessagingClient",
+          "rpcs": {
+            "Connect": {
+              "methods": [
+                "connect"
+              ]
+            },
+            "CreateBlurb": {
+              "methods": [
+                "create_blurb"
+              ]
+            },
+            "CreateRoom": {
+              "methods": [
+                "create_room"
+              ]
+            },
+            "DeleteBlurb": {
+              "methods": [
+                "delete_blurb"
+              ]
+            },
+            "DeleteRoom": {
+              "methods": [
+                "delete_room"
+              ]
+            },
+            "GetBlurb": {
+              "methods": [
+                "get_blurb"
+              ]
+            },
+            "GetRoom": {
+              "methods": [
+                "get_room"
+              ]
+            },
+            "ListBlurbs": {
+              "methods": [
+                "list_blurbs"
+              ]
+            },
+            "ListRooms": {
+              "methods": [
+                "list_rooms"
+              ]
+            },
+            "SearchBlurbs": {
+              "methods": [
+                "search_blurbs"
+              ]
+            },
+            "SendBlurbs": {
+              "methods": [
+                "send_blurbs"
+              ]
+            },
+            "StreamBlurbs": {
+              "methods": [
+                "stream_blurbs"
+              ]
+            },
+            "UpdateBlurb": {
+              "methods": [
+                "update_blurb"
+              ]
+            },
+            "UpdateRoom": {
+              "methods": [
+                "update_room"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MessagingAsyncClient",
+          "rpcs": {
+            "Connect": {
+              "methods": [
+                "connect"
+              ]
+            },
+            "CreateBlurb": {
+              "methods": [
+                "create_blurb"
+              ]
+            },
+            "CreateRoom": {
+              "methods": [
+                "create_room"
+              ]
+            },
+            "DeleteBlurb": {
+              "methods": [
+                "delete_blurb"
+              ]
+            },
+            "DeleteRoom": {
+              "methods": [
+                "delete_room"
+              ]
+            },
+            "GetBlurb": {
+              "methods": [
+                "get_blurb"
+              ]
+            },
+            "GetRoom": {
+              "methods": [
+                "get_room"
+              ]
+            },
+            "ListBlurbs": {
+              "methods": [
+                "list_blurbs"
+              ]
+            },
+            "ListRooms": {
+              "methods": [
+                "list_rooms"
+              ]
+            },
+            "SearchBlurbs": {
+              "methods": [
+                "search_blurbs"
+              ]
+            },
+            "SendBlurbs": {
+              "methods": [
+                "send_blurbs"
+              ]
+            },
+            "StreamBlurbs": {
+              "methods": [
+                "stream_blurbs"
+              ]
+            },
+            "UpdateBlurb": {
+              "methods": [
+                "update_blurb"
+              ]
+            },
+            "UpdateRoom": {
+              "methods": [
+                "update_room"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "MessagingClient",
+          "rpcs": {
+            "Connect": {
+              "methods": [
+                "connect"
+              ]
+            },
+            "CreateBlurb": {
+              "methods": [
+                "create_blurb"
+              ]
+            },
+            "CreateRoom": {
+              "methods": [
+                "create_room"
+              ]
+            },
+            "DeleteBlurb": {
+              "methods": [
+                "delete_blurb"
+              ]
+            },
+            "DeleteRoom": {
+              "methods": [
+                "delete_room"
+              ]
+            },
+            "GetBlurb": {
+              "methods": [
+                "get_blurb"
+              ]
+            },
+            "GetRoom": {
+              "methods": [
+                "get_room"
+              ]
+            },
+            "ListBlurbs": {
+              "methods": [
+                "list_blurbs"
+              ]
+            },
+            "ListRooms": {
+              "methods": [
+                "list_rooms"
+              ]
+            },
+            "SearchBlurbs": {
+              "methods": [
+                "search_blurbs"
+              ]
+            },
+            "SendBlurbs": {
+              "methods": [
+                "send_blurbs"
+              ]
+            },
+            "StreamBlurbs": {
+              "methods": [
+                "stream_blurbs"
+              ]
+            },
+            "UpdateBlurb": {
+              "methods": [
+                "update_blurb"
+              ]
+            },
+            "UpdateRoom": {
+              "methods": [
+                "update_room"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ResumableUploadService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ResumableUploadServiceClient",
+          "rpcs": {
+            "UploadMedia": {
+              "methods": [
+                "upload_media"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ResumableUploadServiceAsyncClient",
+          "rpcs": {
+            "UploadMedia": {
+              "methods": [
+                "upload_media"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ResumableUploadServiceClient",
+          "rpcs": {
+            "UploadMedia": {
+              "methods": [
+                "upload_media"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SequenceService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SequenceServiceClient",
+          "rpcs": {
+            "AttemptSequence": {
+              "methods": [
+                "attempt_sequence"
+              ]
+            },
+            "AttemptStreamingSequence": {
+              "methods": [
+                "attempt_streaming_sequence"
+              ]
+            },
+            "CreateSequence": {
+              "methods": [
+                "create_sequence"
+              ]
+            },
+            "CreateStreamingSequence": {
+              "methods": [
+                "create_streaming_sequence"
+              ]
+            },
+            "GetSequenceReport": {
+              "methods": [
+                "get_sequence_report"
+              ]
+            },
+            "GetStreamingSequenceReport": {
+              "methods": [
+                "get_streaming_sequence_report"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SequenceServiceAsyncClient",
+          "rpcs": {
+            "AttemptSequence": {
+              "methods": [
+                "attempt_sequence"
+              ]
+            },
+            "AttemptStreamingSequence": {
+              "methods": [
+                "attempt_streaming_sequence"
+              ]
+            },
+            "CreateSequence": {
+              "methods": [
+                "create_sequence"
+              ]
+            },
+            "CreateStreamingSequence": {
+              "methods": [
+                "create_streaming_sequence"
+              ]
+            },
+            "GetSequenceReport": {
+              "methods": [
+                "get_sequence_report"
+              ]
+            },
+            "GetStreamingSequenceReport": {
+              "methods": [
+                "get_streaming_sequence_report"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SequenceServiceClient",
+          "rpcs": {
+            "AttemptSequence": {
+              "methods": [
+                "attempt_sequence"
+              ]
+            },
+            "AttemptStreamingSequence": {
+              "methods": [
+                "attempt_streaming_sequence"
+              ]
+            },
+            "CreateSequence": {
+              "methods": [
+                "create_sequence"
+              ]
+            },
+            "CreateStreamingSequence": {
+              "methods": [
+                "create_streaming_sequence"
+              ]
+            },
+            "GetSequenceReport": {
+              "methods": [
+                "get_sequence_report"
+              ]
+            },
+            "GetStreamingSequenceReport": {
+              "methods": [
+                "get_streaming_sequence_report"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Testing": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "TestingClient",
+          "rpcs": {
+            "CreateSession": {
+              "methods": [
+                "create_session"
+              ]
+            },
+            "DeleteSession": {
+              "methods": [
+                "delete_session"
+              ]
+            },
+            "DeleteTest": {
+              "methods": [
+                "delete_test"
+              ]
+            },
+            "GetSession": {
+              "methods": [
+                "get_session"
+              ]
+            },
+            "ListSessions": {
+              "methods": [
+                "list_sessions"
+              ]
+            },
+            "ListTests": {
+              "methods": [
+                "list_tests"
+              ]
+            },
+            "ReportSession": {
+              "methods": [
+                "report_session"
+              ]
+            },
+            "VerifyTest": {
+              "methods": [
+                "verify_test"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "TestingAsyncClient",
+          "rpcs": {
+            "CreateSession": {
+              "methods": [
+                "create_session"
+              ]
+            },
+            "DeleteSession": {
+              "methods": [
+                "delete_session"
+              ]
+            },
+            "DeleteTest": {
+              "methods": [
+                "delete_test"
+              ]
+            },
+            "GetSession": {
+              "methods": [
+                "get_session"
+              ]
+            },
+            "ListSessions": {
+              "methods": [
+                "list_sessions"
+              ]
+            },
+            "ListTests": {
+              "methods": [
+                "list_tests"
+              ]
+            },
+            "ReportSession": {
+              "methods": [
+                "report_session"
+              ]
+            },
+            "VerifyTest": {
+              "methods": [
+                "verify_test"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "TestingClient",
+          "rpcs": {
+            "CreateSession": {
+              "methods": [
+                "create_session"
+              ]
+            },
+            "DeleteSession": {
+              "methods": [
+                "delete_session"
+              ]
+            },
+            "DeleteTest": {
+              "methods": [
+                "delete_test"
+              ]
+            },
+            "GetSession": {
+              "methods": [
+                "get_session"
+              ]
+            },
+            "ListSessions": {
+              "methods": [
+                "list_sessions"
+              ]
+            },
+            "ListTests": {
+              "methods": [
+                "list_tests"
+              ]
+            },
+            "ReportSession": {
+              "methods": [
+                "report_session"
+              ]
+            },
+            "VerifyTest": {
+              "methods": [
+                "verify_test"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

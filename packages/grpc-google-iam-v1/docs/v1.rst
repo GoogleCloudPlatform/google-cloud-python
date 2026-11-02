@@ -1,0 +1,6 @@
+Types for google.iam.v1
+==================================
+
+.. automodule:: google.iam.v1
+    :members:
+    :show-inheritance:

@@ -1,0 +1,37 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the AutoML model that\n   synthesizes the\
+      \ custom voice."
+    id: model
+    var_type: str
+  - description: "Optional. The usage of the synthesized audio\n   to be reported."
+    id: reported_usage
+    var_type: <xref uid="google.cloud.texttospeech_v1.types.CustomVoiceParams.ReportedUsage">google.cloud.texttospeech_v1.types.CustomVoiceParams.ReportedUsage</xref>
+  children:
+  - google.cloud.texttospeech_v1.types.CustomVoiceParams.ReportedUsage
+  class: google.cloud.texttospeech_v1.types.CustomVoiceParams
+  fullName: google.cloud.texttospeech_v1.types.CustomVoiceParams
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1.types
+  name: CustomVoiceParams
+  source:
+    id: CustomVoiceParams
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1/types/cloud_tts.py
+    startLine: 336
+  summary: 'Description of the custom voice to be synthesized.
+
+    '
+  syntax:
+    content: CustomVoiceParams(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1.types.CustomVoiceParams
+references:
+- fullName: google.cloud.texttospeech_v1.types.CustomVoiceParams.ReportedUsage
+  isExternal: false
+  name: ReportedUsage
+  parent: google.cloud.texttospeech_v1.types.CustomVoiceParams
+  uid: google.cloud.texttospeech_v1.types.CustomVoiceParams.ReportedUsage

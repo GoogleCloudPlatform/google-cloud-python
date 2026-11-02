@@ -1,0 +1,703 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.deploy_v1",
+  "protoPackage": "google.cloud.deploy.v1",
+  "schema": "1.0",
+  "services": {
+    "CloudDeploy": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudDeployClient",
+          "rpcs": {
+            "AbandonRelease": {
+              "methods": [
+                "abandon_release"
+              ]
+            },
+            "AdvanceRollout": {
+              "methods": [
+                "advance_rollout"
+              ]
+            },
+            "ApproveRollout": {
+              "methods": [
+                "approve_rollout"
+              ]
+            },
+            "CancelAutomationRun": {
+              "methods": [
+                "cancel_automation_run"
+              ]
+            },
+            "CancelRollout": {
+              "methods": [
+                "cancel_rollout"
+              ]
+            },
+            "CreateAutomation": {
+              "methods": [
+                "create_automation"
+              ]
+            },
+            "CreateCustomTargetType": {
+              "methods": [
+                "create_custom_target_type"
+              ]
+            },
+            "CreateDeliveryPipeline": {
+              "methods": [
+                "create_delivery_pipeline"
+              ]
+            },
+            "CreateDeployPolicy": {
+              "methods": [
+                "create_deploy_policy"
+              ]
+            },
+            "CreateRelease": {
+              "methods": [
+                "create_release"
+              ]
+            },
+            "CreateRollout": {
+              "methods": [
+                "create_rollout"
+              ]
+            },
+            "CreateTarget": {
+              "methods": [
+                "create_target"
+              ]
+            },
+            "DeleteAutomation": {
+              "methods": [
+                "delete_automation"
+              ]
+            },
+            "DeleteCustomTargetType": {
+              "methods": [
+                "delete_custom_target_type"
+              ]
+            },
+            "DeleteDeliveryPipeline": {
+              "methods": [
+                "delete_delivery_pipeline"
+              ]
+            },
+            "DeleteDeployPolicy": {
+              "methods": [
+                "delete_deploy_policy"
+              ]
+            },
+            "DeleteTarget": {
+              "methods": [
+                "delete_target"
+              ]
+            },
+            "GetAutomation": {
+              "methods": [
+                "get_automation"
+              ]
+            },
+            "GetAutomationRun": {
+              "methods": [
+                "get_automation_run"
+              ]
+            },
+            "GetConfig": {
+              "methods": [
+                "get_config"
+              ]
+            },
+            "GetCustomTargetType": {
+              "methods": [
+                "get_custom_target_type"
+              ]
+            },
+            "GetDeliveryPipeline": {
+              "methods": [
+                "get_delivery_pipeline"
+              ]
+            },
+            "GetDeployPolicy": {
+              "methods": [
+                "get_deploy_policy"
+              ]
+            },
+            "GetJobRun": {
+              "methods": [
+                "get_job_run"
+              ]
+            },
+            "GetRelease": {
+              "methods": [
+                "get_release"
+              ]
+            },
+            "GetRollout": {
+              "methods": [
+                "get_rollout"
+              ]
+            },
+            "GetTarget": {
+              "methods": [
+                "get_target"
+              ]
+            },
+            "IgnoreJob": {
+              "methods": [
+                "ignore_job"
+              ]
+            },
+            "ListAutomationRuns": {
+              "methods": [
+                "list_automation_runs"
+              ]
+            },
+            "ListAutomations": {
+              "methods": [
+                "list_automations"
+              ]
+            },
+            "ListCustomTargetTypes": {
+              "methods": [
+                "list_custom_target_types"
+              ]
+            },
+            "ListDeliveryPipelines": {
+              "methods": [
+                "list_delivery_pipelines"
+              ]
+            },
+            "ListDeployPolicies": {
+              "methods": [
+                "list_deploy_policies"
+              ]
+            },
+            "ListJobRuns": {
+              "methods": [
+                "list_job_runs"
+              ]
+            },
+            "ListReleases": {
+              "methods": [
+                "list_releases"
+              ]
+            },
+            "ListRollouts": {
+              "methods": [
+                "list_rollouts"
+              ]
+            },
+            "ListTargets": {
+              "methods": [
+                "list_targets"
+              ]
+            },
+            "RetryJob": {
+              "methods": [
+                "retry_job"
+              ]
+            },
+            "RollbackTarget": {
+              "methods": [
+                "rollback_target"
+              ]
+            },
+            "TerminateJobRun": {
+              "methods": [
+                "terminate_job_run"
+              ]
+            },
+            "UpdateAutomation": {
+              "methods": [
+                "update_automation"
+              ]
+            },
+            "UpdateCustomTargetType": {
+              "methods": [
+                "update_custom_target_type"
+              ]
+            },
+            "UpdateDeliveryPipeline": {
+              "methods": [
+                "update_delivery_pipeline"
+              ]
+            },
+            "UpdateDeployPolicy": {
+              "methods": [
+                "update_deploy_policy"
+              ]
+            },
+            "UpdateTarget": {
+              "methods": [
+                "update_target"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudDeployAsyncClient",
+          "rpcs": {
+            "AbandonRelease": {
+              "methods": [
+                "abandon_release"
+              ]
+            },
+            "AdvanceRollout": {
+              "methods": [
+                "advance_rollout"
+              ]
+            },
+            "ApproveRollout": {
+              "methods": [
+                "approve_rollout"
+              ]
+            },
+            "CancelAutomationRun": {
+              "methods": [
+                "cancel_automation_run"
+              ]
+            },
+            "CancelRollout": {
+              "methods": [
+                "cancel_rollout"
+              ]
+            },
+            "CreateAutomation": {
+              "methods": [
+                "create_automation"
+              ]
+            },
+            "CreateCustomTargetType": {
+              "methods": [
+                "create_custom_target_type"
+              ]
+            },
+            "CreateDeliveryPipeline": {
+              "methods": [
+                "create_delivery_pipeline"
+              ]
+            },
+            "CreateDeployPolicy": {
+              "methods": [
+                "create_deploy_policy"
+              ]
+            },
+            "CreateRelease": {
+              "methods": [
+                "create_release"
+              ]
+            },
+            "CreateRollout": {
+              "methods": [
+                "create_rollout"
+              ]
+            },
+            "CreateTarget": {
+              "methods": [
+                "create_target"
+              ]
+            },
+            "DeleteAutomation": {
+              "methods": [
+                "delete_automation"
+              ]
+            },
+            "DeleteCustomTargetType": {
+              "methods": [
+                "delete_custom_target_type"
+              ]
+            },
+            "DeleteDeliveryPipeline": {
+              "methods": [
+                "delete_delivery_pipeline"
+              ]
+            },
+            "DeleteDeployPolicy": {
+              "methods": [
+                "delete_deploy_policy"
+              ]
+            },
+            "DeleteTarget": {
+              "methods": [
+                "delete_target"
+              ]
+            },
+            "GetAutomation": {
+              "methods": [
+                "get_automation"
+              ]
+            },
+            "GetAutomationRun": {
+              "methods": [
+                "get_automation_run"
+              ]
+            },
+            "GetConfig": {
+              "methods": [
+                "get_config"
+              ]
+            },
+            "GetCustomTargetType": {
+              "methods": [
+                "get_custom_target_type"
+              ]
+            },
+            "GetDeliveryPipeline": {
+              "methods": [
+                "get_delivery_pipeline"
+              ]
+            },
+            "GetDeployPolicy": {
+              "methods": [
+                "get_deploy_policy"
+              ]
+            },
+            "GetJobRun": {
+              "methods": [
+                "get_job_run"
+              ]
+            },
+            "GetRelease": {
+              "methods": [
+                "get_release"
+              ]
+            },
+            "GetRollout": {
+              "methods": [
+                "get_rollout"
+              ]
+            },
+            "GetTarget": {
+              "methods": [
+                "get_target"
+              ]
+            },
+            "IgnoreJob": {
+              "methods": [
+                "ignore_job"
+              ]
+            },
+            "ListAutomationRuns": {
+              "methods": [
+                "list_automation_runs"
+              ]
+            },
+            "ListAutomations": {
+              "methods": [
+                "list_automations"
+              ]
+            },
+            "ListCustomTargetTypes": {
+              "methods": [
+                "list_custom_target_types"
+              ]
+            },
+            "ListDeliveryPipelines": {
+              "methods": [
+                "list_delivery_pipelines"
+              ]
+            },
+            "ListDeployPolicies": {
+              "methods": [
+                "list_deploy_policies"
+              ]
+            },
+            "ListJobRuns": {
+              "methods": [
+                "list_job_runs"
+              ]
+            },
+            "ListReleases": {
+              "methods": [
+                "list_releases"
+              ]
+            },
+            "ListRollouts": {
+              "methods": [
+                "list_rollouts"
+              ]
+            },
+            "ListTargets": {
+              "methods": [
+                "list_targets"
+              ]
+            },
+            "RetryJob": {
+              "methods": [
+                "retry_job"
+              ]
+            },
+            "RollbackTarget": {
+              "methods": [
+                "rollback_target"
+              ]
+            },
+            "TerminateJobRun": {
+              "methods": [
+                "terminate_job_run"
+              ]
+            },
+            "UpdateAutomation": {
+              "methods": [
+                "update_automation"
+              ]
+            },
+            "UpdateCustomTargetType": {
+              "methods": [
+                "update_custom_target_type"
+              ]
+            },
+            "UpdateDeliveryPipeline": {
+              "methods": [
+                "update_delivery_pipeline"
+              ]
+            },
+            "UpdateDeployPolicy": {
+              "methods": [
+                "update_deploy_policy"
+              ]
+            },
+            "UpdateTarget": {
+              "methods": [
+                "update_target"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudDeployClient",
+          "rpcs": {
+            "AbandonRelease": {
+              "methods": [
+                "abandon_release"
+              ]
+            },
+            "AdvanceRollout": {
+              "methods": [
+                "advance_rollout"
+              ]
+            },
+            "ApproveRollout": {
+              "methods": [
+                "approve_rollout"
+              ]
+            },
+            "CancelAutomationRun": {
+              "methods": [
+                "cancel_automation_run"
+              ]
+            },
+            "CancelRollout": {
+              "methods": [
+                "cancel_rollout"
+              ]
+            },
+            "CreateAutomation": {
+              "methods": [
+                "create_automation"
+              ]
+            },
+            "CreateCustomTargetType": {
+              "methods": [
+                "create_custom_target_type"
+              ]
+            },
+            "CreateDeliveryPipeline": {
+              "methods": [
+                "create_delivery_pipeline"
+              ]
+            },
+            "CreateDeployPolicy": {
+              "methods": [
+                "create_deploy_policy"
+              ]
+            },
+            "CreateRelease": {
+              "methods": [
+                "create_release"
+              ]
+            },
+            "CreateRollout": {
+              "methods": [
+                "create_rollout"
+              ]
+            },
+            "CreateTarget": {
+              "methods": [
+                "create_target"
+              ]
+            },
+            "DeleteAutomation": {
+              "methods": [
+                "delete_automation"
+              ]
+            },
+            "DeleteCustomTargetType": {
+              "methods": [
+                "delete_custom_target_type"
+              ]
+            },
+            "DeleteDeliveryPipeline": {
+              "methods": [
+                "delete_delivery_pipeline"
+              ]
+            },
+            "DeleteDeployPolicy": {
+              "methods": [
+                "delete_deploy_policy"
+              ]
+            },
+            "DeleteTarget": {
+              "methods": [
+                "delete_target"
+              ]
+            },
+            "GetAutomation": {
+              "methods": [
+                "get_automation"
+              ]
+            },
+            "GetAutomationRun": {
+              "methods": [
+                "get_automation_run"
+              ]
+            },
+            "GetConfig": {
+              "methods": [
+                "get_config"
+              ]
+            },
+            "GetCustomTargetType": {
+              "methods": [
+                "get_custom_target_type"
+              ]
+            },
+            "GetDeliveryPipeline": {
+              "methods": [
+                "get_delivery_pipeline"
+              ]
+            },
+            "GetDeployPolicy": {
+              "methods": [
+                "get_deploy_policy"
+              ]
+            },
+            "GetJobRun": {
+              "methods": [
+                "get_job_run"
+              ]
+            },
+            "GetRelease": {
+              "methods": [
+                "get_release"
+              ]
+            },
+            "GetRollout": {
+              "methods": [
+                "get_rollout"
+              ]
+            },
+            "GetTarget": {
+              "methods": [
+                "get_target"
+              ]
+            },
+            "IgnoreJob": {
+              "methods": [
+                "ignore_job"
+              ]
+            },
+            "ListAutomationRuns": {
+              "methods": [
+                "list_automation_runs"
+              ]
+            },
+            "ListAutomations": {
+              "methods": [
+                "list_automations"
+              ]
+            },
+            "ListCustomTargetTypes": {
+              "methods": [
+                "list_custom_target_types"
+              ]
+            },
+            "ListDeliveryPipelines": {
+              "methods": [
+                "list_delivery_pipelines"
+              ]
+            },
+            "ListDeployPolicies": {
+              "methods": [
+                "list_deploy_policies"
+              ]
+            },
+            "ListJobRuns": {
+              "methods": [
+                "list_job_runs"
+              ]
+            },
+            "ListReleases": {
+              "methods": [
+                "list_releases"
+              ]
+            },
+            "ListRollouts": {
+              "methods": [
+                "list_rollouts"
+              ]
+            },
+            "ListTargets": {
+              "methods": [
+                "list_targets"
+              ]
+            },
+            "RetryJob": {
+              "methods": [
+                "retry_job"
+              ]
+            },
+            "RollbackTarget": {
+              "methods": [
+                "rollback_target"
+              ]
+            },
+            "TerminateJobRun": {
+              "methods": [
+                "terminate_job_run"
+              ]
+            },
+            "UpdateAutomation": {
+              "methods": [
+                "update_automation"
+              ]
+            },
+            "UpdateCustomTargetType": {
+              "methods": [
+                "update_custom_target_type"
+              ]
+            },
+            "UpdateDeliveryPipeline": {
+              "methods": [
+                "update_delivery_pipeline"
+              ]
+            },
+            "UpdateDeployPolicy": {
+              "methods": [
+                "update_deploy_policy"
+              ]
+            },
+            "UpdateTarget": {
+              "methods": [
+                "update_target"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

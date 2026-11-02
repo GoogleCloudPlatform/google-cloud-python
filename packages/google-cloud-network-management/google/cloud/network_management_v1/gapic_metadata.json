@@ -1,0 +1,336 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.network_management_v1",
+  "protoPackage": "google.cloud.networkmanagement.v1",
+  "schema": "1.0",
+  "services": {
+    "OrganizationVpcFlowLogsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "OrganizationVpcFlowLogsServiceClient",
+          "rpcs": {
+            "CreateVpcFlowLogsConfig": {
+              "methods": [
+                "create_vpc_flow_logs_config"
+              ]
+            },
+            "DeleteVpcFlowLogsConfig": {
+              "methods": [
+                "delete_vpc_flow_logs_config"
+              ]
+            },
+            "GetVpcFlowLogsConfig": {
+              "methods": [
+                "get_vpc_flow_logs_config"
+              ]
+            },
+            "ListVpcFlowLogsConfigs": {
+              "methods": [
+                "list_vpc_flow_logs_configs"
+              ]
+            },
+            "UpdateVpcFlowLogsConfig": {
+              "methods": [
+                "update_vpc_flow_logs_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "OrganizationVpcFlowLogsServiceAsyncClient",
+          "rpcs": {
+            "CreateVpcFlowLogsConfig": {
+              "methods": [
+                "create_vpc_flow_logs_config"
+              ]
+            },
+            "DeleteVpcFlowLogsConfig": {
+              "methods": [
+                "delete_vpc_flow_logs_config"
+              ]
+            },
+            "GetVpcFlowLogsConfig": {
+              "methods": [
+                "get_vpc_flow_logs_config"
+              ]
+            },
+            "ListVpcFlowLogsConfigs": {
+              "methods": [
+                "list_vpc_flow_logs_configs"
+              ]
+            },
+            "UpdateVpcFlowLogsConfig": {
+              "methods": [
+                "update_vpc_flow_logs_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "OrganizationVpcFlowLogsServiceClient",
+          "rpcs": {
+            "CreateVpcFlowLogsConfig": {
+              "methods": [
+                "create_vpc_flow_logs_config"
+              ]
+            },
+            "DeleteVpcFlowLogsConfig": {
+              "methods": [
+                "delete_vpc_flow_logs_config"
+              ]
+            },
+            "GetVpcFlowLogsConfig": {
+              "methods": [
+                "get_vpc_flow_logs_config"
+              ]
+            },
+            "ListVpcFlowLogsConfigs": {
+              "methods": [
+                "list_vpc_flow_logs_configs"
+              ]
+            },
+            "UpdateVpcFlowLogsConfig": {
+              "methods": [
+                "update_vpc_flow_logs_config"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ReachabilityService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ReachabilityServiceClient",
+          "rpcs": {
+            "CreateConnectivityTest": {
+              "methods": [
+                "create_connectivity_test"
+              ]
+            },
+            "DeleteConnectivityTest": {
+              "methods": [
+                "delete_connectivity_test"
+              ]
+            },
+            "GetConnectivityTest": {
+              "methods": [
+                "get_connectivity_test"
+              ]
+            },
+            "ListConnectivityTests": {
+              "methods": [
+                "list_connectivity_tests"
+              ]
+            },
+            "RerunConnectivityTest": {
+              "methods": [
+                "rerun_connectivity_test"
+              ]
+            },
+            "UpdateConnectivityTest": {
+              "methods": [
+                "update_connectivity_test"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ReachabilityServiceAsyncClient",
+          "rpcs": {
+            "CreateConnectivityTest": {
+              "methods": [
+                "create_connectivity_test"
+              ]
+            },
+            "DeleteConnectivityTest": {
+              "methods": [
+                "delete_connectivity_test"
+              ]
+            },
+            "GetConnectivityTest": {
+              "methods": [
+                "get_connectivity_test"
+              ]
+            },
+            "ListConnectivityTests": {
+              "methods": [
+                "list_connectivity_tests"
+              ]
+            },
+            "RerunConnectivityTest": {
+              "methods": [
+                "rerun_connectivity_test"
+              ]
+            },
+            "UpdateConnectivityTest": {
+              "methods": [
+                "update_connectivity_test"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ReachabilityServiceClient",
+          "rpcs": {
+            "CreateConnectivityTest": {
+              "methods": [
+                "create_connectivity_test"
+              ]
+            },
+            "DeleteConnectivityTest": {
+              "methods": [
+                "delete_connectivity_test"
+              ]
+            },
+            "GetConnectivityTest": {
+              "methods": [
+                "get_connectivity_test"
+              ]
+            },
+            "ListConnectivityTests": {
+              "methods": [
+                "list_connectivity_tests"
+              ]
+            },
+            "RerunConnectivityTest": {
+              "methods": [
+                "rerun_connectivity_test"
+              ]
+            },
+            "UpdateConnectivityTest": {
+              "methods": [
+                "update_connectivity_test"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "VpcFlowLogsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "VpcFlowLogsServiceClient",
+          "rpcs": {
+            "CreateVpcFlowLogsConfig": {
+              "methods": [
+                "create_vpc_flow_logs_config"
+              ]
+            },
+            "DeleteVpcFlowLogsConfig": {
+              "methods": [
+                "delete_vpc_flow_logs_config"
+              ]
+            },
+            "GetVpcFlowLogsConfig": {
+              "methods": [
+                "get_vpc_flow_logs_config"
+              ]
+            },
+            "ListVpcFlowLogsConfigs": {
+              "methods": [
+                "list_vpc_flow_logs_configs"
+              ]
+            },
+            "QueryOrgVpcFlowLogsConfigs": {
+              "methods": [
+                "query_org_vpc_flow_logs_configs"
+              ]
+            },
+            "ShowEffectiveFlowLogsConfigs": {
+              "methods": [
+                "show_effective_flow_logs_configs"
+              ]
+            },
+            "UpdateVpcFlowLogsConfig": {
+              "methods": [
+                "update_vpc_flow_logs_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "VpcFlowLogsServiceAsyncClient",
+          "rpcs": {
+            "CreateVpcFlowLogsConfig": {
+              "methods": [
+                "create_vpc_flow_logs_config"
+              ]
+            },
+            "DeleteVpcFlowLogsConfig": {
+              "methods": [
+                "delete_vpc_flow_logs_config"
+              ]
+            },
+            "GetVpcFlowLogsConfig": {
+              "methods": [
+                "get_vpc_flow_logs_config"
+              ]
+            },
+            "ListVpcFlowLogsConfigs": {
+              "methods": [
+                "list_vpc_flow_logs_configs"
+              ]
+            },
+            "QueryOrgVpcFlowLogsConfigs": {
+              "methods": [
+                "query_org_vpc_flow_logs_configs"
+              ]
+            },
+            "ShowEffectiveFlowLogsConfigs": {
+              "methods": [
+                "show_effective_flow_logs_configs"
+              ]
+            },
+            "UpdateVpcFlowLogsConfig": {
+              "methods": [
+                "update_vpc_flow_logs_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "VpcFlowLogsServiceClient",
+          "rpcs": {
+            "CreateVpcFlowLogsConfig": {
+              "methods": [
+                "create_vpc_flow_logs_config"
+              ]
+            },
+            "DeleteVpcFlowLogsConfig": {
+              "methods": [
+                "delete_vpc_flow_logs_config"
+              ]
+            },
+            "GetVpcFlowLogsConfig": {
+              "methods": [
+                "get_vpc_flow_logs_config"
+              ]
+            },
+            "ListVpcFlowLogsConfigs": {
+              "methods": [
+                "list_vpc_flow_logs_configs"
+              ]
+            },
+            "QueryOrgVpcFlowLogsConfigs": {
+              "methods": [
+                "query_org_vpc_flow_logs_configs"
+              ]
+            },
+            "ShowEffectiveFlowLogsConfigs": {
+              "methods": [
+                "show_effective_flow_logs_configs"
+              ]
+            },
+            "UpdateVpcFlowLogsConfig": {
+              "methods": [
+                "update_vpc_flow_logs_config"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

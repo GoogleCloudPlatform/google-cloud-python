@@ -1,0 +1,33 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The name of the schema that messages published\n   should\
+      \ be validated against. Format is\n   <code>projects/{project}/schemas/{schema}</code>.\
+      \ The value of this\n   field will be <code>_deleted-schema_</code> if the schema\
+      \ has been\n   deleted."
+    id: schema
+    var_type: str
+  - description: The encoding of messages validated against <code>schema</code>.
+    id: encoding
+    var_type: google.pubsub_v1.types.Encoding
+  children: []
+  class: google.cloud.pubsub_v1.types.SchemaSettings
+  fullName: google.cloud.pubsub_v1.types.SchemaSettings
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: SchemaSettings
+  source:
+    id: SchemaSettings
+    path: null
+    startLine: null
+  summary: 'Settings for validating messages published against a schema.
+
+    '
+  syntax:
+    content: SchemaSettings(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.SchemaSettings
+references: []

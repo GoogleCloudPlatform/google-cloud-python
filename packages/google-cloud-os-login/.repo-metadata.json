@@ -1,0 +1,16 @@
+{
+    "api_description": "You can use OS Login to manage access to your VM instances using IAM roles.",
+    "api_id": "oslogin.googleapis.com",
+    "api_shortname": "oslogin",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/oslogin/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-os-login",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559755",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "oslogin",
+    "name_pretty": "Cloud OS Login",
+    "product_documentation": "https://cloud.google.com/compute/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

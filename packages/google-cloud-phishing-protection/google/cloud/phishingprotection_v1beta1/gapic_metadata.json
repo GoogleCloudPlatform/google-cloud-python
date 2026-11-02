@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.phishingprotection_v1beta1",
+  "protoPackage": "google.cloud.phishingprotection.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "PhishingProtectionServiceV1Beta1": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PhishingProtectionServiceV1Beta1Client",
+          "rpcs": {
+            "ReportPhishing": {
+              "methods": [
+                "report_phishing"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "PhishingProtectionServiceV1Beta1AsyncClient",
+          "rpcs": {
+            "ReportPhishing": {
+              "methods": [
+                "report_phishing"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "PhishingProtectionServiceV1Beta1Client",
+          "rpcs": {
+            "ReportPhishing": {
+              "methods": [
+                "report_phishing"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

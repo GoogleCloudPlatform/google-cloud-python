@@ -1,0 +1,937 @@
+tests:
+  - description: selectSpecificFields
+    pipeline:
+      - Collection: books
+      - Select:
+          - title
+          - author
+      - Sort:
+          - Ordering:
+            - Field: author
+            - ASCENDING
+    assert_results:
+      - title: "The Hitchhiker's Guide to the Galaxy"
+        author: "Douglas Adams"
+      - title: "The Great Gatsby"
+        author: "F. Scott Fitzgerald"
+      - title: "Dune"
+        author: "Frank Herbert"
+      - title: "Crime and Punishment"
+        author: "Fyodor Dostoevsky"
+      - title: "One Hundred Years of Solitude"
+        author: "Gabriel García Márquez"
+      - title: "1984"
+        author: "George Orwell"
+      - title: "To Kill a Mockingbird"
+        author: "Harper Lee"
+      - title: "The Lord of the Rings"
+        author: "J.R.R. Tolkien"
+      - title: "Pride and Prejudice"
+        author: "Jane Austen"
+      - title: "The Handmaid's Tale"
+        author: "Margaret Atwood"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                author:
+                  fieldReferenceValue: author
+                title:
+                  fieldReferenceValue: title
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: author
+          name: sort
+  - description: addAndRemoveFields
+    pipeline:
+      - Collection: books
+      - AddFields:
+        - AliasedExpression:
+            - FunctionExpression.string_concat:
+                - Field: author
+                - Constant: _
+                - Field: title
+            - "author_title"
+        - AliasedExpression:
+            - FunctionExpression.string_concat:
+                - Field: title
+                - Constant: _
+                - Field: author
+            - "title_author"
+      - RemoveFields:
+        - title_author
+        - tags
+        - awards
+        - rating
+        - title
+        - Field: published
+        - Field: genre
+        - Field: nestedField # Field does not exist, should be ignored
+      - Sort:
+        - Ordering:
+          - Field: author_title
+          - ASCENDING
+    assert_results:
+      - author: Douglas Adams
+        author_title: Douglas Adams_The Hitchhiker's Guide to the Galaxy
+      - author: F. Scott Fitzgerald
+        author_title: F. Scott Fitzgerald_The Great Gatsby
+      - author: Frank Herbert
+        author_title: Frank Herbert_Dune
+      - author: Fyodor Dostoevsky
+        author_title: Fyodor Dostoevsky_Crime and Punishment
+      - author: Gabriel García Márquez
+        author_title: Gabriel García Márquez_One Hundred Years of Solitude
+      - author: George Orwell
+        author_title: George Orwell_1984
+      - author: Harper Lee
+        author_title: Harper Lee_To Kill a Mockingbird
+      - author: J.R.R. Tolkien
+        author_title: J.R.R. Tolkien_The Lord of the Rings
+      - author: Jane Austen
+        author_title: Jane Austen_Pride and Prejudice
+      - author: Margaret Atwood
+        author_title: Margaret Atwood_The Handmaid's Tale
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                author_title:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: author
+                    - stringValue: _
+                    - fieldReferenceValue: title
+                    name: string_concat
+                title_author:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: title
+                    - stringValue: _
+                    - fieldReferenceValue: author
+                    name: string_concat
+          name: add_fields
+        - args:
+          - fieldReferenceValue: title_author
+          - fieldReferenceValue: tags
+          - fieldReferenceValue: awards
+          - fieldReferenceValue: rating
+          - fieldReferenceValue: title
+          - fieldReferenceValue: published
+          - fieldReferenceValue: genre
+          - fieldReferenceValue: nestedField
+          name: remove_fields
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: author_title
+          name: sort
+  - description: testPipelineWithOffsetAndLimit
+    pipeline:
+      - Collection: books
+      - Sort:
+          - Ordering:
+            - Field: author
+            - ASCENDING
+      - Offset: 5
+      - Limit: 3
+      - Select:
+        - title
+        - author
+    assert_results:
+      - title: "1984"
+        author: George Orwell
+      - title: To Kill a Mockingbird
+        author: Harper Lee
+      - title: The Lord of the Rings
+        author: J.R.R. Tolkien
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: author
+          name: sort
+        - args:
+          - integerValue: '5'
+          name: offset
+        - args:
+          - integerValue: '3'
+          name: limit
+        - args:
+          - mapValue:
+              fields:
+                author:
+                  fieldReferenceValue: author
+                title:
+                  fieldReferenceValue: title
+          name: select
+  - description: testSampleLimit
+    pipeline:
+      - Collection: books
+      - Sample: 3
+    assert_count: 3 # Results will vary due to randomness
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - integerValue: '3'
+          - stringValue: documents
+          name: sample
+  - description: testSamplePercentage
+    pipeline:
+      - Collection: books
+      - Sample:
+          - SampleOptions:
+            - 0.6
+            - percent
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - doubleValue: 0.6
+          - stringValue: percent
+          name: sample
+  - description: testUnion
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: genre
+              - Constant: Romance
+      - Union:
+        - Pipeline:
+            - Collection: books
+            - Where:
+                - FunctionExpression.equal:
+                    - Field: genre
+                    - Constant: Dystopian
+      - Select:
+        - title
+      - Sort:
+        - Ordering:
+          - Field: title
+          - ASCENDING
+    assert_results:
+      - title: "1984"
+      - title: Pride and Prejudice
+      - title: "The Handmaid's Tale"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: genre
+              - stringValue: Romance
+              name: equal
+          name: where
+        - args:
+          - pipelineValue:
+              stages:
+              - args:
+                - referenceValue: /books
+                name: collection
+              - args:
+                - functionValue:
+                    args:
+                    - fieldReferenceValue: genre
+                    - stringValue: Dystopian
+                    name: equal
+                name: where
+          name: union
+        - args:
+          - mapValue:
+              fields:
+                title:
+                  fieldReferenceValue: title
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+  - description: testUnionFullCollection
+    pipeline:
+      - Collection: books
+      - Union:
+        - Pipeline:
+          - Collection: books
+    assert_count: 20 # Results will be duplicated
+  - description: testCollectionGroup
+    pipeline:
+      - CollectionGroup: books
+      - Select:
+        - title
+      - Distinct:
+        - title
+      - Sort:
+        - Ordering:
+          - Field: title
+          - ASCENDING
+    assert_results:
+      - title: "1984"
+      - title: "Crime and Punishment"
+      - title: "Dune"
+      - title: "One Hundred Years of Solitude"
+      - title: "Pride and Prejudice"
+      - title: "The Great Gatsby"
+      - title: "The Handmaid's Tale"
+      - title: "The Hitchhiker's Guide to the Galaxy"
+      - title: "The Lord of the Rings"
+      - title: "To Kill a Mockingbird"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: ''
+          - stringValue: books
+          name: collection_group
+        - args:
+          - mapValue:
+              fields:
+                title:
+                  fieldReferenceValue: title
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                title:
+                  fieldReferenceValue: title
+          name: distinct
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+
+  - description: testDistinct
+    pipeline:
+      - Collection: books
+      - Distinct:
+        - genre
+      - Sort:
+        - Ordering:
+          - Field: genre
+          - ASCENDING
+    assert_results:
+      - genre: Dystopian
+      - genre: Fantasy
+      - genre: Magical Realism
+      - genre: Modernist
+      - genre: Psychological Thriller
+      - genre: Romance
+      - genre: Science Fiction
+      - genre: Southern Gothic
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                genre:
+                  fieldReferenceValue: genre
+          name: distinct
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: genre
+          name: sort
+
+  - description: testDocuments
+    pipeline:
+      - Documents:
+        - /books/book1
+        - /books/book10
+      - Select:
+        - title
+      - Sort:
+        - Ordering:
+          - Field: title
+          - ASCENDING
+    assert_results:
+      - title: "Dune"
+      - title: "The Hitchhiker's Guide to the Galaxy"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books/book1
+          - referenceValue: /books/book10
+          name: documents
+        - args:
+          - mapValue:
+              fields:
+                title:
+                  fieldReferenceValue: title
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+
+  - description: testDatabase
+    pipeline:
+      - Database
+      - Select:
+        - title
+      - Distinct:
+        - title
+      - Aggregate:
+        - AliasedExpression:
+            - Count: []
+            - count
+      - Select:
+        - AliasedExpression:
+          - Conditional:
+            - FunctionExpression.greater_than_or_equal:
+              - Field: count
+              - Constant: 10
+            - Constant: True
+            - Constant: False
+          - result
+    assert_results:
+      - result: True
+    assert_proto:
+      pipeline:
+        stages:
+        - name: database
+        - args:
+          - mapValue:
+              fields:
+                title:
+                  fieldReferenceValue: title
+          name: select
+        - args:
+          - mapValue:
+              fields:
+                title:
+                  fieldReferenceValue: title
+          name: distinct
+        - args:
+          - mapValue:
+              fields:
+                count:
+                  functionValue:
+                    name: count
+          - mapValue: {}
+          name: aggregate
+        - name: select
+          args:
+          - mapValue:
+              fields:
+                result:
+                  functionValue:
+                    args:
+                    - functionValue:
+                        args:
+                        - fieldReferenceValue: count
+                        - integerValue: '10'
+                        name: greater_than_or_equal
+                    - booleanValue: true
+                    - booleanValue: false
+                    name: conditional
+  - description: testRawStage
+    pipeline:
+      - RawStage:
+          - "collection"
+          - Value:
+              reference_value: "/books"
+      - RawStage:
+        - "where"
+        - FunctionExpression.equal:
+          - Field: title
+          - Constant: The Hitchhiker's Guide to the Galaxy
+      - RawStage:
+        - "select"
+        - Value:
+            map_value:
+              fields:
+                author:
+                  field_reference_value: author
+    assert_results:
+      - author: Douglas Adams
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: title
+              - stringValue: The Hitchhiker's Guide to the Galaxy
+              name: equal
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                author:
+                  fieldReferenceValue: author
+          name: select
+  - description: testUnnest
+    pipeline:
+      - Collection: books
+      - Where:
+        - FunctionExpression.equal:
+          - Field: title
+          - Constant: The Hitchhiker's Guide to the Galaxy
+      - Unnest:
+        - tags
+        - tags_alias
+      - Select: tags_alias
+    assert_results:
+      - tags_alias: comedy
+      - tags_alias: space
+      - tags_alias: adventure
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: title
+              - stringValue: The Hitchhiker's Guide to the Galaxy
+              name: equal
+          name: where
+        - args:
+          - fieldReferenceValue: tags
+          - fieldReferenceValue: tags_alias
+          name: unnest
+        - args:
+          - mapValue:
+              fields:
+                tags_alias:
+                  fieldReferenceValue: tags_alias
+          name: select
+  - description: testUnnestWithOptions
+    pipeline:
+      - Collection: books
+      - Where:
+        - FunctionExpression.equal:
+          - Field: title
+          - Constant: The Hitchhiker's Guide to the Galaxy
+      - Unnest:
+          field: tags
+          alias: tags_alias
+          options:
+            UnnestOptions:
+            - index
+      - Select: 
+        - tags_alias
+        - index
+    assert_results:
+      - tags_alias: comedy
+        index: 0
+      - tags_alias: space
+        index: 1
+      - tags_alias: adventure
+        index: 2
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: title
+              - stringValue: The Hitchhiker's Guide to the Galaxy
+              name: equal
+          name: where
+        - args:
+          - fieldReferenceValue: tags
+          - fieldReferenceValue: tags_alias
+          name: unnest
+          options:
+            index_field:
+              fieldReferenceValue: index
+        - args:
+          - mapValue:
+              fields:
+                tags_alias:
+                  fieldReferenceValue: tags_alias
+                index:
+                  fieldReferenceValue: index
+          name: select
+  - description: replaceWith
+    pipeline:
+      - Collection: books
+      - Where:
+        - FunctionExpression.equal:
+          - Field: title
+          - Constant: "The Hitchhiker's Guide to the Galaxy"
+      - ReplaceWith:
+        - Field: awards
+    assert_results:
+      - hugo: True
+        nebula: False
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: title
+              - stringValue: "The Hitchhiker's Guide to the Galaxy"
+              name: equal
+          name: where
+        - args:
+          - fieldReferenceValue: awards
+          - stringValue: full_replace
+          name: replace_with
+  - description: testTypeAndIsType
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: title
+              - Constant: "The Hitchhiker's Guide to the Galaxy"
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.type:
+                - Field: awards
+            - "val_type"
+        - AliasedExpression:
+            - FunctionExpression.is_type:
+                - Field: awards
+                - Constant: "map"
+            - "val_is_map"
+    assert_results:
+      - val_type: "map"
+        val_is_map: true
+  - description: literals
+    pipeline:
+      - Literals:
+        - title: "The Hitchhiker's Guide to the Galaxy"
+          author: "Douglas Adams"
+        - genre: "Science Fiction"
+          year: 1979
+    assert_results:
+      - title: "The Hitchhiker's Guide to the Galaxy"
+        author: "Douglas Adams"
+      - genre: "Science Fiction"
+        year: 1979
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - mapValue:
+              fields:
+                author:
+                  stringValue: "Douglas Adams"
+                title:
+                  stringValue: "The Hitchhiker's Guide to the Galaxy"
+          - mapValue:
+              fields:
+                genre:
+                  stringValue: "Science Fiction"
+                year:
+                  integerValue: '1979'
+          name: literals
+  - description: literals_with_expression_input
+    pipeline:
+      - Literals:
+        - res:
+            FunctionExpression.string_concat:
+              - Constant: "A"
+              - Constant: "B"
+      - Select:
+        - res
+    assert_results:
+      - res: "AB"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - mapValue:
+              fields:
+                res:
+                  functionValue:
+                    args:
+                    - stringValue: "A"
+                    - stringValue: "B"
+                    name: string_concat
+          name: literals
+        - args:
+          - mapValue:
+              fields:
+                res:
+                  fieldReferenceValue: res
+          name: select
+  - description: testCoalesce
+    pipeline:
+      - Collection: books
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.coalesce:
+                - Field: non_existent_field
+                - Constant: "B"
+            - "res"
+    assert_results:
+      - res: "B"
+  - description: testCoalesceMultipleFailures
+    pipeline:
+      - Collection: books
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.coalesce:
+                - Field: non_existent_field1
+                - Field: non_existent_field2
+                - Field: non_existent_field3
+                - Constant: "Found"
+            - "res"
+    assert_results:
+      - res: "Found"
+  - description: testCoalesceShortCircuit
+    pipeline:
+      - Collection: books
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.coalesce:
+                - Field: non_existent_field
+                - "Hello"
+                - "Never Reaches"
+            - "res"
+    assert_results:
+      - res: "Hello"
+  - description: testCoalesceNumber
+    pipeline:
+      - Collection: books
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.coalesce:
+                - Field: non_existent_field
+                - 42
+            - "res"
+    assert_results:
+      - res: 42
+  - description: testCoalesceNoResult
+    pipeline:
+      - Collection: books
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.coalesce:
+                - Field: non_existent_field1
+                - Field: non_existent_field2
+            - "res"
+    assert_results:
+      - {}
+  - description: testCoalesceFieldResult
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: title
+              - Constant: "1984"
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.coalesce:
+                - Field: non_existent_field
+                - Field: title
+            - "res"
+    assert_results:
+      - res: "1984"
+  - description: testCoalesceNull
+    pipeline:
+      - Documents:
+          - /errors/doc_with_null
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.coalesce:
+                - Field: value
+                - Constant: "Success"
+            - "res"
+    assert_results:
+      - res: "Success"
+  - description: testSwitchOn
+    pipeline:
+      - Literals:
+        - res:
+            FunctionExpression.switch_on:
+              - FunctionExpression.equal:
+                  - Constant: 1
+                  - Constant: 2
+              - Constant: "A"
+              - FunctionExpression.equal:
+                  - Constant: 1
+                  - Constant: 1
+              - Constant: "B"
+              - Constant: "C"
+      - Select:
+        - res
+    assert_results:
+      - res: "B"
+  - description: testSwitchOn_Default
+    pipeline:
+      - Literals:
+        - res:
+            FunctionExpression.switch_on:
+              - FunctionExpression.equal:
+                  - Constant: 1
+                  - Constant: 2
+              - Constant: "A"
+              - FunctionExpression.equal:
+                  - Constant: 1
+                  - Constant: 3
+              - Constant: "B"
+              - Constant: "C"
+      - Select:
+        - res
+    assert_results:
+      - res: "C"
+  - description: testSwitchOn_Error
+    pipeline:
+      - Literals:
+        - res:
+            FunctionExpression.switch_on:
+              - FunctionExpression.equal:
+                  - Constant: 1
+                  - Constant: 2
+              - Constant: "A"
+              - FunctionExpression.equal:
+                  - Constant: 1
+                  - Constant: 3
+              - Constant: "B"
+      - Select:
+        - res
+    assert_error: ".*all switch cases evaluate to false, and no default provided"
+  - description: testStorageSize
+    pipeline:
+      - Collection: books
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.storage_size:
+                - Field: __name__
+            - res
+    assert_results:
+      - res: 29
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - integerValue: '1'
+          name: limit
+        - args:
+          - mapValue:
+              fields:
+                res:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: __name__
+                    name: storage_size
+          name: select
+  - description: union_subpipeline_error
+    pipeline:
+      - Collection: books
+      - Union:
+        - Pipeline:
+          - Subcollection: reviews
+    assert_error: ".*start of a nested pipeline.*"
+  - description: cannot_call_expression_methods_on_aliased_expression
+    pipeline:
+      - Collection: books
+      - Select:
+        - FunctionExpression.add:
+          - AliasedExpression:
+            - Field: pages
+            - pages_alias
+          - 5
+    assert_error: "Cannot call 'add' on AliasedExpression"
+  - description: cannot_chain_aliases
+    pipeline:
+      - Collection: books
+      - Select:
+        - AliasedExpression:
+          - AliasedExpression:
+            - Field: pages
+            - pages_alias
+          - final_alias
+    assert_error: "Cannot wrap an AliasedExpression"
+  - description: valid_aliased_expression_proto
+    pipeline:
+      - Collection: books
+      - Select:
+        - AliasedExpression:
+          - Field: pages
+          - pages_alias
+    assert_proto:
+      pipeline:
+        stages:
+          - args:
+            - referenceValue: /books
+            name: collection
+          - args:
+            - mapValue:
+                fields:
+                  pages_alias:
+                    fieldReferenceValue: pages
+            name: select

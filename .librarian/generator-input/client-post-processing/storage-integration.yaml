@@ -1,0 +1,821 @@
+description: Restore handwritten __init__.py for google-cloud-storage
+replacements:
+  - paths: [
+      packages/google-cloud-storage/noxfile.py,
+    ]
+    before: |
+      UNIT_TEST_DEPENDENCIES: List\[str\] = \[\]
+    after: |
+      UNIT_TEST_DEPENDENCIES: List[str] = [
+          "brotli",
+          "grpcio",
+          "grpc-google-iam-v1",
+          "opentelemetry-api",
+          "opentelemetry-sdk",
+      ]
+    count: 1
+  - paths: [
+      packages/google-cloud-storage/noxfile.py,
+    ]
+    before: |
+        os.path.join\("tests", "unit"\),
+        \        \*session.posargs,
+    after: |
+        os.path.join("tests", "unit"),
+                os.path.join("tests", "resumable_media", "unit"),
+                *session.posargs,
+    count: 1
+  - paths: [
+      packages/google-cloud-storage/noxfile.py,
+    ]
+    before: |
+      def prerelease_deps\(session, protobuf_implementation\):
+      \    """
+      \    Run all tests with pre-release versions of dependencies installed
+      [\s\S]*?def core_deps_from_source\(session, protobuf_implementation\):
+    after: |
+      def prerelease_deps(session, protobuf_implementation):
+          """Run all tests with prerelease versions of dependencies installed."""
+
+          # Environment check: Only run tests if the environment variable is set.
+          if not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", ""):
+              session.skip(
+                  "Credentials must be set via environment variable GOOGLE_APPLICATION_CREDENTIALS"
+              )
+
+          # Install dependencies for the unit test environment
+          unit_deps_all = UNIT_TEST_STANDARD_DEPENDENCIES + UNIT_TEST_EXTERNAL_DEPENDENCIES
+          session.install(*unit_deps_all)
+
+          # Install dependencies needed for system tests
+          session.install(
+              "google-cloud-pubsub",
+              "google-cloud-kms",
+              "google-cloud-testutils",
+              "google-cloud-iam",
+          )
+
+          # Install all dependencies
+          session.install("-e", ".[protobuf, tracing]")
+
+          prerel_deps = [
+              "google-api-core",
+              # Exclude google-auth 3.0.0.dev0 which was yanked
+              "google-auth!=3.0.0.dev0",
+              "google-cloud-core",
+              "google-crc32c",
+              "google-resumable-media",
+              "opentelemetry-api",
+              "protobuf",
+          ]
+
+          package_namespaces = {
+              "google-api-core": "google.api_core",
+              "google-auth": "google.auth",
+              "google-cloud-core": "google.cloud.version",
+              "opentelemetry-api": "opentelemetry.version",
+              "protobuf": "google.protobuf",
+          }
+
+          for dep in prerel_deps:
+              session.install("--pre", "--no-deps", "--upgrade", dep)
+              print(f"Installed {dep}")
+
+              version_namespace = package_namespaces.get(dep)
+
+              if version_namespace:
+                  session.run(
+                      "python",
+                      "-c",
+                      f"import {version_namespace}; print({version_namespace}.__version__)",
+                  )
+          # Remaining dependencies
+          other_deps = ["requests", "pyopenssl"]
+          session.install(*other_deps)
+
+          session.run(
+              "py.test",
+              "tests/unit",
+              env={
+                  "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": protobuf_implementation,
+              },
+          )
+
+          session.run(
+              "py.test",
+              "--verbose",
+              f"--junitxml=system_{session.python}_sponge_log.xml",
+              os.path.join("tests", "system"),
+              *session.posargs,
+              env={
+                  "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": protobuf_implementation,
+              },
+          )
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      @nox.parametrize(
+          "protobuf_implementation",
+          ["python", "upb"],
+      )
+      def core_deps_from_source(session, protobuf_implementation):
+    count: 1
+  - paths: [
+      packages/google-cloud-storage/noxfile.py,
+    ]
+    before: |
+      @nox.session\(python=SYSTEM_TEST_PYTHON_VERSIONS\)
+      def system\(session\):
+      [\s\S]*?def cover\(session\):
+    after: |
+      @nox.session(python=SYSTEM_TEST_PYTHON_VERSIONS)
+      @nox.parametrize(
+          "test_type",
+          ["system", "conformance", "conformance_bidi"],
+      )
+      def system(session, test_type):
+          if test_type == "conformance":
+              conftest_retry(session)
+              return
+          if test_type == "conformance_bidi":
+              conftest_retry_bidi(session)
+              return
+
+          constraints_path = str(
+              CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+          )
+          """Run the system test suite."""
+          rerun_count = 0
+
+          # Check the value of `RUN_SYSTEM_TESTS` env var. It defaults to true.
+          if os.environ.get("RUN_SYSTEM_TESTS", "true") == "false":
+              session.skip("RUN_SYSTEM_TESTS is set to false, skipping")
+          # Environment check: Only run tests if the environment variable is set.
+          if not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", ""):
+              session.skip(
+                  "Credentials must be set via environment variable GOOGLE_APPLICATION_CREDENTIALS"
+              )
+          # mTLS tests requires pyopenssl.
+          if os.environ.get("GOOGLE_API_USE_CLIENT_CERTIFICATE", "") == "true":
+              session.install("pyopenssl")
+          # Check if endpoint is being overriden for rerun_count
+          if (
+              os.getenv("API_ENDPOINT_OVERRIDE", "https://storage.googleapis.com")
+              != "https://storage.googleapis.com"
+          ):
+              rerun_count = 3
+
+          # Use pre-release gRPC for system tests.
+          # TODO: Remove ban of 1.52.0rc1 once grpc/grpc#31885 is resolved.
+          session.install("--pre", "grpcio!=1.52.0rc1")
+
+          # Install all test dependencies, then install this package into the
+          # virtualenv's dist-packages.
+          # 2021-05-06: defer installing 'google-cloud-*' to after this package,
+          #             in order to work around Python 2.7 googolapis-common-protos
+          #             issue.
+          session.install(
+              "mock",
+              "pytest",
+              "pytest-rerunfailures",
+              "pytest-asyncio",
+              "-c",
+              constraints_path,
+          )
+          session.install("-e", ".", "-c", constraints_path)
+          session.install(
+              "google-cloud-testutils",
+              "google-cloud-iam",
+              "google-cloud-pubsub",
+              "google-cloud-kms",
+              "brotli",
+              "-c",
+              constraints_path,
+          )
+
+          # Run py.test against the system tests.
+          session.run(
+              "py.test",
+              "--quiet",
+              f"--junitxml=system_{session.python}_sponge_log.xml",
+              "--reruns={}".format(rerun_count),
+              os.path.join("tests", "system"),
+              os.path.join("tests", "resumable_media", "system"),
+              *session.posargs,
+          )
+
+
+      @nox.session(python=SYSTEM_TEST_PYTHON_VERSIONS)
+      def conftest_retry(session):
+          """Run the retry conformance test suite."""
+          json_conformance_tests = "tests/conformance/test_conformance.py"
+          # Environment check: only run tests if found.
+          if not os.path.exists(json_conformance_tests):
+              session.skip("Conformance tests were not found")
+
+          constraints_path = str(
+              CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+          )
+
+          # Install all test dependencies and pytest plugin to run tests in parallel.
+          # Then install this package in-place.
+          session.install(
+              "pytest",
+              "pytest-xdist",
+              "-c",
+              constraints_path,
+          )
+          session.install("-e", ".", "-c", constraints_path)
+
+          # Run #CPU processes in parallel if no test session arguments are passed in.
+          if session.posargs:
+              test_cmd = [
+                  "pytest",
+                  "-vv",
+                  "-s",
+                  json_conformance_tests,
+                  *session.posargs,
+              ]
+          else:
+              test_cmd = ["pytest", "-vv", "-s", "-n", "auto", json_conformance_tests]
+
+          # Run pytest against the conformance tests.
+          session.run(*test_cmd, env={"DOCKER_API_VERSION": "1.39"})
+
+
+      @nox.session(python=SYSTEM_TEST_PYTHON_VERSIONS)
+      def conftest_retry_bidi(session):
+          """Run the retry conformance test suite."""
+
+          constraints_path = str(
+              CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+          )
+
+          # Install all test dependencies and pytest plugin to run tests in parallel.
+          # Then install this package in-place.
+          session.install(
+              "pytest",
+              "pytest-xdist",
+              "pytest-asyncio",
+              "grpcio",
+              "grpcio-status",
+              "grpc-google-iam-v1",
+              "-c",
+              constraints_path,
+          )
+          session.install("-e", ".", "-c", constraints_path)
+
+          bidi_tests = [
+              "tests/conformance/test_bidi_reads.py",
+              "tests/conformance/test_bidi_writes.py",
+          ]
+          for test_file in bidi_tests:
+              session.run(
+                  "pytest",
+                  "-vv",
+                  "-s",
+                  test_file,
+                  env={"DOCKER_API_VERSION": "1.39"},
+              )
+
+
+      @nox.session(python=DEFAULT_PYTHON_VERSION)
+      def cover(session):
+    count: 1
+  - paths: [
+      packages/google-cloud-storage/README.rst,
+    ]
+    before: |
+      Python Client for Cloud Storage
+      [\s\S]*?\(This is the reason for 2.i. above.\)
+    after: |
+      Python Client for Cloud Storage
+      ===============================
+
+      |stable| |pypi| |versions|
+
+      `Google Cloud Storage`_ is a managed service for storing unstructured data. Cloud Storage
+      allows worldwide storage and retrieval of any amount of data at any time. You can use
+      Cloud Storage for a range of scenarios including serving website content, storing data
+      for archival and disaster recovery, or distributing large data objects to users via direct download.
+
+      **NOTE**: `3.0 Major Version Notes`_ are available. Feedback welcome.
+
+      A comprehensive list of changes in each version may be found in the `CHANGELOG`_.
+
+      - `Product Documentation`_
+      - `Client Library Documentation`_
+      - `github.com/googleapis/google-cloud-python`_
+
+      Certain control plane and long-running operations for Cloud Storage (including Folder
+      and Managed Folder operations) are supported via the `Storage Control Client`_.
+      The `Storage Control API`_ creates one space to perform metadata-specific, control plane,
+      and long-running operations apart from the Storage API.
+
+      Read more about the client libraries for Cloud APIs, including the older
+      Google APIs Client Libraries, in `Client Libraries Explained`_.
+
+      .. |stable| image:: https://img.shields.io/badge/support-stable-gold.svg
+         :target: https://github.com/googleapis/google-cloud-python/blob/main/README.rst#stability-levels
+      .. |pypi| image:: https://img.shields.io/pypi/v/google-cloud-storage.svg
+         :target: https://pypi.org/project/google-cloud-storage/
+      .. |versions| image:: https://img.shields.io/pypi/pyversions/google-cloud-storage.svg
+         :target: https://pypi.org/project/google-cloud-storage/
+      .. _Google Cloud Storage: https://cloud.google.com/storage
+      .. _Client Library Documentation: https://cloud.google.com/python/docs/reference/storage/latest/summary_overview
+      .. _Product Documentation:  https://cloud.google.com/storage
+      .. _CHANGELOG:  https://github.com/googleapis/google-cloud-python/blob/main/CHANGELOG.md
+      .. _github.com/googleapis/google-cloud-python: https://github.com/googleapis/google-cloud-python
+      .. _Storage Control Client: https://cloud.google.com/python/docs/reference/google-cloud-storage-control/latest
+      .. _Storage Control API: https://cloud.google.com/storage/docs/reference/rpc/google.storage.control.v2
+      .. _Client Libraries Explained: https://cloud.google.com/apis/docs/client-libraries-explained
+
+
+      Quick Start
+      -----------
+
+      To use this library, you first need to follow these steps.
+      A step-by-step guide may also be found in `Get Started with Client Libraries`_.
+
+      1. `Select or create a Cloud Platform project.`_
+      2. `Enable billing for your project.`_
+      3. `Enable the Google Cloud Storage API.`_
+      4. `Set up Authentication.`_
+
+      .. _Get Started with Client Libraries: https://cloud.google.com/storage/docs/reference/libraries#client-libraries-install-python
+      .. _Select or create a Cloud Platform project.: https://console.cloud.google.com/project
+      .. _Enable billing for your project.: https://cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_a_project
+      .. _Enable the Google Cloud Storage API.:  https://console.cloud.google.com/flows/enableapi?apiid=storage-api.googleapis.com
+      .. _Set up Authentication.: https://cloud.google.com/docs/authentication/client-libraries
+
+      Installation
+      ~~~~~~~~~~~~
+
+      Install this library in a virtual environment using `venv`_. `venv`_ is a tool that
+      creates isolated Python environments. These isolated environments can have separate
+      versions of Python packages, which allows you to isolate one project's dependencies
+      from the dependencies of other projects.
+
+      With `venv`_, it's possible to install this library without needing system
+      install permissions, and without clashing with the installed system
+      dependencies.
+
+      .. _`venv`: https://docs.python.org/3/library/venv.html
+
+
+      Code samples and snippets
+      ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+      Code samples and snippets live in the `samples/`_ folder.
+
+      .. _`samples/`: https://github.com/googleapis/google-cloud-python/tree/main/samples
+
+
+      Supported Python Versions
+      ^^^^^^^^^^^^^^^^^^^^^^^^^
+      Our client libraries are compatible with all current `active`_ and `maintenance`_ versions of
+      Python.
+
+      Python >= 3.7
+
+      .. _active: https://devguide.python.org/devcycle/#in-development-main-branch
+      .. _maintenance: https://devguide.python.org/devcycle/#maintenance-branches
+
+      Unsupported Python Versions
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      Python <= 3.6
+
+      If you are using an `end-of-life`_
+      version of Python, we recommend that you update as soon as possible to an actively supported version.
+
+      .. _end-of-life: https://devguide.python.org/devcycle/#end-of-life-branches
+
+      Mac/Linux
+      ^^^^^^^^^
+
+      .. code-block:: console
+
+          python3 -m venv <your-env>
+          source <your-env>/bin/activate
+          pip install google-cloud-storage
+
+
+      Windows
+      ^^^^^^^
+
+      .. code-block:: console
+
+          py -m venv <your-env>
+          .\\<your-env>\\Scripts\\activate
+          pip install google-cloud-storage
+
+
+      Example Usage
+      ~~~~~~~~~~~~~
+
+      .. code-block:: python
+
+          # Imports the Google Cloud client library
+          from google.cloud import storage
+
+          # Instantiates a client
+          storage_client = storage.Client()
+
+          # The name for the new bucket
+          bucket_name = "my-new-bucket"
+
+          # Creates the new bucket
+          bucket = storage_client.create_bucket(bucket_name)
+
+          print(f"Bucket {bucket.name} created.")
+
+
+      Tracing With OpenTelemetry
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+      This is a PREVIEW FEATURE: Coverage and functionality are still in development and subject to change.
+
+      This library can be configured to use `OpenTelemetry`_ to generate traces on calls to Google Cloud Storage.
+      For information on the benefits and utility of tracing, read the `Cloud Trace Overview <https://cloud.google.com/trace/docs/overview>`_.
+
+      To enable OpenTelemetry tracing in the Cloud Storage client, first install OpenTelemetry:
+
+      .. code-block:: console
+
+          pip install google-cloud-storage[tracing]
+
+      Set the ``ENABLE_GCS_PYTHON_CLIENT_OTEL_TRACES`` environment variable to opt in selectively to tracing for the Cloud Storage client:
+
+      .. code-block:: console
+
+          export ENABLE_GCS_PYTHON_CLIENT_OTEL_TRACES=True
+
+      You will also need to tell OpenTelemetry which exporter to use. An example to export traces to Google Cloud Trace can be found below.
+
+      .. code-block:: console
+
+          # Install the Google Cloud Trace exporter and propagator, however you can use any exporter of your choice.
+          pip install opentelemetry-exporter-gcp-trace opentelemetry-propagator-gcp
+
+          # [Optional] Install the OpenTelemetry Requests Instrumentation to trace the underlying HTTP requests.
+          pip install opentelemetry-instrumentation-requests
+
+      .. code-block:: python
+
+          from opentelemetry import trace
+          from opentelemetry.sdk.trace import TracerProvider
+          from opentelemetry.sdk.trace.export import BatchSpanProcessor
+          from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
+
+          tracer_provider = TracerProvider()
+          tracer_provider.add_span_processor(BatchSpanProcessor(CloudTraceSpanExporter()))
+          trace.set_tracer_provider(tracer_provider)
+
+          # Optional yet recommended to instrument the requests HTTP library
+          from opentelemetry.instrumentation.requests import RequestsInstrumentor
+          RequestsInstrumentor().instrument(tracer_provider=tracer_provider)
+
+      In this example, tracing data will be published to the `Google Cloud Trace`_ console.
+      Tracing is most effective when many libraries are instrumented to provide insight over the entire lifespan of a request.
+      For a list of libraries that can be instrumented, refer to the `OpenTelemetry Registry`_.
+
+      .. _OpenTelemetry: https://opentelemetry.io
+      .. _OpenTelemetry Registry: https://opentelemetry.io/ecosystem/registry
+      .. _Google Cloud Trace: https://cloud.google.com/trace
+
+
+      3.0 Major Version Notes
+      -----------------------
+
+      Feedback Welcome
+      ~~~~~~~~~~~~~~~~
+
+      If you experience any break in backwards compatibility for your application
+      with this major version release, please let us know through the GitHub issues
+      system. While some breaks of backwards compatibility may be unavoidable due to
+      new features in the major version release, we will do our best to minimize
+      them. Thank you.
+
+      Exception Handling
+      ~~~~~~~~~~~~~~~~~~
+
+      In Python Storage 3.0, the dependency ``google-resumable-media`` was integrated.
+      The ``google-resumable-media`` dependency included exceptions
+      ``google.resumable_media.common.InvalidResponse`` and
+      ``google.resumable_media.common.DataCorruption``, which were often imported
+      directly in user application code. The replacements for these exceptions are
+      ``google.cloud.storage.exceptions.InvalidResponse`` and
+      ``google.cloud.storage.exceptions.DataCorruption``. Please update application code
+      to import and use these exceptions instead.
+
+      For backwards compatibility, if ``google-resumable-media`` is installed, the new
+      exceptions will be defined as subclasses of the old exceptions, so applications
+      should continue to work without modification. This backwards compatibility
+      feature may be removed in a future major version update.
+
+      Some users may be using the original exception classes from the
+      ``google-resumable-media`` library without explicitly installing that library. So
+      as not to break user applications following this pattern,
+      ``google-resumable-media`` is still in the list of dependencies in this package's
+      setup.py file. Applications that do not import directly from
+      ``google-resumable-media`` can safely disregard this dependency.
+      This backwards compatibility feature **will be removed** in a future major
+      version update. Please migrate to using the ``google.cloud.storage.exceptions``
+      classes as above.
+
+      Checksum Defaults
+      ~~~~~~~~~~~~~~~~~
+
+      In Python Storage 3.0, uploads and downloads now have a default of "auto" where
+      applicable. "Auto" will use crc32c checksums, except for unusual cases where the
+      fast (C extension) crc32c implementation is not available, in which case it will
+      use md5 instead. Before Python Storage 3.0, the default was md5 for most
+      downloads and None for most uploads. Note that ranged downloads ("start" or
+      "end" set) still do not support any checksumming, and some features in
+      ``transfer_manager.py`` still support crc32c only.
+
+      Note: The method ``Blob.upload_from_file()`` requires a file in bytes mode, but
+      when checksum is set to None, as was the previous default, it would not throw an
+      error if passed a file in string mode under some circumstances. With the new
+      defaults, it will now raise a TypeError. Please use a file opened in bytes
+      reading mode as required.
+
+      Miscellaneous
+      ~~~~~~~~~~~~~
+
+      - The ``BlobWriter`` class now attempts to terminate an ongoing resumable upload if
+        the writer exits with an exception.
+      - Retry behavior is now identical between media operations (uploads and
+        downloads) and other operations, and custom predicates are now supported for
+        media operations as well.
+      - ``Blob.download_as_filename()`` will now delete the empty file if it results in a
+        google.cloud.exceptions.NotFound exception (HTTP 404).
+      - Previously, object upload, metadata update, and delete methods had retries
+        disabled by default unless the generation or metageneration was specified in
+        the request. This has now changed so that retries are enabled by default.
+
+
+      Next Steps
+      ~~~~~~~~~~
+
+      -  Read the `Google Cloud Storage Product documentation`_ to learn
+         more about the product and see How-to Guides.
+      -  Read the `Client Library Documentation`_ for Google Cloud Storage API
+         to see other available methods on the client.
+      -  View this `README`_ to see the full list of Cloud
+         APIs that we cover.
+
+      .. _Google Cloud Storage Product documentation:  https://cloud.google.com/storage
+      .. _README: https://github.com/googleapis/google-cloud-python/blob/main/README.rst
+
+    count: 1
+  - paths: [
+      packages/google-cloud-storage/setup.py,
+    ]
+    before: |
+      dependencies = \[
+      [\s\S]*?extras = \{\}
+    after: |
+      dependencies = [
+          "google-auth >= 2.26.1, < 3.0.0",
+          "google-api-core >= 2.27.0, < 3.0.0",
+          "google-cloud-core >= 2.4.2, < 3.0.0",
+          # The dependency "google-resumable-media" is no longer used. However, the
+          # dependency is still included here to accommodate users who may be
+          # importing exception classes from the google-resumable-media without
+          # installing it explicitly. See the python-storage README for details on
+          # exceptions and importing. Users who are not importing
+          # google-resumable-media classes in their application can safely disregard
+          # this dependency.
+          "google-resumable-media >= 2.7.2, < 3.0.0",
+          "requests >= 2.22.0, < 3.0.0",
+          "google-crc32c >= 1.6.0, < 2.0.0",
+      ]
+      extras = {
+          # TODO: Make these extra dependencies as mandatory once gRPC out of
+          # experimental in this SDK. More info in b/465352227
+          "grpc": [
+              "google-api-core[grpc] >= 2.27.0, < 3.0.0",
+              "grpcio >= 1.59.0, < 2.0.0",
+              "grpcio >= 1.75.1, < 2.0.0; python_version >= '3.14'",
+              "grpcio-status >= 1.59.0, < 2.0.0",
+              "grpcio-status >= 1.75.1, < 2.0.0; python_version >= '3.14'",
+              "proto-plus >= 1.26.1, <2.0.0",
+              "protobuf >= 6.33.5, < 8.0.0",
+              "grpc-google-iam-v1 >= 0.14.2, <1.0.0",
+          ],
+          "protobuf": ["protobuf >= 6.33.5, < 8.0.0"],
+          "tracing": [
+              "opentelemetry-api >= 1.1.0, < 2.0.0",
+          ],
+          "testing": [
+              "google-cloud-testutils",
+              "numpy",
+              "psutil",
+              "py-cpuinfo",
+              "pytest-benchmark",
+              "PyYAML",
+              "mock",
+              "pytest",
+              "pytest-cov",
+              "pytest-asyncio",
+              "pytest-rerunfailures",
+              "pytest-xdist",
+              "google-cloud-testutils",
+              "google-cloud-iam",
+              "google-cloud-pubsub",
+              "google-cloud-kms",
+              "brotli",
+              "coverage",
+              "pyopenssl",
+              "opentelemetry-sdk",
+              "flake8",
+              "black",
+          ],
+      }
+    count: 1
+  - paths: [
+      packages/google-cloud-storage/testing/constraints-3.10.txt
+    ]
+    before: |
+      google-api-core==2.28.0
+      google-auth==2.14.1
+      grpcio==1.59.0
+      proto-plus==1.26.1
+      protobuf==6.33.5
+      grpc-google-iam-v1==0.14.2
+    after: |
+      google-auth==2.26.1
+      # cryptography is a direct dependency of google-auth
+      cryptography==38.0.0
+      google-api-core==2.28.0
+      google-cloud-core==2.4.2
+      google-resumable-media==2.7.2
+      grpcio==1.59.0
+      grpcio-status==1.59.0
+      proto-plus==1.26.1
+      protobuf==6.33.5
+      grpc-google-iam-v1==0.14.2
+      opentelemetry-api==1.1.0
+      requests==2.22.0
+      google-crc32c==1.6.0
+    count: 1
+  - paths: [
+      packages/google-cloud-storage/testing/constraints-3.11.txt,
+      packages/google-cloud-storage/testing/constraints-3.12.txt,
+    ]
+    before: |
+      google-api-core
+      [\s\S]*?grpc-google-iam-v1
+    after: |
+      google-auth
+      # cryptography is a direct dependency of google-auth
+      cryptography
+      google-api-core
+      google-cloud-core
+      google-resumable-media
+      grpcio
+      requests
+      google-crc32c
+      protobuf
+      opentelemetry-api
+    count: 2
+  - paths: [
+      packages/google-cloud-storage/testing/constraints-3.13.txt,
+      packages/google-cloud-storage/testing/constraints-3.14.txt,
+    ]
+    before: |
+      google-api-core>=2
+      [\s\S]*?grpc-google-iam-v1>=0
+    after: |
+      google-auth
+      # cryptography is a direct dependency of google-auth
+      cryptography
+      google-api-core
+      google-cloud-core
+      google-resumable-media
+      grpcio
+      requests
+      google-crc32c
+      protobuf
+      opentelemetry-api
+    count: 2
+  - paths:
+      - "packages/google-cloud-storage/docs/conf.py"
+    before: |
+      exclude_patterns = \[
+      \    "_build",
+    after: |
+      exclude_patterns = [
+          "_storage_v2/**",
+          "multiprocessing.rst",
+          "_build",
+    count: 1
+  - paths:
+      - "packages/google-cloud-storage/docs/index.rst"
+    before: |
+      .. include:: multiprocessing.rst
+
+
+      API Reference
+      -------------
+      .. toctree::
+          :maxdepth: 2
+
+          _storage_v2/services_
+          _storage_v2/types_
+
+
+    after: |
+      .. note::
+
+         Because the storage client uses the third-party :mod:`requests` library by
+         default, it is safe to share instances across threads.  In multiprocessing
+         scenarious, best practice is to create client instances *after*
+         :class:`multiprocessing.Pool` or :class:`multiprocessing.Process` invokes
+         :func:`os.fork`.
+
+      Guides
+      ------
+      .. toctree::
+        :maxdepth: 2
+
+        acl_guide
+        generation_metageneration
+        retry_timeout
+
+      API Reference
+      -------------
+      .. toctree::
+        :maxdepth: 2
+
+        storage/acl
+        storage/batch
+        storage/blob
+        storage/bucket
+        storage/client
+        storage/constants
+        storage/exceptions
+        storage/fileio
+        storage/hmac_key
+        storage/notification
+        storage/retry
+        storage/transfer_manager
+
+
+      More Examples
+      -------------
+      .. toctree::
+        :maxdepth: 2
+
+        Official Google Cloud Storage How-to Guides <https://cloud.google.com/storage/docs/how-to>
+        Official Google Cloud Storage Samples <https://cloud.google.com/storage/docs/samples>
+    count: 1
+  - paths: [
+      packages/google-cloud-storage/tests/unit/__init__.py
+    ]
+    before: "#\n$"
+    after: |
+      import io
+      import json
+      import os
+
+
+      def _read_local_json(json_file):
+          here = os.path.dirname(__file__)
+          json_path = os.path.abspath(os.path.join(here, json_file))
+          with io.open(json_path, "r", encoding="utf-8-sig") as fileobj:
+              return json.load(fileobj)
+    count: 1
+  - paths: [
+      packages/google-cloud-storage/noxfile.py
+    ]
+    before: |
+      """Run the type checker."""
+      [\s\S]*?"google",
+      \        "--check-untyped-defs",
+      \        \*session.posargs,
+      \    \)
+    after: |
+      """Run the type checker."""
+
+          # TODO(https://github.com/googleapis/google-cloud-python/issues/13362):
+          # Enable mypy once this repo has been updated for mypy evaluation.
+          session.skip("Skip mypy since this library is not yet updated for mypy evaluation")
+
+          session.install("-e", ".")
+          session.install(
+              "mypy",
+              "types-setuptools",
+              "types-protobuf",
+              "types-requests",
+          )
+          session.run(
+              "mypy",
+              f"--config-file={MYPY_CONFIG_FILE}",
+              "-p",
+              "google",
+              *session.posargs,
+          )
+    count: 1

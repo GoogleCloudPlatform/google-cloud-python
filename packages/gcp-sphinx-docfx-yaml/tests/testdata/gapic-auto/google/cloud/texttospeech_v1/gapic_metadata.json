@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.texttospeech_v1",
+  "protoPackage": "google.cloud.texttospeech.v1",
+  "schema": "1.0",
+  "services": {
+    "TextToSpeech": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "TextToSpeechClient",
+          "rpcs": {
+            "ListVoices": {
+              "methods": [
+                "list_voices"
+              ]
+            },
+            "SynthesizeSpeech": {
+              "methods": [
+                "synthesize_speech"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "TextToSpeechAsyncClient",
+          "rpcs": {
+            "ListVoices": {
+              "methods": [
+                "list_voices"
+              ]
+            },
+            "SynthesizeSpeech": {
+              "methods": [
+                "synthesize_speech"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

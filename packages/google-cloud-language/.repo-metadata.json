@@ -1,0 +1,16 @@
+{
+    "api_description": "Provides natural language understanding technologies, such as sentiment\nanalysis, entity recognition, entity sentiment analysis, and other text\nannotations, to developers.",
+    "api_id": "language.googleapis.com",
+    "api_shortname": "language",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/language/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-language",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559753",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "language",
+    "name_pretty": "Cloud Natural Language",
+    "product_documentation": "https://cloud.google.com/natural-language/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,941 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.databasecenter.v1beta",
+        "version": "v1beta"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-databasecenter",
+    "version": "0.9.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient",
+          "shortName": "DatabaseCenterAsyncClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient.aggregate_fleet",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.AggregateFleet",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "AggregateFleet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.AggregateFleetRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.services.database_center.pagers.AggregateFleetAsyncPager",
+        "shortName": "aggregate_fleet"
+      },
+      "description": "Sample for AggregateFleet",
+      "file": "databasecenter_v1beta_generated_database_center_aggregate_fleet_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_AggregateFleet_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_aggregate_fleet_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient",
+          "shortName": "DatabaseCenterClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient.aggregate_fleet",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.AggregateFleet",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "AggregateFleet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.AggregateFleetRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.services.database_center.pagers.AggregateFleetPager",
+        "shortName": "aggregate_fleet"
+      },
+      "description": "Sample for AggregateFleet",
+      "file": "databasecenter_v1beta_generated_database_center_aggregate_fleet_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_AggregateFleet_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_aggregate_fleet_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient",
+          "shortName": "DatabaseCenterAsyncClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient.aggregate_issue_stats",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.AggregateIssueStats",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "AggregateIssueStats"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.AggregateIssueStatsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.types.AggregateIssueStatsResponse",
+        "shortName": "aggregate_issue_stats"
+      },
+      "description": "Sample for AggregateIssueStats",
+      "file": "databasecenter_v1beta_generated_database_center_aggregate_issue_stats_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_AggregateIssueStats_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_aggregate_issue_stats_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient",
+          "shortName": "DatabaseCenterClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient.aggregate_issue_stats",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.AggregateIssueStats",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "AggregateIssueStats"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.AggregateIssueStatsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.types.AggregateIssueStatsResponse",
+        "shortName": "aggregate_issue_stats"
+      },
+      "description": "Sample for AggregateIssueStats",
+      "file": "databasecenter_v1beta_generated_database_center_aggregate_issue_stats_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_AggregateIssueStats_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_aggregate_issue_stats_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient",
+          "shortName": "DatabaseCenterAsyncClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient.aggregate_query_stats",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.AggregateQueryStats",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "AggregateQueryStats"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.AggregateQueryStatsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.services.database_center.pagers.AggregateQueryStatsAsyncPager",
+        "shortName": "aggregate_query_stats"
+      },
+      "description": "Sample for AggregateQueryStats",
+      "file": "databasecenter_v1beta_generated_database_center_aggregate_query_stats_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_AggregateQueryStats_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_aggregate_query_stats_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient",
+          "shortName": "DatabaseCenterClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient.aggregate_query_stats",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.AggregateQueryStats",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "AggregateQueryStats"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.AggregateQueryStatsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.services.database_center.pagers.AggregateQueryStatsPager",
+        "shortName": "aggregate_query_stats"
+      },
+      "description": "Sample for AggregateQueryStats",
+      "file": "databasecenter_v1beta_generated_database_center_aggregate_query_stats_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_AggregateQueryStats_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_aggregate_query_stats_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient",
+          "shortName": "DatabaseCenterAsyncClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient.query_database_resource_groups",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.QueryDatabaseResourceGroups",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "QueryDatabaseResourceGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.QueryDatabaseResourceGroupsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.services.database_center.pagers.QueryDatabaseResourceGroupsAsyncPager",
+        "shortName": "query_database_resource_groups"
+      },
+      "description": "Sample for QueryDatabaseResourceGroups",
+      "file": "databasecenter_v1beta_generated_database_center_query_database_resource_groups_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_QueryDatabaseResourceGroups_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_query_database_resource_groups_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient",
+          "shortName": "DatabaseCenterClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient.query_database_resource_groups",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.QueryDatabaseResourceGroups",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "QueryDatabaseResourceGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.QueryDatabaseResourceGroupsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.services.database_center.pagers.QueryDatabaseResourceGroupsPager",
+        "shortName": "query_database_resource_groups"
+      },
+      "description": "Sample for QueryDatabaseResourceGroups",
+      "file": "databasecenter_v1beta_generated_database_center_query_database_resource_groups_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_QueryDatabaseResourceGroups_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_query_database_resource_groups_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient",
+          "shortName": "DatabaseCenterAsyncClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient.query_issues",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.QueryIssues",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "QueryIssues"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.QueryIssuesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.services.database_center.pagers.QueryIssuesAsyncPager",
+        "shortName": "query_issues"
+      },
+      "description": "Sample for QueryIssues",
+      "file": "databasecenter_v1beta_generated_database_center_query_issues_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_QueryIssues_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_query_issues_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient",
+          "shortName": "DatabaseCenterClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient.query_issues",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.QueryIssues",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "QueryIssues"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.QueryIssuesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.services.database_center.pagers.QueryIssuesPager",
+        "shortName": "query_issues"
+      },
+      "description": "Sample for QueryIssues",
+      "file": "databasecenter_v1beta_generated_database_center_query_issues_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_QueryIssues_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_query_issues_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient",
+          "shortName": "DatabaseCenterAsyncClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterAsyncClient.query_products",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.QueryProducts",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "QueryProducts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.QueryProductsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.services.database_center.pagers.QueryProductsAsyncPager",
+        "shortName": "query_products"
+      },
+      "description": "Sample for QueryProducts",
+      "file": "databasecenter_v1beta_generated_database_center_query_products_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_QueryProducts_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_query_products_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient",
+          "shortName": "DatabaseCenterClient"
+        },
+        "fullName": "google.cloud.databasecenter_v1beta.DatabaseCenterClient.query_products",
+        "method": {
+          "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter.QueryProducts",
+          "service": {
+            "fullName": "google.cloud.databasecenter.v1beta.DatabaseCenter",
+            "shortName": "DatabaseCenter"
+          },
+          "shortName": "QueryProducts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.databasecenter_v1beta.types.QueryProductsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.databasecenter_v1beta.services.database_center.pagers.QueryProductsPager",
+        "shortName": "query_products"
+      },
+      "description": "Sample for QueryProducts",
+      "file": "databasecenter_v1beta_generated_database_center_query_products_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "databasecenter_v1beta_generated_DatabaseCenter_QueryProducts_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "databasecenter_v1beta_generated_database_center_query_products_sync.py"
+    }
+  ]
+}

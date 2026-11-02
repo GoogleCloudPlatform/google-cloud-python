@@ -1,0 +1,57 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: Required. The subscription to affect.
+    id: subscription
+    var_type: str
+  - description: "The time to seek to. Messages retained in the subscription\n   that\
+      \ were published before this time are marked as\n   acknowledged, and messages\
+      \ retained in the subscription that\n   were published after this time are marked\
+      \ as unacknowledged.\n   Note that this operation affects only those messages\n\
+      \   retained in the subscription (configured by the combination\n   of <code>message_retention_duration</code>\
+      \ and\n   <code>retain_acked_messages</code>). For example, if <code>time</code>\n\
+      \   corresponds to a point before the message retention window\n   (or to a\
+      \ point before the system's notion of the\n   subscription creation time), only\
+      \ retained messages will be\n   marked as unacknowledged, and already-expunged\
+      \ messages will\n   not be restored.\n   \n   This field is a member of <code>oneof</code>_\
+      \ <code>target</code>."
+    id: time
+    var_type: google.protobuf.timestamp_pb2.Timestamp
+  - description: "The snapshot to seek to. The snapshot's topic must be the\n   same\
+      \ as that of the provided subscription. Format is\n   <code>projects/{project}/snapshots/{snap}</code>.\n\
+      \   \n   This field is a member of <code>oneof</code>_ <code>target</code>."
+    id: snapshot
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.SeekRequest
+  fullName: google.cloud.pubsub_v1.types.SeekRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: SeekRequest
+  source:
+    id: SeekRequest
+    path: null
+    startLine: null
+  summary: 'Request for the `Seek` method.
+
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+
+    For each oneof, at most one member field can be set at the same time.
+
+    Setting any member of the oneof automatically clears all other
+
+    members.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    '
+  syntax:
+    content: SeekRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.SeekRequest
+references: []

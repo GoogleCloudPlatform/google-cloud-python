@@ -1,0 +1,103 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.webrisk_v1",
+  "protoPackage": "google.cloud.webrisk.v1",
+  "schema": "1.0",
+  "services": {
+    "WebRiskService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WebRiskServiceClient",
+          "rpcs": {
+            "ComputeThreatListDiff": {
+              "methods": [
+                "compute_threat_list_diff"
+              ]
+            },
+            "CreateSubmission": {
+              "methods": [
+                "create_submission"
+              ]
+            },
+            "SearchHashes": {
+              "methods": [
+                "search_hashes"
+              ]
+            },
+            "SearchUris": {
+              "methods": [
+                "search_uris"
+              ]
+            },
+            "SubmitUri": {
+              "methods": [
+                "submit_uri"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "WebRiskServiceAsyncClient",
+          "rpcs": {
+            "ComputeThreatListDiff": {
+              "methods": [
+                "compute_threat_list_diff"
+              ]
+            },
+            "CreateSubmission": {
+              "methods": [
+                "create_submission"
+              ]
+            },
+            "SearchHashes": {
+              "methods": [
+                "search_hashes"
+              ]
+            },
+            "SearchUris": {
+              "methods": [
+                "search_uris"
+              ]
+            },
+            "SubmitUri": {
+              "methods": [
+                "submit_uri"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "WebRiskServiceClient",
+          "rpcs": {
+            "ComputeThreatListDiff": {
+              "methods": [
+                "compute_threat_list_diff"
+              ]
+            },
+            "CreateSubmission": {
+              "methods": [
+                "create_submission"
+              ]
+            },
+            "SearchHashes": {
+              "methods": [
+                "search_hashes"
+              ]
+            },
+            "SearchUris": {
+              "methods": [
+                "search_uris"
+              ]
+            },
+            "SubmitUri": {
+              "methods": [
+                "submit_uri"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

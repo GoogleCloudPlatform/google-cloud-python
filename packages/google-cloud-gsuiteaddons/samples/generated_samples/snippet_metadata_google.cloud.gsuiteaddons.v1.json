@@ -1,0 +1,1462 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.gsuiteaddons.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-gsuiteaddons",
+    "version": "0.5.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient",
+          "shortName": "GSuiteAddOnsAsyncClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient.create_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.CreateDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "CreateDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.CreateDeploymentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.gsuiteaddons_v1.types.Deployment"
+          },
+          {
+            "name": "deployment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.types.Deployment",
+        "shortName": "create_deployment"
+      },
+      "description": "Sample for CreateDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_create_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_CreateDeployment_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_create_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient",
+          "shortName": "GSuiteAddOnsClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient.create_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.CreateDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "CreateDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.CreateDeploymentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.gsuiteaddons_v1.types.Deployment"
+          },
+          {
+            "name": "deployment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.types.Deployment",
+        "shortName": "create_deployment"
+      },
+      "description": "Sample for CreateDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_create_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_CreateDeployment_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_create_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient",
+          "shortName": "GSuiteAddOnsAsyncClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient.delete_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.DeleteDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "DeleteDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.DeleteDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_deployment"
+      },
+      "description": "Sample for DeleteDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_delete_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_DeleteDeployment_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_delete_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient",
+          "shortName": "GSuiteAddOnsClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient.delete_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.DeleteDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "DeleteDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.DeleteDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_deployment"
+      },
+      "description": "Sample for DeleteDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_delete_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_DeleteDeployment_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_delete_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient",
+          "shortName": "GSuiteAddOnsAsyncClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient.get_authorization",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.GetAuthorization",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "GetAuthorization"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.GetAuthorizationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.types.Authorization",
+        "shortName": "get_authorization"
+      },
+      "description": "Sample for GetAuthorization",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_get_authorization_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_GetAuthorization_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_get_authorization_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient",
+          "shortName": "GSuiteAddOnsClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient.get_authorization",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.GetAuthorization",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "GetAuthorization"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.GetAuthorizationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.types.Authorization",
+        "shortName": "get_authorization"
+      },
+      "description": "Sample for GetAuthorization",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_get_authorization_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_GetAuthorization_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_get_authorization_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient",
+          "shortName": "GSuiteAddOnsAsyncClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient.get_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.GetDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "GetDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.GetDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.types.Deployment",
+        "shortName": "get_deployment"
+      },
+      "description": "Sample for GetDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_get_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_GetDeployment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_get_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient",
+          "shortName": "GSuiteAddOnsClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient.get_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.GetDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "GetDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.GetDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.types.Deployment",
+        "shortName": "get_deployment"
+      },
+      "description": "Sample for GetDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_get_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_GetDeployment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_get_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient",
+          "shortName": "GSuiteAddOnsAsyncClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient.get_install_status",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.GetInstallStatus",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "GetInstallStatus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.GetInstallStatusRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.types.InstallStatus",
+        "shortName": "get_install_status"
+      },
+      "description": "Sample for GetInstallStatus",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_get_install_status_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_GetInstallStatus_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_get_install_status_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient",
+          "shortName": "GSuiteAddOnsClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient.get_install_status",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.GetInstallStatus",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "GetInstallStatus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.GetInstallStatusRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.types.InstallStatus",
+        "shortName": "get_install_status"
+      },
+      "description": "Sample for GetInstallStatus",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_get_install_status_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_GetInstallStatus_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_get_install_status_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient",
+          "shortName": "GSuiteAddOnsAsyncClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient.install_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.InstallDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "InstallDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.InstallDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "install_deployment"
+      },
+      "description": "Sample for InstallDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_install_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_InstallDeployment_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_install_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient",
+          "shortName": "GSuiteAddOnsClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient.install_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.InstallDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "InstallDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.InstallDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "install_deployment"
+      },
+      "description": "Sample for InstallDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_install_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_InstallDeployment_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_install_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient",
+          "shortName": "GSuiteAddOnsAsyncClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient.list_deployments",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.ListDeployments",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "ListDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.ListDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.services.g_suite_add_ons.pagers.ListDeploymentsAsyncPager",
+        "shortName": "list_deployments"
+      },
+      "description": "Sample for ListDeployments",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_list_deployments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_ListDeployments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_list_deployments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient",
+          "shortName": "GSuiteAddOnsClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient.list_deployments",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.ListDeployments",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "ListDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.ListDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.services.g_suite_add_ons.pagers.ListDeploymentsPager",
+        "shortName": "list_deployments"
+      },
+      "description": "Sample for ListDeployments",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_list_deployments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_ListDeployments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_list_deployments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient",
+          "shortName": "GSuiteAddOnsAsyncClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient.replace_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.ReplaceDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "ReplaceDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.ReplaceDeploymentRequest"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.gsuiteaddons_v1.types.Deployment"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.types.Deployment",
+        "shortName": "replace_deployment"
+      },
+      "description": "Sample for ReplaceDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_replace_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_ReplaceDeployment_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_replace_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient",
+          "shortName": "GSuiteAddOnsClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient.replace_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.ReplaceDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "ReplaceDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.ReplaceDeploymentRequest"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.gsuiteaddons_v1.types.Deployment"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.gsuiteaddons_v1.types.Deployment",
+        "shortName": "replace_deployment"
+      },
+      "description": "Sample for ReplaceDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_replace_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_ReplaceDeployment_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_replace_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient",
+          "shortName": "GSuiteAddOnsAsyncClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsAsyncClient.uninstall_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.UninstallDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "UninstallDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.UninstallDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "uninstall_deployment"
+      },
+      "description": "Sample for UninstallDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_uninstall_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_UninstallDeployment_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_uninstall_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient",
+          "shortName": "GSuiteAddOnsClient"
+        },
+        "fullName": "google.cloud.gsuiteaddons_v1.GSuiteAddOnsClient.uninstall_deployment",
+        "method": {
+          "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns.UninstallDeployment",
+          "service": {
+            "fullName": "google.cloud.gsuiteaddons.v1.GSuiteAddOns",
+            "shortName": "GSuiteAddOns"
+          },
+          "shortName": "UninstallDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.gsuiteaddons_v1.types.UninstallDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "uninstall_deployment"
+      },
+      "description": "Sample for UninstallDeployment",
+      "file": "gsuiteaddons_v1_generated_g_suite_add_ons_uninstall_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "gsuiteaddons_v1_generated_GSuiteAddOns_UninstallDeployment_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "gsuiteaddons_v1_generated_g_suite_add_ons_uninstall_deployment_sync.py"
+    }
+  ]
+}

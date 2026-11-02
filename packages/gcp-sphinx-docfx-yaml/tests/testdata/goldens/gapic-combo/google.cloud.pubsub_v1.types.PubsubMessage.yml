@@ -1,0 +1,76 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "The message data field. If this field is\n   empty, the message\
+      \ must contain at least one\n   attribute."
+    id: data
+    var_type: bytes
+  - description: "Attributes for this message. If this field is\n   empty, the message\
+      \ must contain non-empty data.\n   This can be used to filter messages on the\n\
+      \   subscription."
+    id: attributes
+    var_type: Mapping[str, str]
+  - description: "ID of this message, assigned by the server when the message\n  \
+      \ is published. Guaranteed to be unique within the topic. This\n   value may\
+      \ be read by a subscriber that receives a\n   <code>PubsubMessage</code> via\
+      \ a <code>Pull</code> call or a push delivery. It\n   must not be populated\
+      \ by the publisher in a <code>Publish</code>\n   call."
+    id: message_id
+    var_type: str
+  - description: "The time at which the message was published, populated by\n   the\
+      \ server when it receives the <code>Publish</code> call. It must\n   not be\
+      \ populated by the publisher in a <code>Publish</code> call."
+    id: publish_time
+    var_type: google.protobuf.timestamp_pb2.Timestamp
+  - description: "If non-empty, identifies related messages for which publish\n  \
+      \ order should be respected. If a <code>Subscription</code> has\n   <code>enable_message_ordering</code>\
+      \ set to <code>true</code>, messages\n   published with the same non-empty <code>ordering_key</code>\
+      \ value\n   will be delivered to subscribers in the order in which they\n  \
+      \ are received by the Pub/Sub system. All <code>PubsubMessage</code>\\ s\n \
+      \  published in a given <code>PublishRequest</code> must specify the\n   same\
+      \ <code>ordering_key</code> value."
+    id: ordering_key
+    var_type: str
+  children:
+  - google.cloud.pubsub_v1.types.PubsubMessage.AttributesEntry
+  class: google.cloud.pubsub_v1.types.PubsubMessage
+  fullName: google.cloud.pubsub_v1.types.PubsubMessage
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: PubsubMessage
+  source:
+    id: PubsubMessage
+    path: null
+    startLine: null
+  summary: 'A message that is published by publishers and consumed by
+
+    subscribers. The message must contain either a non-empty data field
+
+    or at least one attribute. Note that client libraries represent this
+
+    object differently depending on the language. See the corresponding
+
+    `client library
+
+    documentation <https://cloud.google.com/pubsub/docs/reference/libraries>`__
+
+    for more information. See [quotas and limits]
+
+    (https://cloud.google.com/pubsub/quotas) for more information about
+
+    message limits.
+
+    '
+  syntax:
+    content: PubsubMessage(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.PubsubMessage
+references:
+- fullName: google.cloud.pubsub_v1.types.PubsubMessage.AttributesEntry
+  isExternal: false
+  name: AttributesEntry
+  parent: google.cloud.pubsub_v1.types.PubsubMessage
+  uid: google.cloud.pubsub_v1.types.PubsubMessage.AttributesEntry

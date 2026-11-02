@@ -1,0 +1,16 @@
+{
+    "api_description": "A unified AI platform for financial services, leveraging Google's global framework for security and compliance.",
+    "api_id": "financialservices.googleapis.com",
+    "api_shortname": "financialservices",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-financialservices/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-financialservices",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=933093",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-financialservices",
+    "name_pretty": "Financial Services",
+    "product_documentation": "https://cloud.google.com/financial-services/anti-money-laundering/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

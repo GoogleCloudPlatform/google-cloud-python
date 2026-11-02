@@ -1,0 +1,15 @@
+{
+    "api_description": "Deploy and manage user provided container images that scale automatically\nbased on incoming requests. The Cloud Run Admin API v1 follows the Knative\nServing API specification, while v2 is aligned with Google Cloud AIP-based\nAPI standards, as described in https://google.aip.dev/.",
+    "api_id": "run.googleapis.com",
+    "api_shortname": "run",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/run/latest",
+    "default_version": "v2",
+    "distribution_name": "google-cloud-run",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "run",
+    "name_pretty": "Cloud Run Admin",
+    "product_documentation": "https://cloud.google.com/run/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

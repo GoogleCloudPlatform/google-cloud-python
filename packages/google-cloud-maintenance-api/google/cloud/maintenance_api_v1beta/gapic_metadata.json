@@ -1,0 +1,73 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.maintenance_api_v1beta",
+  "protoPackage": "google.cloud.maintenance.api.v1beta",
+  "schema": "1.0",
+  "services": {
+    "Maintenance": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MaintenanceClient",
+          "rpcs": {
+            "GetResourceMaintenance": {
+              "methods": [
+                "get_resource_maintenance"
+              ]
+            },
+            "ListResourceMaintenances": {
+              "methods": [
+                "list_resource_maintenances"
+              ]
+            },
+            "SummarizeMaintenances": {
+              "methods": [
+                "summarize_maintenances"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MaintenanceAsyncClient",
+          "rpcs": {
+            "GetResourceMaintenance": {
+              "methods": [
+                "get_resource_maintenance"
+              ]
+            },
+            "ListResourceMaintenances": {
+              "methods": [
+                "list_resource_maintenances"
+              ]
+            },
+            "SummarizeMaintenances": {
+              "methods": [
+                "summarize_maintenances"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "MaintenanceClient",
+          "rpcs": {
+            "GetResourceMaintenance": {
+              "methods": [
+                "get_resource_maintenance"
+              ]
+            },
+            "ListResourceMaintenances": {
+              "methods": [
+                "list_resource_maintenances"
+              ]
+            },
+            "SummarizeMaintenances": {
+              "methods": [
+                "summarize_maintenances"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

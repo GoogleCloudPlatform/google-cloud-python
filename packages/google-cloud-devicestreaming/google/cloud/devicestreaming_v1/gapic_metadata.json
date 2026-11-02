@@ -1,0 +1,118 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.devicestreaming_v1",
+  "protoPackage": "google.cloud.devicestreaming.v1",
+  "schema": "1.0",
+  "services": {
+    "DirectAccessService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DirectAccessServiceClient",
+          "rpcs": {
+            "AdbConnect": {
+              "methods": [
+                "adb_connect"
+              ]
+            },
+            "CancelDeviceSession": {
+              "methods": [
+                "cancel_device_session"
+              ]
+            },
+            "CreateDeviceSession": {
+              "methods": [
+                "create_device_session"
+              ]
+            },
+            "GetDeviceSession": {
+              "methods": [
+                "get_device_session"
+              ]
+            },
+            "ListDeviceSessions": {
+              "methods": [
+                "list_device_sessions"
+              ]
+            },
+            "UpdateDeviceSession": {
+              "methods": [
+                "update_device_session"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DirectAccessServiceAsyncClient",
+          "rpcs": {
+            "AdbConnect": {
+              "methods": [
+                "adb_connect"
+              ]
+            },
+            "CancelDeviceSession": {
+              "methods": [
+                "cancel_device_session"
+              ]
+            },
+            "CreateDeviceSession": {
+              "methods": [
+                "create_device_session"
+              ]
+            },
+            "GetDeviceSession": {
+              "methods": [
+                "get_device_session"
+              ]
+            },
+            "ListDeviceSessions": {
+              "methods": [
+                "list_device_sessions"
+              ]
+            },
+            "UpdateDeviceSession": {
+              "methods": [
+                "update_device_session"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DirectAccessServiceClient",
+          "rpcs": {
+            "AdbConnect": {
+              "methods": [
+                "adb_connect"
+              ]
+            },
+            "CancelDeviceSession": {
+              "methods": [
+                "cancel_device_session"
+              ]
+            },
+            "CreateDeviceSession": {
+              "methods": [
+                "create_device_session"
+              ]
+            },
+            "GetDeviceSession": {
+              "methods": [
+                "get_device_session"
+              ]
+            },
+            "ListDeviceSessions": {
+              "methods": [
+                "list_device_sessions"
+              ]
+            },
+            "UpdateDeviceSession": {
+              "methods": [
+                "update_device_session"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

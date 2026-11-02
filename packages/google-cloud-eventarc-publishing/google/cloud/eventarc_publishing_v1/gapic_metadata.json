@@ -1,0 +1,73 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.eventarc_publishing_v1",
+  "protoPackage": "google.cloud.eventarc.publishing.v1",
+  "schema": "1.0",
+  "services": {
+    "Publisher": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PublisherClient",
+          "rpcs": {
+            "Publish": {
+              "methods": [
+                "publish"
+              ]
+            },
+            "PublishChannelConnectionEvents": {
+              "methods": [
+                "publish_channel_connection_events"
+              ]
+            },
+            "PublishEvents": {
+              "methods": [
+                "publish_events"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "PublisherAsyncClient",
+          "rpcs": {
+            "Publish": {
+              "methods": [
+                "publish"
+              ]
+            },
+            "PublishChannelConnectionEvents": {
+              "methods": [
+                "publish_channel_connection_events"
+              ]
+            },
+            "PublishEvents": {
+              "methods": [
+                "publish_events"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "PublisherClient",
+          "rpcs": {
+            "Publish": {
+              "methods": [
+                "publish"
+              ]
+            },
+            "PublishChannelConnectionEvents": {
+              "methods": [
+                "publish_channel_connection_events"
+              ]
+            },
+            "PublishEvents": {
+              "methods": [
+                "publish_events"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

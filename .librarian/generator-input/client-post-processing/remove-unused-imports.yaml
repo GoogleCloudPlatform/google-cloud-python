@@ -1,0 +1,33 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+description: Remove unused imports
+url: https://github.com/googleapis/gapic-generator-python/issues/1833
+replacements:
+  - paths: [
+      packages/google-cloud-gke-hub/tests/unit/gapic/gkehub_v1/test_gke_hub.py
+    ]
+    before: |
+      import google.cloud.gkehub.configmanagement.v1.configmanagement_pb2 as configmanagement_pb2  # type: ignore
+      import google.cloud.gkehub.multiclusteringress.v1.multiclusteringress_pb2 as multiclusteringress_pb2  # type: ignore
+      import google.cloud.gkehub.rbacrolebindingactuation.v1.rbacrolebindingactuation_pb2 as rbacrolebindingactuation_pb2  # type: ignore
+    after:  ""
+    count: 1
+  - paths: [
+      packages/google-cloud-binary-authorization/tests/unit/gapic/binaryauthorization_v1/test_validation_helper_v1.py
+    ]
+    before: |
+      import grafeas.v1.attestation_pb2 as attestation_pb2  # type: ignore
+      import grafeas.v1.common_pb2 as common_pb2  # type: ignore
+    after:  ""
+    count: 1

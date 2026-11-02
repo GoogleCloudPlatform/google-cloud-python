@@ -1,0 +1,373 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.asset_v1",
+  "protoPackage": "google.cloud.asset.v1",
+  "schema": "1.0",
+  "services": {
+    "AssetService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AssetServiceClient",
+          "rpcs": {
+            "AnalyzeIamPolicy": {
+              "methods": [
+                "analyze_iam_policy"
+              ]
+            },
+            "AnalyzeIamPolicyLongrunning": {
+              "methods": [
+                "analyze_iam_policy_longrunning"
+              ]
+            },
+            "AnalyzeMove": {
+              "methods": [
+                "analyze_move"
+              ]
+            },
+            "AnalyzeOrgPolicies": {
+              "methods": [
+                "analyze_org_policies"
+              ]
+            },
+            "AnalyzeOrgPolicyGovernedAssets": {
+              "methods": [
+                "analyze_org_policy_governed_assets"
+              ]
+            },
+            "AnalyzeOrgPolicyGovernedContainers": {
+              "methods": [
+                "analyze_org_policy_governed_containers"
+              ]
+            },
+            "BatchGetAssetsHistory": {
+              "methods": [
+                "batch_get_assets_history"
+              ]
+            },
+            "BatchGetEffectiveIamPolicies": {
+              "methods": [
+                "batch_get_effective_iam_policies"
+              ]
+            },
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "CreateSavedQuery": {
+              "methods": [
+                "create_saved_query"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "DeleteSavedQuery": {
+              "methods": [
+                "delete_saved_query"
+              ]
+            },
+            "ExportAssets": {
+              "methods": [
+                "export_assets"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "GetSavedQuery": {
+              "methods": [
+                "get_saved_query"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "ListSavedQueries": {
+              "methods": [
+                "list_saved_queries"
+              ]
+            },
+            "QueryAssets": {
+              "methods": [
+                "query_assets"
+              ]
+            },
+            "SearchAllIamPolicies": {
+              "methods": [
+                "search_all_iam_policies"
+              ]
+            },
+            "SearchAllResources": {
+              "methods": [
+                "search_all_resources"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            },
+            "UpdateSavedQuery": {
+              "methods": [
+                "update_saved_query"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AssetServiceAsyncClient",
+          "rpcs": {
+            "AnalyzeIamPolicy": {
+              "methods": [
+                "analyze_iam_policy"
+              ]
+            },
+            "AnalyzeIamPolicyLongrunning": {
+              "methods": [
+                "analyze_iam_policy_longrunning"
+              ]
+            },
+            "AnalyzeMove": {
+              "methods": [
+                "analyze_move"
+              ]
+            },
+            "AnalyzeOrgPolicies": {
+              "methods": [
+                "analyze_org_policies"
+              ]
+            },
+            "AnalyzeOrgPolicyGovernedAssets": {
+              "methods": [
+                "analyze_org_policy_governed_assets"
+              ]
+            },
+            "AnalyzeOrgPolicyGovernedContainers": {
+              "methods": [
+                "analyze_org_policy_governed_containers"
+              ]
+            },
+            "BatchGetAssetsHistory": {
+              "methods": [
+                "batch_get_assets_history"
+              ]
+            },
+            "BatchGetEffectiveIamPolicies": {
+              "methods": [
+                "batch_get_effective_iam_policies"
+              ]
+            },
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "CreateSavedQuery": {
+              "methods": [
+                "create_saved_query"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "DeleteSavedQuery": {
+              "methods": [
+                "delete_saved_query"
+              ]
+            },
+            "ExportAssets": {
+              "methods": [
+                "export_assets"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "GetSavedQuery": {
+              "methods": [
+                "get_saved_query"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "ListSavedQueries": {
+              "methods": [
+                "list_saved_queries"
+              ]
+            },
+            "QueryAssets": {
+              "methods": [
+                "query_assets"
+              ]
+            },
+            "SearchAllIamPolicies": {
+              "methods": [
+                "search_all_iam_policies"
+              ]
+            },
+            "SearchAllResources": {
+              "methods": [
+                "search_all_resources"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            },
+            "UpdateSavedQuery": {
+              "methods": [
+                "update_saved_query"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AssetServiceClient",
+          "rpcs": {
+            "AnalyzeIamPolicy": {
+              "methods": [
+                "analyze_iam_policy"
+              ]
+            },
+            "AnalyzeIamPolicyLongrunning": {
+              "methods": [
+                "analyze_iam_policy_longrunning"
+              ]
+            },
+            "AnalyzeMove": {
+              "methods": [
+                "analyze_move"
+              ]
+            },
+            "AnalyzeOrgPolicies": {
+              "methods": [
+                "analyze_org_policies"
+              ]
+            },
+            "AnalyzeOrgPolicyGovernedAssets": {
+              "methods": [
+                "analyze_org_policy_governed_assets"
+              ]
+            },
+            "AnalyzeOrgPolicyGovernedContainers": {
+              "methods": [
+                "analyze_org_policy_governed_containers"
+              ]
+            },
+            "BatchGetAssetsHistory": {
+              "methods": [
+                "batch_get_assets_history"
+              ]
+            },
+            "BatchGetEffectiveIamPolicies": {
+              "methods": [
+                "batch_get_effective_iam_policies"
+              ]
+            },
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "CreateSavedQuery": {
+              "methods": [
+                "create_saved_query"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "DeleteSavedQuery": {
+              "methods": [
+                "delete_saved_query"
+              ]
+            },
+            "ExportAssets": {
+              "methods": [
+                "export_assets"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "GetSavedQuery": {
+              "methods": [
+                "get_saved_query"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "ListSavedQueries": {
+              "methods": [
+                "list_saved_queries"
+              ]
+            },
+            "QueryAssets": {
+              "methods": [
+                "query_assets"
+              ]
+            },
+            "SearchAllIamPolicies": {
+              "methods": [
+                "search_all_iam_policies"
+              ]
+            },
+            "SearchAllResources": {
+              "methods": [
+                "search_all_resources"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            },
+            "UpdateSavedQuery": {
+              "methods": [
+                "update_saved_query"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

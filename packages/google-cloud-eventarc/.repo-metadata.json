@@ -1,0 +1,15 @@
+{
+    "api_description": "Build event-driven applications on Google Cloud Platform.",
+    "api_id": "eventarc.googleapis.com",
+    "api_shortname": "eventarc",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/eventarc/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-eventarc",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "eventarc",
+    "name_pretty": "Eventarc",
+    "product_documentation": "https://cloud.google.com/eventarc/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

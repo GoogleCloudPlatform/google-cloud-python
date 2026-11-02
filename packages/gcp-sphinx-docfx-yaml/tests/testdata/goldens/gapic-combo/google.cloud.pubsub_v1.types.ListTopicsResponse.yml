@@ -1,0 +1,31 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: The resulting topics.
+    id: topics
+    var_type: Sequence[google.pubsub_v1.types.Topic]
+  - description: "If not empty, indicates that there may be more topics that\n   match\
+      \ the request; this value should be passed in a new\n   <code>ListTopicsRequest</code>."
+    id: next_page_token
+    var_type: str
+  children: []
+  class: google.cloud.pubsub_v1.types.ListTopicsResponse
+  fullName: google.cloud.pubsub_v1.types.ListTopicsResponse
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: ListTopicsResponse
+  source:
+    id: ListTopicsResponse
+    path: null
+    startLine: null
+  summary: 'Response for the `ListTopics` method.
+
+    '
+  syntax:
+    content: ListTopicsResponse(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.ListTopicsResponse
+references: []

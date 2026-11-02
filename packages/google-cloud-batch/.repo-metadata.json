@@ -1,0 +1,15 @@
+{
+    "api_description": "An API to manage the running of Batch resources on Google Cloud Platform.",
+    "api_id": "batch.googleapis.com",
+    "api_shortname": "batch",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/batch/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-batch",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "batch",
+    "name_pretty": "Batch",
+    "product_documentation": "https://cloud.google.com/batch/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

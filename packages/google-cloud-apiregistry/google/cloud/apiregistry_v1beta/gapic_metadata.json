@@ -1,0 +1,88 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.apiregistry_v1beta",
+  "protoPackage": "google.cloud.apiregistry.v1beta",
+  "schema": "1.0",
+  "services": {
+    "CloudApiRegistry": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudApiRegistryClient",
+          "rpcs": {
+            "GetMcpServer": {
+              "methods": [
+                "get_mcp_server"
+              ]
+            },
+            "GetMcpTool": {
+              "methods": [
+                "get_mcp_tool"
+              ]
+            },
+            "ListMcpServers": {
+              "methods": [
+                "list_mcp_servers"
+              ]
+            },
+            "ListMcpTools": {
+              "methods": [
+                "list_mcp_tools"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudApiRegistryAsyncClient",
+          "rpcs": {
+            "GetMcpServer": {
+              "methods": [
+                "get_mcp_server"
+              ]
+            },
+            "GetMcpTool": {
+              "methods": [
+                "get_mcp_tool"
+              ]
+            },
+            "ListMcpServers": {
+              "methods": [
+                "list_mcp_servers"
+              ]
+            },
+            "ListMcpTools": {
+              "methods": [
+                "list_mcp_tools"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudApiRegistryClient",
+          "rpcs": {
+            "GetMcpServer": {
+              "methods": [
+                "get_mcp_server"
+              ]
+            },
+            "GetMcpTool": {
+              "methods": [
+                "get_mcp_tool"
+              ]
+            },
+            "ListMcpServers": {
+              "methods": [
+                "list_mcp_servers"
+              ]
+            },
+            "ListMcpTools": {
+              "methods": [
+                "list_mcp_tools"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

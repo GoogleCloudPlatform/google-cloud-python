@@ -1,0 +1,10 @@
+{
+    "client_documentation": "https://cloud.google.com/python/docs/reference/dns/latest",
+    "distribution_name": "google-cloud-dns",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559772",
+    "language": "python",
+    "library_type": "REST",
+    "name": "dns",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

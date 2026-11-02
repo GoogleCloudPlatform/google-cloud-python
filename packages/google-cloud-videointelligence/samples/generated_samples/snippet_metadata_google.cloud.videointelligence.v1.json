@@ -1,0 +1,184 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.videointelligence.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-videointelligence",
+    "version": "2.21.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.videointelligence_v1.VideoIntelligenceServiceAsyncClient",
+          "shortName": "VideoIntelligenceServiceAsyncClient"
+        },
+        "fullName": "google.cloud.videointelligence_v1.VideoIntelligenceServiceAsyncClient.annotate_video",
+        "method": {
+          "fullName": "google.cloud.videointelligence.v1.VideoIntelligenceService.AnnotateVideo",
+          "service": {
+            "fullName": "google.cloud.videointelligence.v1.VideoIntelligenceService",
+            "shortName": "VideoIntelligenceService"
+          },
+          "shortName": "AnnotateVideo"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.videointelligence_v1.types.AnnotateVideoRequest"
+          },
+          {
+            "name": "input_uri",
+            "type": "str"
+          },
+          {
+            "name": "features",
+            "type": "MutableSequence[google.cloud.videointelligence_v1.types.Feature]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "annotate_video"
+      },
+      "description": "Sample for AnnotateVideo",
+      "file": "videointelligence_v1_generated_video_intelligence_service_annotate_video_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "videointelligence_v1_generated_VideoIntelligenceService_AnnotateVideo_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "videointelligence_v1_generated_video_intelligence_service_annotate_video_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.videointelligence_v1.VideoIntelligenceServiceClient",
+          "shortName": "VideoIntelligenceServiceClient"
+        },
+        "fullName": "google.cloud.videointelligence_v1.VideoIntelligenceServiceClient.annotate_video",
+        "method": {
+          "fullName": "google.cloud.videointelligence.v1.VideoIntelligenceService.AnnotateVideo",
+          "service": {
+            "fullName": "google.cloud.videointelligence.v1.VideoIntelligenceService",
+            "shortName": "VideoIntelligenceService"
+          },
+          "shortName": "AnnotateVideo"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.videointelligence_v1.types.AnnotateVideoRequest"
+          },
+          {
+            "name": "input_uri",
+            "type": "str"
+          },
+          {
+            "name": "features",
+            "type": "MutableSequence[google.cloud.videointelligence_v1.types.Feature]"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "annotate_video"
+      },
+      "description": "Sample for AnnotateVideo",
+      "file": "videointelligence_v1_generated_video_intelligence_service_annotate_video_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "videointelligence_v1_generated_VideoIntelligenceService_AnnotateVideo_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "videointelligence_v1_generated_video_intelligence_service_annotate_video_sync.py"
+    }
+  ]
+}

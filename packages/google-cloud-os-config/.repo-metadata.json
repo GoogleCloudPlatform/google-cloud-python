@@ -1,0 +1,15 @@
+{
+    "api_description": "OS management tools that can be used for patch management, patch\ncompliance, and configuration management on VM instances.",
+    "api_id": "osconfig.googleapis.com",
+    "api_shortname": "osconfig",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/osconfig/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-os-config",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "osconfig",
+    "name_pretty": "OS Config",
+    "product_documentation": "https://cloud.google.com/compute/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

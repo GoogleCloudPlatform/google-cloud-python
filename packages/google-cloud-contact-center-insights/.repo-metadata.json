@@ -1,0 +1,15 @@
+{
+    "api_description": "Contact Center Insights provides out-of-the-box and custom modeling techniques to make it easier for contact center teams to better understand customer interaction data.",
+    "api_id": "contactcenterinsights.googleapis.com",
+    "api_shortname": "contactcenterinsights",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/contactcenterinsights/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-contact-center-insights",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "contactcenterinsights",
+    "name_pretty": "Contact Center AI Insights",
+    "product_documentation": "https://cloud.google.com/contact-center/insights/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

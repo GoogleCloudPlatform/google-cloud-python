@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.maps.areainsights_v1",
+  "protoPackage": "google.maps.areainsights.v1",
+  "schema": "1.0",
+  "services": {
+    "AreaInsights": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AreaInsightsClient",
+          "rpcs": {
+            "ComputeInsights": {
+              "methods": [
+                "compute_insights"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AreaInsightsAsyncClient",
+          "rpcs": {
+            "ComputeInsights": {
+              "methods": [
+                "compute_insights"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AreaInsightsClient",
+          "rpcs": {
+            "ComputeInsights": {
+              "methods": [
+                "compute_insights"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

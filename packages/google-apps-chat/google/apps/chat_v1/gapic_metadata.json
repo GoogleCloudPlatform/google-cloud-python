@@ -1,0 +1,823 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.apps.chat_v1",
+  "protoPackage": "google.chat.v1",
+  "schema": "1.0",
+  "services": {
+    "ChatService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ChatServiceClient",
+          "rpcs": {
+            "CompleteImportSpace": {
+              "methods": [
+                "complete_import_space"
+              ]
+            },
+            "CreateCustomEmoji": {
+              "methods": [
+                "create_custom_emoji"
+              ]
+            },
+            "CreateMembership": {
+              "methods": [
+                "create_membership"
+              ]
+            },
+            "CreateMessage": {
+              "methods": [
+                "create_message"
+              ]
+            },
+            "CreateMessagePin": {
+              "methods": [
+                "create_message_pin"
+              ]
+            },
+            "CreateReaction": {
+              "methods": [
+                "create_reaction"
+              ]
+            },
+            "CreateSection": {
+              "methods": [
+                "create_section"
+              ]
+            },
+            "CreateSpace": {
+              "methods": [
+                "create_space"
+              ]
+            },
+            "DeleteCustomEmoji": {
+              "methods": [
+                "delete_custom_emoji"
+              ]
+            },
+            "DeleteMembership": {
+              "methods": [
+                "delete_membership"
+              ]
+            },
+            "DeleteMessage": {
+              "methods": [
+                "delete_message"
+              ]
+            },
+            "DeleteMessagePin": {
+              "methods": [
+                "delete_message_pin"
+              ]
+            },
+            "DeleteReaction": {
+              "methods": [
+                "delete_reaction"
+              ]
+            },
+            "DeleteSection": {
+              "methods": [
+                "delete_section"
+              ]
+            },
+            "DeleteSpace": {
+              "methods": [
+                "delete_space"
+              ]
+            },
+            "FindDirectMessage": {
+              "methods": [
+                "find_direct_message"
+              ]
+            },
+            "FindGroupChats": {
+              "methods": [
+                "find_group_chats"
+              ]
+            },
+            "GetAttachment": {
+              "methods": [
+                "get_attachment"
+              ]
+            },
+            "GetAvailability": {
+              "methods": [
+                "get_availability"
+              ]
+            },
+            "GetCustomEmoji": {
+              "methods": [
+                "get_custom_emoji"
+              ]
+            },
+            "GetMembership": {
+              "methods": [
+                "get_membership"
+              ]
+            },
+            "GetMessage": {
+              "methods": [
+                "get_message"
+              ]
+            },
+            "GetSpace": {
+              "methods": [
+                "get_space"
+              ]
+            },
+            "GetSpaceEvent": {
+              "methods": [
+                "get_space_event"
+              ]
+            },
+            "GetSpaceNotificationSetting": {
+              "methods": [
+                "get_space_notification_setting"
+              ]
+            },
+            "GetSpaceReadState": {
+              "methods": [
+                "get_space_read_state"
+              ]
+            },
+            "GetThreadReadState": {
+              "methods": [
+                "get_thread_read_state"
+              ]
+            },
+            "ListCustomEmojis": {
+              "methods": [
+                "list_custom_emojis"
+              ]
+            },
+            "ListMemberships": {
+              "methods": [
+                "list_memberships"
+              ]
+            },
+            "ListMessagePins": {
+              "methods": [
+                "list_message_pins"
+              ]
+            },
+            "ListMessages": {
+              "methods": [
+                "list_messages"
+              ]
+            },
+            "ListReactions": {
+              "methods": [
+                "list_reactions"
+              ]
+            },
+            "ListSectionItems": {
+              "methods": [
+                "list_section_items"
+              ]
+            },
+            "ListSections": {
+              "methods": [
+                "list_sections"
+              ]
+            },
+            "ListSpaceEvents": {
+              "methods": [
+                "list_space_events"
+              ]
+            },
+            "ListSpaces": {
+              "methods": [
+                "list_spaces"
+              ]
+            },
+            "MarkAsActive": {
+              "methods": [
+                "mark_as_active"
+              ]
+            },
+            "MarkAsAway": {
+              "methods": [
+                "mark_as_away"
+              ]
+            },
+            "MarkAsDoNotDisturb": {
+              "methods": [
+                "mark_as_do_not_disturb"
+              ]
+            },
+            "MoveSectionItem": {
+              "methods": [
+                "move_section_item"
+              ]
+            },
+            "PositionSection": {
+              "methods": [
+                "position_section"
+              ]
+            },
+            "ReplaceMessageCards": {
+              "methods": [
+                "replace_message_cards"
+              ]
+            },
+            "SearchMessages": {
+              "methods": [
+                "search_messages"
+              ]
+            },
+            "SearchSpaces": {
+              "methods": [
+                "search_spaces"
+              ]
+            },
+            "SetUpSpace": {
+              "methods": [
+                "set_up_space"
+              ]
+            },
+            "UpdateAvailability": {
+              "methods": [
+                "update_availability"
+              ]
+            },
+            "UpdateMembership": {
+              "methods": [
+                "update_membership"
+              ]
+            },
+            "UpdateMessage": {
+              "methods": [
+                "update_message"
+              ]
+            },
+            "UpdateSection": {
+              "methods": [
+                "update_section"
+              ]
+            },
+            "UpdateSpace": {
+              "methods": [
+                "update_space"
+              ]
+            },
+            "UpdateSpaceNotificationSetting": {
+              "methods": [
+                "update_space_notification_setting"
+              ]
+            },
+            "UpdateSpaceReadState": {
+              "methods": [
+                "update_space_read_state"
+              ]
+            },
+            "UploadAttachment": {
+              "methods": [
+                "upload_attachment"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ChatServiceAsyncClient",
+          "rpcs": {
+            "CompleteImportSpace": {
+              "methods": [
+                "complete_import_space"
+              ]
+            },
+            "CreateCustomEmoji": {
+              "methods": [
+                "create_custom_emoji"
+              ]
+            },
+            "CreateMembership": {
+              "methods": [
+                "create_membership"
+              ]
+            },
+            "CreateMessage": {
+              "methods": [
+                "create_message"
+              ]
+            },
+            "CreateMessagePin": {
+              "methods": [
+                "create_message_pin"
+              ]
+            },
+            "CreateReaction": {
+              "methods": [
+                "create_reaction"
+              ]
+            },
+            "CreateSection": {
+              "methods": [
+                "create_section"
+              ]
+            },
+            "CreateSpace": {
+              "methods": [
+                "create_space"
+              ]
+            },
+            "DeleteCustomEmoji": {
+              "methods": [
+                "delete_custom_emoji"
+              ]
+            },
+            "DeleteMembership": {
+              "methods": [
+                "delete_membership"
+              ]
+            },
+            "DeleteMessage": {
+              "methods": [
+                "delete_message"
+              ]
+            },
+            "DeleteMessagePin": {
+              "methods": [
+                "delete_message_pin"
+              ]
+            },
+            "DeleteReaction": {
+              "methods": [
+                "delete_reaction"
+              ]
+            },
+            "DeleteSection": {
+              "methods": [
+                "delete_section"
+              ]
+            },
+            "DeleteSpace": {
+              "methods": [
+                "delete_space"
+              ]
+            },
+            "FindDirectMessage": {
+              "methods": [
+                "find_direct_message"
+              ]
+            },
+            "FindGroupChats": {
+              "methods": [
+                "find_group_chats"
+              ]
+            },
+            "GetAttachment": {
+              "methods": [
+                "get_attachment"
+              ]
+            },
+            "GetAvailability": {
+              "methods": [
+                "get_availability"
+              ]
+            },
+            "GetCustomEmoji": {
+              "methods": [
+                "get_custom_emoji"
+              ]
+            },
+            "GetMembership": {
+              "methods": [
+                "get_membership"
+              ]
+            },
+            "GetMessage": {
+              "methods": [
+                "get_message"
+              ]
+            },
+            "GetSpace": {
+              "methods": [
+                "get_space"
+              ]
+            },
+            "GetSpaceEvent": {
+              "methods": [
+                "get_space_event"
+              ]
+            },
+            "GetSpaceNotificationSetting": {
+              "methods": [
+                "get_space_notification_setting"
+              ]
+            },
+            "GetSpaceReadState": {
+              "methods": [
+                "get_space_read_state"
+              ]
+            },
+            "GetThreadReadState": {
+              "methods": [
+                "get_thread_read_state"
+              ]
+            },
+            "ListCustomEmojis": {
+              "methods": [
+                "list_custom_emojis"
+              ]
+            },
+            "ListMemberships": {
+              "methods": [
+                "list_memberships"
+              ]
+            },
+            "ListMessagePins": {
+              "methods": [
+                "list_message_pins"
+              ]
+            },
+            "ListMessages": {
+              "methods": [
+                "list_messages"
+              ]
+            },
+            "ListReactions": {
+              "methods": [
+                "list_reactions"
+              ]
+            },
+            "ListSectionItems": {
+              "methods": [
+                "list_section_items"
+              ]
+            },
+            "ListSections": {
+              "methods": [
+                "list_sections"
+              ]
+            },
+            "ListSpaceEvents": {
+              "methods": [
+                "list_space_events"
+              ]
+            },
+            "ListSpaces": {
+              "methods": [
+                "list_spaces"
+              ]
+            },
+            "MarkAsActive": {
+              "methods": [
+                "mark_as_active"
+              ]
+            },
+            "MarkAsAway": {
+              "methods": [
+                "mark_as_away"
+              ]
+            },
+            "MarkAsDoNotDisturb": {
+              "methods": [
+                "mark_as_do_not_disturb"
+              ]
+            },
+            "MoveSectionItem": {
+              "methods": [
+                "move_section_item"
+              ]
+            },
+            "PositionSection": {
+              "methods": [
+                "position_section"
+              ]
+            },
+            "ReplaceMessageCards": {
+              "methods": [
+                "replace_message_cards"
+              ]
+            },
+            "SearchMessages": {
+              "methods": [
+                "search_messages"
+              ]
+            },
+            "SearchSpaces": {
+              "methods": [
+                "search_spaces"
+              ]
+            },
+            "SetUpSpace": {
+              "methods": [
+                "set_up_space"
+              ]
+            },
+            "UpdateAvailability": {
+              "methods": [
+                "update_availability"
+              ]
+            },
+            "UpdateMembership": {
+              "methods": [
+                "update_membership"
+              ]
+            },
+            "UpdateMessage": {
+              "methods": [
+                "update_message"
+              ]
+            },
+            "UpdateSection": {
+              "methods": [
+                "update_section"
+              ]
+            },
+            "UpdateSpace": {
+              "methods": [
+                "update_space"
+              ]
+            },
+            "UpdateSpaceNotificationSetting": {
+              "methods": [
+                "update_space_notification_setting"
+              ]
+            },
+            "UpdateSpaceReadState": {
+              "methods": [
+                "update_space_read_state"
+              ]
+            },
+            "UploadAttachment": {
+              "methods": [
+                "upload_attachment"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ChatServiceClient",
+          "rpcs": {
+            "CompleteImportSpace": {
+              "methods": [
+                "complete_import_space"
+              ]
+            },
+            "CreateCustomEmoji": {
+              "methods": [
+                "create_custom_emoji"
+              ]
+            },
+            "CreateMembership": {
+              "methods": [
+                "create_membership"
+              ]
+            },
+            "CreateMessage": {
+              "methods": [
+                "create_message"
+              ]
+            },
+            "CreateMessagePin": {
+              "methods": [
+                "create_message_pin"
+              ]
+            },
+            "CreateReaction": {
+              "methods": [
+                "create_reaction"
+              ]
+            },
+            "CreateSection": {
+              "methods": [
+                "create_section"
+              ]
+            },
+            "CreateSpace": {
+              "methods": [
+                "create_space"
+              ]
+            },
+            "DeleteCustomEmoji": {
+              "methods": [
+                "delete_custom_emoji"
+              ]
+            },
+            "DeleteMembership": {
+              "methods": [
+                "delete_membership"
+              ]
+            },
+            "DeleteMessage": {
+              "methods": [
+                "delete_message"
+              ]
+            },
+            "DeleteMessagePin": {
+              "methods": [
+                "delete_message_pin"
+              ]
+            },
+            "DeleteReaction": {
+              "methods": [
+                "delete_reaction"
+              ]
+            },
+            "DeleteSection": {
+              "methods": [
+                "delete_section"
+              ]
+            },
+            "DeleteSpace": {
+              "methods": [
+                "delete_space"
+              ]
+            },
+            "FindDirectMessage": {
+              "methods": [
+                "find_direct_message"
+              ]
+            },
+            "FindGroupChats": {
+              "methods": [
+                "find_group_chats"
+              ]
+            },
+            "GetAttachment": {
+              "methods": [
+                "get_attachment"
+              ]
+            },
+            "GetAvailability": {
+              "methods": [
+                "get_availability"
+              ]
+            },
+            "GetCustomEmoji": {
+              "methods": [
+                "get_custom_emoji"
+              ]
+            },
+            "GetMembership": {
+              "methods": [
+                "get_membership"
+              ]
+            },
+            "GetMessage": {
+              "methods": [
+                "get_message"
+              ]
+            },
+            "GetSpace": {
+              "methods": [
+                "get_space"
+              ]
+            },
+            "GetSpaceEvent": {
+              "methods": [
+                "get_space_event"
+              ]
+            },
+            "GetSpaceNotificationSetting": {
+              "methods": [
+                "get_space_notification_setting"
+              ]
+            },
+            "GetSpaceReadState": {
+              "methods": [
+                "get_space_read_state"
+              ]
+            },
+            "GetThreadReadState": {
+              "methods": [
+                "get_thread_read_state"
+              ]
+            },
+            "ListCustomEmojis": {
+              "methods": [
+                "list_custom_emojis"
+              ]
+            },
+            "ListMemberships": {
+              "methods": [
+                "list_memberships"
+              ]
+            },
+            "ListMessagePins": {
+              "methods": [
+                "list_message_pins"
+              ]
+            },
+            "ListMessages": {
+              "methods": [
+                "list_messages"
+              ]
+            },
+            "ListReactions": {
+              "methods": [
+                "list_reactions"
+              ]
+            },
+            "ListSectionItems": {
+              "methods": [
+                "list_section_items"
+              ]
+            },
+            "ListSections": {
+              "methods": [
+                "list_sections"
+              ]
+            },
+            "ListSpaceEvents": {
+              "methods": [
+                "list_space_events"
+              ]
+            },
+            "ListSpaces": {
+              "methods": [
+                "list_spaces"
+              ]
+            },
+            "MarkAsActive": {
+              "methods": [
+                "mark_as_active"
+              ]
+            },
+            "MarkAsAway": {
+              "methods": [
+                "mark_as_away"
+              ]
+            },
+            "MarkAsDoNotDisturb": {
+              "methods": [
+                "mark_as_do_not_disturb"
+              ]
+            },
+            "MoveSectionItem": {
+              "methods": [
+                "move_section_item"
+              ]
+            },
+            "PositionSection": {
+              "methods": [
+                "position_section"
+              ]
+            },
+            "ReplaceMessageCards": {
+              "methods": [
+                "replace_message_cards"
+              ]
+            },
+            "SearchMessages": {
+              "methods": [
+                "search_messages"
+              ]
+            },
+            "SearchSpaces": {
+              "methods": [
+                "search_spaces"
+              ]
+            },
+            "SetUpSpace": {
+              "methods": [
+                "set_up_space"
+              ]
+            },
+            "UpdateAvailability": {
+              "methods": [
+                "update_availability"
+              ]
+            },
+            "UpdateMembership": {
+              "methods": [
+                "update_membership"
+              ]
+            },
+            "UpdateMessage": {
+              "methods": [
+                "update_message"
+              ]
+            },
+            "UpdateSection": {
+              "methods": [
+                "update_section"
+              ]
+            },
+            "UpdateSpace": {
+              "methods": [
+                "update_space"
+              ]
+            },
+            "UpdateSpaceNotificationSetting": {
+              "methods": [
+                "update_space_notification_setting"
+              ]
+            },
+            "UpdateSpaceReadState": {
+              "methods": [
+                "update_space_read_state"
+              ]
+            },
+            "UploadAttachment": {
+              "methods": [
+                "upload_attachment"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

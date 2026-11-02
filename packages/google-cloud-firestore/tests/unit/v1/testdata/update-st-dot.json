@@ -1,0 +1,35 @@
+{
+  "tests": [
+    {
+      "description": "update: ServerTimestamp with dotted field",
+      "comment": "Like other uses of ServerTimestamp, the data is pruned and the\nfield does not appear in the update mask, because it is in the transform. In this case\nAn update operation is produced just to hold the precondition.",
+      "update": {
+        "docRefPath": "projects/projectID/databases/(default)/documents/C/d",
+        "jsonData": "{\"a.b.c\": \"ServerTimestamp\"}",
+        "request": {
+          "database": "projects/projectID/databases/(default)",
+          "writes": [
+            {
+              "currentDocument": {
+                "exists": true
+              },
+              "update": {
+                "fields": {},
+                "name": "projects/projectID/databases/(default)/documents/C/d"
+              },
+              "updateMask": {
+                "fieldPaths": []
+              },
+              "updateTransforms": [
+                {
+                  "fieldPath": "a.b.c",
+                  "setToServerValue": "REQUEST_TIME"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

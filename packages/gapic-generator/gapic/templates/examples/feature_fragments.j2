@@ -1,0 +1,396 @@
+{#
+ # Copyright (C) 2019  Google LLC
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #     http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ #}
+{# response handling macros #}
+
+{% macro sample_header(sample, calling_form) %}
+# Generated code. DO NOT EDIT!
+#
+# Snippet for {{ sample.rpc }}
+# NOTE: This snippet has been automatically generated for illustrative purposes only.
+# It may require modifications to work in your environment.
+
+# To install the latest published package dependency, execute the following:
+{% if sample.get("is_resumable_upload") and sample.transport in ("grpc-async", "rest-async") %}
+#   python3 -m pip install {{ sample.package_name }}[async_rest]
+{% else %}
+#   python3 -m pip install {{ sample.package_name }}
+{% endif %}
+{% endmacro %}
+
+{% macro print_string_formatting(string_list) %}
+
+{% if string_list|length == 1 %}
+"{{ string_list[0] | render_format_string }}"
+{% elif string_list|length == 2 and string_list[0] == "%s" and string_list[1] == "$resp" %}
+response
+{% else %}
+{# Note: This is the equivalent of render_format_string(string_list[0], string_list[1:] )
+# See https://jinja.palletsprojects.com/en/3.0.x/api/#custom-filters #}
+f"{{ string_list[0] | render_format_string(string_list[1:]) }}"
+{% endif %}
+{% endmacro %}
+
+{% macro print_input_params(full_request) %}
+{% with input_parameters = [] %}
+  {% for request in full_request.request_list %}
+    {% if request.body %}
+      {% for element in request.body if element.input_parameter %}
+        {% do input_parameters.append(element.input_parameter) %}
+      {% endfor %}
+    {% elif request.single and request.single.input_parameter %}
+      {% do input_parameters.append(request.single.input_parameter) %}
+    {% endif %}
+  {% endfor %}
+{{ input_parameters|join(", ") -}}
+{% endwith %}
+{% endmacro %}
+
+{# First elment is a format string, remaining elements are the format string parameters #}
+{# Validating that the number of format params equals #}
+{# the number of remaining params is handled by real python code #}
+{% macro render_print(elts) %}
+print({{ print_string_formatting(elts)|trim }})
+{% endmacro %}
+
+{% macro render_comment(elts) %}
+  {# First elment is a format string, remaining elements are the format string parameters #}
+  {# Validating that the number of format params equals #}
+  {# the number of remaining params is handled by real python code #}
+  {% with fmtStr = elts[0] %}
+  {% with params = elts[1:]|map("coerce_response_name")|list %}
+# {{ fmtStr|format(*params) }}
+{% endwith %}
+{% endwith %}
+{% endmacro %}
+
+{% macro render_define(statement) %}
+{# Python code already verified the form, no need to check #}
+{% with lvalue, rvalue = statement.split("=") %}
+{{ lvalue }} = {{ rvalue|coerce_response_name }}
+{% endwith %}
+{% endmacro %}
+
+{% macro render_collection_loop(statement) %}
+for {{ statement.variable }} in {{ statement.collection|coerce_response_name }}:
+  {% for s in statement.body %}
+{{ dispatch_statement(s, 4) }}
+  {% endfor %}
+{% endmacro %}
+
+{% macro render_map_loop(statement) %}
+ {# At least one of key and value exist; validated in python #}
+{% if "key" not in statement %}
+for {{ statement.value }} in {{ statement.map|coerce_response_name }}.values():
+{% elif "value" not in statement %}
+for {{ statement.key }} in {{ statement.map|coerce_response_name }}.keys():
+{% else %}
+for {{statement.key }}, {{ statement.value }} in {{ statement.map|coerce_response_name }}.items():
+{% endif %}
+{% for s in statement.body %}
+{{ dispatch_statement(s, 4) }}
+{% endfor %}
+{% endmacro %}
+
+{% macro render_write_file(statement) %}
+  {% with contents_rval = statement["contents"]|coerce_response_name %}
+with open({{ print_string_formatting(statement["filename"])|trim }}, "wb") as f:
+    f.write({{ contents_rval }})
+  {% endwith %}
+{% endmacro %}
+
+{% macro dispatch_statement(statement, indentation=0) %}
+{# Each statement is a dict with a single key/value pair #}
+{% if "print" in statement %}
+{{ render_print(statement["print"])|indent(width=indentation, first=True) }}
+{% elif "define" in statement %}
+{{ render_define(statement["define"])|indent(width=indentation, first=True) }}
+{% elif "comment" in statement %}
+{{ render_comment(statement["comment"])|indent(width=indentation, first=True) }}
+{% elif "loop" in statement %}
+  {% with loop = statement["loop"] %}
+    {% if "collection" in loop %}
+{{ render_collection_loop(loop)|indent(width=indentation, first=True) }}
+    {% else %}
+{{ render_map_loop(loop)|indent(width=indentation, first=True) }}
+    {% endif %}
+  {% endwith %}
+{% elif "write_file" in statement %}
+{{ render_write_file(statement["write_file"])|indent(indentation, first=True) }}
+{% endif %}
+{% endmacro %}
+
+{% macro render_request_attr(base_name, attr) %}
+{# Note: python code will have manipulated the value #}
+{# to be the correct enum from the right module, if necessary. #}
+{# Python is also responsible for verifying that each input parameter is unique, #}
+{# no parameter is a reserved keyword #}
+{% if attr.input_parameter %}
+
+# {{ attr.input_parameter }} = {{ attr.value }}
+{% if attr.value_is_file %}
+with open({{ attr.input_parameter }}, "rb") as f:
+    {{ base_name }}.{{ attr.field }} = f.read()
+{% else %}
+{{ base_name }}.{{ attr.field }} = {{ attr.input_parameter }}
+{% endif %}
+{% else %}
+{{ base_name }}.{{ attr.field }} = {{ attr.value }}
+{% endif %}
+{% endmacro %}
+
+
+{% macro render_client_setup(module_name, client_name) %}
+# Create a client
+client = {{ module_name }}.{{ client_name }}()
+{% endmacro %}
+
+{% macro render_request_setup(full_request, module_name, request_type, calling_form, calling_form_enum) %}
+# Initialize request argument(s)
+{% for parameter_block in full_request.request_list if parameter_block.body %}
+{% if parameter_block.pattern %}
+{# This is a resource-name patterned lookup parameter #}
+{% with formals = [] %}
+{% for attr in parameter_block.body %}
+{{ attr.field }} = {{ attr.input_parameter or attr.value }}
+{% endfor %}
+{{ parameter_block.base }} = f"{{parameter_block.pattern }}"
+
+{% endwith %}
+{% else %}{# End resource name construction #}
+{{ parameter_block.base }} = {{ module_name }}.{{ request_type.get_field(parameter_block.base).type.name }}()
+{% for attr in parameter_block.body %}
+{{ render_request_attr(parameter_block.base, attr) -}}
+{% endfor %}
+
+{% endif %}
+{% endfor %}
+{% if not full_request.flattenable %}
+request = {{ module_name }}.{{ request_type.ident.name }}(
+{% for parameter in full_request.request_list %}
+    {{ parameter.base }}={{ parameter.base if parameter.body else parameter.single.value }},
+{% endfor %}
+)
+{# Note: This template assumes only one request needs to be sent. When samples accept
+configs the client streaming logic should be modified to allow 2+ request objects. #}
+{# If client streaming, wrap the single request in a generator that produces 'requests' #}
+{% if calling_form in [calling_form_enum.RequestStreamingBidi,
+                       calling_form_enum.RequestStreamingClient] %}
+
+# This method expects an iterator which contains
+# '{{module_name}}.{{ request_type.ident.name }}' objects
+# Here we create a generator that yields a single `request` for 
+# demonstrative purposes.
+requests = [request]
+
+def request_generator():
+    for request in requests:
+        yield request
+{% endif %}
+{% endif %}
+{% endmacro %}
+
+{% macro render_request_params(request) %}
+  {# Provide the top level parameters last and as keyword params #}
+  {% with params = [] %}
+    {% for r in request if r.body %}
+      {% do params.append(r.base) %}
+    {% endfor %}
+    {% for r in request if r.single %}
+      {% do params.append("%s=%s"|format(r.base, r.single.value)) %}
+    {% endfor %}
+{{ params|join(", ") -}}
+  {% endwith %}
+{% endmacro %}
+
+{% macro render_request_params_unary(request) %}
+  {# Provide the top level parameters last and as keyword params #}
+  {% if request.flattenable %}
+  {% with params = [] %}
+    {% for r in request.request_list %}
+      {% do params.append("%s=%s"|format(r.base, r.single.value if r.single else r.base)) %}
+    {% endfor %}
+{{ params|join(", ") -}}
+  {% endwith %}
+  {% else %}
+request=request
+  {% endif %}
+{% endmacro %}
+
+
+{% macro render_method_call(sample, calling_form, calling_form_enum, transport, include_config=False) %}
+{# Note: this doesn't deal with enums or unions #}
+{# LROs return operation objects and paged requests return pager objects #}
+{% if transport == "grpc-async" and calling_form not in
+[calling_form_enum.RequestPaged, calling_form_enum.RequestPagedAll] %}
+await{{ " "}}
+{%- endif -%}
+{% if calling_form in [calling_form_enum.RequestStreamingBidi,
+                       calling_form_enum.RequestStreamingClient] %}
+client.{{ render_method_name(sample)|trim }}(requests=request_generator())
+{% else %}{# TODO: deal with flattening #}
+{# TODO: set up client streaming once some questions are answered #}
+client.{{ render_method_name(sample)|trim }}({{ render_request_params_unary(sample.request)|trim }}{% if include_config %}, config=config{% endif %})
+{% endif %}
+{% endmacro %}
+
+
+{% macro render_resumable_upload_samples(sample, calling_form, calling_form_enum) %}
+{% set is_async = sample.transport in ("grpc-async", "rest-async") %}
+{% set async_prefix = "async " if is_async else "" %}
+{% set await_prefix = "await " if is_async else "" %}
+{% set fn_name = sample.rpc|snake_case|trim %}
+{% set fn_params = print_input_params(sample.request)|trim %}
+{% set method_call_with_config = render_method_call(sample, calling_form, calling_form_enum, sample.transport, include_config=True)|trim %}
+{{ async_prefix }}def sample_{{ fn_name }}({{ fn_params }}):
+    {{ render_client_setup(sample.module_name, sample.client_name)|indent }}
+    {{ render_request_setup(sample.request, sample.request_module_name, sample.request_type, calling_form, calling_form_enum)|indent }}
+    # Configure optional transfer settings such as chunk size and stall detection
+    config = ResumableUploadConfig(
+        chunk_size=8 * 1024 * 1024,  # 8 MB
+        stall_minimum_rate=64 * 1024,
+        stall_timeout=120,
+    )
+
+    # Make the request
+    upload_session = {{ method_call_with_config }}
+
+    # Option 1: Upload the entire stream directly and {% if is_async %}await{% else %}return{% endif %} the final response
+    stream = io.BytesIO(b"Example upload data")
+    {{ "response = " if sample.response else "" }}{{ await_prefix }}upload_session.upload(stream)
+
+    # Option 2: Alternatively, iterate over the upload to receive progress updates per chunk
+    {% if is_async %}
+    # async for progress in upload_session.upload(stream):
+    {% else %}
+    # for progress in upload_session.iter_upload(stream):
+    {% endif %}
+    #     print(f"Uploaded {progress.bytes_uploaded} bytes | State: {progress.state.name}")
+    #     print(f"Session URL: {progress.upload_url}")
+    {% if sample.response %}
+    # response = upload_session.response
+    {% endif %}
+
+    # Option 3: Alternatively, resume an interrupted upload from a saved session URL
+    # {{ "response = " if sample.response else "" }}{{ await_prefix }}upload_session.resume(upload_url, stream, chunk_size=config.chunk_size)
+
+    # Option 4: Alternatively, resume an interrupted upload while receiving progress updates
+    {% if is_async %}
+    # async for progress in upload_session.resume(upload_url, stream, chunk_size=config.chunk_size):
+    {% else %}
+    # for progress in upload_session.iter_resume(upload_url, stream, chunk_size=config.chunk_size):
+    {% endif %}
+    #     print(f"Resumed {progress.bytes_uploaded} bytes | State: {progress.state.name}")
+    {% if sample.response %}
+    # response = upload_session.response
+
+    # Handle the response
+    {% for statement in sample.response %}
+    {{ dispatch_statement(statement)|trim }}
+    {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+
+{# Setting up the method invocation is the responsibility of the caller: #}
+{# it's just easier to set up client side streaming and other things from outside this macro. #}
+{% macro render_calling_form(method_invocation_text, calling_form, calling_form_enum, transport, response_statements, sample=None ) %}
+# Make the request
+{% if calling_form in [calling_form_enum.Request, calling_form_enum.RequestStreamingClient] %}
+{% if response_statements %}response = {% endif %}{{ method_invocation_text|trim }}
+
+{% if response_statements %}
+# Handle the response
+{% for statement in response_statements %}
+{{ dispatch_statement(statement)|trim }}
+{% endfor %}
+{% endif %}
+{% elif calling_form == calling_form_enum.RequestPagedAll %}
+page_result = {{ method_invocation_text|trim }}
+
+# Handle the response
+{% if transport == "grpc-async" %}async {% endif %}for response in page_result:
+  {% for statement in response_statements %}
+    {{ dispatch_statement(statement)|trim }}
+  {% endfor %}
+{% elif calling_form == calling_form_enum.RequestPaged %}
+page_result = {{ method_invocation_text|trim }}
+
+# Handle the response
+{% if transport == "grpc-async" %}async {% endif %}for page in page_result.pages():
+    for response in page:
+  {% for statement in response_statements %}
+        {{ dispatch_statement(statement)|trim }}
+  {% endfor %}
+{% elif calling_form in [calling_form_enum.RequestStreamingServer,
+                        calling_form_enum.RequestStreamingBidi] %}
+stream = {{ method_invocation_text|trim }}
+
+# Handle the response
+{% if transport == "grpc-async" %}async {% endif %}for response in stream:
+  {% for statement in response_statements %}
+    {{ dispatch_statement(statement)|trim }}
+  {% endfor %}
+{% elif calling_form == calling_form_enum.LongRunningRequestPromise %}
+operation = {{ method_invocation_text|trim }}
+
+print("Waiting for operation to complete...")
+
+response = {% if transport == "grpc-async" %}await {% endif %}operation.result()
+
+# Handle the response
+{% for statement in response_statements %}
+{{ dispatch_statement(statement)|trim }}
+{% endfor %}
+{% endif %}
+{% endmacro %}
+
+{% macro render_method_name(sample) %}
+{% set name = (sample.client_method_name|default(sample.rpc, true))|snake_case %}
+{% if sample.is_internal and not name.startswith('_') %}
+_{{ name }}
+{% else %}
+{{ name }}
+{% endif %}
+{% endmacro %}
+
+{% macro render_main_block(sample, full_request) %}
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser()
+{% with arg_list = [] %}
+{% for request in full_request.request_list if request.body %}
+{% for attr in request.body if attr.input_parameter %}
+    parser.add_argument("--{{ attr.input_parameter }}",
+                        type=str,
+                        default={{ attr.value }})
+{% do arg_list.append("args." + attr.input_parameter) %}
+{% endfor %}
+{% endfor %}
+{% for request in full_request.request_list if request.single and request.single.input_parameter %}
+    parser.add_argument("--{{ request.single.input_parameter }}",
+                        type=str,
+                        default={{ request.single.value }})
+{% endfor %}
+    args = parser.parse_args()
+
+    sample_{{ render_method_name(sample)|trim }}({{ arg_list|join(", ") }})
+
+
+if __name__ == "__main__":
+    main()
+{% endwith %}
+{% endmacro %}

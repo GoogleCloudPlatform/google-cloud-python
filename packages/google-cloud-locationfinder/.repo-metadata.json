@@ -1,0 +1,16 @@
+{
+    "api_description": "Cloud Location Finder is a public API that offers a repository of all Google Cloud and Google Distributed Cloud locations, as well as cloud locations for other cloud providers.",
+    "api_id": "cloudlocationfinder.googleapis.com",
+    "api_shortname": "locationfinder",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-locationfinder/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-locationfinder",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1569265\u0026template=1988535",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-locationfinder",
+    "name_pretty": "Cloud Location Finder",
+    "product_documentation": "https://cloud.google.com/location-finder/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

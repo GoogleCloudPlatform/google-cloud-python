@@ -1,0 +1,15 @@
+{
+    "api_description": "Discover and protect your sensitive data. A fully managed service designed\nto help you discover, classify, and protect your valuable data assets with\nease.",
+    "api_id": "dlp.googleapis.com",
+    "api_shortname": "dlp",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/dlp/latest",
+    "default_version": "v2",
+    "distribution_name": "google-cloud-dlp",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "dlp",
+    "name_pretty": "Sensitive Data Protection (DLP)",
+    "product_documentation": "https://cloud.google.com/dlp/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

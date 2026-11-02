@@ -1,0 +1,14 @@
+{
+    "api_id": "contentwarehouse.googleapis.com",
+    "api_shortname": "contentwarehouse",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/contentwarehouse/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-contentwarehouse",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "contentwarehouse",
+    "name_pretty": "Document AI Warehouse",
+    "product_documentation": "https://cloud.google.com/document-warehouse/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

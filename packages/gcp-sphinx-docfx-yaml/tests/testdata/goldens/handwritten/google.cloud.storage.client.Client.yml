@@ -1,0 +1,990 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.client.Client.SCOPE
+  - google.cloud.storage.client.Client.batch
+  - google.cloud.storage.client.Client.bucket
+  - google.cloud.storage.client.Client.create_anonymous_client
+  - google.cloud.storage.client.Client.create_bucket
+  - google.cloud.storage.client.Client.create_hmac_key
+  - google.cloud.storage.client.Client.current_batch
+  - google.cloud.storage.client.Client.download_blob_to_file
+  - google.cloud.storage.client.Client.generate_signed_post_policy_v4
+  - google.cloud.storage.client.Client.get_bucket
+  - google.cloud.storage.client.Client.get_hmac_key_metadata
+  - google.cloud.storage.client.Client.get_service_account_email
+  - google.cloud.storage.client.Client.list_blobs
+  - google.cloud.storage.client.Client.list_buckets
+  - google.cloud.storage.client.Client.list_hmac_keys
+  - google.cloud.storage.client.Client.lookup_bucket
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: Client
+  source:
+    id: Client
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 66
+  summary: 'Client to bundle configuration needed for API requests.
+
+    '
+  syntax:
+    content: Client(project=<object object>, credentials=None, _http=None, client_info=None,
+      client_options=None)
+    parameters:
+    - description: the project which the client acts on behalf of. Will be passed
+        when creating a topic. If not passed, falls back to the default inferred from
+        the environment.
+      id: project
+      var_type: str or None
+    - description: (Optional) The OAuth2 Credentials to use for this client. If not
+        passed (and if no <code>_http</code> object is passed), falls back to the
+        default inferred from the environment.
+      id: credentials
+      var_type: <code>google.auth.credentials.Credentials</code>
+    - description: (Optional) HTTP object to make requests. Can be any object that
+        defines <code>request()</code> with the same interface as <code>requests.Session.request</code>.
+        If not passed, an <code>_http</code> object is created that is bound to the
+        <code>credentials</code> for the current object. This parameter should be
+        considered private, and could change in the future.
+      id: _http
+      var_type: <code>requests.Session</code>
+    - description: The client info used to send a user-agent string along with API
+        requests. If <code>None</code>, then default info will be used. Generally,
+        you only need to set this if you're developing your own library or partner
+        tool.
+      id: client_info
+      var_type: <code>google.api_core.client_info.ClientInfo</code>
+    - description: (Optional) Client options used to set user options on the client.
+        API Endpoint should be set through client_options.
+      id: client_options
+      var_type: <code>google.api_core.client_options.ClientOptions</code> or <code>dict</code>
+  type: class
+  uid: google.cloud.storage.client.Client
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.SCOPE
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: SCOPE
+  source:
+    id: SCOPE
+    path: null
+    startLine: null
+  summary: 'The scopes required for authenticating as a Cloud Storage consumer.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.storage.client.Client.SCOPE
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.batch
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: batch
+  source:
+    id: batch
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 298
+  summary: 'Factory constructor for batch object.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    This will not make an HTTP request; it simply instantiates
+
+    a batch object owned by this client.
+
+    </aside>'
+  syntax:
+    content: batch()
+    parameters: []
+    returns:
+    - description: The batch object created.
+      var_type: <xref uid="google.cloud.storage.batch.Batch">Batch</xref>
+  type: method
+  uid: google.cloud.storage.client.Client.batch
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.bucket
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: bucket
+  source:
+    id: bucket
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 279
+  summary: 'Factory constructor for bucket object.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    This will not make an HTTP request; it simply instantiates
+
+    a bucket object owned by this client.
+
+    </aside>'
+  syntax:
+    content: bucket(bucket_name, user_project=None)
+    parameters:
+    - description: The name of the bucket to be instantiated.
+      id: bucket_name
+      var_type: str
+    - description: (Optional) The project ID to be billed for API requests made via
+        the bucket.
+      id: user_project
+      var_type: str
+    returns:
+    - description: The bucket object created.
+      var_type: <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref>
+  type: method
+  uid: google.cloud.storage.client.Client.bucket
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.create_anonymous_client
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: create_anonymous_client
+  source:
+    id: create_anonymous_client
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 174
+  summary: 'Factory: return client with anonymous credentials.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    Such a client has only limited access to "public" buckets:
+
+    listing their contents and downloading their blobs.
+
+    </aside>'
+  syntax:
+    content: create_anonymous_client()
+    parameters: []
+    returns:
+    - description: Instance w/ anonymous credentials and no project.
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+  type: method
+  uid: google.cloud.storage.client.Client.create_anonymous_client
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.create_bucket
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: create_bucket
+  source:
+    id: create_bucket
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 817
+  summary: 'Create a new bucket via a POST request.
+
+
+    See [API reference docs](https://cloud.google.com/storage/docs/json_api/v1/buckets/insert)
+    and a [code sample](https://cloud.google.com/storage/docs/samples/storage-create-bucket#storage_create_bucket-python).
+
+    '
+  syntax:
+    content: create_bucket(bucket_or_name, requester_pays=None, project=None, user_project=None,
+      location=None, data_locations=None, predefined_acl=None, predefined_default_object_acl=None,
+      timeout=60, retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: If the bucket already exists.
+      var_type: google.cloud.exceptions.Conflict
+    parameters:
+    - description: The bucket resource to pass or name to create.
+      id: bucket_or_name
+      var_type: Union[ <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref>,
+        str, ]
+    - description: DEPRECATED. Use Bucket().requester_pays instead. (Optional) Whether
+        requester pays for API requests for this bucket and its blobs.
+      id: requester_pays
+      var_type: bool
+    - description: (Optional) The project under which the bucket is to be created.
+        If not passed, uses the project set on the client.
+      id: project
+      var_type: str
+    - description: (Optional) The project ID to be billed for API requests made via
+        created bucket.
+      id: user_project
+      var_type: str
+    - description: '(Optional) The location of the bucket. If not passed, the default
+        location, US, will be used. If specifying a dual-region, <code>data_locations</code>
+        should be set in conjunction. See: https://cloud.google.com/storage/docs/locations'
+      id: location
+      var_type: str
+    - description: '(Optional) The list of regional locations of a custom dual-region
+        bucket. Dual-regions require exactly 2 regional locations. See: https://cloud.google.com/storage/docs/locations'
+      id: data_locations
+      var_type: list of str
+    - description: '(Optional) Name of predefined ACL to apply to bucket. See: https://cloud.google.com/storage/docs/access-control/lists#predefined-acl'
+      id: predefined_acl
+      var_type: str
+    - description: '(Optional) Name of predefined ACL to apply to bucket''s objects.
+        See: https://cloud.google.com/storage/docs/access-control/lists#predefined-acl'
+      id: predefined_default_object_acl
+      var_type: str
+    - description: The amount of time, in seconds, to wait for the server response.
+        Can also be passed as a tuple (connect_timeout, read_timeout). See <code>requests.Session.request</code>
+        documentation for details.
+      id: timeout
+      var_type: Optional[Union[float, Tuple[float, float]]]
+    - description: How to retry the RPC. A None value will disable retries. A google.api_core.retry.Retry
+        value will enable retries, and the object will define retriable response codes
+        and errors and configure backoff and timeout options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_metageneration_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them.
+      id: retry
+      var_type: Optional[Union[google.api_core.retry.Retry, <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>]]
+  type: method
+  uid: google.cloud.storage.client.Client.create_bucket
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.create_hmac_key
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: create_hmac_key
+  source:
+    id: create_hmac_key
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 1360
+  summary: 'Create an HMAC key for a service account.
+
+    '
+  syntax:
+    content: "create_hmac_key(\n    service_account_email, project_id=None, user_project=None,\
+      \ timeout=60, retry=None\n)"
+    parameters:
+    - description: e-mail address of the service account
+      id: service_account_email
+      var_type: str
+    - description: (Optional) Explicit project ID for the key. Defaults to the client's
+        project.
+      id: project_id
+      var_type: str
+    - description: (Optional) This parameter is currently ignored.
+      id: user_project
+      var_type: str
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_metageneration_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: metadata for the created key, plus the bytes of the key's secret,
+        which is an 40-character base64-encoded string.
+      var_type: Tuple[<xref uid="google.cloud.storage.hmac_key.HMACKeyMetadata">HMACKeyMetadata</xref>,
+        str]
+  type: method
+  uid: google.cloud.storage.client.Client.create_hmac_key
+- &id001
+  attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.current_batch
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: current_batch
+  source:
+    id: current_batch
+    path: null
+    startLine: null
+  summary: 'Currently-active batch.
+
+    '
+  syntax:
+    returns:
+    - description: The batch at the top of the batch stack.
+      var_type: <xref uid="google.cloud.storage.batch.Batch">Batch</xref> or <code>NoneType</code>
+        (if no batch is active).
+  type: property
+  uid: google.cloud.storage.client.Client.current_batch
+- *id001
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.download_blob_to_file
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: download_blob_to_file
+  source:
+    id: download_blob_to_file
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 953
+  summary: 'Download the contents of a blob object or blob URI into a file-like object.
+
+
+    See https://cloud.google.com/storage/docs/downloading-objects
+
+    '
+  syntax:
+    content: download_blob_to_file(blob_or_uri, file_obj, start=None, end=None, raw_download=False,
+      if_etag_match=None, if_etag_not_match=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      checksum='md5', retry=<google.api_core.retry.Retry object>)
+    parameters:
+    - description: The blob resource to pass or URI to download.
+      id: blob_or_uri
+      var_type: Union[ <xref uid="google.cloud.storage.blob.Blob">Blob</xref>, str,
+        ]
+    - description: A file handle to which to write the blob's data.
+      id: file_obj
+      var_type: file
+    - description: (Optional) The first byte in a range to be downloaded.
+      id: start
+      var_type: int
+    - description: (Optional) The last byte in a range to be downloaded.
+      id: end
+      var_type: int
+    - description: (Optional) If true, download the object without any expansion.
+      id: raw_download
+      var_type: bool
+    - description: (Optional) See :ref:<code>using-if-etag-match</code>
+      id: if_etag_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-etag-not-match</code>
+      id: if_etag_not_match
+      var_type: Union[str, Set[str]]
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: '[Union[float, Tuple[float, float]]]'
+    - description: (Optional) The type of checksum to compute to verify the integrity
+        of the object. The response headers must contain a checksum of the requested
+        type. If the headers lack an appropriate checksum (for instance in the case
+        of transcoded or ranged downloads where the remote service does not know the
+        correct checksum, including downloads where chunk_size is set) an INFO-level
+        log will be emitted. Supported values are "md5", "crc32c" and None. The default
+        is "md5".
+      id: checksum
+      var_type: str
+    - description: (Optional) How to retry the RPC. A None value will disable retries.
+        A google.api_core.retry.Retry value will enable retries, and the object will
+        define retriable response codes and errors and configure backoff and timeout
+        options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_metageneration_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them. Media operations (downloads and
+        uploads) do not support non-default predicates in a Retry object. The default
+        will always be used. Other configuration changes for Retry objects such as
+        delays and deadlines are respected.
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.client.Client.download_blob_to_file
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.generate_signed_post_policy_v4
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: generate_signed_post_policy_v4
+  source:
+    id: generate_signed_post_policy_v4
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 1517
+  summary: 'Generate a V4 signed policy object. Generated policy object allows user
+    to upload objects with a POST request.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    Assumes `credentials` implements the
+
+    `google.auth.credentials.Signing` interface. Also assumes
+
+    `credentials` has a `service_account_email` property which
+
+    identifies the credentials.
+
+    </aside>'
+  syntax:
+    content: "generate_signed_post_policy_v4(\n    bucket_name,\n    blob_name,\n\
+      \    expiration,\n    conditions=None,\n    fields=None,\n    credentials=None,\n\
+      \    virtual_hosted_style=False,\n    bucket_bound_hostname=None,\n    scheme=\"\
+      http\",\n    service_account_email=None,\n    access_token=None,\n)"
+    parameters:
+    - description: Bucket name.
+      id: bucket_name
+      var_type: str
+    - description: Object name.
+      id: blob_name
+      var_type: str
+    - description: Policy expiration time. If a <code>datetime</code> instance is
+        passed without an explicit <code>tzinfo</code> set, it will be assumed to
+        be <code>UTC</code>.
+      id: expiration
+      var_type: Union[Integer, datetime.datetime, datetime.timedelta]
+    - description: (Optional) List of POST policy conditions, which are used to restrict
+        what is allowed in the request.
+      id: conditions
+      var_type: list
+    - description: (Optional) Additional elements to include into request.
+      id: fields
+      var_type: dict
+    - description: (Optional) Credentials object with an associated private key to
+        sign text.
+      id: credentials
+      var_type: <code>google.auth.credentials.Signing</code>
+    - description: (Optional) If True, construct the URL relative to the bucket virtual
+        hostname, e.g., '<bucket-name>.storage.googleapis.com'.
+      id: virtual_hosted_style
+      var_type: bool
+    - description: '(Optional) If passed, construct the URL relative to the bucket-bound
+        hostname. Value can be bare or with a scheme, e.g., ''example.com'' or ''http://example.com''.
+        See: https://cloud.google.com/storage/docs/request-endpoints#cname'
+      id: bucket_bound_hostname
+      var_type: str
+    - description: (Optional) If <code>bucket_bound_hostname</code> is passed as a
+        bare hostname, use this value as a scheme. <code>https</code> will work only
+        when using a CDN. Defaults to <code>"http"</code>.
+      id: scheme
+      var_type: str
+    - description: (Optional) E-mail address of the service account.
+      id: service_account_email
+      var_type: str
+    - description: (Optional) Access token for a service account.
+      id: access_token
+      var_type: str
+    returns:
+    - description: Signed POST policy.
+      var_type: dict
+  type: method
+  uid: google.cloud.storage.client.Client.generate_signed_post_policy_v4
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.get_bucket
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: get_bucket
+  source:
+    id: get_bucket
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 705
+  summary: 'Retrieve a bucket via a GET request.
+
+
+    See [API reference docs](https://cloud.google.com/storage/docs/json_api/v1/buckets/get)
+    and a [code sample](https://cloud.google.com/storage/docs/samples/storage-get-bucket-metadata#storage_get_bucket_metadata-python).
+
+    '
+  syntax:
+    content: get_bucket(bucket_or_name, timeout=60, if_metageneration_match=None,
+      if_metageneration_not_match=None, retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: If the bucket is not found.
+      var_type: google.cloud.exceptions.NotFound
+    parameters:
+    - description: The bucket resource to pass or name to create.
+      id: bucket_or_name
+      var_type: Union[ <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref>,
+        str, ]
+    - description: The amount of time, in seconds, to wait for the server response.
+        Can also be passed as a tuple (connect_timeout, read_timeout). See <code>requests.Session.request</code>
+        documentation for details.
+      id: timeout
+      var_type: Optional[Union[float, Tuple[float, float]]]
+    - description: Make the operation conditional on whether the blob's current metageneration
+        matches the given value.
+      id: if_metageneration_match
+      var_type: Optional[long]
+    - description: Make the operation conditional on whether the blob's current metageneration
+        does not match the given value.
+      id: if_metageneration_not_match
+      var_type: Optional[long]
+    - description: How to retry the RPC. A None value will disable retries. A google.api_core.retry.Retry
+        value will enable retries, and the object will define retriable response codes
+        and errors and configure backoff and timeout options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_metageneration_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them.
+      id: retry
+      var_type: Optional[Union[google.api_core.retry.Retry, <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>]]
+  type: method
+  uid: google.cloud.storage.client.Client.get_bucket
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.get_hmac_key_metadata
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: get_hmac_key_metadata
+  source:
+    id: get_hmac_key_metadata
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 1493
+  summary: 'Return a metadata instance for the given HMAC key.
+
+    '
+  syntax:
+    content: get_hmac_key_metadata(access_id, project_id=None, user_project=None,
+      timeout=60)
+    parameters:
+    - description: Unique ID of an existing key.
+      id: access_id
+      var_type: str
+    - description: (Optional) Project ID of an existing key. Defaults to client's
+        project.
+      id: project_id
+      var_type: str
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) This parameter is currently ignored.
+      id: user_project
+      var_type: str
+  type: method
+  uid: google.cloud.storage.client.Client.get_hmac_key_metadata
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.get_service_account_email
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: get_service_account_email
+  source:
+    id: get_service_account_email
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 251
+  summary: 'Get the email address of the project''s GCS service account
+
+    '
+  syntax:
+    content: get_service_account_email(project=None, timeout=60, retry=<google.api_core.retry.Retry
+      object>)
+    parameters:
+    - description: (Optional) Project ID to use for retreiving GCS service account
+        email address. Defaults to the client's project.
+      id: project
+      var_type: str
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: service account email address
+      var_type: str
+  type: method
+  uid: google.cloud.storage.client.Client.get_service_account_email
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.list_blobs
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: list_blobs
+  source:
+    id: list_blobs
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 1094
+  summary: 'Return an iterator used to find blobs in the bucket.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+
+    <aside class="note">
+
+    <b>Note:</b>
+
+    List prefixes (directories) in a bucket using a prefix and delimiter.
+
+    See a [code sample](https://cloud.google.com/storage/docs/samples/storage-list-files-with-prefix#storage_list_files_with_prefix-python)
+
+    listing objects using a prefix filter.
+
+    </aside>'
+  syntax:
+    content: list_blobs(bucket_or_name, max_results=None, page_token=None, prefix=None,
+      delimiter=None, start_offset=None, end_offset=None, include_trailing_delimiter=None,
+      versions=None, projection='noAcl', fields=None, page_size=None, timeout=60,
+      retry=<google.api_core.retry.Retry object>)
+    parameters:
+    - description: The bucket resource to pass or name to create.
+      id: bucket_or_name
+      var_type: Union[ <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref>,
+        str, ]
+    - description: (Optional) The maximum number of blobs to return.
+      id: max_results
+      var_type: int
+    - description: '(Optional) If present, return the next batch of blobs, using the
+        value, which must correspond to the <code>nextPageToken</code> value returned
+        in the previous response. Deprecated: use the <code>pages</code> property
+        of the returned iterator instead of manually passing the token.'
+      id: page_token
+      var_type: str
+    - description: (Optional) Prefix used to filter blobs.
+      id: prefix
+      var_type: str
+    - description: (Optional) Delimiter, used with <code>prefix</code> to emulate
+        hierarchy.
+      id: delimiter
+      var_type: str
+    - description: (Optional) Filter results to objects whose names are lexicographically
+        equal to or after <code>startOffset</code>. If <code>endOffset</code> is also
+        set, the objects listed will have names between <code>startOffset</code> (inclusive)
+        and <code>endOffset</code> (exclusive).
+      id: start_offset
+      var_type: str
+    - description: (Optional) Filter results to objects whose names are lexicographically
+        before <code>endOffset</code>. If <code>startOffset</code> is also set, the
+        objects listed will have names between <code>startOffset</code> (inclusive)
+        and <code>endOffset</code> (exclusive).
+      id: end_offset
+      var_type: str
+    - description: (Optional) If true, objects that end in exactly one instance of
+        <code>delimiter</code> will have their metadata included in <code>items</code>
+        in addition to <code>prefixes</code>.
+      id: include_trailing_delimiter
+      var_type: boolean
+    - description: (Optional) Whether object versions should be returned as separate
+        blobs.
+      id: versions
+      var_type: bool
+    - description: (Optional) If used, must be 'full' or 'noAcl'. Defaults to <code>'noAcl'</code>.
+        Specifies the set of properties to return.
+      id: projection
+      var_type: str
+    - description: '(Optional) Selector specifying which fields to include in a partial
+        response. Must be a list of fields. For example to get a partial response
+        with just the next page token and the name and language of each blob returned:
+        <code>''items(name,contentLanguage),nextPageToken''</code>. See: https://cloud.google.com/storage/docs/json_api/v1/parameters#fields'
+      id: fields
+      var_type: str
+    - description: (Optional) Maximum number of blobs to return in each page. Defaults
+        to a value set by the API.
+      id: page_size
+      var_type: int
+    - description: The amount of time, in seconds, to wait for the server response.
+        Can also be passed as a tuple (connect_timeout, read_timeout). See <code>requests.Session.request</code>
+        documentation for details.
+      id: timeout
+      var_type: Optional[Union[float, Tuple[float, float]]]
+    - description: How to retry the RPC. A None value will disable retries. A google.api_core.retry.Retry
+        value will enable retries, and the object will define retriable response codes
+        and errors and configure backoff and timeout options. A <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+        value wraps a Retry object and activates it only if certain conditions are
+        met. This class exists to provide safe defaults for RPC calls that are not
+        technically safe to retry normally (due to potential data duplication or other
+        side-effects) but become safe to retry if a condition such as if_metageneration_match
+        is set. See the retry.py source code and docstrings in this package (<xref
+        uid="google.cloud.storage.retry">google.cloud.storage.retry</xref>) for information
+        on retry types and how to configure them.
+      id: retry
+      var_type: Optional[Union[google.api_core.retry.Retry, <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>]]
+  type: method
+  uid: google.cloud.storage.client.Client.list_blobs
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.list_buckets
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: list_buckets
+  source:
+    id: list_buckets
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 1255
+  summary: 'Get all buckets in the project associated to the client.
+
+
+    This will not populate the list of blobs available in each
+
+    bucket.
+
+
+    See [API reference docs](https://cloud.google.com/storage/docs/json_api/v1/buckets/list)
+    and a [code sample](https://cloud.google.com/storage/docs/samples/storage-list-buckets#storage_list_buckets-python).
+
+    '
+  syntax:
+    content: list_buckets(max_results=None, page_token=None, prefix=None, projection='noAcl',
+      fields=None, project=None, page_size=None, timeout=60, retry=<google.api_core.retry.Retry
+      object>)
+    exceptions:
+    - description: if both <code>project</code> is <code>None</code> and the client's
+        project is also <code>None</code>.
+      var_type: ValueError
+    parameters:
+    - description: (Optional) The maximum number of buckets to return.
+      id: max_results
+      var_type: int
+    - description: '(Optional) If present, return the next batch of buckets, using
+        the value, which must correspond to the <code>nextPageToken</code> value returned
+        in the previous response. Deprecated: use the <code>pages</code> property
+        of the returned iterator instead of manually passing the token.'
+      id: page_token
+      var_type: str
+    - description: (Optional) Filter results to buckets whose names begin with this
+        prefix.
+      id: prefix
+      var_type: str
+    - description: (Optional) Specifies the set of properties to return. If used,
+        must be 'full' or 'noAcl'. Defaults to 'noAcl'.
+      id: projection
+      var_type: str
+    - description: '(Optional) Selector specifying which fields to include in a partial
+        response. Must be a list of fields. For example to get a partial response
+        with just the next page token and the language of each bucket returned: ''items/id,nextPageToken'''
+      id: fields
+      var_type: str
+    - description: (Optional) The project whose buckets are to be listed. If not passed,
+        uses the project set on the client.
+      id: project
+      var_type: str
+    - description: (Optional) Maximum number of buckets to return in each page. Defaults
+        to a value set by the API.
+      id: page_size
+      var_type: int
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: Iterator of all <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref>
+        belonging to this project.
+      var_type: <code>google.api_core.page_iterator.Iterator</code>
+  type: method
+  uid: google.cloud.storage.client.Client.list_buckets
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.list_hmac_keys
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: list_hmac_keys
+  source:
+    id: list_hmac_keys
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 1424
+  summary: 'List HMAC keys for a project.
+
+    '
+  syntax:
+    content: list_hmac_keys(max_results=None, service_account_email=None, show_deleted_keys=None,
+      project_id=None, user_project=None, timeout=60, retry=<google.api_core.retry.Retry
+      object>)
+    parameters:
+    - description: (Optional) Max number of keys to return in a given page.
+      id: max_results
+      var_type: int
+    - description: (Optional) Limit keys to those created by the given service account.
+      id: service_account_email
+      var_type: str
+    - description: (Optional) Included deleted keys in the list. Default is to exclude
+        them.
+      id: show_deleted_keys
+      var_type: bool
+    - description: (Optional) Explicit project ID for the key. Defaults to the client's
+        project.
+      id: project_id
+      var_type: str
+    - description: (Optional) This parameter is currently ignored.
+      id: user_project
+      var_type: str
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: metadata for the created key, plus the bytes of the key's secret,
+        which is an 40-character base64-encoded string.
+      var_type: Tuple[<xref uid="google.cloud.storage.hmac_key.HMACKeyMetadata">HMACKeyMetadata</xref>,
+        str]
+  type: method
+  uid: google.cloud.storage.client.Client.list_hmac_keys
+- attributes: []
+  class: google.cloud.storage.client.Client
+  fullName: google.cloud.storage.client.Client.lookup_bucket
+  langs:
+  - python
+  module: google.cloud.storage.client
+  name: lookup_bucket
+  source:
+    id: lookup_bucket
+    path: tests/testdata/handwritten/google/cloud/storage/client.py
+    startLine: 770
+  summary: 'Get a bucket by name, returning None if not found.
+
+
+    You can use this if you would rather check for a None value
+
+    than catching a NotFound exception.
+
+    '
+  syntax:
+    content: lookup_bucket(bucket_name, timeout=60, if_metageneration_match=None,
+      if_metageneration_not_match=None, retry=<google.api_core.retry.Retry object>)
+    parameters:
+    - description: The name of the bucket to get.
+      id: bucket_name
+      var_type: str
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration matches the given value.
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) Make the operation conditional on whether the blob's
+        current metageneration does not match the given value.
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: The bucket matching the name provided or None if not found.
+      var_type: <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref> or <code>NoneType</code>
+  type: method
+  uid: google.cloud.storage.client.Client.lookup_bucket
+references:
+- fullName: google.cloud.storage.client.Client.SCOPE
+  isExternal: false
+  name: SCOPE
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.SCOPE
+- fullName: google.cloud.storage.client.Client.batch
+  isExternal: false
+  name: batch
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.batch
+- fullName: google.cloud.storage.client.Client.bucket
+  isExternal: false
+  name: bucket
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.bucket
+- fullName: google.cloud.storage.client.Client.create_anonymous_client
+  isExternal: false
+  name: create_anonymous_client
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.create_anonymous_client
+- fullName: google.cloud.storage.client.Client.create_bucket
+  isExternal: false
+  name: create_bucket
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.create_bucket
+- fullName: google.cloud.storage.client.Client.create_hmac_key
+  isExternal: false
+  name: create_hmac_key
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.create_hmac_key
+- fullName: google.cloud.storage.client.Client.current_batch
+  isExternal: false
+  name: current_batch
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.current_batch
+- fullName: google.cloud.storage.client.Client.download_blob_to_file
+  isExternal: false
+  name: download_blob_to_file
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.download_blob_to_file
+- fullName: google.cloud.storage.client.Client.generate_signed_post_policy_v4
+  isExternal: false
+  name: generate_signed_post_policy_v4
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.generate_signed_post_policy_v4
+- fullName: google.cloud.storage.client.Client.get_bucket
+  isExternal: false
+  name: get_bucket
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.get_bucket
+- fullName: google.cloud.storage.client.Client.get_hmac_key_metadata
+  isExternal: false
+  name: get_hmac_key_metadata
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.get_hmac_key_metadata
+- fullName: google.cloud.storage.client.Client.get_service_account_email
+  isExternal: false
+  name: get_service_account_email
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.get_service_account_email
+- fullName: google.cloud.storage.client.Client.list_blobs
+  isExternal: false
+  name: list_blobs
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.list_blobs
+- fullName: google.cloud.storage.client.Client.list_buckets
+  isExternal: false
+  name: list_buckets
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.list_buckets
+- fullName: google.cloud.storage.client.Client.list_hmac_keys
+  isExternal: false
+  name: list_hmac_keys
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.list_hmac_keys
+- fullName: google.cloud.storage.client.Client.lookup_bucket
+  isExternal: false
+  name: lookup_bucket
+  parent: google.cloud.storage.client.Client
+  uid: google.cloud.storage.client.Client.lookup_bucket

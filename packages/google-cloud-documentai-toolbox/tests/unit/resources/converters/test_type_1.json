@@ -1,0 +1,36 @@
+{
+  "DocumentType": "ScannedPDF",
+  "NoOfPages": 1,
+  "pages": [
+    {},
+    {
+      "Entities": [
+        {
+          "Type": "BusinessName",
+          "Text": "411 I.T. Group",
+          "id":0,
+          "bBox": [
+            {
+              "x": 4.083333,
+              "y": 1.208333
+            },
+            {
+              "x": 5.8125,
+              "y": 1.208333
+            },
+            {
+              "x": 5.8125,
+              "y": 1.510416
+            },
+            {
+              "x": 4.083333,
+              "y": 1.510416
+            }
+          ],
+          "page": "0",
+          "confidence": 0.9997831
+        }
+      ]
+    }
+  ]
+}

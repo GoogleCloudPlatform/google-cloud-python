@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-core/latest",
+    "distribution_name": "google-cloud-core",
+    "language": "python",
+    "library_type": "CORE",
+    "name": "google-cloud-core",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

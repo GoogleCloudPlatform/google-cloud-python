@@ -1,0 +1,411 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.vectorsearch_v1beta",
+  "protoPackage": "google.cloud.vectorsearch.v1beta",
+  "schema": "1.0",
+  "services": {
+    "DataObjectSearchService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataObjectSearchServiceClient",
+          "rpcs": {
+            "AggregateDataObjects": {
+              "methods": [
+                "aggregate_data_objects"
+              ]
+            },
+            "BatchSearchDataObjects": {
+              "methods": [
+                "batch_search_data_objects"
+              ]
+            },
+            "QueryDataObjects": {
+              "methods": [
+                "query_data_objects"
+              ]
+            },
+            "SearchDataObjects": {
+              "methods": [
+                "search_data_objects"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataObjectSearchServiceAsyncClient",
+          "rpcs": {
+            "AggregateDataObjects": {
+              "methods": [
+                "aggregate_data_objects"
+              ]
+            },
+            "BatchSearchDataObjects": {
+              "methods": [
+                "batch_search_data_objects"
+              ]
+            },
+            "QueryDataObjects": {
+              "methods": [
+                "query_data_objects"
+              ]
+            },
+            "SearchDataObjects": {
+              "methods": [
+                "search_data_objects"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataObjectSearchServiceClient",
+          "rpcs": {
+            "AggregateDataObjects": {
+              "methods": [
+                "aggregate_data_objects"
+              ]
+            },
+            "BatchSearchDataObjects": {
+              "methods": [
+                "batch_search_data_objects"
+              ]
+            },
+            "QueryDataObjects": {
+              "methods": [
+                "query_data_objects"
+              ]
+            },
+            "SearchDataObjects": {
+              "methods": [
+                "search_data_objects"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DataObjectService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataObjectServiceClient",
+          "rpcs": {
+            "BatchCreateDataObjects": {
+              "methods": [
+                "batch_create_data_objects"
+              ]
+            },
+            "BatchDeleteDataObjects": {
+              "methods": [
+                "batch_delete_data_objects"
+              ]
+            },
+            "BatchUpdateDataObjects": {
+              "methods": [
+                "batch_update_data_objects"
+              ]
+            },
+            "CreateDataObject": {
+              "methods": [
+                "create_data_object"
+              ]
+            },
+            "DeleteDataObject": {
+              "methods": [
+                "delete_data_object"
+              ]
+            },
+            "GetDataObject": {
+              "methods": [
+                "get_data_object"
+              ]
+            },
+            "UpdateDataObject": {
+              "methods": [
+                "update_data_object"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataObjectServiceAsyncClient",
+          "rpcs": {
+            "BatchCreateDataObjects": {
+              "methods": [
+                "batch_create_data_objects"
+              ]
+            },
+            "BatchDeleteDataObjects": {
+              "methods": [
+                "batch_delete_data_objects"
+              ]
+            },
+            "BatchUpdateDataObjects": {
+              "methods": [
+                "batch_update_data_objects"
+              ]
+            },
+            "CreateDataObject": {
+              "methods": [
+                "create_data_object"
+              ]
+            },
+            "DeleteDataObject": {
+              "methods": [
+                "delete_data_object"
+              ]
+            },
+            "GetDataObject": {
+              "methods": [
+                "get_data_object"
+              ]
+            },
+            "UpdateDataObject": {
+              "methods": [
+                "update_data_object"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataObjectServiceClient",
+          "rpcs": {
+            "BatchCreateDataObjects": {
+              "methods": [
+                "batch_create_data_objects"
+              ]
+            },
+            "BatchDeleteDataObjects": {
+              "methods": [
+                "batch_delete_data_objects"
+              ]
+            },
+            "BatchUpdateDataObjects": {
+              "methods": [
+                "batch_update_data_objects"
+              ]
+            },
+            "CreateDataObject": {
+              "methods": [
+                "create_data_object"
+              ]
+            },
+            "DeleteDataObject": {
+              "methods": [
+                "delete_data_object"
+              ]
+            },
+            "GetDataObject": {
+              "methods": [
+                "get_data_object"
+              ]
+            },
+            "UpdateDataObject": {
+              "methods": [
+                "update_data_object"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "VectorSearchService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "VectorSearchServiceClient",
+          "rpcs": {
+            "CreateCollection": {
+              "methods": [
+                "create_collection"
+              ]
+            },
+            "CreateIndex": {
+              "methods": [
+                "create_index"
+              ]
+            },
+            "DeleteCollection": {
+              "methods": [
+                "delete_collection"
+              ]
+            },
+            "DeleteIndex": {
+              "methods": [
+                "delete_index"
+              ]
+            },
+            "ExportDataObjects": {
+              "methods": [
+                "export_data_objects"
+              ]
+            },
+            "GetCollection": {
+              "methods": [
+                "get_collection"
+              ]
+            },
+            "GetIndex": {
+              "methods": [
+                "get_index"
+              ]
+            },
+            "ImportDataObjects": {
+              "methods": [
+                "import_data_objects"
+              ]
+            },
+            "ListCollections": {
+              "methods": [
+                "list_collections"
+              ]
+            },
+            "ListIndexes": {
+              "methods": [
+                "list_indexes"
+              ]
+            },
+            "UpdateCollection": {
+              "methods": [
+                "update_collection"
+              ]
+            },
+            "UpdateIndex": {
+              "methods": [
+                "update_index"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "VectorSearchServiceAsyncClient",
+          "rpcs": {
+            "CreateCollection": {
+              "methods": [
+                "create_collection"
+              ]
+            },
+            "CreateIndex": {
+              "methods": [
+                "create_index"
+              ]
+            },
+            "DeleteCollection": {
+              "methods": [
+                "delete_collection"
+              ]
+            },
+            "DeleteIndex": {
+              "methods": [
+                "delete_index"
+              ]
+            },
+            "ExportDataObjects": {
+              "methods": [
+                "export_data_objects"
+              ]
+            },
+            "GetCollection": {
+              "methods": [
+                "get_collection"
+              ]
+            },
+            "GetIndex": {
+              "methods": [
+                "get_index"
+              ]
+            },
+            "ImportDataObjects": {
+              "methods": [
+                "import_data_objects"
+              ]
+            },
+            "ListCollections": {
+              "methods": [
+                "list_collections"
+              ]
+            },
+            "ListIndexes": {
+              "methods": [
+                "list_indexes"
+              ]
+            },
+            "UpdateCollection": {
+              "methods": [
+                "update_collection"
+              ]
+            },
+            "UpdateIndex": {
+              "methods": [
+                "update_index"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "VectorSearchServiceClient",
+          "rpcs": {
+            "CreateCollection": {
+              "methods": [
+                "create_collection"
+              ]
+            },
+            "CreateIndex": {
+              "methods": [
+                "create_index"
+              ]
+            },
+            "DeleteCollection": {
+              "methods": [
+                "delete_collection"
+              ]
+            },
+            "DeleteIndex": {
+              "methods": [
+                "delete_index"
+              ]
+            },
+            "ExportDataObjects": {
+              "methods": [
+                "export_data_objects"
+              ]
+            },
+            "GetCollection": {
+              "methods": [
+                "get_collection"
+              ]
+            },
+            "GetIndex": {
+              "methods": [
+                "get_index"
+              ]
+            },
+            "ImportDataObjects": {
+              "methods": [
+                "import_data_objects"
+              ]
+            },
+            "ListCollections": {
+              "methods": [
+                "list_collections"
+              ]
+            },
+            "ListIndexes": {
+              "methods": [
+                "list_indexes"
+              ]
+            },
+            "UpdateCollection": {
+              "methods": [
+                "update_collection"
+              ]
+            },
+            "UpdateIndex": {
+              "methods": [
+                "update_index"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

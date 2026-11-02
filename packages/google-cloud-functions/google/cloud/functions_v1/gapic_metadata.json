@@ -1,0 +1,193 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.functions_v1",
+  "protoPackage": "google.cloud.functions.v1",
+  "schema": "1.0",
+  "services": {
+    "CloudFunctionsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudFunctionsServiceClient",
+          "rpcs": {
+            "CallFunction": {
+              "methods": [
+                "call_function"
+              ]
+            },
+            "CreateFunction": {
+              "methods": [
+                "create_function"
+              ]
+            },
+            "DeleteFunction": {
+              "methods": [
+                "delete_function"
+              ]
+            },
+            "GenerateDownloadUrl": {
+              "methods": [
+                "generate_download_url"
+              ]
+            },
+            "GenerateUploadUrl": {
+              "methods": [
+                "generate_upload_url"
+              ]
+            },
+            "GetFunction": {
+              "methods": [
+                "get_function"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "ListFunctions": {
+              "methods": [
+                "list_functions"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateFunction": {
+              "methods": [
+                "update_function"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudFunctionsServiceAsyncClient",
+          "rpcs": {
+            "CallFunction": {
+              "methods": [
+                "call_function"
+              ]
+            },
+            "CreateFunction": {
+              "methods": [
+                "create_function"
+              ]
+            },
+            "DeleteFunction": {
+              "methods": [
+                "delete_function"
+              ]
+            },
+            "GenerateDownloadUrl": {
+              "methods": [
+                "generate_download_url"
+              ]
+            },
+            "GenerateUploadUrl": {
+              "methods": [
+                "generate_upload_url"
+              ]
+            },
+            "GetFunction": {
+              "methods": [
+                "get_function"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "ListFunctions": {
+              "methods": [
+                "list_functions"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateFunction": {
+              "methods": [
+                "update_function"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudFunctionsServiceClient",
+          "rpcs": {
+            "CallFunction": {
+              "methods": [
+                "call_function"
+              ]
+            },
+            "CreateFunction": {
+              "methods": [
+                "create_function"
+              ]
+            },
+            "DeleteFunction": {
+              "methods": [
+                "delete_function"
+              ]
+            },
+            "GenerateDownloadUrl": {
+              "methods": [
+                "generate_download_url"
+              ]
+            },
+            "GenerateUploadUrl": {
+              "methods": [
+                "generate_upload_url"
+              ]
+            },
+            "GetFunction": {
+              "methods": [
+                "get_function"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "ListFunctions": {
+              "methods": [
+                "list_functions"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateFunction": {
+              "methods": [
+                "update_function"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

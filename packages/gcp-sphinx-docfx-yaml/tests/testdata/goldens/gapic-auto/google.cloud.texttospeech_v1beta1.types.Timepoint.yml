@@ -1,0 +1,33 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Timepoint name as received from the client within <code><mark></code>\n\
+      \   tag."
+    id: mark_name
+    var_type: str
+  - description: "Time offset in seconds from the start of the\n   synthesized audio."
+    id: time_seconds
+    var_type: float
+  children: []
+  class: google.cloud.texttospeech_v1beta1.types.Timepoint
+  fullName: google.cloud.texttospeech_v1beta1.types.Timepoint
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.types
+  name: Timepoint
+  source:
+    id: Timepoint
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/types/cloud_tts.py
+    startLine: 421
+  summary: 'This contains a mapping between a certain point in the input
+
+    text and a corresponding time in the output audio.
+
+    '
+  syntax:
+    content: Timepoint(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1beta1.types.Timepoint
+references: []

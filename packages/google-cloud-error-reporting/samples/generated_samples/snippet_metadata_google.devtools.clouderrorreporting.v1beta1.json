@@ -1,0 +1,1005 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.devtools.clouderrorreporting.v1beta1",
+        "version": "v1beta1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-error-reporting",
+    "version": "1.17.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ErrorGroupServiceAsyncClient",
+          "shortName": "ErrorGroupServiceAsyncClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ErrorGroupServiceAsyncClient.get_group",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorGroupService.GetGroup",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorGroupService",
+            "shortName": "ErrorGroupService"
+          },
+          "shortName": "GetGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.GetGroupRequest"
+          },
+          {
+            "name": "group_name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.types.ErrorGroup",
+        "shortName": "get_group"
+      },
+      "description": "Sample for GetGroup",
+      "file": "clouderrorreporting_v1beta1_generated_error_group_service_get_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ErrorGroupService_GetGroup_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_error_group_service_get_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ErrorGroupServiceClient",
+          "shortName": "ErrorGroupServiceClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ErrorGroupServiceClient.get_group",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorGroupService.GetGroup",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorGroupService",
+            "shortName": "ErrorGroupService"
+          },
+          "shortName": "GetGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.GetGroupRequest"
+          },
+          {
+            "name": "group_name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.types.ErrorGroup",
+        "shortName": "get_group"
+      },
+      "description": "Sample for GetGroup",
+      "file": "clouderrorreporting_v1beta1_generated_error_group_service_get_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ErrorGroupService_GetGroup_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_error_group_service_get_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ErrorGroupServiceAsyncClient",
+          "shortName": "ErrorGroupServiceAsyncClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ErrorGroupServiceAsyncClient.update_group",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorGroupService.UpdateGroup",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorGroupService",
+            "shortName": "ErrorGroupService"
+          },
+          "shortName": "UpdateGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.UpdateGroupRequest"
+          },
+          {
+            "name": "group",
+            "type": "google.cloud.errorreporting_v1beta1.types.ErrorGroup"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.types.ErrorGroup",
+        "shortName": "update_group"
+      },
+      "description": "Sample for UpdateGroup",
+      "file": "clouderrorreporting_v1beta1_generated_error_group_service_update_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ErrorGroupService_UpdateGroup_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_error_group_service_update_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ErrorGroupServiceClient",
+          "shortName": "ErrorGroupServiceClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ErrorGroupServiceClient.update_group",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorGroupService.UpdateGroup",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorGroupService",
+            "shortName": "ErrorGroupService"
+          },
+          "shortName": "UpdateGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.UpdateGroupRequest"
+          },
+          {
+            "name": "group",
+            "type": "google.cloud.errorreporting_v1beta1.types.ErrorGroup"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.types.ErrorGroup",
+        "shortName": "update_group"
+      },
+      "description": "Sample for UpdateGroup",
+      "file": "clouderrorreporting_v1beta1_generated_error_group_service_update_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ErrorGroupService_UpdateGroup_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_error_group_service_update_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceAsyncClient",
+          "shortName": "ErrorStatsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceAsyncClient.delete_events",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService.DeleteEvents",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService",
+            "shortName": "ErrorStatsService"
+          },
+          "shortName": "DeleteEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.DeleteEventsRequest"
+          },
+          {
+            "name": "project_name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.types.DeleteEventsResponse",
+        "shortName": "delete_events"
+      },
+      "description": "Sample for DeleteEvents",
+      "file": "clouderrorreporting_v1beta1_generated_error_stats_service_delete_events_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ErrorStatsService_DeleteEvents_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_error_stats_service_delete_events_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceClient",
+          "shortName": "ErrorStatsServiceClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceClient.delete_events",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService.DeleteEvents",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService",
+            "shortName": "ErrorStatsService"
+          },
+          "shortName": "DeleteEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.DeleteEventsRequest"
+          },
+          {
+            "name": "project_name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.types.DeleteEventsResponse",
+        "shortName": "delete_events"
+      },
+      "description": "Sample for DeleteEvents",
+      "file": "clouderrorreporting_v1beta1_generated_error_stats_service_delete_events_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ErrorStatsService_DeleteEvents_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_error_stats_service_delete_events_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceAsyncClient",
+          "shortName": "ErrorStatsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceAsyncClient.list_events",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService.ListEvents",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService",
+            "shortName": "ErrorStatsService"
+          },
+          "shortName": "ListEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.ListEventsRequest"
+          },
+          {
+            "name": "project_name",
+            "type": "str"
+          },
+          {
+            "name": "group_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.services.error_stats_service.pagers.ListEventsAsyncPager",
+        "shortName": "list_events"
+      },
+      "description": "Sample for ListEvents",
+      "file": "clouderrorreporting_v1beta1_generated_error_stats_service_list_events_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ErrorStatsService_ListEvents_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_error_stats_service_list_events_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceClient",
+          "shortName": "ErrorStatsServiceClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceClient.list_events",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService.ListEvents",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService",
+            "shortName": "ErrorStatsService"
+          },
+          "shortName": "ListEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.ListEventsRequest"
+          },
+          {
+            "name": "project_name",
+            "type": "str"
+          },
+          {
+            "name": "group_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.services.error_stats_service.pagers.ListEventsPager",
+        "shortName": "list_events"
+      },
+      "description": "Sample for ListEvents",
+      "file": "clouderrorreporting_v1beta1_generated_error_stats_service_list_events_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ErrorStatsService_ListEvents_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_error_stats_service_list_events_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceAsyncClient",
+          "shortName": "ErrorStatsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceAsyncClient.list_group_stats",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService.ListGroupStats",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService",
+            "shortName": "ErrorStatsService"
+          },
+          "shortName": "ListGroupStats"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.ListGroupStatsRequest"
+          },
+          {
+            "name": "project_name",
+            "type": "str"
+          },
+          {
+            "name": "time_range",
+            "type": "google.cloud.errorreporting_v1beta1.types.QueryTimeRange"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.services.error_stats_service.pagers.ListGroupStatsAsyncPager",
+        "shortName": "list_group_stats"
+      },
+      "description": "Sample for ListGroupStats",
+      "file": "clouderrorreporting_v1beta1_generated_error_stats_service_list_group_stats_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ErrorStatsService_ListGroupStats_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_error_stats_service_list_group_stats_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceClient",
+          "shortName": "ErrorStatsServiceClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ErrorStatsServiceClient.list_group_stats",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService.ListGroupStats",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ErrorStatsService",
+            "shortName": "ErrorStatsService"
+          },
+          "shortName": "ListGroupStats"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.ListGroupStatsRequest"
+          },
+          {
+            "name": "project_name",
+            "type": "str"
+          },
+          {
+            "name": "time_range",
+            "type": "google.cloud.errorreporting_v1beta1.types.QueryTimeRange"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.services.error_stats_service.pagers.ListGroupStatsPager",
+        "shortName": "list_group_stats"
+      },
+      "description": "Sample for ListGroupStats",
+      "file": "clouderrorreporting_v1beta1_generated_error_stats_service_list_group_stats_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ErrorStatsService_ListGroupStats_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_error_stats_service_list_group_stats_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ReportErrorsServiceAsyncClient",
+          "shortName": "ReportErrorsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ReportErrorsServiceAsyncClient.report_error_event",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ReportErrorsService.ReportErrorEvent",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ReportErrorsService",
+            "shortName": "ReportErrorsService"
+          },
+          "shortName": "ReportErrorEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.ReportErrorEventRequest"
+          },
+          {
+            "name": "project_name",
+            "type": "str"
+          },
+          {
+            "name": "event",
+            "type": "google.cloud.errorreporting_v1beta1.types.ReportedErrorEvent"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.types.ReportErrorEventResponse",
+        "shortName": "report_error_event"
+      },
+      "description": "Sample for ReportErrorEvent",
+      "file": "clouderrorreporting_v1beta1_generated_report_errors_service_report_error_event_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ReportErrorsService_ReportErrorEvent_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_report_errors_service_report_error_event_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.errorreporting_v1beta1.ReportErrorsServiceClient",
+          "shortName": "ReportErrorsServiceClient"
+        },
+        "fullName": "google.cloud.errorreporting_v1beta1.ReportErrorsServiceClient.report_error_event",
+        "method": {
+          "fullName": "google.devtools.clouderrorreporting.v1beta1.ReportErrorsService.ReportErrorEvent",
+          "service": {
+            "fullName": "google.devtools.clouderrorreporting.v1beta1.ReportErrorsService",
+            "shortName": "ReportErrorsService"
+          },
+          "shortName": "ReportErrorEvent"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.errorreporting_v1beta1.types.ReportErrorEventRequest"
+          },
+          {
+            "name": "project_name",
+            "type": "str"
+          },
+          {
+            "name": "event",
+            "type": "google.cloud.errorreporting_v1beta1.types.ReportedErrorEvent"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.errorreporting_v1beta1.types.ReportErrorEventResponse",
+        "shortName": "report_error_event"
+      },
+      "description": "Sample for ReportErrorEvent",
+      "file": "clouderrorreporting_v1beta1_generated_report_errors_service_report_error_event_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "clouderrorreporting_v1beta1_generated_ReportErrorsService_ReportErrorEvent_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "clouderrorreporting_v1beta1_generated_report_errors_service_report_error_event_sync.py"
+    }
+  ]
+}

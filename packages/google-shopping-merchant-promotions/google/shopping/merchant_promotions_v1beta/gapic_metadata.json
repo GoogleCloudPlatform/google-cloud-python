@@ -1,0 +1,73 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_promotions_v1beta",
+  "protoPackage": "google.shopping.merchant.promotions.v1beta",
+  "schema": "1.0",
+  "services": {
+    "PromotionsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PromotionsServiceClient",
+          "rpcs": {
+            "GetPromotion": {
+              "methods": [
+                "get_promotion"
+              ]
+            },
+            "InsertPromotion": {
+              "methods": [
+                "insert_promotion"
+              ]
+            },
+            "ListPromotions": {
+              "methods": [
+                "list_promotions"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "PromotionsServiceAsyncClient",
+          "rpcs": {
+            "GetPromotion": {
+              "methods": [
+                "get_promotion"
+              ]
+            },
+            "InsertPromotion": {
+              "methods": [
+                "insert_promotion"
+              ]
+            },
+            "ListPromotions": {
+              "methods": [
+                "list_promotions"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "PromotionsServiceClient",
+          "rpcs": {
+            "GetPromotion": {
+              "methods": [
+                "get_promotion"
+              ]
+            },
+            "InsertPromotion": {
+              "methods": [
+                "insert_promotion"
+              ]
+            },
+            "ListPromotions": {
+              "methods": [
+                "list_promotions"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

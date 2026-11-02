@@ -1,0 +1,1012 @@
+# -*- coding: utf-8 -*-
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+import logging as std_logging
+import re
+from collections import OrderedDict
+from typing import (
+    Callable,
+    Dict,
+    Mapping,
+    MutableMapping,
+    MutableSequence,
+    Optional,
+    Sequence,
+    Tuple,
+    Type,
+    Union,
+)
+
+import google.protobuf
+from google.api_core import exceptions as core_exceptions
+from google.api_core import gapic_v1
+from google.api_core import retry_async as retries
+from google.api_core.client_options import ClientOptions
+from google.auth import credentials as ga_credentials  # type: ignore
+from google.oauth2 import service_account  # type: ignore
+
+from google.cloud.sqladmin_v1beta4 import gapic_version as package_version
+
+try:
+    OptionalRetry = Union[retries.AsyncRetry, gapic_v1.method._MethodDefault, None]
+except AttributeError:  # pragma: NO COVER
+    OptionalRetry = Union[retries.AsyncRetry, object, None]  # type: ignore
+
+import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+from google.cloud.location import locations_pb2  # type: ignore
+from google.longrunning import operations_pb2  # type: ignore
+
+from google.cloud.sqladmin_v1beta4.services.blue_green_deployments_service import pagers
+from google.cloud.sqladmin_v1beta4.types import (
+    cloud_sql_blue_green_deployments,
+    cloud_sql_resources,
+)
+
+from .client import BlueGreenDeploymentsServiceClient
+from .transports.base import DEFAULT_CLIENT_INFO, BlueGreenDeploymentsServiceTransport
+from .transports.grpc_asyncio import BlueGreenDeploymentsServiceGrpcAsyncIOTransport
+
+try:
+    from google.api_core import client_logging  # type: ignore
+
+    CLIENT_LOGGING_SUPPORTED = True  # pragma: NO COVER
+except ImportError:  # pragma: NO COVER
+    CLIENT_LOGGING_SUPPORTED = False
+
+_LOGGER = std_logging.getLogger(__name__)
+
+
+class BlueGreenDeploymentsServiceAsyncClient:
+    """Service for managing blue-green deployments."""
+
+    _client: BlueGreenDeploymentsServiceClient
+
+    # Copy defaults from the synchronous client for use here.
+    # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
+    DEFAULT_ENDPOINT = BlueGreenDeploymentsServiceClient.DEFAULT_ENDPOINT
+    DEFAULT_MTLS_ENDPOINT = BlueGreenDeploymentsServiceClient.DEFAULT_MTLS_ENDPOINT
+    _DEFAULT_ENDPOINT_TEMPLATE = (
+        BlueGreenDeploymentsServiceClient._DEFAULT_ENDPOINT_TEMPLATE
+    )
+    _DEFAULT_UNIVERSE = BlueGreenDeploymentsServiceClient._DEFAULT_UNIVERSE
+
+    blue_green_deployment_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.blue_green_deployment_path
+    )
+    parse_blue_green_deployment_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.parse_blue_green_deployment_path
+    )
+    common_billing_account_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.common_billing_account_path
+    )
+    parse_common_billing_account_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.parse_common_billing_account_path
+    )
+    common_folder_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.common_folder_path
+    )
+    parse_common_folder_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.parse_common_folder_path
+    )
+    common_organization_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.common_organization_path
+    )
+    parse_common_organization_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.parse_common_organization_path
+    )
+    common_project_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.common_project_path
+    )
+    parse_common_project_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.parse_common_project_path
+    )
+    common_location_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.common_location_path
+    )
+    parse_common_location_path = staticmethod(
+        BlueGreenDeploymentsServiceClient.parse_common_location_path
+    )
+
+    @classmethod
+    def from_service_account_info(cls, info: dict, *args, **kwargs):
+        """Creates an instance of this client using the provided credentials
+            info.
+
+        Args:
+            info (dict): The service account private key info.
+            args: Additional arguments to pass to the constructor.
+            kwargs: Additional arguments to pass to the constructor.
+
+        Returns:
+            BlueGreenDeploymentsServiceAsyncClient: The constructed client.
+        """
+        sa_info_func = (
+            BlueGreenDeploymentsServiceClient.from_service_account_info.__func__  # type: ignore
+        )
+        return sa_info_func(
+            BlueGreenDeploymentsServiceAsyncClient, info, *args, **kwargs
+        )
+
+    @classmethod
+    def from_service_account_file(cls, filename: str, *args, **kwargs):
+        """Creates an instance of this client using the provided credentials
+            file.
+
+        Args:
+            filename (str): The path to the service account private key json
+                file.
+            args: Additional arguments to pass to the constructor.
+            kwargs: Additional arguments to pass to the constructor.
+
+        Returns:
+            BlueGreenDeploymentsServiceAsyncClient: The constructed client.
+        """
+        sa_file_func = (
+            BlueGreenDeploymentsServiceClient.from_service_account_file.__func__  # type: ignore
+        )
+        return sa_file_func(
+            BlueGreenDeploymentsServiceAsyncClient, filename, *args, **kwargs
+        )
+
+    from_service_account_json = from_service_account_file
+
+    @classmethod
+    def get_mtls_endpoint_and_cert_source(
+        cls, client_options: Optional[ClientOptions] = None
+    ):
+        """Return the API endpoint and client cert source for mutual TLS.
+
+        The client cert source is determined in the following order:
+        (1) if `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not "true", the
+        client cert source is None.
+        (2) if `client_options.client_cert_source` is provided, use the provided one; if the
+        default client cert source exists, use the default one; otherwise the client cert
+        source is None.
+
+        The API endpoint is determined in the following order:
+        (1) if `client_options.api_endpoint` if provided, use the provided one.
+        (2) if `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is "always", use the
+        default mTLS endpoint; if the environment variable is "never", use the default API
+        endpoint; otherwise if client cert source exists, use the default mTLS endpoint, otherwise
+        use the default API endpoint.
+
+        More details can be found at https://google.aip.dev/auth/4114.
+
+        Args:
+            client_options (google.api_core.client_options.ClientOptions): Custom options for the
+                client. Only the `api_endpoint` and `client_cert_source` properties may be used
+                in this method.
+
+        Returns:
+            Tuple[str, Callable[[], Tuple[bytes, bytes]]]: returns the API endpoint and the
+                client cert source to use.
+
+        Raises:
+            google.auth.exceptions.MutualTLSChannelError: If any errors happen.
+        """
+        return BlueGreenDeploymentsServiceClient.get_mtls_endpoint_and_cert_source(
+            client_options
+        )  # type: ignore
+
+    @property
+    def transport(self) -> BlueGreenDeploymentsServiceTransport:
+        """Returns the transport used by the client instance.
+
+        Returns:
+            BlueGreenDeploymentsServiceTransport: The transport used by the client instance.
+        """
+        return self._client.transport
+
+    @property
+    def api_endpoint(self) -> str:
+        """Return the API endpoint used by the client instance.
+
+        Returns:
+            str: The API endpoint used by the client instance.
+        """
+        return self._client._api_endpoint
+
+    @property
+    def universe_domain(self) -> str:
+        """Return the universe domain used by the client instance.
+
+        Returns:
+            str: The universe domain used
+                by the client instance.
+        """
+        return self._client._universe_domain
+
+    get_transport_class = BlueGreenDeploymentsServiceClient.get_transport_class
+
+    def __init__(
+        self,
+        *,
+        credentials: Optional[ga_credentials.Credentials] = None,
+        transport: Optional[
+            Union[
+                str,
+                BlueGreenDeploymentsServiceTransport,
+                Callable[..., BlueGreenDeploymentsServiceTransport],
+            ]
+        ] = "grpc_asyncio",
+        client_options: Optional[ClientOptions] = None,
+        client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
+    ) -> None:
+        """Instantiates the blue green deployments service async client.
+
+        Args:
+            credentials (Optional[google.auth.credentials.Credentials]): The
+                authorization credentials to attach to requests. These
+                credentials identify the application to the service; if none
+                are specified, the client will attempt to ascertain the
+                credentials from the environment.
+            transport (Optional[Union[str,BlueGreenDeploymentsServiceTransport,Callable[..., BlueGreenDeploymentsServiceTransport]]]):
+                The transport to use, or a Callable that constructs and returns a new transport to use.
+                If a Callable is given, it will be called with the same set of initialization
+                arguments as used in the BlueGreenDeploymentsServiceTransport constructor.
+                If set to None, a transport is chosen automatically.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client.
+
+                1. The ``api_endpoint`` property can be used to override the
+                default endpoint provided by the client when ``transport`` is
+                not explicitly provided. Only if this property is not set and
+                ``transport`` was not explicitly provided, the endpoint is
+                determined by the GOOGLE_API_USE_MTLS_ENDPOINT environment
+                variable, which have one of the following values:
+                "always" (always use the default mTLS endpoint), "never" (always
+                use the default regular endpoint) and "auto" (auto-switch to the
+                default mTLS endpoint if client certificate is present; this is
+                the default value).
+
+                2. If the GOOGLE_API_USE_CLIENT_CERTIFICATE environment variable
+                is "true", then the ``client_cert_source`` property can be used
+                to provide a client certificate for mTLS transport. If
+                not provided, the default SSL client certificate will be used if
+                present. If GOOGLE_API_USE_CLIENT_CERTIFICATE is "false" or not
+                set, no client certificate will be used.
+
+                3. The ``universe_domain`` property can be used to override the
+                default "googleapis.com" universe. Note that ``api_endpoint``
+                property still takes precedence; and ``universe_domain`` is
+                currently not supported for mTLS.
+
+            client_info (google.api_core.gapic_v1.client_info.ClientInfo):
+                The client info used to send a user-agent string along with
+                API requests. If ``None``, then default info will be used.
+                Generally, you only need to set this if you're developing
+                your own client library.
+
+        Raises:
+            google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
+                creation failed for any reason.
+        """
+        self._client = BlueGreenDeploymentsServiceClient(
+            credentials=credentials,
+            transport=transport,
+            client_options=client_options,
+            client_info=client_info,
+        )
+
+        if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+            std_logging.DEBUG
+        ):  # pragma: NO COVER
+            _LOGGER.debug(
+                "Created client `google.cloud.sql_v1beta4.BlueGreenDeploymentsServiceAsyncClient`.",
+                extra={
+                    "serviceName": "google.cloud.sql.v1beta4.BlueGreenDeploymentsService",
+                    "universeDomain": getattr(
+                        self._client._transport._credentials, "universe_domain", ""
+                    ),
+                    "credentialsType": f"{type(self._client._transport._credentials).__module__}.{type(self._client._transport._credentials).__qualname__}",
+                    "credentialsInfo": getattr(
+                        self.transport._credentials, "get_cred_info", lambda: None
+                    )(),
+                }
+                if hasattr(self._client._transport, "_credentials")
+                else {
+                    "serviceName": "google.cloud.sql.v1beta4.BlueGreenDeploymentsService",
+                    "credentialsType": None,
+                },
+            )
+
+    async def create_blue_green_deployment(
+        self,
+        request: Optional[
+            Union[
+                cloud_sql_blue_green_deployments.CreateBlueGreenDeploymentRequest, dict
+            ]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        blue_green_deployment: Optional[
+            cloud_sql_blue_green_deployments.BlueGreenDeployment
+        ] = None,
+        blue_green_deployment_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_sql_resources.Operation:
+        r"""Creates a blue-green deployment under a given project
+        and location. This deployment provisions a synchronized
+        green environment (target instance) from a blue
+        production environment (source instance), facilitating
+        updates like major version upgrades on the green
+        instance without impacting the blue instance.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1beta4
+
+            async def sample_create_blue_green_deployment():
+                # Create a client
+                client = sqladmin_v1beta4.BlueGreenDeploymentsServiceAsyncClient()
+
+                # Initialize request argument(s)
+                blue_green_deployment = sqladmin_v1beta4.BlueGreenDeployment()
+                blue_green_deployment.source_instance = "source_instance_value"
+
+                request = sqladmin_v1beta4.CreateBlueGreenDeploymentRequest(
+                    parent="parent_value",
+                    blue_green_deployment_id="blue_green_deployment_id_value",
+                    blue_green_deployment=blue_green_deployment,
+                )
+
+                # Make the request
+                response = await client.create_blue_green_deployment(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.CreateBlueGreenDeploymentRequest, dict]]):
+                The request object. The request message for creating a
+                ``BlueGreenDeployment`` resource.
+            parent (:class:`str`):
+                Required. The parent resource where
+                this blue-green deployment will be
+                created. Format:
+                projects/{project}/locations/{location}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            blue_green_deployment (:class:`google.cloud.sqladmin_v1beta4.types.BlueGreenDeployment`):
+                Required. The ``BlueGreenDeployment`` resource to
+                create.
+
+                This corresponds to the ``blue_green_deployment`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            blue_green_deployment_id (:class:`str`):
+                Required. The ID to use for the
+                blue-green deployment, which will become
+                the final component of the deployment's
+                resource name.
+
+                This corresponds to the ``blue_green_deployment_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1beta4.types.Operation:
+                An Operation resource.&nbsp;For
+                successful operations that return an
+                Operation resource, only the fields
+                relevant to the operation are populated
+                in the resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, blue_green_deployment, blue_green_deployment_id]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, cloud_sql_blue_green_deployments.CreateBlueGreenDeploymentRequest
+        ):
+            request = cloud_sql_blue_green_deployments.CreateBlueGreenDeploymentRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+        if blue_green_deployment is not None:
+            request.blue_green_deployment = blue_green_deployment
+        if blue_green_deployment_id is not None:
+            request.blue_green_deployment_id = blue_green_deployment_id
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.create_blue_green_deployment
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_blue_green_deployment(
+        self,
+        request: Optional[
+            Union[cloud_sql_blue_green_deployments.GetBlueGreenDeploymentRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_sql_blue_green_deployments.BlueGreenDeployment:
+        r"""Retrieves a blue-green deployment resource under a
+        given project and location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1beta4
+
+            async def sample_get_blue_green_deployment():
+                # Create a client
+                client = sqladmin_v1beta4.BlueGreenDeploymentsServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = sqladmin_v1beta4.GetBlueGreenDeploymentRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_blue_green_deployment(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.GetBlueGreenDeploymentRequest, dict]]):
+                The request object. The request message for getting a
+                ``BlueGreenDeployment`` resource.
+            name (:class:`str`):
+                Required. The name of the blue-green deployment to
+                retrieve. Format:
+                projects/{project}/locations/{location}/blueGreenDeployments/{blue_green_deployment}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1beta4.types.BlueGreenDeployment:
+                A BlueGreenDeployment resource represents a Cloud SQL blue-green deployment
+                   setup. It orchestrates the lifecycle of creating a
+                   synchronized "green" environment from a "blue"
+                   production environment, performing updates, and
+                   managing the switchover process to minimize downtime.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, cloud_sql_blue_green_deployments.GetBlueGreenDeploymentRequest
+        ):
+            request = cloud_sql_blue_green_deployments.GetBlueGreenDeploymentRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_blue_green_deployment
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_blue_green_deployments(
+        self,
+        request: Optional[
+            Union[
+                cloud_sql_blue_green_deployments.ListBlueGreenDeploymentsRequest, dict
+            ]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListBlueGreenDeploymentsAsyncPager:
+        r"""Lists blue-green deployments under a given project.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1beta4
+
+            async def sample_list_blue_green_deployments():
+                # Create a client
+                client = sqladmin_v1beta4.BlueGreenDeploymentsServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = sqladmin_v1beta4.ListBlueGreenDeploymentsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_blue_green_deployments(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.ListBlueGreenDeploymentsRequest, dict]]):
+                The request object. The request message for listing
+                blue-green deployment resources.
+            parent (:class:`str`):
+                Required. The parent resource whose
+                blue-green deployments are to be listed.
+                Format:
+                projects/{project}/locations/{location}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1beta4.services.blue_green_deployments_service.pagers.ListBlueGreenDeploymentsAsyncPager:
+                The response message for listing
+                blue-green deployment resources.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, cloud_sql_blue_green_deployments.ListBlueGreenDeploymentsRequest
+        ):
+            request = cloud_sql_blue_green_deployments.ListBlueGreenDeploymentsRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_blue_green_deployments
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListBlueGreenDeploymentsAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def switchover_blue_green_deployment(
+        self,
+        request: Optional[
+            Union[
+                cloud_sql_blue_green_deployments.SwitchoverBlueGreenDeploymentRequest,
+                dict,
+            ]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_sql_resources.Operation:
+        r"""Switches over to green instance for a blue-green
+        deployment.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1beta4
+
+            async def sample_switchover_blue_green_deployment():
+                # Create a client
+                client = sqladmin_v1beta4.BlueGreenDeploymentsServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = sqladmin_v1beta4.SwitchoverBlueGreenDeploymentRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.switchover_blue_green_deployment(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.SwitchoverBlueGreenDeploymentRequest, dict]]):
+                The request object. Request message for switching over a
+                ``BlueGreenDeployment`` resource.
+            name (:class:`str`):
+                Required. The name of the blue-green deployment to
+                switch over. Format:
+                projects/{project}/locations/{location}/blueGreenDeployments/{blue_green_deployment}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1beta4.types.Operation:
+                An Operation resource.&nbsp;For
+                successful operations that return an
+                Operation resource, only the fields
+                relevant to the operation are populated
+                in the resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request,
+            cloud_sql_blue_green_deployments.SwitchoverBlueGreenDeploymentRequest,
+        ):
+            request = (
+                cloud_sql_blue_green_deployments.SwitchoverBlueGreenDeploymentRequest(
+                    request
+                )
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.switchover_blue_green_deployment
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def delete_blue_green_deployment(
+        self,
+        request: Optional[
+            Union[
+                cloud_sql_blue_green_deployments.DeleteBlueGreenDeploymentRequest, dict
+            ]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_sql_resources.Operation:
+        r"""Deletes a blue-green deployment, including metadata and
+        underlying resources based on the deployment state. If issued
+        before switchover, this deletes the green instance. If issued
+        after switchover, this deletes the old blue instance (source
+        instance) if the ``delete_old_source`` field in the request is
+        set to true. All blue-green deployment metadata is permanently
+        deleted. Resources deleted as a result of this operation are no
+        longer accessible and can't be restored.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1beta4
+
+            async def sample_delete_blue_green_deployment():
+                # Create a client
+                client = sqladmin_v1beta4.BlueGreenDeploymentsServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = sqladmin_v1beta4.DeleteBlueGreenDeploymentRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.delete_blue_green_deployment(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.DeleteBlueGreenDeploymentRequest, dict]]):
+                The request object. Request message for deleting a ``BlueGreenDeployment``
+                resource.
+            name (:class:`str`):
+                Required. The name of the blue-green deployment to
+                delete. Format:
+                projects/{project}/locations/{location}/blueGreenDeployments/{blue_green_deployment}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1beta4.types.Operation:
+                An Operation resource.&nbsp;For
+                successful operations that return an
+                Operation resource, only the fields
+                relevant to the operation are populated
+                in the resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, cloud_sql_blue_green_deployments.DeleteBlueGreenDeploymentRequest
+        ):
+            request = cloud_sql_blue_green_deployments.DeleteBlueGreenDeploymentRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.delete_blue_green_deployment
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def __aenter__(self) -> "BlueGreenDeploymentsServiceAsyncClient":
+        return self
+
+    async def __aexit__(self, exc_type, exc, tb):
+        await self.transport.close()
+
+
+DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
+    gapic_version=package_version.__version__
+)
+DEFAULT_CLIENT_INFO.protobuf_runtime_version = google.protobuf.__version__
+
+
+__all__ = ("BlueGreenDeploymentsServiceAsyncClient",)

@@ -1,0 +1,253 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.maps.mapmanagement_v2beta",
+  "protoPackage": "google.maps.mapmanagement.v2beta",
+  "schema": "1.0",
+  "services": {
+    "MapManagement": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MapManagementClient",
+          "rpcs": {
+            "CreateMapConfig": {
+              "methods": [
+                "create_map_config"
+              ]
+            },
+            "CreateMapContextConfig": {
+              "methods": [
+                "create_map_context_config"
+              ]
+            },
+            "CreateStyleConfig": {
+              "methods": [
+                "create_style_config"
+              ]
+            },
+            "DeleteMapConfig": {
+              "methods": [
+                "delete_map_config"
+              ]
+            },
+            "DeleteMapContextConfig": {
+              "methods": [
+                "delete_map_context_config"
+              ]
+            },
+            "DeleteStyleConfig": {
+              "methods": [
+                "delete_style_config"
+              ]
+            },
+            "GetMapConfig": {
+              "methods": [
+                "get_map_config"
+              ]
+            },
+            "GetMapContextConfig": {
+              "methods": [
+                "get_map_context_config"
+              ]
+            },
+            "GetStyleConfig": {
+              "methods": [
+                "get_style_config"
+              ]
+            },
+            "ListMapConfigs": {
+              "methods": [
+                "list_map_configs"
+              ]
+            },
+            "ListMapContextConfigs": {
+              "methods": [
+                "list_map_context_configs"
+              ]
+            },
+            "ListStyleConfigs": {
+              "methods": [
+                "list_style_configs"
+              ]
+            },
+            "UpdateMapConfig": {
+              "methods": [
+                "update_map_config"
+              ]
+            },
+            "UpdateMapContextConfig": {
+              "methods": [
+                "update_map_context_config"
+              ]
+            },
+            "UpdateStyleConfig": {
+              "methods": [
+                "update_style_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MapManagementAsyncClient",
+          "rpcs": {
+            "CreateMapConfig": {
+              "methods": [
+                "create_map_config"
+              ]
+            },
+            "CreateMapContextConfig": {
+              "methods": [
+                "create_map_context_config"
+              ]
+            },
+            "CreateStyleConfig": {
+              "methods": [
+                "create_style_config"
+              ]
+            },
+            "DeleteMapConfig": {
+              "methods": [
+                "delete_map_config"
+              ]
+            },
+            "DeleteMapContextConfig": {
+              "methods": [
+                "delete_map_context_config"
+              ]
+            },
+            "DeleteStyleConfig": {
+              "methods": [
+                "delete_style_config"
+              ]
+            },
+            "GetMapConfig": {
+              "methods": [
+                "get_map_config"
+              ]
+            },
+            "GetMapContextConfig": {
+              "methods": [
+                "get_map_context_config"
+              ]
+            },
+            "GetStyleConfig": {
+              "methods": [
+                "get_style_config"
+              ]
+            },
+            "ListMapConfigs": {
+              "methods": [
+                "list_map_configs"
+              ]
+            },
+            "ListMapContextConfigs": {
+              "methods": [
+                "list_map_context_configs"
+              ]
+            },
+            "ListStyleConfigs": {
+              "methods": [
+                "list_style_configs"
+              ]
+            },
+            "UpdateMapConfig": {
+              "methods": [
+                "update_map_config"
+              ]
+            },
+            "UpdateMapContextConfig": {
+              "methods": [
+                "update_map_context_config"
+              ]
+            },
+            "UpdateStyleConfig": {
+              "methods": [
+                "update_style_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "MapManagementClient",
+          "rpcs": {
+            "CreateMapConfig": {
+              "methods": [
+                "create_map_config"
+              ]
+            },
+            "CreateMapContextConfig": {
+              "methods": [
+                "create_map_context_config"
+              ]
+            },
+            "CreateStyleConfig": {
+              "methods": [
+                "create_style_config"
+              ]
+            },
+            "DeleteMapConfig": {
+              "methods": [
+                "delete_map_config"
+              ]
+            },
+            "DeleteMapContextConfig": {
+              "methods": [
+                "delete_map_context_config"
+              ]
+            },
+            "DeleteStyleConfig": {
+              "methods": [
+                "delete_style_config"
+              ]
+            },
+            "GetMapConfig": {
+              "methods": [
+                "get_map_config"
+              ]
+            },
+            "GetMapContextConfig": {
+              "methods": [
+                "get_map_context_config"
+              ]
+            },
+            "GetStyleConfig": {
+              "methods": [
+                "get_style_config"
+              ]
+            },
+            "ListMapConfigs": {
+              "methods": [
+                "list_map_configs"
+              ]
+            },
+            "ListMapContextConfigs": {
+              "methods": [
+                "list_map_context_configs"
+              ]
+            },
+            "ListStyleConfigs": {
+              "methods": [
+                "list_style_configs"
+              ]
+            },
+            "UpdateMapConfig": {
+              "methods": [
+                "update_map_config"
+              ]
+            },
+            "UpdateMapContextConfig": {
+              "methods": [
+                "update_map_context_config"
+              ]
+            },
+            "UpdateStyleConfig": {
+              "methods": [
+                "update_style_config"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

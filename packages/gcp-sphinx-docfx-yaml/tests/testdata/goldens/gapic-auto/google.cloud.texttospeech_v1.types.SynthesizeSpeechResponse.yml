@@ -1,0 +1,34 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "The audio data bytes encoded as specified in the request,\n   including\
+      \ the header for encodings that are wrapped in\n   containers (e.g. MP3, OGG_OPUS).\
+      \ For LINEAR16 audio, we\n   include the WAV header. Note: as with all bytes\
+      \ fields,\n   protobuffers use a pure binary representation, whereas JSON\n\
+      \   representations use base64."
+    id: audio_content
+    var_type: bytes
+  children: []
+  class: google.cloud.texttospeech_v1.types.SynthesizeSpeechResponse
+  fullName: google.cloud.texttospeech_v1.types.SynthesizeSpeechResponse
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1.types
+  name: SynthesizeSpeechResponse
+  source:
+    id: SynthesizeSpeechResponse
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1/types/cloud_tts.py
+    startLine: 368
+  summary: 'The message returned to the client by the `SynthesizeSpeech`
+
+    method.
+
+    '
+  syntax:
+    content: SynthesizeSpeechResponse(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1.types.SynthesizeSpeechResponse
+references: []

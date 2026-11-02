@@ -1,0 +1,15 @@
+{% extends "_base.py.j2" %}
+
+{% block content %}
+
+include README.rst LICENSE
+{% if api.naming.module_namespace %}
+recursive-include {{ api.naming.module_namespace[0] }} *.py *.pyi *.json *.proto py.typed
+{% else %}
+recursive-include {{ api.naming.versioned_module_name }} *.py *.pyi *.json *.proto py.typed
+{% endif %}
+recursive-include tests *
+global-exclude *.py[co]
+global-exclude __pycache__
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{
+    "api_description": "Agent Registry is a centralized, unified catalog that lets you store,\ndiscover, and govern Model Context Protocol (MCP) servers, tools, and AI\nagents within Google Cloud.",
+    "api_id": "agentregistry.googleapis.com",
+    "api_shortname": "agentregistry",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-agentregistry/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-agentregistry",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1992739",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-agentregistry",
+    "name_pretty": "Agent Registry",
+    "product_documentation": "https://docs.cloud.google.com/agent-registry/overview",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

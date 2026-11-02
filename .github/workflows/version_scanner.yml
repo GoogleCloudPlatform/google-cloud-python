@@ -1,0 +1,80 @@
+name: Version Scan
+
+on:
+  push:
+    branches:
+      - main
+      - '**version-scanner**'
+  schedule:
+    - cron: '0 * * * *' # Run hourly at the top of the hour
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  scan:
+    name: Version Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.15'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+          
+      - name: Run Version Scanner
+        run: |
+          # Uses -o to output a detailed, raw CSV to a file
+          # Uses --stdout to print a slim, easier to parse summary to the GitHub Actions UI
+          # Uses --soft-fail to temporarily limit causing CI/CD failures during the migration to full operation. 
+          python scripts/version_scanner/version_scanner.py --matrix-file scripts/version_scanner/matrix.yaml --package-file scripts/version_scanner/example-list-non-generated-packages.txt --stdout -o version_scanner_output.csv --soft-fail
+          
+      - name: Upload CSV Results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: version-scanner-results
+          path: version_scanner_output.csv
+          
+      - name: Create or update issue on finding
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="Version Scanner found deprecated dependencies"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          
+          # Read the first 50 lines to prevent blowing up the issue body if it's massive
+          CSV_PREVIEW=$(head -n 50 version_scanner_output.csv)
+          
+          BODY="The [Version Scanner]($RUN_URL) found deprecated dependencies in the repository.
+          
+          **Matches Found:**
+          \`\`\`csv
+          $CSV_PREVIEW
+          \`\`\`
+          *(If there are more than 50 matches, see the workflow logs for the full list)*"
+
+          # Mirroring regenerate-all.yml: check if an issue already exists to prevent spam
+          EXISTING_ISSUE=$(gh issue list --state open --search "in:title \"$TITLE\"" --json number --jq '.[0].number')
+          
+          if [ -z "$EXISTING_ISSUE" ]; then
+            echo "WOULD HAVE CREATED ISSUE:"
+            echo "gh issue create --title \"$TITLE\" --body \"$BODY\""
+            # gh issue create --title "$TITLE" --body "$BODY"
+          else
+            echo "Issue #$EXISTING_ISSUE already exists."
+            echo "WOULD HAVE ADDED COMMENT:"
+            echo "gh issue comment \"$EXISTING_ISSUE\" --body \"Another scanner run found deprecated dependencies: $RUN_URL\""
+            # gh issue comment "$EXISTING_ISSUE" --body "Another scanner run found deprecated dependencies: $RUN_URL"
+          fi

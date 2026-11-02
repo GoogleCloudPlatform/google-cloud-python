@@ -1,0 +1,11 @@
+[flake8]
+ignore =
+  # Closing bracket mismatches opening bracket's line.
+  # This works poorly with type annotations in method declarations.
+  E123, E124
+  # Line over-indented for visual indent.
+  # This works poorly with type annotations in method declarations.
+  E128, E131
+  # TODO(https://github.com/googleapis/gapic-generator-python/issues/2333): 
+  # Resolve flake8 lint issues
+  E203, E231, E266, E501, W503

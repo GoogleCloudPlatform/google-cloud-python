@@ -1,0 +1,16 @@
+{
+    "api_description": "The Cloud Billing Budget API stores Cloud Billing budgets, which define a\nbudget plan and the rules to execute as spend is tracked against that\nplan.",
+    "api_id": "billingbudgets.googleapis.com",
+    "api_shortname": "billingbudgets",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/billingbudgets/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-billing-budgets",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559770",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "billingbudgets",
+    "name_pretty": "Cloud Billing Budget",
+    "product_documentation": "https://cloud.google.com/billing/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

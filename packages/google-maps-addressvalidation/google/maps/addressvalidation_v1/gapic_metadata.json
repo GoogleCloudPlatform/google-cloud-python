@@ -1,0 +1,58 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.maps.addressvalidation_v1",
+  "protoPackage": "google.maps.addressvalidation.v1",
+  "schema": "1.0",
+  "services": {
+    "AddressValidation": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AddressValidationClient",
+          "rpcs": {
+            "ProvideValidationFeedback": {
+              "methods": [
+                "provide_validation_feedback"
+              ]
+            },
+            "ValidateAddress": {
+              "methods": [
+                "validate_address"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AddressValidationAsyncClient",
+          "rpcs": {
+            "ProvideValidationFeedback": {
+              "methods": [
+                "provide_validation_feedback"
+              ]
+            },
+            "ValidateAddress": {
+              "methods": [
+                "validate_address"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AddressValidationClient",
+          "rpcs": {
+            "ProvideValidationFeedback": {
+              "methods": [
+                "provide_validation_feedback"
+              ]
+            },
+            "ValidateAddress": {
+              "methods": [
+                "validate_address"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

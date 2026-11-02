@@ -1,0 +1,25 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.cloud.pubsub_v1.types.FeatureSetDefaults.FeatureSetEditionDefault
+  class: google.cloud.pubsub_v1.types.FeatureSetDefaults
+  fullName: google.cloud.pubsub_v1.types.FeatureSetDefaults
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: FeatureSetDefaults
+  source:
+    id: FeatureSetDefaults
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.FeatureSetDefaults` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.FeatureSetDefaults
+references:
+- fullName: google.cloud.pubsub_v1.types.FeatureSetDefaults.FeatureSetEditionDefault
+  isExternal: false
+  name: FeatureSetEditionDefault
+  parent: google.cloud.pubsub_v1.types.FeatureSetDefaults
+  uid: google.cloud.pubsub_v1.types.FeatureSetDefaults.FeatureSetEditionDefault

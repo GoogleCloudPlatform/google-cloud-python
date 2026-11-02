@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://googleapis.dev/python/google-crc32c/latest",
+    "distribution_name": "google-crc32c",
+    "language": "python",
+    "library_type": "OTHER",
+    "name": "google-crc32c",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

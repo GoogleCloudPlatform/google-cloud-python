@@ -1,0 +1,179 @@
+workspace(name = "gapic_generator_python")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# Load Protobuf 33.5 first to ensure Bazel uses Protobuf 33.5 over older
+# transitive versions pulled in by downstream rules (e.g. gRPC or rules_gapic).
+_protobuf_version = "33.5"
+_protobuf_sha256 = "98bc55acbc30be2bda6fb8bc9169a31e14956bd3b3169c63edbe6207b8116b68"
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = _protobuf_sha256,
+    strip_prefix = "protobuf-{}".format(_protobuf_version),
+    urls = ["https://github.com/protocolbuffers/protobuf/releases/download/v{0}/protobuf-{0}.zip".format(_protobuf_version)],
+)
+
+# Load com_google_googleapis first so we can choose which version will be used
+_googleapis_sha256 = "87352afc822946dbb5e19de59e31af4821e299e7ae927612cfeda980dc5cebc2"
+_googleapis_commit = "2638026851b9110c280d75338581a752a4271340"
+http_archive(
+    name = "com_google_googleapis",
+    sha256 = _googleapis_sha256,
+    strip_prefix = "googleapis-{}".format(_googleapis_commit),
+    urls = ["https://github.com/googleapis/googleapis/archive/{0}.zip".format(_googleapis_commit)],
+)
+
+# Load com_google_gapic_showcase used for testing
+_gapic_showcase_sha256 = "561af1e332a7c60644cba786fc8eb4f8fc4ea1f3abfe2bd2b8bd16da6fb245b5"
+_gapic_showcase_commit = "5158967e8a41c751b15776142d190428ddb7e99f"
+http_archive(
+    name = "com_google_gapic_showcase",
+    sha256 = _gapic_showcase_sha256,
+    build_file = "//tests/integration:showcase.BUILD.bazel",
+    strip_prefix = "gapic-showcase-{}".format(_gapic_showcase_commit),
+    urls = ["https://github.com/googleapis/gapic-showcase/archive/{}.zip".format(_gapic_showcase_commit)],
+)
+
+# Load rules_gapic v1.0.0. We patch rules_gapic's .bzl files to inject the
+# explicit load for Starlark ProtoInfo from @rules_proto to maintain symbol
+# resolution under rules_proto / Protobuf 35.1.
+_rules_gapic_version = "1.0.0"
+_rules_gapic_sha256 = "c21e78a42f69898e7c3142fa837e3a637b1993d27c08a64723262611971d2b96"
+http_archive(
+    name = "rules_gapic",
+    sha256 = _rules_gapic_sha256,
+    strip_prefix = "rules_gapic-{}".format(_rules_gapic_version),
+    urls = [
+        "https://github.com/googleapis/rules_gapic/archive/v{}.tar.gz".format(_rules_gapic_version)
+    ]
+)
+
+# Load C++ rules matching modern Protobuf C++ requirements
+_rules_cc_version = "0.1.5"
+_rules_cc_sha256 = "b8b918a85f9144c01f6cfe0f45e4f2838c7413961a8ff23bc0c6cdf8bb07a3b6"
+http_archive(
+    name = "rules_cc",
+    sha256 = _rules_cc_sha256,
+    strip_prefix = "rules_cc-{}".format(_rules_cc_version),
+    urls = ["https://github.com/bazelbuild/rules_cc/releases/download/{0}/rules_cc-{0}.tar.gz".format(_rules_cc_version)],
+)
+
+# Load bazel_skylib required by Starlark rules
+_bazel_skylib_version = "1.9.0"
+_bazel_skylib_sha256 = "3b5b49006181f5f8ff626ef8ddceaa95e9bb8ad294f7b5d7b11ea9f7ddaf8c59"
+http_archive(
+    name = "bazel_skylib",
+    sha256 = _bazel_skylib_sha256,
+    url = "https://github.com/bazelbuild/bazel-skylib/releases/download/{0}/bazel-skylib-{0}.tar.gz".format(_bazel_skylib_version),
+)
+
+# Load Abseil C++ matching Protobuf 35 C++ dependencies
+_com_google_absl_version = "20240722.1"
+_com_google_absl_sha256 = "40cee67604060a7c8794d931538cb55f4d444073e556980c88b6c49bb9b19bb7"
+http_archive(
+    name = "com_google_absl",
+    sha256 = _com_google_absl_sha256,
+    strip_prefix = "abseil-cpp-{}".format(_com_google_absl_version),
+    urls = [
+        "https://github.com/abseil/abseil-cpp/releases/download/{0}/abseil-cpp-{0}.tar.gz".format(_com_google_absl_version),
+    ],
+)
+
+# Load Go rules required for GAPIC plugin building
+_io_bazel_rules_go_version = "0.33.0"
+_io_bazel_rules_go_sha256 = "685052b498b6ddfe562ca7a97736741d87916fe536623afb7da2824c0211c369"
+http_archive(
+    name = "io_bazel_rules_go",
+    sha256 = _io_bazel_rules_go_sha256,
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v{0}/rules_go-v{0}.zip".format(_io_bazel_rules_go_version),
+        "https://github.com/bazelbuild/rules_go/releases/download/v{0}/rules_go-v{0}.zip".format(_io_bazel_rules_go_version),
+    ],
+)
+
+# Upgraded to rules_python 1.1.0 for modern C-extension toolchain support.
+_rules_python_version = "1.1.0"
+_rules_python_sha256 = "9c6e26911a79fbf510a8f06d8eedb40f412023cf7fa6d1461def27116bff022c"
+http_archive(
+    name = "rules_python",
+    sha256 = _rules_python_sha256,
+    strip_prefix = "rules_python-{}".format(_rules_python_version),
+    url = "https://github.com/bazelbuild/rules_python/releases/download/{0}/rules_python-{0}.tar.gz".format(_rules_python_version),
+)
+
+load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_multi_toolchains")
+py_repositories()
+
+# Register multi-version hermetic Python toolchains (3.10 - 3.13) to ensure
+# Bazel can resolve both execution and C-header toolchains for any Python target.
+# Set ignore_root_user_error = True so toolchains unpack safely in Docker CI containers (EUID=0).
+python_register_multi_toolchains(
+    name = "python",
+    ignore_root_user_error = True,
+    python_versions = [
+        "3.11",
+        "3.12",
+        "3.13",
+    ],
+)
+
+load("@rules_python//python:pip.bzl", "pip_parse")
+pip_parse(
+    name = "gapic_generator_python_pip_deps",
+    requirements_lock = "//:requirements.txt",
+)
+
+load("@gapic_generator_python_pip_deps//:requirements.bzl", "install_deps")
+install_deps()
+
+# Load gRPC v1.83.0 with temporary patch for legacy_channel.cc.
+# The fix is merged upstream (https://github.com/grpc/grpc/commit/816506e5c0434a42414af6955cc9eef0c562ff3a)
+# and this patch is temporary until released in a future gRPC release.
+_grpc_version = "1.83.0"
+_grpc_sha256 = "876ff5c9c26f364cd603531761268a5b58ccc1479afc78d6dab1d8e839da00c0"
+http_archive(
+    name = "com_github_grpc_grpc",
+    sha256 = _grpc_sha256,
+    strip_prefix = "grpc-{}".format(_grpc_version),
+    urls = ["https://github.com/grpc/grpc/archive/v{}.zip".format(_grpc_version)],
+    patches = ["//third_party:grpc_legacy_channel.patch"],
+    patch_args = ["-p1"],
+)
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+grpc_deps()
+
+load(
+    "//:repositories.bzl",
+    "gapic_generator_python",
+    "gapic_generator_register_toolchains",
+)
+gapic_generator_python()
+gapic_generator_register_toolchains()
+
+# Add rules_java to resolve compatibility proxy errors
+load("@rules_java//java:rules_java_deps.bzl", "rules_java_dependencies")
+rules_java_dependencies()
+
+# Load transitive proto dependencies and register proto toolchains
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+protobuf_deps()
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies")
+rules_proto_dependencies()
+
+load("@rules_proto//proto:toolchains.bzl", "rules_proto_toolchains")
+rules_proto_toolchains()
+
+# Load platform dependencies
+load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
+apple_rules_dependencies()
+
+load("@build_bazel_apple_support//lib:repositories.bzl", "apple_support_dependencies")
+apple_support_dependencies()
+
+load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
+switched_rules_by_language(
+    name = "com_google_googleapis_imports",
+    gapic = True,
+    grpc = True,
+)

@@ -1,0 +1,103 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.biglake_v1",
+  "protoPackage": "google.cloud.biglake.v1",
+  "schema": "1.0",
+  "services": {
+    "IcebergCatalogService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "IcebergCatalogServiceClient",
+          "rpcs": {
+            "CreateIcebergCatalog": {
+              "methods": [
+                "create_iceberg_catalog"
+              ]
+            },
+            "FailoverIcebergCatalog": {
+              "methods": [
+                "failover_iceberg_catalog"
+              ]
+            },
+            "GetIcebergCatalog": {
+              "methods": [
+                "get_iceberg_catalog"
+              ]
+            },
+            "ListIcebergCatalogs": {
+              "methods": [
+                "list_iceberg_catalogs"
+              ]
+            },
+            "UpdateIcebergCatalog": {
+              "methods": [
+                "update_iceberg_catalog"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "IcebergCatalogServiceAsyncClient",
+          "rpcs": {
+            "CreateIcebergCatalog": {
+              "methods": [
+                "create_iceberg_catalog"
+              ]
+            },
+            "FailoverIcebergCatalog": {
+              "methods": [
+                "failover_iceberg_catalog"
+              ]
+            },
+            "GetIcebergCatalog": {
+              "methods": [
+                "get_iceberg_catalog"
+              ]
+            },
+            "ListIcebergCatalogs": {
+              "methods": [
+                "list_iceberg_catalogs"
+              ]
+            },
+            "UpdateIcebergCatalog": {
+              "methods": [
+                "update_iceberg_catalog"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "IcebergCatalogServiceClient",
+          "rpcs": {
+            "CreateIcebergCatalog": {
+              "methods": [
+                "create_iceberg_catalog"
+              ]
+            },
+            "FailoverIcebergCatalog": {
+              "methods": [
+                "failover_iceberg_catalog"
+              ]
+            },
+            "GetIcebergCatalog": {
+              "methods": [
+                "get_iceberg_catalog"
+              ]
+            },
+            "ListIcebergCatalogs": {
+              "methods": [
+                "list_iceberg_catalogs"
+              ]
+            },
+            "UpdateIcebergCatalog": {
+              "methods": [
+                "update_iceberg_catalog"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

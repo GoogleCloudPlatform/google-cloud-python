@@ -1,0 +1,27 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children: []
+  class: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest.TimepointType
+  fullName: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest.TimepointType
+  langs:
+  - python
+  module: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest
+  name: TimepointType
+  source:
+    id: TimepointType
+    path: tests/testdata/gapic-auto/google/cloud/texttospeech_v1beta1/types/cloud_tts.py
+    startLine: 154
+  summary: 'The type of timepoint information that is returned in the
+
+    response.
+
+
+    '
+  syntax:
+    content: TimepointType(value)
+    parameters: []
+  type: class
+  uid: google.cloud.texttospeech_v1beta1.types.SynthesizeSpeechRequest.TimepointType
+references: []

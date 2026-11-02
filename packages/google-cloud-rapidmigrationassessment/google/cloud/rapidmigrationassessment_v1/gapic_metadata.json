@@ -1,0 +1,178 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.rapidmigrationassessment_v1",
+  "protoPackage": "google.cloud.rapidmigrationassessment.v1",
+  "schema": "1.0",
+  "services": {
+    "RapidMigrationAssessment": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "RapidMigrationAssessmentClient",
+          "rpcs": {
+            "CreateAnnotation": {
+              "methods": [
+                "create_annotation"
+              ]
+            },
+            "CreateCollector": {
+              "methods": [
+                "create_collector"
+              ]
+            },
+            "DeleteCollector": {
+              "methods": [
+                "delete_collector"
+              ]
+            },
+            "GetAnnotation": {
+              "methods": [
+                "get_annotation"
+              ]
+            },
+            "GetCollector": {
+              "methods": [
+                "get_collector"
+              ]
+            },
+            "ListCollectors": {
+              "methods": [
+                "list_collectors"
+              ]
+            },
+            "PauseCollector": {
+              "methods": [
+                "pause_collector"
+              ]
+            },
+            "RegisterCollector": {
+              "methods": [
+                "register_collector"
+              ]
+            },
+            "ResumeCollector": {
+              "methods": [
+                "resume_collector"
+              ]
+            },
+            "UpdateCollector": {
+              "methods": [
+                "update_collector"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "RapidMigrationAssessmentAsyncClient",
+          "rpcs": {
+            "CreateAnnotation": {
+              "methods": [
+                "create_annotation"
+              ]
+            },
+            "CreateCollector": {
+              "methods": [
+                "create_collector"
+              ]
+            },
+            "DeleteCollector": {
+              "methods": [
+                "delete_collector"
+              ]
+            },
+            "GetAnnotation": {
+              "methods": [
+                "get_annotation"
+              ]
+            },
+            "GetCollector": {
+              "methods": [
+                "get_collector"
+              ]
+            },
+            "ListCollectors": {
+              "methods": [
+                "list_collectors"
+              ]
+            },
+            "PauseCollector": {
+              "methods": [
+                "pause_collector"
+              ]
+            },
+            "RegisterCollector": {
+              "methods": [
+                "register_collector"
+              ]
+            },
+            "ResumeCollector": {
+              "methods": [
+                "resume_collector"
+              ]
+            },
+            "UpdateCollector": {
+              "methods": [
+                "update_collector"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "RapidMigrationAssessmentClient",
+          "rpcs": {
+            "CreateAnnotation": {
+              "methods": [
+                "create_annotation"
+              ]
+            },
+            "CreateCollector": {
+              "methods": [
+                "create_collector"
+              ]
+            },
+            "DeleteCollector": {
+              "methods": [
+                "delete_collector"
+              ]
+            },
+            "GetAnnotation": {
+              "methods": [
+                "get_annotation"
+              ]
+            },
+            "GetCollector": {
+              "methods": [
+                "get_collector"
+              ]
+            },
+            "ListCollectors": {
+              "methods": [
+                "list_collectors"
+              ]
+            },
+            "PauseCollector": {
+              "methods": [
+                "pause_collector"
+              ]
+            },
+            "RegisterCollector": {
+              "methods": [
+                "register_collector"
+              ]
+            },
+            "ResumeCollector": {
+              "methods": [
+                "resume_collector"
+              ]
+            },
+            "UpdateCollector": {
+              "methods": [
+                "update_collector"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

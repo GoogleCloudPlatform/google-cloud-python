@@ -1,0 +1,86 @@
+// Copyright (C) 2023  Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.fragment;
+
+import "google/api/client.proto";
+import "google/type/dayofweek.proto";
+
+service EnumIndexedTypes {
+  option (google.api.default_host) = "my.example.com";
+
+  rpc MethodWithRepeatedEnums(MethodRequestWithRepeatedEnums) returns (MethodResponseWithRepeatedEnums) {
+  }
+}
+
+// Represents a day of the week. Copied from "google/type/dayofweek.proto"
+enum Weekday {
+  // The day of the week is unspecified.
+  DAY_OF_WEEK_UNSPECIFIED = 0;
+
+  // Monday
+  MONDAY = 1;
+
+  // Tuesday
+  TUESDAY = 2;
+
+  // Wednesday
+  WEDNESDAY = 3;
+
+  // Thursday
+  THURSDAY = 4;
+
+  // Friday
+  FRIDAY = 5;
+
+  // Saturday
+  SATURDAY = 6;
+
+  // Sunday
+  SUNDAY = 7;
+}
+
+
+message MethodRequestWithRepeatedEnums {
+  // Without proper handling, the two fields below referencing
+  // google.type.DayOfWeek trigger errors like:
+  //
+  //  TypeError: Parameters to generic types must be types.
+  //  Got <google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper object at 0x....>
+  //
+  // Interestingly, the fields referencing the Weekday type defined in this file
+  // do not trigger that error.
+  //
+  // The generated code needs to either quote the type, or `from __future__
+  // import annotations`. This may be solved by PEP 563, currently scheduled for
+  // Python 3.11
+  // (cf. https://mail.python.org/archives/list/python-dev@python.org/message/CLVXXPQ2T2LQ5MP2Y53VVQFCXYWQJHKZ/)
+
+  repeated Weekday which_days = 1;
+  repeated google.type.DayOfWeek holidays = 2;
+  map<string, Weekday> string_days = 3;
+  map<string, google.type.DayOfWeek> string_holidays = 4;
+}
+
+message MethodResponseWithRepeatedEnums {
+  // The commentary in MethodRequestWithRepeatedEnums describes what is tested
+  // below.
+
+  repeated Weekday which_days = 1;
+  repeated google.type.DayOfWeek holidays = 2;
+  map<string, Weekday> string_days = 3;
+  map<string, google.type.DayOfWeek> string_holidays = 4;
+}

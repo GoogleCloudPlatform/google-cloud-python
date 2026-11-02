@@ -1,0 +1,173 @@
+on:
+  pull_request:
+    branches:
+      - main
+      - preview
+  # Trigger workflow on GitHub merge queue events
+  # See https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#merge_group
+  merge_group:
+    types: [checks_requested]
+name: lint
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  NOX_REUSE_EXISTING_VIRTUALENVS: "true"
+  NOX_ENVDIR: "/tmp/shared_nox_envs"
+  NOX_DEFAULT_VENV_BACKEND: "uv"
+  UV_VENV_SEED: "1"
+  # Run checks in parallel using 4 cores
+  PARALLEL_WORKERS: "4"
+
+jobs:
+  initialize:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      is_full_run: ${{ steps.check-label.outputs.is_full_run }}
+    env:
+      MAX_SHARDS: 4
+    steps:
+    - name: Checkout
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        fetch-depth: 0
+        filter: blob:none
+        persist-credentials: false
+    - name: Check for unit_test:all_packages label
+      id: check-label
+      run: |
+        if [[ "${{ contains(github.event.pull_request.labels.*.name, 'unit_test:all_packages') }}" == "true" ]]; then
+          echo "is_full_run=true" >> $GITHUB_OUTPUT
+        else
+          echo "is_full_run=false" >> $GITHUB_OUTPUT
+        fi
+    - name: Setup Python
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+      with:
+        python-version: "3.15"
+    - name: Get package shards
+      id: set-matrix
+      env:
+        BUILD_TYPE: presubmit
+        TARGET_BRANCH: ${{ github.base_ref || github.event.merge_group.base_ref }}
+        TEST_ALL_PACKAGES: ${{ steps.check-label.outputs.is_full_run }}
+      run: |
+        if [ -n "$TARGET_BRANCH" ]; then
+          git fetch --no-tags --quiet origin "$TARGET_BRANCH" || true
+        fi
+        python3 ci/get_package_shards.py
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Use a fetch-depth of 2 to avoid error `fatal: origin/main...HEAD: no merge base`
+      # See https://github.com/googleapis/google-cloud-python/issues/12013
+      # and https://github.com/actions/checkout#checkout-head.
+      with:
+        fetch-depth: 2
+        persist-credentials: false
+    - name: Check for unit_test:all_packages label
+      id: check-label
+      run: |
+        if [[ "${{ contains(github.event.pull_request.labels.*.name, 'unit_test:all_packages') }}" == "true" ]]; then
+          echo "is_full_run=true" >> $GITHUB_OUTPUT
+        else
+          echo "is_full_run=false" >> $GITHUB_OUTPUT
+        fi
+    - name: Setup Python
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+      with:
+        python-version: "3.15"
+    - name: Install nox
+      run: |
+        python -m pip install --upgrade setuptools pip wheel build twine
+        python -m pip install nox uv
+    - name: Run lint
+      env:
+        BUILD_TYPE: presubmit
+        TARGET_BRANCH: ${{ github.base_ref || github.event.merge_group.base_ref }}
+        TEST_ALL_PACKAGES: ${{ steps.check-label.outputs.is_full_run }}
+        TEST_TYPE: lint
+        # TODO(https://github.com/googleapis/google-cloud-python/issues/13775): Specify `PY_VERSION` rather than relying on the default python version of the nox session.
+        PY_VERSION: "unused"
+      run: |
+        ci/run_conditional_tests.sh
+    - name: Run lint_setup_py
+      env:
+        BUILD_TYPE: presubmit
+        TARGET_BRANCH: ${{ github.base_ref || github.event.merge_group.base_ref }}
+        TEST_ALL_PACKAGES: ${{ steps.check-label.outputs.is_full_run }}
+        TEST_TYPE: lint_setup_py
+        # TODO(https://github.com/googleapis/google-cloud-python/issues/13775): Specify `PY_VERSION` rather than relying on the default python version of the nox session.
+        PY_VERSION: "unused"
+      run: |
+        ci/run_conditional_tests.sh
+    - name: Run twine_check
+      env:
+        BUILD_TYPE: presubmit
+        TARGET_BRANCH: ${{ github.base_ref || github.event.merge_group.base_ref }}
+        TEST_ALL_PACKAGES: ${{ steps.check-label.outputs.is_full_run }}
+        TEST_TYPE: twine_check
+        # TODO(https://github.com/googleapis/google-cloud-python/issues/13775): Specify `PY_VERSION` rather than relying on the default python version of the nox session.
+        PY_VERSION: "unused"
+      run: |
+        ci/run_conditional_tests.sh
+
+  mypy-shard:
+    needs: initialize
+    if: needs.initialize.outputs.matrix != '[]' && needs.initialize.outputs.matrix != ''
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        package_shard: ${{ fromJson(needs.initialize.outputs.matrix) }}
+    name: ${{ matrix.package_shard.is_sharded && format('mypy ({0})', matrix.package_shard.name) || format('mypy ({0})', matrix.package_shard.description) }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Use a fetch-depth of 2 to avoid error `fatal: origin/main...HEAD: no merge base`
+      # See https://github.com/googleapis/google-cloud-python/issues/12013
+      # and https://github.com/actions/checkout#checkout-head.
+      with:
+        fetch-depth: 2
+        persist-credentials: false
+    - name: Setup Python
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+      with:
+        python-version: "3.15"
+    - name: Install nox
+      run: |
+        python -m pip install --upgrade setuptools pip wheel
+        python -m pip install nox uv
+    - name: Run mypy for ${{ matrix.package_shard.description }}
+      env:
+        BUILD_TYPE: presubmit
+        TARGET_BRANCH: ${{ github.base_ref || github.event.merge_group.base_ref }}
+        TEST_TYPE: mypy
+        PACKAGE_LIST: ${{ matrix.package_shard.packages }}
+        # TODO(https://github.com/googleapis/google-cloud-python/issues/13775): Specify `PY_VERSION` rather than relying on the default python version of the nox session.
+        PY_VERSION: "unused"
+      run: |
+        ci/run_conditional_tests.sh
+
+  mypy-status:
+    if: always()
+    needs: [initialize, mypy-shard]
+    runs-on: ubuntu-latest
+    name: mypy-status
+    steps:
+    - name: Check mypy job status
+      run: |
+        if [[ "${{ needs['mypy-shard'].result }}" != "success" && "${{ needs['mypy-shard'].result }}" != "skipped" ]]; then
+          echo "mypy failed with result: ${{ needs['mypy-shard'].result }}"
+          exit 1
+        fi
+        echo "All mypy shards passed successfully!"

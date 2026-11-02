@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="unknown" lang="unknown">
+<head>
+<title>{{ title }}</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="ocr-system" content="Document AI OCR" />
+<meta name="ocr-langs" content="unknown" />
+<meta name="ocr-scripts" content="unknown" />
+<meta name="ocr-number-of-pages" content="{{ pages|length }}" />
+<meta name="ocr-capabilities" content="ocrp_lang ocr_page ocr_carea ocr_par ocr_line ocrx_word" />
+</head>
+<body>
+{% for page in pages -%}
+    {% set page_number = page.documentai_object.page_number -%}
+    <div class='ocr_page' lang='unknown' title='{{ page.hocr_bounding_box -}}'>{% for docai_block in page.blocks -%}
+        {% set bidx = loop.index0 -%}
+        <span class='ocr_carea' id='block_{{ page_number }}_{{ bidx }}' title='{{ docai_block.hocr_bounding_box -}}'>{% for paragraph in docai_block.paragraphs -%}
+            {% set paridx = loop.index0 -%}
+            <p class='ocr_par' id='par_{{ page_number }}_{{ bidx }}_{{ paridx }}' title='{{ paragraph.hocr_bounding_box -}}'>{% for line in paragraph.lines -%}
+                {% set lidx = loop.index0 -%}
+                <span class='ocr_line' id='line_{{ page_number }}_{{ bidx }}_{{ paridx }}_{{ lidx }}' title='{{ line.hocr_bounding_box }}'>{{ line.text|escape }}{% for token in line.tokens -%}
+                    {% set tidx = loop.index0 -%}
+                    <span class='ocrx_word' id='word_{{ page_number }}_{{ bidx }}_{{ paridx }}_{{ lidx }}_{{ tidx }}' title='{{ token.hocr_bounding_box }}'>{{ token.text|escape }}</span>{% endfor -%}
+                </span>{% endfor -%}
+            </p>{% endfor -%}
+        </span>{% endfor -%}
+    </div>
+{% endfor -%}
+</body>
+</html>

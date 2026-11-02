@@ -1,0 +1,19 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.PolicyDelta
+  fullName: google.cloud.pubsub_v1.types.PolicyDelta
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: PolicyDelta
+  source:
+    id: PolicyDelta
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.PolicyDelta` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.PolicyDelta
+references: []

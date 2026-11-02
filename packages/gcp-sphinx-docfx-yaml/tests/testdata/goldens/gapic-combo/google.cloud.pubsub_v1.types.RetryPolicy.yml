@@ -1,0 +1,53 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "The minimum delay between consecutive\n   deliveries of a given\
+      \ message. Value should be\n   between 0 and 600 seconds. Defaults to 10\n \
+      \  seconds."
+    id: minimum_backoff
+    var_type: google.protobuf.duration_pb2.Duration
+  - description: "The maximum delay between consecutive\n   deliveries of a given\
+      \ message. Value should be\n   between 0 and 600 seconds. Defaults to 600\n\
+      \   seconds."
+    id: maximum_backoff
+    var_type: google.protobuf.duration_pb2.Duration
+  children: []
+  class: google.cloud.pubsub_v1.types.RetryPolicy
+  fullName: google.cloud.pubsub_v1.types.RetryPolicy
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: RetryPolicy
+  source:
+    id: RetryPolicy
+    path: null
+    startLine: null
+  summary: 'A policy that specifies how Cloud Pub/Sub retries message delivery.
+
+
+    Retry delay will be exponential based on provided minimum and
+
+    maximum backoffs. https://en.wikipedia.org/wiki/Exponential_backoff.
+
+
+    RetryPolicy will be triggered on NACKs or acknowledgement deadline
+
+    exceeded events for a given message.
+
+
+    Retry Policy is implemented on a best effort basis. At times, the
+
+    delay between consecutive deliveries may not match the
+
+    configuration. That is, delay can be more or less than configured
+
+    backoff.
+
+    '
+  syntax:
+    content: RetryPolicy(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.RetryPolicy
+references: []

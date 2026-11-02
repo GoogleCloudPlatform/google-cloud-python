@@ -1,0 +1,163 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.gsuiteaddons_v1",
+  "protoPackage": "google.cloud.gsuiteaddons.v1",
+  "schema": "1.0",
+  "services": {
+    "GSuiteAddOns": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "GSuiteAddOnsClient",
+          "rpcs": {
+            "CreateDeployment": {
+              "methods": [
+                "create_deployment"
+              ]
+            },
+            "DeleteDeployment": {
+              "methods": [
+                "delete_deployment"
+              ]
+            },
+            "GetAuthorization": {
+              "methods": [
+                "get_authorization"
+              ]
+            },
+            "GetDeployment": {
+              "methods": [
+                "get_deployment"
+              ]
+            },
+            "GetInstallStatus": {
+              "methods": [
+                "get_install_status"
+              ]
+            },
+            "InstallDeployment": {
+              "methods": [
+                "install_deployment"
+              ]
+            },
+            "ListDeployments": {
+              "methods": [
+                "list_deployments"
+              ]
+            },
+            "ReplaceDeployment": {
+              "methods": [
+                "replace_deployment"
+              ]
+            },
+            "UninstallDeployment": {
+              "methods": [
+                "uninstall_deployment"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "GSuiteAddOnsAsyncClient",
+          "rpcs": {
+            "CreateDeployment": {
+              "methods": [
+                "create_deployment"
+              ]
+            },
+            "DeleteDeployment": {
+              "methods": [
+                "delete_deployment"
+              ]
+            },
+            "GetAuthorization": {
+              "methods": [
+                "get_authorization"
+              ]
+            },
+            "GetDeployment": {
+              "methods": [
+                "get_deployment"
+              ]
+            },
+            "GetInstallStatus": {
+              "methods": [
+                "get_install_status"
+              ]
+            },
+            "InstallDeployment": {
+              "methods": [
+                "install_deployment"
+              ]
+            },
+            "ListDeployments": {
+              "methods": [
+                "list_deployments"
+              ]
+            },
+            "ReplaceDeployment": {
+              "methods": [
+                "replace_deployment"
+              ]
+            },
+            "UninstallDeployment": {
+              "methods": [
+                "uninstall_deployment"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "GSuiteAddOnsClient",
+          "rpcs": {
+            "CreateDeployment": {
+              "methods": [
+                "create_deployment"
+              ]
+            },
+            "DeleteDeployment": {
+              "methods": [
+                "delete_deployment"
+              ]
+            },
+            "GetAuthorization": {
+              "methods": [
+                "get_authorization"
+              ]
+            },
+            "GetDeployment": {
+              "methods": [
+                "get_deployment"
+              ]
+            },
+            "GetInstallStatus": {
+              "methods": [
+                "get_install_status"
+              ]
+            },
+            "InstallDeployment": {
+              "methods": [
+                "install_deployment"
+              ]
+            },
+            "ListDeployments": {
+              "methods": [
+                "list_deployments"
+              ]
+            },
+            "ReplaceDeployment": {
+              "methods": [
+                "replace_deployment"
+              ]
+            },
+            "UninstallDeployment": {
+              "methods": [
+                "uninstall_deployment"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

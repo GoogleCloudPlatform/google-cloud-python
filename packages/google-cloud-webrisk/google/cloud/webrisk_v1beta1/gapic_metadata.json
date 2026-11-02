@@ -1,0 +1,73 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.webrisk_v1beta1",
+  "protoPackage": "google.cloud.webrisk.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "WebRiskServiceV1Beta1": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WebRiskServiceV1Beta1Client",
+          "rpcs": {
+            "ComputeThreatListDiff": {
+              "methods": [
+                "compute_threat_list_diff"
+              ]
+            },
+            "SearchHashes": {
+              "methods": [
+                "search_hashes"
+              ]
+            },
+            "SearchUris": {
+              "methods": [
+                "search_uris"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "WebRiskServiceV1Beta1AsyncClient",
+          "rpcs": {
+            "ComputeThreatListDiff": {
+              "methods": [
+                "compute_threat_list_diff"
+              ]
+            },
+            "SearchHashes": {
+              "methods": [
+                "search_hashes"
+              ]
+            },
+            "SearchUris": {
+              "methods": [
+                "search_uris"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "WebRiskServiceV1Beta1Client",
+          "rpcs": {
+            "ComputeThreatListDiff": {
+              "methods": [
+                "compute_threat_list_diff"
+              ]
+            },
+            "SearchHashes": {
+              "methods": [
+                "search_hashes"
+              ]
+            },
+            "SearchUris": {
+              "methods": [
+                "search_uris"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

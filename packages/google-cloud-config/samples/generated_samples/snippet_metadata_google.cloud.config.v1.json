@@ -1,0 +1,6183 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.config.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-config",
+    "version": "0.7.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.create_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.CreateDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "CreateDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.CreateDeploymentGroupRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "deployment_group",
+            "type": "google.cloud.config_v1.types.DeploymentGroup"
+          },
+          {
+            "name": "deployment_group_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_deployment_group"
+      },
+      "description": "Sample for CreateDeploymentGroup",
+      "file": "config_v1_generated_config_create_deployment_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_CreateDeploymentGroup_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_create_deployment_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.create_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.CreateDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "CreateDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.CreateDeploymentGroupRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "deployment_group",
+            "type": "google.cloud.config_v1.types.DeploymentGroup"
+          },
+          {
+            "name": "deployment_group_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_deployment_group"
+      },
+      "description": "Sample for CreateDeploymentGroup",
+      "file": "config_v1_generated_config_create_deployment_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_CreateDeploymentGroup_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_create_deployment_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.create_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.CreateDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "CreateDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.CreateDeploymentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.config_v1.types.Deployment"
+          },
+          {
+            "name": "deployment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_deployment"
+      },
+      "description": "Sample for CreateDeployment",
+      "file": "config_v1_generated_config_create_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_CreateDeployment_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_create_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.create_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.CreateDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "CreateDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.CreateDeploymentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.config_v1.types.Deployment"
+          },
+          {
+            "name": "deployment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_deployment"
+      },
+      "description": "Sample for CreateDeployment",
+      "file": "config_v1_generated_config_create_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_CreateDeployment_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_create_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.create_preview",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.CreatePreview",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "CreatePreview"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.CreatePreviewRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "preview",
+            "type": "google.cloud.config_v1.types.Preview"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_preview"
+      },
+      "description": "Sample for CreatePreview",
+      "file": "config_v1_generated_config_create_preview_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_CreatePreview_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_create_preview_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.create_preview",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.CreatePreview",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "CreatePreview"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.CreatePreviewRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "preview",
+            "type": "google.cloud.config_v1.types.Preview"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_preview"
+      },
+      "description": "Sample for CreatePreview",
+      "file": "config_v1_generated_config_create_preview_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_CreatePreview_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_create_preview_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.delete_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.DeleteDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeleteDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.DeleteDeploymentGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_deployment_group"
+      },
+      "description": "Sample for DeleteDeploymentGroup",
+      "file": "config_v1_generated_config_delete_deployment_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_DeleteDeploymentGroup_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_delete_deployment_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.delete_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.DeleteDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeleteDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.DeleteDeploymentGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_deployment_group"
+      },
+      "description": "Sample for DeleteDeploymentGroup",
+      "file": "config_v1_generated_config_delete_deployment_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_DeleteDeploymentGroup_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_delete_deployment_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.delete_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.DeleteDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeleteDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.DeleteDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_deployment"
+      },
+      "description": "Sample for DeleteDeployment",
+      "file": "config_v1_generated_config_delete_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_DeleteDeployment_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_delete_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.delete_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.DeleteDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeleteDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.DeleteDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_deployment"
+      },
+      "description": "Sample for DeleteDeployment",
+      "file": "config_v1_generated_config_delete_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_DeleteDeployment_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_delete_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.delete_preview",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.DeletePreview",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeletePreview"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.DeletePreviewRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_preview"
+      },
+      "description": "Sample for DeletePreview",
+      "file": "config_v1_generated_config_delete_preview_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_DeletePreview_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_delete_preview_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.delete_preview",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.DeletePreview",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeletePreview"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.DeletePreviewRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_preview"
+      },
+      "description": "Sample for DeletePreview",
+      "file": "config_v1_generated_config_delete_preview_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_DeletePreview_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_delete_preview_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.delete_statefile",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.DeleteStatefile",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeleteStatefile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.DeleteStatefileRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_statefile"
+      },
+      "description": "Sample for DeleteStatefile",
+      "file": "config_v1_generated_config_delete_statefile_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_DeleteStatefile_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_delete_statefile_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.delete_statefile",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.DeleteStatefile",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeleteStatefile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.DeleteStatefileRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_statefile"
+      },
+      "description": "Sample for DeleteStatefile",
+      "file": "config_v1_generated_config_delete_statefile_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_DeleteStatefile_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_delete_statefile_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.deprovision_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.DeprovisionDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeprovisionDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.DeprovisionDeploymentGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "deprovision_deployment_group"
+      },
+      "description": "Sample for DeprovisionDeploymentGroup",
+      "file": "config_v1_generated_config_deprovision_deployment_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_DeprovisionDeploymentGroup_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_deprovision_deployment_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.deprovision_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.DeprovisionDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeprovisionDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.DeprovisionDeploymentGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "deprovision_deployment_group"
+      },
+      "description": "Sample for DeprovisionDeploymentGroup",
+      "file": "config_v1_generated_config_deprovision_deployment_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_DeprovisionDeploymentGroup_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_deprovision_deployment_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.export_deployment_statefile",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ExportDeploymentStatefile",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ExportDeploymentStatefile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ExportDeploymentStatefileRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Statefile",
+        "shortName": "export_deployment_statefile"
+      },
+      "description": "Sample for ExportDeploymentStatefile",
+      "file": "config_v1_generated_config_export_deployment_statefile_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ExportDeploymentStatefile_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_export_deployment_statefile_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.export_deployment_statefile",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ExportDeploymentStatefile",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ExportDeploymentStatefile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ExportDeploymentStatefileRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Statefile",
+        "shortName": "export_deployment_statefile"
+      },
+      "description": "Sample for ExportDeploymentStatefile",
+      "file": "config_v1_generated_config_export_deployment_statefile_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ExportDeploymentStatefile_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_export_deployment_statefile_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.export_lock_info",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ExportLockInfo",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ExportLockInfo"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ExportLockInfoRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.LockInfo",
+        "shortName": "export_lock_info"
+      },
+      "description": "Sample for ExportLockInfo",
+      "file": "config_v1_generated_config_export_lock_info_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ExportLockInfo_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_export_lock_info_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.export_lock_info",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ExportLockInfo",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ExportLockInfo"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ExportLockInfoRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.LockInfo",
+        "shortName": "export_lock_info"
+      },
+      "description": "Sample for ExportLockInfo",
+      "file": "config_v1_generated_config_export_lock_info_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ExportLockInfo_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_export_lock_info_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.export_preview_result",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ExportPreviewResult",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ExportPreviewResult"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ExportPreviewResultRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.ExportPreviewResultResponse",
+        "shortName": "export_preview_result"
+      },
+      "description": "Sample for ExportPreviewResult",
+      "file": "config_v1_generated_config_export_preview_result_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ExportPreviewResult_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_export_preview_result_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.export_preview_result",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ExportPreviewResult",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ExportPreviewResult"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ExportPreviewResultRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.ExportPreviewResultResponse",
+        "shortName": "export_preview_result"
+      },
+      "description": "Sample for ExportPreviewResult",
+      "file": "config_v1_generated_config_export_preview_result_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ExportPreviewResult_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_export_preview_result_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.export_revision_statefile",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ExportRevisionStatefile",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ExportRevisionStatefile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ExportRevisionStatefileRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Statefile",
+        "shortName": "export_revision_statefile"
+      },
+      "description": "Sample for ExportRevisionStatefile",
+      "file": "config_v1_generated_config_export_revision_statefile_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ExportRevisionStatefile_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_export_revision_statefile_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.export_revision_statefile",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ExportRevisionStatefile",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ExportRevisionStatefile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ExportRevisionStatefileRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Statefile",
+        "shortName": "export_revision_statefile"
+      },
+      "description": "Sample for ExportRevisionStatefile",
+      "file": "config_v1_generated_config_export_revision_statefile_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ExportRevisionStatefile_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_export_revision_statefile_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.get_auto_migration_config",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetAutoMigrationConfig",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetAutoMigrationConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetAutoMigrationConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.AutoMigrationConfig",
+        "shortName": "get_auto_migration_config"
+      },
+      "description": "Sample for GetAutoMigrationConfig",
+      "file": "config_v1_generated_config_get_auto_migration_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetAutoMigrationConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_auto_migration_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.get_auto_migration_config",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetAutoMigrationConfig",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetAutoMigrationConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetAutoMigrationConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.AutoMigrationConfig",
+        "shortName": "get_auto_migration_config"
+      },
+      "description": "Sample for GetAutoMigrationConfig",
+      "file": "config_v1_generated_config_get_auto_migration_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetAutoMigrationConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_auto_migration_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.get_deployment_group_revision",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetDeploymentGroupRevision",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetDeploymentGroupRevision"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetDeploymentGroupRevisionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.DeploymentGroupRevision",
+        "shortName": "get_deployment_group_revision"
+      },
+      "description": "Sample for GetDeploymentGroupRevision",
+      "file": "config_v1_generated_config_get_deployment_group_revision_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetDeploymentGroupRevision_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_deployment_group_revision_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.get_deployment_group_revision",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetDeploymentGroupRevision",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetDeploymentGroupRevision"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetDeploymentGroupRevisionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.DeploymentGroupRevision",
+        "shortName": "get_deployment_group_revision"
+      },
+      "description": "Sample for GetDeploymentGroupRevision",
+      "file": "config_v1_generated_config_get_deployment_group_revision_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetDeploymentGroupRevision_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_deployment_group_revision_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.get_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetDeploymentGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.DeploymentGroup",
+        "shortName": "get_deployment_group"
+      },
+      "description": "Sample for GetDeploymentGroup",
+      "file": "config_v1_generated_config_get_deployment_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetDeploymentGroup_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_deployment_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.get_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetDeploymentGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.DeploymentGroup",
+        "shortName": "get_deployment_group"
+      },
+      "description": "Sample for GetDeploymentGroup",
+      "file": "config_v1_generated_config_get_deployment_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetDeploymentGroup_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_deployment_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.get_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Deployment",
+        "shortName": "get_deployment"
+      },
+      "description": "Sample for GetDeployment",
+      "file": "config_v1_generated_config_get_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetDeployment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.get_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Deployment",
+        "shortName": "get_deployment"
+      },
+      "description": "Sample for GetDeployment",
+      "file": "config_v1_generated_config_get_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetDeployment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.get_preview",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetPreview",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetPreview"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetPreviewRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Preview",
+        "shortName": "get_preview"
+      },
+      "description": "Sample for GetPreview",
+      "file": "config_v1_generated_config_get_preview_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetPreview_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_preview_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.get_preview",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetPreview",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetPreview"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetPreviewRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Preview",
+        "shortName": "get_preview"
+      },
+      "description": "Sample for GetPreview",
+      "file": "config_v1_generated_config_get_preview_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetPreview_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_preview_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.get_resource_change",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetResourceChange",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetResourceChange"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetResourceChangeRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.ResourceChange",
+        "shortName": "get_resource_change"
+      },
+      "description": "Sample for GetResourceChange",
+      "file": "config_v1_generated_config_get_resource_change_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetResourceChange_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_resource_change_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.get_resource_change",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetResourceChange",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetResourceChange"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetResourceChangeRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.ResourceChange",
+        "shortName": "get_resource_change"
+      },
+      "description": "Sample for GetResourceChange",
+      "file": "config_v1_generated_config_get_resource_change_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetResourceChange_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_resource_change_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.get_resource_drift",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetResourceDrift",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetResourceDrift"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetResourceDriftRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.ResourceDrift",
+        "shortName": "get_resource_drift"
+      },
+      "description": "Sample for GetResourceDrift",
+      "file": "config_v1_generated_config_get_resource_drift_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetResourceDrift_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_resource_drift_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.get_resource_drift",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetResourceDrift",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetResourceDrift"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetResourceDriftRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.ResourceDrift",
+        "shortName": "get_resource_drift"
+      },
+      "description": "Sample for GetResourceDrift",
+      "file": "config_v1_generated_config_get_resource_drift_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetResourceDrift_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_resource_drift_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.get_resource",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetResource",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetResource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetResourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Resource",
+        "shortName": "get_resource"
+      },
+      "description": "Sample for GetResource",
+      "file": "config_v1_generated_config_get_resource_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetResource_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_resource_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.get_resource",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetResource",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetResource"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetResourceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Resource",
+        "shortName": "get_resource"
+      },
+      "description": "Sample for GetResource",
+      "file": "config_v1_generated_config_get_resource_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetResource_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_resource_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.get_revision",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetRevision",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetRevision"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetRevisionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Revision",
+        "shortName": "get_revision"
+      },
+      "description": "Sample for GetRevision",
+      "file": "config_v1_generated_config_get_revision_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetRevision_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_revision_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.get_revision",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetRevision",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetRevision"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetRevisionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Revision",
+        "shortName": "get_revision"
+      },
+      "description": "Sample for GetRevision",
+      "file": "config_v1_generated_config_get_revision_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetRevision_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_revision_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.get_terraform_version",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetTerraformVersion",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetTerraformVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetTerraformVersionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.TerraformVersion",
+        "shortName": "get_terraform_version"
+      },
+      "description": "Sample for GetTerraformVersion",
+      "file": "config_v1_generated_config_get_terraform_version_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetTerraformVersion_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_terraform_version_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.get_terraform_version",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.GetTerraformVersion",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetTerraformVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.GetTerraformVersionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.TerraformVersion",
+        "shortName": "get_terraform_version"
+      },
+      "description": "Sample for GetTerraformVersion",
+      "file": "config_v1_generated_config_get_terraform_version_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_GetTerraformVersion_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_get_terraform_version_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.import_statefile",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ImportStatefile",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ImportStatefile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ImportStatefileRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "lock_id",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Statefile",
+        "shortName": "import_statefile"
+      },
+      "description": "Sample for ImportStatefile",
+      "file": "config_v1_generated_config_import_statefile_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ImportStatefile_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_import_statefile_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.import_statefile",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ImportStatefile",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ImportStatefile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ImportStatefileRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "lock_id",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.types.Statefile",
+        "shortName": "import_statefile"
+      },
+      "description": "Sample for ImportStatefile",
+      "file": "config_v1_generated_config_import_statefile_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ImportStatefile_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_import_statefile_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.list_deployment_group_revisions",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListDeploymentGroupRevisions",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListDeploymentGroupRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListDeploymentGroupRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListDeploymentGroupRevisionsAsyncPager",
+        "shortName": "list_deployment_group_revisions"
+      },
+      "description": "Sample for ListDeploymentGroupRevisions",
+      "file": "config_v1_generated_config_list_deployment_group_revisions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListDeploymentGroupRevisions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_deployment_group_revisions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.list_deployment_group_revisions",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListDeploymentGroupRevisions",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListDeploymentGroupRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListDeploymentGroupRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListDeploymentGroupRevisionsPager",
+        "shortName": "list_deployment_group_revisions"
+      },
+      "description": "Sample for ListDeploymentGroupRevisions",
+      "file": "config_v1_generated_config_list_deployment_group_revisions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListDeploymentGroupRevisions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_deployment_group_revisions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.list_deployment_groups",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListDeploymentGroups",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListDeploymentGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListDeploymentGroupsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListDeploymentGroupsAsyncPager",
+        "shortName": "list_deployment_groups"
+      },
+      "description": "Sample for ListDeploymentGroups",
+      "file": "config_v1_generated_config_list_deployment_groups_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListDeploymentGroups_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_deployment_groups_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.list_deployment_groups",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListDeploymentGroups",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListDeploymentGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListDeploymentGroupsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListDeploymentGroupsPager",
+        "shortName": "list_deployment_groups"
+      },
+      "description": "Sample for ListDeploymentGroups",
+      "file": "config_v1_generated_config_list_deployment_groups_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListDeploymentGroups_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_deployment_groups_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.list_deployments",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListDeployments",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListDeploymentsAsyncPager",
+        "shortName": "list_deployments"
+      },
+      "description": "Sample for ListDeployments",
+      "file": "config_v1_generated_config_list_deployments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListDeployments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_deployments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.list_deployments",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListDeployments",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListDeploymentsPager",
+        "shortName": "list_deployments"
+      },
+      "description": "Sample for ListDeployments",
+      "file": "config_v1_generated_config_list_deployments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListDeployments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_deployments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.list_previews",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListPreviews",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListPreviews"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListPreviewsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListPreviewsAsyncPager",
+        "shortName": "list_previews"
+      },
+      "description": "Sample for ListPreviews",
+      "file": "config_v1_generated_config_list_previews_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListPreviews_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_previews_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.list_previews",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListPreviews",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListPreviews"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListPreviewsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListPreviewsPager",
+        "shortName": "list_previews"
+      },
+      "description": "Sample for ListPreviews",
+      "file": "config_v1_generated_config_list_previews_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListPreviews_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_previews_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.list_resource_changes",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListResourceChanges",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListResourceChanges"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListResourceChangesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListResourceChangesAsyncPager",
+        "shortName": "list_resource_changes"
+      },
+      "description": "Sample for ListResourceChanges",
+      "file": "config_v1_generated_config_list_resource_changes_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListResourceChanges_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_resource_changes_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.list_resource_changes",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListResourceChanges",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListResourceChanges"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListResourceChangesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListResourceChangesPager",
+        "shortName": "list_resource_changes"
+      },
+      "description": "Sample for ListResourceChanges",
+      "file": "config_v1_generated_config_list_resource_changes_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListResourceChanges_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_resource_changes_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.list_resource_drifts",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListResourceDrifts",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListResourceDrifts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListResourceDriftsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListResourceDriftsAsyncPager",
+        "shortName": "list_resource_drifts"
+      },
+      "description": "Sample for ListResourceDrifts",
+      "file": "config_v1_generated_config_list_resource_drifts_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListResourceDrifts_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_resource_drifts_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.list_resource_drifts",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListResourceDrifts",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListResourceDrifts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListResourceDriftsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListResourceDriftsPager",
+        "shortName": "list_resource_drifts"
+      },
+      "description": "Sample for ListResourceDrifts",
+      "file": "config_v1_generated_config_list_resource_drifts_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListResourceDrifts_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_resource_drifts_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.list_resources",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListResources",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListResources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListResourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListResourcesAsyncPager",
+        "shortName": "list_resources"
+      },
+      "description": "Sample for ListResources",
+      "file": "config_v1_generated_config_list_resources_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListResources_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_resources_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.list_resources",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListResources",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListResources"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListResourcesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListResourcesPager",
+        "shortName": "list_resources"
+      },
+      "description": "Sample for ListResources",
+      "file": "config_v1_generated_config_list_resources_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListResources_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_resources_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.list_revisions",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListRevisions",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListRevisionsAsyncPager",
+        "shortName": "list_revisions"
+      },
+      "description": "Sample for ListRevisions",
+      "file": "config_v1_generated_config_list_revisions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListRevisions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_revisions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.list_revisions",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListRevisions",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListRevisionsPager",
+        "shortName": "list_revisions"
+      },
+      "description": "Sample for ListRevisions",
+      "file": "config_v1_generated_config_list_revisions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListRevisions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_revisions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.list_terraform_versions",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListTerraformVersions",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListTerraformVersions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListTerraformVersionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListTerraformVersionsAsyncPager",
+        "shortName": "list_terraform_versions"
+      },
+      "description": "Sample for ListTerraformVersions",
+      "file": "config_v1_generated_config_list_terraform_versions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListTerraformVersions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_terraform_versions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.list_terraform_versions",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ListTerraformVersions",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListTerraformVersions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ListTerraformVersionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.config_v1.services.config.pagers.ListTerraformVersionsPager",
+        "shortName": "list_terraform_versions"
+      },
+      "description": "Sample for ListTerraformVersions",
+      "file": "config_v1_generated_config_list_terraform_versions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ListTerraformVersions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_list_terraform_versions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.lock_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.LockDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "LockDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.LockDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "lock_deployment"
+      },
+      "description": "Sample for LockDeployment",
+      "file": "config_v1_generated_config_lock_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_LockDeployment_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_lock_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.lock_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.LockDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "LockDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.LockDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "lock_deployment"
+      },
+      "description": "Sample for LockDeployment",
+      "file": "config_v1_generated_config_lock_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_LockDeployment_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_lock_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.provision_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ProvisionDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ProvisionDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ProvisionDeploymentGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "provision_deployment_group"
+      },
+      "description": "Sample for ProvisionDeploymentGroup",
+      "file": "config_v1_generated_config_provision_deployment_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ProvisionDeploymentGroup_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_provision_deployment_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.provision_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.ProvisionDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ProvisionDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.ProvisionDeploymentGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "provision_deployment_group"
+      },
+      "description": "Sample for ProvisionDeploymentGroup",
+      "file": "config_v1_generated_config_provision_deployment_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_ProvisionDeploymentGroup_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_provision_deployment_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.unlock_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.UnlockDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UnlockDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.UnlockDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "lock_id",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "unlock_deployment"
+      },
+      "description": "Sample for UnlockDeployment",
+      "file": "config_v1_generated_config_unlock_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_UnlockDeployment_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_unlock_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.unlock_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.UnlockDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UnlockDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.UnlockDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "lock_id",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "unlock_deployment"
+      },
+      "description": "Sample for UnlockDeployment",
+      "file": "config_v1_generated_config_unlock_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_UnlockDeployment_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_unlock_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.update_auto_migration_config",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.UpdateAutoMigrationConfig",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UpdateAutoMigrationConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.UpdateAutoMigrationConfigRequest"
+          },
+          {
+            "name": "auto_migration_config",
+            "type": "google.cloud.config_v1.types.AutoMigrationConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_auto_migration_config"
+      },
+      "description": "Sample for UpdateAutoMigrationConfig",
+      "file": "config_v1_generated_config_update_auto_migration_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_UpdateAutoMigrationConfig_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_update_auto_migration_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.update_auto_migration_config",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.UpdateAutoMigrationConfig",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UpdateAutoMigrationConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.UpdateAutoMigrationConfigRequest"
+          },
+          {
+            "name": "auto_migration_config",
+            "type": "google.cloud.config_v1.types.AutoMigrationConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_auto_migration_config"
+      },
+      "description": "Sample for UpdateAutoMigrationConfig",
+      "file": "config_v1_generated_config_update_auto_migration_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_UpdateAutoMigrationConfig_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_update_auto_migration_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.update_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.UpdateDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UpdateDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.UpdateDeploymentGroupRequest"
+          },
+          {
+            "name": "deployment_group",
+            "type": "google.cloud.config_v1.types.DeploymentGroup"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_deployment_group"
+      },
+      "description": "Sample for UpdateDeploymentGroup",
+      "file": "config_v1_generated_config_update_deployment_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_UpdateDeploymentGroup_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_update_deployment_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.update_deployment_group",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.UpdateDeploymentGroup",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UpdateDeploymentGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.UpdateDeploymentGroupRequest"
+          },
+          {
+            "name": "deployment_group",
+            "type": "google.cloud.config_v1.types.DeploymentGroup"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_deployment_group"
+      },
+      "description": "Sample for UpdateDeploymentGroup",
+      "file": "config_v1_generated_config_update_deployment_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_UpdateDeploymentGroup_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_update_deployment_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigAsyncClient.update_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.UpdateDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UpdateDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.UpdateDeploymentRequest"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.config_v1.types.Deployment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_deployment"
+      },
+      "description": "Sample for UpdateDeployment",
+      "file": "config_v1_generated_config_update_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_UpdateDeployment_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_update_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.config_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.config_v1.ConfigClient.update_deployment",
+        "method": {
+          "fullName": "google.cloud.config.v1.Config.UpdateDeployment",
+          "service": {
+            "fullName": "google.cloud.config.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UpdateDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.config_v1.types.UpdateDeploymentRequest"
+          },
+          {
+            "name": "deployment",
+            "type": "google.cloud.config_v1.types.Deployment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_deployment"
+      },
+      "description": "Sample for UpdateDeployment",
+      "file": "config_v1_generated_config_update_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "config_v1_generated_Config_UpdateDeployment_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "config_v1_generated_config_update_deployment_sync.py"
+    }
+  ]
+}

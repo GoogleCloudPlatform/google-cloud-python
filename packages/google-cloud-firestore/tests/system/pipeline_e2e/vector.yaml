@@ -1,0 +1,160 @@
+tests:
+  - description: testVectorLength
+    pipeline:
+      - Collection: vectors
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.vector_length:
+                - Field: embedding
+            - "embedding_length"
+      - Sort:
+        - Ordering:
+          - Field: embedding_length
+          - ASCENDING
+    assert_results:
+      - embedding_length: 3
+      - embedding_length: 3
+      - embedding_length: 3
+      - embedding_length: 4
+  - description: testFindNearestEuclidean
+    pipeline:
+      - Collection: vectors
+      - FindNearest:
+          field: embedding
+          vector: [1.0, 2.0, 3.0]
+          distance_measure: EUCLIDEAN
+          options:
+            FindNearestOptions:
+              limit: 2
+              distance_field:
+                Field: distance
+      - Select:
+        - distance
+    assert_results:
+      - distance: 0.0
+      - distance: 1.0
+    assert_proto:
+      pipeline:
+        stages:
+        - name: collection
+          args:
+          - referenceValue: /vectors
+        - name: find_nearest
+          args:
+          - fieldReferenceValue: embedding
+          - mapValue:
+              fields:
+                __type__:
+                  stringValue: __vector__
+                value:
+                  arrayValue:
+                    values:
+                    - doubleValue: 1.0
+                    - doubleValue: 2.0
+                    - doubleValue: 3.0
+          - stringValue: euclidean
+          options:
+            limit:
+              integerValue: '2'
+            distance_field:
+              fieldReferenceValue: distance
+        - name: select
+          args:
+          - mapValue:
+              fields:
+                distance:
+                  fieldReferenceValue: distance
+  - description: testFindNearestDotProduct
+    pipeline:
+      - Collection: vectors
+      - FindNearest:
+          field: embedding
+          vector: [1.0, 2.0, 3.0]
+          distance_measure: DOT_PRODUCT
+          options:
+            FindNearestOptions:
+              limit: 3
+              distance_field: 
+                Field: distance
+      - Select:
+        - distance
+    assert_results:
+      - distance: 38.0
+      - distance: 17.0
+      - distance: 14.0
+    assert_proto:
+      pipeline:
+        stages:
+        - name: collection
+          args:
+          - referenceValue: /vectors
+        - name: find_nearest
+          args:
+          - fieldReferenceValue: embedding
+          - mapValue:
+              fields:
+                __type__:
+                  stringValue: __vector__
+                value:
+                  arrayValue:
+                    values:
+                    - doubleValue: 1.0
+                    - doubleValue: 2.0
+                    - doubleValue: 3.0
+          - stringValue: dot_product
+          options:
+            limit:
+              integerValue: '3'
+            distance_field:
+              fieldReferenceValue: distance
+        - name: select
+          args:
+          - mapValue:
+              fields:
+                distance:
+                  fieldReferenceValue: distance
+  - description: testDotProductWithConstant
+    pipeline:
+      - Collection: vectors
+      - Where:
+          - FunctionExpression.equal:
+              - Field: embedding
+              - Vector: [1.0, 2.0, 3.0]
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.dot_product:
+                - Field: embedding
+                - Vector: [1.0, 1.0, 1.0]
+            - "dot_product_result"
+    assert_results:
+      - dot_product_result: 6.0
+  - description: testEuclideanDistanceWithConstant
+    pipeline:
+      - Collection: vectors
+      - Where:
+          - FunctionExpression.equal:
+              - Field: embedding
+              - Vector: [1.0, 2.0, 3.0]
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.euclidean_distance:
+                - Field: embedding
+                - Vector: [1.0, 2.0, 3.0]
+            - "euclidean_distance_result"
+    assert_results:
+      - euclidean_distance_result: 0.0
+  - description: testCosineDistanceWithConstant
+    pipeline:
+      - Collection: vectors
+      - Where:
+          - FunctionExpression.equal:
+              - Field: embedding
+              - Vector: [1.0, 2.0, 3.0]
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.cosine_distance:
+                - Field: embedding
+                - Vector: [1.0, 2.0, 3.0]
+            - "cosine_distance_result"
+    assert_results:
+      - cosine_distance_result: 0.0

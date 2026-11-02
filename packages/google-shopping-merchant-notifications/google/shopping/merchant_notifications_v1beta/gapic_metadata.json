@@ -1,0 +1,103 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_notifications_v1beta",
+  "protoPackage": "google.shopping.merchant.notifications.v1beta",
+  "schema": "1.0",
+  "services": {
+    "NotificationsApiService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "NotificationsApiServiceClient",
+          "rpcs": {
+            "CreateNotificationSubscription": {
+              "methods": [
+                "create_notification_subscription"
+              ]
+            },
+            "DeleteNotificationSubscription": {
+              "methods": [
+                "delete_notification_subscription"
+              ]
+            },
+            "GetNotificationSubscription": {
+              "methods": [
+                "get_notification_subscription"
+              ]
+            },
+            "ListNotificationSubscriptions": {
+              "methods": [
+                "list_notification_subscriptions"
+              ]
+            },
+            "UpdateNotificationSubscription": {
+              "methods": [
+                "update_notification_subscription"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "NotificationsApiServiceAsyncClient",
+          "rpcs": {
+            "CreateNotificationSubscription": {
+              "methods": [
+                "create_notification_subscription"
+              ]
+            },
+            "DeleteNotificationSubscription": {
+              "methods": [
+                "delete_notification_subscription"
+              ]
+            },
+            "GetNotificationSubscription": {
+              "methods": [
+                "get_notification_subscription"
+              ]
+            },
+            "ListNotificationSubscriptions": {
+              "methods": [
+                "list_notification_subscriptions"
+              ]
+            },
+            "UpdateNotificationSubscription": {
+              "methods": [
+                "update_notification_subscription"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "NotificationsApiServiceClient",
+          "rpcs": {
+            "CreateNotificationSubscription": {
+              "methods": [
+                "create_notification_subscription"
+              ]
+            },
+            "DeleteNotificationSubscription": {
+              "methods": [
+                "delete_notification_subscription"
+              ]
+            },
+            "GetNotificationSubscription": {
+              "methods": [
+                "get_notification_subscription"
+              ]
+            },
+            "ListNotificationSubscriptions": {
+              "methods": [
+                "list_notification_subscriptions"
+              ]
+            },
+            "UpdateNotificationSubscription": {
+              "methods": [
+                "update_notification_subscription"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

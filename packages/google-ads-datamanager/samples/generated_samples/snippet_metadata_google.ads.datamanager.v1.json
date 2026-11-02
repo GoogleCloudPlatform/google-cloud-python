@@ -1,0 +1,4173 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.ads.datamanager.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-ads-datamanager",
+    "version": "0.9.4"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient",
+          "shortName": "IngestionServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient.ingest_ad_events",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.IngestAdEvents",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "IngestAdEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.IngestAdEventsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.IngestAdEventsResponse",
+        "shortName": "ingest_ad_events"
+      },
+      "description": "Sample for IngestAdEvents",
+      "file": "datamanager_v1_generated_ingestion_service_ingest_ad_events_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_IngestAdEvents_async",
+      "segments": [
+        {
+          "end": 67,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 67,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 61,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 64,
+          "start": 62,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 68,
+          "start": 65,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_ingest_ad_events_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceClient",
+          "shortName": "IngestionServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceClient.ingest_ad_events",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.IngestAdEvents",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "IngestAdEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.IngestAdEventsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.IngestAdEventsResponse",
+        "shortName": "ingest_ad_events"
+      },
+      "description": "Sample for IngestAdEvents",
+      "file": "datamanager_v1_generated_ingestion_service_ingest_ad_events_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_IngestAdEvents_sync",
+      "segments": [
+        {
+          "end": 67,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 67,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 61,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 64,
+          "start": 62,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 68,
+          "start": 65,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_ingest_ad_events_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient",
+          "shortName": "IngestionServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient.ingest_audience_members",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.IngestAudienceMembers",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "IngestAudienceMembers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.IngestAudienceMembersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.IngestAudienceMembersResponse",
+        "shortName": "ingest_audience_members"
+      },
+      "description": "Sample for IngestAudienceMembers",
+      "file": "datamanager_v1_generated_ingestion_service_ingest_audience_members_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_IngestAudienceMembers_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_ingest_audience_members_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceClient",
+          "shortName": "IngestionServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceClient.ingest_audience_members",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.IngestAudienceMembers",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "IngestAudienceMembers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.IngestAudienceMembersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.IngestAudienceMembersResponse",
+        "shortName": "ingest_audience_members"
+      },
+      "description": "Sample for IngestAudienceMembers",
+      "file": "datamanager_v1_generated_ingestion_service_ingest_audience_members_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_IngestAudienceMembers_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_ingest_audience_members_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient",
+          "shortName": "IngestionServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient.ingest_events",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.IngestEvents",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "IngestEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.IngestEventsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.IngestEventsResponse",
+        "shortName": "ingest_events"
+      },
+      "description": "Sample for IngestEvents",
+      "file": "datamanager_v1_generated_ingestion_service_ingest_events_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_IngestEvents_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_ingest_events_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceClient",
+          "shortName": "IngestionServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceClient.ingest_events",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.IngestEvents",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "IngestEvents"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.IngestEventsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.IngestEventsResponse",
+        "shortName": "ingest_events"
+      },
+      "description": "Sample for IngestEvents",
+      "file": "datamanager_v1_generated_ingestion_service_ingest_events_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_IngestEvents_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_ingest_events_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient",
+          "shortName": "IngestionServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient.ingest_users",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.IngestUsers",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "IngestUsers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.IngestUsersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.IngestUsersResponse",
+        "shortName": "ingest_users"
+      },
+      "description": "Sample for IngestUsers",
+      "file": "datamanager_v1_generated_ingestion_service_ingest_users_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_IngestUsers_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 56,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_ingest_users_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceClient",
+          "shortName": "IngestionServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceClient.ingest_users",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.IngestUsers",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "IngestUsers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.IngestUsersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.IngestUsersResponse",
+        "shortName": "ingest_users"
+      },
+      "description": "Sample for IngestUsers",
+      "file": "datamanager_v1_generated_ingestion_service_ingest_users_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_IngestUsers_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 56,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_ingest_users_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient",
+          "shortName": "IngestionServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient.remove_all_audience_members",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.RemoveAllAudienceMembers",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "RemoveAllAudienceMembers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RemoveAllAudienceMembersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.RemoveAllAudienceMembersResponse",
+        "shortName": "remove_all_audience_members"
+      },
+      "description": "Sample for RemoveAllAudienceMembers",
+      "file": "datamanager_v1_generated_ingestion_service_remove_all_audience_members_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_RemoveAllAudienceMembers_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_remove_all_audience_members_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceClient",
+          "shortName": "IngestionServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceClient.remove_all_audience_members",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.RemoveAllAudienceMembers",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "RemoveAllAudienceMembers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RemoveAllAudienceMembersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.RemoveAllAudienceMembersResponse",
+        "shortName": "remove_all_audience_members"
+      },
+      "description": "Sample for RemoveAllAudienceMembers",
+      "file": "datamanager_v1_generated_ingestion_service_remove_all_audience_members_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_RemoveAllAudienceMembers_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_remove_all_audience_members_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient",
+          "shortName": "IngestionServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient.remove_audience_members",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.RemoveAudienceMembers",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "RemoveAudienceMembers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RemoveAudienceMembersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.RemoveAudienceMembersResponse",
+        "shortName": "remove_audience_members"
+      },
+      "description": "Sample for RemoveAudienceMembers",
+      "file": "datamanager_v1_generated_ingestion_service_remove_audience_members_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_RemoveAudienceMembers_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_remove_audience_members_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceClient",
+          "shortName": "IngestionServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceClient.remove_audience_members",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.RemoveAudienceMembers",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "RemoveAudienceMembers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RemoveAudienceMembersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.RemoveAudienceMembersResponse",
+        "shortName": "remove_audience_members"
+      },
+      "description": "Sample for RemoveAudienceMembers",
+      "file": "datamanager_v1_generated_ingestion_service_remove_audience_members_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_RemoveAudienceMembers_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_remove_audience_members_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient",
+          "shortName": "IngestionServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient.remove_users",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.RemoveUsers",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "RemoveUsers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RemoveUsersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.RemoveUsersResponse",
+        "shortName": "remove_users"
+      },
+      "description": "Sample for RemoveUsers",
+      "file": "datamanager_v1_generated_ingestion_service_remove_users_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_RemoveUsers_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 55,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_remove_users_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceClient",
+          "shortName": "IngestionServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceClient.remove_users",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.RemoveUsers",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "RemoveUsers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RemoveUsersRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.RemoveUsersResponse",
+        "shortName": "remove_users"
+      },
+      "description": "Sample for RemoveUsers",
+      "file": "datamanager_v1_generated_ingestion_service_remove_users_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_RemoveUsers_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 55,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_remove_users_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient",
+          "shortName": "IngestionServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceAsyncClient.retrieve_request_status",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.RetrieveRequestStatus",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "RetrieveRequestStatus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RetrieveRequestStatusRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.RetrieveRequestStatusResponse",
+        "shortName": "retrieve_request_status"
+      },
+      "description": "Sample for RetrieveRequestStatus",
+      "file": "datamanager_v1_generated_ingestion_service_retrieve_request_status_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_RetrieveRequestStatus_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_retrieve_request_status_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.IngestionServiceClient",
+          "shortName": "IngestionServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.IngestionServiceClient.retrieve_request_status",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.IngestionService.RetrieveRequestStatus",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.IngestionService",
+            "shortName": "IngestionService"
+          },
+          "shortName": "RetrieveRequestStatus"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RetrieveRequestStatusRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.RetrieveRequestStatusResponse",
+        "shortName": "retrieve_request_status"
+      },
+      "description": "Sample for RetrieveRequestStatus",
+      "file": "datamanager_v1_generated_ingestion_service_retrieve_request_status_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_IngestionService_RetrieveRequestStatus_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_ingestion_service_retrieve_request_status_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.MarketingDataInsightsServiceAsyncClient",
+          "shortName": "MarketingDataInsightsServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.MarketingDataInsightsServiceAsyncClient.retrieve_insights",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.MarketingDataInsightsService.RetrieveInsights",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.MarketingDataInsightsService",
+            "shortName": "MarketingDataInsightsService"
+          },
+          "shortName": "RetrieveInsights"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RetrieveInsightsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.RetrieveInsightsResponse",
+        "shortName": "retrieve_insights"
+      },
+      "description": "Sample for RetrieveInsights",
+      "file": "datamanager_v1_generated_marketing_data_insights_service_retrieve_insights_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_MarketingDataInsightsService_RetrieveInsights_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_marketing_data_insights_service_retrieve_insights_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.MarketingDataInsightsServiceClient",
+          "shortName": "MarketingDataInsightsServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.MarketingDataInsightsServiceClient.retrieve_insights",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.MarketingDataInsightsService.RetrieveInsights",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.MarketingDataInsightsService",
+            "shortName": "MarketingDataInsightsService"
+          },
+          "shortName": "RetrieveInsights"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RetrieveInsightsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.RetrieveInsightsResponse",
+        "shortName": "retrieve_insights"
+      },
+      "description": "Sample for RetrieveInsights",
+      "file": "datamanager_v1_generated_marketing_data_insights_service_retrieve_insights_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_MarketingDataInsightsService_RetrieveInsights_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_marketing_data_insights_service_retrieve_insights_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.PartnerLinkServiceAsyncClient",
+          "shortName": "PartnerLinkServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.PartnerLinkServiceAsyncClient.create_partner_link",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.PartnerLinkService.CreatePartnerLink",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.PartnerLinkService",
+            "shortName": "PartnerLinkService"
+          },
+          "shortName": "CreatePartnerLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.CreatePartnerLinkRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "partner_link",
+            "type": "google.ads.datamanager_v1.types.PartnerLink"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.PartnerLink",
+        "shortName": "create_partner_link"
+      },
+      "description": "Sample for CreatePartnerLink",
+      "file": "datamanager_v1_generated_partner_link_service_create_partner_link_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_PartnerLinkService_CreatePartnerLink_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_partner_link_service_create_partner_link_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.PartnerLinkServiceClient",
+          "shortName": "PartnerLinkServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.PartnerLinkServiceClient.create_partner_link",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.PartnerLinkService.CreatePartnerLink",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.PartnerLinkService",
+            "shortName": "PartnerLinkService"
+          },
+          "shortName": "CreatePartnerLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.CreatePartnerLinkRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "partner_link",
+            "type": "google.ads.datamanager_v1.types.PartnerLink"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.PartnerLink",
+        "shortName": "create_partner_link"
+      },
+      "description": "Sample for CreatePartnerLink",
+      "file": "datamanager_v1_generated_partner_link_service_create_partner_link_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_PartnerLinkService_CreatePartnerLink_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_partner_link_service_create_partner_link_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.PartnerLinkServiceAsyncClient",
+          "shortName": "PartnerLinkServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.PartnerLinkServiceAsyncClient.delete_partner_link",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.PartnerLinkService.DeletePartnerLink",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.PartnerLinkService",
+            "shortName": "PartnerLinkService"
+          },
+          "shortName": "DeletePartnerLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.DeletePartnerLinkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_partner_link"
+      },
+      "description": "Sample for DeletePartnerLink",
+      "file": "datamanager_v1_generated_partner_link_service_delete_partner_link_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_PartnerLinkService_DeletePartnerLink_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_partner_link_service_delete_partner_link_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.PartnerLinkServiceClient",
+          "shortName": "PartnerLinkServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.PartnerLinkServiceClient.delete_partner_link",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.PartnerLinkService.DeletePartnerLink",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.PartnerLinkService",
+            "shortName": "PartnerLinkService"
+          },
+          "shortName": "DeletePartnerLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.DeletePartnerLinkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_partner_link"
+      },
+      "description": "Sample for DeletePartnerLink",
+      "file": "datamanager_v1_generated_partner_link_service_delete_partner_link_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_PartnerLinkService_DeletePartnerLink_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_partner_link_service_delete_partner_link_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.PartnerLinkServiceAsyncClient",
+          "shortName": "PartnerLinkServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.PartnerLinkServiceAsyncClient.search_partner_links",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.PartnerLinkService.SearchPartnerLinks",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.PartnerLinkService",
+            "shortName": "PartnerLinkService"
+          },
+          "shortName": "SearchPartnerLinks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.SearchPartnerLinksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.partner_link_service.pagers.SearchPartnerLinksAsyncPager",
+        "shortName": "search_partner_links"
+      },
+      "description": "Sample for SearchPartnerLinks",
+      "file": "datamanager_v1_generated_partner_link_service_search_partner_links_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_PartnerLinkService_SearchPartnerLinks_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_partner_link_service_search_partner_links_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.PartnerLinkServiceClient",
+          "shortName": "PartnerLinkServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.PartnerLinkServiceClient.search_partner_links",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.PartnerLinkService.SearchPartnerLinks",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.PartnerLinkService",
+            "shortName": "PartnerLinkService"
+          },
+          "shortName": "SearchPartnerLinks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.SearchPartnerLinksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.partner_link_service.pagers.SearchPartnerLinksPager",
+        "shortName": "search_partner_links"
+      },
+      "description": "Sample for SearchPartnerLinks",
+      "file": "datamanager_v1_generated_partner_link_service_search_partner_links_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_PartnerLinkService_SearchPartnerLinks_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_partner_link_service_search_partner_links_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceAsyncClient",
+          "shortName": "UserListDirectLicenseServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceAsyncClient.create_user_list_direct_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService.CreateUserListDirectLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService",
+            "shortName": "UserListDirectLicenseService"
+          },
+          "shortName": "CreateUserListDirectLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.CreateUserListDirectLicenseRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_list_direct_license",
+            "type": "google.ads.datamanager_v1.types.UserListDirectLicense"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListDirectLicense",
+        "shortName": "create_user_list_direct_license"
+      },
+      "description": "Sample for CreateUserListDirectLicense",
+      "file": "datamanager_v1_generated_user_list_direct_license_service_create_user_list_direct_license_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListDirectLicenseService_CreateUserListDirectLicense_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_direct_license_service_create_user_list_direct_license_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceClient",
+          "shortName": "UserListDirectLicenseServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceClient.create_user_list_direct_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService.CreateUserListDirectLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService",
+            "shortName": "UserListDirectLicenseService"
+          },
+          "shortName": "CreateUserListDirectLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.CreateUserListDirectLicenseRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_list_direct_license",
+            "type": "google.ads.datamanager_v1.types.UserListDirectLicense"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListDirectLicense",
+        "shortName": "create_user_list_direct_license"
+      },
+      "description": "Sample for CreateUserListDirectLicense",
+      "file": "datamanager_v1_generated_user_list_direct_license_service_create_user_list_direct_license_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListDirectLicenseService_CreateUserListDirectLicense_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_direct_license_service_create_user_list_direct_license_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceAsyncClient",
+          "shortName": "UserListDirectLicenseServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceAsyncClient.get_user_list_direct_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService.GetUserListDirectLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService",
+            "shortName": "UserListDirectLicenseService"
+          },
+          "shortName": "GetUserListDirectLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.GetUserListDirectLicenseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListDirectLicense",
+        "shortName": "get_user_list_direct_license"
+      },
+      "description": "Sample for GetUserListDirectLicense",
+      "file": "datamanager_v1_generated_user_list_direct_license_service_get_user_list_direct_license_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListDirectLicenseService_GetUserListDirectLicense_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_direct_license_service_get_user_list_direct_license_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceClient",
+          "shortName": "UserListDirectLicenseServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceClient.get_user_list_direct_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService.GetUserListDirectLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService",
+            "shortName": "UserListDirectLicenseService"
+          },
+          "shortName": "GetUserListDirectLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.GetUserListDirectLicenseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListDirectLicense",
+        "shortName": "get_user_list_direct_license"
+      },
+      "description": "Sample for GetUserListDirectLicense",
+      "file": "datamanager_v1_generated_user_list_direct_license_service_get_user_list_direct_license_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListDirectLicenseService_GetUserListDirectLicense_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_direct_license_service_get_user_list_direct_license_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceAsyncClient",
+          "shortName": "UserListDirectLicenseServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceAsyncClient.list_user_list_direct_licenses",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService.ListUserListDirectLicenses",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService",
+            "shortName": "UserListDirectLicenseService"
+          },
+          "shortName": "ListUserListDirectLicenses"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.ListUserListDirectLicensesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.user_list_direct_license_service.pagers.ListUserListDirectLicensesAsyncPager",
+        "shortName": "list_user_list_direct_licenses"
+      },
+      "description": "Sample for ListUserListDirectLicenses",
+      "file": "datamanager_v1_generated_user_list_direct_license_service_list_user_list_direct_licenses_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListDirectLicenseService_ListUserListDirectLicenses_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_direct_license_service_list_user_list_direct_licenses_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceClient",
+          "shortName": "UserListDirectLicenseServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceClient.list_user_list_direct_licenses",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService.ListUserListDirectLicenses",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService",
+            "shortName": "UserListDirectLicenseService"
+          },
+          "shortName": "ListUserListDirectLicenses"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.ListUserListDirectLicensesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.user_list_direct_license_service.pagers.ListUserListDirectLicensesPager",
+        "shortName": "list_user_list_direct_licenses"
+      },
+      "description": "Sample for ListUserListDirectLicenses",
+      "file": "datamanager_v1_generated_user_list_direct_license_service_list_user_list_direct_licenses_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListDirectLicenseService_ListUserListDirectLicenses_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_direct_license_service_list_user_list_direct_licenses_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceAsyncClient",
+          "shortName": "UserListDirectLicenseServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceAsyncClient.update_user_list_direct_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService.UpdateUserListDirectLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService",
+            "shortName": "UserListDirectLicenseService"
+          },
+          "shortName": "UpdateUserListDirectLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.UpdateUserListDirectLicenseRequest"
+          },
+          {
+            "name": "user_list_direct_license",
+            "type": "google.ads.datamanager_v1.types.UserListDirectLicense"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListDirectLicense",
+        "shortName": "update_user_list_direct_license"
+      },
+      "description": "Sample for UpdateUserListDirectLicense",
+      "file": "datamanager_v1_generated_user_list_direct_license_service_update_user_list_direct_license_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListDirectLicenseService_UpdateUserListDirectLicense_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_direct_license_service_update_user_list_direct_license_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceClient",
+          "shortName": "UserListDirectLicenseServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceClient.update_user_list_direct_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService.UpdateUserListDirectLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListDirectLicenseService",
+            "shortName": "UserListDirectLicenseService"
+          },
+          "shortName": "UpdateUserListDirectLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.UpdateUserListDirectLicenseRequest"
+          },
+          {
+            "name": "user_list_direct_license",
+            "type": "google.ads.datamanager_v1.types.UserListDirectLicense"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListDirectLicense",
+        "shortName": "update_user_list_direct_license"
+      },
+      "description": "Sample for UpdateUserListDirectLicense",
+      "file": "datamanager_v1_generated_user_list_direct_license_service_update_user_list_direct_license_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListDirectLicenseService_UpdateUserListDirectLicense_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_direct_license_service_update_user_list_direct_license_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceAsyncClient",
+          "shortName": "UserListGlobalLicenseServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceAsyncClient.create_user_list_global_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService.CreateUserListGlobalLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService",
+            "shortName": "UserListGlobalLicenseService"
+          },
+          "shortName": "CreateUserListGlobalLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.CreateUserListGlobalLicenseRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_list_global_license",
+            "type": "google.ads.datamanager_v1.types.UserListGlobalLicense"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListGlobalLicense",
+        "shortName": "create_user_list_global_license"
+      },
+      "description": "Sample for CreateUserListGlobalLicense",
+      "file": "datamanager_v1_generated_user_list_global_license_service_create_user_list_global_license_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListGlobalLicenseService_CreateUserListGlobalLicense_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_global_license_service_create_user_list_global_license_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceClient",
+          "shortName": "UserListGlobalLicenseServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceClient.create_user_list_global_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService.CreateUserListGlobalLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService",
+            "shortName": "UserListGlobalLicenseService"
+          },
+          "shortName": "CreateUserListGlobalLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.CreateUserListGlobalLicenseRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_list_global_license",
+            "type": "google.ads.datamanager_v1.types.UserListGlobalLicense"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListGlobalLicense",
+        "shortName": "create_user_list_global_license"
+      },
+      "description": "Sample for CreateUserListGlobalLicense",
+      "file": "datamanager_v1_generated_user_list_global_license_service_create_user_list_global_license_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListGlobalLicenseService_CreateUserListGlobalLicense_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_global_license_service_create_user_list_global_license_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceAsyncClient",
+          "shortName": "UserListGlobalLicenseServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceAsyncClient.get_user_list_global_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService.GetUserListGlobalLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService",
+            "shortName": "UserListGlobalLicenseService"
+          },
+          "shortName": "GetUserListGlobalLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.GetUserListGlobalLicenseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListGlobalLicense",
+        "shortName": "get_user_list_global_license"
+      },
+      "description": "Sample for GetUserListGlobalLicense",
+      "file": "datamanager_v1_generated_user_list_global_license_service_get_user_list_global_license_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListGlobalLicenseService_GetUserListGlobalLicense_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_global_license_service_get_user_list_global_license_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceClient",
+          "shortName": "UserListGlobalLicenseServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceClient.get_user_list_global_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService.GetUserListGlobalLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService",
+            "shortName": "UserListGlobalLicenseService"
+          },
+          "shortName": "GetUserListGlobalLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.GetUserListGlobalLicenseRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListGlobalLicense",
+        "shortName": "get_user_list_global_license"
+      },
+      "description": "Sample for GetUserListGlobalLicense",
+      "file": "datamanager_v1_generated_user_list_global_license_service_get_user_list_global_license_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListGlobalLicenseService_GetUserListGlobalLicense_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_global_license_service_get_user_list_global_license_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceAsyncClient",
+          "shortName": "UserListGlobalLicenseServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceAsyncClient.list_user_list_global_license_customer_infos",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService.ListUserListGlobalLicenseCustomerInfos",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService",
+            "shortName": "UserListGlobalLicenseService"
+          },
+          "shortName": "ListUserListGlobalLicenseCustomerInfos"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.ListUserListGlobalLicenseCustomerInfosRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.user_list_global_license_service.pagers.ListUserListGlobalLicenseCustomerInfosAsyncPager",
+        "shortName": "list_user_list_global_license_customer_infos"
+      },
+      "description": "Sample for ListUserListGlobalLicenseCustomerInfos",
+      "file": "datamanager_v1_generated_user_list_global_license_service_list_user_list_global_license_customer_infos_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListGlobalLicenseService_ListUserListGlobalLicenseCustomerInfos_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_global_license_service_list_user_list_global_license_customer_infos_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceClient",
+          "shortName": "UserListGlobalLicenseServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceClient.list_user_list_global_license_customer_infos",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService.ListUserListGlobalLicenseCustomerInfos",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService",
+            "shortName": "UserListGlobalLicenseService"
+          },
+          "shortName": "ListUserListGlobalLicenseCustomerInfos"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.ListUserListGlobalLicenseCustomerInfosRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.user_list_global_license_service.pagers.ListUserListGlobalLicenseCustomerInfosPager",
+        "shortName": "list_user_list_global_license_customer_infos"
+      },
+      "description": "Sample for ListUserListGlobalLicenseCustomerInfos",
+      "file": "datamanager_v1_generated_user_list_global_license_service_list_user_list_global_license_customer_infos_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListGlobalLicenseService_ListUserListGlobalLicenseCustomerInfos_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_global_license_service_list_user_list_global_license_customer_infos_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceAsyncClient",
+          "shortName": "UserListGlobalLicenseServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceAsyncClient.list_user_list_global_licenses",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService.ListUserListGlobalLicenses",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService",
+            "shortName": "UserListGlobalLicenseService"
+          },
+          "shortName": "ListUserListGlobalLicenses"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.ListUserListGlobalLicensesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.user_list_global_license_service.pagers.ListUserListGlobalLicensesAsyncPager",
+        "shortName": "list_user_list_global_licenses"
+      },
+      "description": "Sample for ListUserListGlobalLicenses",
+      "file": "datamanager_v1_generated_user_list_global_license_service_list_user_list_global_licenses_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListGlobalLicenseService_ListUserListGlobalLicenses_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_global_license_service_list_user_list_global_licenses_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceClient",
+          "shortName": "UserListGlobalLicenseServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceClient.list_user_list_global_licenses",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService.ListUserListGlobalLicenses",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService",
+            "shortName": "UserListGlobalLicenseService"
+          },
+          "shortName": "ListUserListGlobalLicenses"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.ListUserListGlobalLicensesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.user_list_global_license_service.pagers.ListUserListGlobalLicensesPager",
+        "shortName": "list_user_list_global_licenses"
+      },
+      "description": "Sample for ListUserListGlobalLicenses",
+      "file": "datamanager_v1_generated_user_list_global_license_service_list_user_list_global_licenses_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListGlobalLicenseService_ListUserListGlobalLicenses_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_global_license_service_list_user_list_global_licenses_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceAsyncClient",
+          "shortName": "UserListGlobalLicenseServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceAsyncClient.update_user_list_global_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService.UpdateUserListGlobalLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService",
+            "shortName": "UserListGlobalLicenseService"
+          },
+          "shortName": "UpdateUserListGlobalLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.UpdateUserListGlobalLicenseRequest"
+          },
+          {
+            "name": "user_list_global_license",
+            "type": "google.ads.datamanager_v1.types.UserListGlobalLicense"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListGlobalLicense",
+        "shortName": "update_user_list_global_license"
+      },
+      "description": "Sample for UpdateUserListGlobalLicense",
+      "file": "datamanager_v1_generated_user_list_global_license_service_update_user_list_global_license_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListGlobalLicenseService_UpdateUserListGlobalLicense_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_global_license_service_update_user_list_global_license_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceClient",
+          "shortName": "UserListGlobalLicenseServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListGlobalLicenseServiceClient.update_user_list_global_license",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService.UpdateUserListGlobalLicense",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListGlobalLicenseService",
+            "shortName": "UserListGlobalLicenseService"
+          },
+          "shortName": "UpdateUserListGlobalLicense"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.UpdateUserListGlobalLicenseRequest"
+          },
+          {
+            "name": "user_list_global_license",
+            "type": "google.ads.datamanager_v1.types.UserListGlobalLicense"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserListGlobalLicense",
+        "shortName": "update_user_list_global_license"
+      },
+      "description": "Sample for UpdateUserListGlobalLicense",
+      "file": "datamanager_v1_generated_user_list_global_license_service_update_user_list_global_license_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListGlobalLicenseService_UpdateUserListGlobalLicense_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_global_license_service_update_user_list_global_license_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListServiceAsyncClient",
+          "shortName": "UserListServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListServiceAsyncClient.create_user_list",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListService.CreateUserList",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListService",
+            "shortName": "UserListService"
+          },
+          "shortName": "CreateUserList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.CreateUserListRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_list",
+            "type": "google.ads.datamanager_v1.types.UserList"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserList",
+        "shortName": "create_user_list"
+      },
+      "description": "Sample for CreateUserList",
+      "file": "datamanager_v1_generated_user_list_service_create_user_list_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListService_CreateUserList_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_service_create_user_list_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListServiceClient",
+          "shortName": "UserListServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListServiceClient.create_user_list",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListService.CreateUserList",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListService",
+            "shortName": "UserListService"
+          },
+          "shortName": "CreateUserList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.CreateUserListRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_list",
+            "type": "google.ads.datamanager_v1.types.UserList"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserList",
+        "shortName": "create_user_list"
+      },
+      "description": "Sample for CreateUserList",
+      "file": "datamanager_v1_generated_user_list_service_create_user_list_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListService_CreateUserList_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_service_create_user_list_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListServiceAsyncClient",
+          "shortName": "UserListServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListServiceAsyncClient.delete_user_list",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListService.DeleteUserList",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListService",
+            "shortName": "UserListService"
+          },
+          "shortName": "DeleteUserList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.DeleteUserListRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_user_list"
+      },
+      "description": "Sample for DeleteUserList",
+      "file": "datamanager_v1_generated_user_list_service_delete_user_list_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListService_DeleteUserList_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_service_delete_user_list_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListServiceClient",
+          "shortName": "UserListServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListServiceClient.delete_user_list",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListService.DeleteUserList",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListService",
+            "shortName": "UserListService"
+          },
+          "shortName": "DeleteUserList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.DeleteUserListRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_user_list"
+      },
+      "description": "Sample for DeleteUserList",
+      "file": "datamanager_v1_generated_user_list_service_delete_user_list_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListService_DeleteUserList_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_service_delete_user_list_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListServiceAsyncClient",
+          "shortName": "UserListServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListServiceAsyncClient.get_user_list",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListService.GetUserList",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListService",
+            "shortName": "UserListService"
+          },
+          "shortName": "GetUserList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.GetUserListRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserList",
+        "shortName": "get_user_list"
+      },
+      "description": "Sample for GetUserList",
+      "file": "datamanager_v1_generated_user_list_service_get_user_list_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListService_GetUserList_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_service_get_user_list_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListServiceClient",
+          "shortName": "UserListServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListServiceClient.get_user_list",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListService.GetUserList",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListService",
+            "shortName": "UserListService"
+          },
+          "shortName": "GetUserList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.GetUserListRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserList",
+        "shortName": "get_user_list"
+      },
+      "description": "Sample for GetUserList",
+      "file": "datamanager_v1_generated_user_list_service_get_user_list_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListService_GetUserList_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_service_get_user_list_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListServiceAsyncClient",
+          "shortName": "UserListServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListServiceAsyncClient.list_user_lists",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListService.ListUserLists",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListService",
+            "shortName": "UserListService"
+          },
+          "shortName": "ListUserLists"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.ListUserListsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.user_list_service.pagers.ListUserListsAsyncPager",
+        "shortName": "list_user_lists"
+      },
+      "description": "Sample for ListUserLists",
+      "file": "datamanager_v1_generated_user_list_service_list_user_lists_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListService_ListUserLists_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_service_list_user_lists_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListServiceClient",
+          "shortName": "UserListServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListServiceClient.list_user_lists",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListService.ListUserLists",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListService",
+            "shortName": "UserListService"
+          },
+          "shortName": "ListUserLists"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.ListUserListsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.user_list_service.pagers.ListUserListsPager",
+        "shortName": "list_user_lists"
+      },
+      "description": "Sample for ListUserLists",
+      "file": "datamanager_v1_generated_user_list_service_list_user_lists_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListService_ListUserLists_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_service_list_user_lists_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListServiceAsyncClient",
+          "shortName": "UserListServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListServiceAsyncClient.update_user_list",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListService.UpdateUserList",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListService",
+            "shortName": "UserListService"
+          },
+          "shortName": "UpdateUserList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.UpdateUserListRequest"
+          },
+          {
+            "name": "user_list",
+            "type": "google.ads.datamanager_v1.types.UserList"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserList",
+        "shortName": "update_user_list"
+      },
+      "description": "Sample for UpdateUserList",
+      "file": "datamanager_v1_generated_user_list_service_update_user_list_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListService_UpdateUserList_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_service_update_user_list_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.UserListServiceClient",
+          "shortName": "UserListServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.UserListServiceClient.update_user_list",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.UserListService.UpdateUserList",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.UserListService",
+            "shortName": "UserListService"
+          },
+          "shortName": "UpdateUserList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.UpdateUserListRequest"
+          },
+          {
+            "name": "user_list",
+            "type": "google.ads.datamanager_v1.types.UserList"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.types.UserList",
+        "shortName": "update_user_list"
+      },
+      "description": "Sample for UpdateUserList",
+      "file": "datamanager_v1_generated_user_list_service_update_user_list_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_UserListService_UpdateUserList_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_user_list_service_update_user_list_sync.py"
+    }
+  ]
+}

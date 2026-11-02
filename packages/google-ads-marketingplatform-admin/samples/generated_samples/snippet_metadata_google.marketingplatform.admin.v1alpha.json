@@ -1,0 +1,3579 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.marketingplatform.admin.v1alpha",
+        "version": "v1alpha"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-ads-marketingplatform-admin",
+    "version": "0.6.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.create_admin_access_binding",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.CreateAdminAccessBinding",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "CreateAdminAccessBinding"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.CreateAdminAccessBindingRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "admin_access_binding",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding",
+        "shortName": "create_admin_access_binding"
+      },
+      "description": "Sample for CreateAdminAccessBinding",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_admin_access_binding_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_CreateAdminAccessBinding_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_admin_access_binding_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.create_admin_access_binding",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.CreateAdminAccessBinding",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "CreateAdminAccessBinding"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.CreateAdminAccessBindingRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "admin_access_binding",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding",
+        "shortName": "create_admin_access_binding"
+      },
+      "description": "Sample for CreateAdminAccessBinding",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_admin_access_binding_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_CreateAdminAccessBinding_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_admin_access_binding_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.create_analytics_account_link",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.CreateAnalyticsAccountLink",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "CreateAnalyticsAccountLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.CreateAnalyticsAccountLinkRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "analytics_account_link",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.AnalyticsAccountLink"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.AnalyticsAccountLink",
+        "shortName": "create_analytics_account_link"
+      },
+      "description": "Sample for CreateAnalyticsAccountLink",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_analytics_account_link_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_CreateAnalyticsAccountLink_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_analytics_account_link_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.create_analytics_account_link",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.CreateAnalyticsAccountLink",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "CreateAnalyticsAccountLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.CreateAnalyticsAccountLinkRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "analytics_account_link",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.AnalyticsAccountLink"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.AnalyticsAccountLink",
+        "shortName": "create_analytics_account_link"
+      },
+      "description": "Sample for CreateAnalyticsAccountLink",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_analytics_account_link_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_CreateAnalyticsAccountLink_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_analytics_account_link_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.create_user_group_member",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.CreateUserGroupMember",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "CreateUserGroupMember"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.CreateUserGroupMemberRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_group_member",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember",
+        "shortName": "create_user_group_member"
+      },
+      "description": "Sample for CreateUserGroupMember",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_user_group_member_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_CreateUserGroupMember_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_user_group_member_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.create_user_group_member",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.CreateUserGroupMember",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "CreateUserGroupMember"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.CreateUserGroupMemberRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_group_member",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember",
+        "shortName": "create_user_group_member"
+      },
+      "description": "Sample for CreateUserGroupMember",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_user_group_member_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_CreateUserGroupMember_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_user_group_member_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.create_user_group",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.CreateUserGroup",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "CreateUserGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.CreateUserGroupRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_group",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UserGroup"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroup",
+        "shortName": "create_user_group"
+      },
+      "description": "Sample for CreateUserGroup",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_user_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_CreateUserGroup_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_user_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.create_user_group",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.CreateUserGroup",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "CreateUserGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.CreateUserGroupRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "user_group",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UserGroup"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroup",
+        "shortName": "create_user_group"
+      },
+      "description": "Sample for CreateUserGroup",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_user_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_CreateUserGroup_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_create_user_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.delete_analytics_account_link",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.DeleteAnalyticsAccountLink",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "DeleteAnalyticsAccountLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.DeleteAnalyticsAccountLinkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_analytics_account_link"
+      },
+      "description": "Sample for DeleteAnalyticsAccountLink",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_analytics_account_link_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_DeleteAnalyticsAccountLink_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_analytics_account_link_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.delete_analytics_account_link",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.DeleteAnalyticsAccountLink",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "DeleteAnalyticsAccountLink"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.DeleteAnalyticsAccountLinkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_analytics_account_link"
+      },
+      "description": "Sample for DeleteAnalyticsAccountLink",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_analytics_account_link_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_DeleteAnalyticsAccountLink_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_analytics_account_link_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.delete_user_group_member",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.DeleteUserGroupMember",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "DeleteUserGroupMember"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.DeleteUserGroupMemberRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_user_group_member"
+      },
+      "description": "Sample for DeleteUserGroupMember",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_user_group_member_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_DeleteUserGroupMember_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_user_group_member_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.delete_user_group_member",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.DeleteUserGroupMember",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "DeleteUserGroupMember"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.DeleteUserGroupMemberRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_user_group_member"
+      },
+      "description": "Sample for DeleteUserGroupMember",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_user_group_member_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_DeleteUserGroupMember_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_user_group_member_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.delete_user_group",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.DeleteUserGroup",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "DeleteUserGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.DeleteUserGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_user_group"
+      },
+      "description": "Sample for DeleteUserGroup",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_user_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_DeleteUserGroup_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_user_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.delete_user_group",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.DeleteUserGroup",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "DeleteUserGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.DeleteUserGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_user_group"
+      },
+      "description": "Sample for DeleteUserGroup",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_user_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_DeleteUserGroup_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_delete_user_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.find_sales_partner_managed_clients",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.FindSalesPartnerManagedClients",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "FindSalesPartnerManagedClients"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.FindSalesPartnerManagedClientsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.FindSalesPartnerManagedClientsResponse",
+        "shortName": "find_sales_partner_managed_clients"
+      },
+      "description": "Sample for FindSalesPartnerManagedClients",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_find_sales_partner_managed_clients_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_FindSalesPartnerManagedClients_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_find_sales_partner_managed_clients_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.find_sales_partner_managed_clients",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.FindSalesPartnerManagedClients",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "FindSalesPartnerManagedClients"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.FindSalesPartnerManagedClientsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.FindSalesPartnerManagedClientsResponse",
+        "shortName": "find_sales_partner_managed_clients"
+      },
+      "description": "Sample for FindSalesPartnerManagedClients",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_find_sales_partner_managed_clients_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_FindSalesPartnerManagedClients_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_find_sales_partner_managed_clients_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.get_admin_access_binding",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.GetAdminAccessBinding",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "GetAdminAccessBinding"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.GetAdminAccessBindingRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding",
+        "shortName": "get_admin_access_binding"
+      },
+      "description": "Sample for GetAdminAccessBinding",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_admin_access_binding_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_GetAdminAccessBinding_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_admin_access_binding_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.get_admin_access_binding",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.GetAdminAccessBinding",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "GetAdminAccessBinding"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.GetAdminAccessBindingRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding",
+        "shortName": "get_admin_access_binding"
+      },
+      "description": "Sample for GetAdminAccessBinding",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_admin_access_binding_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_GetAdminAccessBinding_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_admin_access_binding_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.get_organization",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.GetOrganization",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "GetOrganization"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.GetOrganizationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.Organization",
+        "shortName": "get_organization"
+      },
+      "description": "Sample for GetOrganization",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_organization_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_GetOrganization_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_organization_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.get_organization",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.GetOrganization",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "GetOrganization"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.GetOrganizationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.Organization",
+        "shortName": "get_organization"
+      },
+      "description": "Sample for GetOrganization",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_organization_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_GetOrganization_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_organization_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.get_user_group_member",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.GetUserGroupMember",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "GetUserGroupMember"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.GetUserGroupMemberRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember",
+        "shortName": "get_user_group_member"
+      },
+      "description": "Sample for GetUserGroupMember",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_user_group_member_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_GetUserGroupMember_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_user_group_member_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.get_user_group_member",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.GetUserGroupMember",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "GetUserGroupMember"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.GetUserGroupMemberRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember",
+        "shortName": "get_user_group_member"
+      },
+      "description": "Sample for GetUserGroupMember",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_user_group_member_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_GetUserGroupMember_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_user_group_member_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.get_user_group",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.GetUserGroup",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "GetUserGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.GetUserGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroup",
+        "shortName": "get_user_group"
+      },
+      "description": "Sample for GetUserGroup",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_user_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_GetUserGroup_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_user_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.get_user_group",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.GetUserGroup",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "GetUserGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.GetUserGroupRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroup",
+        "shortName": "get_user_group"
+      },
+      "description": "Sample for GetUserGroup",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_user_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_GetUserGroup_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_get_user_group_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.list_admin_access_bindings",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ListAdminAccessBindings",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ListAdminAccessBindings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ListAdminAccessBindingsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListAdminAccessBindingsAsyncPager",
+        "shortName": "list_admin_access_bindings"
+      },
+      "description": "Sample for ListAdminAccessBindings",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_admin_access_bindings_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ListAdminAccessBindings_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_admin_access_bindings_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.list_admin_access_bindings",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ListAdminAccessBindings",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ListAdminAccessBindings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ListAdminAccessBindingsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListAdminAccessBindingsPager",
+        "shortName": "list_admin_access_bindings"
+      },
+      "description": "Sample for ListAdminAccessBindings",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_admin_access_bindings_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ListAdminAccessBindings_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_admin_access_bindings_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.list_analytics_account_links",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ListAnalyticsAccountLinks",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ListAnalyticsAccountLinks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ListAnalyticsAccountLinksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListAnalyticsAccountLinksAsyncPager",
+        "shortName": "list_analytics_account_links"
+      },
+      "description": "Sample for ListAnalyticsAccountLinks",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_analytics_account_links_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ListAnalyticsAccountLinks_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_analytics_account_links_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.list_analytics_account_links",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ListAnalyticsAccountLinks",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ListAnalyticsAccountLinks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ListAnalyticsAccountLinksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListAnalyticsAccountLinksPager",
+        "shortName": "list_analytics_account_links"
+      },
+      "description": "Sample for ListAnalyticsAccountLinks",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_analytics_account_links_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ListAnalyticsAccountLinks_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_analytics_account_links_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.list_organizations",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ListOrganizations",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ListOrganizations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ListOrganizationsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListOrganizationsAsyncPager",
+        "shortName": "list_organizations"
+      },
+      "description": "Sample for ListOrganizations",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_organizations_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ListOrganizations_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_organizations_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.list_organizations",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ListOrganizations",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ListOrganizations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ListOrganizationsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListOrganizationsPager",
+        "shortName": "list_organizations"
+      },
+      "description": "Sample for ListOrganizations",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_organizations_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ListOrganizations_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_organizations_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.list_user_group_members",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ListUserGroupMembers",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ListUserGroupMembers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ListUserGroupMembersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListUserGroupMembersAsyncPager",
+        "shortName": "list_user_group_members"
+      },
+      "description": "Sample for ListUserGroupMembers",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_user_group_members_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ListUserGroupMembers_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_user_group_members_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.list_user_group_members",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ListUserGroupMembers",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ListUserGroupMembers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ListUserGroupMembersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListUserGroupMembersPager",
+        "shortName": "list_user_group_members"
+      },
+      "description": "Sample for ListUserGroupMembers",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_user_group_members_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ListUserGroupMembers_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_user_group_members_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.list_user_groups",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ListUserGroups",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ListUserGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ListUserGroupsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListUserGroupsAsyncPager",
+        "shortName": "list_user_groups"
+      },
+      "description": "Sample for ListUserGroups",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_user_groups_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ListUserGroups_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_user_groups_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.list_user_groups",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ListUserGroups",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ListUserGroups"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ListUserGroupsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListUserGroupsPager",
+        "shortName": "list_user_groups"
+      },
+      "description": "Sample for ListUserGroups",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_user_groups_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ListUserGroups_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_list_user_groups_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.report_property_usage",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ReportPropertyUsage",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ReportPropertyUsage"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ReportPropertyUsageRequest"
+          },
+          {
+            "name": "organization",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.ReportPropertyUsageResponse",
+        "shortName": "report_property_usage"
+      },
+      "description": "Sample for ReportPropertyUsage",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_report_property_usage_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ReportPropertyUsage_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_report_property_usage_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.report_property_usage",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.ReportPropertyUsage",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "ReportPropertyUsage"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.ReportPropertyUsageRequest"
+          },
+          {
+            "name": "organization",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.ReportPropertyUsageResponse",
+        "shortName": "report_property_usage"
+      },
+      "description": "Sample for ReportPropertyUsage",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_report_property_usage_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_ReportPropertyUsage_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_report_property_usage_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.set_property_service_level",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.SetPropertyServiceLevel",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "SetPropertyServiceLevel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.SetPropertyServiceLevelRequest"
+          },
+          {
+            "name": "analytics_account_link",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.SetPropertyServiceLevelResponse",
+        "shortName": "set_property_service_level"
+      },
+      "description": "Sample for SetPropertyServiceLevel",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_set_property_service_level_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_SetPropertyServiceLevel_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_set_property_service_level_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.set_property_service_level",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.SetPropertyServiceLevel",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "SetPropertyServiceLevel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.SetPropertyServiceLevelRequest"
+          },
+          {
+            "name": "analytics_account_link",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.SetPropertyServiceLevelResponse",
+        "shortName": "set_property_service_level"
+      },
+      "description": "Sample for SetPropertyServiceLevel",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_set_property_service_level_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_SetPropertyServiceLevel_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_set_property_service_level_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.update_admin_access_binding",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.UpdateAdminAccessBinding",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "UpdateAdminAccessBinding"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UpdateAdminAccessBindingRequest"
+          },
+          {
+            "name": "admin_access_binding",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding",
+        "shortName": "update_admin_access_binding"
+      },
+      "description": "Sample for UpdateAdminAccessBinding",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_admin_access_binding_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_UpdateAdminAccessBinding_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_admin_access_binding_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.update_admin_access_binding",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.UpdateAdminAccessBinding",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "UpdateAdminAccessBinding"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UpdateAdminAccessBindingRequest"
+          },
+          {
+            "name": "admin_access_binding",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding",
+        "shortName": "update_admin_access_binding"
+      },
+      "description": "Sample for UpdateAdminAccessBinding",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_admin_access_binding_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_UpdateAdminAccessBinding_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_admin_access_binding_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.update_user_group_member",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.UpdateUserGroupMember",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "UpdateUserGroupMember"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UpdateUserGroupMemberRequest"
+          },
+          {
+            "name": "user_group_member",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember",
+        "shortName": "update_user_group_member"
+      },
+      "description": "Sample for UpdateUserGroupMember",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_user_group_member_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_UpdateUserGroupMember_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_user_group_member_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.update_user_group_member",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.UpdateUserGroupMember",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "UpdateUserGroupMember"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UpdateUserGroupMemberRequest"
+          },
+          {
+            "name": "user_group_member",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember",
+        "shortName": "update_user_group_member"
+      },
+      "description": "Sample for UpdateUserGroupMember",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_user_group_member_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_UpdateUserGroupMember_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_user_group_member_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient",
+          "shortName": "MarketingplatformAdminServiceAsyncClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient.update_user_group",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.UpdateUserGroup",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "UpdateUserGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UpdateUserGroupRequest"
+          },
+          {
+            "name": "user_group",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UserGroup"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroup",
+        "shortName": "update_user_group"
+      },
+      "description": "Sample for UpdateUserGroup",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_user_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_UpdateUserGroup_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_user_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient",
+          "shortName": "MarketingplatformAdminServiceClient"
+        },
+        "fullName": "google.ads.marketingplatform_admin_v1alpha.MarketingplatformAdminServiceClient.update_user_group",
+        "method": {
+          "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService.UpdateUserGroup",
+          "service": {
+            "fullName": "google.marketingplatform.admin.v1alpha.MarketingplatformAdminService",
+            "shortName": "MarketingplatformAdminService"
+          },
+          "shortName": "UpdateUserGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UpdateUserGroupRequest"
+          },
+          {
+            "name": "user_group",
+            "type": "google.ads.marketingplatform_admin_v1alpha.types.UserGroup"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.marketingplatform_admin_v1alpha.types.UserGroup",
+        "shortName": "update_user_group"
+      },
+      "description": "Sample for UpdateUserGroup",
+      "file": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_user_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "marketingplatformadmin_v1alpha_generated_MarketingplatformAdminService_UpdateUserGroup_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "marketingplatformadmin_v1alpha_generated_marketingplatform_admin_service_update_user_group_sync.py"
+    }
+  ]
+}

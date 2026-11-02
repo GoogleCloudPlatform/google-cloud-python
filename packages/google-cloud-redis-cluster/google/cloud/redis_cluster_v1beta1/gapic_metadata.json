@@ -1,0 +1,478 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.redis_cluster_v1beta1",
+  "protoPackage": "google.cloud.redis.cluster.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "CloudRedisCluster": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudRedisClusterClient",
+          "rpcs": {
+            "AddAuthToken": {
+              "methods": [
+                "add_auth_token"
+              ]
+            },
+            "AddTokenAuthUser": {
+              "methods": [
+                "add_token_auth_user"
+              ]
+            },
+            "BackupCluster": {
+              "methods": [
+                "backup_cluster"
+              ]
+            },
+            "CreateAclPolicy": {
+              "methods": [
+                "create_acl_policy"
+              ]
+            },
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "DeleteAclPolicy": {
+              "methods": [
+                "delete_acl_policy"
+              ]
+            },
+            "DeleteAuthToken": {
+              "methods": [
+                "delete_auth_token"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteTokenAuthUser": {
+              "methods": [
+                "delete_token_auth_user"
+              ]
+            },
+            "ExportBackup": {
+              "methods": [
+                "export_backup"
+              ]
+            },
+            "GetAclPolicy": {
+              "methods": [
+                "get_acl_policy"
+              ]
+            },
+            "GetAclPolicyRevision": {
+              "methods": [
+                "get_acl_policy_revision"
+              ]
+            },
+            "GetAuthToken": {
+              "methods": [
+                "get_auth_token"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupCollection": {
+              "methods": [
+                "get_backup_collection"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetClusterCertificateAuthority": {
+              "methods": [
+                "get_cluster_certificate_authority"
+              ]
+            },
+            "GetSharedRegionalCertificateAuthority": {
+              "methods": [
+                "get_shared_regional_certificate_authority"
+              ]
+            },
+            "GetTokenAuthUser": {
+              "methods": [
+                "get_token_auth_user"
+              ]
+            },
+            "ListAclPolicies": {
+              "methods": [
+                "list_acl_policies"
+              ]
+            },
+            "ListAclPolicyRevisions": {
+              "methods": [
+                "list_acl_policy_revisions"
+              ]
+            },
+            "ListAuthTokens": {
+              "methods": [
+                "list_auth_tokens"
+              ]
+            },
+            "ListBackupCollections": {
+              "methods": [
+                "list_backup_collections"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListTokenAuthUsers": {
+              "methods": [
+                "list_token_auth_users"
+              ]
+            },
+            "RescheduleClusterMaintenance": {
+              "methods": [
+                "reschedule_cluster_maintenance"
+              ]
+            },
+            "UpdateAclPolicy": {
+              "methods": [
+                "update_acl_policy"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudRedisClusterAsyncClient",
+          "rpcs": {
+            "AddAuthToken": {
+              "methods": [
+                "add_auth_token"
+              ]
+            },
+            "AddTokenAuthUser": {
+              "methods": [
+                "add_token_auth_user"
+              ]
+            },
+            "BackupCluster": {
+              "methods": [
+                "backup_cluster"
+              ]
+            },
+            "CreateAclPolicy": {
+              "methods": [
+                "create_acl_policy"
+              ]
+            },
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "DeleteAclPolicy": {
+              "methods": [
+                "delete_acl_policy"
+              ]
+            },
+            "DeleteAuthToken": {
+              "methods": [
+                "delete_auth_token"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteTokenAuthUser": {
+              "methods": [
+                "delete_token_auth_user"
+              ]
+            },
+            "ExportBackup": {
+              "methods": [
+                "export_backup"
+              ]
+            },
+            "GetAclPolicy": {
+              "methods": [
+                "get_acl_policy"
+              ]
+            },
+            "GetAclPolicyRevision": {
+              "methods": [
+                "get_acl_policy_revision"
+              ]
+            },
+            "GetAuthToken": {
+              "methods": [
+                "get_auth_token"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupCollection": {
+              "methods": [
+                "get_backup_collection"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetClusterCertificateAuthority": {
+              "methods": [
+                "get_cluster_certificate_authority"
+              ]
+            },
+            "GetSharedRegionalCertificateAuthority": {
+              "methods": [
+                "get_shared_regional_certificate_authority"
+              ]
+            },
+            "GetTokenAuthUser": {
+              "methods": [
+                "get_token_auth_user"
+              ]
+            },
+            "ListAclPolicies": {
+              "methods": [
+                "list_acl_policies"
+              ]
+            },
+            "ListAclPolicyRevisions": {
+              "methods": [
+                "list_acl_policy_revisions"
+              ]
+            },
+            "ListAuthTokens": {
+              "methods": [
+                "list_auth_tokens"
+              ]
+            },
+            "ListBackupCollections": {
+              "methods": [
+                "list_backup_collections"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListTokenAuthUsers": {
+              "methods": [
+                "list_token_auth_users"
+              ]
+            },
+            "RescheduleClusterMaintenance": {
+              "methods": [
+                "reschedule_cluster_maintenance"
+              ]
+            },
+            "UpdateAclPolicy": {
+              "methods": [
+                "update_acl_policy"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudRedisClusterClient",
+          "rpcs": {
+            "AddAuthToken": {
+              "methods": [
+                "add_auth_token"
+              ]
+            },
+            "AddTokenAuthUser": {
+              "methods": [
+                "add_token_auth_user"
+              ]
+            },
+            "BackupCluster": {
+              "methods": [
+                "backup_cluster"
+              ]
+            },
+            "CreateAclPolicy": {
+              "methods": [
+                "create_acl_policy"
+              ]
+            },
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "DeleteAclPolicy": {
+              "methods": [
+                "delete_acl_policy"
+              ]
+            },
+            "DeleteAuthToken": {
+              "methods": [
+                "delete_auth_token"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteTokenAuthUser": {
+              "methods": [
+                "delete_token_auth_user"
+              ]
+            },
+            "ExportBackup": {
+              "methods": [
+                "export_backup"
+              ]
+            },
+            "GetAclPolicy": {
+              "methods": [
+                "get_acl_policy"
+              ]
+            },
+            "GetAclPolicyRevision": {
+              "methods": [
+                "get_acl_policy_revision"
+              ]
+            },
+            "GetAuthToken": {
+              "methods": [
+                "get_auth_token"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupCollection": {
+              "methods": [
+                "get_backup_collection"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetClusterCertificateAuthority": {
+              "methods": [
+                "get_cluster_certificate_authority"
+              ]
+            },
+            "GetSharedRegionalCertificateAuthority": {
+              "methods": [
+                "get_shared_regional_certificate_authority"
+              ]
+            },
+            "GetTokenAuthUser": {
+              "methods": [
+                "get_token_auth_user"
+              ]
+            },
+            "ListAclPolicies": {
+              "methods": [
+                "list_acl_policies"
+              ]
+            },
+            "ListAclPolicyRevisions": {
+              "methods": [
+                "list_acl_policy_revisions"
+              ]
+            },
+            "ListAuthTokens": {
+              "methods": [
+                "list_auth_tokens"
+              ]
+            },
+            "ListBackupCollections": {
+              "methods": [
+                "list_backup_collections"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListTokenAuthUsers": {
+              "methods": [
+                "list_token_auth_users"
+              ]
+            },
+            "RescheduleClusterMaintenance": {
+              "methods": [
+                "reschedule_cluster_maintenance"
+              ]
+            },
+            "UpdateAclPolicy": {
+              "methods": [
+                "update_acl_policy"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

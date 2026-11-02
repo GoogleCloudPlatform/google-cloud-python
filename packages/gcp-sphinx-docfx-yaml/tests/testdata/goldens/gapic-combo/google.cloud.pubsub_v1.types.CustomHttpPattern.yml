@@ -1,0 +1,19 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.CustomHttpPattern
+  fullName: google.cloud.pubsub_v1.types.CustomHttpPattern
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: CustomHttpPattern
+  source:
+    id: CustomHttpPattern
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.CustomHttpPattern` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.CustomHttpPattern
+references: []

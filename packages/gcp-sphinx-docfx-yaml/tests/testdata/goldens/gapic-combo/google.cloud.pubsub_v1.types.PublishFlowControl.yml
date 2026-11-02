@@ -1,0 +1,127 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.pubsub_v1.types.PublishFlowControl
+  - google.cloud.pubsub_v1.types.PublishFlowControl.byte_limit
+  - google.cloud.pubsub_v1.types.PublishFlowControl.limit_exceeded_behavior
+  - google.cloud.pubsub_v1.types.PublishFlowControl.message_limit
+  class: google.cloud.pubsub_v1.types.PublishFlowControl
+  fullName: google.cloud.pubsub_v1.types.PublishFlowControl
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: PublishFlowControl
+  source:
+    id: PublishFlowControl
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/types.py
+    startLine: 95
+  summary: 'The client flow control settings for message publishing.
+
+
+    '
+  syntax:
+    content: "PublishFlowControl(\n    message_limit: int = 1000,\n    byte_limit:\
+      \ int = 10000000,\n    limit_exceeded_behavior: google.cloud.pubsub_v1.types.LimitExceededBehavior\
+      \ = LimitExceededBehavior.IGNORE,\n)"
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.PublishFlowControl
+- attributes: []
+  class: google.cloud.pubsub_v1.types.PublishFlowControl
+  fullName: google.cloud.pubsub_v1.types.PublishFlowControl
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: PublishFlowControl
+  source:
+    id: PublishFlowControl
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/types.py
+    startLine: 95
+  summary: 'Create new instance of PublishFlowControl(message_limit, byte_limit, limit_exceeded_behavior)
+
+
+    '
+  syntax:
+    content: "PublishFlowControl(\n    message_limit: int = 1000,\n    byte_limit:\
+      \ int = 10000000,\n    limit_exceeded_behavior: google.cloud.pubsub_v1.types.LimitExceededBehavior\
+      \ = LimitExceededBehavior.IGNORE,\n)"
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.types.PublishFlowControl
+- attributes: []
+  class: google.cloud.pubsub_v1.types.PublishFlowControl
+  fullName: google.cloud.pubsub_v1.types.PublishFlowControl.byte_limit
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: byte_limit
+  source:
+    id: byte_limit
+    path: null
+    startLine: null
+  summary: 'The maximum total size of messages awaiting to be published.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.PublishFlowControl.byte_limit
+- attributes: []
+  class: google.cloud.pubsub_v1.types.PublishFlowControl
+  fullName: google.cloud.pubsub_v1.types.PublishFlowControl.limit_exceeded_behavior
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: limit_exceeded_behavior
+  source:
+    id: limit_exceeded_behavior
+    path: null
+    startLine: null
+  summary: 'The action to take when publish flow control limits are exceeded.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.PublishFlowControl.limit_exceeded_behavior
+- attributes: []
+  class: google.cloud.pubsub_v1.types.PublishFlowControl
+  fullName: google.cloud.pubsub_v1.types.PublishFlowControl.message_limit
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: message_limit
+  source:
+    id: message_limit
+    path: null
+    startLine: null
+  summary: 'The maximum number of messages awaiting to be published.
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.pubsub_v1.types.PublishFlowControl.message_limit
+references:
+- fullName: google.cloud.pubsub_v1.types.PublishFlowControl
+  isExternal: false
+  name: PublishFlowControl
+  parent: google.cloud.pubsub_v1.types.PublishFlowControl
+  uid: google.cloud.pubsub_v1.types.PublishFlowControl
+- fullName: google.cloud.pubsub_v1.types.PublishFlowControl.byte_limit
+  isExternal: false
+  name: byte_limit
+  parent: google.cloud.pubsub_v1.types.PublishFlowControl
+  uid: google.cloud.pubsub_v1.types.PublishFlowControl.byte_limit
+- fullName: google.cloud.pubsub_v1.types.PublishFlowControl.limit_exceeded_behavior
+  isExternal: false
+  name: limit_exceeded_behavior
+  parent: google.cloud.pubsub_v1.types.PublishFlowControl
+  uid: google.cloud.pubsub_v1.types.PublishFlowControl.limit_exceeded_behavior
+- fullName: google.cloud.pubsub_v1.types.PublishFlowControl.message_limit
+  isExternal: false
+  name: message_limit
+  parent: google.cloud.pubsub_v1.types.PublishFlowControl
+  uid: google.cloud.pubsub_v1.types.PublishFlowControl.message_limit

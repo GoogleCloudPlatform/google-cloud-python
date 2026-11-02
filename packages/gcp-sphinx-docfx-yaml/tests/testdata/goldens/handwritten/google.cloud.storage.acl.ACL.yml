@@ -1,0 +1,704 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.acl.ACL.PREDEFINED_JSON_ACLS
+  - google.cloud.storage.acl.ACL.add_entity
+  - google.cloud.storage.acl.ACL.all
+  - google.cloud.storage.acl.ACL.all_authenticated
+  - google.cloud.storage.acl.ACL.clear
+  - google.cloud.storage.acl.ACL.client
+  - google.cloud.storage.acl.ACL.domain
+  - google.cloud.storage.acl.ACL.entity
+  - google.cloud.storage.acl.ACL.entity_from_dict
+  - google.cloud.storage.acl.ACL.get_entities
+  - google.cloud.storage.acl.ACL.get_entity
+  - google.cloud.storage.acl.ACL.group
+  - google.cloud.storage.acl.ACL.has_entity
+  - google.cloud.storage.acl.ACL.reload
+  - google.cloud.storage.acl.ACL.reset
+  - google.cloud.storage.acl.ACL.save
+  - google.cloud.storage.acl.ACL.save_predefined
+  - google.cloud.storage.acl.ACL.user
+  - google.cloud.storage.acl.ACL.validate_predefined
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: ACL
+  source:
+    id: ACL
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 105
+  summary: 'Container class representing a list of access controls.
+
+
+    '
+  syntax:
+    content: ACL()
+    parameters: []
+  type: class
+  uid: google.cloud.storage.acl.ACL
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.PREDEFINED_JSON_ACLS
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: PREDEFINED_JSON_ACLS
+  source:
+    id: PREDEFINED_JSON_ACLS
+    path: null
+    startLine: null
+  summary: 'See
+
+    https://cloud.google.com/storage/docs/access-control/lists#predefined-acl
+
+
+    '
+  syntax: {}
+  type: attribute
+  uid: google.cloud.storage.acl.ACL.PREDEFINED_JSON_ACLS
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.add_entity
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: add_entity
+  source:
+    id: add_entity
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 250
+  summary: 'Add an entity to the ACL.
+
+    '
+  syntax:
+    content: add_entity(entity)
+    parameters:
+    - description: The entity to add to this ACL.
+      id: entity
+      var_type: <code>_ACLEntity</code>
+  type: method
+  uid: google.cloud.storage.acl.ACL.add_entity
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.all
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: all
+  source:
+    id: all
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 318
+  summary: 'Factory method for an Entity representing all users.
+
+    '
+  syntax:
+    content: all()
+    parameters: []
+    returns:
+    - description: An entity representing all users.
+      var_type: <code>_ACLEntity</code>
+  type: method
+  uid: google.cloud.storage.acl.ACL.all
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.all_authenticated
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: all_authenticated
+  source:
+    id: all_authenticated
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 326
+  summary: 'Factory method for an Entity representing all authenticated users.
+
+    '
+  syntax:
+    content: all_authenticated()
+    parameters: []
+    returns:
+    - description: An entity representing all authenticated users.
+      var_type: <code>_ACLEntity</code>
+  type: method
+  uid: google.cloud.storage.acl.ACL.all_authenticated
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.clear
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: clear
+  source:
+    id: clear
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 621
+  summary: 'Remove all ACL entries.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+
+    Note that this won''t actually remove *ALL* the rules, but it
+
+    will remove all the non-default rules.  In short, you''ll still
+
+    have access to a bucket that you created even after you clear
+
+    ACL rules with this method.
+
+    '
+  syntax:
+    content: clear(client=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the ACL's parent.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.acl.ACL.clear
+- &id001
+  attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.client
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: client
+  source:
+    id: client
+    path: null
+    startLine: null
+  summary: 'Abstract getter for the object client.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.acl.ACL.client
+- *id001
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.domain
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: domain
+  source:
+    id: domain
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 307
+  summary: 'Factory method for a domain Entity.
+
+    '
+  syntax:
+    content: domain(domain)
+    parameters:
+    - description: The domain for this entity.
+      id: domain
+      var_type: str
+    returns:
+    - description: An entity corresponding to this domain.
+      var_type: <code>_ACLEntity</code>
+  type: method
+  uid: google.cloud.storage.acl.ACL.domain
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.entity
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: entity
+  source:
+    id: entity
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 259
+  summary: 'Factory method for creating an Entity.
+
+
+    If an entity with the same type and identifier already exists,
+
+    this will return a reference to that entity.  If not, it will
+
+    create a new one and add it to the list of known entities for
+
+    this ACL.
+
+    '
+  syntax:
+    content: entity(entity_type, identifier=None)
+    parameters:
+    - description: The type of entity to create (ie, <code>user</code>, <code>group</code>,
+        etc)
+      id: entity_type
+      var_type: str
+    - description: The ID of the entity (if applicable). This can be either an ID
+        or an e-mail address.
+      id: identifier
+      var_type: str
+    returns:
+    - description: A new Entity or a reference to an existing identical entity.
+      var_type: <code>_ACLEntity</code>
+  type: method
+  uid: google.cloud.storage.acl.ACL.entity
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.entity_from_dict
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: entity_from_dict
+  source:
+    id: entity_from_dict
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 189
+  summary: 'Build an _ACLEntity object from a dictionary of data.
+
+
+    An entity is a mutable object that represents a list of roles
+
+    belonging to either a user or group or the special types for all
+
+    users and all authenticated users.
+
+    '
+  syntax:
+    content: entity_from_dict(entity_dict)
+    parameters:
+    - description: Dictionary full of data from an ACL lookup.
+      id: entity_dict
+      var_type: dict
+    returns:
+    - description: An Entity constructed from the dictionary.
+      var_type: <code>_ACLEntity</code>
+  type: method
+  uid: google.cloud.storage.acl.ACL.entity_from_dict
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.get_entities
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: get_entities
+  source:
+    id: get_entities
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 334
+  summary: 'Get a list of all Entity objects.
+
+    '
+  syntax:
+    content: get_entities()
+    parameters: []
+    returns:
+    - description: A list of all Entity objects.
+      var_type: list of <code>_ACLEntity</code> objects
+  type: method
+  uid: google.cloud.storage.acl.ACL.get_entities
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.get_entity
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: get_entity
+  source:
+    id: get_entity
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 233
+  summary: 'Gets an entity object from the ACL.
+
+    '
+  syntax:
+    content: get_entity(entity, default=None)
+    parameters:
+    - description: The entity to get lookup in the ACL.
+      id: entity
+      var_type: <code>_ACLEntity</code> or string
+    - description: This value will be returned if the entity doesn't exist.
+      id: default
+      var_type: anything
+    returns:
+    - description: The corresponding entity or the value provided to <code>default</code>.
+      var_type: <code>_ACLEntity</code>
+  type: method
+  uid: google.cloud.storage.acl.ACL.get_entity
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.group
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: group
+  source:
+    id: group
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 296
+  summary: 'Factory method for a group Entity.
+
+    '
+  syntax:
+    content: group(identifier)
+    parameters:
+    - description: An id or e-mail for this particular group.
+      id: identifier
+      var_type: str
+    returns:
+    - description: An Entity corresponding to this group.
+      var_type: <code>_ACLEntity</code>
+  type: method
+  uid: google.cloud.storage.acl.ACL.group
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.has_entity
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: has_entity
+  source:
+    id: has_entity
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 221
+  summary: 'Returns whether or not this ACL has any entries for an entity.
+
+    '
+  syntax:
+    content: has_entity(entity)
+    parameters:
+    - description: The entity to check for existence in this ACL.
+      id: entity
+      var_type: <code>_ACLEntity</code>
+    returns:
+    - description: True of the entity exists in the ACL.
+      var_type: bool
+  type: method
+  uid: google.cloud.storage.acl.ACL.has_entity
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.reload
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: reload
+  source:
+    id: reload
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 363
+  summary: 'Reload the ACL data from Cloud Storage.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: reload(client=None, timeout=60, retry=<google.api_core.retry.Retry object>)
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the ACL's parent.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: <code>google.api_core.retry.Retry</code>
+  type: method
+  uid: google.cloud.storage.acl.ACL.reload
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.reset
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: reset
+  source:
+    id: reset
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 176
+  summary: 'Remove all entities from the ACL, and clear the `loaded` flag.
+
+
+    '
+  syntax:
+    content: reset()
+    parameters: []
+  type: method
+  uid: google.cloud.storage.acl.ACL.reset
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.save
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: save
+  source:
+    id: save
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 488
+  summary: 'Save this ACL for the current bucket.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: save(acl=None, client=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: The ACL object to save. If left blank, this will save current entries.
+      id: acl
+      var_type: <xref uid="google.cloud.storage.acl.ACL">ACL</xref>, or a compatible
+        list.
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the ACL's parent.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.acl.ACL.save
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.save_predefined
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: save_predefined
+  source:
+    id: save_predefined
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 556
+  summary: 'Save this ACL for the current bucket using a predefined ACL.
+
+
+    If `user_project` is set, bills the API request to that project.
+
+    '
+  syntax:
+    content: save_predefined(predefined, client=None, if_generation_match=None, if_generation_not_match=None,
+      if_metageneration_match=None, if_metageneration_not_match=None, timeout=60,
+      retry=<google.cloud.storage.retry.ConditionalRetryPolicy object>)
+    parameters:
+    - description: An identifier for a predefined ACL. Must be one of the keys in
+        <code>PREDEFINED_JSON_ACLS</code> or <code>PREDEFINED_XML_ACLS</code> (which
+        will be aliased to the corresponding JSON name). If passed, <code>acl</code>
+        must be None.
+      id: predefined
+      var_type: str
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the ACL's parent.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: (Optional) See :ref:<code>using-if-generation-match</code>
+      id: if_generation_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-generation-not-match</code>
+      id: if_generation_not_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-match</code>
+      id: if_metageneration_match
+      var_type: long
+    - description: (Optional) See :ref:<code>using-if-metageneration-not-match</code>
+      id: if_metageneration_not_match
+      var_type: long
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.acl.ACL.save_predefined
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.user
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: user
+  source:
+    id: user
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 285
+  summary: 'Factory method for a user Entity.
+
+    '
+  syntax:
+    content: user(identifier)
+    parameters:
+    - description: An id or e-mail for this particular user.
+      id: identifier
+      var_type: str
+    returns:
+    - description: An Entity corresponding to this user.
+      var_type: <code>_ACLEntity</code>
+  type: method
+  uid: google.cloud.storage.acl.ACL.user
+- attributes: []
+  class: google.cloud.storage.acl.ACL
+  fullName: google.cloud.storage.acl.ACL.validate_predefined
+  langs:
+  - python
+  module: google.cloud.storage.acl
+  name: validate_predefined
+  source:
+    id: validate_predefined
+    path: tests/testdata/handwritten/google/cloud/storage/acl.py
+    startLine: 159
+  summary: 'Ensures predefined is in list of predefined json values
+
+    '
+  syntax:
+    content: validate_predefined(predefined)
+    exceptions:
+    - description: '<code>ValueError</code>: If predefined is not a valid acl'
+      var_type: :exc
+    parameters:
+    - description: validated JSON name of predefined acl
+      id: predefined
+      var_type: str
+  type: method
+  uid: google.cloud.storage.acl.ACL.validate_predefined
+references:
+- fullName: google.cloud.storage.acl.ACL.PREDEFINED_JSON_ACLS
+  isExternal: false
+  name: PREDEFINED_JSON_ACLS
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.PREDEFINED_JSON_ACLS
+- fullName: google.cloud.storage.acl.ACL.add_entity
+  isExternal: false
+  name: add_entity
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.add_entity
+- fullName: google.cloud.storage.acl.ACL.all
+  isExternal: false
+  name: all
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.all
+- fullName: google.cloud.storage.acl.ACL.all_authenticated
+  isExternal: false
+  name: all_authenticated
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.all_authenticated
+- fullName: google.cloud.storage.acl.ACL.clear
+  isExternal: false
+  name: clear
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.clear
+- fullName: google.cloud.storage.acl.ACL.client
+  isExternal: false
+  name: client
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.client
+- fullName: google.cloud.storage.acl.ACL.domain
+  isExternal: false
+  name: domain
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.domain
+- fullName: google.cloud.storage.acl.ACL.entity
+  isExternal: false
+  name: entity
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.entity
+- fullName: google.cloud.storage.acl.ACL.entity_from_dict
+  isExternal: false
+  name: entity_from_dict
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.entity_from_dict
+- fullName: google.cloud.storage.acl.ACL.get_entities
+  isExternal: false
+  name: get_entities
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.get_entities
+- fullName: google.cloud.storage.acl.ACL.get_entity
+  isExternal: false
+  name: get_entity
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.get_entity
+- fullName: google.cloud.storage.acl.ACL.group
+  isExternal: false
+  name: group
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.group
+- fullName: google.cloud.storage.acl.ACL.has_entity
+  isExternal: false
+  name: has_entity
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.has_entity
+- fullName: google.cloud.storage.acl.ACL.reload
+  isExternal: false
+  name: reload
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.reload
+- fullName: google.cloud.storage.acl.ACL.reset
+  isExternal: false
+  name: reset
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.reset
+- fullName: google.cloud.storage.acl.ACL.save
+  isExternal: false
+  name: save
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.save
+- fullName: google.cloud.storage.acl.ACL.save_predefined
+  isExternal: false
+  name: save_predefined
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.save_predefined
+- fullName: google.cloud.storage.acl.ACL.user
+  isExternal: false
+  name: user
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.user
+- fullName: google.cloud.storage.acl.ACL.validate_predefined
+  isExternal: false
+  name: validate_predefined
+  parent: google.cloud.storage.acl.ACL
+  uid: google.cloud.storage.acl.ACL.validate_predefined

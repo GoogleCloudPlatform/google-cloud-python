@@ -1,0 +1,39 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+  - google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+  fullName: google.cloud.pubsub_v1.subscriber.scheduler
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.scheduler
+  name: scheduler
+  source:
+    id: scheduler
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/scheduler.py
+    startLine: 0
+  summary: 'Schedulers provide means to *schedule* callbacks asynchronously.
+
+
+    These are used by the subscriber to call the user-provided callback to process
+
+    each message.
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google.cloud.pubsub_v1.subscriber.scheduler
+references:
+- fullName: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+  isExternal: false
+  name: Scheduler
+  parent: google.cloud.pubsub_v1.subscriber.scheduler
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.Scheduler
+- fullName: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler
+  isExternal: false
+  name: ThreadScheduler
+  parent: google.cloud.pubsub_v1.subscriber.scheduler
+  uid: google.cloud.pubsub_v1.subscriber.scheduler.ThreadScheduler

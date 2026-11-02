@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.maps.isochrones_v1",
+  "protoPackage": "google.maps.isochrones.v1",
+  "schema": "1.0",
+  "services": {
+    "IsochroneService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "IsochroneServiceClient",
+          "rpcs": {
+            "GenerateIsochrone": {
+              "methods": [
+                "generate_isochrone"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "IsochroneServiceAsyncClient",
+          "rpcs": {
+            "GenerateIsochrone": {
+              "methods": [
+                "generate_isochrone"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "IsochroneServiceClient",
+          "rpcs": {
+            "GenerateIsochrone": {
+              "methods": [
+                "generate_isochrone"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

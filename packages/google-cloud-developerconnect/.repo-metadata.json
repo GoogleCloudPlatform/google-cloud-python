@@ -1,0 +1,16 @@
+{
+    "api_description": "Connect third-party source code management to Google",
+    "api_id": "developerconnect.googleapis.com",
+    "api_shortname": "developerconnect",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-developerconnect/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-developerconnect",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1446966\u0026template=1822025",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-developerconnect",
+    "name_pretty": "Developer Connect",
+    "product_documentation": "https://cloud.google.com/developer-connect/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

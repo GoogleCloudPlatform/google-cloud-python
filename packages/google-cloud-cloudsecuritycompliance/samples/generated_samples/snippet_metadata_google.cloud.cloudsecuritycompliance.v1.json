@@ -1,0 +1,4454 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.cloudsecuritycompliance.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-cloudsecuritycompliance",
+    "version": "0.8.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditAsyncClient",
+          "shortName": "AuditAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditAsyncClient.create_framework_audit",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit.CreateFrameworkAudit",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit",
+            "shortName": "Audit"
+          },
+          "shortName": "CreateFrameworkAudit"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CreateFrameworkAuditRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "framework_audit",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.FrameworkAudit"
+          },
+          {
+            "name": "framework_audit_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_framework_audit"
+      },
+      "description": "Sample for CreateFrameworkAudit",
+      "file": "cloudsecuritycompliance_v1_generated_audit_create_framework_audit_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Audit_CreateFrameworkAudit_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_audit_create_framework_audit_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditClient",
+          "shortName": "AuditClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditClient.create_framework_audit",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit.CreateFrameworkAudit",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit",
+            "shortName": "Audit"
+          },
+          "shortName": "CreateFrameworkAudit"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CreateFrameworkAuditRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "framework_audit",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.FrameworkAudit"
+          },
+          {
+            "name": "framework_audit_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_framework_audit"
+      },
+      "description": "Sample for CreateFrameworkAudit",
+      "file": "cloudsecuritycompliance_v1_generated_audit_create_framework_audit_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Audit_CreateFrameworkAudit_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_audit_create_framework_audit_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditAsyncClient",
+          "shortName": "AuditAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditAsyncClient.generate_framework_audit_scope_report",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit.GenerateFrameworkAuditScopeReport",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit",
+            "shortName": "Audit"
+          },
+          "shortName": "GenerateFrameworkAuditScopeReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GenerateFrameworkAuditScopeReportRequest"
+          },
+          {
+            "name": "scope",
+            "type": "str"
+          },
+          {
+            "name": "report_format",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GenerateFrameworkAuditScopeReportRequest.Format"
+          },
+          {
+            "name": "compliance_framework",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.GenerateFrameworkAuditScopeReportResponse",
+        "shortName": "generate_framework_audit_scope_report"
+      },
+      "description": "Sample for GenerateFrameworkAuditScopeReport",
+      "file": "cloudsecuritycompliance_v1_generated_audit_generate_framework_audit_scope_report_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Audit_GenerateFrameworkAuditScopeReport_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_audit_generate_framework_audit_scope_report_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditClient",
+          "shortName": "AuditClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditClient.generate_framework_audit_scope_report",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit.GenerateFrameworkAuditScopeReport",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit",
+            "shortName": "Audit"
+          },
+          "shortName": "GenerateFrameworkAuditScopeReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GenerateFrameworkAuditScopeReportRequest"
+          },
+          {
+            "name": "scope",
+            "type": "str"
+          },
+          {
+            "name": "report_format",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GenerateFrameworkAuditScopeReportRequest.Format"
+          },
+          {
+            "name": "compliance_framework",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.GenerateFrameworkAuditScopeReportResponse",
+        "shortName": "generate_framework_audit_scope_report"
+      },
+      "description": "Sample for GenerateFrameworkAuditScopeReport",
+      "file": "cloudsecuritycompliance_v1_generated_audit_generate_framework_audit_scope_report_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Audit_GenerateFrameworkAuditScopeReport_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_audit_generate_framework_audit_scope_report_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditAsyncClient",
+          "shortName": "AuditAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditAsyncClient.get_framework_audit",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit.GetFrameworkAudit",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit",
+            "shortName": "Audit"
+          },
+          "shortName": "GetFrameworkAudit"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GetFrameworkAuditRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.FrameworkAudit",
+        "shortName": "get_framework_audit"
+      },
+      "description": "Sample for GetFrameworkAudit",
+      "file": "cloudsecuritycompliance_v1_generated_audit_get_framework_audit_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Audit_GetFrameworkAudit_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_audit_get_framework_audit_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditClient",
+          "shortName": "AuditClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditClient.get_framework_audit",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit.GetFrameworkAudit",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit",
+            "shortName": "Audit"
+          },
+          "shortName": "GetFrameworkAudit"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GetFrameworkAuditRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.FrameworkAudit",
+        "shortName": "get_framework_audit"
+      },
+      "description": "Sample for GetFrameworkAudit",
+      "file": "cloudsecuritycompliance_v1_generated_audit_get_framework_audit_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Audit_GetFrameworkAudit_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_audit_get_framework_audit_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditAsyncClient",
+          "shortName": "AuditAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditAsyncClient.list_framework_audits",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit.ListFrameworkAudits",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit",
+            "shortName": "Audit"
+          },
+          "shortName": "ListFrameworkAudits"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListFrameworkAuditsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.audit.pagers.ListFrameworkAuditsAsyncPager",
+        "shortName": "list_framework_audits"
+      },
+      "description": "Sample for ListFrameworkAudits",
+      "file": "cloudsecuritycompliance_v1_generated_audit_list_framework_audits_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Audit_ListFrameworkAudits_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_audit_list_framework_audits_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditClient",
+          "shortName": "AuditClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.AuditClient.list_framework_audits",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit.ListFrameworkAudits",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Audit",
+            "shortName": "Audit"
+          },
+          "shortName": "ListFrameworkAudits"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListFrameworkAuditsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.audit.pagers.ListFrameworkAuditsPager",
+        "shortName": "list_framework_audits"
+      },
+      "description": "Sample for ListFrameworkAudits",
+      "file": "cloudsecuritycompliance_v1_generated_audit_list_framework_audits_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Audit_ListFrameworkAudits_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_audit_list_framework_audits_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.CmEnrollmentServiceAsyncClient",
+          "shortName": "CmEnrollmentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.CmEnrollmentServiceAsyncClient.calculate_effective_cm_enrollment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.CmEnrollmentService.CalculateEffectiveCmEnrollment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.CmEnrollmentService",
+            "shortName": "CmEnrollmentService"
+          },
+          "shortName": "CalculateEffectiveCmEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CalculateEffectiveCmEnrollmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CalculateEffectiveCmEnrollmentResponse",
+        "shortName": "calculate_effective_cm_enrollment"
+      },
+      "description": "Sample for CalculateEffectiveCmEnrollment",
+      "file": "cloudsecuritycompliance_v1_generated_cm_enrollment_service_calculate_effective_cm_enrollment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_CmEnrollmentService_CalculateEffectiveCmEnrollment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_cm_enrollment_service_calculate_effective_cm_enrollment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.CmEnrollmentServiceClient",
+          "shortName": "CmEnrollmentServiceClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.CmEnrollmentServiceClient.calculate_effective_cm_enrollment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.CmEnrollmentService.CalculateEffectiveCmEnrollment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.CmEnrollmentService",
+            "shortName": "CmEnrollmentService"
+          },
+          "shortName": "CalculateEffectiveCmEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CalculateEffectiveCmEnrollmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CalculateEffectiveCmEnrollmentResponse",
+        "shortName": "calculate_effective_cm_enrollment"
+      },
+      "description": "Sample for CalculateEffectiveCmEnrollment",
+      "file": "cloudsecuritycompliance_v1_generated_cm_enrollment_service_calculate_effective_cm_enrollment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_CmEnrollmentService_CalculateEffectiveCmEnrollment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_cm_enrollment_service_calculate_effective_cm_enrollment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.CmEnrollmentServiceAsyncClient",
+          "shortName": "CmEnrollmentServiceAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.CmEnrollmentServiceAsyncClient.update_cm_enrollment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.CmEnrollmentService.UpdateCmEnrollment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.CmEnrollmentService",
+            "shortName": "CmEnrollmentService"
+          },
+          "shortName": "UpdateCmEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.UpdateCmEnrollmentRequest"
+          },
+          {
+            "name": "cm_enrollment",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CmEnrollment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CmEnrollment",
+        "shortName": "update_cm_enrollment"
+      },
+      "description": "Sample for UpdateCmEnrollment",
+      "file": "cloudsecuritycompliance_v1_generated_cm_enrollment_service_update_cm_enrollment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_CmEnrollmentService_UpdateCmEnrollment_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_cm_enrollment_service_update_cm_enrollment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.CmEnrollmentServiceClient",
+          "shortName": "CmEnrollmentServiceClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.CmEnrollmentServiceClient.update_cm_enrollment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.CmEnrollmentService.UpdateCmEnrollment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.CmEnrollmentService",
+            "shortName": "CmEnrollmentService"
+          },
+          "shortName": "UpdateCmEnrollment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.UpdateCmEnrollmentRequest"
+          },
+          {
+            "name": "cm_enrollment",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CmEnrollment"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CmEnrollment",
+        "shortName": "update_cm_enrollment"
+      },
+      "description": "Sample for UpdateCmEnrollment",
+      "file": "cloudsecuritycompliance_v1_generated_cm_enrollment_service_update_cm_enrollment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_CmEnrollmentService_UpdateCmEnrollment_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_cm_enrollment_service_update_cm_enrollment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient.create_cloud_control",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.CreateCloudControl",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "CreateCloudControl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CreateCloudControlRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "cloud_control",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CloudControl"
+          },
+          {
+            "name": "cloud_control_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CloudControl",
+        "shortName": "create_cloud_control"
+      },
+      "description": "Sample for CreateCloudControl",
+      "file": "cloudsecuritycompliance_v1_generated_config_create_cloud_control_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_CreateCloudControl_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_create_cloud_control_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient.create_cloud_control",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.CreateCloudControl",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "CreateCloudControl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CreateCloudControlRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "cloud_control",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CloudControl"
+          },
+          {
+            "name": "cloud_control_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CloudControl",
+        "shortName": "create_cloud_control"
+      },
+      "description": "Sample for CreateCloudControl",
+      "file": "cloudsecuritycompliance_v1_generated_config_create_cloud_control_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_CreateCloudControl_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_create_cloud_control_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient.create_framework",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.CreateFramework",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "CreateFramework"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CreateFrameworkRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "framework",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.Framework"
+          },
+          {
+            "name": "framework_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.Framework",
+        "shortName": "create_framework"
+      },
+      "description": "Sample for CreateFramework",
+      "file": "cloudsecuritycompliance_v1_generated_config_create_framework_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_CreateFramework_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_create_framework_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient.create_framework",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.CreateFramework",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "CreateFramework"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CreateFrameworkRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "framework",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.Framework"
+          },
+          {
+            "name": "framework_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.Framework",
+        "shortName": "create_framework"
+      },
+      "description": "Sample for CreateFramework",
+      "file": "cloudsecuritycompliance_v1_generated_config_create_framework_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_CreateFramework_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_create_framework_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient.delete_cloud_control",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.DeleteCloudControl",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeleteCloudControl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.DeleteCloudControlRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_cloud_control"
+      },
+      "description": "Sample for DeleteCloudControl",
+      "file": "cloudsecuritycompliance_v1_generated_config_delete_cloud_control_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_DeleteCloudControl_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_delete_cloud_control_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient.delete_cloud_control",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.DeleteCloudControl",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeleteCloudControl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.DeleteCloudControlRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_cloud_control"
+      },
+      "description": "Sample for DeleteCloudControl",
+      "file": "cloudsecuritycompliance_v1_generated_config_delete_cloud_control_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_DeleteCloudControl_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_delete_cloud_control_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient.delete_framework",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.DeleteFramework",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeleteFramework"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.DeleteFrameworkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_framework"
+      },
+      "description": "Sample for DeleteFramework",
+      "file": "cloudsecuritycompliance_v1_generated_config_delete_framework_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_DeleteFramework_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_delete_framework_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient.delete_framework",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.DeleteFramework",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "DeleteFramework"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.DeleteFrameworkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_framework"
+      },
+      "description": "Sample for DeleteFramework",
+      "file": "cloudsecuritycompliance_v1_generated_config_delete_framework_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_DeleteFramework_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_delete_framework_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient.get_cloud_control",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.GetCloudControl",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetCloudControl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GetCloudControlRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CloudControl",
+        "shortName": "get_cloud_control"
+      },
+      "description": "Sample for GetCloudControl",
+      "file": "cloudsecuritycompliance_v1_generated_config_get_cloud_control_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_GetCloudControl_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_get_cloud_control_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient.get_cloud_control",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.GetCloudControl",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetCloudControl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GetCloudControlRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CloudControl",
+        "shortName": "get_cloud_control"
+      },
+      "description": "Sample for GetCloudControl",
+      "file": "cloudsecuritycompliance_v1_generated_config_get_cloud_control_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_GetCloudControl_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_get_cloud_control_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient.get_framework",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.GetFramework",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetFramework"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GetFrameworkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.Framework",
+        "shortName": "get_framework"
+      },
+      "description": "Sample for GetFramework",
+      "file": "cloudsecuritycompliance_v1_generated_config_get_framework_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_GetFramework_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_get_framework_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient.get_framework",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.GetFramework",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "GetFramework"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GetFrameworkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.Framework",
+        "shortName": "get_framework"
+      },
+      "description": "Sample for GetFramework",
+      "file": "cloudsecuritycompliance_v1_generated_config_get_framework_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_GetFramework_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_get_framework_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient.list_cloud_controls",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.ListCloudControls",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListCloudControls"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListCloudControlsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.config.pagers.ListCloudControlsAsyncPager",
+        "shortName": "list_cloud_controls"
+      },
+      "description": "Sample for ListCloudControls",
+      "file": "cloudsecuritycompliance_v1_generated_config_list_cloud_controls_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_ListCloudControls_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_list_cloud_controls_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient.list_cloud_controls",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.ListCloudControls",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListCloudControls"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListCloudControlsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.config.pagers.ListCloudControlsPager",
+        "shortName": "list_cloud_controls"
+      },
+      "description": "Sample for ListCloudControls",
+      "file": "cloudsecuritycompliance_v1_generated_config_list_cloud_controls_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_ListCloudControls_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_list_cloud_controls_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient.list_frameworks",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.ListFrameworks",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListFrameworks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListFrameworksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.config.pagers.ListFrameworksAsyncPager",
+        "shortName": "list_frameworks"
+      },
+      "description": "Sample for ListFrameworks",
+      "file": "cloudsecuritycompliance_v1_generated_config_list_frameworks_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_ListFrameworks_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_list_frameworks_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient.list_frameworks",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.ListFrameworks",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "ListFrameworks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListFrameworksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.config.pagers.ListFrameworksPager",
+        "shortName": "list_frameworks"
+      },
+      "description": "Sample for ListFrameworks",
+      "file": "cloudsecuritycompliance_v1_generated_config_list_frameworks_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_ListFrameworks_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_list_frameworks_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient.update_cloud_control",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.UpdateCloudControl",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UpdateCloudControl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.UpdateCloudControlRequest"
+          },
+          {
+            "name": "cloud_control",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CloudControl"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CloudControl",
+        "shortName": "update_cloud_control"
+      },
+      "description": "Sample for UpdateCloudControl",
+      "file": "cloudsecuritycompliance_v1_generated_config_update_cloud_control_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_UpdateCloudControl_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_update_cloud_control_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient.update_cloud_control",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.UpdateCloudControl",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UpdateCloudControl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.UpdateCloudControlRequest"
+          },
+          {
+            "name": "cloud_control",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CloudControl"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CloudControl",
+        "shortName": "update_cloud_control"
+      },
+      "description": "Sample for UpdateCloudControl",
+      "file": "cloudsecuritycompliance_v1_generated_config_update_cloud_control_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_UpdateCloudControl_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_update_cloud_control_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient",
+          "shortName": "ConfigAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigAsyncClient.update_framework",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.UpdateFramework",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UpdateFramework"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.UpdateFrameworkRequest"
+          },
+          {
+            "name": "framework",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.Framework"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.Framework",
+        "shortName": "update_framework"
+      },
+      "description": "Sample for UpdateFramework",
+      "file": "cloudsecuritycompliance_v1_generated_config_update_framework_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_UpdateFramework_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_update_framework_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient",
+          "shortName": "ConfigClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.ConfigClient.update_framework",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Config.UpdateFramework",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Config",
+            "shortName": "Config"
+          },
+          "shortName": "UpdateFramework"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.UpdateFrameworkRequest"
+          },
+          {
+            "name": "framework",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.Framework"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.Framework",
+        "shortName": "update_framework"
+      },
+      "description": "Sample for UpdateFramework",
+      "file": "cloudsecuritycompliance_v1_generated_config_update_framework_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Config_UpdateFramework_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_config_update_framework_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient",
+          "shortName": "DeploymentAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient.create_framework_deployment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.CreateFrameworkDeployment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "CreateFrameworkDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CreateFrameworkDeploymentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "framework_deployment",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.FrameworkDeployment"
+          },
+          {
+            "name": "framework_deployment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_framework_deployment"
+      },
+      "description": "Sample for CreateFrameworkDeployment",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_create_framework_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_CreateFrameworkDeployment_async",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_create_framework_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient",
+          "shortName": "DeploymentClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient.create_framework_deployment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.CreateFrameworkDeployment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "CreateFrameworkDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.CreateFrameworkDeploymentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "framework_deployment",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.FrameworkDeployment"
+          },
+          {
+            "name": "framework_deployment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_framework_deployment"
+      },
+      "description": "Sample for CreateFrameworkDeployment",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_create_framework_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_CreateFrameworkDeployment_sync",
+      "segments": [
+        {
+          "end": 63,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 63,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 60,
+          "start": 54,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 64,
+          "start": 61,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_create_framework_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient",
+          "shortName": "DeploymentAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient.delete_framework_deployment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.DeleteFrameworkDeployment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "DeleteFrameworkDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.DeleteFrameworkDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_framework_deployment"
+      },
+      "description": "Sample for DeleteFrameworkDeployment",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_delete_framework_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_DeleteFrameworkDeployment_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_delete_framework_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient",
+          "shortName": "DeploymentClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient.delete_framework_deployment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.DeleteFrameworkDeployment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "DeleteFrameworkDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.DeleteFrameworkDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_framework_deployment"
+      },
+      "description": "Sample for DeleteFrameworkDeployment",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_delete_framework_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_DeleteFrameworkDeployment_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_delete_framework_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient",
+          "shortName": "DeploymentAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient.get_cloud_control_deployment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.GetCloudControlDeployment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "GetCloudControlDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GetCloudControlDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CloudControlDeployment",
+        "shortName": "get_cloud_control_deployment"
+      },
+      "description": "Sample for GetCloudControlDeployment",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_get_cloud_control_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_GetCloudControlDeployment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_get_cloud_control_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient",
+          "shortName": "DeploymentClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient.get_cloud_control_deployment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.GetCloudControlDeployment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "GetCloudControlDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GetCloudControlDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.CloudControlDeployment",
+        "shortName": "get_cloud_control_deployment"
+      },
+      "description": "Sample for GetCloudControlDeployment",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_get_cloud_control_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_GetCloudControlDeployment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_get_cloud_control_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient",
+          "shortName": "DeploymentAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient.get_framework_deployment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.GetFrameworkDeployment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "GetFrameworkDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GetFrameworkDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.FrameworkDeployment",
+        "shortName": "get_framework_deployment"
+      },
+      "description": "Sample for GetFrameworkDeployment",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_get_framework_deployment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_GetFrameworkDeployment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_get_framework_deployment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient",
+          "shortName": "DeploymentClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient.get_framework_deployment",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.GetFrameworkDeployment",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "GetFrameworkDeployment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.GetFrameworkDeploymentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.FrameworkDeployment",
+        "shortName": "get_framework_deployment"
+      },
+      "description": "Sample for GetFrameworkDeployment",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_get_framework_deployment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_GetFrameworkDeployment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_get_framework_deployment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient",
+          "shortName": "DeploymentAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient.list_cloud_control_deployments",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.ListCloudControlDeployments",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "ListCloudControlDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListCloudControlDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.deployment.pagers.ListCloudControlDeploymentsAsyncPager",
+        "shortName": "list_cloud_control_deployments"
+      },
+      "description": "Sample for ListCloudControlDeployments",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_list_cloud_control_deployments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_ListCloudControlDeployments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_list_cloud_control_deployments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient",
+          "shortName": "DeploymentClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient.list_cloud_control_deployments",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.ListCloudControlDeployments",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "ListCloudControlDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListCloudControlDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.deployment.pagers.ListCloudControlDeploymentsPager",
+        "shortName": "list_cloud_control_deployments"
+      },
+      "description": "Sample for ListCloudControlDeployments",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_list_cloud_control_deployments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_ListCloudControlDeployments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_list_cloud_control_deployments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient",
+          "shortName": "DeploymentAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentAsyncClient.list_framework_deployments",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.ListFrameworkDeployments",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "ListFrameworkDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListFrameworkDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.deployment.pagers.ListFrameworkDeploymentsAsyncPager",
+        "shortName": "list_framework_deployments"
+      },
+      "description": "Sample for ListFrameworkDeployments",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_list_framework_deployments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_ListFrameworkDeployments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_list_framework_deployments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient",
+          "shortName": "DeploymentClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.DeploymentClient.list_framework_deployments",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment.ListFrameworkDeployments",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Deployment",
+            "shortName": "Deployment"
+          },
+          "shortName": "ListFrameworkDeployments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListFrameworkDeploymentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.deployment.pagers.ListFrameworkDeploymentsPager",
+        "shortName": "list_framework_deployments"
+      },
+      "description": "Sample for ListFrameworkDeployments",
+      "file": "cloudsecuritycompliance_v1_generated_deployment_list_framework_deployments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Deployment_ListFrameworkDeployments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_deployment_list_framework_deployments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringAsyncClient",
+          "shortName": "MonitoringAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringAsyncClient.aggregate_framework_compliance_report",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring.AggregateFrameworkComplianceReport",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring",
+            "shortName": "Monitoring"
+          },
+          "shortName": "AggregateFrameworkComplianceReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.AggregateFrameworkComplianceReportRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.AggregateFrameworkComplianceReportResponse",
+        "shortName": "aggregate_framework_compliance_report"
+      },
+      "description": "Sample for AggregateFrameworkComplianceReport",
+      "file": "cloudsecuritycompliance_v1_generated_monitoring_aggregate_framework_compliance_report_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Monitoring_AggregateFrameworkComplianceReport_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_monitoring_aggregate_framework_compliance_report_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringClient",
+          "shortName": "MonitoringClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringClient.aggregate_framework_compliance_report",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring.AggregateFrameworkComplianceReport",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring",
+            "shortName": "Monitoring"
+          },
+          "shortName": "AggregateFrameworkComplianceReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.AggregateFrameworkComplianceReportRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.AggregateFrameworkComplianceReportResponse",
+        "shortName": "aggregate_framework_compliance_report"
+      },
+      "description": "Sample for AggregateFrameworkComplianceReport",
+      "file": "cloudsecuritycompliance_v1_generated_monitoring_aggregate_framework_compliance_report_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Monitoring_AggregateFrameworkComplianceReport_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_monitoring_aggregate_framework_compliance_report_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringAsyncClient",
+          "shortName": "MonitoringAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringAsyncClient.fetch_framework_compliance_report",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring.FetchFrameworkComplianceReport",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring",
+            "shortName": "Monitoring"
+          },
+          "shortName": "FetchFrameworkComplianceReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.FetchFrameworkComplianceReportRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.FrameworkComplianceReport",
+        "shortName": "fetch_framework_compliance_report"
+      },
+      "description": "Sample for FetchFrameworkComplianceReport",
+      "file": "cloudsecuritycompliance_v1_generated_monitoring_fetch_framework_compliance_report_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Monitoring_FetchFrameworkComplianceReport_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_monitoring_fetch_framework_compliance_report_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringClient",
+          "shortName": "MonitoringClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringClient.fetch_framework_compliance_report",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring.FetchFrameworkComplianceReport",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring",
+            "shortName": "Monitoring"
+          },
+          "shortName": "FetchFrameworkComplianceReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.FetchFrameworkComplianceReportRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.types.FrameworkComplianceReport",
+        "shortName": "fetch_framework_compliance_report"
+      },
+      "description": "Sample for FetchFrameworkComplianceReport",
+      "file": "cloudsecuritycompliance_v1_generated_monitoring_fetch_framework_compliance_report_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Monitoring_FetchFrameworkComplianceReport_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_monitoring_fetch_framework_compliance_report_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringAsyncClient",
+          "shortName": "MonitoringAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringAsyncClient.list_control_compliance_summaries",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring.ListControlComplianceSummaries",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring",
+            "shortName": "Monitoring"
+          },
+          "shortName": "ListControlComplianceSummaries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListControlComplianceSummariesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.monitoring.pagers.ListControlComplianceSummariesAsyncPager",
+        "shortName": "list_control_compliance_summaries"
+      },
+      "description": "Sample for ListControlComplianceSummaries",
+      "file": "cloudsecuritycompliance_v1_generated_monitoring_list_control_compliance_summaries_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Monitoring_ListControlComplianceSummaries_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_monitoring_list_control_compliance_summaries_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringClient",
+          "shortName": "MonitoringClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringClient.list_control_compliance_summaries",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring.ListControlComplianceSummaries",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring",
+            "shortName": "Monitoring"
+          },
+          "shortName": "ListControlComplianceSummaries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListControlComplianceSummariesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.monitoring.pagers.ListControlComplianceSummariesPager",
+        "shortName": "list_control_compliance_summaries"
+      },
+      "description": "Sample for ListControlComplianceSummaries",
+      "file": "cloudsecuritycompliance_v1_generated_monitoring_list_control_compliance_summaries_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Monitoring_ListControlComplianceSummaries_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_monitoring_list_control_compliance_summaries_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringAsyncClient",
+          "shortName": "MonitoringAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringAsyncClient.list_finding_summaries",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring.ListFindingSummaries",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring",
+            "shortName": "Monitoring"
+          },
+          "shortName": "ListFindingSummaries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListFindingSummariesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.monitoring.pagers.ListFindingSummariesAsyncPager",
+        "shortName": "list_finding_summaries"
+      },
+      "description": "Sample for ListFindingSummaries",
+      "file": "cloudsecuritycompliance_v1_generated_monitoring_list_finding_summaries_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Monitoring_ListFindingSummaries_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_monitoring_list_finding_summaries_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringClient",
+          "shortName": "MonitoringClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringClient.list_finding_summaries",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring.ListFindingSummaries",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring",
+            "shortName": "Monitoring"
+          },
+          "shortName": "ListFindingSummaries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListFindingSummariesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.monitoring.pagers.ListFindingSummariesPager",
+        "shortName": "list_finding_summaries"
+      },
+      "description": "Sample for ListFindingSummaries",
+      "file": "cloudsecuritycompliance_v1_generated_monitoring_list_finding_summaries_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Monitoring_ListFindingSummaries_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_monitoring_list_finding_summaries_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringAsyncClient",
+          "shortName": "MonitoringAsyncClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringAsyncClient.list_framework_compliance_summaries",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring.ListFrameworkComplianceSummaries",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring",
+            "shortName": "Monitoring"
+          },
+          "shortName": "ListFrameworkComplianceSummaries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListFrameworkComplianceSummariesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.monitoring.pagers.ListFrameworkComplianceSummariesAsyncPager",
+        "shortName": "list_framework_compliance_summaries"
+      },
+      "description": "Sample for ListFrameworkComplianceSummaries",
+      "file": "cloudsecuritycompliance_v1_generated_monitoring_list_framework_compliance_summaries_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Monitoring_ListFrameworkComplianceSummaries_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_monitoring_list_framework_compliance_summaries_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringClient",
+          "shortName": "MonitoringClient"
+        },
+        "fullName": "google.cloud.cloudsecuritycompliance_v1.MonitoringClient.list_framework_compliance_summaries",
+        "method": {
+          "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring.ListFrameworkComplianceSummaries",
+          "service": {
+            "fullName": "google.cloud.cloudsecuritycompliance.v1.Monitoring",
+            "shortName": "Monitoring"
+          },
+          "shortName": "ListFrameworkComplianceSummaries"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.cloudsecuritycompliance_v1.types.ListFrameworkComplianceSummariesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.cloudsecuritycompliance_v1.services.monitoring.pagers.ListFrameworkComplianceSummariesPager",
+        "shortName": "list_framework_compliance_summaries"
+      },
+      "description": "Sample for ListFrameworkComplianceSummaries",
+      "file": "cloudsecuritycompliance_v1_generated_monitoring_list_framework_compliance_summaries_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudsecuritycompliance_v1_generated_Monitoring_ListFrameworkComplianceSummaries_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudsecuritycompliance_v1_generated_monitoring_list_framework_compliance_summaries_sync.py"
+    }
+  ]
+}

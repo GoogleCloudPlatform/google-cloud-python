@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.lifesciences_v2beta",
+  "protoPackage": "google.cloud.lifesciences.v2beta",
+  "schema": "1.0",
+  "services": {
+    "WorkflowsServiceV2Beta": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WorkflowsServiceV2BetaClient",
+          "rpcs": {
+            "RunPipeline": {
+              "methods": [
+                "run_pipeline"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "WorkflowsServiceV2BetaAsyncClient",
+          "rpcs": {
+            "RunPipeline": {
+              "methods": [
+                "run_pipeline"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "WorkflowsServiceV2BetaClient",
+          "rpcs": {
+            "RunPipeline": {
+              "methods": [
+                "run_pipeline"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

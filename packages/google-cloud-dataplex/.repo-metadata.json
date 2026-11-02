@@ -1,0 +1,16 @@
+{
+    "api_description": "A unified, intelligent governance solution for data and AI assets.",
+    "api_id": "dataplex.googleapis.com",
+    "api_shortname": "dataplex",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/dataplex/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-dataplex",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1155079\u0026template=1656695",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "dataplex",
+    "name_pretty": "Cloud Dataplex",
+    "product_documentation": "https://cloud.google.com/dataplex/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

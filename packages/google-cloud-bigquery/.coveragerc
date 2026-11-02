@@ -1,0 +1,14 @@
+[run]
+branch = True
+
+[report]
+fail_under = 99
+show_missing = True
+omit =
+    google/cloud/bigquery/__init__.py
+    google/cloud/bigquery_v2/*  # Legacy proto-based types.
+exclude_lines =
+    # Re-enable the standard pragma
+    pragma: (no cover|NO COVER)
+    # Ignore debug-only repr
+    def __repr__

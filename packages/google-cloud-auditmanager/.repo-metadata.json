@@ -1,0 +1,16 @@
+{
+    "api_description": "The Audit Manager API allows customers to manage compliance audits.",
+    "api_id": "auditmanager.googleapis.com",
+    "api_shortname": "auditmanager",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-auditmanager/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-auditmanager",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1335397\u0026template=0",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-auditmanager",
+    "name_pretty": "Audit Manager",
+    "product_documentation": "https://cloud.google.com/audit-manager/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

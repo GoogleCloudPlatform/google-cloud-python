@@ -1,0 +1,15 @@
+{
+    "api_description": "The management interface for Binary Authorization, a service that provides\npolicy-based deployment validation and control for images deployed to\nGoogle Kubernetes Engine (GKE), Anthos Service Mesh, Anthos Clusters, and\nCloud Run.",
+    "api_id": "binaryauthorization.googleapis.com",
+    "api_shortname": "binaryauthorization",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/binaryauthorization/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-binary-authorization",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "binaryauthorization",
+    "name_pretty": "Binary Authorization",
+    "product_documentation": "https://cloud.google.com/binary-authorization",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

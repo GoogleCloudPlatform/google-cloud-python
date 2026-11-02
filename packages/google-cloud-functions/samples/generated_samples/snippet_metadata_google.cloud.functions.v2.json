@@ -1,0 +1,1311 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.functions.v2",
+        "version": "v2"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-functions",
+    "version": "1.25.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient",
+          "shortName": "FunctionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient.create_function",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.CreateFunction",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "CreateFunction"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.CreateFunctionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "function",
+            "type": "google.cloud.functions_v2.types.Function"
+          },
+          {
+            "name": "function_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_function"
+      },
+      "description": "Sample for CreateFunction",
+      "file": "cloudfunctions_v2_generated_function_service_create_function_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_CreateFunction_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_create_function_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceClient",
+          "shortName": "FunctionServiceClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceClient.create_function",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.CreateFunction",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "CreateFunction"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.CreateFunctionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "function",
+            "type": "google.cloud.functions_v2.types.Function"
+          },
+          {
+            "name": "function_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_function"
+      },
+      "description": "Sample for CreateFunction",
+      "file": "cloudfunctions_v2_generated_function_service_create_function_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_CreateFunction_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_create_function_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient",
+          "shortName": "FunctionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient.delete_function",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.DeleteFunction",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "DeleteFunction"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.DeleteFunctionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_function"
+      },
+      "description": "Sample for DeleteFunction",
+      "file": "cloudfunctions_v2_generated_function_service_delete_function_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_DeleteFunction_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_delete_function_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceClient",
+          "shortName": "FunctionServiceClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceClient.delete_function",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.DeleteFunction",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "DeleteFunction"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.DeleteFunctionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_function"
+      },
+      "description": "Sample for DeleteFunction",
+      "file": "cloudfunctions_v2_generated_function_service_delete_function_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_DeleteFunction_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_delete_function_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient",
+          "shortName": "FunctionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient.generate_download_url",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.GenerateDownloadUrl",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "GenerateDownloadUrl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.GenerateDownloadUrlRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.functions_v2.types.GenerateDownloadUrlResponse",
+        "shortName": "generate_download_url"
+      },
+      "description": "Sample for GenerateDownloadUrl",
+      "file": "cloudfunctions_v2_generated_function_service_generate_download_url_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_GenerateDownloadUrl_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_generate_download_url_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceClient",
+          "shortName": "FunctionServiceClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceClient.generate_download_url",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.GenerateDownloadUrl",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "GenerateDownloadUrl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.GenerateDownloadUrlRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.functions_v2.types.GenerateDownloadUrlResponse",
+        "shortName": "generate_download_url"
+      },
+      "description": "Sample for GenerateDownloadUrl",
+      "file": "cloudfunctions_v2_generated_function_service_generate_download_url_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_GenerateDownloadUrl_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_generate_download_url_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient",
+          "shortName": "FunctionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient.generate_upload_url",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.GenerateUploadUrl",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "GenerateUploadUrl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.GenerateUploadUrlRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.functions_v2.types.GenerateUploadUrlResponse",
+        "shortName": "generate_upload_url"
+      },
+      "description": "Sample for GenerateUploadUrl",
+      "file": "cloudfunctions_v2_generated_function_service_generate_upload_url_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_GenerateUploadUrl_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_generate_upload_url_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceClient",
+          "shortName": "FunctionServiceClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceClient.generate_upload_url",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.GenerateUploadUrl",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "GenerateUploadUrl"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.GenerateUploadUrlRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.functions_v2.types.GenerateUploadUrlResponse",
+        "shortName": "generate_upload_url"
+      },
+      "description": "Sample for GenerateUploadUrl",
+      "file": "cloudfunctions_v2_generated_function_service_generate_upload_url_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_GenerateUploadUrl_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_generate_upload_url_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient",
+          "shortName": "FunctionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient.get_function",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.GetFunction",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "GetFunction"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.GetFunctionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.functions_v2.types.Function",
+        "shortName": "get_function"
+      },
+      "description": "Sample for GetFunction",
+      "file": "cloudfunctions_v2_generated_function_service_get_function_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_GetFunction_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_get_function_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceClient",
+          "shortName": "FunctionServiceClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceClient.get_function",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.GetFunction",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "GetFunction"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.GetFunctionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.functions_v2.types.Function",
+        "shortName": "get_function"
+      },
+      "description": "Sample for GetFunction",
+      "file": "cloudfunctions_v2_generated_function_service_get_function_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_GetFunction_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_get_function_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient",
+          "shortName": "FunctionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient.list_functions",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.ListFunctions",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "ListFunctions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.ListFunctionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.functions_v2.services.function_service.pagers.ListFunctionsAsyncPager",
+        "shortName": "list_functions"
+      },
+      "description": "Sample for ListFunctions",
+      "file": "cloudfunctions_v2_generated_function_service_list_functions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_ListFunctions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_list_functions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceClient",
+          "shortName": "FunctionServiceClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceClient.list_functions",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.ListFunctions",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "ListFunctions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.ListFunctionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.functions_v2.services.function_service.pagers.ListFunctionsPager",
+        "shortName": "list_functions"
+      },
+      "description": "Sample for ListFunctions",
+      "file": "cloudfunctions_v2_generated_function_service_list_functions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_ListFunctions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_list_functions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient",
+          "shortName": "FunctionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient.list_runtimes",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.ListRuntimes",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "ListRuntimes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.ListRuntimesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.functions_v2.types.ListRuntimesResponse",
+        "shortName": "list_runtimes"
+      },
+      "description": "Sample for ListRuntimes",
+      "file": "cloudfunctions_v2_generated_function_service_list_runtimes_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_ListRuntimes_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_list_runtimes_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceClient",
+          "shortName": "FunctionServiceClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceClient.list_runtimes",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.ListRuntimes",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "ListRuntimes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.ListRuntimesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.functions_v2.types.ListRuntimesResponse",
+        "shortName": "list_runtimes"
+      },
+      "description": "Sample for ListRuntimes",
+      "file": "cloudfunctions_v2_generated_function_service_list_runtimes_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_ListRuntimes_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_list_runtimes_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient",
+          "shortName": "FunctionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceAsyncClient.update_function",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.UpdateFunction",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "UpdateFunction"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.UpdateFunctionRequest"
+          },
+          {
+            "name": "function",
+            "type": "google.cloud.functions_v2.types.Function"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_function"
+      },
+      "description": "Sample for UpdateFunction",
+      "file": "cloudfunctions_v2_generated_function_service_update_function_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_UpdateFunction_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_update_function_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.functions_v2.FunctionServiceClient",
+          "shortName": "FunctionServiceClient"
+        },
+        "fullName": "google.cloud.functions_v2.FunctionServiceClient.update_function",
+        "method": {
+          "fullName": "google.cloud.functions.v2.FunctionService.UpdateFunction",
+          "service": {
+            "fullName": "google.cloud.functions.v2.FunctionService",
+            "shortName": "FunctionService"
+          },
+          "shortName": "UpdateFunction"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.functions_v2.types.UpdateFunctionRequest"
+          },
+          {
+            "name": "function",
+            "type": "google.cloud.functions_v2.types.Function"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_function"
+      },
+      "description": "Sample for UpdateFunction",
+      "file": "cloudfunctions_v2_generated_function_service_update_function_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudfunctions_v2_generated_FunctionService_UpdateFunction_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudfunctions_v2_generated_function_service_update_function_sync.py"
+    }
+  ]
+}

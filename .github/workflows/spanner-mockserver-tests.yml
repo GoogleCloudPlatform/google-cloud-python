@@ -1,0 +1,59 @@
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      - 'packages/google-cloud-spanner/**'
+      - '.github/workflows/spanner-mockserver-tests.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/google-cloud-spanner/**'
+      - '.github/workflows/spanner-mockserver-tests.yml'
+
+defaults:
+  run:
+    working-directory: packages/google-cloud-spanner
+
+name: Run Spanner mockserver tests
+jobs:
+  check_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      run_spanner: ${{ steps.filter.outputs.spanner }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: filter
+        with:
+          filters: |
+            spanner:
+              - 'packages/google-cloud-spanner/**'
+              - '.github/workflows/spanner-mockserver-tests.yml'
+
+  mockserver-tests:
+    needs: check_changes
+    if: ${{ needs.check_changes.outputs.run_spanner == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.15"
+      - name: Install nox
+        run: python -m pip install nox
+      - name: Run nox
+        run: nox -s mockserver

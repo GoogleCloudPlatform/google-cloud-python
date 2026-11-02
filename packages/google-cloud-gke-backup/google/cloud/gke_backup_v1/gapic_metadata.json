@@ -1,0 +1,613 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.gke_backup_v1",
+  "protoPackage": "google.cloud.gkebackup.v1",
+  "schema": "1.0",
+  "services": {
+    "BackupForGKE": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "BackupForGKEClient",
+          "rpcs": {
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateBackupChannel": {
+              "methods": [
+                "create_backup_channel"
+              ]
+            },
+            "CreateBackupPlan": {
+              "methods": [
+                "create_backup_plan"
+              ]
+            },
+            "CreateRestore": {
+              "methods": [
+                "create_restore"
+              ]
+            },
+            "CreateRestoreChannel": {
+              "methods": [
+                "create_restore_channel"
+              ]
+            },
+            "CreateRestorePlan": {
+              "methods": [
+                "create_restore_plan"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteBackupChannel": {
+              "methods": [
+                "delete_backup_channel"
+              ]
+            },
+            "DeleteBackupPlan": {
+              "methods": [
+                "delete_backup_plan"
+              ]
+            },
+            "DeleteRestore": {
+              "methods": [
+                "delete_restore"
+              ]
+            },
+            "DeleteRestoreChannel": {
+              "methods": [
+                "delete_restore_channel"
+              ]
+            },
+            "DeleteRestorePlan": {
+              "methods": [
+                "delete_restore_plan"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupChannel": {
+              "methods": [
+                "get_backup_channel"
+              ]
+            },
+            "GetBackupIndexDownloadUrl": {
+              "methods": [
+                "get_backup_index_download_url"
+              ]
+            },
+            "GetBackupPlan": {
+              "methods": [
+                "get_backup_plan"
+              ]
+            },
+            "GetBackupPlanBinding": {
+              "methods": [
+                "get_backup_plan_binding"
+              ]
+            },
+            "GetRestore": {
+              "methods": [
+                "get_restore"
+              ]
+            },
+            "GetRestoreChannel": {
+              "methods": [
+                "get_restore_channel"
+              ]
+            },
+            "GetRestorePlan": {
+              "methods": [
+                "get_restore_plan"
+              ]
+            },
+            "GetRestorePlanBinding": {
+              "methods": [
+                "get_restore_plan_binding"
+              ]
+            },
+            "GetVolumeBackup": {
+              "methods": [
+                "get_volume_backup"
+              ]
+            },
+            "GetVolumeRestore": {
+              "methods": [
+                "get_volume_restore"
+              ]
+            },
+            "ListBackupChannels": {
+              "methods": [
+                "list_backup_channels"
+              ]
+            },
+            "ListBackupPlanBindings": {
+              "methods": [
+                "list_backup_plan_bindings"
+              ]
+            },
+            "ListBackupPlans": {
+              "methods": [
+                "list_backup_plans"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListRestoreChannels": {
+              "methods": [
+                "list_restore_channels"
+              ]
+            },
+            "ListRestorePlanBindings": {
+              "methods": [
+                "list_restore_plan_bindings"
+              ]
+            },
+            "ListRestorePlans": {
+              "methods": [
+                "list_restore_plans"
+              ]
+            },
+            "ListRestores": {
+              "methods": [
+                "list_restores"
+              ]
+            },
+            "ListVolumeBackups": {
+              "methods": [
+                "list_volume_backups"
+              ]
+            },
+            "ListVolumeRestores": {
+              "methods": [
+                "list_volume_restores"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateBackupChannel": {
+              "methods": [
+                "update_backup_channel"
+              ]
+            },
+            "UpdateBackupPlan": {
+              "methods": [
+                "update_backup_plan"
+              ]
+            },
+            "UpdateRestore": {
+              "methods": [
+                "update_restore"
+              ]
+            },
+            "UpdateRestoreChannel": {
+              "methods": [
+                "update_restore_channel"
+              ]
+            },
+            "UpdateRestorePlan": {
+              "methods": [
+                "update_restore_plan"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "BackupForGKEAsyncClient",
+          "rpcs": {
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateBackupChannel": {
+              "methods": [
+                "create_backup_channel"
+              ]
+            },
+            "CreateBackupPlan": {
+              "methods": [
+                "create_backup_plan"
+              ]
+            },
+            "CreateRestore": {
+              "methods": [
+                "create_restore"
+              ]
+            },
+            "CreateRestoreChannel": {
+              "methods": [
+                "create_restore_channel"
+              ]
+            },
+            "CreateRestorePlan": {
+              "methods": [
+                "create_restore_plan"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteBackupChannel": {
+              "methods": [
+                "delete_backup_channel"
+              ]
+            },
+            "DeleteBackupPlan": {
+              "methods": [
+                "delete_backup_plan"
+              ]
+            },
+            "DeleteRestore": {
+              "methods": [
+                "delete_restore"
+              ]
+            },
+            "DeleteRestoreChannel": {
+              "methods": [
+                "delete_restore_channel"
+              ]
+            },
+            "DeleteRestorePlan": {
+              "methods": [
+                "delete_restore_plan"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupChannel": {
+              "methods": [
+                "get_backup_channel"
+              ]
+            },
+            "GetBackupIndexDownloadUrl": {
+              "methods": [
+                "get_backup_index_download_url"
+              ]
+            },
+            "GetBackupPlan": {
+              "methods": [
+                "get_backup_plan"
+              ]
+            },
+            "GetBackupPlanBinding": {
+              "methods": [
+                "get_backup_plan_binding"
+              ]
+            },
+            "GetRestore": {
+              "methods": [
+                "get_restore"
+              ]
+            },
+            "GetRestoreChannel": {
+              "methods": [
+                "get_restore_channel"
+              ]
+            },
+            "GetRestorePlan": {
+              "methods": [
+                "get_restore_plan"
+              ]
+            },
+            "GetRestorePlanBinding": {
+              "methods": [
+                "get_restore_plan_binding"
+              ]
+            },
+            "GetVolumeBackup": {
+              "methods": [
+                "get_volume_backup"
+              ]
+            },
+            "GetVolumeRestore": {
+              "methods": [
+                "get_volume_restore"
+              ]
+            },
+            "ListBackupChannels": {
+              "methods": [
+                "list_backup_channels"
+              ]
+            },
+            "ListBackupPlanBindings": {
+              "methods": [
+                "list_backup_plan_bindings"
+              ]
+            },
+            "ListBackupPlans": {
+              "methods": [
+                "list_backup_plans"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListRestoreChannels": {
+              "methods": [
+                "list_restore_channels"
+              ]
+            },
+            "ListRestorePlanBindings": {
+              "methods": [
+                "list_restore_plan_bindings"
+              ]
+            },
+            "ListRestorePlans": {
+              "methods": [
+                "list_restore_plans"
+              ]
+            },
+            "ListRestores": {
+              "methods": [
+                "list_restores"
+              ]
+            },
+            "ListVolumeBackups": {
+              "methods": [
+                "list_volume_backups"
+              ]
+            },
+            "ListVolumeRestores": {
+              "methods": [
+                "list_volume_restores"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateBackupChannel": {
+              "methods": [
+                "update_backup_channel"
+              ]
+            },
+            "UpdateBackupPlan": {
+              "methods": [
+                "update_backup_plan"
+              ]
+            },
+            "UpdateRestore": {
+              "methods": [
+                "update_restore"
+              ]
+            },
+            "UpdateRestoreChannel": {
+              "methods": [
+                "update_restore_channel"
+              ]
+            },
+            "UpdateRestorePlan": {
+              "methods": [
+                "update_restore_plan"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "BackupForGKEClient",
+          "rpcs": {
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateBackupChannel": {
+              "methods": [
+                "create_backup_channel"
+              ]
+            },
+            "CreateBackupPlan": {
+              "methods": [
+                "create_backup_plan"
+              ]
+            },
+            "CreateRestore": {
+              "methods": [
+                "create_restore"
+              ]
+            },
+            "CreateRestoreChannel": {
+              "methods": [
+                "create_restore_channel"
+              ]
+            },
+            "CreateRestorePlan": {
+              "methods": [
+                "create_restore_plan"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteBackupChannel": {
+              "methods": [
+                "delete_backup_channel"
+              ]
+            },
+            "DeleteBackupPlan": {
+              "methods": [
+                "delete_backup_plan"
+              ]
+            },
+            "DeleteRestore": {
+              "methods": [
+                "delete_restore"
+              ]
+            },
+            "DeleteRestoreChannel": {
+              "methods": [
+                "delete_restore_channel"
+              ]
+            },
+            "DeleteRestorePlan": {
+              "methods": [
+                "delete_restore_plan"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetBackupChannel": {
+              "methods": [
+                "get_backup_channel"
+              ]
+            },
+            "GetBackupIndexDownloadUrl": {
+              "methods": [
+                "get_backup_index_download_url"
+              ]
+            },
+            "GetBackupPlan": {
+              "methods": [
+                "get_backup_plan"
+              ]
+            },
+            "GetBackupPlanBinding": {
+              "methods": [
+                "get_backup_plan_binding"
+              ]
+            },
+            "GetRestore": {
+              "methods": [
+                "get_restore"
+              ]
+            },
+            "GetRestoreChannel": {
+              "methods": [
+                "get_restore_channel"
+              ]
+            },
+            "GetRestorePlan": {
+              "methods": [
+                "get_restore_plan"
+              ]
+            },
+            "GetRestorePlanBinding": {
+              "methods": [
+                "get_restore_plan_binding"
+              ]
+            },
+            "GetVolumeBackup": {
+              "methods": [
+                "get_volume_backup"
+              ]
+            },
+            "GetVolumeRestore": {
+              "methods": [
+                "get_volume_restore"
+              ]
+            },
+            "ListBackupChannels": {
+              "methods": [
+                "list_backup_channels"
+              ]
+            },
+            "ListBackupPlanBindings": {
+              "methods": [
+                "list_backup_plan_bindings"
+              ]
+            },
+            "ListBackupPlans": {
+              "methods": [
+                "list_backup_plans"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListRestoreChannels": {
+              "methods": [
+                "list_restore_channels"
+              ]
+            },
+            "ListRestorePlanBindings": {
+              "methods": [
+                "list_restore_plan_bindings"
+              ]
+            },
+            "ListRestorePlans": {
+              "methods": [
+                "list_restore_plans"
+              ]
+            },
+            "ListRestores": {
+              "methods": [
+                "list_restores"
+              ]
+            },
+            "ListVolumeBackups": {
+              "methods": [
+                "list_volume_backups"
+              ]
+            },
+            "ListVolumeRestores": {
+              "methods": [
+                "list_volume_restores"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateBackupChannel": {
+              "methods": [
+                "update_backup_channel"
+              ]
+            },
+            "UpdateBackupPlan": {
+              "methods": [
+                "update_backup_plan"
+              ]
+            },
+            "UpdateRestore": {
+              "methods": [
+                "update_restore"
+              ]
+            },
+            "UpdateRestoreChannel": {
+              "methods": [
+                "update_restore_channel"
+              ]
+            },
+            "UpdateRestorePlan": {
+              "methods": [
+                "update_restore_plan"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

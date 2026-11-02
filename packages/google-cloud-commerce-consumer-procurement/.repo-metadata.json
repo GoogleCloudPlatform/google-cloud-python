@@ -1,0 +1,16 @@
+{
+    "api_description": "Enables consumers to procure products served by Cloud Marketplace platform.",
+    "api_id": "cloudcommerceconsumerprocurement.googleapis.com",
+    "api_shortname": "cloudcommerceconsumerprocurement",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/procurement/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-commerce-consumer-procurement",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1396141",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "procurement",
+    "name_pretty": "Cloud Commerce Consumer Procurement",
+    "product_documentation": "https://cloud.google.com/marketplace/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

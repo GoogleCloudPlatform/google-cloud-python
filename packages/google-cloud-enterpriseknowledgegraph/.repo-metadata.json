@@ -1,0 +1,14 @@
+{
+    "api_id": "enterpriseknowledgegraph.googleapis.com",
+    "api_shortname": "enterpriseknowledgegraph",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/enterpriseknowledgegraph/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-enterpriseknowledgegraph",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "enterpriseknowledgegraph",
+    "name_pretty": "Enterprise Knowledge Graph",
+    "product_documentation": "https://cloud.google.com/enterprise-knowledge-graph/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

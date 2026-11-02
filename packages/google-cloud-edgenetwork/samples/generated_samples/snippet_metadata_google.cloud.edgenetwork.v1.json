@@ -1,0 +1,4281 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.edgenetwork.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-edgenetwork",
+    "version": "0.5.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.create_interconnect_attachment",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.CreateInterconnectAttachment",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "CreateInterconnectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.CreateInterconnectAttachmentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "interconnect_attachment",
+            "type": "google.cloud.edgenetwork_v1.types.InterconnectAttachment"
+          },
+          {
+            "name": "interconnect_attachment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_interconnect_attachment"
+      },
+      "description": "Sample for CreateInterconnectAttachment",
+      "file": "edgenetwork_v1_generated_edge_network_create_interconnect_attachment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_CreateInterconnectAttachment_async",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_create_interconnect_attachment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.create_interconnect_attachment",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.CreateInterconnectAttachment",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "CreateInterconnectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.CreateInterconnectAttachmentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "interconnect_attachment",
+            "type": "google.cloud.edgenetwork_v1.types.InterconnectAttachment"
+          },
+          {
+            "name": "interconnect_attachment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_interconnect_attachment"
+      },
+      "description": "Sample for CreateInterconnectAttachment",
+      "file": "edgenetwork_v1_generated_edge_network_create_interconnect_attachment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_CreateInterconnectAttachment_sync",
+      "segments": [
+        {
+          "end": 62,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 62,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 59,
+          "start": 53,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 63,
+          "start": 60,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_create_interconnect_attachment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.create_network",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.CreateNetwork",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "CreateNetwork"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.CreateNetworkRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "network",
+            "type": "google.cloud.edgenetwork_v1.types.Network"
+          },
+          {
+            "name": "network_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_network"
+      },
+      "description": "Sample for CreateNetwork",
+      "file": "edgenetwork_v1_generated_edge_network_create_network_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_CreateNetwork_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_create_network_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.create_network",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.CreateNetwork",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "CreateNetwork"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.CreateNetworkRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "network",
+            "type": "google.cloud.edgenetwork_v1.types.Network"
+          },
+          {
+            "name": "network_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_network"
+      },
+      "description": "Sample for CreateNetwork",
+      "file": "edgenetwork_v1_generated_edge_network_create_network_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_CreateNetwork_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_create_network_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.create_router",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.CreateRouter",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "CreateRouter"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.CreateRouterRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "router",
+            "type": "google.cloud.edgenetwork_v1.types.Router"
+          },
+          {
+            "name": "router_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_router"
+      },
+      "description": "Sample for CreateRouter",
+      "file": "edgenetwork_v1_generated_edge_network_create_router_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_CreateRouter_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_create_router_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.create_router",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.CreateRouter",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "CreateRouter"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.CreateRouterRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "router",
+            "type": "google.cloud.edgenetwork_v1.types.Router"
+          },
+          {
+            "name": "router_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_router"
+      },
+      "description": "Sample for CreateRouter",
+      "file": "edgenetwork_v1_generated_edge_network_create_router_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_CreateRouter_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_create_router_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.create_subnet",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.CreateSubnet",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "CreateSubnet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.CreateSubnetRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "subnet",
+            "type": "google.cloud.edgenetwork_v1.types.Subnet"
+          },
+          {
+            "name": "subnet_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_subnet"
+      },
+      "description": "Sample for CreateSubnet",
+      "file": "edgenetwork_v1_generated_edge_network_create_subnet_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_CreateSubnet_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_create_subnet_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.create_subnet",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.CreateSubnet",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "CreateSubnet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.CreateSubnetRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "subnet",
+            "type": "google.cloud.edgenetwork_v1.types.Subnet"
+          },
+          {
+            "name": "subnet_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_subnet"
+      },
+      "description": "Sample for CreateSubnet",
+      "file": "edgenetwork_v1_generated_edge_network_create_subnet_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_CreateSubnet_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_create_subnet_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.delete_interconnect_attachment",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DeleteInterconnectAttachment",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DeleteInterconnectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DeleteInterconnectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_interconnect_attachment"
+      },
+      "description": "Sample for DeleteInterconnectAttachment",
+      "file": "edgenetwork_v1_generated_edge_network_delete_interconnect_attachment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DeleteInterconnectAttachment_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_delete_interconnect_attachment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.delete_interconnect_attachment",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DeleteInterconnectAttachment",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DeleteInterconnectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DeleteInterconnectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_interconnect_attachment"
+      },
+      "description": "Sample for DeleteInterconnectAttachment",
+      "file": "edgenetwork_v1_generated_edge_network_delete_interconnect_attachment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DeleteInterconnectAttachment_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_delete_interconnect_attachment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.delete_network",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DeleteNetwork",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DeleteNetwork"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DeleteNetworkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_network"
+      },
+      "description": "Sample for DeleteNetwork",
+      "file": "edgenetwork_v1_generated_edge_network_delete_network_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DeleteNetwork_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_delete_network_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.delete_network",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DeleteNetwork",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DeleteNetwork"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DeleteNetworkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_network"
+      },
+      "description": "Sample for DeleteNetwork",
+      "file": "edgenetwork_v1_generated_edge_network_delete_network_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DeleteNetwork_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_delete_network_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.delete_router",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DeleteRouter",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DeleteRouter"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DeleteRouterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_router"
+      },
+      "description": "Sample for DeleteRouter",
+      "file": "edgenetwork_v1_generated_edge_network_delete_router_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DeleteRouter_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_delete_router_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.delete_router",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DeleteRouter",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DeleteRouter"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DeleteRouterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_router"
+      },
+      "description": "Sample for DeleteRouter",
+      "file": "edgenetwork_v1_generated_edge_network_delete_router_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DeleteRouter_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_delete_router_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.delete_subnet",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DeleteSubnet",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DeleteSubnet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DeleteSubnetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_subnet"
+      },
+      "description": "Sample for DeleteSubnet",
+      "file": "edgenetwork_v1_generated_edge_network_delete_subnet_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DeleteSubnet_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_delete_subnet_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.delete_subnet",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DeleteSubnet",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DeleteSubnet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DeleteSubnetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_subnet"
+      },
+      "description": "Sample for DeleteSubnet",
+      "file": "edgenetwork_v1_generated_edge_network_delete_subnet_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DeleteSubnet_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_delete_subnet_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.diagnose_interconnect",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DiagnoseInterconnect",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DiagnoseInterconnect"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DiagnoseInterconnectRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.DiagnoseInterconnectResponse",
+        "shortName": "diagnose_interconnect"
+      },
+      "description": "Sample for DiagnoseInterconnect",
+      "file": "edgenetwork_v1_generated_edge_network_diagnose_interconnect_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DiagnoseInterconnect_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_diagnose_interconnect_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.diagnose_interconnect",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DiagnoseInterconnect",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DiagnoseInterconnect"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DiagnoseInterconnectRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.DiagnoseInterconnectResponse",
+        "shortName": "diagnose_interconnect"
+      },
+      "description": "Sample for DiagnoseInterconnect",
+      "file": "edgenetwork_v1_generated_edge_network_diagnose_interconnect_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DiagnoseInterconnect_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_diagnose_interconnect_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.diagnose_network",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DiagnoseNetwork",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DiagnoseNetwork"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DiagnoseNetworkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.DiagnoseNetworkResponse",
+        "shortName": "diagnose_network"
+      },
+      "description": "Sample for DiagnoseNetwork",
+      "file": "edgenetwork_v1_generated_edge_network_diagnose_network_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DiagnoseNetwork_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_diagnose_network_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.diagnose_network",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DiagnoseNetwork",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DiagnoseNetwork"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DiagnoseNetworkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.DiagnoseNetworkResponse",
+        "shortName": "diagnose_network"
+      },
+      "description": "Sample for DiagnoseNetwork",
+      "file": "edgenetwork_v1_generated_edge_network_diagnose_network_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DiagnoseNetwork_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_diagnose_network_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.diagnose_router",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DiagnoseRouter",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DiagnoseRouter"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DiagnoseRouterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.DiagnoseRouterResponse",
+        "shortName": "diagnose_router"
+      },
+      "description": "Sample for DiagnoseRouter",
+      "file": "edgenetwork_v1_generated_edge_network_diagnose_router_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DiagnoseRouter_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_diagnose_router_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.diagnose_router",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.DiagnoseRouter",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "DiagnoseRouter"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.DiagnoseRouterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.DiagnoseRouterResponse",
+        "shortName": "diagnose_router"
+      },
+      "description": "Sample for DiagnoseRouter",
+      "file": "edgenetwork_v1_generated_edge_network_diagnose_router_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_DiagnoseRouter_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_diagnose_router_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.get_interconnect_attachment",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetInterconnectAttachment",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetInterconnectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetInterconnectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.InterconnectAttachment",
+        "shortName": "get_interconnect_attachment"
+      },
+      "description": "Sample for GetInterconnectAttachment",
+      "file": "edgenetwork_v1_generated_edge_network_get_interconnect_attachment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetInterconnectAttachment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_interconnect_attachment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.get_interconnect_attachment",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetInterconnectAttachment",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetInterconnectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetInterconnectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.InterconnectAttachment",
+        "shortName": "get_interconnect_attachment"
+      },
+      "description": "Sample for GetInterconnectAttachment",
+      "file": "edgenetwork_v1_generated_edge_network_get_interconnect_attachment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetInterconnectAttachment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_interconnect_attachment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.get_interconnect",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetInterconnect",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetInterconnect"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetInterconnectRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.Interconnect",
+        "shortName": "get_interconnect"
+      },
+      "description": "Sample for GetInterconnect",
+      "file": "edgenetwork_v1_generated_edge_network_get_interconnect_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetInterconnect_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_interconnect_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.get_interconnect",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetInterconnect",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetInterconnect"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetInterconnectRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.Interconnect",
+        "shortName": "get_interconnect"
+      },
+      "description": "Sample for GetInterconnect",
+      "file": "edgenetwork_v1_generated_edge_network_get_interconnect_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetInterconnect_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_interconnect_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.get_network",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetNetwork",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetNetwork"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetNetworkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.Network",
+        "shortName": "get_network"
+      },
+      "description": "Sample for GetNetwork",
+      "file": "edgenetwork_v1_generated_edge_network_get_network_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetNetwork_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_network_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.get_network",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetNetwork",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetNetwork"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetNetworkRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.Network",
+        "shortName": "get_network"
+      },
+      "description": "Sample for GetNetwork",
+      "file": "edgenetwork_v1_generated_edge_network_get_network_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetNetwork_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_network_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.get_router",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetRouter",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetRouter"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetRouterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.Router",
+        "shortName": "get_router"
+      },
+      "description": "Sample for GetRouter",
+      "file": "edgenetwork_v1_generated_edge_network_get_router_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetRouter_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_router_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.get_router",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetRouter",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetRouter"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetRouterRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.Router",
+        "shortName": "get_router"
+      },
+      "description": "Sample for GetRouter",
+      "file": "edgenetwork_v1_generated_edge_network_get_router_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetRouter_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_router_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.get_subnet",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetSubnet",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetSubnet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetSubnetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.Subnet",
+        "shortName": "get_subnet"
+      },
+      "description": "Sample for GetSubnet",
+      "file": "edgenetwork_v1_generated_edge_network_get_subnet_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetSubnet_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_subnet_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.get_subnet",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetSubnet",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetSubnet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetSubnetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.Subnet",
+        "shortName": "get_subnet"
+      },
+      "description": "Sample for GetSubnet",
+      "file": "edgenetwork_v1_generated_edge_network_get_subnet_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetSubnet_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_subnet_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.get_zone",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetZone",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetZoneRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.Zone",
+        "shortName": "get_zone"
+      },
+      "description": "Sample for GetZone",
+      "file": "edgenetwork_v1_generated_edge_network_get_zone_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetZone_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_zone_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.get_zone",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.GetZone",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "GetZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.GetZoneRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.Zone",
+        "shortName": "get_zone"
+      },
+      "description": "Sample for GetZone",
+      "file": "edgenetwork_v1_generated_edge_network_get_zone_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_GetZone_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_get_zone_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.initialize_zone",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.InitializeZone",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "InitializeZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.InitializeZoneRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.InitializeZoneResponse",
+        "shortName": "initialize_zone"
+      },
+      "description": "Sample for InitializeZone",
+      "file": "edgenetwork_v1_generated_edge_network_initialize_zone_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_InitializeZone_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_initialize_zone_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.initialize_zone",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.InitializeZone",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "InitializeZone"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.InitializeZoneRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.types.InitializeZoneResponse",
+        "shortName": "initialize_zone"
+      },
+      "description": "Sample for InitializeZone",
+      "file": "edgenetwork_v1_generated_edge_network_initialize_zone_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_InitializeZone_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_initialize_zone_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.list_interconnect_attachments",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListInterconnectAttachments",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListInterconnectAttachments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListInterconnectAttachmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListInterconnectAttachmentsAsyncPager",
+        "shortName": "list_interconnect_attachments"
+      },
+      "description": "Sample for ListInterconnectAttachments",
+      "file": "edgenetwork_v1_generated_edge_network_list_interconnect_attachments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListInterconnectAttachments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_interconnect_attachments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.list_interconnect_attachments",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListInterconnectAttachments",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListInterconnectAttachments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListInterconnectAttachmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListInterconnectAttachmentsPager",
+        "shortName": "list_interconnect_attachments"
+      },
+      "description": "Sample for ListInterconnectAttachments",
+      "file": "edgenetwork_v1_generated_edge_network_list_interconnect_attachments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListInterconnectAttachments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_interconnect_attachments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.list_interconnects",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListInterconnects",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListInterconnects"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListInterconnectsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListInterconnectsAsyncPager",
+        "shortName": "list_interconnects"
+      },
+      "description": "Sample for ListInterconnects",
+      "file": "edgenetwork_v1_generated_edge_network_list_interconnects_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListInterconnects_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_interconnects_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.list_interconnects",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListInterconnects",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListInterconnects"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListInterconnectsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListInterconnectsPager",
+        "shortName": "list_interconnects"
+      },
+      "description": "Sample for ListInterconnects",
+      "file": "edgenetwork_v1_generated_edge_network_list_interconnects_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListInterconnects_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_interconnects_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.list_networks",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListNetworks",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListNetworks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListNetworksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListNetworksAsyncPager",
+        "shortName": "list_networks"
+      },
+      "description": "Sample for ListNetworks",
+      "file": "edgenetwork_v1_generated_edge_network_list_networks_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListNetworks_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_networks_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.list_networks",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListNetworks",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListNetworks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListNetworksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListNetworksPager",
+        "shortName": "list_networks"
+      },
+      "description": "Sample for ListNetworks",
+      "file": "edgenetwork_v1_generated_edge_network_list_networks_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListNetworks_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_networks_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.list_routers",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListRouters",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListRouters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListRoutersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListRoutersAsyncPager",
+        "shortName": "list_routers"
+      },
+      "description": "Sample for ListRouters",
+      "file": "edgenetwork_v1_generated_edge_network_list_routers_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListRouters_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_routers_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.list_routers",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListRouters",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListRouters"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListRoutersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListRoutersPager",
+        "shortName": "list_routers"
+      },
+      "description": "Sample for ListRouters",
+      "file": "edgenetwork_v1_generated_edge_network_list_routers_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListRouters_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_routers_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.list_subnets",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListSubnets",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListSubnets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListSubnetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListSubnetsAsyncPager",
+        "shortName": "list_subnets"
+      },
+      "description": "Sample for ListSubnets",
+      "file": "edgenetwork_v1_generated_edge_network_list_subnets_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListSubnets_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_subnets_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.list_subnets",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListSubnets",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListSubnets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListSubnetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListSubnetsPager",
+        "shortName": "list_subnets"
+      },
+      "description": "Sample for ListSubnets",
+      "file": "edgenetwork_v1_generated_edge_network_list_subnets_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListSubnets_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_subnets_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.list_zones",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListZones",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListZones"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListZonesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListZonesAsyncPager",
+        "shortName": "list_zones"
+      },
+      "description": "Sample for ListZones",
+      "file": "edgenetwork_v1_generated_edge_network_list_zones_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListZones_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_zones_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.list_zones",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.ListZones",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "ListZones"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.ListZonesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.edgenetwork_v1.services.edge_network.pagers.ListZonesPager",
+        "shortName": "list_zones"
+      },
+      "description": "Sample for ListZones",
+      "file": "edgenetwork_v1_generated_edge_network_list_zones_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_ListZones_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_list_zones_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.update_router",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.UpdateRouter",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "UpdateRouter"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.UpdateRouterRequest"
+          },
+          {
+            "name": "router",
+            "type": "google.cloud.edgenetwork_v1.types.Router"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_router"
+      },
+      "description": "Sample for UpdateRouter",
+      "file": "edgenetwork_v1_generated_edge_network_update_router_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_UpdateRouter_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_update_router_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.update_router",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.UpdateRouter",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "UpdateRouter"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.UpdateRouterRequest"
+          },
+          {
+            "name": "router",
+            "type": "google.cloud.edgenetwork_v1.types.Router"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_router"
+      },
+      "description": "Sample for UpdateRouter",
+      "file": "edgenetwork_v1_generated_edge_network_update_router_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_UpdateRouter_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_update_router_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient",
+          "shortName": "EdgeNetworkAsyncClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkAsyncClient.update_subnet",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.UpdateSubnet",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "UpdateSubnet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.UpdateSubnetRequest"
+          },
+          {
+            "name": "subnet",
+            "type": "google.cloud.edgenetwork_v1.types.Subnet"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_subnet"
+      },
+      "description": "Sample for UpdateSubnet",
+      "file": "edgenetwork_v1_generated_edge_network_update_subnet_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_UpdateSubnet_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_update_subnet_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient",
+          "shortName": "EdgeNetworkClient"
+        },
+        "fullName": "google.cloud.edgenetwork_v1.EdgeNetworkClient.update_subnet",
+        "method": {
+          "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork.UpdateSubnet",
+          "service": {
+            "fullName": "google.cloud.edgenetwork.v1.EdgeNetwork",
+            "shortName": "EdgeNetwork"
+          },
+          "shortName": "UpdateSubnet"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.edgenetwork_v1.types.UpdateSubnetRequest"
+          },
+          {
+            "name": "subnet",
+            "type": "google.cloud.edgenetwork_v1.types.Subnet"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_subnet"
+      },
+      "description": "Sample for UpdateSubnet",
+      "file": "edgenetwork_v1_generated_edge_network_update_subnet_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "edgenetwork_v1_generated_EdgeNetwork_UpdateSubnet_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "edgenetwork_v1_generated_edge_network_update_subnet_sync.py"
+    }
+  ]
+}

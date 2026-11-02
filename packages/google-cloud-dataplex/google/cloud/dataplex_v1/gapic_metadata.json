@@ -1,0 +1,2124 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.dataplex_v1",
+  "protoPackage": "google.cloud.dataplex.v1",
+  "schema": "1.0",
+  "services": {
+    "BusinessGlossaryService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "BusinessGlossaryServiceClient",
+          "rpcs": {
+            "CreateGlossary": {
+              "methods": [
+                "create_glossary"
+              ]
+            },
+            "CreateGlossaryCategory": {
+              "methods": [
+                "create_glossary_category"
+              ]
+            },
+            "CreateGlossaryTerm": {
+              "methods": [
+                "create_glossary_term"
+              ]
+            },
+            "DeleteGlossary": {
+              "methods": [
+                "delete_glossary"
+              ]
+            },
+            "DeleteGlossaryCategory": {
+              "methods": [
+                "delete_glossary_category"
+              ]
+            },
+            "DeleteGlossaryTerm": {
+              "methods": [
+                "delete_glossary_term"
+              ]
+            },
+            "GetGlossary": {
+              "methods": [
+                "get_glossary"
+              ]
+            },
+            "GetGlossaryCategory": {
+              "methods": [
+                "get_glossary_category"
+              ]
+            },
+            "GetGlossaryTerm": {
+              "methods": [
+                "get_glossary_term"
+              ]
+            },
+            "ListGlossaries": {
+              "methods": [
+                "list_glossaries"
+              ]
+            },
+            "ListGlossaryCategories": {
+              "methods": [
+                "list_glossary_categories"
+              ]
+            },
+            "ListGlossaryTerms": {
+              "methods": [
+                "list_glossary_terms"
+              ]
+            },
+            "UpdateGlossary": {
+              "methods": [
+                "update_glossary"
+              ]
+            },
+            "UpdateGlossaryCategory": {
+              "methods": [
+                "update_glossary_category"
+              ]
+            },
+            "UpdateGlossaryTerm": {
+              "methods": [
+                "update_glossary_term"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "BusinessGlossaryServiceAsyncClient",
+          "rpcs": {
+            "CreateGlossary": {
+              "methods": [
+                "create_glossary"
+              ]
+            },
+            "CreateGlossaryCategory": {
+              "methods": [
+                "create_glossary_category"
+              ]
+            },
+            "CreateGlossaryTerm": {
+              "methods": [
+                "create_glossary_term"
+              ]
+            },
+            "DeleteGlossary": {
+              "methods": [
+                "delete_glossary"
+              ]
+            },
+            "DeleteGlossaryCategory": {
+              "methods": [
+                "delete_glossary_category"
+              ]
+            },
+            "DeleteGlossaryTerm": {
+              "methods": [
+                "delete_glossary_term"
+              ]
+            },
+            "GetGlossary": {
+              "methods": [
+                "get_glossary"
+              ]
+            },
+            "GetGlossaryCategory": {
+              "methods": [
+                "get_glossary_category"
+              ]
+            },
+            "GetGlossaryTerm": {
+              "methods": [
+                "get_glossary_term"
+              ]
+            },
+            "ListGlossaries": {
+              "methods": [
+                "list_glossaries"
+              ]
+            },
+            "ListGlossaryCategories": {
+              "methods": [
+                "list_glossary_categories"
+              ]
+            },
+            "ListGlossaryTerms": {
+              "methods": [
+                "list_glossary_terms"
+              ]
+            },
+            "UpdateGlossary": {
+              "methods": [
+                "update_glossary"
+              ]
+            },
+            "UpdateGlossaryCategory": {
+              "methods": [
+                "update_glossary_category"
+              ]
+            },
+            "UpdateGlossaryTerm": {
+              "methods": [
+                "update_glossary_term"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "BusinessGlossaryServiceClient",
+          "rpcs": {
+            "CreateGlossary": {
+              "methods": [
+                "create_glossary"
+              ]
+            },
+            "CreateGlossaryCategory": {
+              "methods": [
+                "create_glossary_category"
+              ]
+            },
+            "CreateGlossaryTerm": {
+              "methods": [
+                "create_glossary_term"
+              ]
+            },
+            "DeleteGlossary": {
+              "methods": [
+                "delete_glossary"
+              ]
+            },
+            "DeleteGlossaryCategory": {
+              "methods": [
+                "delete_glossary_category"
+              ]
+            },
+            "DeleteGlossaryTerm": {
+              "methods": [
+                "delete_glossary_term"
+              ]
+            },
+            "GetGlossary": {
+              "methods": [
+                "get_glossary"
+              ]
+            },
+            "GetGlossaryCategory": {
+              "methods": [
+                "get_glossary_category"
+              ]
+            },
+            "GetGlossaryTerm": {
+              "methods": [
+                "get_glossary_term"
+              ]
+            },
+            "ListGlossaries": {
+              "methods": [
+                "list_glossaries"
+              ]
+            },
+            "ListGlossaryCategories": {
+              "methods": [
+                "list_glossary_categories"
+              ]
+            },
+            "ListGlossaryTerms": {
+              "methods": [
+                "list_glossary_terms"
+              ]
+            },
+            "UpdateGlossary": {
+              "methods": [
+                "update_glossary"
+              ]
+            },
+            "UpdateGlossaryCategory": {
+              "methods": [
+                "update_glossary_category"
+              ]
+            },
+            "UpdateGlossaryTerm": {
+              "methods": [
+                "update_glossary_term"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CatalogService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CatalogServiceClient",
+          "rpcs": {
+            "CancelMetadataJob": {
+              "methods": [
+                "cancel_metadata_job"
+              ]
+            },
+            "CreateAspectType": {
+              "methods": [
+                "create_aspect_type"
+              ]
+            },
+            "CreateEntry": {
+              "methods": [
+                "create_entry"
+              ]
+            },
+            "CreateEntryGroup": {
+              "methods": [
+                "create_entry_group"
+              ]
+            },
+            "CreateEntryLink": {
+              "methods": [
+                "create_entry_link"
+              ]
+            },
+            "CreateEntryType": {
+              "methods": [
+                "create_entry_type"
+              ]
+            },
+            "CreateMetadataFeed": {
+              "methods": [
+                "create_metadata_feed"
+              ]
+            },
+            "CreateMetadataJob": {
+              "methods": [
+                "create_metadata_job"
+              ]
+            },
+            "DeleteAspectType": {
+              "methods": [
+                "delete_aspect_type"
+              ]
+            },
+            "DeleteEntry": {
+              "methods": [
+                "delete_entry"
+              ]
+            },
+            "DeleteEntryGroup": {
+              "methods": [
+                "delete_entry_group"
+              ]
+            },
+            "DeleteEntryLink": {
+              "methods": [
+                "delete_entry_link"
+              ]
+            },
+            "DeleteEntryType": {
+              "methods": [
+                "delete_entry_type"
+              ]
+            },
+            "DeleteMetadataFeed": {
+              "methods": [
+                "delete_metadata_feed"
+              ]
+            },
+            "GetAspectType": {
+              "methods": [
+                "get_aspect_type"
+              ]
+            },
+            "GetEntry": {
+              "methods": [
+                "get_entry"
+              ]
+            },
+            "GetEntryGroup": {
+              "methods": [
+                "get_entry_group"
+              ]
+            },
+            "GetEntryLink": {
+              "methods": [
+                "get_entry_link"
+              ]
+            },
+            "GetEntryType": {
+              "methods": [
+                "get_entry_type"
+              ]
+            },
+            "GetMetadataFeed": {
+              "methods": [
+                "get_metadata_feed"
+              ]
+            },
+            "GetMetadataJob": {
+              "methods": [
+                "get_metadata_job"
+              ]
+            },
+            "ListAspectTypes": {
+              "methods": [
+                "list_aspect_types"
+              ]
+            },
+            "ListEntries": {
+              "methods": [
+                "list_entries"
+              ]
+            },
+            "ListEntryGroups": {
+              "methods": [
+                "list_entry_groups"
+              ]
+            },
+            "ListEntryTypes": {
+              "methods": [
+                "list_entry_types"
+              ]
+            },
+            "ListMetadataFeeds": {
+              "methods": [
+                "list_metadata_feeds"
+              ]
+            },
+            "ListMetadataJobs": {
+              "methods": [
+                "list_metadata_jobs"
+              ]
+            },
+            "LookupContext": {
+              "methods": [
+                "lookup_context"
+              ]
+            },
+            "LookupEntry": {
+              "methods": [
+                "lookup_entry"
+              ]
+            },
+            "LookupEntryLinks": {
+              "methods": [
+                "lookup_entry_links"
+              ]
+            },
+            "ModifyEntry": {
+              "methods": [
+                "modify_entry"
+              ]
+            },
+            "SearchEntries": {
+              "methods": [
+                "search_entries"
+              ]
+            },
+            "UpdateAspectType": {
+              "methods": [
+                "update_aspect_type"
+              ]
+            },
+            "UpdateEntry": {
+              "methods": [
+                "update_entry"
+              ]
+            },
+            "UpdateEntryGroup": {
+              "methods": [
+                "update_entry_group"
+              ]
+            },
+            "UpdateEntryLink": {
+              "methods": [
+                "update_entry_link"
+              ]
+            },
+            "UpdateEntryType": {
+              "methods": [
+                "update_entry_type"
+              ]
+            },
+            "UpdateMetadataFeed": {
+              "methods": [
+                "update_metadata_feed"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CatalogServiceAsyncClient",
+          "rpcs": {
+            "CancelMetadataJob": {
+              "methods": [
+                "cancel_metadata_job"
+              ]
+            },
+            "CreateAspectType": {
+              "methods": [
+                "create_aspect_type"
+              ]
+            },
+            "CreateEntry": {
+              "methods": [
+                "create_entry"
+              ]
+            },
+            "CreateEntryGroup": {
+              "methods": [
+                "create_entry_group"
+              ]
+            },
+            "CreateEntryLink": {
+              "methods": [
+                "create_entry_link"
+              ]
+            },
+            "CreateEntryType": {
+              "methods": [
+                "create_entry_type"
+              ]
+            },
+            "CreateMetadataFeed": {
+              "methods": [
+                "create_metadata_feed"
+              ]
+            },
+            "CreateMetadataJob": {
+              "methods": [
+                "create_metadata_job"
+              ]
+            },
+            "DeleteAspectType": {
+              "methods": [
+                "delete_aspect_type"
+              ]
+            },
+            "DeleteEntry": {
+              "methods": [
+                "delete_entry"
+              ]
+            },
+            "DeleteEntryGroup": {
+              "methods": [
+                "delete_entry_group"
+              ]
+            },
+            "DeleteEntryLink": {
+              "methods": [
+                "delete_entry_link"
+              ]
+            },
+            "DeleteEntryType": {
+              "methods": [
+                "delete_entry_type"
+              ]
+            },
+            "DeleteMetadataFeed": {
+              "methods": [
+                "delete_metadata_feed"
+              ]
+            },
+            "GetAspectType": {
+              "methods": [
+                "get_aspect_type"
+              ]
+            },
+            "GetEntry": {
+              "methods": [
+                "get_entry"
+              ]
+            },
+            "GetEntryGroup": {
+              "methods": [
+                "get_entry_group"
+              ]
+            },
+            "GetEntryLink": {
+              "methods": [
+                "get_entry_link"
+              ]
+            },
+            "GetEntryType": {
+              "methods": [
+                "get_entry_type"
+              ]
+            },
+            "GetMetadataFeed": {
+              "methods": [
+                "get_metadata_feed"
+              ]
+            },
+            "GetMetadataJob": {
+              "methods": [
+                "get_metadata_job"
+              ]
+            },
+            "ListAspectTypes": {
+              "methods": [
+                "list_aspect_types"
+              ]
+            },
+            "ListEntries": {
+              "methods": [
+                "list_entries"
+              ]
+            },
+            "ListEntryGroups": {
+              "methods": [
+                "list_entry_groups"
+              ]
+            },
+            "ListEntryTypes": {
+              "methods": [
+                "list_entry_types"
+              ]
+            },
+            "ListMetadataFeeds": {
+              "methods": [
+                "list_metadata_feeds"
+              ]
+            },
+            "ListMetadataJobs": {
+              "methods": [
+                "list_metadata_jobs"
+              ]
+            },
+            "LookupContext": {
+              "methods": [
+                "lookup_context"
+              ]
+            },
+            "LookupEntry": {
+              "methods": [
+                "lookup_entry"
+              ]
+            },
+            "LookupEntryLinks": {
+              "methods": [
+                "lookup_entry_links"
+              ]
+            },
+            "ModifyEntry": {
+              "methods": [
+                "modify_entry"
+              ]
+            },
+            "SearchEntries": {
+              "methods": [
+                "search_entries"
+              ]
+            },
+            "UpdateAspectType": {
+              "methods": [
+                "update_aspect_type"
+              ]
+            },
+            "UpdateEntry": {
+              "methods": [
+                "update_entry"
+              ]
+            },
+            "UpdateEntryGroup": {
+              "methods": [
+                "update_entry_group"
+              ]
+            },
+            "UpdateEntryLink": {
+              "methods": [
+                "update_entry_link"
+              ]
+            },
+            "UpdateEntryType": {
+              "methods": [
+                "update_entry_type"
+              ]
+            },
+            "UpdateMetadataFeed": {
+              "methods": [
+                "update_metadata_feed"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CatalogServiceClient",
+          "rpcs": {
+            "CancelMetadataJob": {
+              "methods": [
+                "cancel_metadata_job"
+              ]
+            },
+            "CreateAspectType": {
+              "methods": [
+                "create_aspect_type"
+              ]
+            },
+            "CreateEntry": {
+              "methods": [
+                "create_entry"
+              ]
+            },
+            "CreateEntryGroup": {
+              "methods": [
+                "create_entry_group"
+              ]
+            },
+            "CreateEntryLink": {
+              "methods": [
+                "create_entry_link"
+              ]
+            },
+            "CreateEntryType": {
+              "methods": [
+                "create_entry_type"
+              ]
+            },
+            "CreateMetadataFeed": {
+              "methods": [
+                "create_metadata_feed"
+              ]
+            },
+            "CreateMetadataJob": {
+              "methods": [
+                "create_metadata_job"
+              ]
+            },
+            "DeleteAspectType": {
+              "methods": [
+                "delete_aspect_type"
+              ]
+            },
+            "DeleteEntry": {
+              "methods": [
+                "delete_entry"
+              ]
+            },
+            "DeleteEntryGroup": {
+              "methods": [
+                "delete_entry_group"
+              ]
+            },
+            "DeleteEntryLink": {
+              "methods": [
+                "delete_entry_link"
+              ]
+            },
+            "DeleteEntryType": {
+              "methods": [
+                "delete_entry_type"
+              ]
+            },
+            "DeleteMetadataFeed": {
+              "methods": [
+                "delete_metadata_feed"
+              ]
+            },
+            "GetAspectType": {
+              "methods": [
+                "get_aspect_type"
+              ]
+            },
+            "GetEntry": {
+              "methods": [
+                "get_entry"
+              ]
+            },
+            "GetEntryGroup": {
+              "methods": [
+                "get_entry_group"
+              ]
+            },
+            "GetEntryLink": {
+              "methods": [
+                "get_entry_link"
+              ]
+            },
+            "GetEntryType": {
+              "methods": [
+                "get_entry_type"
+              ]
+            },
+            "GetMetadataFeed": {
+              "methods": [
+                "get_metadata_feed"
+              ]
+            },
+            "GetMetadataJob": {
+              "methods": [
+                "get_metadata_job"
+              ]
+            },
+            "ListAspectTypes": {
+              "methods": [
+                "list_aspect_types"
+              ]
+            },
+            "ListEntries": {
+              "methods": [
+                "list_entries"
+              ]
+            },
+            "ListEntryGroups": {
+              "methods": [
+                "list_entry_groups"
+              ]
+            },
+            "ListEntryTypes": {
+              "methods": [
+                "list_entry_types"
+              ]
+            },
+            "ListMetadataFeeds": {
+              "methods": [
+                "list_metadata_feeds"
+              ]
+            },
+            "ListMetadataJobs": {
+              "methods": [
+                "list_metadata_jobs"
+              ]
+            },
+            "LookupContext": {
+              "methods": [
+                "lookup_context"
+              ]
+            },
+            "LookupEntry": {
+              "methods": [
+                "lookup_entry"
+              ]
+            },
+            "LookupEntryLinks": {
+              "methods": [
+                "lookup_entry_links"
+              ]
+            },
+            "ModifyEntry": {
+              "methods": [
+                "modify_entry"
+              ]
+            },
+            "SearchEntries": {
+              "methods": [
+                "search_entries"
+              ]
+            },
+            "UpdateAspectType": {
+              "methods": [
+                "update_aspect_type"
+              ]
+            },
+            "UpdateEntry": {
+              "methods": [
+                "update_entry"
+              ]
+            },
+            "UpdateEntryGroup": {
+              "methods": [
+                "update_entry_group"
+              ]
+            },
+            "UpdateEntryLink": {
+              "methods": [
+                "update_entry_link"
+              ]
+            },
+            "UpdateEntryType": {
+              "methods": [
+                "update_entry_type"
+              ]
+            },
+            "UpdateMetadataFeed": {
+              "methods": [
+                "update_metadata_feed"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CmekService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CmekServiceClient",
+          "rpcs": {
+            "CreateEncryptionConfig": {
+              "methods": [
+                "create_encryption_config"
+              ]
+            },
+            "DeleteEncryptionConfig": {
+              "methods": [
+                "delete_encryption_config"
+              ]
+            },
+            "GetEncryptionConfig": {
+              "methods": [
+                "get_encryption_config"
+              ]
+            },
+            "ListEncryptionConfigs": {
+              "methods": [
+                "list_encryption_configs"
+              ]
+            },
+            "UpdateEncryptionConfig": {
+              "methods": [
+                "update_encryption_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CmekServiceAsyncClient",
+          "rpcs": {
+            "CreateEncryptionConfig": {
+              "methods": [
+                "create_encryption_config"
+              ]
+            },
+            "DeleteEncryptionConfig": {
+              "methods": [
+                "delete_encryption_config"
+              ]
+            },
+            "GetEncryptionConfig": {
+              "methods": [
+                "get_encryption_config"
+              ]
+            },
+            "ListEncryptionConfigs": {
+              "methods": [
+                "list_encryption_configs"
+              ]
+            },
+            "UpdateEncryptionConfig": {
+              "methods": [
+                "update_encryption_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CmekServiceClient",
+          "rpcs": {
+            "CreateEncryptionConfig": {
+              "methods": [
+                "create_encryption_config"
+              ]
+            },
+            "DeleteEncryptionConfig": {
+              "methods": [
+                "delete_encryption_config"
+              ]
+            },
+            "GetEncryptionConfig": {
+              "methods": [
+                "get_encryption_config"
+              ]
+            },
+            "ListEncryptionConfigs": {
+              "methods": [
+                "list_encryption_configs"
+              ]
+            },
+            "UpdateEncryptionConfig": {
+              "methods": [
+                "update_encryption_config"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ContentService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ContentServiceClient"
+        },
+        "grpc-async": {
+          "libraryClient": "ContentServiceAsyncClient"
+        },
+        "rest": {
+          "libraryClient": "ContentServiceClient"
+        }
+      }
+    },
+    "DataProductService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataProductServiceClient",
+          "rpcs": {
+            "CreateDataAsset": {
+              "methods": [
+                "create_data_asset"
+              ]
+            },
+            "CreateDataProduct": {
+              "methods": [
+                "create_data_product"
+              ]
+            },
+            "DeleteDataAsset": {
+              "methods": [
+                "delete_data_asset"
+              ]
+            },
+            "DeleteDataProduct": {
+              "methods": [
+                "delete_data_product"
+              ]
+            },
+            "GetDataAsset": {
+              "methods": [
+                "get_data_asset"
+              ]
+            },
+            "GetDataProduct": {
+              "methods": [
+                "get_data_product"
+              ]
+            },
+            "ListDataAssets": {
+              "methods": [
+                "list_data_assets"
+              ]
+            },
+            "ListDataProducts": {
+              "methods": [
+                "list_data_products"
+              ]
+            },
+            "RequestDataProductAccess": {
+              "methods": [
+                "request_data_product_access"
+              ]
+            },
+            "UpdateDataAsset": {
+              "methods": [
+                "update_data_asset"
+              ]
+            },
+            "UpdateDataProduct": {
+              "methods": [
+                "update_data_product"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataProductServiceAsyncClient",
+          "rpcs": {
+            "CreateDataAsset": {
+              "methods": [
+                "create_data_asset"
+              ]
+            },
+            "CreateDataProduct": {
+              "methods": [
+                "create_data_product"
+              ]
+            },
+            "DeleteDataAsset": {
+              "methods": [
+                "delete_data_asset"
+              ]
+            },
+            "DeleteDataProduct": {
+              "methods": [
+                "delete_data_product"
+              ]
+            },
+            "GetDataAsset": {
+              "methods": [
+                "get_data_asset"
+              ]
+            },
+            "GetDataProduct": {
+              "methods": [
+                "get_data_product"
+              ]
+            },
+            "ListDataAssets": {
+              "methods": [
+                "list_data_assets"
+              ]
+            },
+            "ListDataProducts": {
+              "methods": [
+                "list_data_products"
+              ]
+            },
+            "RequestDataProductAccess": {
+              "methods": [
+                "request_data_product_access"
+              ]
+            },
+            "UpdateDataAsset": {
+              "methods": [
+                "update_data_asset"
+              ]
+            },
+            "UpdateDataProduct": {
+              "methods": [
+                "update_data_product"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataProductServiceClient",
+          "rpcs": {
+            "CreateDataAsset": {
+              "methods": [
+                "create_data_asset"
+              ]
+            },
+            "CreateDataProduct": {
+              "methods": [
+                "create_data_product"
+              ]
+            },
+            "DeleteDataAsset": {
+              "methods": [
+                "delete_data_asset"
+              ]
+            },
+            "DeleteDataProduct": {
+              "methods": [
+                "delete_data_product"
+              ]
+            },
+            "GetDataAsset": {
+              "methods": [
+                "get_data_asset"
+              ]
+            },
+            "GetDataProduct": {
+              "methods": [
+                "get_data_product"
+              ]
+            },
+            "ListDataAssets": {
+              "methods": [
+                "list_data_assets"
+              ]
+            },
+            "ListDataProducts": {
+              "methods": [
+                "list_data_products"
+              ]
+            },
+            "RequestDataProductAccess": {
+              "methods": [
+                "request_data_product_access"
+              ]
+            },
+            "UpdateDataAsset": {
+              "methods": [
+                "update_data_asset"
+              ]
+            },
+            "UpdateDataProduct": {
+              "methods": [
+                "update_data_product"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DataScanService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataScanServiceClient",
+          "rpcs": {
+            "CancelDataScanJob": {
+              "methods": [
+                "cancel_data_scan_job"
+              ]
+            },
+            "CreateDataScan": {
+              "methods": [
+                "create_data_scan"
+              ]
+            },
+            "DeleteDataScan": {
+              "methods": [
+                "delete_data_scan"
+              ]
+            },
+            "GenerateDataQualityRules": {
+              "methods": [
+                "generate_data_quality_rules"
+              ]
+            },
+            "GetDataScan": {
+              "methods": [
+                "get_data_scan"
+              ]
+            },
+            "GetDataScanJob": {
+              "methods": [
+                "get_data_scan_job"
+              ]
+            },
+            "ListDataScanJobs": {
+              "methods": [
+                "list_data_scan_jobs"
+              ]
+            },
+            "ListDataScans": {
+              "methods": [
+                "list_data_scans"
+              ]
+            },
+            "RunDataScan": {
+              "methods": [
+                "run_data_scan"
+              ]
+            },
+            "UpdateDataScan": {
+              "methods": [
+                "update_data_scan"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataScanServiceAsyncClient",
+          "rpcs": {
+            "CancelDataScanJob": {
+              "methods": [
+                "cancel_data_scan_job"
+              ]
+            },
+            "CreateDataScan": {
+              "methods": [
+                "create_data_scan"
+              ]
+            },
+            "DeleteDataScan": {
+              "methods": [
+                "delete_data_scan"
+              ]
+            },
+            "GenerateDataQualityRules": {
+              "methods": [
+                "generate_data_quality_rules"
+              ]
+            },
+            "GetDataScan": {
+              "methods": [
+                "get_data_scan"
+              ]
+            },
+            "GetDataScanJob": {
+              "methods": [
+                "get_data_scan_job"
+              ]
+            },
+            "ListDataScanJobs": {
+              "methods": [
+                "list_data_scan_jobs"
+              ]
+            },
+            "ListDataScans": {
+              "methods": [
+                "list_data_scans"
+              ]
+            },
+            "RunDataScan": {
+              "methods": [
+                "run_data_scan"
+              ]
+            },
+            "UpdateDataScan": {
+              "methods": [
+                "update_data_scan"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataScanServiceClient",
+          "rpcs": {
+            "CancelDataScanJob": {
+              "methods": [
+                "cancel_data_scan_job"
+              ]
+            },
+            "CreateDataScan": {
+              "methods": [
+                "create_data_scan"
+              ]
+            },
+            "DeleteDataScan": {
+              "methods": [
+                "delete_data_scan"
+              ]
+            },
+            "GenerateDataQualityRules": {
+              "methods": [
+                "generate_data_quality_rules"
+              ]
+            },
+            "GetDataScan": {
+              "methods": [
+                "get_data_scan"
+              ]
+            },
+            "GetDataScanJob": {
+              "methods": [
+                "get_data_scan_job"
+              ]
+            },
+            "ListDataScanJobs": {
+              "methods": [
+                "list_data_scan_jobs"
+              ]
+            },
+            "ListDataScans": {
+              "methods": [
+                "list_data_scans"
+              ]
+            },
+            "RunDataScan": {
+              "methods": [
+                "run_data_scan"
+              ]
+            },
+            "UpdateDataScan": {
+              "methods": [
+                "update_data_scan"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DataTaxonomyService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataTaxonomyServiceClient",
+          "rpcs": {
+            "CreateDataAttribute": {
+              "methods": [
+                "create_data_attribute"
+              ]
+            },
+            "CreateDataAttributeBinding": {
+              "methods": [
+                "create_data_attribute_binding"
+              ]
+            },
+            "CreateDataTaxonomy": {
+              "methods": [
+                "create_data_taxonomy"
+              ]
+            },
+            "DeleteDataAttribute": {
+              "methods": [
+                "delete_data_attribute"
+              ]
+            },
+            "DeleteDataAttributeBinding": {
+              "methods": [
+                "delete_data_attribute_binding"
+              ]
+            },
+            "DeleteDataTaxonomy": {
+              "methods": [
+                "delete_data_taxonomy"
+              ]
+            },
+            "GetDataAttribute": {
+              "methods": [
+                "get_data_attribute"
+              ]
+            },
+            "GetDataAttributeBinding": {
+              "methods": [
+                "get_data_attribute_binding"
+              ]
+            },
+            "GetDataTaxonomy": {
+              "methods": [
+                "get_data_taxonomy"
+              ]
+            },
+            "ListDataAttributeBindings": {
+              "methods": [
+                "list_data_attribute_bindings"
+              ]
+            },
+            "ListDataAttributes": {
+              "methods": [
+                "list_data_attributes"
+              ]
+            },
+            "ListDataTaxonomies": {
+              "methods": [
+                "list_data_taxonomies"
+              ]
+            },
+            "UpdateDataAttribute": {
+              "methods": [
+                "update_data_attribute"
+              ]
+            },
+            "UpdateDataAttributeBinding": {
+              "methods": [
+                "update_data_attribute_binding"
+              ]
+            },
+            "UpdateDataTaxonomy": {
+              "methods": [
+                "update_data_taxonomy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataTaxonomyServiceAsyncClient",
+          "rpcs": {
+            "CreateDataAttribute": {
+              "methods": [
+                "create_data_attribute"
+              ]
+            },
+            "CreateDataAttributeBinding": {
+              "methods": [
+                "create_data_attribute_binding"
+              ]
+            },
+            "CreateDataTaxonomy": {
+              "methods": [
+                "create_data_taxonomy"
+              ]
+            },
+            "DeleteDataAttribute": {
+              "methods": [
+                "delete_data_attribute"
+              ]
+            },
+            "DeleteDataAttributeBinding": {
+              "methods": [
+                "delete_data_attribute_binding"
+              ]
+            },
+            "DeleteDataTaxonomy": {
+              "methods": [
+                "delete_data_taxonomy"
+              ]
+            },
+            "GetDataAttribute": {
+              "methods": [
+                "get_data_attribute"
+              ]
+            },
+            "GetDataAttributeBinding": {
+              "methods": [
+                "get_data_attribute_binding"
+              ]
+            },
+            "GetDataTaxonomy": {
+              "methods": [
+                "get_data_taxonomy"
+              ]
+            },
+            "ListDataAttributeBindings": {
+              "methods": [
+                "list_data_attribute_bindings"
+              ]
+            },
+            "ListDataAttributes": {
+              "methods": [
+                "list_data_attributes"
+              ]
+            },
+            "ListDataTaxonomies": {
+              "methods": [
+                "list_data_taxonomies"
+              ]
+            },
+            "UpdateDataAttribute": {
+              "methods": [
+                "update_data_attribute"
+              ]
+            },
+            "UpdateDataAttributeBinding": {
+              "methods": [
+                "update_data_attribute_binding"
+              ]
+            },
+            "UpdateDataTaxonomy": {
+              "methods": [
+                "update_data_taxonomy"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataTaxonomyServiceClient",
+          "rpcs": {
+            "CreateDataAttribute": {
+              "methods": [
+                "create_data_attribute"
+              ]
+            },
+            "CreateDataAttributeBinding": {
+              "methods": [
+                "create_data_attribute_binding"
+              ]
+            },
+            "CreateDataTaxonomy": {
+              "methods": [
+                "create_data_taxonomy"
+              ]
+            },
+            "DeleteDataAttribute": {
+              "methods": [
+                "delete_data_attribute"
+              ]
+            },
+            "DeleteDataAttributeBinding": {
+              "methods": [
+                "delete_data_attribute_binding"
+              ]
+            },
+            "DeleteDataTaxonomy": {
+              "methods": [
+                "delete_data_taxonomy"
+              ]
+            },
+            "GetDataAttribute": {
+              "methods": [
+                "get_data_attribute"
+              ]
+            },
+            "GetDataAttributeBinding": {
+              "methods": [
+                "get_data_attribute_binding"
+              ]
+            },
+            "GetDataTaxonomy": {
+              "methods": [
+                "get_data_taxonomy"
+              ]
+            },
+            "ListDataAttributeBindings": {
+              "methods": [
+                "list_data_attribute_bindings"
+              ]
+            },
+            "ListDataAttributes": {
+              "methods": [
+                "list_data_attributes"
+              ]
+            },
+            "ListDataTaxonomies": {
+              "methods": [
+                "list_data_taxonomies"
+              ]
+            },
+            "UpdateDataAttribute": {
+              "methods": [
+                "update_data_attribute"
+              ]
+            },
+            "UpdateDataAttributeBinding": {
+              "methods": [
+                "update_data_attribute_binding"
+              ]
+            },
+            "UpdateDataTaxonomy": {
+              "methods": [
+                "update_data_taxonomy"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DataplexService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataplexServiceClient",
+          "rpcs": {
+            "CancelJob": {
+              "methods": [
+                "cancel_job"
+              ]
+            },
+            "CreateAsset": {
+              "methods": [
+                "create_asset"
+              ]
+            },
+            "CreateLake": {
+              "methods": [
+                "create_lake"
+              ]
+            },
+            "CreateTask": {
+              "methods": [
+                "create_task"
+              ]
+            },
+            "CreateZone": {
+              "methods": [
+                "create_zone"
+              ]
+            },
+            "DeleteAsset": {
+              "methods": [
+                "delete_asset"
+              ]
+            },
+            "DeleteLake": {
+              "methods": [
+                "delete_lake"
+              ]
+            },
+            "DeleteTask": {
+              "methods": [
+                "delete_task"
+              ]
+            },
+            "DeleteZone": {
+              "methods": [
+                "delete_zone"
+              ]
+            },
+            "GetAsset": {
+              "methods": [
+                "get_asset"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "GetLake": {
+              "methods": [
+                "get_lake"
+              ]
+            },
+            "GetTask": {
+              "methods": [
+                "get_task"
+              ]
+            },
+            "GetZone": {
+              "methods": [
+                "get_zone"
+              ]
+            },
+            "ListAssetActions": {
+              "methods": [
+                "list_asset_actions"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "ListLakeActions": {
+              "methods": [
+                "list_lake_actions"
+              ]
+            },
+            "ListLakes": {
+              "methods": [
+                "list_lakes"
+              ]
+            },
+            "ListTasks": {
+              "methods": [
+                "list_tasks"
+              ]
+            },
+            "ListZoneActions": {
+              "methods": [
+                "list_zone_actions"
+              ]
+            },
+            "ListZones": {
+              "methods": [
+                "list_zones"
+              ]
+            },
+            "RunTask": {
+              "methods": [
+                "run_task"
+              ]
+            },
+            "UpdateAsset": {
+              "methods": [
+                "update_asset"
+              ]
+            },
+            "UpdateLake": {
+              "methods": [
+                "update_lake"
+              ]
+            },
+            "UpdateTask": {
+              "methods": [
+                "update_task"
+              ]
+            },
+            "UpdateZone": {
+              "methods": [
+                "update_zone"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataplexServiceAsyncClient",
+          "rpcs": {
+            "CancelJob": {
+              "methods": [
+                "cancel_job"
+              ]
+            },
+            "CreateAsset": {
+              "methods": [
+                "create_asset"
+              ]
+            },
+            "CreateLake": {
+              "methods": [
+                "create_lake"
+              ]
+            },
+            "CreateTask": {
+              "methods": [
+                "create_task"
+              ]
+            },
+            "CreateZone": {
+              "methods": [
+                "create_zone"
+              ]
+            },
+            "DeleteAsset": {
+              "methods": [
+                "delete_asset"
+              ]
+            },
+            "DeleteLake": {
+              "methods": [
+                "delete_lake"
+              ]
+            },
+            "DeleteTask": {
+              "methods": [
+                "delete_task"
+              ]
+            },
+            "DeleteZone": {
+              "methods": [
+                "delete_zone"
+              ]
+            },
+            "GetAsset": {
+              "methods": [
+                "get_asset"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "GetLake": {
+              "methods": [
+                "get_lake"
+              ]
+            },
+            "GetTask": {
+              "methods": [
+                "get_task"
+              ]
+            },
+            "GetZone": {
+              "methods": [
+                "get_zone"
+              ]
+            },
+            "ListAssetActions": {
+              "methods": [
+                "list_asset_actions"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "ListLakeActions": {
+              "methods": [
+                "list_lake_actions"
+              ]
+            },
+            "ListLakes": {
+              "methods": [
+                "list_lakes"
+              ]
+            },
+            "ListTasks": {
+              "methods": [
+                "list_tasks"
+              ]
+            },
+            "ListZoneActions": {
+              "methods": [
+                "list_zone_actions"
+              ]
+            },
+            "ListZones": {
+              "methods": [
+                "list_zones"
+              ]
+            },
+            "RunTask": {
+              "methods": [
+                "run_task"
+              ]
+            },
+            "UpdateAsset": {
+              "methods": [
+                "update_asset"
+              ]
+            },
+            "UpdateLake": {
+              "methods": [
+                "update_lake"
+              ]
+            },
+            "UpdateTask": {
+              "methods": [
+                "update_task"
+              ]
+            },
+            "UpdateZone": {
+              "methods": [
+                "update_zone"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DataplexServiceClient",
+          "rpcs": {
+            "CancelJob": {
+              "methods": [
+                "cancel_job"
+              ]
+            },
+            "CreateAsset": {
+              "methods": [
+                "create_asset"
+              ]
+            },
+            "CreateLake": {
+              "methods": [
+                "create_lake"
+              ]
+            },
+            "CreateTask": {
+              "methods": [
+                "create_task"
+              ]
+            },
+            "CreateZone": {
+              "methods": [
+                "create_zone"
+              ]
+            },
+            "DeleteAsset": {
+              "methods": [
+                "delete_asset"
+              ]
+            },
+            "DeleteLake": {
+              "methods": [
+                "delete_lake"
+              ]
+            },
+            "DeleteTask": {
+              "methods": [
+                "delete_task"
+              ]
+            },
+            "DeleteZone": {
+              "methods": [
+                "delete_zone"
+              ]
+            },
+            "GetAsset": {
+              "methods": [
+                "get_asset"
+              ]
+            },
+            "GetJob": {
+              "methods": [
+                "get_job"
+              ]
+            },
+            "GetLake": {
+              "methods": [
+                "get_lake"
+              ]
+            },
+            "GetTask": {
+              "methods": [
+                "get_task"
+              ]
+            },
+            "GetZone": {
+              "methods": [
+                "get_zone"
+              ]
+            },
+            "ListAssetActions": {
+              "methods": [
+                "list_asset_actions"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListJobs": {
+              "methods": [
+                "list_jobs"
+              ]
+            },
+            "ListLakeActions": {
+              "methods": [
+                "list_lake_actions"
+              ]
+            },
+            "ListLakes": {
+              "methods": [
+                "list_lakes"
+              ]
+            },
+            "ListTasks": {
+              "methods": [
+                "list_tasks"
+              ]
+            },
+            "ListZoneActions": {
+              "methods": [
+                "list_zone_actions"
+              ]
+            },
+            "ListZones": {
+              "methods": [
+                "list_zones"
+              ]
+            },
+            "RunTask": {
+              "methods": [
+                "run_task"
+              ]
+            },
+            "UpdateAsset": {
+              "methods": [
+                "update_asset"
+              ]
+            },
+            "UpdateLake": {
+              "methods": [
+                "update_lake"
+              ]
+            },
+            "UpdateTask": {
+              "methods": [
+                "update_task"
+              ]
+            },
+            "UpdateZone": {
+              "methods": [
+                "update_zone"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "MetadataService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MetadataServiceClient",
+          "rpcs": {
+            "CreateEntity": {
+              "methods": [
+                "create_entity"
+              ]
+            },
+            "CreatePartition": {
+              "methods": [
+                "create_partition"
+              ]
+            },
+            "DeleteEntity": {
+              "methods": [
+                "delete_entity"
+              ]
+            },
+            "DeletePartition": {
+              "methods": [
+                "delete_partition"
+              ]
+            },
+            "GetEntity": {
+              "methods": [
+                "get_entity"
+              ]
+            },
+            "GetPartition": {
+              "methods": [
+                "get_partition"
+              ]
+            },
+            "ListEntities": {
+              "methods": [
+                "list_entities"
+              ]
+            },
+            "ListPartitions": {
+              "methods": [
+                "list_partitions"
+              ]
+            },
+            "UpdateEntity": {
+              "methods": [
+                "update_entity"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MetadataServiceAsyncClient",
+          "rpcs": {
+            "CreateEntity": {
+              "methods": [
+                "create_entity"
+              ]
+            },
+            "CreatePartition": {
+              "methods": [
+                "create_partition"
+              ]
+            },
+            "DeleteEntity": {
+              "methods": [
+                "delete_entity"
+              ]
+            },
+            "DeletePartition": {
+              "methods": [
+                "delete_partition"
+              ]
+            },
+            "GetEntity": {
+              "methods": [
+                "get_entity"
+              ]
+            },
+            "GetPartition": {
+              "methods": [
+                "get_partition"
+              ]
+            },
+            "ListEntities": {
+              "methods": [
+                "list_entities"
+              ]
+            },
+            "ListPartitions": {
+              "methods": [
+                "list_partitions"
+              ]
+            },
+            "UpdateEntity": {
+              "methods": [
+                "update_entity"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "MetadataServiceClient",
+          "rpcs": {
+            "CreateEntity": {
+              "methods": [
+                "create_entity"
+              ]
+            },
+            "CreatePartition": {
+              "methods": [
+                "create_partition"
+              ]
+            },
+            "DeleteEntity": {
+              "methods": [
+                "delete_entity"
+              ]
+            },
+            "DeletePartition": {
+              "methods": [
+                "delete_partition"
+              ]
+            },
+            "GetEntity": {
+              "methods": [
+                "get_entity"
+              ]
+            },
+            "GetPartition": {
+              "methods": [
+                "get_partition"
+              ]
+            },
+            "ListEntities": {
+              "methods": [
+                "list_entities"
+              ]
+            },
+            "ListPartitions": {
+              "methods": [
+                "list_partitions"
+              ]
+            },
+            "UpdateEntity": {
+              "methods": [
+                "update_entity"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

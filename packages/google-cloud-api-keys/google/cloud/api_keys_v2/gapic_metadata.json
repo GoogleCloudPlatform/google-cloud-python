@@ -1,0 +1,148 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.api_keys_v2",
+  "protoPackage": "google.api.apikeys.v2",
+  "schema": "1.0",
+  "services": {
+    "ApiKeys": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ApiKeysClient",
+          "rpcs": {
+            "CreateKey": {
+              "methods": [
+                "create_key"
+              ]
+            },
+            "DeleteKey": {
+              "methods": [
+                "delete_key"
+              ]
+            },
+            "GetKey": {
+              "methods": [
+                "get_key"
+              ]
+            },
+            "GetKeyString": {
+              "methods": [
+                "get_key_string"
+              ]
+            },
+            "ListKeys": {
+              "methods": [
+                "list_keys"
+              ]
+            },
+            "LookupKey": {
+              "methods": [
+                "lookup_key"
+              ]
+            },
+            "UndeleteKey": {
+              "methods": [
+                "undelete_key"
+              ]
+            },
+            "UpdateKey": {
+              "methods": [
+                "update_key"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ApiKeysAsyncClient",
+          "rpcs": {
+            "CreateKey": {
+              "methods": [
+                "create_key"
+              ]
+            },
+            "DeleteKey": {
+              "methods": [
+                "delete_key"
+              ]
+            },
+            "GetKey": {
+              "methods": [
+                "get_key"
+              ]
+            },
+            "GetKeyString": {
+              "methods": [
+                "get_key_string"
+              ]
+            },
+            "ListKeys": {
+              "methods": [
+                "list_keys"
+              ]
+            },
+            "LookupKey": {
+              "methods": [
+                "lookup_key"
+              ]
+            },
+            "UndeleteKey": {
+              "methods": [
+                "undelete_key"
+              ]
+            },
+            "UpdateKey": {
+              "methods": [
+                "update_key"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ApiKeysClient",
+          "rpcs": {
+            "CreateKey": {
+              "methods": [
+                "create_key"
+              ]
+            },
+            "DeleteKey": {
+              "methods": [
+                "delete_key"
+              ]
+            },
+            "GetKey": {
+              "methods": [
+                "get_key"
+              ]
+            },
+            "GetKeyString": {
+              "methods": [
+                "get_key_string"
+              ]
+            },
+            "ListKeys": {
+              "methods": [
+                "list_keys"
+              ]
+            },
+            "LookupKey": {
+              "methods": [
+                "lookup_key"
+              ]
+            },
+            "UndeleteKey": {
+              "methods": [
+                "undelete_key"
+              ]
+            },
+            "UpdateKey": {
+              "methods": [
+                "update_key"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

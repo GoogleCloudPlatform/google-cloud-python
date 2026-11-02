@@ -1,0 +1,313 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.bigquery_analyticshub_v1",
+  "protoPackage": "google.cloud.bigquery.analyticshub.v1",
+  "schema": "1.0",
+  "services": {
+    "AnalyticsHubService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AnalyticsHubServiceClient",
+          "rpcs": {
+            "ApproveQueryTemplate": {
+              "methods": [
+                "approve_query_template"
+              ]
+            },
+            "CreateDataExchange": {
+              "methods": [
+                "create_data_exchange"
+              ]
+            },
+            "CreateListing": {
+              "methods": [
+                "create_listing"
+              ]
+            },
+            "CreateQueryTemplate": {
+              "methods": [
+                "create_query_template"
+              ]
+            },
+            "DeleteDataExchange": {
+              "methods": [
+                "delete_data_exchange"
+              ]
+            },
+            "DeleteListing": {
+              "methods": [
+                "delete_listing"
+              ]
+            },
+            "DeleteQueryTemplate": {
+              "methods": [
+                "delete_query_template"
+              ]
+            },
+            "DeleteSubscription": {
+              "methods": [
+                "delete_subscription"
+              ]
+            },
+            "GetDataExchange": {
+              "methods": [
+                "get_data_exchange"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetListing": {
+              "methods": [
+                "get_listing"
+              ]
+            },
+            "GetQueryTemplate": {
+              "methods": [
+                "get_query_template"
+              ]
+            },
+            "GetSubscription": {
+              "methods": [
+                "get_subscription"
+              ]
+            },
+            "ListDataExchanges": {
+              "methods": [
+                "list_data_exchanges"
+              ]
+            },
+            "ListListings": {
+              "methods": [
+                "list_listings"
+              ]
+            },
+            "ListOrgDataExchanges": {
+              "methods": [
+                "list_org_data_exchanges"
+              ]
+            },
+            "ListQueryTemplates": {
+              "methods": [
+                "list_query_templates"
+              ]
+            },
+            "ListSharedResourceSubscriptions": {
+              "methods": [
+                "list_shared_resource_subscriptions"
+              ]
+            },
+            "ListSubscriptions": {
+              "methods": [
+                "list_subscriptions"
+              ]
+            },
+            "RefreshSubscription": {
+              "methods": [
+                "refresh_subscription"
+              ]
+            },
+            "RevokeSubscription": {
+              "methods": [
+                "revoke_subscription"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SubmitQueryTemplate": {
+              "methods": [
+                "submit_query_template"
+              ]
+            },
+            "SubscribeDataExchange": {
+              "methods": [
+                "subscribe_data_exchange"
+              ]
+            },
+            "SubscribeListing": {
+              "methods": [
+                "subscribe_listing"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateDataExchange": {
+              "methods": [
+                "update_data_exchange"
+              ]
+            },
+            "UpdateListing": {
+              "methods": [
+                "update_listing"
+              ]
+            },
+            "UpdateQueryTemplate": {
+              "methods": [
+                "update_query_template"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AnalyticsHubServiceAsyncClient",
+          "rpcs": {
+            "ApproveQueryTemplate": {
+              "methods": [
+                "approve_query_template"
+              ]
+            },
+            "CreateDataExchange": {
+              "methods": [
+                "create_data_exchange"
+              ]
+            },
+            "CreateListing": {
+              "methods": [
+                "create_listing"
+              ]
+            },
+            "CreateQueryTemplate": {
+              "methods": [
+                "create_query_template"
+              ]
+            },
+            "DeleteDataExchange": {
+              "methods": [
+                "delete_data_exchange"
+              ]
+            },
+            "DeleteListing": {
+              "methods": [
+                "delete_listing"
+              ]
+            },
+            "DeleteQueryTemplate": {
+              "methods": [
+                "delete_query_template"
+              ]
+            },
+            "DeleteSubscription": {
+              "methods": [
+                "delete_subscription"
+              ]
+            },
+            "GetDataExchange": {
+              "methods": [
+                "get_data_exchange"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetListing": {
+              "methods": [
+                "get_listing"
+              ]
+            },
+            "GetQueryTemplate": {
+              "methods": [
+                "get_query_template"
+              ]
+            },
+            "GetSubscription": {
+              "methods": [
+                "get_subscription"
+              ]
+            },
+            "ListDataExchanges": {
+              "methods": [
+                "list_data_exchanges"
+              ]
+            },
+            "ListListings": {
+              "methods": [
+                "list_listings"
+              ]
+            },
+            "ListOrgDataExchanges": {
+              "methods": [
+                "list_org_data_exchanges"
+              ]
+            },
+            "ListQueryTemplates": {
+              "methods": [
+                "list_query_templates"
+              ]
+            },
+            "ListSharedResourceSubscriptions": {
+              "methods": [
+                "list_shared_resource_subscriptions"
+              ]
+            },
+            "ListSubscriptions": {
+              "methods": [
+                "list_subscriptions"
+              ]
+            },
+            "RefreshSubscription": {
+              "methods": [
+                "refresh_subscription"
+              ]
+            },
+            "RevokeSubscription": {
+              "methods": [
+                "revoke_subscription"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "SubmitQueryTemplate": {
+              "methods": [
+                "submit_query_template"
+              ]
+            },
+            "SubscribeDataExchange": {
+              "methods": [
+                "subscribe_data_exchange"
+              ]
+            },
+            "SubscribeListing": {
+              "methods": [
+                "subscribe_listing"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateDataExchange": {
+              "methods": [
+                "update_data_exchange"
+              ]
+            },
+            "UpdateListing": {
+              "methods": [
+                "update_listing"
+              ]
+            },
+            "UpdateQueryTemplate": {
+              "methods": [
+                "update_query_template"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

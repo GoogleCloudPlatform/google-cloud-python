@@ -1,0 +1,16 @@
+{
+    "api_description": "Manage Apache Kafka clusters and resources.",
+    "api_id": "managedkafka.googleapis.com",
+    "api_shortname": "managedkafka",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-managedkafka-schemaregistry/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-managedkafka-schemaregistry",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1376234",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-managedkafka-schemaregistry",
+    "name_pretty": "Managed Service for Apache Kafka",
+    "product_documentation": "https://cloud.google.com/managed-service-for-apache-kafka/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

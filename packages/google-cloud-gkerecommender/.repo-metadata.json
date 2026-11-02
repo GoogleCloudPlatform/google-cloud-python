@@ -1,0 +1,16 @@
+{
+    "api_description": "GKE Recommender API",
+    "api_id": "gkerecommender.googleapis.com",
+    "api_shortname": "gkerecommender",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-gkerecommender/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-gkerecommender",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1790908",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-gkerecommender",
+    "name_pretty": "GKE Recommender",
+    "product_documentation": "https://cloud.google.com/kubernetes-engine/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

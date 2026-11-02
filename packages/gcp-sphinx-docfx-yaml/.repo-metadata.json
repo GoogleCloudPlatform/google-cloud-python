@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://googleapis.dev/python/gcp-sphinx-docfx-yaml/latest",
+    "distribution_name": "gcp-sphinx-docfx-yaml",
+    "language": "python",
+    "library_type": "OTHER",
+    "name": "gcp-sphinx-docfx-yaml",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

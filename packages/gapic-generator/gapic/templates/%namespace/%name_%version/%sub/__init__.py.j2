@@ -1,0 +1,94 @@
+{% extends '_base.py.j2' %}
+
+{% block content %}
+
+{% set package_path = api.naming.module_namespace|join('.') + "." + api.naming.versioned_module_name %}
+from {{package_path}} import gapic_version as package_version
+
+import google.api_core as api_core
+
+__version__ = package_version.__version__
+
+# PEP 0810: Explicit Lazy Imports
+# Python 3.15+ natively intercepts and defers these imports.
+# Developers can disable this behavior and force eager imports.
+# For more information, see:
+# https://docs.python.org/3.15/library/sys.html#sys.set_lazy_imports_filter
+# Older Python versions safely ignore this variable.
+__lazy_modules__ = {
+    {% filter sort_lines -%}
+    {% for subpackage, _ in api.subpackages|dictsort -%}
+        "{{package_path}}.{{ subpackage }}",
+    {% endfor -%}
+    {% for service in api.services.values()
+            if service.meta.address.subpackage == api.subpackage_view -%}
+        "{{package_path}}.services.{{ service.name|snake_case }}",
+    {% endfor -%}
+    {% for proto in api.protos.values()
+            if proto.meta.address.subpackage == api.subpackage_view -%}
+        "{{package_path}}.types.{{ proto.module_name }}",
+    {% endfor -%}
+    {% endfilter %}
+}
+
+{#  Import subpackages. -#}
+{% for subpackage, _ in api.subpackages|dictsort %}
+from . import {{ subpackage }}
+{% endfor %}
+
+{#  Import services for this package. -#}
+{% for service in api.services.values()|sort(attribute='name')
+        if service.meta.address.subpackage == api.subpackage_view %}
+from .services.{{ service.name|snake_case }} import {{ service.client_name }}
+{% if 'grpc' in opts.transport %}
+from .services.{{ service.name|snake_case }} import {{ service.async_client_name }}
+{% endif %}
+{% endfor %}
+
+{#  Import messages and enums from each proto.
+    It is safe to import all of the messages into the same namespace here,
+    because protocol buffers itself enforces selector uniqueness within
+    a proto package.
+-#}
+{% for proto in api.protos.values()|sort(attribute='name')
+        if proto.meta.address.subpackage == api.subpackage_view %}
+{% for message in proto.messages.values()|sort(attribute='name') %}
+from .types.{{ proto.module_name }} import {{ message.name }}
+{% endfor %}
+{% for enum in proto.enums.values()|sort(attribute='name') %}
+from .types.{{ proto.module_name }} import {{ enum.name }}
+{% endfor %}
+{% endfor %}
+
+{#  Define __all__.
+    This requires the full set of imported names, so we iterate over
+    them again.
+-#}
+__all__ = (
+    {% filter sort_lines -%}
+    {% for subpackage in api.subpackages -%}
+    '{{ subpackage }}',
+    {% endfor -%}
+    {% for service in api.services.values()
+            if service.meta.address.subpackage == api.subpackage_view -%}
+    '{{ service.client_name }}',
+    {% if 'grpc' in opts.transport %}
+    '{{ service.async_client_name }}',
+    {% endif %}
+    {% endfor -%}
+    {% for proto in api.protos.values()
+            if proto.meta.address.subpackage == api.subpackage_view -%}
+    {% for message in proto.messages.values()|sort(attribute='name') -%}
+    '{{ message.name }}',
+    {% endfor -%}
+    {% for enum in proto.enums.values() -%}
+    '{{ enum.name }}',
+    {% endfor -%}
+    {% endfor -%}
+    {% endfilter %}
+)
+
+api_core.check_python_version("{{package_path}}")
+api_core.check_dependency_versions("{{package_path}}")
+
+{% endblock %}

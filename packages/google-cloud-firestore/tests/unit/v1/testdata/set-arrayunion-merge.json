@@ -1,0 +1,48 @@
+{
+  "tests": [
+    {
+      "description": "set: merge ArrayUnion field",
+      "comment": "An ArrayUnion value can occur at any depth. In this case,\nthe transform applies to the field path \"b.c\". \"a\" is left alone and remains in the object.",
+      "set": {
+        "option": {
+          "all": true
+        },
+        "docRefPath": "projects/projectID/databases/(default)/documents/C/d",
+        "jsonData": "{\"a\": 1, \"b\": {\"c\": [\"ArrayUnion\", \"foo\", \"bar\"]}}",
+        "request": {
+          "database": "projects/projectID/databases/(default)",
+          "writes": [
+            {
+              "update": {
+                "name": "projects/projectID/databases/(default)/documents/C/d",
+                "fields": {
+                  "a": {
+                    "integerValue": "1"
+                  }
+                }
+              },
+              "updateMask": {
+                "fieldPaths": ["a"]
+              },
+              "updateTransforms": [
+                {
+                  "fieldPath": "b.c",
+                  "appendMissingElements": {
+                    "values": [
+                      {
+                        "stringValue": "foo"
+                      },
+                      {
+                        "stringValue": "bar"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

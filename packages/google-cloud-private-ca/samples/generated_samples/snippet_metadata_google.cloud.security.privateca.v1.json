@@ -1,0 +1,4788 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.security.privateca.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-private-ca",
+    "version": "1.20.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.activate_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ActivateCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ActivateCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ActivateCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "activate_certificate_authority"
+      },
+      "description": "Sample for ActivateCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_activate_certificate_authority_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ActivateCertificateAuthority_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_activate_certificate_authority_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.activate_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ActivateCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ActivateCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ActivateCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "activate_certificate_authority"
+      },
+      "description": "Sample for ActivateCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_activate_certificate_authority_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ActivateCertificateAuthority_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_activate_certificate_authority_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.create_ca_pool",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.CreateCaPool",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "CreateCaPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.CreateCaPoolRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "ca_pool",
+            "type": "google.cloud.security.privateca_v1.types.CaPool"
+          },
+          {
+            "name": "ca_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_ca_pool"
+      },
+      "description": "Sample for CreateCaPool",
+      "file": "privateca_v1_generated_certificate_authority_service_create_ca_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_CreateCaPool_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_create_ca_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.create_ca_pool",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.CreateCaPool",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "CreateCaPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.CreateCaPoolRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "ca_pool",
+            "type": "google.cloud.security.privateca_v1.types.CaPool"
+          },
+          {
+            "name": "ca_pool_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_ca_pool"
+      },
+      "description": "Sample for CreateCaPool",
+      "file": "privateca_v1_generated_certificate_authority_service_create_ca_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_CreateCaPool_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_create_ca_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.create_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.CreateCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "CreateCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.CreateCertificateAuthorityRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "certificate_authority",
+            "type": "google.cloud.security.privateca_v1.types.CertificateAuthority"
+          },
+          {
+            "name": "certificate_authority_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_certificate_authority"
+      },
+      "description": "Sample for CreateCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_create_certificate_authority_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_CreateCertificateAuthority_async",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_create_certificate_authority_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.create_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.CreateCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "CreateCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.CreateCertificateAuthorityRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "certificate_authority",
+            "type": "google.cloud.security.privateca_v1.types.CertificateAuthority"
+          },
+          {
+            "name": "certificate_authority_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_certificate_authority"
+      },
+      "description": "Sample for CreateCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_create_certificate_authority_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_CreateCertificateAuthority_sync",
+      "segments": [
+        {
+          "end": 61,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 61,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 58,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 62,
+          "start": 59,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_create_certificate_authority_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.create_certificate_template",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.CreateCertificateTemplate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "CreateCertificateTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.CreateCertificateTemplateRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "certificate_template",
+            "type": "google.cloud.security.privateca_v1.types.CertificateTemplate"
+          },
+          {
+            "name": "certificate_template_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_certificate_template"
+      },
+      "description": "Sample for CreateCertificateTemplate",
+      "file": "privateca_v1_generated_certificate_authority_service_create_certificate_template_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_CreateCertificateTemplate_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_create_certificate_template_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.create_certificate_template",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.CreateCertificateTemplate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "CreateCertificateTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.CreateCertificateTemplateRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "certificate_template",
+            "type": "google.cloud.security.privateca_v1.types.CertificateTemplate"
+          },
+          {
+            "name": "certificate_template_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_certificate_template"
+      },
+      "description": "Sample for CreateCertificateTemplate",
+      "file": "privateca_v1_generated_certificate_authority_service_create_certificate_template_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_CreateCertificateTemplate_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_create_certificate_template_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.create_certificate",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.CreateCertificate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "CreateCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.CreateCertificateRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "certificate",
+            "type": "google.cloud.security.privateca_v1.types.Certificate"
+          },
+          {
+            "name": "certificate_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.Certificate",
+        "shortName": "create_certificate"
+      },
+      "description": "Sample for CreateCertificate",
+      "file": "privateca_v1_generated_certificate_authority_service_create_certificate_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_CreateCertificate_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_create_certificate_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.create_certificate",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.CreateCertificate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "CreateCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.CreateCertificateRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "certificate",
+            "type": "google.cloud.security.privateca_v1.types.Certificate"
+          },
+          {
+            "name": "certificate_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.Certificate",
+        "shortName": "create_certificate"
+      },
+      "description": "Sample for CreateCertificate",
+      "file": "privateca_v1_generated_certificate_authority_service_create_certificate_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_CreateCertificate_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_create_certificate_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.delete_ca_pool",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.DeleteCaPool",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "DeleteCaPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.DeleteCaPoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_ca_pool"
+      },
+      "description": "Sample for DeleteCaPool",
+      "file": "privateca_v1_generated_certificate_authority_service_delete_ca_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_DeleteCaPool_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_delete_ca_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.delete_ca_pool",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.DeleteCaPool",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "DeleteCaPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.DeleteCaPoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_ca_pool"
+      },
+      "description": "Sample for DeleteCaPool",
+      "file": "privateca_v1_generated_certificate_authority_service_delete_ca_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_DeleteCaPool_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_delete_ca_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.delete_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.DeleteCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "DeleteCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.DeleteCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_certificate_authority"
+      },
+      "description": "Sample for DeleteCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_delete_certificate_authority_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_DeleteCertificateAuthority_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_delete_certificate_authority_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.delete_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.DeleteCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "DeleteCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.DeleteCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_certificate_authority"
+      },
+      "description": "Sample for DeleteCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_delete_certificate_authority_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_DeleteCertificateAuthority_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_delete_certificate_authority_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.delete_certificate_template",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.DeleteCertificateTemplate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "DeleteCertificateTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.DeleteCertificateTemplateRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_certificate_template"
+      },
+      "description": "Sample for DeleteCertificateTemplate",
+      "file": "privateca_v1_generated_certificate_authority_service_delete_certificate_template_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_DeleteCertificateTemplate_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_delete_certificate_template_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.delete_certificate_template",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.DeleteCertificateTemplate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "DeleteCertificateTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.DeleteCertificateTemplateRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_certificate_template"
+      },
+      "description": "Sample for DeleteCertificateTemplate",
+      "file": "privateca_v1_generated_certificate_authority_service_delete_certificate_template_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_DeleteCertificateTemplate_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_delete_certificate_template_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.disable_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.DisableCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "DisableCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.DisableCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "disable_certificate_authority"
+      },
+      "description": "Sample for DisableCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_disable_certificate_authority_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_DisableCertificateAuthority_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_disable_certificate_authority_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.disable_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.DisableCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "DisableCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.DisableCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "disable_certificate_authority"
+      },
+      "description": "Sample for DisableCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_disable_certificate_authority_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_DisableCertificateAuthority_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_disable_certificate_authority_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.enable_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.EnableCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "EnableCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.EnableCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "enable_certificate_authority"
+      },
+      "description": "Sample for EnableCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_enable_certificate_authority_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_EnableCertificateAuthority_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_enable_certificate_authority_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.enable_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.EnableCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "EnableCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.EnableCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "enable_certificate_authority"
+      },
+      "description": "Sample for EnableCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_enable_certificate_authority_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_EnableCertificateAuthority_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_enable_certificate_authority_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.fetch_ca_certs",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.FetchCaCerts",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "FetchCaCerts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.FetchCaCertsRequest"
+          },
+          {
+            "name": "ca_pool",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.FetchCaCertsResponse",
+        "shortName": "fetch_ca_certs"
+      },
+      "description": "Sample for FetchCaCerts",
+      "file": "privateca_v1_generated_certificate_authority_service_fetch_ca_certs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_FetchCaCerts_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_fetch_ca_certs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.fetch_ca_certs",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.FetchCaCerts",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "FetchCaCerts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.FetchCaCertsRequest"
+          },
+          {
+            "name": "ca_pool",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.FetchCaCertsResponse",
+        "shortName": "fetch_ca_certs"
+      },
+      "description": "Sample for FetchCaCerts",
+      "file": "privateca_v1_generated_certificate_authority_service_fetch_ca_certs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_FetchCaCerts_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_fetch_ca_certs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.fetch_certificate_authority_csr",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.FetchCertificateAuthorityCsr",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "FetchCertificateAuthorityCsr"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.FetchCertificateAuthorityCsrRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.FetchCertificateAuthorityCsrResponse",
+        "shortName": "fetch_certificate_authority_csr"
+      },
+      "description": "Sample for FetchCertificateAuthorityCsr",
+      "file": "privateca_v1_generated_certificate_authority_service_fetch_certificate_authority_csr_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_FetchCertificateAuthorityCsr_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_fetch_certificate_authority_csr_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.fetch_certificate_authority_csr",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.FetchCertificateAuthorityCsr",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "FetchCertificateAuthorityCsr"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.FetchCertificateAuthorityCsrRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.FetchCertificateAuthorityCsrResponse",
+        "shortName": "fetch_certificate_authority_csr"
+      },
+      "description": "Sample for FetchCertificateAuthorityCsr",
+      "file": "privateca_v1_generated_certificate_authority_service_fetch_certificate_authority_csr_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_FetchCertificateAuthorityCsr_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_fetch_certificate_authority_csr_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.get_ca_pool",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.GetCaPool",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "GetCaPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.GetCaPoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.CaPool",
+        "shortName": "get_ca_pool"
+      },
+      "description": "Sample for GetCaPool",
+      "file": "privateca_v1_generated_certificate_authority_service_get_ca_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_GetCaPool_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_get_ca_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.get_ca_pool",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.GetCaPool",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "GetCaPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.GetCaPoolRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.CaPool",
+        "shortName": "get_ca_pool"
+      },
+      "description": "Sample for GetCaPool",
+      "file": "privateca_v1_generated_certificate_authority_service_get_ca_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_GetCaPool_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_get_ca_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.get_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.GetCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "GetCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.GetCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.CertificateAuthority",
+        "shortName": "get_certificate_authority"
+      },
+      "description": "Sample for GetCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_get_certificate_authority_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_GetCertificateAuthority_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_get_certificate_authority_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.get_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.GetCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "GetCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.GetCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.CertificateAuthority",
+        "shortName": "get_certificate_authority"
+      },
+      "description": "Sample for GetCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_get_certificate_authority_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_GetCertificateAuthority_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_get_certificate_authority_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.get_certificate_revocation_list",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.GetCertificateRevocationList",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "GetCertificateRevocationList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.GetCertificateRevocationListRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.CertificateRevocationList",
+        "shortName": "get_certificate_revocation_list"
+      },
+      "description": "Sample for GetCertificateRevocationList",
+      "file": "privateca_v1_generated_certificate_authority_service_get_certificate_revocation_list_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_GetCertificateRevocationList_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_get_certificate_revocation_list_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.get_certificate_revocation_list",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.GetCertificateRevocationList",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "GetCertificateRevocationList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.GetCertificateRevocationListRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.CertificateRevocationList",
+        "shortName": "get_certificate_revocation_list"
+      },
+      "description": "Sample for GetCertificateRevocationList",
+      "file": "privateca_v1_generated_certificate_authority_service_get_certificate_revocation_list_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_GetCertificateRevocationList_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_get_certificate_revocation_list_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.get_certificate_template",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.GetCertificateTemplate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "GetCertificateTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.GetCertificateTemplateRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.CertificateTemplate",
+        "shortName": "get_certificate_template"
+      },
+      "description": "Sample for GetCertificateTemplate",
+      "file": "privateca_v1_generated_certificate_authority_service_get_certificate_template_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_GetCertificateTemplate_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_get_certificate_template_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.get_certificate_template",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.GetCertificateTemplate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "GetCertificateTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.GetCertificateTemplateRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.CertificateTemplate",
+        "shortName": "get_certificate_template"
+      },
+      "description": "Sample for GetCertificateTemplate",
+      "file": "privateca_v1_generated_certificate_authority_service_get_certificate_template_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_GetCertificateTemplate_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_get_certificate_template_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.get_certificate",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.GetCertificate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "GetCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.GetCertificateRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.Certificate",
+        "shortName": "get_certificate"
+      },
+      "description": "Sample for GetCertificate",
+      "file": "privateca_v1_generated_certificate_authority_service_get_certificate_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_GetCertificate_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_get_certificate_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.get_certificate",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.GetCertificate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "GetCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.GetCertificateRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.Certificate",
+        "shortName": "get_certificate"
+      },
+      "description": "Sample for GetCertificate",
+      "file": "privateca_v1_generated_certificate_authority_service_get_certificate_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_GetCertificate_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_get_certificate_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.list_ca_pools",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ListCaPools",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ListCaPools"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ListCaPoolsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.services.certificate_authority_service.pagers.ListCaPoolsAsyncPager",
+        "shortName": "list_ca_pools"
+      },
+      "description": "Sample for ListCaPools",
+      "file": "privateca_v1_generated_certificate_authority_service_list_ca_pools_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ListCaPools_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_list_ca_pools_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.list_ca_pools",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ListCaPools",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ListCaPools"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ListCaPoolsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.services.certificate_authority_service.pagers.ListCaPoolsPager",
+        "shortName": "list_ca_pools"
+      },
+      "description": "Sample for ListCaPools",
+      "file": "privateca_v1_generated_certificate_authority_service_list_ca_pools_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ListCaPools_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_list_ca_pools_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.list_certificate_authorities",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ListCertificateAuthorities",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ListCertificateAuthorities"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ListCertificateAuthoritiesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.services.certificate_authority_service.pagers.ListCertificateAuthoritiesAsyncPager",
+        "shortName": "list_certificate_authorities"
+      },
+      "description": "Sample for ListCertificateAuthorities",
+      "file": "privateca_v1_generated_certificate_authority_service_list_certificate_authorities_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ListCertificateAuthorities_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_list_certificate_authorities_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.list_certificate_authorities",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ListCertificateAuthorities",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ListCertificateAuthorities"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ListCertificateAuthoritiesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.services.certificate_authority_service.pagers.ListCertificateAuthoritiesPager",
+        "shortName": "list_certificate_authorities"
+      },
+      "description": "Sample for ListCertificateAuthorities",
+      "file": "privateca_v1_generated_certificate_authority_service_list_certificate_authorities_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ListCertificateAuthorities_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_list_certificate_authorities_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.list_certificate_revocation_lists",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ListCertificateRevocationLists",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ListCertificateRevocationLists"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ListCertificateRevocationListsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.services.certificate_authority_service.pagers.ListCertificateRevocationListsAsyncPager",
+        "shortName": "list_certificate_revocation_lists"
+      },
+      "description": "Sample for ListCertificateRevocationLists",
+      "file": "privateca_v1_generated_certificate_authority_service_list_certificate_revocation_lists_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ListCertificateRevocationLists_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_list_certificate_revocation_lists_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.list_certificate_revocation_lists",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ListCertificateRevocationLists",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ListCertificateRevocationLists"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ListCertificateRevocationListsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.services.certificate_authority_service.pagers.ListCertificateRevocationListsPager",
+        "shortName": "list_certificate_revocation_lists"
+      },
+      "description": "Sample for ListCertificateRevocationLists",
+      "file": "privateca_v1_generated_certificate_authority_service_list_certificate_revocation_lists_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ListCertificateRevocationLists_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_list_certificate_revocation_lists_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.list_certificate_templates",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ListCertificateTemplates",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ListCertificateTemplates"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ListCertificateTemplatesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.services.certificate_authority_service.pagers.ListCertificateTemplatesAsyncPager",
+        "shortName": "list_certificate_templates"
+      },
+      "description": "Sample for ListCertificateTemplates",
+      "file": "privateca_v1_generated_certificate_authority_service_list_certificate_templates_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ListCertificateTemplates_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_list_certificate_templates_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.list_certificate_templates",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ListCertificateTemplates",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ListCertificateTemplates"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ListCertificateTemplatesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.services.certificate_authority_service.pagers.ListCertificateTemplatesPager",
+        "shortName": "list_certificate_templates"
+      },
+      "description": "Sample for ListCertificateTemplates",
+      "file": "privateca_v1_generated_certificate_authority_service_list_certificate_templates_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ListCertificateTemplates_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_list_certificate_templates_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.list_certificates",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ListCertificates",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ListCertificates"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ListCertificatesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.services.certificate_authority_service.pagers.ListCertificatesAsyncPager",
+        "shortName": "list_certificates"
+      },
+      "description": "Sample for ListCertificates",
+      "file": "privateca_v1_generated_certificate_authority_service_list_certificates_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ListCertificates_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_list_certificates_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.list_certificates",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.ListCertificates",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "ListCertificates"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.ListCertificatesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.services.certificate_authority_service.pagers.ListCertificatesPager",
+        "shortName": "list_certificates"
+      },
+      "description": "Sample for ListCertificates",
+      "file": "privateca_v1_generated_certificate_authority_service_list_certificates_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_ListCertificates_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_list_certificates_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.revoke_certificate",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.RevokeCertificate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "RevokeCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.RevokeCertificateRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.Certificate",
+        "shortName": "revoke_certificate"
+      },
+      "description": "Sample for RevokeCertificate",
+      "file": "privateca_v1_generated_certificate_authority_service_revoke_certificate_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_RevokeCertificate_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_revoke_certificate_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.revoke_certificate",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.RevokeCertificate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "RevokeCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.RevokeCertificateRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.Certificate",
+        "shortName": "revoke_certificate"
+      },
+      "description": "Sample for RevokeCertificate",
+      "file": "privateca_v1_generated_certificate_authority_service_revoke_certificate_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_RevokeCertificate_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_revoke_certificate_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.undelete_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UndeleteCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UndeleteCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UndeleteCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "undelete_certificate_authority"
+      },
+      "description": "Sample for UndeleteCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_undelete_certificate_authority_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UndeleteCertificateAuthority_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_undelete_certificate_authority_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.undelete_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UndeleteCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UndeleteCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UndeleteCertificateAuthorityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "undelete_certificate_authority"
+      },
+      "description": "Sample for UndeleteCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_undelete_certificate_authority_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UndeleteCertificateAuthority_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_undelete_certificate_authority_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.update_ca_pool",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UpdateCaPool",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UpdateCaPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UpdateCaPoolRequest"
+          },
+          {
+            "name": "ca_pool",
+            "type": "google.cloud.security.privateca_v1.types.CaPool"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_ca_pool"
+      },
+      "description": "Sample for UpdateCaPool",
+      "file": "privateca_v1_generated_certificate_authority_service_update_ca_pool_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UpdateCaPool_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_update_ca_pool_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.update_ca_pool",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UpdateCaPool",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UpdateCaPool"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UpdateCaPoolRequest"
+          },
+          {
+            "name": "ca_pool",
+            "type": "google.cloud.security.privateca_v1.types.CaPool"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_ca_pool"
+      },
+      "description": "Sample for UpdateCaPool",
+      "file": "privateca_v1_generated_certificate_authority_service_update_ca_pool_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UpdateCaPool_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_update_ca_pool_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.update_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UpdateCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UpdateCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UpdateCertificateAuthorityRequest"
+          },
+          {
+            "name": "certificate_authority",
+            "type": "google.cloud.security.privateca_v1.types.CertificateAuthority"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_certificate_authority"
+      },
+      "description": "Sample for UpdateCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_update_certificate_authority_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UpdateCertificateAuthority_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_update_certificate_authority_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.update_certificate_authority",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UpdateCertificateAuthority",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UpdateCertificateAuthority"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UpdateCertificateAuthorityRequest"
+          },
+          {
+            "name": "certificate_authority",
+            "type": "google.cloud.security.privateca_v1.types.CertificateAuthority"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_certificate_authority"
+      },
+      "description": "Sample for UpdateCertificateAuthority",
+      "file": "privateca_v1_generated_certificate_authority_service_update_certificate_authority_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UpdateCertificateAuthority_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_update_certificate_authority_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.update_certificate_revocation_list",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UpdateCertificateRevocationList",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UpdateCertificateRevocationList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UpdateCertificateRevocationListRequest"
+          },
+          {
+            "name": "certificate_revocation_list",
+            "type": "google.cloud.security.privateca_v1.types.CertificateRevocationList"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_certificate_revocation_list"
+      },
+      "description": "Sample for UpdateCertificateRevocationList",
+      "file": "privateca_v1_generated_certificate_authority_service_update_certificate_revocation_list_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UpdateCertificateRevocationList_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_update_certificate_revocation_list_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.update_certificate_revocation_list",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UpdateCertificateRevocationList",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UpdateCertificateRevocationList"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UpdateCertificateRevocationListRequest"
+          },
+          {
+            "name": "certificate_revocation_list",
+            "type": "google.cloud.security.privateca_v1.types.CertificateRevocationList"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_certificate_revocation_list"
+      },
+      "description": "Sample for UpdateCertificateRevocationList",
+      "file": "privateca_v1_generated_certificate_authority_service_update_certificate_revocation_list_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UpdateCertificateRevocationList_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_update_certificate_revocation_list_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.update_certificate_template",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UpdateCertificateTemplate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UpdateCertificateTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UpdateCertificateTemplateRequest"
+          },
+          {
+            "name": "certificate_template",
+            "type": "google.cloud.security.privateca_v1.types.CertificateTemplate"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_certificate_template"
+      },
+      "description": "Sample for UpdateCertificateTemplate",
+      "file": "privateca_v1_generated_certificate_authority_service_update_certificate_template_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UpdateCertificateTemplate_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_update_certificate_template_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.update_certificate_template",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UpdateCertificateTemplate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UpdateCertificateTemplate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UpdateCertificateTemplateRequest"
+          },
+          {
+            "name": "certificate_template",
+            "type": "google.cloud.security.privateca_v1.types.CertificateTemplate"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_certificate_template"
+      },
+      "description": "Sample for UpdateCertificateTemplate",
+      "file": "privateca_v1_generated_certificate_authority_service_update_certificate_template_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UpdateCertificateTemplate_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_update_certificate_template_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient",
+          "shortName": "CertificateAuthorityServiceAsyncClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceAsyncClient.update_certificate",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UpdateCertificate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UpdateCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UpdateCertificateRequest"
+          },
+          {
+            "name": "certificate",
+            "type": "google.cloud.security.privateca_v1.types.Certificate"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.Certificate",
+        "shortName": "update_certificate"
+      },
+      "description": "Sample for UpdateCertificate",
+      "file": "privateca_v1_generated_certificate_authority_service_update_certificate_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UpdateCertificate_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_update_certificate_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient",
+          "shortName": "CertificateAuthorityServiceClient"
+        },
+        "fullName": "google.cloud.security.privateca_v1.CertificateAuthorityServiceClient.update_certificate",
+        "method": {
+          "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService.UpdateCertificate",
+          "service": {
+            "fullName": "google.cloud.security.privateca.v1.CertificateAuthorityService",
+            "shortName": "CertificateAuthorityService"
+          },
+          "shortName": "UpdateCertificate"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.security.privateca_v1.types.UpdateCertificateRequest"
+          },
+          {
+            "name": "certificate",
+            "type": "google.cloud.security.privateca_v1.types.Certificate"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.security.privateca_v1.types.Certificate",
+        "shortName": "update_certificate"
+      },
+      "description": "Sample for UpdateCertificate",
+      "file": "privateca_v1_generated_certificate_authority_service_update_certificate_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "privateca_v1_generated_CertificateAuthorityService_UpdateCertificate_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "privateca_v1_generated_certificate_authority_service_update_certificate_sync.py"
+    }
+  ]
+}

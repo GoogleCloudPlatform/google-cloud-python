@@ -1,0 +1,2416 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.ads.admanager_v1",
+  "protoPackage": "google.ads.admanager.v1",
+  "schema": "1.0",
+  "services": {
+    "AdBreakService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "AdBreakServiceClient",
+          "rpcs": {
+            "CreateAdBreak": {
+              "methods": [
+                "create_ad_break"
+              ]
+            },
+            "DeleteAdBreak": {
+              "methods": [
+                "delete_ad_break"
+              ]
+            },
+            "GetAdBreak": {
+              "methods": [
+                "get_ad_break"
+              ]
+            },
+            "ListAdBreaks": {
+              "methods": [
+                "list_ad_breaks"
+              ]
+            },
+            "UpdateAdBreak": {
+              "methods": [
+                "update_ad_break"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "AdReviewCenterAdService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "AdReviewCenterAdServiceClient",
+          "rpcs": {
+            "BatchAllowAdReviewCenterAds": {
+              "methods": [
+                "batch_allow_ad_review_center_ads"
+              ]
+            },
+            "BatchApplyAdReviewCenterCustomLabels": {
+              "methods": [
+                "batch_apply_ad_review_center_custom_labels"
+              ]
+            },
+            "BatchBlockAdReviewCenterAds": {
+              "methods": [
+                "batch_block_ad_review_center_ads"
+              ]
+            },
+            "FetchAdReviewCenterCustomLabels": {
+              "methods": [
+                "fetch_ad_review_center_custom_labels"
+              ]
+            },
+            "SearchAdReviewCenterAds": {
+              "methods": [
+                "search_ad_review_center_ads"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "AdRuleService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "AdRuleServiceClient",
+          "rpcs": {
+            "BatchActivateAdRules": {
+              "methods": [
+                "batch_activate_ad_rules"
+              ]
+            },
+            "BatchCreateAdRules": {
+              "methods": [
+                "batch_create_ad_rules"
+              ]
+            },
+            "BatchDeactivateAdRules": {
+              "methods": [
+                "batch_deactivate_ad_rules"
+              ]
+            },
+            "BatchDeleteAdRules": {
+              "methods": [
+                "batch_delete_ad_rules"
+              ]
+            },
+            "BatchUpdateAdRules": {
+              "methods": [
+                "batch_update_ad_rules"
+              ]
+            },
+            "CreateAdRule": {
+              "methods": [
+                "create_ad_rule"
+              ]
+            },
+            "GetAdRule": {
+              "methods": [
+                "get_ad_rule"
+              ]
+            },
+            "ListAdRules": {
+              "methods": [
+                "list_ad_rules"
+              ]
+            },
+            "UpdateAdRule": {
+              "methods": [
+                "update_ad_rule"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "AdSpotService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "AdSpotServiceClient",
+          "rpcs": {
+            "BatchCreateAdSpots": {
+              "methods": [
+                "batch_create_ad_spots"
+              ]
+            },
+            "BatchUpdateAdSpots": {
+              "methods": [
+                "batch_update_ad_spots"
+              ]
+            },
+            "CreateAdSpot": {
+              "methods": [
+                "create_ad_spot"
+              ]
+            },
+            "GetAdSpot": {
+              "methods": [
+                "get_ad_spot"
+              ]
+            },
+            "ListAdSpots": {
+              "methods": [
+                "list_ad_spots"
+              ]
+            },
+            "UpdateAdSpot": {
+              "methods": [
+                "update_ad_spot"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "AdUnitService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "AdUnitServiceClient",
+          "rpcs": {
+            "BatchActivateAdUnits": {
+              "methods": [
+                "batch_activate_ad_units"
+              ]
+            },
+            "BatchArchiveAdUnits": {
+              "methods": [
+                "batch_archive_ad_units"
+              ]
+            },
+            "BatchCreateAdUnits": {
+              "methods": [
+                "batch_create_ad_units"
+              ]
+            },
+            "BatchDeactivateAdUnits": {
+              "methods": [
+                "batch_deactivate_ad_units"
+              ]
+            },
+            "BatchUpdateAdUnits": {
+              "methods": [
+                "batch_update_ad_units"
+              ]
+            },
+            "CreateAdUnit": {
+              "methods": [
+                "create_ad_unit"
+              ]
+            },
+            "GetAdUnit": {
+              "methods": [
+                "get_ad_unit"
+              ]
+            },
+            "ListAdUnitSizes": {
+              "methods": [
+                "list_ad_unit_sizes"
+              ]
+            },
+            "ListAdUnits": {
+              "methods": [
+                "list_ad_units"
+              ]
+            },
+            "UpdateAdUnit": {
+              "methods": [
+                "update_ad_unit"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ApplicationService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "ApplicationServiceClient",
+          "rpcs": {
+            "BatchArchiveApplications": {
+              "methods": [
+                "batch_archive_applications"
+              ]
+            },
+            "BatchCreateApplications": {
+              "methods": [
+                "batch_create_applications"
+              ]
+            },
+            "BatchUnarchiveApplications": {
+              "methods": [
+                "batch_unarchive_applications"
+              ]
+            },
+            "BatchUpdateApplications": {
+              "methods": [
+                "batch_update_applications"
+              ]
+            },
+            "CreateApplication": {
+              "methods": [
+                "create_application"
+              ]
+            },
+            "GetApplication": {
+              "methods": [
+                "get_application"
+              ]
+            },
+            "ListApplications": {
+              "methods": [
+                "list_applications"
+              ]
+            },
+            "UpdateApplication": {
+              "methods": [
+                "update_application"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "AudienceSegmentService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "AudienceSegmentServiceClient",
+          "rpcs": {
+            "BatchActivateAudienceSegments": {
+              "methods": [
+                "batch_activate_audience_segments"
+              ]
+            },
+            "BatchApproveAudienceSegments": {
+              "methods": [
+                "batch_approve_audience_segments"
+              ]
+            },
+            "BatchCreateAudienceSegments": {
+              "methods": [
+                "batch_create_audience_segments"
+              ]
+            },
+            "BatchDeactivateAudienceSegments": {
+              "methods": [
+                "batch_deactivate_audience_segments"
+              ]
+            },
+            "BatchPopulateAudienceSegments": {
+              "methods": [
+                "batch_populate_audience_segments"
+              ]
+            },
+            "BatchRejectAudienceSegments": {
+              "methods": [
+                "batch_reject_audience_segments"
+              ]
+            },
+            "BatchUpdateAudienceSegments": {
+              "methods": [
+                "batch_update_audience_segments"
+              ]
+            },
+            "CreateAudienceSegment": {
+              "methods": [
+                "create_audience_segment"
+              ]
+            },
+            "GetAudienceSegment": {
+              "methods": [
+                "get_audience_segment"
+              ]
+            },
+            "ListAudienceSegments": {
+              "methods": [
+                "list_audience_segments"
+              ]
+            },
+            "UpdateAudienceSegment": {
+              "methods": [
+                "update_audience_segment"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "BandwidthGroupService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "BandwidthGroupServiceClient",
+          "rpcs": {
+            "GetBandwidthGroup": {
+              "methods": [
+                "get_bandwidth_group"
+              ]
+            },
+            "ListBandwidthGroups": {
+              "methods": [
+                "list_bandwidth_groups"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "BreakTemplateService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "BreakTemplateServiceClient",
+          "rpcs": {
+            "BatchCreateBreakTemplates": {
+              "methods": [
+                "batch_create_break_templates"
+              ]
+            },
+            "BatchUpdateBreakTemplates": {
+              "methods": [
+                "batch_update_break_templates"
+              ]
+            },
+            "CreateBreakTemplate": {
+              "methods": [
+                "create_break_template"
+              ]
+            },
+            "GetBreakTemplate": {
+              "methods": [
+                "get_break_template"
+              ]
+            },
+            "ListBreakTemplates": {
+              "methods": [
+                "list_break_templates"
+              ]
+            },
+            "UpdateBreakTemplate": {
+              "methods": [
+                "update_break_template"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "BrowserLanguageService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "BrowserLanguageServiceClient",
+          "rpcs": {
+            "GetBrowserLanguage": {
+              "methods": [
+                "get_browser_language"
+              ]
+            },
+            "ListBrowserLanguages": {
+              "methods": [
+                "list_browser_languages"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "BrowserService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "BrowserServiceClient",
+          "rpcs": {
+            "GetBrowser": {
+              "methods": [
+                "get_browser"
+              ]
+            },
+            "ListBrowsers": {
+              "methods": [
+                "list_browsers"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CdnConfigService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CdnConfigServiceClient",
+          "rpcs": {
+            "BatchActivateCdnConfigs": {
+              "methods": [
+                "batch_activate_cdn_configs"
+              ]
+            },
+            "BatchArchiveCdnConfigs": {
+              "methods": [
+                "batch_archive_cdn_configs"
+              ]
+            },
+            "BatchCreateCdnConfigs": {
+              "methods": [
+                "batch_create_cdn_configs"
+              ]
+            },
+            "BatchUpdateCdnConfigs": {
+              "methods": [
+                "batch_update_cdn_configs"
+              ]
+            },
+            "CreateCdnConfig": {
+              "methods": [
+                "create_cdn_config"
+              ]
+            },
+            "GetCdnConfig": {
+              "methods": [
+                "get_cdn_config"
+              ]
+            },
+            "ListCdnConfigs": {
+              "methods": [
+                "list_cdn_configs"
+              ]
+            },
+            "UpdateCdnConfig": {
+              "methods": [
+                "update_cdn_config"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ChildPublisherService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "ChildPublisherServiceClient",
+          "rpcs": {
+            "BatchCreateChildPublishers": {
+              "methods": [
+                "batch_create_child_publishers"
+              ]
+            },
+            "BatchRejectChildPublishers": {
+              "methods": [
+                "batch_reject_child_publishers"
+              ]
+            },
+            "BatchRenegotiateChildPublisherAgreements": {
+              "methods": [
+                "batch_renegotiate_child_publisher_agreements"
+              ]
+            },
+            "BatchResendChildPublisherInvitationEmails": {
+              "methods": [
+                "batch_resend_child_publisher_invitation_emails"
+              ]
+            },
+            "BatchUpdateChildPublishers": {
+              "methods": [
+                "batch_update_child_publishers"
+              ]
+            },
+            "BatchWithdrawChildPublishers": {
+              "methods": [
+                "batch_withdraw_child_publishers"
+              ]
+            },
+            "CreateChildPublisher": {
+              "methods": [
+                "create_child_publisher"
+              ]
+            },
+            "GetChildPublisher": {
+              "methods": [
+                "get_child_publisher"
+              ]
+            },
+            "ListChildPublishers": {
+              "methods": [
+                "list_child_publishers"
+              ]
+            },
+            "UpdateChildPublisher": {
+              "methods": [
+                "update_child_publisher"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CmsMetadataKeyService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CmsMetadataKeyServiceClient",
+          "rpcs": {
+            "BatchActivateCmsMetadataKeys": {
+              "methods": [
+                "batch_activate_cms_metadata_keys"
+              ]
+            },
+            "BatchDeactivateCmsMetadataKeys": {
+              "methods": [
+                "batch_deactivate_cms_metadata_keys"
+              ]
+            },
+            "GetCmsMetadataKey": {
+              "methods": [
+                "get_cms_metadata_key"
+              ]
+            },
+            "ListCmsMetadataKeys": {
+              "methods": [
+                "list_cms_metadata_keys"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CmsMetadataValueService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CmsMetadataValueServiceClient",
+          "rpcs": {
+            "BatchActivateCmsMetadataValues": {
+              "methods": [
+                "batch_activate_cms_metadata_values"
+              ]
+            },
+            "BatchDeactivateCmsMetadataValues": {
+              "methods": [
+                "batch_deactivate_cms_metadata_values"
+              ]
+            },
+            "GetCmsMetadataValue": {
+              "methods": [
+                "get_cms_metadata_value"
+              ]
+            },
+            "ListCmsMetadataValues": {
+              "methods": [
+                "list_cms_metadata_values"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CompanyService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CompanyServiceClient",
+          "rpcs": {
+            "BatchCreateCompanies": {
+              "methods": [
+                "batch_create_companies"
+              ]
+            },
+            "BatchUpdateCompanies": {
+              "methods": [
+                "batch_update_companies"
+              ]
+            },
+            "CreateCompany": {
+              "methods": [
+                "create_company"
+              ]
+            },
+            "GetCompany": {
+              "methods": [
+                "get_company"
+              ]
+            },
+            "ListCompanies": {
+              "methods": [
+                "list_companies"
+              ]
+            },
+            "UpdateCompany": {
+              "methods": [
+                "update_company"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ContactService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "ContactServiceClient",
+          "rpcs": {
+            "BatchCreateContacts": {
+              "methods": [
+                "batch_create_contacts"
+              ]
+            },
+            "BatchUpdateContacts": {
+              "methods": [
+                "batch_update_contacts"
+              ]
+            },
+            "CreateContact": {
+              "methods": [
+                "create_contact"
+              ]
+            },
+            "GetContact": {
+              "methods": [
+                "get_contact"
+              ]
+            },
+            "ListContacts": {
+              "methods": [
+                "list_contacts"
+              ]
+            },
+            "UpdateContact": {
+              "methods": [
+                "update_contact"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ContentBundleService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "ContentBundleServiceClient",
+          "rpcs": {
+            "BatchActivateContentBundles": {
+              "methods": [
+                "batch_activate_content_bundles"
+              ]
+            },
+            "BatchDeactivateContentBundles": {
+              "methods": [
+                "batch_deactivate_content_bundles"
+              ]
+            },
+            "GetContentBundle": {
+              "methods": [
+                "get_content_bundle"
+              ]
+            },
+            "ListContentBundles": {
+              "methods": [
+                "list_content_bundles"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ContentLabelService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "ContentLabelServiceClient",
+          "rpcs": {
+            "GetContentLabel": {
+              "methods": [
+                "get_content_label"
+              ]
+            },
+            "ListContentLabels": {
+              "methods": [
+                "list_content_labels"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ContentService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "ContentServiceClient",
+          "rpcs": {
+            "GetContent": {
+              "methods": [
+                "get_content"
+              ]
+            },
+            "ListContent": {
+              "methods": [
+                "list_content"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CreativeService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CreativeServiceClient",
+          "rpcs": {
+            "BatchActivateCreatives": {
+              "methods": [
+                "batch_activate_creatives"
+              ]
+            },
+            "BatchDeactivateCreatives": {
+              "methods": [
+                "batch_deactivate_creatives"
+              ]
+            },
+            "GetCreative": {
+              "methods": [
+                "get_creative"
+              ]
+            },
+            "ListCreatives": {
+              "methods": [
+                "list_creatives"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CreativeSetService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CreativeSetServiceClient",
+          "rpcs": {
+            "CreateCreativeSet": {
+              "methods": [
+                "create_creative_set"
+              ]
+            },
+            "GetCreativeSet": {
+              "methods": [
+                "get_creative_set"
+              ]
+            },
+            "ListCreativeSets": {
+              "methods": [
+                "list_creative_sets"
+              ]
+            },
+            "UpdateCreativeSet": {
+              "methods": [
+                "update_creative_set"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CreativeTemplateService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CreativeTemplateServiceClient",
+          "rpcs": {
+            "GetCreativeTemplate": {
+              "methods": [
+                "get_creative_template"
+              ]
+            },
+            "ListCreativeTemplates": {
+              "methods": [
+                "list_creative_templates"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CreativeWrapperService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CreativeWrapperServiceClient",
+          "rpcs": {
+            "BatchActivateCreativeWrappers": {
+              "methods": [
+                "batch_activate_creative_wrappers"
+              ]
+            },
+            "BatchCreateCreativeWrappers": {
+              "methods": [
+                "batch_create_creative_wrappers"
+              ]
+            },
+            "BatchDeactivateCreativeWrappers": {
+              "methods": [
+                "batch_deactivate_creative_wrappers"
+              ]
+            },
+            "BatchUpdateCreativeWrappers": {
+              "methods": [
+                "batch_update_creative_wrappers"
+              ]
+            },
+            "CreateCreativeWrapper": {
+              "methods": [
+                "create_creative_wrapper"
+              ]
+            },
+            "GetCreativeWrapper": {
+              "methods": [
+                "get_creative_wrapper"
+              ]
+            },
+            "ListCreativeWrappers": {
+              "methods": [
+                "list_creative_wrappers"
+              ]
+            },
+            "UpdateCreativeWrapper": {
+              "methods": [
+                "update_creative_wrapper"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CustomFieldService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CustomFieldServiceClient",
+          "rpcs": {
+            "BatchActivateCustomFields": {
+              "methods": [
+                "batch_activate_custom_fields"
+              ]
+            },
+            "BatchCreateCustomFields": {
+              "methods": [
+                "batch_create_custom_fields"
+              ]
+            },
+            "BatchDeactivateCustomFields": {
+              "methods": [
+                "batch_deactivate_custom_fields"
+              ]
+            },
+            "BatchUpdateCustomFields": {
+              "methods": [
+                "batch_update_custom_fields"
+              ]
+            },
+            "CreateCustomField": {
+              "methods": [
+                "create_custom_field"
+              ]
+            },
+            "GetCustomField": {
+              "methods": [
+                "get_custom_field"
+              ]
+            },
+            "ListCustomFields": {
+              "methods": [
+                "list_custom_fields"
+              ]
+            },
+            "UpdateCustomField": {
+              "methods": [
+                "update_custom_field"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CustomTargetingKeyService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CustomTargetingKeyServiceClient",
+          "rpcs": {
+            "BatchActivateCustomTargetingKeys": {
+              "methods": [
+                "batch_activate_custom_targeting_keys"
+              ]
+            },
+            "BatchCreateCustomTargetingKeys": {
+              "methods": [
+                "batch_create_custom_targeting_keys"
+              ]
+            },
+            "BatchDeactivateCustomTargetingKeys": {
+              "methods": [
+                "batch_deactivate_custom_targeting_keys"
+              ]
+            },
+            "BatchUpdateCustomTargetingKeys": {
+              "methods": [
+                "batch_update_custom_targeting_keys"
+              ]
+            },
+            "CreateCustomTargetingKey": {
+              "methods": [
+                "create_custom_targeting_key"
+              ]
+            },
+            "GetCustomTargetingKey": {
+              "methods": [
+                "get_custom_targeting_key"
+              ]
+            },
+            "ListCustomTargetingKeys": {
+              "methods": [
+                "list_custom_targeting_keys"
+              ]
+            },
+            "UpdateCustomTargetingKey": {
+              "methods": [
+                "update_custom_targeting_key"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CustomTargetingValueService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "CustomTargetingValueServiceClient",
+          "rpcs": {
+            "BatchActivateCustomTargetingValues": {
+              "methods": [
+                "batch_activate_custom_targeting_values"
+              ]
+            },
+            "BatchCreateCustomTargetingValues": {
+              "methods": [
+                "batch_create_custom_targeting_values"
+              ]
+            },
+            "BatchDeactivateCustomTargetingValues": {
+              "methods": [
+                "batch_deactivate_custom_targeting_values"
+              ]
+            },
+            "BatchUpdateCustomTargetingValues": {
+              "methods": [
+                "batch_update_custom_targeting_values"
+              ]
+            },
+            "CreateCustomTargetingValue": {
+              "methods": [
+                "create_custom_targeting_value"
+              ]
+            },
+            "GetCustomTargetingValue": {
+              "methods": [
+                "get_custom_targeting_value"
+              ]
+            },
+            "ListCustomTargetingValues": {
+              "methods": [
+                "list_custom_targeting_values"
+              ]
+            },
+            "UpdateCustomTargetingValue": {
+              "methods": [
+                "update_custom_targeting_value"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DaiAuthenticationKeyService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "DaiAuthenticationKeyServiceClient",
+          "rpcs": {
+            "BatchActivateDaiAuthenticationKeys": {
+              "methods": [
+                "batch_activate_dai_authentication_keys"
+              ]
+            },
+            "BatchCreateDaiAuthenticationKeys": {
+              "methods": [
+                "batch_create_dai_authentication_keys"
+              ]
+            },
+            "BatchDeactivateDaiAuthenticationKeys": {
+              "methods": [
+                "batch_deactivate_dai_authentication_keys"
+              ]
+            },
+            "BatchUpdateDaiAuthenticationKeys": {
+              "methods": [
+                "batch_update_dai_authentication_keys"
+              ]
+            },
+            "CreateDaiAuthenticationKey": {
+              "methods": [
+                "create_dai_authentication_key"
+              ]
+            },
+            "GetDaiAuthenticationKey": {
+              "methods": [
+                "get_dai_authentication_key"
+              ]
+            },
+            "ListDaiAuthenticationKeys": {
+              "methods": [
+                "list_dai_authentication_keys"
+              ]
+            },
+            "UpdateDaiAuthenticationKey": {
+              "methods": [
+                "update_dai_authentication_key"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DaiEncodingProfileService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "DaiEncodingProfileServiceClient",
+          "rpcs": {
+            "BatchActivateDaiEncodingProfiles": {
+              "methods": [
+                "batch_activate_dai_encoding_profiles"
+              ]
+            },
+            "BatchArchiveDaiEncodingProfiles": {
+              "methods": [
+                "batch_archive_dai_encoding_profiles"
+              ]
+            },
+            "BatchCreateDaiEncodingProfiles": {
+              "methods": [
+                "batch_create_dai_encoding_profiles"
+              ]
+            },
+            "BatchUpdateDaiEncodingProfiles": {
+              "methods": [
+                "batch_update_dai_encoding_profiles"
+              ]
+            },
+            "CreateDaiEncodingProfile": {
+              "methods": [
+                "create_dai_encoding_profile"
+              ]
+            },
+            "GetDaiEncodingProfile": {
+              "methods": [
+                "get_dai_encoding_profile"
+              ]
+            },
+            "ListDaiEncodingProfiles": {
+              "methods": [
+                "list_dai_encoding_profiles"
+              ]
+            },
+            "UpdateDaiEncodingProfile": {
+              "methods": [
+                "update_dai_encoding_profile"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DaiSessionService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "DaiSessionServiceClient",
+          "rpcs": {
+            "GetDaiSession": {
+              "methods": [
+                "get_dai_session"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DeviceCapabilityService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "DeviceCapabilityServiceClient",
+          "rpcs": {
+            "GetDeviceCapability": {
+              "methods": [
+                "get_device_capability"
+              ]
+            },
+            "ListDeviceCapabilities": {
+              "methods": [
+                "list_device_capabilities"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DeviceCategoryService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "DeviceCategoryServiceClient",
+          "rpcs": {
+            "GetDeviceCategory": {
+              "methods": [
+                "get_device_category"
+              ]
+            },
+            "ListDeviceCategories": {
+              "methods": [
+                "list_device_categories"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DeviceManufacturerService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "DeviceManufacturerServiceClient",
+          "rpcs": {
+            "GetDeviceManufacturer": {
+              "methods": [
+                "get_device_manufacturer"
+              ]
+            },
+            "ListDeviceManufacturers": {
+              "methods": [
+                "list_device_manufacturers"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "EntitySignalsMappingService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "EntitySignalsMappingServiceClient",
+          "rpcs": {
+            "BatchCreateEntitySignalsMappings": {
+              "methods": [
+                "batch_create_entity_signals_mappings"
+              ]
+            },
+            "BatchUpdateEntitySignalsMappings": {
+              "methods": [
+                "batch_update_entity_signals_mappings"
+              ]
+            },
+            "CreateEntitySignalsMapping": {
+              "methods": [
+                "create_entity_signals_mapping"
+              ]
+            },
+            "GetEntitySignalsMapping": {
+              "methods": [
+                "get_entity_signals_mapping"
+              ]
+            },
+            "ListEntitySignalsMappings": {
+              "methods": [
+                "list_entity_signals_mappings"
+              ]
+            },
+            "UpdateEntitySignalsMapping": {
+              "methods": [
+                "update_entity_signals_mapping"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ForecastService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "ForecastServiceClient",
+          "rpcs": {
+            "RunAvailabilityForecast": {
+              "methods": [
+                "run_availability_forecast"
+              ]
+            },
+            "RunDeliveryForecast": {
+              "methods": [
+                "run_delivery_forecast"
+              ]
+            },
+            "RunTrafficData": {
+              "methods": [
+                "run_traffic_data"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GeoTargetService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "GeoTargetServiceClient",
+          "rpcs": {
+            "GetGeoTarget": {
+              "methods": [
+                "get_geo_target"
+              ]
+            },
+            "ListGeoTargets": {
+              "methods": [
+                "list_geo_targets"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "LabelService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "LabelServiceClient",
+          "rpcs": {
+            "BatchActivateLabels": {
+              "methods": [
+                "batch_activate_labels"
+              ]
+            },
+            "BatchCreateLabels": {
+              "methods": [
+                "batch_create_labels"
+              ]
+            },
+            "BatchDeactivateLabels": {
+              "methods": [
+                "batch_deactivate_labels"
+              ]
+            },
+            "BatchUpdateLabels": {
+              "methods": [
+                "batch_update_labels"
+              ]
+            },
+            "CreateLabel": {
+              "methods": [
+                "create_label"
+              ]
+            },
+            "GetLabel": {
+              "methods": [
+                "get_label"
+              ]
+            },
+            "ListLabels": {
+              "methods": [
+                "list_labels"
+              ]
+            },
+            "UpdateLabel": {
+              "methods": [
+                "update_label"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "LineItemCreativeAssociationService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "LineItemCreativeAssociationServiceClient",
+          "rpcs": {
+            "GetLineItemCreativeAssociation": {
+              "methods": [
+                "get_line_item_creative_association"
+              ]
+            },
+            "ListLineItemCreativeAssociations": {
+              "methods": [
+                "list_line_item_creative_associations"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "LineItemService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "LineItemServiceClient",
+          "rpcs": {
+            "BatchActivateLineItems": {
+              "methods": [
+                "batch_activate_line_items"
+              ]
+            },
+            "BatchArchiveLineItems": {
+              "methods": [
+                "batch_archive_line_items"
+              ]
+            },
+            "BatchCreateLineItems": {
+              "methods": [
+                "batch_create_line_items"
+              ]
+            },
+            "BatchDeleteLineItems": {
+              "methods": [
+                "batch_delete_line_items"
+              ]
+            },
+            "BatchPauseLineItems": {
+              "methods": [
+                "batch_pause_line_items"
+              ]
+            },
+            "BatchReleaseLineItems": {
+              "methods": [
+                "batch_release_line_items"
+              ]
+            },
+            "BatchReserveAndOverbookLineItems": {
+              "methods": [
+                "batch_reserve_and_overbook_line_items"
+              ]
+            },
+            "BatchReserveLineItems": {
+              "methods": [
+                "batch_reserve_line_items"
+              ]
+            },
+            "BatchResumeAndOverbookLineItems": {
+              "methods": [
+                "batch_resume_and_overbook_line_items"
+              ]
+            },
+            "BatchResumeLineItems": {
+              "methods": [
+                "batch_resume_line_items"
+              ]
+            },
+            "BatchUnarchiveLineItems": {
+              "methods": [
+                "batch_unarchive_line_items"
+              ]
+            },
+            "BatchUpdateLineItems": {
+              "methods": [
+                "batch_update_line_items"
+              ]
+            },
+            "CreateLineItem": {
+              "methods": [
+                "create_line_item"
+              ]
+            },
+            "GetLineItem": {
+              "methods": [
+                "get_line_item"
+              ]
+            },
+            "ListLineItems": {
+              "methods": [
+                "list_line_items"
+              ]
+            },
+            "UpdateLineItem": {
+              "methods": [
+                "update_line_item"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "LineItemTemplateService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "LineItemTemplateServiceClient",
+          "rpcs": {
+            "GetLineItemTemplate": {
+              "methods": [
+                "get_line_item_template"
+              ]
+            },
+            "ListLineItemTemplates": {
+              "methods": [
+                "list_line_item_templates"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "LinkedDeviceService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "LinkedDeviceServiceClient",
+          "rpcs": {
+            "GetLinkedDevice": {
+              "methods": [
+                "get_linked_device"
+              ]
+            },
+            "ListLinkedDevices": {
+              "methods": [
+                "list_linked_devices"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "LiveStreamService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "LiveStreamServiceClient",
+          "rpcs": {
+            "BatchActivateLiveStreams": {
+              "methods": [
+                "batch_activate_live_streams"
+              ]
+            },
+            "BatchArchiveLiveStreams": {
+              "methods": [
+                "batch_archive_live_streams"
+              ]
+            },
+            "BatchCreateLiveStreams": {
+              "methods": [
+                "batch_create_live_streams"
+              ]
+            },
+            "BatchPauseAdsLiveStreams": {
+              "methods": [
+                "batch_pause_ads_live_streams"
+              ]
+            },
+            "BatchPauseLiveStreams": {
+              "methods": [
+                "batch_pause_live_streams"
+              ]
+            },
+            "BatchRefreshMasterPlaylists": {
+              "methods": [
+                "batch_refresh_master_playlists"
+              ]
+            },
+            "BatchUpdateLiveStreams": {
+              "methods": [
+                "batch_update_live_streams"
+              ]
+            },
+            "CreateLiveStream": {
+              "methods": [
+                "create_live_stream"
+              ]
+            },
+            "GetLiveStream": {
+              "methods": [
+                "get_live_stream"
+              ]
+            },
+            "ListLiveStreams": {
+              "methods": [
+                "list_live_streams"
+              ]
+            },
+            "UpdateLiveStream": {
+              "methods": [
+                "update_live_stream"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "McmEarningsService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "McmEarningsServiceClient",
+          "rpcs": {
+            "FetchMcmEarnings": {
+              "methods": [
+                "fetch_mcm_earnings"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "MobileCarrierService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "MobileCarrierServiceClient",
+          "rpcs": {
+            "GetMobileCarrier": {
+              "methods": [
+                "get_mobile_carrier"
+              ]
+            },
+            "ListMobileCarriers": {
+              "methods": [
+                "list_mobile_carriers"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "MobileDeviceService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "MobileDeviceServiceClient",
+          "rpcs": {
+            "GetMobileDevice": {
+              "methods": [
+                "get_mobile_device"
+              ]
+            },
+            "ListMobileDevices": {
+              "methods": [
+                "list_mobile_devices"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "MobileDeviceSubmodelService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "MobileDeviceSubmodelServiceClient",
+          "rpcs": {
+            "GetMobileDeviceSubmodel": {
+              "methods": [
+                "get_mobile_device_submodel"
+              ]
+            },
+            "ListMobileDeviceSubmodels": {
+              "methods": [
+                "list_mobile_device_submodels"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NativeStyleService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "NativeStyleServiceClient",
+          "rpcs": {
+            "BatchActivateNativeStyles": {
+              "methods": [
+                "batch_activate_native_styles"
+              ]
+            },
+            "BatchArchiveNativeStyles": {
+              "methods": [
+                "batch_archive_native_styles"
+              ]
+            },
+            "BatchCreateNativeStyles": {
+              "methods": [
+                "batch_create_native_styles"
+              ]
+            },
+            "BatchDeactivateNativeStyles": {
+              "methods": [
+                "batch_deactivate_native_styles"
+              ]
+            },
+            "BatchUpdateNativeStyles": {
+              "methods": [
+                "batch_update_native_styles"
+              ]
+            },
+            "CreateNativeStyle": {
+              "methods": [
+                "create_native_style"
+              ]
+            },
+            "GetNativeStyle": {
+              "methods": [
+                "get_native_style"
+              ]
+            },
+            "ListNativeStyles": {
+              "methods": [
+                "list_native_styles"
+              ]
+            },
+            "UpdateNativeStyle": {
+              "methods": [
+                "update_native_style"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NetworkService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "NetworkServiceClient",
+          "rpcs": {
+            "GetDefaultThirdPartyDataDeclaration": {
+              "methods": [
+                "get_default_third_party_data_declaration"
+              ]
+            },
+            "GetNetwork": {
+              "methods": [
+                "get_network"
+              ]
+            },
+            "ListNetworks": {
+              "methods": [
+                "list_networks"
+              ]
+            },
+            "ProvisionTestNetwork": {
+              "methods": [
+                "provision_test_network"
+              ]
+            },
+            "UpdateNetwork": {
+              "methods": [
+                "update_network"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "OperatingSystemService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "OperatingSystemServiceClient",
+          "rpcs": {
+            "GetOperatingSystem": {
+              "methods": [
+                "get_operating_system"
+              ]
+            },
+            "ListOperatingSystems": {
+              "methods": [
+                "list_operating_systems"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "OperatingSystemVersionService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "OperatingSystemVersionServiceClient",
+          "rpcs": {
+            "GetOperatingSystemVersion": {
+              "methods": [
+                "get_operating_system_version"
+              ]
+            },
+            "ListOperatingSystemVersions": {
+              "methods": [
+                "list_operating_system_versions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "OrderService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "OrderServiceClient",
+          "rpcs": {
+            "BatchApproveAndOverbookOrders": {
+              "methods": [
+                "batch_approve_and_overbook_orders"
+              ]
+            },
+            "BatchApproveOrders": {
+              "methods": [
+                "batch_approve_orders"
+              ]
+            },
+            "BatchApproveOrdersWithoutReservation": {
+              "methods": [
+                "batch_approve_orders_without_reservation"
+              ]
+            },
+            "BatchArchiveOrders": {
+              "methods": [
+                "batch_archive_orders"
+              ]
+            },
+            "BatchCreateOrders": {
+              "methods": [
+                "batch_create_orders"
+              ]
+            },
+            "BatchDeleteOrders": {
+              "methods": [
+                "batch_delete_orders"
+              ]
+            },
+            "BatchDisapproveOrders": {
+              "methods": [
+                "batch_disapprove_orders"
+              ]
+            },
+            "BatchDisapproveOrdersWithoutReservationChanges": {
+              "methods": [
+                "batch_disapprove_orders_without_reservation_changes"
+              ]
+            },
+            "BatchPauseOrders": {
+              "methods": [
+                "batch_pause_orders"
+              ]
+            },
+            "BatchResumeAndOverbookOrders": {
+              "methods": [
+                "batch_resume_and_overbook_orders"
+              ]
+            },
+            "BatchResumeOrders": {
+              "methods": [
+                "batch_resume_orders"
+              ]
+            },
+            "BatchRetractOrders": {
+              "methods": [
+                "batch_retract_orders"
+              ]
+            },
+            "BatchRetractOrdersWithoutReservationChanges": {
+              "methods": [
+                "batch_retract_orders_without_reservation_changes"
+              ]
+            },
+            "BatchSubmitOrdersForApproval": {
+              "methods": [
+                "batch_submit_orders_for_approval"
+              ]
+            },
+            "BatchSubmitOrdersForApprovalAndOverbook": {
+              "methods": [
+                "batch_submit_orders_for_approval_and_overbook"
+              ]
+            },
+            "BatchSubmitOrdersForApprovalWithoutReservationChanges": {
+              "methods": [
+                "batch_submit_orders_for_approval_without_reservation_changes"
+              ]
+            },
+            "BatchUnarchiveOrders": {
+              "methods": [
+                "batch_unarchive_orders"
+              ]
+            },
+            "BatchUpdateOrders": {
+              "methods": [
+                "batch_update_orders"
+              ]
+            },
+            "GetOrder": {
+              "methods": [
+                "get_order"
+              ]
+            },
+            "ListOrders": {
+              "methods": [
+                "list_orders"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PartnerService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "PartnerServiceClient",
+          "rpcs": {
+            "BatchUpdatePartners": {
+              "methods": [
+                "batch_update_partners"
+              ]
+            },
+            "GetPartner": {
+              "methods": [
+                "get_partner"
+              ]
+            },
+            "ListPartners": {
+              "methods": [
+                "list_partners"
+              ]
+            },
+            "UpdatePartner": {
+              "methods": [
+                "update_partner"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PlacementService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "PlacementServiceClient",
+          "rpcs": {
+            "BatchActivatePlacements": {
+              "methods": [
+                "batch_activate_placements"
+              ]
+            },
+            "BatchArchivePlacements": {
+              "methods": [
+                "batch_archive_placements"
+              ]
+            },
+            "BatchCreatePlacements": {
+              "methods": [
+                "batch_create_placements"
+              ]
+            },
+            "BatchDeactivatePlacements": {
+              "methods": [
+                "batch_deactivate_placements"
+              ]
+            },
+            "BatchUpdatePlacements": {
+              "methods": [
+                "batch_update_placements"
+              ]
+            },
+            "CreatePlacement": {
+              "methods": [
+                "create_placement"
+              ]
+            },
+            "GetPlacement": {
+              "methods": [
+                "get_placement"
+              ]
+            },
+            "ListPlacements": {
+              "methods": [
+                "list_placements"
+              ]
+            },
+            "UpdatePlacement": {
+              "methods": [
+                "update_placement"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PrivateAuctionDealService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "PrivateAuctionDealServiceClient",
+          "rpcs": {
+            "CreatePrivateAuctionDeal": {
+              "methods": [
+                "create_private_auction_deal"
+              ]
+            },
+            "GetPrivateAuctionDeal": {
+              "methods": [
+                "get_private_auction_deal"
+              ]
+            },
+            "ListPrivateAuctionDeals": {
+              "methods": [
+                "list_private_auction_deals"
+              ]
+            },
+            "UpdatePrivateAuctionDeal": {
+              "methods": [
+                "update_private_auction_deal"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "PrivateAuctionService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "PrivateAuctionServiceClient",
+          "rpcs": {
+            "CreatePrivateAuction": {
+              "methods": [
+                "create_private_auction"
+              ]
+            },
+            "GetPrivateAuction": {
+              "methods": [
+                "get_private_auction"
+              ]
+            },
+            "ListPrivateAuctions": {
+              "methods": [
+                "list_private_auctions"
+              ]
+            },
+            "UpdatePrivateAuction": {
+              "methods": [
+                "update_private_auction"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ProgrammaticBuyerService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "ProgrammaticBuyerServiceClient",
+          "rpcs": {
+            "GetProgrammaticBuyer": {
+              "methods": [
+                "get_programmatic_buyer"
+              ]
+            },
+            "ListProgrammaticBuyers": {
+              "methods": [
+                "list_programmatic_buyers"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ReportService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "ReportServiceClient",
+          "rpcs": {
+            "CreateReport": {
+              "methods": [
+                "create_report"
+              ]
+            },
+            "FetchReportResultRows": {
+              "methods": [
+                "fetch_report_result_rows"
+              ]
+            },
+            "GetReport": {
+              "methods": [
+                "get_report"
+              ]
+            },
+            "ListReports": {
+              "methods": [
+                "list_reports"
+              ]
+            },
+            "RunReport": {
+              "methods": [
+                "run_report"
+              ]
+            },
+            "UpdateReport": {
+              "methods": [
+                "update_report"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RichMediaAdsCompanyService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "RichMediaAdsCompanyServiceClient",
+          "rpcs": {
+            "GetRichMediaAdsCompany": {
+              "methods": [
+                "get_rich_media_ads_company"
+              ]
+            },
+            "ListRichMediaAdsCompanies": {
+              "methods": [
+                "list_rich_media_ads_companies"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RoleService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "RoleServiceClient",
+          "rpcs": {
+            "GetRole": {
+              "methods": [
+                "get_role"
+              ]
+            },
+            "ListRoles": {
+              "methods": [
+                "list_roles"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SiteService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "SiteServiceClient",
+          "rpcs": {
+            "BatchCreateSites": {
+              "methods": [
+                "batch_create_sites"
+              ]
+            },
+            "BatchDeactivateSites": {
+              "methods": [
+                "batch_deactivate_sites"
+              ]
+            },
+            "BatchSubmitSitesForApproval": {
+              "methods": [
+                "batch_submit_sites_for_approval"
+              ]
+            },
+            "BatchUpdateSites": {
+              "methods": [
+                "batch_update_sites"
+              ]
+            },
+            "CreateSite": {
+              "methods": [
+                "create_site"
+              ]
+            },
+            "GetSite": {
+              "methods": [
+                "get_site"
+              ]
+            },
+            "ListSites": {
+              "methods": [
+                "list_sites"
+              ]
+            },
+            "UpdateSite": {
+              "methods": [
+                "update_site"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SlateService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "SlateServiceClient",
+          "rpcs": {
+            "BatchArchiveSlates": {
+              "methods": [
+                "batch_archive_slates"
+              ]
+            },
+            "BatchCreateSlates": {
+              "methods": [
+                "batch_create_slates"
+              ]
+            },
+            "BatchUnarchiveSlates": {
+              "methods": [
+                "batch_unarchive_slates"
+              ]
+            },
+            "BatchUpdateSlates": {
+              "methods": [
+                "batch_update_slates"
+              ]
+            },
+            "CreateSlate": {
+              "methods": [
+                "create_slate"
+              ]
+            },
+            "GetSlate": {
+              "methods": [
+                "get_slate"
+              ]
+            },
+            "ListSlates": {
+              "methods": [
+                "list_slates"
+              ]
+            },
+            "UpdateSlate": {
+              "methods": [
+                "update_slate"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SuggestedAdUnitService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "SuggestedAdUnitServiceClient",
+          "rpcs": {
+            "BatchApproveSuggestedAdUnits": {
+              "methods": [
+                "batch_approve_suggested_ad_units"
+              ]
+            },
+            "GetSuggestedAdUnit": {
+              "methods": [
+                "get_suggested_ad_unit"
+              ]
+            },
+            "ListSuggestedAdUnits": {
+              "methods": [
+                "list_suggested_ad_units"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TargetingPresetService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "TargetingPresetServiceClient",
+          "rpcs": {
+            "BatchCreateTargetingPresets": {
+              "methods": [
+                "batch_create_targeting_presets"
+              ]
+            },
+            "BatchDeactivateTargetingPresets": {
+              "methods": [
+                "batch_deactivate_targeting_presets"
+              ]
+            },
+            "BatchUpdateTargetingPresets": {
+              "methods": [
+                "batch_update_targeting_presets"
+              ]
+            },
+            "CreateTargetingPreset": {
+              "methods": [
+                "create_targeting_preset"
+              ]
+            },
+            "GetTargetingPreset": {
+              "methods": [
+                "get_targeting_preset"
+              ]
+            },
+            "ListTargetingPresets": {
+              "methods": [
+                "list_targeting_presets"
+              ]
+            },
+            "UpdateTargetingPreset": {
+              "methods": [
+                "update_targeting_preset"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TaxonomyCategoryService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "TaxonomyCategoryServiceClient",
+          "rpcs": {
+            "GetTaxonomyCategory": {
+              "methods": [
+                "get_taxonomy_category"
+              ]
+            },
+            "ListTaxonomyCategories": {
+              "methods": [
+                "list_taxonomy_categories"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "TeamService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "TeamServiceClient",
+          "rpcs": {
+            "BatchActivateTeams": {
+              "methods": [
+                "batch_activate_teams"
+              ]
+            },
+            "BatchCreateTeams": {
+              "methods": [
+                "batch_create_teams"
+              ]
+            },
+            "BatchDeactivateTeams": {
+              "methods": [
+                "batch_deactivate_teams"
+              ]
+            },
+            "BatchUpdateTeams": {
+              "methods": [
+                "batch_update_teams"
+              ]
+            },
+            "CreateTeam": {
+              "methods": [
+                "create_team"
+              ]
+            },
+            "GetTeam": {
+              "methods": [
+                "get_team"
+              ]
+            },
+            "ListTeams": {
+              "methods": [
+                "list_teams"
+              ]
+            },
+            "UpdateTeam": {
+              "methods": [
+                "update_team"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ThirdPartyCompanyService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "ThirdPartyCompanyServiceClient",
+          "rpcs": {
+            "GetThirdPartyCompany": {
+              "methods": [
+                "get_third_party_company"
+              ]
+            },
+            "ListThirdPartyCompanies": {
+              "methods": [
+                "list_third_party_companies"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "UserService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "UserServiceClient",
+          "rpcs": {
+            "BatchActivateUsers": {
+              "methods": [
+                "batch_activate_users"
+              ]
+            },
+            "BatchCreateUsers": {
+              "methods": [
+                "batch_create_users"
+              ]
+            },
+            "BatchDeactivateUsers": {
+              "methods": [
+                "batch_deactivate_users"
+              ]
+            },
+            "BatchUpdateUsers": {
+              "methods": [
+                "batch_update_users"
+              ]
+            },
+            "CreateUser": {
+              "methods": [
+                "create_user"
+              ]
+            },
+            "GetUser": {
+              "methods": [
+                "get_user"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "list_users"
+              ]
+            },
+            "UpdateUser": {
+              "methods": [
+                "update_user"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ViewabilityProviderService": {
+      "clients": {
+        "rest": {
+          "libraryClient": "ViewabilityProviderServiceClient",
+          "rpcs": {
+            "BatchCreateViewabilityProviders": {
+              "methods": [
+                "batch_create_viewability_providers"
+              ]
+            },
+            "BatchUpdateViewabilityProviders": {
+              "methods": [
+                "batch_update_viewability_providers"
+              ]
+            },
+            "CreateViewabilityProvider": {
+              "methods": [
+                "create_viewability_provider"
+              ]
+            },
+            "GetViewabilityProvider": {
+              "methods": [
+                "get_viewability_provider"
+              ]
+            },
+            "ListViewabilityProviders": {
+              "methods": [
+                "list_viewability_providers"
+              ]
+            },
+            "UpdateViewabilityProvider": {
+              "methods": [
+                "update_viewability_provider"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

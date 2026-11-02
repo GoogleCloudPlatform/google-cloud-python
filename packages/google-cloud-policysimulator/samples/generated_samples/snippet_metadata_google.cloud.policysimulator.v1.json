@@ -1,0 +1,1166 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.policysimulator.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-policysimulator",
+    "version": "0.4.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceAsyncClient",
+          "shortName": "OrgPolicyViolationsPreviewServiceAsyncClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceAsyncClient.create_org_policy_violations_preview",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService.CreateOrgPolicyViolationsPreview",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService",
+            "shortName": "OrgPolicyViolationsPreviewService"
+          },
+          "shortName": "CreateOrgPolicyViolationsPreview"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.CreateOrgPolicyViolationsPreviewRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "org_policy_violations_preview",
+            "type": "google.cloud.policysimulator_v1.types.OrgPolicyViolationsPreview"
+          },
+          {
+            "name": "org_policy_violations_preview_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_org_policy_violations_preview"
+      },
+      "description": "Sample for CreateOrgPolicyViolationsPreview",
+      "file": "policysimulator_v1_generated_org_policy_violations_preview_service_create_org_policy_violations_preview_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_OrgPolicyViolationsPreviewService_CreateOrgPolicyViolationsPreview_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_org_policy_violations_preview_service_create_org_policy_violations_preview_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceClient",
+          "shortName": "OrgPolicyViolationsPreviewServiceClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceClient.create_org_policy_violations_preview",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService.CreateOrgPolicyViolationsPreview",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService",
+            "shortName": "OrgPolicyViolationsPreviewService"
+          },
+          "shortName": "CreateOrgPolicyViolationsPreview"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.CreateOrgPolicyViolationsPreviewRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "org_policy_violations_preview",
+            "type": "google.cloud.policysimulator_v1.types.OrgPolicyViolationsPreview"
+          },
+          {
+            "name": "org_policy_violations_preview_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_org_policy_violations_preview"
+      },
+      "description": "Sample for CreateOrgPolicyViolationsPreview",
+      "file": "policysimulator_v1_generated_org_policy_violations_preview_service_create_org_policy_violations_preview_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_OrgPolicyViolationsPreviewService_CreateOrgPolicyViolationsPreview_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_org_policy_violations_preview_service_create_org_policy_violations_preview_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceAsyncClient",
+          "shortName": "OrgPolicyViolationsPreviewServiceAsyncClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceAsyncClient.get_org_policy_violations_preview",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService.GetOrgPolicyViolationsPreview",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService",
+            "shortName": "OrgPolicyViolationsPreviewService"
+          },
+          "shortName": "GetOrgPolicyViolationsPreview"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.GetOrgPolicyViolationsPreviewRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.policysimulator_v1.types.OrgPolicyViolationsPreview",
+        "shortName": "get_org_policy_violations_preview"
+      },
+      "description": "Sample for GetOrgPolicyViolationsPreview",
+      "file": "policysimulator_v1_generated_org_policy_violations_preview_service_get_org_policy_violations_preview_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_OrgPolicyViolationsPreviewService_GetOrgPolicyViolationsPreview_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_org_policy_violations_preview_service_get_org_policy_violations_preview_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceClient",
+          "shortName": "OrgPolicyViolationsPreviewServiceClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceClient.get_org_policy_violations_preview",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService.GetOrgPolicyViolationsPreview",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService",
+            "shortName": "OrgPolicyViolationsPreviewService"
+          },
+          "shortName": "GetOrgPolicyViolationsPreview"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.GetOrgPolicyViolationsPreviewRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.policysimulator_v1.types.OrgPolicyViolationsPreview",
+        "shortName": "get_org_policy_violations_preview"
+      },
+      "description": "Sample for GetOrgPolicyViolationsPreview",
+      "file": "policysimulator_v1_generated_org_policy_violations_preview_service_get_org_policy_violations_preview_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_OrgPolicyViolationsPreviewService_GetOrgPolicyViolationsPreview_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_org_policy_violations_preview_service_get_org_policy_violations_preview_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceAsyncClient",
+          "shortName": "OrgPolicyViolationsPreviewServiceAsyncClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceAsyncClient.list_org_policy_violations_previews",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService.ListOrgPolicyViolationsPreviews",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService",
+            "shortName": "OrgPolicyViolationsPreviewService"
+          },
+          "shortName": "ListOrgPolicyViolationsPreviews"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.ListOrgPolicyViolationsPreviewsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.policysimulator_v1.services.org_policy_violations_preview_service.pagers.ListOrgPolicyViolationsPreviewsAsyncPager",
+        "shortName": "list_org_policy_violations_previews"
+      },
+      "description": "Sample for ListOrgPolicyViolationsPreviews",
+      "file": "policysimulator_v1_generated_org_policy_violations_preview_service_list_org_policy_violations_previews_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_OrgPolicyViolationsPreviewService_ListOrgPolicyViolationsPreviews_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_org_policy_violations_preview_service_list_org_policy_violations_previews_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceClient",
+          "shortName": "OrgPolicyViolationsPreviewServiceClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceClient.list_org_policy_violations_previews",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService.ListOrgPolicyViolationsPreviews",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService",
+            "shortName": "OrgPolicyViolationsPreviewService"
+          },
+          "shortName": "ListOrgPolicyViolationsPreviews"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.ListOrgPolicyViolationsPreviewsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.policysimulator_v1.services.org_policy_violations_preview_service.pagers.ListOrgPolicyViolationsPreviewsPager",
+        "shortName": "list_org_policy_violations_previews"
+      },
+      "description": "Sample for ListOrgPolicyViolationsPreviews",
+      "file": "policysimulator_v1_generated_org_policy_violations_preview_service_list_org_policy_violations_previews_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_OrgPolicyViolationsPreviewService_ListOrgPolicyViolationsPreviews_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_org_policy_violations_preview_service_list_org_policy_violations_previews_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceAsyncClient",
+          "shortName": "OrgPolicyViolationsPreviewServiceAsyncClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceAsyncClient.list_org_policy_violations",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService.ListOrgPolicyViolations",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService",
+            "shortName": "OrgPolicyViolationsPreviewService"
+          },
+          "shortName": "ListOrgPolicyViolations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.ListOrgPolicyViolationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.policysimulator_v1.services.org_policy_violations_preview_service.pagers.ListOrgPolicyViolationsAsyncPager",
+        "shortName": "list_org_policy_violations"
+      },
+      "description": "Sample for ListOrgPolicyViolations",
+      "file": "policysimulator_v1_generated_org_policy_violations_preview_service_list_org_policy_violations_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_OrgPolicyViolationsPreviewService_ListOrgPolicyViolations_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_org_policy_violations_preview_service_list_org_policy_violations_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceClient",
+          "shortName": "OrgPolicyViolationsPreviewServiceClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.OrgPolicyViolationsPreviewServiceClient.list_org_policy_violations",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService.ListOrgPolicyViolations",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.OrgPolicyViolationsPreviewService",
+            "shortName": "OrgPolicyViolationsPreviewService"
+          },
+          "shortName": "ListOrgPolicyViolations"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.ListOrgPolicyViolationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.policysimulator_v1.services.org_policy_violations_preview_service.pagers.ListOrgPolicyViolationsPager",
+        "shortName": "list_org_policy_violations"
+      },
+      "description": "Sample for ListOrgPolicyViolations",
+      "file": "policysimulator_v1_generated_org_policy_violations_preview_service_list_org_policy_violations_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_OrgPolicyViolationsPreviewService_ListOrgPolicyViolations_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_org_policy_violations_preview_service_list_org_policy_violations_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.SimulatorAsyncClient",
+          "shortName": "SimulatorAsyncClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.SimulatorAsyncClient.create_replay",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.Simulator.CreateReplay",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.Simulator",
+            "shortName": "Simulator"
+          },
+          "shortName": "CreateReplay"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.CreateReplayRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "replay",
+            "type": "google.cloud.policysimulator_v1.types.Replay"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_replay"
+      },
+      "description": "Sample for CreateReplay",
+      "file": "policysimulator_v1_generated_simulator_create_replay_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_Simulator_CreateReplay_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_simulator_create_replay_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.SimulatorClient",
+          "shortName": "SimulatorClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.SimulatorClient.create_replay",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.Simulator.CreateReplay",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.Simulator",
+            "shortName": "Simulator"
+          },
+          "shortName": "CreateReplay"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.CreateReplayRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "replay",
+            "type": "google.cloud.policysimulator_v1.types.Replay"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_replay"
+      },
+      "description": "Sample for CreateReplay",
+      "file": "policysimulator_v1_generated_simulator_create_replay_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_Simulator_CreateReplay_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_simulator_create_replay_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.SimulatorAsyncClient",
+          "shortName": "SimulatorAsyncClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.SimulatorAsyncClient.get_replay",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.Simulator.GetReplay",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.Simulator",
+            "shortName": "Simulator"
+          },
+          "shortName": "GetReplay"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.GetReplayRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.policysimulator_v1.types.Replay",
+        "shortName": "get_replay"
+      },
+      "description": "Sample for GetReplay",
+      "file": "policysimulator_v1_generated_simulator_get_replay_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_Simulator_GetReplay_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_simulator_get_replay_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.SimulatorClient",
+          "shortName": "SimulatorClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.SimulatorClient.get_replay",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.Simulator.GetReplay",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.Simulator",
+            "shortName": "Simulator"
+          },
+          "shortName": "GetReplay"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.GetReplayRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.policysimulator_v1.types.Replay",
+        "shortName": "get_replay"
+      },
+      "description": "Sample for GetReplay",
+      "file": "policysimulator_v1_generated_simulator_get_replay_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_Simulator_GetReplay_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_simulator_get_replay_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.SimulatorAsyncClient",
+          "shortName": "SimulatorAsyncClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.SimulatorAsyncClient.list_replay_results",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.Simulator.ListReplayResults",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.Simulator",
+            "shortName": "Simulator"
+          },
+          "shortName": "ListReplayResults"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.ListReplayResultsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.policysimulator_v1.services.simulator.pagers.ListReplayResultsAsyncPager",
+        "shortName": "list_replay_results"
+      },
+      "description": "Sample for ListReplayResults",
+      "file": "policysimulator_v1_generated_simulator_list_replay_results_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_Simulator_ListReplayResults_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_simulator_list_replay_results_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.policysimulator_v1.SimulatorClient",
+          "shortName": "SimulatorClient"
+        },
+        "fullName": "google.cloud.policysimulator_v1.SimulatorClient.list_replay_results",
+        "method": {
+          "fullName": "google.cloud.policysimulator.v1.Simulator.ListReplayResults",
+          "service": {
+            "fullName": "google.cloud.policysimulator.v1.Simulator",
+            "shortName": "Simulator"
+          },
+          "shortName": "ListReplayResults"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.policysimulator_v1.types.ListReplayResultsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.policysimulator_v1.services.simulator.pagers.ListReplayResultsPager",
+        "shortName": "list_replay_results"
+      },
+      "description": "Sample for ListReplayResults",
+      "file": "policysimulator_v1_generated_simulator_list_replay_results_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "policysimulator_v1_generated_Simulator_ListReplayResults_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "policysimulator_v1_generated_simulator_list_replay_results_sync.py"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children: []
+  fullName: google.cloud.storage.constants
+  langs:
+  - python
+  module: google.cloud.storage.constants
+  name: constants
+  source:
+    id: constants
+    path: tests/testdata/handwritten/google/cloud/storage/constants.py
+    startLine: 0
+  summary: 'Constants used across google.cloud.storage modules.
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google.cloud.storage.constants
+references: []

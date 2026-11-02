@@ -1,0 +1,32 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: Required. The updated subscription object.
+    id: subscription
+    var_type: google.pubsub_v1.types.Subscription
+  - description: "Required. Indicates which fields in the\n   provided subscription\
+      \ to update. Must be\n   specified and non-empty."
+    id: update_mask
+    var_type: google.protobuf.field_mask_pb2.FieldMask
+  children: []
+  class: google.cloud.pubsub_v1.types.UpdateSubscriptionRequest
+  fullName: google.cloud.pubsub_v1.types.UpdateSubscriptionRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: UpdateSubscriptionRequest
+  source:
+    id: UpdateSubscriptionRequest
+    path: null
+    startLine: null
+  summary: 'Request for the UpdateSubscription method.
+
+    '
+  syntax:
+    content: UpdateSubscriptionRequest(mapping=None, *, ignore_unknown_fields=False,
+      **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.UpdateSubscriptionRequest
+references: []

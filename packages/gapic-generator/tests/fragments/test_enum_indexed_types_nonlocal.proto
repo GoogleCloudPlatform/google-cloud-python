@@ -1,0 +1,54 @@
+// Copyright (C) 2023  Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.fragment;
+
+import "google/api/client.proto";
+import "google/type/dayofweek.proto";
+
+// This test differs from the one implemented by service EnumIndexedTypes in
+// that this file does not define any enum types, which may lead to a
+// slightly distinct template generation path.
+service EnumIndexedTypesNonLocal {
+  option (google.api.default_host) = "my.example.com";
+
+  rpc MethodWithRepeatedEnums(MethodRequestWithRepeatedEnums) returns (MethodResponseWithRepeatedEnums) {
+  }
+}
+
+message MethodRequestWithRepeatedEnums {
+  // Without proper handling, the two fields below referencing
+  // google.type.DayOfWeek trigger errors like:
+  //
+  //  TypeError: Parameters to generic types must be types.
+  //  Got <google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper object at 0x....>
+  //
+  // The generated code needs to either quote the type, or `from __future__
+  // import annotations`. This may be solved by PEP 563, currently scheduled for
+  // Python 3.11
+  // (cf. https://mail.python.org/archives/list/python-dev@python.org/message/CLVXXPQ2T2LQ5MP2Y53VVQFCXYWQJHKZ/)
+
+  repeated google.type.DayOfWeek holidays = 2;
+  map<string, google.type.DayOfWeek> string_holidays = 4;
+}
+
+message MethodResponseWithRepeatedEnums {
+  // The commentary in MethodRequestWithRepeatedEnums describes what is tested
+  // below.
+
+  repeated google.type.DayOfWeek holidays = 2;
+  map<string, google.type.DayOfWeek> string_holidays = 4;
+}

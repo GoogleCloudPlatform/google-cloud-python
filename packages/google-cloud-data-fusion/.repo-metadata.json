@@ -1,0 +1,15 @@
+{
+    "api_description": "Cloud Data Fusion is a fully-managed, cloud native, enterprise data\nintegration service for     quickly building and managing data pipelines.\nIt provides a graphical interface to increase     time efficiency and\nreduce complexity, and allows business users, developers, and data\nscientists to easily and reliably build scalable data integration\nsolutions to cleanse,     prepare, blend, transfer and transform data\nwithout having to wrestle with infrastructure.",
+    "api_id": "datafusion.googleapis.com",
+    "api_shortname": "datafusion",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/datafusion/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-data-fusion",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "datafusion",
+    "name_pretty": "Cloud Data Fusion",
+    "product_documentation": "https://cloud.google.com/data-fusion",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

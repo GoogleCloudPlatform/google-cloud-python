@@ -1,0 +1,136 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.retry.ConditionalRetryPolicy
+  - google.cloud.storage.retry.is_etag_in_data
+  - google.cloud.storage.retry.is_etag_in_json
+  - google.cloud.storage.retry.is_generation_specified
+  - google.cloud.storage.retry.is_metageneration_specified
+  fullName: google.cloud.storage.retry
+  langs:
+  - python
+  module: google.cloud.storage.retry
+  name: retry
+  source:
+    id: retry
+    path: tests/testdata/handwritten/google/cloud/storage/retry.py
+    startLine: 0
+  summary: 'Helpers for configuring retries with exponential back-off.
+
+
+    See [Retry Strategy for Google Cloud Storage](https://cloud.google.com/storage/docs/retry-strategy#client-libraries)
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google.cloud.storage.retry
+- attributes: []
+  fullName: google.cloud.storage.retry.is_etag_in_data
+  langs:
+  - python
+  module: google.cloud.storage.retry
+  name: is_etag_in_data
+  source:
+    id: is_etag_in_data
+    path: tests/testdata/handwritten/google/cloud/storage/retry.py
+    startLine: 124
+  summary: 'Return True if an etag is contained in the request body.
+
+    '
+  syntax:
+    content: is_etag_in_data(data)
+    parameters:
+    - description: A dict representing the request JSON body. If not passed, returns
+        False.
+      id: data
+      var_type: dict or None
+  type: function
+  uid: google.cloud.storage.retry.is_etag_in_data
+- attributes: []
+  fullName: google.cloud.storage.retry.is_etag_in_json
+  langs:
+  - python
+  module: google.cloud.storage.retry
+  name: is_etag_in_json
+  source:
+    id: is_etag_in_json
+    path: tests/testdata/handwritten/google/cloud/storage/retry.py
+    startLine: 133
+  summary: '`is_etag_in_json` is supported for backwards-compatibility reasons only;
+
+    please use `is_etag_in_data` instead.
+
+
+    '
+  syntax:
+    content: is_etag_in_json(data)
+    parameters: []
+  type: function
+  uid: google.cloud.storage.retry.is_etag_in_json
+- attributes: []
+  fullName: google.cloud.storage.retry.is_generation_specified
+  langs:
+  - python
+  module: google.cloud.storage.retry
+  name: is_generation_specified
+  source:
+    id: is_generation_specified
+    path: tests/testdata/handwritten/google/cloud/storage/retry.py
+    startLine: 111
+  summary: 'Return True if generation or if_generation_match is specified.
+
+
+    '
+  syntax:
+    content: is_generation_specified(query_params)
+    parameters: []
+  type: function
+  uid: google.cloud.storage.retry.is_generation_specified
+- attributes: []
+  fullName: google.cloud.storage.retry.is_metageneration_specified
+  langs:
+  - python
+  module: google.cloud.storage.retry
+  name: is_metageneration_specified
+  source:
+    id: is_metageneration_specified
+    path: tests/testdata/handwritten/google/cloud/storage/retry.py
+    startLine: 118
+  summary: 'Return True if if_metageneration_match is specified.
+
+
+    '
+  syntax:
+    content: is_metageneration_specified(query_params)
+    parameters: []
+  type: function
+  uid: google.cloud.storage.retry.is_metageneration_specified
+references:
+- fullName: google.cloud.storage.retry.ConditionalRetryPolicy
+  isExternal: false
+  name: ConditionalRetryPolicy
+  parent: google.cloud.storage.retry
+  uid: google.cloud.storage.retry.ConditionalRetryPolicy
+- fullName: google.cloud.storage.retry.is_etag_in_data
+  isExternal: false
+  name: is_etag_in_data
+  parent: google.cloud.storage.retry
+  uid: google.cloud.storage.retry.is_etag_in_data
+- fullName: google.cloud.storage.retry.is_etag_in_json
+  isExternal: false
+  name: is_etag_in_json
+  parent: google.cloud.storage.retry
+  uid: google.cloud.storage.retry.is_etag_in_json
+- fullName: google.cloud.storage.retry.is_generation_specified
+  isExternal: false
+  name: is_generation_specified
+  parent: google.cloud.storage.retry
+  uid: google.cloud.storage.retry.is_generation_specified
+- fullName: google.cloud.storage.retry.is_metageneration_specified
+  isExternal: false
+  name: is_metageneration_specified
+  parent: google.cloud.storage.retry
+  uid: google.cloud.storage.retry.is_metageneration_specified

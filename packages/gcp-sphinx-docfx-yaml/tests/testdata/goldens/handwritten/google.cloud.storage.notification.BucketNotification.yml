@@ -1,0 +1,605 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.notification.BucketNotification.blob_name_prefix
+  - google.cloud.storage.notification.BucketNotification.bucket
+  - google.cloud.storage.notification.BucketNotification.client
+  - google.cloud.storage.notification.BucketNotification.create
+  - google.cloud.storage.notification.BucketNotification.custom_attributes
+  - google.cloud.storage.notification.BucketNotification.delete
+  - google.cloud.storage.notification.BucketNotification.etag
+  - google.cloud.storage.notification.BucketNotification.event_types
+  - google.cloud.storage.notification.BucketNotification.exists
+  - google.cloud.storage.notification.BucketNotification.from_api_repr
+  - google.cloud.storage.notification.BucketNotification.notification_id
+  - google.cloud.storage.notification.BucketNotification.path
+  - google.cloud.storage.notification.BucketNotification.payload_format
+  - google.cloud.storage.notification.BucketNotification.reload
+  - google.cloud.storage.notification.BucketNotification.self_link
+  - google.cloud.storage.notification.BucketNotification.topic_name
+  - google.cloud.storage.notification.BucketNotification.topic_project
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: BucketNotification
+  source:
+    id: BucketNotification
+    path: tests/testdata/handwritten/google/cloud/storage/notification.py
+    startLine: 48
+  summary: 'Represent a single notification resource for a bucket.
+
+
+    See: https://cloud.google.com/storage/docs/json_api/v1/notifications
+
+    '
+  syntax:
+    content: "BucketNotification(\n    bucket,\n    topic_name=None,\n    topic_project=None,\n\
+      \    custom_attributes=None,\n    event_types=None,\n    blob_name_prefix=None,\n\
+      \    payload_format=\"NONE\",\n    notification_id=None,\n)"
+    parameters:
+    - description: Bucket to which the notification is bound.
+      id: bucket
+      var_type: <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref>
+    - description: (Optional) Topic name to which notifications are published.
+      id: topic_name
+      var_type: str
+    - description: (Optional) Project ID of topic to which notifications are published.
+        If not passed, uses the project ID of the bucket's client.
+      id: topic_project
+      var_type: str
+    - description: (Optional) Additional attributes passed with notification events.
+      id: custom_attributes
+      var_type: dict
+    - description: (Optional) Event types for which notification events are published.
+      id: event_types
+      var_type: list(str)
+    - description: (Optional) Prefix of blob names for which notification events are
+        published.
+      id: blob_name_prefix
+      var_type: str
+    - description: (Optional) Format of payload for notification events.
+      id: payload_format
+      var_type: str
+    - description: (Optional) The ID of the notification.
+      id: notification_id
+      var_type: str
+  type: class
+  uid: google.cloud.storage.notification.BucketNotification
+- &id001
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.blob_name_prefix
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: blob_name_prefix
+  source:
+    id: blob_name_prefix
+    path: null
+    startLine: null
+  summary: 'Prefix of blob names for which notification events are published.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.blob_name_prefix
+- *id001
+- &id002
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.bucket
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: bucket
+  source:
+    id: bucket
+    path: null
+    startLine: null
+  summary: 'Bucket to which the notification is bound.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.bucket
+- *id002
+- &id003
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.client
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: client
+  source:
+    id: client
+    path: null
+    startLine: null
+  summary: 'The client bound to this notfication.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.client
+- *id003
+- attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.create
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: create
+  source:
+    id: create
+    path: tests/testdata/handwritten/google/cloud/storage/notification.py
+    startLine: 233
+  summary: 'API wrapper: create the notification.
+
+
+    See:
+
+    https://cloud.google.com/storage/docs/json_api/v1/notifications/insert
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+    '
+  syntax:
+    content: create(client=None, timeout=60, retry=None)
+    exceptions:
+    - description: if the notification already exists.
+      var_type: ValueError
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the notification's bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.notification.BucketNotification.create
+- &id004
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.custom_attributes
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: custom_attributes
+  source:
+    id: custom_attributes
+    path: null
+    startLine: null
+  summary: 'Custom attributes passed with notification events.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.custom_attributes
+- *id004
+- attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.delete
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: delete
+  source:
+    id: delete
+    path: tests/testdata/handwritten/google/cloud/storage/notification.py
+    startLine: 374
+  summary: 'Delete this notification.
+
+
+    See:
+
+    https://cloud.google.com/storage/docs/json_api/v1/notifications/delete
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+    '
+  syntax:
+    content: delete(client=None, timeout=60, retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: if the notification does not exist.
+      var_type: <code>google.api_core.exceptions.NotFound</code>
+    - description: if the notification has no ID.
+      var_type: ValueError
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.notification.BucketNotification.delete
+- &id005
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.etag
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: etag
+  source:
+    id: etag
+    path: null
+    startLine: null
+  summary: 'Server-set ETag of notification resource.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.etag
+- *id005
+- &id006
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.event_types
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: event_types
+  source:
+    id: event_types
+    path: null
+    startLine: null
+  summary: 'Event types for which notification events are published.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.event_types
+- *id006
+- attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.exists
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: exists
+  source:
+    id: exists
+    path: tests/testdata/handwritten/google/cloud/storage/notification.py
+    startLine: 285
+  summary: 'Test whether this notification exists.
+
+
+    See:
+
+    https://cloud.google.com/storage/docs/json_api/v1/notifications/get
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+    '
+  syntax:
+    content: exists(client=None, timeout=60, retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: if the notification has no ID.
+      var_type: ValueError
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+    returns:
+    - description: True, if the notification exists, else False.
+      var_type: bool
+  type: method
+  uid: google.cloud.storage.notification.BucketNotification.exists
+- attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.from_api_repr
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: from_api_repr
+  source:
+    id: from_api_repr
+    path: tests/testdata/handwritten/google/cloud/storage/notification.py
+    startLine: 125
+  summary: 'Construct an instance from the JSON repr returned by the server.
+
+
+    See: https://cloud.google.com/storage/docs/json_api/v1/notifications
+
+    '
+  syntax:
+    content: from_api_repr(resource, bucket)
+    parameters:
+    - description: JSON repr of the notification
+      id: resource
+      var_type: dict
+    - description: Bucket to which the notification is bound.
+      id: bucket
+      var_type: <xref uid="google.cloud.storage.bucket.Bucket">Bucket</xref>
+    returns:
+    - description: the new notification instance
+      var_type: <code>BucketNotification</code>
+  type: method
+  uid: google.cloud.storage.notification.BucketNotification.from_api_repr
+- &id007
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.notification_id
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: notification_id
+  source:
+    id: notification_id
+    path: null
+    startLine: null
+  summary: 'Server-set ID of notification resource.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.notification_id
+- *id007
+- &id008
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.path
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: path
+  source:
+    id: path
+    path: null
+    startLine: null
+  summary: 'The URL path for this notification.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.path
+- *id008
+- &id009
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.payload_format
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: payload_format
+  source:
+    id: payload_format
+    path: null
+    startLine: null
+  summary: 'Format of payload of notification events.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.payload_format
+- *id009
+- attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.reload
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: reload
+  source:
+    id: reload
+    path: tests/testdata/handwritten/google/cloud/storage/notification.py
+    startLine: 332
+  summary: 'Update this notification from the server configuration.
+
+
+    See:
+
+    https://cloud.google.com/storage/docs/json_api/v1/notifications/get
+
+
+    If `user_project` is set on the bucket, bills the API request
+
+    to that project.
+
+    '
+  syntax:
+    content: reload(client=None, timeout=60, retry=<google.api_core.retry.Retry object>)
+    exceptions:
+    - description: if the notification has no ID.
+      var_type: ValueError
+    parameters:
+    - description: (Optional) The client to use. If not passed, falls back to the
+        <code>client</code> stored on the current bucket.
+      id: client
+      var_type: <xref uid="google.cloud.storage.client.Client">Client</xref> or <code>NoneType</code>
+    - description: '(Optional) The amount of time, in seconds, to wait for the server
+        response. See: <code>configuring_timeouts</code>'
+      id: timeout
+      var_type: float or tuple
+    - description: '(Optional) How to retry the RPC. See: <code>configuring_retries</code>'
+      id: retry
+      var_type: google.api_core.retry.Retry or <xref uid="google.cloud.storage.retry.ConditionalRetryPolicy">google.cloud.storage.retry.ConditionalRetryPolicy</xref>
+  type: method
+  uid: google.cloud.storage.notification.BucketNotification.reload
+- &id010
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.self_link
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: self_link
+  source:
+    id: self_link
+    path: null
+    startLine: null
+  summary: 'Server-set ETag of notification resource.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.self_link
+- *id010
+- &id011
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.topic_name
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: topic_name
+  source:
+    id: topic_name
+    path: null
+    startLine: null
+  summary: 'Topic name to which notifications are published.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.topic_name
+- *id011
+- &id012
+  attributes: []
+  class: google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification.BucketNotification.topic_project
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: topic_project
+  source:
+    id: topic_project
+    path: null
+    startLine: null
+  summary: 'Project ID of topic to which notifications are published.
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.storage.notification.BucketNotification.topic_project
+- *id012
+references:
+- fullName: google.cloud.storage.notification.BucketNotification.blob_name_prefix
+  isExternal: false
+  name: blob_name_prefix
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.blob_name_prefix
+- fullName: google.cloud.storage.notification.BucketNotification.bucket
+  isExternal: false
+  name: bucket
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.bucket
+- fullName: google.cloud.storage.notification.BucketNotification.client
+  isExternal: false
+  name: client
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.client
+- fullName: google.cloud.storage.notification.BucketNotification.create
+  isExternal: false
+  name: create
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.create
+- fullName: google.cloud.storage.notification.BucketNotification.custom_attributes
+  isExternal: false
+  name: custom_attributes
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.custom_attributes
+- fullName: google.cloud.storage.notification.BucketNotification.delete
+  isExternal: false
+  name: delete
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.delete
+- fullName: google.cloud.storage.notification.BucketNotification.etag
+  isExternal: false
+  name: etag
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.etag
+- fullName: google.cloud.storage.notification.BucketNotification.event_types
+  isExternal: false
+  name: event_types
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.event_types
+- fullName: google.cloud.storage.notification.BucketNotification.exists
+  isExternal: false
+  name: exists
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.exists
+- fullName: google.cloud.storage.notification.BucketNotification.from_api_repr
+  isExternal: false
+  name: from_api_repr
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.from_api_repr
+- fullName: google.cloud.storage.notification.BucketNotification.notification_id
+  isExternal: false
+  name: notification_id
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.notification_id
+- fullName: google.cloud.storage.notification.BucketNotification.path
+  isExternal: false
+  name: path
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.path
+- fullName: google.cloud.storage.notification.BucketNotification.payload_format
+  isExternal: false
+  name: payload_format
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.payload_format
+- fullName: google.cloud.storage.notification.BucketNotification.reload
+  isExternal: false
+  name: reload
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.reload
+- fullName: google.cloud.storage.notification.BucketNotification.self_link
+  isExternal: false
+  name: self_link
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.self_link
+- fullName: google.cloud.storage.notification.BucketNotification.topic_name
+  isExternal: false
+  name: topic_name
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.topic_name
+- fullName: google.cloud.storage.notification.BucketNotification.topic_project
+  isExternal: false
+  name: topic_project
+  parent: google.cloud.storage.notification.BucketNotification
+  uid: google.cloud.storage.notification.BucketNotification.topic_project

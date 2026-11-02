@@ -1,0 +1,15 @@
+{
+    "api_description": "The Network Management API provides a collection of network performance\nmonitoring and diagnostic capabilities.",
+    "api_id": "networkmanagement.googleapis.com",
+    "api_shortname": "networkmanagement",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/networkmanagement/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-network-management",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "networkmanagement",
+    "name_pretty": "Network Management",
+    "product_documentation": "https://cloud.google.com/network-management",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

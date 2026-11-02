@@ -1,0 +1,43 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.shopping.merchant_loyaltycustomers_v1",
+  "protoPackage": "google.shopping.merchant.loyaltycustomers.v1",
+  "schema": "1.0",
+  "services": {
+    "LoyaltyCustomerMatchService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "LoyaltyCustomerMatchServiceClient",
+          "rpcs": {
+            "ManageLoyaltyCustomerMatch": {
+              "methods": [
+                "manage_loyalty_customer_match"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "LoyaltyCustomerMatchServiceAsyncClient",
+          "rpcs": {
+            "ManageLoyaltyCustomerMatch": {
+              "methods": [
+                "manage_loyalty_customer_match"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "LoyaltyCustomerMatchServiceClient",
+          "rpcs": {
+            "ManageLoyaltyCustomerMatch": {
+              "methods": [
+                "manage_loyalty_customer_match"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package examples.spanner.music;
+
+message SingerInfo {
+  optional int64 singer_id = 1;
+  optional string birth_date = 2;
+  optional string nationality = 3;
+  optional Genre genre = 4;
+}
+
+enum Genre {
+  POP = 0;
+  JAZZ = 1;
+  FOLK = 2;
+  ROCK = 3;
+}

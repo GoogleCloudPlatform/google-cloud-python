@@ -1,0 +1,15 @@
+{
+    "api_description": "Store and manage build artifacts in a scalable and integrated service built\non Google infrastructure.",
+    "api_id": "artifactregistry.googleapis.com",
+    "api_shortname": "artifactregistry",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/artifactregistry/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-artifact-registry",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "artifactregistry",
+    "name_pretty": "Artifact Registry",
+    "product_documentation": "https://cloud.google.com/artifact-registry",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

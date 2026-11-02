@@ -1,0 +1,36 @@
+{% extends '_base.py.j2' %}
+
+{% block content %}
+
+from collections import OrderedDict
+from typing import Dict, Type
+
+from .base import {{ service.name }}Transport
+{% if 'grpc' in opts.transport %}
+from .grpc import {{ service.name }}GrpcTransport
+{% endif %}
+{% if 'rest' in opts.transport %}
+from .rest import {{ service.name }}RestTransport
+from .rest import {{ service.name }}RestInterceptor
+{% endif %}
+
+# Compile a registry of transports.
+_transport_registry = OrderedDict()  # type: Dict[str, Type[{{ service.name }}Transport]]
+{% if 'grpc' in opts.transport %}
+_transport_registry['grpc'] = {{ service.name }}GrpcTransport
+{% endif %}
+{% if 'rest' in opts.transport %}
+_transport_registry['rest'] = {{ service.name }}RestTransport
+{% endif %}
+
+__all__ = (
+    '{{ service.name }}Transport',
+    {% if 'grpc' in opts.transport %}
+    '{{ service.name }}GrpcTransport',
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    '{{ service.name }}RestTransport',
+    '{{ service.name }}RestInterceptor',
+    {% endif %}
+)
+{% endblock %}

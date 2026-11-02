@@ -1,0 +1,2194 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.pubsub_v1.subscriber.client.Client
+  - google.cloud.pubsub_v1.subscriber.client.Client.acknowledge
+  - google.cloud.pubsub_v1.subscriber.client.Client.api
+  - google.cloud.pubsub_v1.subscriber.client.Client.close
+  - google.cloud.pubsub_v1.subscriber.client.Client.closed
+  - google.cloud.pubsub_v1.subscriber.client.Client.common_billing_account_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.common_folder_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.common_location_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.common_organization_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.common_project_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.create_snapshot
+  - google.cloud.pubsub_v1.subscriber.client.Client.create_subscription
+  - google.cloud.pubsub_v1.subscriber.client.Client.delete_snapshot
+  - google.cloud.pubsub_v1.subscriber.client.Client.delete_subscription
+  - google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_file
+  - google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_info
+  - google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_json
+  - google.cloud.pubsub_v1.subscriber.client.Client.get_iam_policy
+  - google.cloud.pubsub_v1.subscriber.client.Client.get_mtls_endpoint_and_cert_source
+  - google.cloud.pubsub_v1.subscriber.client.Client.get_snapshot
+  - google.cloud.pubsub_v1.subscriber.client.Client.get_subscription
+  - google.cloud.pubsub_v1.subscriber.client.Client.list_snapshots
+  - google.cloud.pubsub_v1.subscriber.client.Client.list_subscriptions
+  - google.cloud.pubsub_v1.subscriber.client.Client.modify_ack_deadline
+  - google.cloud.pubsub_v1.subscriber.client.Client.modify_push_config
+  - google.cloud.pubsub_v1.subscriber.client.Client.parse_common_billing_account_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.parse_common_folder_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.parse_common_location_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.parse_common_organization_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.parse_common_project_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.parse_snapshot_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.parse_subscription_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.parse_topic_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.pull
+  - google.cloud.pubsub_v1.subscriber.client.Client.seek
+  - google.cloud.pubsub_v1.subscriber.client.Client.set_iam_policy
+  - google.cloud.pubsub_v1.subscriber.client.Client.snapshot_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.streaming_pull
+  - google.cloud.pubsub_v1.subscriber.client.Client.subscribe
+  - google.cloud.pubsub_v1.subscriber.client.Client.subscription_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.target
+  - google.cloud.pubsub_v1.subscriber.client.Client.test_iam_permissions
+  - google.cloud.pubsub_v1.subscriber.client.Client.topic_path
+  - google.cloud.pubsub_v1.subscriber.client.Client.transport
+  - google.cloud.pubsub_v1.subscriber.client.Client.update_snapshot
+  - google.cloud.pubsub_v1.subscriber.client.Client.update_subscription
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: Client
+  source:
+    id: Client
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/client.py
+    startLine: 46
+  summary: 'A subscriber client for Google Cloud Pub/Sub.
+
+
+    This creates an object that is capable of subscribing to messages.
+
+    Generally, you can instantiate this client with no arguments, and you
+
+    get sensible defaults.
+
+    '
+  syntax:
+    content: 'Client(**kwargs: typing.Any)'
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.subscriber.client.Client
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: Client
+  source:
+    id: Client
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/client.py
+    startLine: 46
+  summary: 'Instantiates the subscriber client.
+
+    '
+  syntax:
+    content: 'Client(**kwargs: typing.Any)'
+    exceptions:
+    - description: If mutual TLS transport creation failed for any reason.
+      var_type: google.auth.exceptions.MutualTLSChannelError
+    parameters:
+    - description: The authorization credentials to attach to requests. These credentials
+        identify the application to the service; if none are specified, the client
+        will attempt to ascertain the credentials from the environment.
+      id: credentials
+      var_type: Optional[google.auth.credentials.Credentials]
+    - description: The transport to use. If set to None, a transport is chosen automatically.
+      id: transport
+      var_type: Union[str, SubscriberTransport]
+    - description: 'Custom options for the client. It won''t take effect if a <code>transport</code>
+        instance is provided. (1) The <code>api_endpoint</code> property can be used
+        to override the default endpoint provided by the client. GOOGLE_API_USE_MTLS_ENDPOINT
+        environment variable can also be used to override the endpoint: "always" (always
+        use the default mTLS endpoint), "never" (always use the default regular endpoint)
+        and "auto" (auto switch to the default mTLS endpoint if client certificate
+        is present, this is the default value). However, the <code>api_endpoint</code>
+        property takes precedence if provided. (2) If GOOGLE_API_USE_CLIENT_CERTIFICATE
+        environment variable is "true", then the <code>client_cert_source</code> property
+        can be used to provide client certificate for mutual TLS transport. If not
+        provided, the default SSL client certificate will be used if present. If GOOGLE_API_USE_CLIENT_CERTIFICATE
+        is "false" or not set, no client certificate will be used.'
+      id: client_options
+      var_type: google.api_core.client_options.ClientOptions
+    - description: The client info used to send a user-agent string along with API
+        requests. If <code>None</code>, then default info will be used. Generally,
+        you only need to set this if you're developing your own client library.
+      id: client_info
+      var_type: google.api_core.gapic_v1.client_info.ClientInfo
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.acknowledge
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: acknowledge
+  source:
+    id: acknowledge
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 1203
+  summary: "Acknowledges the messages associated with the `ack_ids` in the\n`AcknowledgeRequest`.\
+    \ The Pub/Sub system can remove the\nrelevant messages from the subscription.\n\
+    \nAcknowledging a message whose ack deadline has expired may\nsucceed, but such\
+    \ a message may be redelivered later.\nAcknowledging a message more than once\
+    \ will not result in an\nerror.\n\n```python\n# This snippet has been automatically\
+    \ generated and should be regarded as a\n# code template only.\n# It will require\
+    \ modifications to work:\n# - It may require correct/in-range values for request\
+    \ initialization.\n# - It may require specifying regional endpoints when creating\
+    \ the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_acknowledge():\n    # Create a client\n\
+    \    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request argument(s)\n\
+    \    request = pubsub_v1.AcknowledgeRequest(\n        subscription=\"subscription_value\"\
+    ,\n        ack_ids=['ack_ids_value1', 'ack_ids_value2'],\n    )\n\n    # Make\
+    \ the request\n    client.acknowledge(request=request)\n```\n"
+  syntax:
+    content: "acknowledge(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.AcknowledgeRequest,\
+      \ dict]\n    ] = None,\n    *,\n    subscription: typing.Optional[str] = None,\n\
+      \    ack_ids: typing.Optional[typing.Sequence[str]] = None,\n    retry: typing.Union[\n\
+      \        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ None"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the Acknowledge method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.AcknowledgeRequest, dict]
+    - description: Required. The subscription whose message is being acknowledged.
+        Format is <code>projects/{project}/subscriptions/{sub}</code>. This corresponds
+        to the <code>subscription</code> field on the <code>request</code> instance;
+        if <code>request</code> is provided, this should not be set.
+      id: subscription
+      var_type: str
+    - description: Required. The acknowledgment ID for the messages being acknowledged
+        that was returned by the Pub/Sub system in the <code>Pull</code> response.
+        Must not be empty. This corresponds to the <code>ack_ids</code> field on the
+        <code>request</code> instance; if <code>request</code> is provided, this should
+        not be set.
+      id: ack_ids
+      var_type: Sequence[str]
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.acknowledge
+- &id001
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.api
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: api
+  source:
+    id: api
+    path: null
+    startLine: null
+  summary: "The underlying gapic API client.\n\n.. versionchanged:: 2.10.0\n    Instead\
+    \ of a GAPIC `SubscriberClient` client instance, this property is a\n    proxy\
+    \ object to it with the same interface.\n\n<aside class=\"deprecated\">\n<b>deprecated:</b>\n\
+    Use the GAPIC methods and properties on the client instance directly\ninstead\
+    \ of through the `api` attribute.\n</aside>"
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.api
+- *id001
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.close
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: close
+  source:
+    id: close
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/client.py
+    startLine: 271
+  summary: 'Close the underlying channel to release socket resources.
+
+
+    After a channel has been closed, the client instance cannot be used
+
+    anymore.
+
+
+    This method is idempotent.
+
+
+    '
+  syntax:
+    content: close() -> None
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.close
+- &id002
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.closed
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: closed
+  source:
+    id: closed
+    path: null
+    startLine: null
+  summary: 'Return whether the client has been closed and cannot be used anymore.
+
+
+    .. versionadded:: 2.8.0
+
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.closed
+- *id002
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.common_billing_account_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: common_billing_account_path
+  source:
+    id: common_billing_account_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 248
+  summary: 'Returns a fully-qualified billing_account string.
+
+
+    '
+  syntax:
+    content: 'common_billing_account_path(billing_account: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.common_billing_account_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.common_folder_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: common_folder_path
+  source:
+    id: common_folder_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 263
+  summary: 'Returns a fully-qualified folder string.
+
+
+    '
+  syntax:
+    content: 'common_folder_path(folder: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.common_folder_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.common_location_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: common_location_path
+  source:
+    id: common_location_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 308
+  summary: 'Returns a fully-qualified location string.
+
+
+    '
+  syntax:
+    content: 'common_location_path(project: str, location: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.common_location_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.common_organization_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: common_organization_path
+  source:
+    id: common_organization_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 278
+  summary: 'Returns a fully-qualified organization string.
+
+
+    '
+  syntax:
+    content: 'common_organization_path(organization: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.common_organization_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.common_project_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: common_project_path
+  source:
+    id: common_project_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 293
+  summary: 'Returns a fully-qualified project string.
+
+
+    '
+  syntax:
+    content: 'common_project_path(project: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.common_project_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.create_snapshot
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: create_snapshot
+  source:
+    id: create_snapshot
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 1892
+  summary: "Creates a snapshot from the requested subscription. Snapshots\nare used\
+    \ in\n`Seek <https://cloud.google.com/pubsub/docs/replay-overview>`__\noperations,\
+    \ which allow you to manage message acknowledgments in\nbulk. That is, you can\
+    \ set the acknowledgment state of messages\nin an existing subscription to the\
+    \ state captured by a snapshot.\nIf the snapshot already exists, returns `ALREADY_EXISTS`.\
+    \ If\nthe requested subscription doesn't exist, returns `NOT_FOUND`.\nIf the backlog\
+    \ in the subscription is too old -- and the\nresulting snapshot would expire in\
+    \ less than 1 hour -- then\n`FAILED_PRECONDITION` is returned. See also the\n\
+    `Snapshot.expire_time` field. If the name is not provided in\nthe request, the\
+    \ server will assign a random name for this\nsnapshot on the same project as the\
+    \ subscription, conforming to\nthe [resource name format]\n(https://cloud.google.com/pubsub/docs/admin#resource_names).\
+    \ The\ngenerated name is populated in the returned Snapshot object.\nNote that\
+    \ for REST API requests, you must specify a name in the\nrequest.\n\n```python\n\
+    # This snippet has been automatically generated and should be regarded as a\n\
+    # code template only.\n# It will require modifications to work:\n# - It may require\
+    \ correct/in-range values for request initialization.\n# - It may require specifying\
+    \ regional endpoints when creating the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_create_snapshot():\n    # Create a\
+    \ client\n    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request\
+    \ argument(s)\n    request = pubsub_v1.CreateSnapshotRequest(\n        name=\"\
+    name_value\",\n        subscription=\"subscription_value\",\n    )\n\n    # Make\
+    \ the request\n    response = client.create_snapshot(request=request)\n\n    #\
+    \ Handle the response\n    print(response)\n```\n"
+  syntax:
+    content: "create_snapshot(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.CreateSnapshotRequest,\
+      \ dict]\n    ] = None,\n    *,\n    name: typing.Optional[str] = None,\n   \
+      \ subscription: typing.Optional[str] = None,\n    retry: typing.Union[\n   \
+      \     google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ google.cloud.pubsub_v1.types.Snapshot"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the <code>CreateSnapshot</code>
+        method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.CreateSnapshotRequest, dict]
+    - description: Required. User-provided name for this snapshot. If the name is
+        not provided in the request, the server will assign a random name for this
+        snapshot on the same project as the subscription. Note that for REST API requests,
+        you must specify a name. See the resource name rules. Format is <code>projects/{project}/snapshots/{snap}</code>.
+        This corresponds to the <code>name</code> field on the <code>request</code>
+        instance; if <code>request</code> is provided, this should not be set.
+      id: name
+      var_type: str
+    - description: 'Required. The subscription whose backlog the snapshot retains.
+        Specifically, the created snapshot is guaranteed to retain: (a) The existing
+        backlog on the subscription. More precisely, this is defined as the messages
+        in the subscription''s backlog that are unacknowledged upon the successful
+        completion of the <code>CreateSnapshot</code> request; as well as: (b) Any
+        messages published to the subscription''s topic following the successful completion
+        of the CreateSnapshot request. Format is <code>projects/{project}/subscriptions/{sub}</code>.
+        This corresponds to the <code>subscription</code> field on the <code>request</code>
+        instance; if <code>request</code> is provided, this should not be set.'
+      id: subscription
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: A snapshot resource. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
+        operations, which allow you to manage message acknowledgments in bulk. That
+        is, you can set the acknowledgment state of messages in an existing subscription
+        to the state captured by a snapshot.
+      var_type: google.pubsub_v1.types.Snapshot
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.create_snapshot
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.create_subscription
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: create_subscription
+  source:
+    id: create_subscription
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 500
+  summary: "Creates a subscription to a given topic. See the [resource name\nrules]\n\
+    (https://cloud.google.com/pubsub/docs/admin#resource_names). If\nthe subscription\
+    \ already exists, returns `ALREADY_EXISTS`. If\nthe corresponding topic doesn't\
+    \ exist, returns `NOT_FOUND`.\n\nIf the name is not provided in the request, the\
+    \ server will\nassign a random name for this subscription on the same project\n\
+    as the topic, conforming to the [resource name format]\n(https://cloud.google.com/pubsub/docs/admin#resource_names).\
+    \ The\ngenerated name is populated in the returned Subscription object.\nNote\
+    \ that for REST API requests, you must specify a name in the\nrequest.\n\n```python\n\
+    # This snippet has been automatically generated and should be regarded as a\n\
+    # code template only.\n# It will require modifications to work:\n# - It may require\
+    \ correct/in-range values for request initialization.\n# - It may require specifying\
+    \ regional endpoints when creating the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_create_subscription():\n    # Create\
+    \ a client\n    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request\
+    \ argument(s)\n    request = pubsub_v1.Subscription(\n        name=\"name_value\"\
+    ,\n        topic=\"topic_value\",\n    )\n\n    # Make the request\n    response\
+    \ = client.create_subscription(request=request)\n\n    # Handle the response\n\
+    \    print(response)\n```\n"
+  syntax:
+    content: "create_subscription(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.Subscription,\
+      \ dict]\n    ] = None,\n    *,\n    name: typing.Optional[str] = None,\n   \
+      \ topic: typing.Optional[str] = None,\n    push_config: typing.Optional[google.cloud.pubsub_v1.types.PushConfig]\
+      \ = None,\n    ack_deadline_seconds: typing.Optional[int] = None,\n    retry:\
+      \ typing.Union[\n        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ google.cloud.pubsub_v1.types.Subscription"
+    parameters:
+    - defaultValue: None
+      description: The request object. A subscription resource.
+      id: request
+      var_type: Union[google.pubsub_v1.types.Subscription, dict]
+    - description: Required. The name of the subscription. It must have the format
+        <code>"projects/{project}/subscriptions/{subscription}"</code>. <code>{subscription}</code>
+        must start with a letter, and contain only letters (<code>[A-Za-z]</code>),
+        numbers (<code>[0-9]</code>), dashes (<code>-</code>), underscores (<code>_</code>),
+        periods (<code>.</code>), tildes (<pre></pre>), plus (`<code>+</code><code>)
+        or percent signs (</code><code>%</code><code>). It must be between 3 and 255
+        characters in length, and it must not start with </code>"goog"<code>. This
+        corresponds to the </code>name<code> field on the </code>request<code> instance;
+        if </code>request` is provided, this should not be set.
+      id: name
+      var_type: str
+    - description: Required. The name of the topic from which this subscription is
+        receiving messages. Format is <code>projects/{project}/topics/{topic}</code>.
+        The value of this field will be <code>_deleted-topic_</code> if the topic
+        has been deleted. This corresponds to the <code>topic</code> field on the
+        <code>request</code> instance; if <code>request</code> is provided, this should
+        not be set.
+      id: topic
+      var_type: str
+    - description: If push delivery is used with this subscription, this field is
+        used to configure it. Either <code>pushConfig</code> or <code>bigQueryConfig</code>
+        can be set, but not both. If both are empty, then the subscriber will pull
+        and ack messages using API methods. This corresponds to the <code>push_config</code>
+        field on the <code>request</code> instance; if <code>request</code> is provided,
+        this should not be set.
+      id: push_config
+      var_type: google.pubsub_v1.types.PushConfig
+    - description: The approximate amount of time (on a best-effort basis) Pub/Sub
+        waits for the subscriber to acknowledge receipt before resending the message.
+        In the interval after the message is delivered and before it is acknowledged,
+        it is considered to be outstanding. During that time period, the message will
+        not be redelivered (on a best-effort basis). For pull subscriptions, this
+        value is used as the initial value for the ack deadline. To override this
+        value for a given message, call <code>ModifyAckDeadline</code> with the corresponding
+        <code>ack_id</code> if using non-streaming pull or send the <code>ack_id</code>
+        in a <code>StreamingModifyAckDeadlineRequest</code> if using streaming pull.
+        The minimum custom deadline you can specify is 10 seconds. The maximum custom
+        deadline you can specify is 600 seconds (10 minutes). If this parameter is
+        0, a default value of 10 seconds is used. For push delivery, this value is
+        also used to set the request timeout for the call to the push endpoint. If
+        the subscriber never acknowledges the message, the Pub/Sub system will eventually
+        redeliver the message. This corresponds to the <code>ack_deadline_seconds</code>
+        field on the <code>request</code> instance; if <code>request</code> is provided,
+        this should not be set.
+      id: ack_deadline_seconds
+      var_type: int
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: A subscription resource.
+      var_type: google.pubsub_v1.types.Subscription
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.create_subscription
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.delete_snapshot
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: delete_snapshot
+  source:
+    id: delete_snapshot
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 2133
+  summary: "Removes an existing snapshot. Snapshots are used in [Seek]\n(https://cloud.google.com/pubsub/docs/replay-overview)\n\
+    operations, which allow you to manage message acknowledgments in\nbulk. That is,\
+    \ you can set the acknowledgment state of messages\nin an existing subscription\
+    \ to the state captured by a snapshot.\nWhen the snapshot is deleted, all messages\
+    \ retained in the\nsnapshot are immediately dropped. After a snapshot is deleted,\
+    \ a\nnew one may be created with the same name, but the new one has\nno association\
+    \ with the old snapshot or its subscription, unless\nthe same subscription is\
+    \ specified.\n\n```python\n# This snippet has been automatically generated and\
+    \ should be regarded as a\n# code template only.\n# It will require modifications\
+    \ to work:\n# - It may require correct/in-range values for request initialization.\n\
+    # - It may require specifying regional endpoints when creating the service\n#\
+    \   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_delete_snapshot():\n    # Create a\
+    \ client\n    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request\
+    \ argument(s)\n    request = pubsub_v1.DeleteSnapshotRequest(\n        snapshot=\"\
+    snapshot_value\",\n    )\n\n    # Make the request\n    client.delete_snapshot(request=request)\n\
+    ```\n"
+  syntax:
+    content: "delete_snapshot(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.DeleteSnapshotRequest,\
+      \ dict]\n    ] = None,\n    *,\n    snapshot: typing.Optional[str] = None,\n\
+      \    retry: typing.Union[\n        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ None"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the <code>DeleteSnapshot</code>
+        method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.DeleteSnapshotRequest, dict]
+    - description: Required. The name of the snapshot to delete. Format is <code>projects/{project}/snapshots/{snap}</code>.
+        This corresponds to the <code>snapshot</code> field on the <code>request</code>
+        instance; if <code>request</code> is provided, this should not be set.
+      id: snapshot
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.delete_snapshot
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.delete_subscription
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: delete_subscription
+  source:
+    id: delete_subscription
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 980
+  summary: "Deletes an existing subscription. All messages retained in the\nsubscription\
+    \ are immediately dropped. Calls to `Pull` after\ndeletion will return `NOT_FOUND`.\
+    \ After a subscription is\ndeleted, a new one may be created with the same name,\
+    \ but the\nnew one has no association with the old subscription or its\ntopic\
+    \ unless the same topic is specified.\n\n```python\n# This snippet has been automatically\
+    \ generated and should be regarded as a\n# code template only.\n# It will require\
+    \ modifications to work:\n# - It may require correct/in-range values for request\
+    \ initialization.\n# - It may require specifying regional endpoints when creating\
+    \ the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_delete_subscription():\n    # Create\
+    \ a client\n    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request\
+    \ argument(s)\n    request = pubsub_v1.DeleteSubscriptionRequest(\n        subscription=\"\
+    subscription_value\",\n    )\n\n    # Make the request\n    client.delete_subscription(request=request)\n\
+    ```\n"
+  syntax:
+    content: "delete_subscription(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.DeleteSubscriptionRequest,\
+      \ dict]\n    ] = None,\n    *,\n    subscription: typing.Optional[str] = None,\n\
+      \    retry: typing.Union[\n        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ None"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the DeleteSubscription method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.DeleteSubscriptionRequest, dict]
+    - description: Required. The subscription to delete. Format is <code>projects/{project}/subscriptions/{sub}</code>.
+        This corresponds to the <code>subscription</code> field on the <code>request</code>
+        instance; if <code>request</code> is provided, this should not be set.
+      id: subscription
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.delete_subscription
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_file
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: from_service_account_file
+  source:
+    id: from_service_account_file
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/client.py
+    startLine: 91
+  summary: 'Creates an instance of this client using the provided credentials
+
+    file.
+
+    '
+  syntax:
+    content: "from_service_account_file(\n    filename: str, **kwargs: typing.Any\n\
+      ) -> google.cloud.pubsub_v1.subscriber.client.Client"
+    parameters:
+    - description: The path to the service account private key json file.
+      id: filename
+      var_type: str
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_file
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_info
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: from_service_account_info
+  source:
+    id: from_service_account_info
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 148
+  summary: "Creates an instance of this client using the provided credentials\n  \
+    \  info.\n"
+  syntax:
+    content: 'from_service_account_info(info: dict, *args, **kwargs)'
+    parameters:
+    - description: The service account private key info.
+      id: info
+      var_type: dict
+    returns:
+    - description: The constructed client.
+      var_type: SubscriberClient
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_info
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_json
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: from_service_account_json
+  source:
+    id: from_service_account_json
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/client.py
+    startLine: 91
+  summary: 'Creates an instance of this client using the provided credentials
+
+    file.
+
+    '
+  syntax:
+    content: "from_service_account_json(\n    filename: str, **kwargs: typing.Any\n\
+      ) -> google.cloud.pubsub_v1.subscriber.client.Client"
+    parameters:
+    - description: The path to the service account private key json file.
+      id: filename
+      var_type: str
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_json
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.get_iam_policy
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: get_iam_policy
+  source:
+    id: get_iam_policy
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 2453
+  summary: 'Gets the IAM access control policy for a function.
+
+
+    Returns an empty policy if the function exists and does not have a
+
+    policy set.
+
+    '
+  syntax:
+    content: "get_iam_policy(\n    request: typing.Optional[google.iam.v1.iam_policy_pb2.GetIamPolicyRequest]\
+      \ = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Optional[float] = None,\n    metadata: typing.Sequence[typing.Tuple[str,\
+      \ str]] = ()\n) -> google.iam.v1.policy_pb2.Policy"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request message for <code>GetIamPolicy</code>
+        method.
+      id: request
+      var_type: <code>.iam_policy_pb2.GetIamPolicyRequest</code>
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: 'Defines an Identity and Access Management (IAM) policy. It is
+        used to specify access control policies for Cloud Platform resources. A <code>Policy</code>
+        is a collection of <code>bindings</code>. A <code>binding</code> binds one
+        or more <code>members</code> to a single <code>role</code>. Members can be
+        user accounts, service accounts, Google groups, and domains (such as G Suite).
+        A <code>role</code> is a named list of permissions (defined by IAM or configured
+        by users). A <code>binding</code> can optionally specify a <code>condition</code>,
+        which is a logic expression that further constrains the role binding based
+        on attributes about the request and/or target resource. **JSON Example** ::
+        { "bindings": [ { "role": "roles/resourcemanager.organizationAdmin", "members":
+        [ "user:mike@example.com", "group:admins@example.com", "domain:google.com",
+        "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, { "role":
+        "roles/resourcemanager.organizationViewer", "members": ["user:eve@example.com"],
+        "condition": { "title": "expirable access", "description": "Does not grant
+        access after Sep 2020", "expression": "request.time < timestamp(''2020-10-01T00:00:00.000Z'')",
+        } } ] } **YAML Example** :: bindings: - members: - user:mike@example.com -
+        group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com
+        role: roles/resourcemanager.organizationViewer condition: title: expirable
+        access description: Does not grant access after Sep 2020 expression: request.time
+        < timestamp(''2020-10-01T00:00:00.000Z'') For a description of IAM and its
+        features, see the <code>IAM developer''s guide <https://cloud.google.com/iam/docs></code>__.'
+      var_type: <code>.policy_pb2.Policy</code>
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.get_iam_policy
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.get_mtls_endpoint_and_cert_source
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: get_mtls_endpoint_and_cert_source
+  source:
+    id: get_mtls_endpoint_and_cert_source
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 325
+  summary: 'Return the API endpoint and client cert source for mutual TLS.
+
+
+    The client cert source is determined in the following order:
+
+    (1) if `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not "true",
+    the
+
+    client cert source is None.
+
+    (2) if `client_options.client_cert_source` is provided, use the provided one;
+    if the
+
+    default client cert source exists, use the default one; otherwise the client cert
+
+    source is None.
+
+
+    The API endpoint is determined in the following order:
+
+    (1) if `client_options.api_endpoint` if provided, use the provided one.
+
+    (2) if `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is "always", use
+    the
+
+    default mTLS endpoint; if the environment variabel is "never", use the default
+    API
+
+    endpoint; otherwise if client cert source exists, use the default mTLS endpoint,
+    otherwise
+
+    use the default API endpoint.
+
+
+    More details can be found at https://google.aip.dev/auth/4114.
+
+    '
+  syntax:
+    content: "get_mtls_endpoint_and_cert_source(\n    client_options: typing.Optional[\n\
+      \        google.api_core.client_options.ClientOptions\n    ] = None,\n)"
+    exceptions:
+    - description: If any errors happen.
+      var_type: google.auth.exceptions.MutualTLSChannelError
+    parameters:
+    - defaultValue: None
+      description: Custom options for the client. Only the <code>api_endpoint</code>
+        and <code>client_cert_source</code> properties may be used in this method.
+      id: client_options
+      var_type: google.api_core.client_options.ClientOptions
+    returns:
+    - description: returns the API endpoint and the client cert source to use.
+      var_type: Tuple[str, Callable[[], Tuple[bytes, bytes]]]
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.get_mtls_endpoint_and_cert_source
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.get_snapshot
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: get_snapshot
+  source:
+    id: get_snapshot
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 1663
+  summary: "Gets the configuration details of a snapshot.\nSnapshots are used in <a\n\
+    href=\"https://cloud.google.com/pubsub/docs/replay-overview\">Seek</a>\noperations,\
+    \ which allow you to manage message\nacknowledgments in bulk. That is, you can\
+    \ set the\nacknowledgment state of messages in an existing\nsubscription to the\
+    \ state captured by a snapshot.\n\n```python\n# This snippet has been automatically\
+    \ generated and should be regarded as a\n# code template only.\n# It will require\
+    \ modifications to work:\n# - It may require correct/in-range values for request\
+    \ initialization.\n# - It may require specifying regional endpoints when creating\
+    \ the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_get_snapshot():\n    # Create a client\n\
+    \    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request argument(s)\n\
+    \    request = pubsub_v1.GetSnapshotRequest(\n        snapshot=\"snapshot_value\"\
+    ,\n    )\n\n    # Make the request\n    response = client.get_snapshot(request=request)\n\
+    \n    # Handle the response\n    print(response)\n```\n"
+  syntax:
+    content: "get_snapshot(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.GetSnapshotRequest,\
+      \ dict]\n    ] = None,\n    *,\n    snapshot: typing.Optional[str] = None,\n\
+      \    retry: typing.Union[\n        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ google.cloud.pubsub_v1.types.Snapshot"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the GetSnapshot method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.GetSnapshotRequest, dict]
+    - description: Required. The name of the snapshot to get. Format is <code>projects/{project}/snapshots/{snap}</code>.
+        This corresponds to the <code>snapshot</code> field on the <code>request</code>
+        instance; if <code>request</code> is provided, this should not be set.
+      id: snapshot
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: A snapshot resource. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
+        operations, which allow you to manage message acknowledgments in bulk. That
+        is, you can set the acknowledgment state of messages in an existing subscription
+        to the state captured by a snapshot.
+      var_type: google.pubsub_v1.types.Snapshot
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.get_snapshot
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.get_subscription
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: get_subscription
+  source:
+    id: get_subscription
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 677
+  summary: "Gets the configuration details of a subscription.\n\n```python\n# This\
+    \ snippet has been automatically generated and should be regarded as a\n# code\
+    \ template only.\n# It will require modifications to work:\n# - It may require\
+    \ correct/in-range values for request initialization.\n# - It may require specifying\
+    \ regional endpoints when creating the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_get_subscription():\n    # Create a\
+    \ client\n    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request\
+    \ argument(s)\n    request = pubsub_v1.GetSubscriptionRequest(\n        subscription=\"\
+    subscription_value\",\n    )\n\n    # Make the request\n    response = client.get_subscription(request=request)\n\
+    \n    # Handle the response\n    print(response)\n```\n"
+  syntax:
+    content: "get_subscription(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.GetSubscriptionRequest,\
+      \ dict]\n    ] = None,\n    *,\n    subscription: typing.Optional[str] = None,\n\
+      \    retry: typing.Union[\n        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ google.cloud.pubsub_v1.types.Subscription"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the GetSubscription method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.GetSubscriptionRequest, dict]
+    - description: Required. The name of the subscription to get. Format is <code>projects/{project}/subscriptions/{sub}</code>.
+        This corresponds to the <code>subscription</code> field on the <code>request</code>
+        instance; if <code>request</code> is provided, this should not be set.
+      id: subscription
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: A subscription resource.
+      var_type: google.pubsub_v1.types.Subscription
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.get_subscription
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.list_snapshots
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: list_snapshots
+  source:
+    id: list_snapshots
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 1774
+  summary: "Lists the existing snapshots. Snapshots are used in\n`Seek <https://cloud.google.com/pubsub/docs/replay-overview>`__\n\
+    operations, which allow you to manage message acknowledgments in\nbulk. That is,\
+    \ you can set the acknowledgment state of messages\nin an existing subscription\
+    \ to the state captured by a snapshot.\n\n```python\n# This snippet has been automatically\
+    \ generated and should be regarded as a\n# code template only.\n# It will require\
+    \ modifications to work:\n# - It may require correct/in-range values for request\
+    \ initialization.\n# - It may require specifying regional endpoints when creating\
+    \ the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_list_snapshots():\n    # Create a client\n\
+    \    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request argument(s)\n\
+    \    request = pubsub_v1.ListSnapshotsRequest(\n        project=\"project_value\"\
+    ,\n    )\n\n    # Make the request\n    page_result = client.list_snapshots(request=request)\n\
+    \n    # Handle the response\n    for response in page_result:\n        print(response)\n\
+    ```\n"
+  syntax:
+    content: "list_snapshots(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.ListSnapshotsRequest,\
+      \ dict]\n    ] = None,\n    *,\n    project: typing.Optional[str] = None,\n\
+      \    retry: typing.Union[\n        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the <code>ListSnapshots</code>
+        method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.ListSnapshotsRequest, dict]
+    - description: Required. The name of the project in which to list snapshots. Format
+        is <code>projects/{project-id}</code>. This corresponds to the <code>project</code>
+        field on the <code>request</code> instance; if <code>request</code> is provided,
+        this should not be set.
+      id: project
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: Response for the ListSnapshots method. Iterating over this object
+        will yield results and resolve additional pages automatically.
+      var_type: <xref uid="google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager">google.pubsub_v1.services.subscriber.pagers.ListSnapshotsPager</xref>
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.list_snapshots
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.list_subscriptions
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: list_subscriptions
+  source:
+    id: list_subscriptions
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 866
+  summary: "Lists matching subscriptions.\n\n```python\n# This snippet has been automatically\
+    \ generated and should be regarded as a\n# code template only.\n# It will require\
+    \ modifications to work:\n# - It may require correct/in-range values for request\
+    \ initialization.\n# - It may require specifying regional endpoints when creating\
+    \ the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_list_subscriptions():\n    # Create\
+    \ a client\n    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request\
+    \ argument(s)\n    request = pubsub_v1.ListSubscriptionsRequest(\n        project=\"\
+    project_value\",\n    )\n\n    # Make the request\n    page_result = client.list_subscriptions(request=request)\n\
+    \n    # Handle the response\n    for response in page_result:\n        print(response)\n\
+    ```\n"
+  syntax:
+    content: "list_subscriptions(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.ListSubscriptionsRequest,\
+      \ dict]\n    ] = None,\n    *,\n    project: typing.Optional[str] = None,\n\
+      \    retry: typing.Union[\n        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsPager"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the <code>ListSubscriptions</code>
+        method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.ListSubscriptionsRequest, dict]
+    - description: Required. The name of the project in which to list subscriptions.
+        Format is <code>projects/{project-id}</code>. This corresponds to the <code>project</code>
+        field on the <code>request</code> instance; if <code>request</code> is provided,
+        this should not be set.
+      id: project
+      var_type: str
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: Response for the ListSubscriptions method. Iterating over this
+        object will yield results and resolve additional pages automatically.
+      var_type: <xref uid="google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsPager">google.pubsub_v1.services.subscriber.pagers.ListSubscriptionsPager</xref>
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.list_subscriptions
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.modify_ack_deadline
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: modify_ack_deadline
+  source:
+    id: modify_ack_deadline
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 1077
+  summary: "Modifies the ack deadline for a specific message. This method is\nuseful\
+    \ to indicate that more time is needed to process a message\nby the subscriber,\
+    \ or to make the message available for\nredelivery if the processing was interrupted.\
+    \ Note that this\ndoes not modify the subscription-level `ackDeadlineSeconds`\n\
+    used for subsequent messages.\n\n```python\n# This snippet has been automatically\
+    \ generated and should be regarded as a\n# code template only.\n# It will require\
+    \ modifications to work:\n# - It may require correct/in-range values for request\
+    \ initialization.\n# - It may require specifying regional endpoints when creating\
+    \ the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_modify_ack_deadline():\n    # Create\
+    \ a client\n    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request\
+    \ argument(s)\n    request = pubsub_v1.ModifyAckDeadlineRequest(\n        subscription=\"\
+    subscription_value\",\n        ack_ids=['ack_ids_value1', 'ack_ids_value2'],\n\
+    \        ack_deadline_seconds=2066,\n    )\n\n    # Make the request\n    client.modify_ack_deadline(request=request)\n\
+    ```\n"
+  syntax:
+    content: "modify_ack_deadline(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.ModifyAckDeadlineRequest,\
+      \ dict]\n    ] = None,\n    *,\n    subscription: typing.Optional[str] = None,\n\
+      \    ack_ids: typing.Optional[typing.Sequence[str]] = None,\n    ack_deadline_seconds:\
+      \ typing.Optional[int] = None,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Optional[float] = None,\n    metadata: typing.Sequence[typing.Tuple[str,\
+      \ str]] = ()\n) -> None"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the ModifyAckDeadline method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.ModifyAckDeadlineRequest, dict]
+    - description: Required. The name of the subscription. Format is <code>projects/{project}/subscriptions/{sub}</code>.
+        This corresponds to the <code>subscription</code> field on the <code>request</code>
+        instance; if <code>request</code> is provided, this should not be set.
+      id: subscription
+      var_type: str
+    - description: Required. List of acknowledgment IDs. This corresponds to the <code>ack_ids</code>
+        field on the <code>request</code> instance; if <code>request</code> is provided,
+        this should not be set.
+      id: ack_ids
+      var_type: Sequence[str]
+    - description: Required. The new ack deadline with respect to the time this request
+        was sent to the Pub/Sub system. For example, if the value is 10, the new ack
+        deadline will expire 10 seconds after the <code>ModifyAckDeadline</code> call
+        was made. Specifying zero might immediately make the message available for
+        delivery to another subscriber client. This typically results in an increase
+        in the rate of message redeliveries (that is, duplicates). The minimum deadline
+        you can specify is 0 seconds. The maximum deadline you can specify is 600
+        seconds (10 minutes). This corresponds to the <code>ack_deadline_seconds</code>
+        field on the <code>request</code> instance; if <code>request</code> is provided,
+        this should not be set.
+      id: ack_deadline_seconds
+      var_type: int
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.modify_ack_deadline
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.modify_push_config
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: modify_push_config
+  source:
+    id: modify_push_config
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 1550
+  summary: "Modifies the `PushConfig` for a specified subscription.\n\nThis may be\
+    \ used to change a push subscription to a pull one\n(signified by an empty `PushConfig`)\
+    \ or vice versa, or change\nthe endpoint URL and other attributes of a push subscription.\n\
+    Messages will accumulate for delivery continuously through the\ncall regardless\
+    \ of changes to the `PushConfig`.\n\n```python\n# This snippet has been automatically\
+    \ generated and should be regarded as a\n# code template only.\n# It will require\
+    \ modifications to work:\n# - It may require correct/in-range values for request\
+    \ initialization.\n# - It may require specifying regional endpoints when creating\
+    \ the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_modify_push_config():\n    # Create\
+    \ a client\n    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request\
+    \ argument(s)\n    request = pubsub_v1.ModifyPushConfigRequest(\n        subscription=\"\
+    subscription_value\",\n    )\n\n    # Make the request\n    client.modify_push_config(request=request)\n\
+    ```\n"
+  syntax:
+    content: "modify_push_config(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.ModifyPushConfigRequest,\
+      \ dict]\n    ] = None,\n    *,\n    subscription: typing.Optional[str] = None,\n\
+      \    push_config: typing.Optional[google.cloud.pubsub_v1.types.PushConfig] =\
+      \ None,\n    retry: typing.Union[\n        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ None"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the ModifyPushConfig method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.ModifyPushConfigRequest, dict]
+    - description: Required. The name of the subscription. Format is <code>projects/{project}/subscriptions/{sub}</code>.
+        This corresponds to the <code>subscription</code> field on the <code>request</code>
+        instance; if <code>request</code> is provided, this should not be set.
+      id: subscription
+      var_type: str
+    - description: Required. The push configuration for future deliveries. An empty
+        <code>pushConfig</code> indicates that the Pub/Sub system should stop pushing
+        messages from the given subscription and allow messages to be pulled and acknowledged
+        - effectively pausing the subscription if <code>Pull</code> or <code>StreamingPull</code>
+        is not called. This corresponds to the <code>push_config</code> field on the
+        <code>request</code> instance; if <code>request</code> is provided, this should
+        not be set.
+      id: push_config
+      var_type: google.pubsub_v1.types.PushConfig
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.modify_push_config
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_billing_account_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: parse_common_billing_account_path
+  source:
+    id: parse_common_billing_account_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 257
+  summary: 'Parse a billing_account path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_billing_account_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_billing_account_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_folder_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: parse_common_folder_path
+  source:
+    id: parse_common_folder_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 272
+  summary: 'Parse a folder path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_folder_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_folder_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_location_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: parse_common_location_path
+  source:
+    id: parse_common_location_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 319
+  summary: 'Parse a location path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_location_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_location_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_organization_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: parse_common_organization_path
+  source:
+    id: parse_common_organization_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 287
+  summary: 'Parse a organization path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_organization_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_organization_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_project_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: parse_common_project_path
+  source:
+    id: parse_common_project_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 302
+  summary: 'Parse a project path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_common_project_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_project_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_snapshot_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: parse_snapshot_path
+  source:
+    id: parse_snapshot_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 206
+  summary: 'Parses a snapshot path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_snapshot_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_snapshot_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_subscription_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: parse_subscription_path
+  source:
+    id: parse_subscription_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 223
+  summary: 'Parses a subscription path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_subscription_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_subscription_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_topic_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: parse_topic_path
+  source:
+    id: parse_topic_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 242
+  summary: 'Parses a topic path into its component segments.
+
+
+    '
+  syntax:
+    content: 'parse_topic_path(path: str) -> typing.Dict[str, str]'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_topic_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.pull
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: pull
+  source:
+    id: pull
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 1314
+  summary: "Pulls messages from the server. The server may return\n`UNAVAILABLE` if\
+    \ there are too many concurrent pull requests\npending for the given subscription.\n\
+    \n```python\n# This snippet has been automatically generated and should be regarded\
+    \ as a\n# code template only.\n# It will require modifications to work:\n# - It\
+    \ may require correct/in-range values for request initialization.\n# - It may\
+    \ require specifying regional endpoints when creating the service\n#   client\
+    \ as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_pull():\n    # Create a client\n  \
+    \  client = pubsub_v1.SubscriberClient()\n\n    # Initialize request argument(s)\n\
+    \    request = pubsub_v1.PullRequest(\n        subscription=\"subscription_value\"\
+    ,\n        max_messages=1277,\n    )\n\n    # Make the request\n    response =\
+    \ client.pull(request=request)\n\n    # Handle the response\n    print(response)\n\
+    ```\n"
+  syntax:
+    content: "pull(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.PullRequest,\
+      \ dict]\n    ] = None,\n    *,\n    subscription: typing.Optional[str] = None,\n\
+      \    return_immediately: typing.Optional[bool] = None,\n    max_messages: typing.Optional[int]\
+      \ = None,\n    retry: typing.Union[\n        google.api_core.retry.Retry, google.api_core.gapic_v1.method._MethodDefault\n\
+      \    ] = _MethodDefault._DEFAULT_VALUE,\n    timeout: typing.Optional[float]\
+      \ = None,\n    metadata: typing.Sequence[typing.Tuple[str, str]] = ()\n) ->\
+      \ google.cloud.pubsub_v1.types.PullResponse"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the <code>Pull</code> method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.PullRequest, dict]
+    - description: Required. The subscription from which messages should be pulled.
+        Format is <code>projects/{project}/subscriptions/{sub}</code>. This corresponds
+        to the <code>subscription</code> field on the <code>request</code> instance;
+        if <code>request</code> is provided, this should not be set.
+      id: subscription
+      var_type: str
+    - description: 'Optional. If this field set to true, the system will respond immediately
+        even if it there are no messages available to return in the <code>Pull</code>
+        response. Otherwise, the system may wait (for a bounded amount of time) until
+        at least one message is available, rather than returning no messages. Warning:
+        setting this field to <code>true</code> is discouraged because it adversely
+        impacts the performance of <code>Pull</code> operations. We recommend that
+        users do not set this field. This corresponds to the <code>return_immediately</code>
+        field on the <code>request</code> instance; if <code>request</code> is provided,
+        this should not be set.'
+      id: return_immediately
+      var_type: bool
+    - description: Required. The maximum number of messages to return for this request.
+        Must be a positive integer. The Pub/Sub system may return fewer than the number
+        specified. This corresponds to the <code>max_messages</code> field on the
+        <code>request</code> instance; if <code>request</code> is provided, this should
+        not be set.
+      id: max_messages
+      var_type: int
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: Response for the Pull method.
+      var_type: google.pubsub_v1.types.PullResponse
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.pull
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.seek
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: seek
+  source:
+    id: seek
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 2232
+  summary: "Seeks an existing subscription to a point in time or to a given\nsnapshot,\
+    \ whichever is provided in the request. Snapshots are\nused in [Seek]\n(https://cloud.google.com/pubsub/docs/replay-overview)\n\
+    operations, which allow you to manage message acknowledgments in\nbulk. That is,\
+    \ you can set the acknowledgment state of messages\nin an existing subscription\
+    \ to the state captured by a snapshot.\nNote that both the subscription and the\
+    \ snapshot must be on the\nsame topic.\n\n```python\n# This snippet has been automatically\
+    \ generated and should be regarded as a\n# code template only.\n# It will require\
+    \ modifications to work:\n# - It may require correct/in-range values for request\
+    \ initialization.\n# - It may require specifying regional endpoints when creating\
+    \ the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_seek():\n    # Create a client\n  \
+    \  client = pubsub_v1.SubscriberClient()\n\n    # Initialize request argument(s)\n\
+    \    request = pubsub_v1.SeekRequest(\n        subscription=\"subscription_value\"\
+    ,\n    )\n\n    # Make the request\n    response = client.seek(request=request)\n\
+    \n    # Handle the response\n    print(response)\n```\n"
+  syntax:
+    content: "seek(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.SeekRequest,\
+      \ dict]\n    ] = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Optional[float] = None,\n    metadata: typing.Sequence[typing.Tuple[str,\
+      \ str]] = ()\n) -> google.cloud.pubsub_v1.types.SeekResponse"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the <code>Seek</code> method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.SeekRequest, dict]
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: Response for the Seek method (this response is empty).
+      var_type: google.pubsub_v1.types.SeekResponse
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.seek
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.set_iam_policy
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: set_iam_policy
+  source:
+    id: set_iam_policy
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 2333
+  summary: 'Sets the IAM access control policy on the specified function.
+
+
+    Replaces any existing policy.
+
+    '
+  syntax:
+    content: "set_iam_policy(\n    request: typing.Optional[google.iam.v1.iam_policy_pb2.SetIamPolicyRequest]\
+      \ = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Optional[float] = None,\n    metadata: typing.Sequence[typing.Tuple[str,\
+      \ str]] = ()\n) -> google.iam.v1.policy_pb2.Policy"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request message for <code>SetIamPolicy</code>
+        method.
+      id: request
+      var_type: <code>.iam_policy_pb2.SetIamPolicyRequest</code>
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: 'Defines an Identity and Access Management (IAM) policy. It is
+        used to specify access control policies for Cloud Platform resources. A <code>Policy</code>
+        is a collection of <code>bindings</code>. A <code>binding</code> binds one
+        or more <code>members</code> to a single <code>role</code>. Members can be
+        user accounts, service accounts, Google groups, and domains (such as G Suite).
+        A <code>role</code> is a named list of permissions (defined by IAM or configured
+        by users). A <code>binding</code> can optionally specify a <code>condition</code>,
+        which is a logic expression that further constrains the role binding based
+        on attributes about the request and/or target resource. **JSON Example** ::
+        { "bindings": [ { "role": "roles/resourcemanager.organizationAdmin", "members":
+        [ "user:mike@example.com", "group:admins@example.com", "domain:google.com",
+        "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, { "role":
+        "roles/resourcemanager.organizationViewer", "members": ["user:eve@example.com"],
+        "condition": { "title": "expirable access", "description": "Does not grant
+        access after Sep 2020", "expression": "request.time < timestamp(''2020-10-01T00:00:00.000Z'')",
+        } } ] } **YAML Example** :: bindings: - members: - user:mike@example.com -
+        group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com
+        role: roles/resourcemanager.organizationViewer condition: title: expirable
+        access description: Does not grant access after Sep 2020 expression: request.time
+        < timestamp(''2020-10-01T00:00:00.000Z'') For a description of IAM and its
+        features, see the <code>IAM developer''s guide <https://cloud.google.com/iam/docs></code>__.'
+      var_type: <code>.policy_pb2.Policy</code>
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.set_iam_policy
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.snapshot_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: snapshot_path
+  source:
+    id: snapshot_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 195
+  summary: 'Returns a fully-qualified snapshot string.
+
+
+    '
+  syntax:
+    content: 'snapshot_path(project: str, snapshot: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.snapshot_path
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.streaming_pull
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: streaming_pull
+  source:
+    id: streaming_pull
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 1455
+  summary: "Establishes a stream with the server, which sends messages down\nto the\
+    \ client. The client streams acknowledgements and ack\ndeadline modifications\
+    \ back to the server. The server will close\nthe stream and return the status\
+    \ on any error. The server may\nclose the stream with status `UNAVAILABLE` to\
+    \ reassign\nserver-side resources, in which case, the client should\nre-establish\
+    \ the stream. Flow control can be achieved by\nconfiguring the underlying RPC\
+    \ channel.\n\n```python\n# This snippet has been automatically generated and should\
+    \ be regarded as a\n# code template only.\n# It will require modifications to\
+    \ work:\n# - It may require correct/in-range values for request initialization.\n\
+    # - It may require specifying regional endpoints when creating the service\n#\
+    \   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_streaming_pull():\n    # Create a client\n\
+    \    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request argument(s)\n\
+    \    request = pubsub_v1.StreamingPullRequest(\n        subscription=\"subscription_value\"\
+    ,\n        stream_ack_deadline_seconds=2813,\n    )\n\n    # This method expects\
+    \ an iterator which contains\n    # 'pubsub_v1.StreamingPullRequest' objects\n\
+    \    # Here we create a generator that yields a single `request` for\n    # demonstrative\
+    \ purposes.\n    requests = [request]\n\n    def request_generator():\n      \
+    \  for request in requests:\n            yield request\n\n    # Make the request\n\
+    \    stream = client.streaming_pull(requests=request_generator())\n\n    # Handle\
+    \ the response\n    for response in stream:\n        print(response)\n```\n"
+  syntax:
+    content: "streaming_pull(\n    requests: typing.Optional[\n        typing.Iterator[google.cloud.pubsub_v1.types.StreamingPullRequest]\n\
+      \    ] = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Optional[float] = None,\n    metadata: typing.Sequence[typing.Tuple[str,\
+      \ str]] = ()\n) -> typing.Iterable[google.cloud.pubsub_v1.types.StreamingPullResponse]"
+    parameters:
+    - defaultValue: None
+      description: The request object iterator. Request for the <code>StreamingPull</code>
+        streaming RPC method. This request is used to establish the initial stream
+        as well as to stream acknowledgements and ack deadline modifications from
+        the client to the server.
+      id: requests
+      var_type: Iterator[google.pubsub_v1.types.StreamingPullRequest]
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: Response for the StreamingPull method. This response is used to
+        stream messages from the server to the client.
+      var_type: Iterable[google.pubsub_v1.types.StreamingPullResponse]
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.streaming_pull
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.subscribe
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: subscribe
+  source:
+    id: subscribe
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/subscriber/client.py
+    startLine: 149
+  summary: "Asynchronously start receiving messages on a given subscription.\n\nThis\
+    \ method starts a background thread to begin pulling messages from\na Pub/Sub\
+    \ subscription and scheduling them to be processed using the\nprovided `callback`.\n\
+    \nThe `callback` will be called with an individual\nxref_Message. It is the\n\
+    responsibility of the callback to either call `ack()` or `nack()`\non the message\
+    \ when it finished processing. If an exception occurs in\nthe callback during\
+    \ processing, the exception is logged and the message\nis `nack()` ed.\n\nThe\
+    \ `flow_control` argument can be used to control the rate of at\nwhich messages\
+    \ are pulled. The settings are relatively conservative by\ndefault to prevent\
+    \ \"message hoarding\" - a situation where the client\npulls a large number of\
+    \ messages but can not process them fast enough\nleading it to \"starve\" other\
+    \ clients of messages. Increasing these\nsettings may lead to faster throughput\
+    \ for messages that do not take\na long time to process.\n\nThe `use_legacy_flow_control`\
+    \ argument disables enforcing flow control\nsettings at the Cloud Pub/Sub server,\
+    \ and only the client side flow control\nwill be enforced.\n\nThis method starts\
+    \ the receiver in the background and returns a\n*Future* representing its execution.\
+    \ Waiting on the future (calling\n`result()`) will block forever or until a non-recoverable\
+    \ error\nis encountered (such as loss of network connectivity). Cancelling the\n\
+    future will signal the process to shutdown gracefully and exit.\n\n<aside class=\"\
+    note\">\n<b>Note:</b>\nproperties that may be surprising. Please take a look at\n\
+    https://cloud.google.com/pubsub/docs/pull#streamingpull for\nmore details on how\
+    \ streaming pull behaves compared to the\nsynchronous pull method.\n</aside>\n\
+    Example:\n\n```python\nfrom google.cloud import pubsub_v1\n\nsubscriber_client\
+    \ = pubsub_v1.SubscriberClient()\n\n# existing subscription\nsubscription = subscriber_client.subscription_path(\n\
+    \    'my-project-id', 'my-subscription')\n\ndef callback(message):\n    print(message)\n\
+    \    message.ack()\n\nfuture = subscriber_client.subscribe(\n    subscription,\
+    \ callback)\n\ntry:\n    future.result()\nexcept KeyboardInterrupt:\n    future.cancel()\
+    \  # Trigger the shutdown.\n    future.result()  # Block until the shutdown is\
+    \ complete.\n```\n"
+  syntax:
+    content: "subscribe(\n    subscription: str,\n    callback: typing.Callable[[subscriber.message.Message],\
+      \ typing.Any],\n    flow_control: typing.Union[\n        google.cloud.pubsub_v1.types.FlowControl,\
+      \ typing.Sequence\n    ] = (),\n    scheduler: typing.Optional[subscriber.scheduler.ThreadScheduler]\
+      \ = None,\n    use_legacy_flow_control: bool = False,\n    await_callbacks_on_shutdown:\
+      \ bool = False,\n) -> google.cloud.pubsub_v1.subscriber.futures.StreamingPullFuture"
+    parameters:
+    - description: The name of the subscription. The subscription should have already
+        been created (for example, by using <code>create_subscription</code>).
+      id: subscription
+      var_type: str
+    - description: The callback function. This function receives the message as its
+        only argument and will be called from a different thread/ process depending
+        on the scheduling strategy.
+      id: callback
+      var_type: typing.Callable[[subscriber.message.Message], typing.Any]
+    - defaultValue: ()
+      description: The flow control settings. Use this to prevent situations where
+        you are inundated with too many messages at once.
+      id: flow_control
+      var_type: typing.Union[<xref uid="google.cloud.pubsub_v1.types.FlowControl">google.cloud.pubsub_v1.types.FlowControl</xref>,
+        typing.Sequence]
+    - defaultValue: None
+      description: An optional *scheduler* to use when executing the callback. This
+        controls how callbacks are executed concurrently. This object must not be
+        shared across multiple <code>SubscriberClient</code> instances.
+      id: scheduler
+      var_type: typing.Optional[subscriber.scheduler.ThreadScheduler]
+    - defaultValue: 'False'
+      description: If set to <code>True</code>, flow control at the Cloud Pub/Sub
+        server is disabled, though client-side flow control is still enabled. If set
+        to <code>False</code> (default), both server-side and client-side flow control
+        are enabled.
+      id: use_legacy_flow_control
+      var_type: bool
+    - defaultValue: 'False'
+      description: If <code>True</code>, after canceling the returned future, the
+        latter's <code>result()</code> method will block until the background stream
+        and its helper threads have been terminated, and all currently executing message
+        callbacks are done processing. If <code>False</code> (default), the returned
+        future's <code>result()</code> method will not block after canceling the future.
+        The method will instead return immediately after the background stream and
+        its helper threads have been terminated, but some of the message callback
+        threads might still be running at that point.
+      id: await_callbacks_on_shutdown
+      var_type: bool
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.subscribe
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.subscription_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: subscription_path
+  source:
+    id: subscription_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 212
+  summary: 'Returns a fully-qualified subscription string.
+
+
+    '
+  syntax:
+    content: 'subscription_path(project: str, subscription: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.subscription_path
+- &id003
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.target
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: target
+  source:
+    id: target
+    path: null
+    startLine: null
+  summary: 'Return the target (where the API is).
+
+    '
+  syntax: {}
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.target
+- *id003
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.test_iam_permissions
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: test_iam_permissions
+  source:
+    id: test_iam_permissions
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 2574
+  summary: "Tests the specified IAM permissions against the IAM access control\n \
+    \   policy for a function.\n\nIf the function does not exist, this will return\
+    \ an empty set\nof permissions, not a NOT_FOUND error.\n"
+  syntax:
+    content: "test_iam_permissions(\n    request: typing.Optional[\n        google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest\n\
+      \    ] = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Optional[float] = None,\n    metadata: typing.Sequence[typing.Tuple[str,\
+      \ str]] = ()\n) -> google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request message for <code>TestIamPermissions</code>
+        method.
+      id: request
+      var_type: <code>.iam_policy_pb2.TestIamPermissionsRequest</code>
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: Response message for <code>TestIamPermissions</code> method.
+      var_type: <code>.iam_policy_pb2.TestIamPermissionsResponse</code>
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.test_iam_permissions
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.topic_path
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: topic_path
+  source:
+    id: topic_path
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 231
+  summary: 'Returns a fully-qualified topic string.
+
+
+    '
+  syntax:
+    content: 'topic_path(project: str, topic: str) -> str'
+    parameters: []
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.topic_path
+- &id004
+  attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.transport
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: transport
+  source:
+    id: transport
+    path: null
+    startLine: null
+  summary: 'Returns the transport used by the client instance.
+
+    '
+  syntax:
+    returns:
+    - description: The transport used by the client instance.
+      var_type: SubscriberTransport
+  type: property
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.transport
+- *id004
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.update_snapshot
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: update_snapshot
+  source:
+    id: update_snapshot
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 2040
+  summary: "Updates an existing snapshot. Snapshots are used in\n<a\nhref=\"https://cloud.google.com/pubsub/docs/replay-overview\"\
+    >Seek</a>\noperations, which allow\nyou to manage message acknowledgments in bulk.\
+    \ That is,\nyou can set the acknowledgment state of messages in an\nexisting subscription\
+    \ to the state captured by a\nsnapshot.\n\n```python\n# This snippet has been\
+    \ automatically generated and should be regarded as a\n# code template only.\n\
+    # It will require modifications to work:\n# - It may require correct/in-range\
+    \ values for request initialization.\n# - It may require specifying regional endpoints\
+    \ when creating the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_update_snapshot():\n    # Create a\
+    \ client\n    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request\
+    \ argument(s)\n    request = pubsub_v1.UpdateSnapshotRequest(\n    )\n\n    #\
+    \ Make the request\n    response = client.update_snapshot(request=request)\n\n\
+    \    # Handle the response\n    print(response)\n```\n"
+  syntax:
+    content: "update_snapshot(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.UpdateSnapshotRequest,\
+      \ dict]\n    ] = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Optional[float] = None,\n    metadata: typing.Sequence[typing.Tuple[str,\
+      \ str]] = ()\n) -> google.cloud.pubsub_v1.types.Snapshot"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the UpdateSnapshot method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.UpdateSnapshotRequest, dict]
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: A snapshot resource. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
+        operations, which allow you to manage message acknowledgments in bulk. That
+        is, you can set the acknowledgment state of messages in an existing subscription
+        to the state captured by a snapshot.
+      var_type: google.pubsub_v1.types.Snapshot
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.update_snapshot
+- attributes: []
+  class: google.cloud.pubsub_v1.subscriber.client.Client
+  fullName: google.cloud.pubsub_v1.subscriber.client.Client.update_subscription
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.subscriber.client
+  name: update_subscription
+  source:
+    id: update_subscription
+    path: tests/testdata/gapic-combo/google/pubsub_v1/services/subscriber/client.py
+    startLine: 779
+  summary: "Updates an existing subscription. Note that certain\nproperties of a subscription,\
+    \ such as its topic, are not\nmodifiable.\n\n```python\n# This snippet has been\
+    \ automatically generated and should be regarded as a\n# code template only.\n\
+    # It will require modifications to work:\n# - It may require correct/in-range\
+    \ values for request initialization.\n# - It may require specifying regional endpoints\
+    \ when creating the service\n#   client as shown in:\n#   https://googleapis.dev/python/google-api-core/latest/client_options.html\n\
+    from google import pubsub_v1\n\ndef sample_update_subscription():\n    # Create\
+    \ a client\n    client = pubsub_v1.SubscriberClient()\n\n    # Initialize request\
+    \ argument(s)\n    subscription = pubsub_v1.Subscription()\n    subscription.name\
+    \ = \"name_value\"\n    subscription.topic = \"topic_value\"\n\n    request =\
+    \ pubsub_v1.UpdateSubscriptionRequest(\n        subscription=subscription,\n \
+    \   )\n\n    # Make the request\n    response = client.update_subscription(request=request)\n\
+    \n    # Handle the response\n    print(response)\n```\n"
+  syntax:
+    content: "update_subscription(\n    request: typing.Optional[\n        typing.Union[google.cloud.pubsub_v1.types.UpdateSubscriptionRequest,\
+      \ dict]\n    ] = None,\n    *,\n    retry: typing.Union[\n        google.api_core.retry.Retry,\
+      \ google.api_core.gapic_v1.method._MethodDefault\n    ] = _MethodDefault._DEFAULT_VALUE,\n\
+      \    timeout: typing.Optional[float] = None,\n    metadata: typing.Sequence[typing.Tuple[str,\
+      \ str]] = ()\n) -> google.cloud.pubsub_v1.types.Subscription"
+    parameters:
+    - defaultValue: None
+      description: The request object. Request for the UpdateSubscription method.
+      id: request
+      var_type: Union[google.pubsub_v1.types.UpdateSubscriptionRequest, dict]
+    - description: Designation of what errors, if any, should be retried.
+      id: retry
+      var_type: google.api_core.retry.Retry
+    - description: The timeout for this request.
+      id: timeout
+      var_type: float
+    - description: Strings which should be sent along with the request as metadata.
+      id: metadata
+      var_type: Sequence[Tuple[str, str]]
+    returns:
+    - description: A subscription resource.
+      var_type: google.pubsub_v1.types.Subscription
+  type: method
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.update_subscription
+references:
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client
+  isExternal: false
+  name: Client
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.acknowledge
+  isExternal: false
+  name: acknowledge
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.acknowledge
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.api
+  isExternal: false
+  name: api
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.api
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.close
+  isExternal: false
+  name: close
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.close
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.closed
+  isExternal: false
+  name: closed
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.closed
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.common_billing_account_path
+  isExternal: false
+  name: common_billing_account_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.common_billing_account_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.common_folder_path
+  isExternal: false
+  name: common_folder_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.common_folder_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.common_location_path
+  isExternal: false
+  name: common_location_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.common_location_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.common_organization_path
+  isExternal: false
+  name: common_organization_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.common_organization_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.common_project_path
+  isExternal: false
+  name: common_project_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.common_project_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.create_snapshot
+  isExternal: false
+  name: create_snapshot
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.create_snapshot
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.create_subscription
+  isExternal: false
+  name: create_subscription
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.create_subscription
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.delete_snapshot
+  isExternal: false
+  name: delete_snapshot
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.delete_snapshot
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.delete_subscription
+  isExternal: false
+  name: delete_subscription
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.delete_subscription
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_file
+  isExternal: false
+  name: from_service_account_file
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_file
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_info
+  isExternal: false
+  name: from_service_account_info
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_info
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_json
+  isExternal: false
+  name: from_service_account_json
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.from_service_account_json
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.get_iam_policy
+  isExternal: false
+  name: get_iam_policy
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.get_iam_policy
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.get_mtls_endpoint_and_cert_source
+  isExternal: false
+  name: get_mtls_endpoint_and_cert_source
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.get_mtls_endpoint_and_cert_source
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.get_snapshot
+  isExternal: false
+  name: get_snapshot
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.get_snapshot
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.get_subscription
+  isExternal: false
+  name: get_subscription
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.get_subscription
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.list_snapshots
+  isExternal: false
+  name: list_snapshots
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.list_snapshots
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.list_subscriptions
+  isExternal: false
+  name: list_subscriptions
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.list_subscriptions
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.modify_ack_deadline
+  isExternal: false
+  name: modify_ack_deadline
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.modify_ack_deadline
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.modify_push_config
+  isExternal: false
+  name: modify_push_config
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.modify_push_config
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_billing_account_path
+  isExternal: false
+  name: parse_common_billing_account_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_billing_account_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_folder_path
+  isExternal: false
+  name: parse_common_folder_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_folder_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_location_path
+  isExternal: false
+  name: parse_common_location_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_location_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_organization_path
+  isExternal: false
+  name: parse_common_organization_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_organization_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_project_path
+  isExternal: false
+  name: parse_common_project_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_common_project_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_snapshot_path
+  isExternal: false
+  name: parse_snapshot_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_snapshot_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_subscription_path
+  isExternal: false
+  name: parse_subscription_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_subscription_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.parse_topic_path
+  isExternal: false
+  name: parse_topic_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.parse_topic_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.pull
+  isExternal: false
+  name: pull
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.pull
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.seek
+  isExternal: false
+  name: seek
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.seek
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.set_iam_policy
+  isExternal: false
+  name: set_iam_policy
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.set_iam_policy
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.snapshot_path
+  isExternal: false
+  name: snapshot_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.snapshot_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.streaming_pull
+  isExternal: false
+  name: streaming_pull
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.streaming_pull
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.subscribe
+  isExternal: false
+  name: subscribe
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.subscribe
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.subscription_path
+  isExternal: false
+  name: subscription_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.subscription_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.target
+  isExternal: false
+  name: target
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.target
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.test_iam_permissions
+  isExternal: false
+  name: test_iam_permissions
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.test_iam_permissions
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.topic_path
+  isExternal: false
+  name: topic_path
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.topic_path
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.transport
+  isExternal: false
+  name: transport
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.transport
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.update_snapshot
+  isExternal: false
+  name: update_snapshot
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.update_snapshot
+- fullName: google.cloud.pubsub_v1.subscriber.client.Client.update_subscription
+  isExternal: false
+  name: update_subscription
+  parent: google.cloud.pubsub_v1.subscriber.client.Client
+  uid: google.cloud.pubsub_v1.subscriber.client.Client.update_subscription

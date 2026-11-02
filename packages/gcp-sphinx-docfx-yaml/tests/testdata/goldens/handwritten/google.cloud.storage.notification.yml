@@ -1,0 +1,32 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes: []
+  children:
+  - google.cloud.storage.notification.BucketNotification
+  fullName: google.cloud.storage.notification
+  langs:
+  - python
+  module: google.cloud.storage.notification
+  name: notification
+  source:
+    id: notification
+    path: tests/testdata/handwritten/google/cloud/storage/notification.py
+    startLine: 0
+  summary: 'Configure bucket notification resources to interact with Google Cloud
+    Pub/Sub.
+
+
+    See [Cloud Pub/Sub Notifications for Google Cloud Storage](https://cloud.google.com/storage/docs/pubsub-notifications)
+
+
+    '
+  syntax: {}
+  type: module
+  uid: google.cloud.storage.notification
+references:
+- fullName: google.cloud.storage.notification.BucketNotification
+  isExternal: false
+  name: BucketNotification
+  parent: google.cloud.storage.notification
+  uid: google.cloud.storage.notification.BucketNotification

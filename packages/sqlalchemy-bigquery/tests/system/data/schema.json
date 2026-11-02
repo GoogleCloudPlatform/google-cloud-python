@@ -1,0 +1,97 @@
+[{
+  "mode": "NULLABLE",
+  "name": "integer",
+  "type": "INTEGER"
+},
+{
+  "mode": "NULLABLE",
+  "name": "timestamp",
+  "type": "TIMESTAMP"
+},
+{
+  "mode": "NULLABLE",
+  "name": "string",
+  "type": "STRING"
+},
+{
+  "mode": "NULLABLE",
+  "name": "float",
+  "type": "FLOAT"
+},
+{
+  "mode": "NULLABLE",
+  "name": "numeric",
+  "type": "NUMERIC"
+},
+{
+  "mode": "NULLABLE",
+  "name": "boolean",
+  "type": "BOOLEAN"
+},
+{
+  "mode": "NULLABLE",
+  "name": "date",
+  "type": "DATE"
+},
+{
+  "mode": "NULLABLE",
+  "name": "datetime",
+  "type": "DATETIME"
+},
+{
+  "mode": "NULLABLE",
+  "name": "time",
+  "type": "TIME"
+},
+{
+  "mode": "NULLABLE",
+  "name": "bytes",
+  "type": "BYTES"
+},
+{
+  "mode": "NULLABLE",
+  "name": "record",
+  "type": "RECORD",
+  "description": "In Standard SQL this data type is a STRUCT<name STRING, age INT64>.",
+  "fields": [
+    {
+      "mode": "NULLABLE",
+      "name": "name",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "age",
+      "type": "INTEGER"
+    }
+  ]
+},
+{
+  "mode": "NULLABLE",
+  "name": "nested_record",
+  "type": "RECORD",
+  "fields": [
+    {
+      "mode": "NULLABLE",
+      "name": "record",
+      "type": "RECORD",
+      "fields": [
+        {
+          "mode": "NULLABLE",
+          "name": "name",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "age",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ]
+},
+{
+  "mode": "REPEATED",
+  "name": "array",
+  "type": "INTEGER"
+}]

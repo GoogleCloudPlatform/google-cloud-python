@@ -1,0 +1,332 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.servicedirectory_v1",
+  "protoPackage": "google.cloud.servicedirectory.v1",
+  "schema": "1.0",
+  "services": {
+    "LookupService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "LookupServiceClient",
+          "rpcs": {
+            "ResolveService": {
+              "methods": [
+                "resolve_service"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "LookupServiceAsyncClient",
+          "rpcs": {
+            "ResolveService": {
+              "methods": [
+                "resolve_service"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "LookupServiceClient",
+          "rpcs": {
+            "ResolveService": {
+              "methods": [
+                "resolve_service"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "RegistrationService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "RegistrationServiceClient",
+          "rpcs": {
+            "CreateEndpoint": {
+              "methods": [
+                "create_endpoint"
+              ]
+            },
+            "CreateNamespace": {
+              "methods": [
+                "create_namespace"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteEndpoint": {
+              "methods": [
+                "delete_endpoint"
+              ]
+            },
+            "DeleteNamespace": {
+              "methods": [
+                "delete_namespace"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "GetEndpoint": {
+              "methods": [
+                "get_endpoint"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetNamespace": {
+              "methods": [
+                "get_namespace"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListEndpoints": {
+              "methods": [
+                "list_endpoints"
+              ]
+            },
+            "ListNamespaces": {
+              "methods": [
+                "list_namespaces"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateEndpoint": {
+              "methods": [
+                "update_endpoint"
+              ]
+            },
+            "UpdateNamespace": {
+              "methods": [
+                "update_namespace"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "RegistrationServiceAsyncClient",
+          "rpcs": {
+            "CreateEndpoint": {
+              "methods": [
+                "create_endpoint"
+              ]
+            },
+            "CreateNamespace": {
+              "methods": [
+                "create_namespace"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteEndpoint": {
+              "methods": [
+                "delete_endpoint"
+              ]
+            },
+            "DeleteNamespace": {
+              "methods": [
+                "delete_namespace"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "GetEndpoint": {
+              "methods": [
+                "get_endpoint"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetNamespace": {
+              "methods": [
+                "get_namespace"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListEndpoints": {
+              "methods": [
+                "list_endpoints"
+              ]
+            },
+            "ListNamespaces": {
+              "methods": [
+                "list_namespaces"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateEndpoint": {
+              "methods": [
+                "update_endpoint"
+              ]
+            },
+            "UpdateNamespace": {
+              "methods": [
+                "update_namespace"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "RegistrationServiceClient",
+          "rpcs": {
+            "CreateEndpoint": {
+              "methods": [
+                "create_endpoint"
+              ]
+            },
+            "CreateNamespace": {
+              "methods": [
+                "create_namespace"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "create_service"
+              ]
+            },
+            "DeleteEndpoint": {
+              "methods": [
+                "delete_endpoint"
+              ]
+            },
+            "DeleteNamespace": {
+              "methods": [
+                "delete_namespace"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "delete_service"
+              ]
+            },
+            "GetEndpoint": {
+              "methods": [
+                "get_endpoint"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
+            "GetNamespace": {
+              "methods": [
+                "get_namespace"
+              ]
+            },
+            "GetService": {
+              "methods": [
+                "get_service"
+              ]
+            },
+            "ListEndpoints": {
+              "methods": [
+                "list_endpoints"
+              ]
+            },
+            "ListNamespaces": {
+              "methods": [
+                "list_namespaces"
+              ]
+            },
+            "ListServices": {
+              "methods": [
+                "list_services"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateEndpoint": {
+              "methods": [
+                "update_endpoint"
+              ]
+            },
+            "UpdateNamespace": {
+              "methods": [
+                "update_namespace"
+              ]
+            },
+            "UpdateService": {
+              "methods": [
+                "update_service"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

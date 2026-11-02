@@ -1,0 +1,133 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.beyondcorp_appconnectors_v1",
+  "protoPackage": "google.cloud.beyondcorp.appconnectors.v1",
+  "schema": "1.0",
+  "services": {
+    "AppConnectorsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AppConnectorsServiceClient",
+          "rpcs": {
+            "CreateAppConnector": {
+              "methods": [
+                "create_app_connector"
+              ]
+            },
+            "DeleteAppConnector": {
+              "methods": [
+                "delete_app_connector"
+              ]
+            },
+            "GetAppConnector": {
+              "methods": [
+                "get_app_connector"
+              ]
+            },
+            "ListAppConnectors": {
+              "methods": [
+                "list_app_connectors"
+              ]
+            },
+            "ReportStatus": {
+              "methods": [
+                "report_status"
+              ]
+            },
+            "ResolveInstanceConfig": {
+              "methods": [
+                "resolve_instance_config"
+              ]
+            },
+            "UpdateAppConnector": {
+              "methods": [
+                "update_app_connector"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AppConnectorsServiceAsyncClient",
+          "rpcs": {
+            "CreateAppConnector": {
+              "methods": [
+                "create_app_connector"
+              ]
+            },
+            "DeleteAppConnector": {
+              "methods": [
+                "delete_app_connector"
+              ]
+            },
+            "GetAppConnector": {
+              "methods": [
+                "get_app_connector"
+              ]
+            },
+            "ListAppConnectors": {
+              "methods": [
+                "list_app_connectors"
+              ]
+            },
+            "ReportStatus": {
+              "methods": [
+                "report_status"
+              ]
+            },
+            "ResolveInstanceConfig": {
+              "methods": [
+                "resolve_instance_config"
+              ]
+            },
+            "UpdateAppConnector": {
+              "methods": [
+                "update_app_connector"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AppConnectorsServiceClient",
+          "rpcs": {
+            "CreateAppConnector": {
+              "methods": [
+                "create_app_connector"
+              ]
+            },
+            "DeleteAppConnector": {
+              "methods": [
+                "delete_app_connector"
+              ]
+            },
+            "GetAppConnector": {
+              "methods": [
+                "get_app_connector"
+              ]
+            },
+            "ListAppConnectors": {
+              "methods": [
+                "list_app_connectors"
+              ]
+            },
+            "ReportStatus": {
+              "methods": [
+                "report_status"
+              ]
+            },
+            "ResolveInstanceConfig": {
+              "methods": [
+                "resolve_instance_config"
+              ]
+            },
+            "UpdateAppConnector": {
+              "methods": [
+                "update_app_connector"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

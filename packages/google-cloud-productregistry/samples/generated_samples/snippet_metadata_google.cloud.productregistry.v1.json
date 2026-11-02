@@ -1,0 +1,1118 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.productregistry.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-productregistry",
+    "version": "0.1.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient",
+          "shortName": "CloudProductRegistryReadServiceAsyncClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient.get_logical_product_variant",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.GetLogicalProductVariant",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "GetLogicalProductVariant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.GetLogicalProductVariantRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.types.LogicalProductVariant",
+        "shortName": "get_logical_product_variant"
+      },
+      "description": "Sample for GetLogicalProductVariant",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_logical_product_variant_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_GetLogicalProductVariant_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_logical_product_variant_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient",
+          "shortName": "CloudProductRegistryReadServiceClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient.get_logical_product_variant",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.GetLogicalProductVariant",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "GetLogicalProductVariant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.GetLogicalProductVariantRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.types.LogicalProductVariant",
+        "shortName": "get_logical_product_variant"
+      },
+      "description": "Sample for GetLogicalProductVariant",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_logical_product_variant_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_GetLogicalProductVariant_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_logical_product_variant_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient",
+          "shortName": "CloudProductRegistryReadServiceAsyncClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient.get_logical_product",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.GetLogicalProduct",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "GetLogicalProduct"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.GetLogicalProductRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.types.LogicalProduct",
+        "shortName": "get_logical_product"
+      },
+      "description": "Sample for GetLogicalProduct",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_logical_product_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_GetLogicalProduct_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_logical_product_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient",
+          "shortName": "CloudProductRegistryReadServiceClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient.get_logical_product",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.GetLogicalProduct",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "GetLogicalProduct"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.GetLogicalProductRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.types.LogicalProduct",
+        "shortName": "get_logical_product"
+      },
+      "description": "Sample for GetLogicalProduct",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_logical_product_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_GetLogicalProduct_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_logical_product_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient",
+          "shortName": "CloudProductRegistryReadServiceAsyncClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient.get_product_suite",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.GetProductSuite",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "GetProductSuite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.GetProductSuiteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.types.ProductSuite",
+        "shortName": "get_product_suite"
+      },
+      "description": "Sample for GetProductSuite",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_product_suite_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_GetProductSuite_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_product_suite_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient",
+          "shortName": "CloudProductRegistryReadServiceClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient.get_product_suite",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.GetProductSuite",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "GetProductSuite"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.GetProductSuiteRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.types.ProductSuite",
+        "shortName": "get_product_suite"
+      },
+      "description": "Sample for GetProductSuite",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_product_suite_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_GetProductSuite_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_get_product_suite_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient",
+          "shortName": "CloudProductRegistryReadServiceAsyncClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient.list_logical_product_variants",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.ListLogicalProductVariants",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "ListLogicalProductVariants"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.ListLogicalProductVariantsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.services.cloud_product_registry_read_service.pagers.ListLogicalProductVariantsAsyncPager",
+        "shortName": "list_logical_product_variants"
+      },
+      "description": "Sample for ListLogicalProductVariants",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_logical_product_variants_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_ListLogicalProductVariants_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_logical_product_variants_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient",
+          "shortName": "CloudProductRegistryReadServiceClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient.list_logical_product_variants",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.ListLogicalProductVariants",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "ListLogicalProductVariants"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.ListLogicalProductVariantsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.services.cloud_product_registry_read_service.pagers.ListLogicalProductVariantsPager",
+        "shortName": "list_logical_product_variants"
+      },
+      "description": "Sample for ListLogicalProductVariants",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_logical_product_variants_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_ListLogicalProductVariants_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_logical_product_variants_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient",
+          "shortName": "CloudProductRegistryReadServiceAsyncClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient.list_logical_products",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.ListLogicalProducts",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "ListLogicalProducts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.ListLogicalProductsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.services.cloud_product_registry_read_service.pagers.ListLogicalProductsAsyncPager",
+        "shortName": "list_logical_products"
+      },
+      "description": "Sample for ListLogicalProducts",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_logical_products_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_ListLogicalProducts_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_logical_products_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient",
+          "shortName": "CloudProductRegistryReadServiceClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient.list_logical_products",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.ListLogicalProducts",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "ListLogicalProducts"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.ListLogicalProductsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.services.cloud_product_registry_read_service.pagers.ListLogicalProductsPager",
+        "shortName": "list_logical_products"
+      },
+      "description": "Sample for ListLogicalProducts",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_logical_products_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_ListLogicalProducts_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_logical_products_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient",
+          "shortName": "CloudProductRegistryReadServiceAsyncClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient.list_product_suites",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.ListProductSuites",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "ListProductSuites"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.ListProductSuitesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.services.cloud_product_registry_read_service.pagers.ListProductSuitesAsyncPager",
+        "shortName": "list_product_suites"
+      },
+      "description": "Sample for ListProductSuites",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_product_suites_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_ListProductSuites_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_product_suites_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient",
+          "shortName": "CloudProductRegistryReadServiceClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient.list_product_suites",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.ListProductSuites",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "ListProductSuites"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.ListProductSuitesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.services.cloud_product_registry_read_service.pagers.ListProductSuitesPager",
+        "shortName": "list_product_suites"
+      },
+      "description": "Sample for ListProductSuites",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_product_suites_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_ListProductSuites_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_list_product_suites_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient",
+          "shortName": "CloudProductRegistryReadServiceAsyncClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceAsyncClient.lookup_entity",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.LookupEntity",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "LookupEntity"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.LookupEntityRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.types.LookupEntityResponse",
+        "shortName": "lookup_entity"
+      },
+      "description": "Sample for LookupEntity",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_lookup_entity_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_LookupEntity_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_lookup_entity_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient",
+          "shortName": "CloudProductRegistryReadServiceClient"
+        },
+        "fullName": "google.cloud.productregistry_v1.CloudProductRegistryReadServiceClient.lookup_entity",
+        "method": {
+          "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService.LookupEntity",
+          "service": {
+            "fullName": "google.cloud.productregistry.v1.CloudProductRegistryReadService",
+            "shortName": "CloudProductRegistryReadService"
+          },
+          "shortName": "LookupEntity"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.productregistry_v1.types.LookupEntityRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.productregistry_v1.types.LookupEntityResponse",
+        "shortName": "lookup_entity"
+      },
+      "description": "Sample for LookupEntity",
+      "file": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_lookup_entity_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "cloudproductregistry_v1_generated_CloudProductRegistryReadService_LookupEntity_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "cloudproductregistry_v1_generated_cloud_product_registry_read_service_lookup_entity_sync.py"
+    }
+  ]
+}

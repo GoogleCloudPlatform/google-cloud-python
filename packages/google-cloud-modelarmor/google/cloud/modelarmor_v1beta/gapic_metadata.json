@@ -1,0 +1,193 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.modelarmor_v1beta",
+  "protoPackage": "google.cloud.modelarmor.v1beta",
+  "schema": "1.0",
+  "services": {
+    "ModelArmor": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ModelArmorClient",
+          "rpcs": {
+            "CreateTemplate": {
+              "methods": [
+                "create_template"
+              ]
+            },
+            "DeleteTemplate": {
+              "methods": [
+                "delete_template"
+              ]
+            },
+            "GetFloorSetting": {
+              "methods": [
+                "get_floor_setting"
+              ]
+            },
+            "GetTemplate": {
+              "methods": [
+                "get_template"
+              ]
+            },
+            "ListTemplates": {
+              "methods": [
+                "list_templates"
+              ]
+            },
+            "SanitizeModelResponse": {
+              "methods": [
+                "sanitize_model_response"
+              ]
+            },
+            "SanitizeUserPrompt": {
+              "methods": [
+                "sanitize_user_prompt"
+              ]
+            },
+            "StreamSanitizeModelResponse": {
+              "methods": [
+                "stream_sanitize_model_response"
+              ]
+            },
+            "StreamSanitizeUserPrompt": {
+              "methods": [
+                "stream_sanitize_user_prompt"
+              ]
+            },
+            "UpdateFloorSetting": {
+              "methods": [
+                "update_floor_setting"
+              ]
+            },
+            "UpdateTemplate": {
+              "methods": [
+                "update_template"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ModelArmorAsyncClient",
+          "rpcs": {
+            "CreateTemplate": {
+              "methods": [
+                "create_template"
+              ]
+            },
+            "DeleteTemplate": {
+              "methods": [
+                "delete_template"
+              ]
+            },
+            "GetFloorSetting": {
+              "methods": [
+                "get_floor_setting"
+              ]
+            },
+            "GetTemplate": {
+              "methods": [
+                "get_template"
+              ]
+            },
+            "ListTemplates": {
+              "methods": [
+                "list_templates"
+              ]
+            },
+            "SanitizeModelResponse": {
+              "methods": [
+                "sanitize_model_response"
+              ]
+            },
+            "SanitizeUserPrompt": {
+              "methods": [
+                "sanitize_user_prompt"
+              ]
+            },
+            "StreamSanitizeModelResponse": {
+              "methods": [
+                "stream_sanitize_model_response"
+              ]
+            },
+            "StreamSanitizeUserPrompt": {
+              "methods": [
+                "stream_sanitize_user_prompt"
+              ]
+            },
+            "UpdateFloorSetting": {
+              "methods": [
+                "update_floor_setting"
+              ]
+            },
+            "UpdateTemplate": {
+              "methods": [
+                "update_template"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ModelArmorClient",
+          "rpcs": {
+            "CreateTemplate": {
+              "methods": [
+                "create_template"
+              ]
+            },
+            "DeleteTemplate": {
+              "methods": [
+                "delete_template"
+              ]
+            },
+            "GetFloorSetting": {
+              "methods": [
+                "get_floor_setting"
+              ]
+            },
+            "GetTemplate": {
+              "methods": [
+                "get_template"
+              ]
+            },
+            "ListTemplates": {
+              "methods": [
+                "list_templates"
+              ]
+            },
+            "SanitizeModelResponse": {
+              "methods": [
+                "sanitize_model_response"
+              ]
+            },
+            "SanitizeUserPrompt": {
+              "methods": [
+                "sanitize_user_prompt"
+              ]
+            },
+            "StreamSanitizeModelResponse": {
+              "methods": [
+                "stream_sanitize_model_response"
+              ]
+            },
+            "StreamSanitizeUserPrompt": {
+              "methods": [
+                "stream_sanitize_user_prompt"
+              ]
+            },
+            "UpdateFloorSetting": {
+              "methods": [
+                "update_floor_setting"
+              ]
+            },
+            "UpdateTemplate": {
+              "methods": [
+                "update_template"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

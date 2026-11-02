@@ -1,0 +1,9 @@
+{
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-spanner-dbapi-driver/latest",
+    "distribution_name": "google-cloud-spanner-dbapi-driver",
+    "language": "python",
+    "library_type": "INTEGRATION",
+    "name": "google-cloud-spanner-dbapi-driver",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

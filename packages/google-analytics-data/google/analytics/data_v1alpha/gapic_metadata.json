@@ -1,0 +1,268 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.analytics.data_v1alpha",
+  "protoPackage": "google.analytics.data.v1alpha",
+  "schema": "1.0",
+  "services": {
+    "AlphaAnalyticsData": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AlphaAnalyticsDataClient",
+          "rpcs": {
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
+            "CreateAudienceList": {
+              "methods": [
+                "create_audience_list"
+              ]
+            },
+            "CreateRecurringAudienceList": {
+              "methods": [
+                "create_recurring_audience_list"
+              ]
+            },
+            "CreateReportTask": {
+              "methods": [
+                "create_report_task"
+              ]
+            },
+            "GetAudienceList": {
+              "methods": [
+                "get_audience_list"
+              ]
+            },
+            "GetMetadata": {
+              "methods": [
+                "get_metadata"
+              ]
+            },
+            "GetPropertyQuotasSnapshot": {
+              "methods": [
+                "get_property_quotas_snapshot"
+              ]
+            },
+            "GetRecurringAudienceList": {
+              "methods": [
+                "get_recurring_audience_list"
+              ]
+            },
+            "GetReportTask": {
+              "methods": [
+                "get_report_task"
+              ]
+            },
+            "ListAudienceLists": {
+              "methods": [
+                "list_audience_lists"
+              ]
+            },
+            "ListRecurringAudienceLists": {
+              "methods": [
+                "list_recurring_audience_lists"
+              ]
+            },
+            "ListReportTasks": {
+              "methods": [
+                "list_report_tasks"
+              ]
+            },
+            "QueryAudienceList": {
+              "methods": [
+                "query_audience_list"
+              ]
+            },
+            "QueryReportTask": {
+              "methods": [
+                "query_report_task"
+              ]
+            },
+            "RunFunnelReport": {
+              "methods": [
+                "run_funnel_report"
+              ]
+            },
+            "RunReport": {
+              "methods": [
+                "run_report"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AlphaAnalyticsDataAsyncClient",
+          "rpcs": {
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
+            "CreateAudienceList": {
+              "methods": [
+                "create_audience_list"
+              ]
+            },
+            "CreateRecurringAudienceList": {
+              "methods": [
+                "create_recurring_audience_list"
+              ]
+            },
+            "CreateReportTask": {
+              "methods": [
+                "create_report_task"
+              ]
+            },
+            "GetAudienceList": {
+              "methods": [
+                "get_audience_list"
+              ]
+            },
+            "GetMetadata": {
+              "methods": [
+                "get_metadata"
+              ]
+            },
+            "GetPropertyQuotasSnapshot": {
+              "methods": [
+                "get_property_quotas_snapshot"
+              ]
+            },
+            "GetRecurringAudienceList": {
+              "methods": [
+                "get_recurring_audience_list"
+              ]
+            },
+            "GetReportTask": {
+              "methods": [
+                "get_report_task"
+              ]
+            },
+            "ListAudienceLists": {
+              "methods": [
+                "list_audience_lists"
+              ]
+            },
+            "ListRecurringAudienceLists": {
+              "methods": [
+                "list_recurring_audience_lists"
+              ]
+            },
+            "ListReportTasks": {
+              "methods": [
+                "list_report_tasks"
+              ]
+            },
+            "QueryAudienceList": {
+              "methods": [
+                "query_audience_list"
+              ]
+            },
+            "QueryReportTask": {
+              "methods": [
+                "query_report_task"
+              ]
+            },
+            "RunFunnelReport": {
+              "methods": [
+                "run_funnel_report"
+              ]
+            },
+            "RunReport": {
+              "methods": [
+                "run_report"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AlphaAnalyticsDataClient",
+          "rpcs": {
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
+            "CreateAudienceList": {
+              "methods": [
+                "create_audience_list"
+              ]
+            },
+            "CreateRecurringAudienceList": {
+              "methods": [
+                "create_recurring_audience_list"
+              ]
+            },
+            "CreateReportTask": {
+              "methods": [
+                "create_report_task"
+              ]
+            },
+            "GetAudienceList": {
+              "methods": [
+                "get_audience_list"
+              ]
+            },
+            "GetMetadata": {
+              "methods": [
+                "get_metadata"
+              ]
+            },
+            "GetPropertyQuotasSnapshot": {
+              "methods": [
+                "get_property_quotas_snapshot"
+              ]
+            },
+            "GetRecurringAudienceList": {
+              "methods": [
+                "get_recurring_audience_list"
+              ]
+            },
+            "GetReportTask": {
+              "methods": [
+                "get_report_task"
+              ]
+            },
+            "ListAudienceLists": {
+              "methods": [
+                "list_audience_lists"
+              ]
+            },
+            "ListRecurringAudienceLists": {
+              "methods": [
+                "list_recurring_audience_lists"
+              ]
+            },
+            "ListReportTasks": {
+              "methods": [
+                "list_report_tasks"
+              ]
+            },
+            "QueryAudienceList": {
+              "methods": [
+                "query_audience_list"
+              ]
+            },
+            "QueryReportTask": {
+              "methods": [
+                "query_report_task"
+              ]
+            },
+            "RunFunnelReport": {
+              "methods": [
+                "run_funnel_report"
+              ]
+            },
+            "RunReport": {
+              "methods": [
+                "run_report"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

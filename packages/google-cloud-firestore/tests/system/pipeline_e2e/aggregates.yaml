@@ -1,0 +1,441 @@
+tests:
+  - description: "testAggregates - count"
+    pipeline:
+      - Collection: books
+      - Aggregate:
+        - AliasedExpression:
+            - FunctionExpression.count:
+              - Field: rating
+            - "count"
+    assert_results:
+      - count: 10
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                count:
+                  functionValue:
+                    name: count
+                    args:
+                    - fieldReferenceValue: rating
+          - mapValue: {}
+          name: aggregate
+  - description: "testAggregates - count_if"
+    pipeline:
+      - Collection: books
+      - Aggregate:
+        - AliasedExpression:
+            - FunctionExpression.count_if:
+              - FunctionExpression.greater_than:
+                - Field: rating
+                - Constant: 4.2
+            - "count_if_rating_gt_4_2"
+    assert_results:
+      - count_if_rating_gt_4_2: 5
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                count_if_rating_gt_4_2:
+                  functionValue:
+                    name: count_if
+                    args:
+                    - functionValue:
+                        name: greater_than
+                        args:
+                        - fieldReferenceValue: rating
+                        - doubleValue: 4.2
+          - mapValue: {}
+          name: aggregate
+  - description: "testAggregates - count_distinct"
+    pipeline:
+      - Collection: books
+      - Aggregate:
+        - AliasedExpression:
+            - FunctionExpression.count_distinct:
+              - Field: genre
+            - "distinct_genres"
+    assert_results:
+      - distinct_genres: 8
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                distinct_genres:
+                  functionValue:
+                    name: count_distinct
+                    args:
+                    - fieldReferenceValue: genre
+          - mapValue: {}
+          name: aggregate
+  - description: "testAggregates - avg, count, max"
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: genre
+              - Constant: Science Fiction
+      - Aggregate:
+        - AliasedExpression:
+            - FunctionExpression.count:
+              - Field: rating
+            - "count"
+        - AliasedExpression:
+            - FunctionExpression.average:
+              - Field: rating
+            - "avg_rating"
+        - AliasedExpression:
+            - FunctionExpression.maximum:
+              - Field: rating
+            - "max_rating"
+    assert_results:
+      - count: 2
+        avg_rating: 4.4
+        max_rating: 4.6
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: genre
+              - stringValue: Science Fiction
+              name: equal
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                avg_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: average
+                count:
+                  functionValue:
+                    name: count
+                    args:
+                    - fieldReferenceValue: rating
+                max_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: maximum
+          - mapValue: {}
+          name: aggregate
+  - description: testGroupBysWithoutAccumulators
+    pipeline:
+      - Collection: books
+      - Where:
+        - FunctionExpression.less_than:
+          - Field: published
+          - Constant: 1900
+      - Aggregate:
+          accumulators: []
+          groups: [genre]
+    assert_error: ".* requires at least one accumulator"
+  - description: testGroupBysAndAggregate
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.less_than:
+              - Field: published
+              - Constant: 1984
+      - Aggregate:
+          accumulators:
+            - AliasedExpression:
+              - FunctionExpression.average:
+                - Field: rating
+              - "avg_rating"
+          groups: [genre]
+      - Where:
+          - FunctionExpression.greater_than:
+              - Field: avg_rating
+              - Constant: 4.3
+      - Sort:
+          - Ordering:
+            - Field: avg_rating
+            - ASCENDING
+    assert_results:
+      - avg_rating: 4.4
+        genre: Science Fiction
+      - avg_rating: 4.5
+        genre: Romance
+      - avg_rating: 4.7
+        genre: Fantasy
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: published
+              - integerValue: '1984'
+              name: less_than
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                avg_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: average
+          - mapValue:
+              fields:
+                genre:
+                  fieldReferenceValue: genre
+          name: aggregate
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: avg_rating
+              - doubleValue: 4.3
+              name: greater_than
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: avg_rating
+          name: sort
+  - description: testMinMax
+    pipeline:
+      - Collection: books
+      - Aggregate:
+          - AliasedExpression:
+              - FunctionExpression.count:
+                - Field: rating
+              - "count"
+          - AliasedExpression:
+              - FunctionExpression.maximum:
+                - Field: rating
+              - "max_rating"
+          - AliasedExpression:
+              - FunctionExpression.minimum:
+                - Field: published
+              - "min_published"
+    assert_results:
+      - count: 10
+        max_rating: 4.7
+        min_published: 1813
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                count:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: count
+                max_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: maximum
+                min_published:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: published
+                    name: minimum
+          - mapValue: {}
+          name: aggregate
+  - description: testSum
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: genre
+              - Constant: Science Fiction
+      - Aggregate:
+        - AliasedExpression:
+            - FunctionExpression.sum:
+              - Field: rating
+            - "total_rating"
+    assert_results:
+      - total_rating: 8.8
+  - description: testArrayAgg
+    pipeline:
+      - Collection: books
+      - Sort:
+          - Ordering:
+            - Field: title
+            - ASCENDING
+      - Aggregate:
+        - AliasedExpression:
+            - FunctionExpression.array_agg:
+              - Field: title
+            - "all_titles"
+    assert_results:
+      - all_titles:
+        - "1984"
+        - "Crime and Punishment"
+        - "Dune"
+        - "One Hundred Years of Solitude"
+        - "Pride and Prejudice"
+        - "The Great Gatsby"
+        - "The Handmaid's Tale"
+        - "The Hitchhiker's Guide to the Galaxy"
+        - "The Lord of the Rings"
+        - "To Kill a Mockingbird"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+        - args:
+          - mapValue:
+              fields:
+                all_titles:
+                  functionValue:
+                    name: array_agg
+                    args:
+                    - fieldReferenceValue: title
+          - mapValue: {}
+          name: aggregate
+  - description: testArrayAggDistinct
+    pipeline:
+      - Collection: books
+      - Aggregate:
+        - AliasedExpression:
+            - FunctionExpression.array_agg_distinct:
+              - Field: genre
+            - "distinct_genres"
+    assert_results:
+      - distinct_genres:
+        - 'Dystopian'
+        - 'Romance'
+        - 'Magical Realism'
+        - 'Fantasy'
+        - 'Southern Gothic'
+        - 'Science Fiction'
+        - 'Psychological Thriller'
+        - 'Modernist'
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                distinct_genres:
+                  functionValue:
+                    name: array_agg_distinct
+                    args:
+                    - fieldReferenceValue: genre
+          - mapValue: {}
+          name: aggregate
+  - description: testFirst
+    pipeline:
+      - Collection: books
+      - Sort:
+          - Ordering:
+            - Field: title
+            - ASCENDING
+      - Aggregate:
+        - AliasedExpression:
+            - FunctionExpression.first:
+              - Field: title
+            - "first_title"
+    assert_results:
+      - first_title: "1984"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+        - args:
+          - mapValue:
+              fields:
+                first_title:
+                  functionValue:
+                    name: first
+                    args:
+                    - fieldReferenceValue: title
+          - mapValue: {}
+          name: aggregate
+  - description: testLast
+    pipeline:
+      - Collection: books
+      - Sort:
+          - Ordering:
+            - Field: title
+            - ASCENDING
+      - Aggregate:
+        - AliasedExpression:
+            - FunctionExpression.last:
+              - Field: title
+            - "last_title"
+    assert_results:
+      - last_title: "To Kill a Mockingbird"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+        - args:
+          - mapValue:
+              fields:
+                last_title:
+                  functionValue:
+                    name: last
+                    args:
+                    - fieldReferenceValue: title
+          - mapValue: {}
+          name: aggregate

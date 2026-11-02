@@ -1,0 +1,16 @@
+{
+    "api_description": "Manages your Cloud Monitoring data and configurations. Most projects must\nbe associated with a Workspace, with a few exceptions as noted on the\nindividual method pages. The table entries below are presented in\nalphabetical order, not in order of common use. For explanations of the\nconcepts found in the table entries, read the [Cloud Monitoring\ndocumentation](https://cloud.google.com/monitoring/docs).",
+    "api_id": "monitoring.googleapis.com",
+    "api_shortname": "monitoring",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-monitoring-metrics-scopes/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-monitoring-metrics-scopes",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559785",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-monitoring-metrics-scopes",
+    "name_pretty": "Cloud Monitoring",
+    "product_documentation": "https://cloud.google.com/monitoring/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

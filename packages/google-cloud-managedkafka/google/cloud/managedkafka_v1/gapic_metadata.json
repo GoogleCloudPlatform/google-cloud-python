@@ -1,0 +1,572 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.managedkafka_v1",
+  "protoPackage": "google.cloud.managedkafka.v1",
+  "schema": "1.0",
+  "services": {
+    "ManagedKafka": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ManagedKafkaClient",
+          "rpcs": {
+            "AddAclEntry": {
+              "methods": [
+                "add_acl_entry"
+              ]
+            },
+            "CreateAcl": {
+              "methods": [
+                "create_acl"
+              ]
+            },
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "CreateTopic": {
+              "methods": [
+                "create_topic"
+              ]
+            },
+            "DeleteAcl": {
+              "methods": [
+                "delete_acl"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteConsumerGroup": {
+              "methods": [
+                "delete_consumer_group"
+              ]
+            },
+            "DeleteTopic": {
+              "methods": [
+                "delete_topic"
+              ]
+            },
+            "GetAcl": {
+              "methods": [
+                "get_acl"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetConsumerGroup": {
+              "methods": [
+                "get_consumer_group"
+              ]
+            },
+            "GetTopic": {
+              "methods": [
+                "get_topic"
+              ]
+            },
+            "ListAcls": {
+              "methods": [
+                "list_acls"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListConsumerGroups": {
+              "methods": [
+                "list_consumer_groups"
+              ]
+            },
+            "ListTopics": {
+              "methods": [
+                "list_topics"
+              ]
+            },
+            "RemoveAclEntry": {
+              "methods": [
+                "remove_acl_entry"
+              ]
+            },
+            "UpdateAcl": {
+              "methods": [
+                "update_acl"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            },
+            "UpdateConsumerGroup": {
+              "methods": [
+                "update_consumer_group"
+              ]
+            },
+            "UpdateTopic": {
+              "methods": [
+                "update_topic"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ManagedKafkaAsyncClient",
+          "rpcs": {
+            "AddAclEntry": {
+              "methods": [
+                "add_acl_entry"
+              ]
+            },
+            "CreateAcl": {
+              "methods": [
+                "create_acl"
+              ]
+            },
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "CreateTopic": {
+              "methods": [
+                "create_topic"
+              ]
+            },
+            "DeleteAcl": {
+              "methods": [
+                "delete_acl"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteConsumerGroup": {
+              "methods": [
+                "delete_consumer_group"
+              ]
+            },
+            "DeleteTopic": {
+              "methods": [
+                "delete_topic"
+              ]
+            },
+            "GetAcl": {
+              "methods": [
+                "get_acl"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetConsumerGroup": {
+              "methods": [
+                "get_consumer_group"
+              ]
+            },
+            "GetTopic": {
+              "methods": [
+                "get_topic"
+              ]
+            },
+            "ListAcls": {
+              "methods": [
+                "list_acls"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListConsumerGroups": {
+              "methods": [
+                "list_consumer_groups"
+              ]
+            },
+            "ListTopics": {
+              "methods": [
+                "list_topics"
+              ]
+            },
+            "RemoveAclEntry": {
+              "methods": [
+                "remove_acl_entry"
+              ]
+            },
+            "UpdateAcl": {
+              "methods": [
+                "update_acl"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            },
+            "UpdateConsumerGroup": {
+              "methods": [
+                "update_consumer_group"
+              ]
+            },
+            "UpdateTopic": {
+              "methods": [
+                "update_topic"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ManagedKafkaClient",
+          "rpcs": {
+            "AddAclEntry": {
+              "methods": [
+                "add_acl_entry"
+              ]
+            },
+            "CreateAcl": {
+              "methods": [
+                "create_acl"
+              ]
+            },
+            "CreateCluster": {
+              "methods": [
+                "create_cluster"
+              ]
+            },
+            "CreateTopic": {
+              "methods": [
+                "create_topic"
+              ]
+            },
+            "DeleteAcl": {
+              "methods": [
+                "delete_acl"
+              ]
+            },
+            "DeleteCluster": {
+              "methods": [
+                "delete_cluster"
+              ]
+            },
+            "DeleteConsumerGroup": {
+              "methods": [
+                "delete_consumer_group"
+              ]
+            },
+            "DeleteTopic": {
+              "methods": [
+                "delete_topic"
+              ]
+            },
+            "GetAcl": {
+              "methods": [
+                "get_acl"
+              ]
+            },
+            "GetCluster": {
+              "methods": [
+                "get_cluster"
+              ]
+            },
+            "GetConsumerGroup": {
+              "methods": [
+                "get_consumer_group"
+              ]
+            },
+            "GetTopic": {
+              "methods": [
+                "get_topic"
+              ]
+            },
+            "ListAcls": {
+              "methods": [
+                "list_acls"
+              ]
+            },
+            "ListClusters": {
+              "methods": [
+                "list_clusters"
+              ]
+            },
+            "ListConsumerGroups": {
+              "methods": [
+                "list_consumer_groups"
+              ]
+            },
+            "ListTopics": {
+              "methods": [
+                "list_topics"
+              ]
+            },
+            "RemoveAclEntry": {
+              "methods": [
+                "remove_acl_entry"
+              ]
+            },
+            "UpdateAcl": {
+              "methods": [
+                "update_acl"
+              ]
+            },
+            "UpdateCluster": {
+              "methods": [
+                "update_cluster"
+              ]
+            },
+            "UpdateConsumerGroup": {
+              "methods": [
+                "update_consumer_group"
+              ]
+            },
+            "UpdateTopic": {
+              "methods": [
+                "update_topic"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ManagedKafkaConnect": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ManagedKafkaConnectClient",
+          "rpcs": {
+            "CreateConnectCluster": {
+              "methods": [
+                "create_connect_cluster"
+              ]
+            },
+            "CreateConnector": {
+              "methods": [
+                "create_connector"
+              ]
+            },
+            "DeleteConnectCluster": {
+              "methods": [
+                "delete_connect_cluster"
+              ]
+            },
+            "DeleteConnector": {
+              "methods": [
+                "delete_connector"
+              ]
+            },
+            "GetConnectCluster": {
+              "methods": [
+                "get_connect_cluster"
+              ]
+            },
+            "GetConnector": {
+              "methods": [
+                "get_connector"
+              ]
+            },
+            "ListConnectClusters": {
+              "methods": [
+                "list_connect_clusters"
+              ]
+            },
+            "ListConnectors": {
+              "methods": [
+                "list_connectors"
+              ]
+            },
+            "PauseConnector": {
+              "methods": [
+                "pause_connector"
+              ]
+            },
+            "RestartConnector": {
+              "methods": [
+                "restart_connector"
+              ]
+            },
+            "ResumeConnector": {
+              "methods": [
+                "resume_connector"
+              ]
+            },
+            "StopConnector": {
+              "methods": [
+                "stop_connector"
+              ]
+            },
+            "UpdateConnectCluster": {
+              "methods": [
+                "update_connect_cluster"
+              ]
+            },
+            "UpdateConnector": {
+              "methods": [
+                "update_connector"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ManagedKafkaConnectAsyncClient",
+          "rpcs": {
+            "CreateConnectCluster": {
+              "methods": [
+                "create_connect_cluster"
+              ]
+            },
+            "CreateConnector": {
+              "methods": [
+                "create_connector"
+              ]
+            },
+            "DeleteConnectCluster": {
+              "methods": [
+                "delete_connect_cluster"
+              ]
+            },
+            "DeleteConnector": {
+              "methods": [
+                "delete_connector"
+              ]
+            },
+            "GetConnectCluster": {
+              "methods": [
+                "get_connect_cluster"
+              ]
+            },
+            "GetConnector": {
+              "methods": [
+                "get_connector"
+              ]
+            },
+            "ListConnectClusters": {
+              "methods": [
+                "list_connect_clusters"
+              ]
+            },
+            "ListConnectors": {
+              "methods": [
+                "list_connectors"
+              ]
+            },
+            "PauseConnector": {
+              "methods": [
+                "pause_connector"
+              ]
+            },
+            "RestartConnector": {
+              "methods": [
+                "restart_connector"
+              ]
+            },
+            "ResumeConnector": {
+              "methods": [
+                "resume_connector"
+              ]
+            },
+            "StopConnector": {
+              "methods": [
+                "stop_connector"
+              ]
+            },
+            "UpdateConnectCluster": {
+              "methods": [
+                "update_connect_cluster"
+              ]
+            },
+            "UpdateConnector": {
+              "methods": [
+                "update_connector"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ManagedKafkaConnectClient",
+          "rpcs": {
+            "CreateConnectCluster": {
+              "methods": [
+                "create_connect_cluster"
+              ]
+            },
+            "CreateConnector": {
+              "methods": [
+                "create_connector"
+              ]
+            },
+            "DeleteConnectCluster": {
+              "methods": [
+                "delete_connect_cluster"
+              ]
+            },
+            "DeleteConnector": {
+              "methods": [
+                "delete_connector"
+              ]
+            },
+            "GetConnectCluster": {
+              "methods": [
+                "get_connect_cluster"
+              ]
+            },
+            "GetConnector": {
+              "methods": [
+                "get_connector"
+              ]
+            },
+            "ListConnectClusters": {
+              "methods": [
+                "list_connect_clusters"
+              ]
+            },
+            "ListConnectors": {
+              "methods": [
+                "list_connectors"
+              ]
+            },
+            "PauseConnector": {
+              "methods": [
+                "pause_connector"
+              ]
+            },
+            "RestartConnector": {
+              "methods": [
+                "restart_connector"
+              ]
+            },
+            "ResumeConnector": {
+              "methods": [
+                "resume_connector"
+              ]
+            },
+            "StopConnector": {
+              "methods": [
+                "stop_connector"
+              ]
+            },
+            "UpdateConnectCluster": {
+              "methods": [
+                "update_connect_cluster"
+              ]
+            },
+            "UpdateConnector": {
+              "methods": [
+                "update_connector"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

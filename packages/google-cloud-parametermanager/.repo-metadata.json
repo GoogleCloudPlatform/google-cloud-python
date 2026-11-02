@@ -1,0 +1,16 @@
+{
+    "api_description": "Parameter Manager is a single source of truth to store, access and manage\nthe lifecycle of your workload parameters. Parameter Manager aims to make\nmanagement of sensitive application parameters effortless for customers\nwithout diminishing focus on security.",
+    "api_id": "parametermanager.googleapis.com",
+    "api_shortname": "parametermanager",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-parametermanager/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-parametermanager",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1706749\u0026template=0",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-parametermanager",
+    "name_pretty": "Parameter Manager",
+    "product_documentation": "https://cloud.google.com/secret-manager/parameter-manager/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

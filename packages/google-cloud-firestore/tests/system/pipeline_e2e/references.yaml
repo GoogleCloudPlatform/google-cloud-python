@@ -1,0 +1,49 @@
+tests:
+  - description: testDocumentId
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal:
+              - Field: title
+              - Constant: "The Hitchhiker's Guide to the Galaxy"
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.document_id:
+                - Field: __name__
+            - "doc_id"
+    assert_results:
+      - doc_id: "book1"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: title
+              - stringValue: "The Hitchhiker's Guide to the Galaxy"
+              name: equal
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                doc_id:
+                  functionValue:
+                    name: document_id
+                    args:
+                    - fieldReferenceValue: __name__
+          name: select
+  - description: testCollectionId
+    pipeline:
+      - Collection: books
+      - Limit: 1
+      - Select:
+        - AliasedExpression:
+            - FunctionExpression.collection_id:
+                - Field: __name__
+            - "collectionName"
+    assert_results:
+      - collectionName: "books"
+

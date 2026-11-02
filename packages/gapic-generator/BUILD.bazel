@@ -1,0 +1,93 @@
+load("//:gapic_generator_python.bzl", "pandoc_binary", "pandoc_toolchain")
+load("@gapic_generator_python_pip_deps//:requirements.bzl", "requirement")
+load("@bazel_tools//tools/python:toolchain.bzl", "py_runtime_pair")
+
+toolchain_type(
+    name = "pandoc_toolchain_type",
+    visibility = ["//visibility:public"],
+)
+
+pandoc_toolchain(
+    exec_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:arm64",
+    ],
+    platform = "linux_arm_64",
+)
+
+pandoc_toolchain(
+    exec_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+    platform = "linux_x86_64",
+)
+
+pandoc_toolchain(
+    exec_compatible_with = [
+        "@platforms//os:osx",
+        "@platforms//cpu:arm64",
+    ],
+    platform = "macOS_arm_64",
+)
+
+pandoc_toolchain(
+    exec_compatible_with = [
+        "@platforms//os:osx",
+        "@platforms//cpu:x86_64",
+    ],
+    platform = "macOS_x86_64",
+)
+
+pandoc_toolchain(
+    exec_compatible_with = [
+        "@platforms//os:windows",
+        "@platforms//cpu:x86_64",
+    ],
+    platform = "windows_x86_64",
+)
+
+pandoc_binary(
+    name = "pandoc_binary",
+)
+
+py_runtime(
+    name = "pyenv3_runtime",
+    interpreter = ":pyenv3wrapper.sh",
+    python_version = "PY3",
+)
+
+py_runtime_pair(
+    name = "pyenv3_runtime_pair",
+    py3_runtime = ":pyenv3_runtime",
+)
+
+toolchain(
+    name = "pyenv3_toolchain",
+    toolchain = ":pyenv3_runtime_pair",
+    toolchain_type = "@bazel_tools//tools/python:toolchain_type",
+)
+
+py_binary(
+    name = "gapic_plugin",
+    srcs = glob(["gapic/**/*.py"]),
+    data = [":pandoc_binary"] + glob([
+        "gapic/**/*.j2",
+        "gapic/**/.*.j2",
+    ]),
+    main = "gapic/cli/generate_with_pandoc.py",
+    python_version = "PY3",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_grpc_grpc//src/python/grpcio/grpc:grpcio",
+        requirement("protobuf"),
+        requirement("click"),
+        requirement("google-api-core"),
+        requirement("googleapis-common-protos"),
+        requirement("jinja2"),
+        requirement("MarkupSafe"),
+        requirement("pypandoc"),
+        requirement("PyYAML"),
+        requirement("grpc-google-iam-v1"),
+    ],
+)

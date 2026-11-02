@@ -1,0 +1,16 @@
+{
+    "api_description": "isochrones.googleapis.com API.",
+    "api_id": "isochrones.googleapis.com",
+    "api_shortname": "isochrones",
+    "client_documentation": "https://googleapis.dev/python/google-maps-isochrones/latest",
+    "default_version": "v1",
+    "distribution_name": "google-maps-isochrones",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1950715\u0026template=0",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-maps-isochrones",
+    "name_pretty": "Isochrones",
+    "product_documentation": "https://developers.google.com/maps/documentation/isochrones/overview",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

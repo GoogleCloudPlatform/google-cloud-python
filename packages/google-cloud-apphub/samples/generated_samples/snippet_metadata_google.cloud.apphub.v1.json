@@ -1,0 +1,5118 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.apphub.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-apphub",
+    "version": "0.5.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.create_application",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.CreateApplication",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "CreateApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.CreateApplicationRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "application",
+            "type": "google.cloud.apphub_v1.types.Application"
+          },
+          {
+            "name": "application_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_application"
+      },
+      "description": "Sample for CreateApplication",
+      "file": "apphub_v1_generated_app_hub_create_application_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_CreateApplication_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_create_application_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.create_application",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.CreateApplication",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "CreateApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.CreateApplicationRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "application",
+            "type": "google.cloud.apphub_v1.types.Application"
+          },
+          {
+            "name": "application_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_application"
+      },
+      "description": "Sample for CreateApplication",
+      "file": "apphub_v1_generated_app_hub_create_application_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_CreateApplication_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_create_application_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.create_service_project_attachment",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.CreateServiceProjectAttachment",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "CreateServiceProjectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.CreateServiceProjectAttachmentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "service_project_attachment",
+            "type": "google.cloud.apphub_v1.types.ServiceProjectAttachment"
+          },
+          {
+            "name": "service_project_attachment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_service_project_attachment"
+      },
+      "description": "Sample for CreateServiceProjectAttachment",
+      "file": "apphub_v1_generated_app_hub_create_service_project_attachment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_CreateServiceProjectAttachment_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_create_service_project_attachment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.create_service_project_attachment",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.CreateServiceProjectAttachment",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "CreateServiceProjectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.CreateServiceProjectAttachmentRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "service_project_attachment",
+            "type": "google.cloud.apphub_v1.types.ServiceProjectAttachment"
+          },
+          {
+            "name": "service_project_attachment_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_service_project_attachment"
+      },
+      "description": "Sample for CreateServiceProjectAttachment",
+      "file": "apphub_v1_generated_app_hub_create_service_project_attachment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_CreateServiceProjectAttachment_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_create_service_project_attachment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.create_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.CreateService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "CreateService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.CreateServiceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "service",
+            "type": "google.cloud.apphub_v1.types.Service"
+          },
+          {
+            "name": "service_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_service"
+      },
+      "description": "Sample for CreateService",
+      "file": "apphub_v1_generated_app_hub_create_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_CreateService_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_create_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.create_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.CreateService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "CreateService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.CreateServiceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "service",
+            "type": "google.cloud.apphub_v1.types.Service"
+          },
+          {
+            "name": "service_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_service"
+      },
+      "description": "Sample for CreateService",
+      "file": "apphub_v1_generated_app_hub_create_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_CreateService_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_create_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.create_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.CreateWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "CreateWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.CreateWorkloadRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "workload",
+            "type": "google.cloud.apphub_v1.types.Workload"
+          },
+          {
+            "name": "workload_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_workload"
+      },
+      "description": "Sample for CreateWorkload",
+      "file": "apphub_v1_generated_app_hub_create_workload_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_CreateWorkload_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_create_workload_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.create_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.CreateWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "CreateWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.CreateWorkloadRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "workload",
+            "type": "google.cloud.apphub_v1.types.Workload"
+          },
+          {
+            "name": "workload_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_workload"
+      },
+      "description": "Sample for CreateWorkload",
+      "file": "apphub_v1_generated_app_hub_create_workload_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_CreateWorkload_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_create_workload_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.delete_application",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.DeleteApplication",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "DeleteApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.DeleteApplicationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_application"
+      },
+      "description": "Sample for DeleteApplication",
+      "file": "apphub_v1_generated_app_hub_delete_application_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_DeleteApplication_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_delete_application_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.delete_application",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.DeleteApplication",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "DeleteApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.DeleteApplicationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_application"
+      },
+      "description": "Sample for DeleteApplication",
+      "file": "apphub_v1_generated_app_hub_delete_application_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_DeleteApplication_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_delete_application_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.delete_service_project_attachment",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.DeleteServiceProjectAttachment",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "DeleteServiceProjectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.DeleteServiceProjectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_service_project_attachment"
+      },
+      "description": "Sample for DeleteServiceProjectAttachment",
+      "file": "apphub_v1_generated_app_hub_delete_service_project_attachment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_DeleteServiceProjectAttachment_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_delete_service_project_attachment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.delete_service_project_attachment",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.DeleteServiceProjectAttachment",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "DeleteServiceProjectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.DeleteServiceProjectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_service_project_attachment"
+      },
+      "description": "Sample for DeleteServiceProjectAttachment",
+      "file": "apphub_v1_generated_app_hub_delete_service_project_attachment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_DeleteServiceProjectAttachment_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_delete_service_project_attachment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.delete_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.DeleteService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "DeleteService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.DeleteServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_service"
+      },
+      "description": "Sample for DeleteService",
+      "file": "apphub_v1_generated_app_hub_delete_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_DeleteService_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_delete_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.delete_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.DeleteService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "DeleteService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.DeleteServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_service"
+      },
+      "description": "Sample for DeleteService",
+      "file": "apphub_v1_generated_app_hub_delete_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_DeleteService_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_delete_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.delete_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.DeleteWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "DeleteWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.DeleteWorkloadRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_workload"
+      },
+      "description": "Sample for DeleteWorkload",
+      "file": "apphub_v1_generated_app_hub_delete_workload_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_DeleteWorkload_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_delete_workload_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.delete_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.DeleteWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "DeleteWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.DeleteWorkloadRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_workload"
+      },
+      "description": "Sample for DeleteWorkload",
+      "file": "apphub_v1_generated_app_hub_delete_workload_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_DeleteWorkload_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_delete_workload_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.detach_service_project_attachment",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.DetachServiceProjectAttachment",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "DetachServiceProjectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.DetachServiceProjectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.DetachServiceProjectAttachmentResponse",
+        "shortName": "detach_service_project_attachment"
+      },
+      "description": "Sample for DetachServiceProjectAttachment",
+      "file": "apphub_v1_generated_app_hub_detach_service_project_attachment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_DetachServiceProjectAttachment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_detach_service_project_attachment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.detach_service_project_attachment",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.DetachServiceProjectAttachment",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "DetachServiceProjectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.DetachServiceProjectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.DetachServiceProjectAttachmentResponse",
+        "shortName": "detach_service_project_attachment"
+      },
+      "description": "Sample for DetachServiceProjectAttachment",
+      "file": "apphub_v1_generated_app_hub_detach_service_project_attachment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_DetachServiceProjectAttachment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_detach_service_project_attachment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.get_application",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetApplication",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetApplicationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.Application",
+        "shortName": "get_application"
+      },
+      "description": "Sample for GetApplication",
+      "file": "apphub_v1_generated_app_hub_get_application_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetApplication_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_application_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.get_application",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetApplication",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetApplicationRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.Application",
+        "shortName": "get_application"
+      },
+      "description": "Sample for GetApplication",
+      "file": "apphub_v1_generated_app_hub_get_application_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetApplication_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_application_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.get_boundary",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetBoundary",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetBoundary"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetBoundaryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.Boundary",
+        "shortName": "get_boundary"
+      },
+      "description": "Sample for GetBoundary",
+      "file": "apphub_v1_generated_app_hub_get_boundary_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetBoundary_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_boundary_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.get_boundary",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetBoundary",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetBoundary"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetBoundaryRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.Boundary",
+        "shortName": "get_boundary"
+      },
+      "description": "Sample for GetBoundary",
+      "file": "apphub_v1_generated_app_hub_get_boundary_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetBoundary_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_boundary_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.get_discovered_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetDiscoveredService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetDiscoveredService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetDiscoveredServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.DiscoveredService",
+        "shortName": "get_discovered_service"
+      },
+      "description": "Sample for GetDiscoveredService",
+      "file": "apphub_v1_generated_app_hub_get_discovered_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetDiscoveredService_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_discovered_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.get_discovered_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetDiscoveredService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetDiscoveredService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetDiscoveredServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.DiscoveredService",
+        "shortName": "get_discovered_service"
+      },
+      "description": "Sample for GetDiscoveredService",
+      "file": "apphub_v1_generated_app_hub_get_discovered_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetDiscoveredService_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_discovered_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.get_discovered_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetDiscoveredWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetDiscoveredWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetDiscoveredWorkloadRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.DiscoveredWorkload",
+        "shortName": "get_discovered_workload"
+      },
+      "description": "Sample for GetDiscoveredWorkload",
+      "file": "apphub_v1_generated_app_hub_get_discovered_workload_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetDiscoveredWorkload_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_discovered_workload_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.get_discovered_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetDiscoveredWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetDiscoveredWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetDiscoveredWorkloadRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.DiscoveredWorkload",
+        "shortName": "get_discovered_workload"
+      },
+      "description": "Sample for GetDiscoveredWorkload",
+      "file": "apphub_v1_generated_app_hub_get_discovered_workload_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetDiscoveredWorkload_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_discovered_workload_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.get_extended_metadata_schema",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetExtendedMetadataSchema",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetExtendedMetadataSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetExtendedMetadataSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.ExtendedMetadataSchema",
+        "shortName": "get_extended_metadata_schema"
+      },
+      "description": "Sample for GetExtendedMetadataSchema",
+      "file": "apphub_v1_generated_app_hub_get_extended_metadata_schema_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetExtendedMetadataSchema_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_extended_metadata_schema_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.get_extended_metadata_schema",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetExtendedMetadataSchema",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetExtendedMetadataSchema"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetExtendedMetadataSchemaRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.ExtendedMetadataSchema",
+        "shortName": "get_extended_metadata_schema"
+      },
+      "description": "Sample for GetExtendedMetadataSchema",
+      "file": "apphub_v1_generated_app_hub_get_extended_metadata_schema_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetExtendedMetadataSchema_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_extended_metadata_schema_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.get_service_project_attachment",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetServiceProjectAttachment",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetServiceProjectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetServiceProjectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.ServiceProjectAttachment",
+        "shortName": "get_service_project_attachment"
+      },
+      "description": "Sample for GetServiceProjectAttachment",
+      "file": "apphub_v1_generated_app_hub_get_service_project_attachment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetServiceProjectAttachment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_service_project_attachment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.get_service_project_attachment",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetServiceProjectAttachment",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetServiceProjectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetServiceProjectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.ServiceProjectAttachment",
+        "shortName": "get_service_project_attachment"
+      },
+      "description": "Sample for GetServiceProjectAttachment",
+      "file": "apphub_v1_generated_app_hub_get_service_project_attachment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetServiceProjectAttachment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_service_project_attachment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.get_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.Service",
+        "shortName": "get_service"
+      },
+      "description": "Sample for GetService",
+      "file": "apphub_v1_generated_app_hub_get_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetService_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.get_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetServiceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.Service",
+        "shortName": "get_service"
+      },
+      "description": "Sample for GetService",
+      "file": "apphub_v1_generated_app_hub_get_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetService_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.get_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetWorkloadRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.Workload",
+        "shortName": "get_workload"
+      },
+      "description": "Sample for GetWorkload",
+      "file": "apphub_v1_generated_app_hub_get_workload_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetWorkload_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_workload_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.get_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.GetWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "GetWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.GetWorkloadRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.Workload",
+        "shortName": "get_workload"
+      },
+      "description": "Sample for GetWorkload",
+      "file": "apphub_v1_generated_app_hub_get_workload_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_GetWorkload_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_get_workload_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.list_applications",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListApplications",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListApplications"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListApplicationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListApplicationsAsyncPager",
+        "shortName": "list_applications"
+      },
+      "description": "Sample for ListApplications",
+      "file": "apphub_v1_generated_app_hub_list_applications_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListApplications_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_applications_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.list_applications",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListApplications",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListApplications"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListApplicationsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListApplicationsPager",
+        "shortName": "list_applications"
+      },
+      "description": "Sample for ListApplications",
+      "file": "apphub_v1_generated_app_hub_list_applications_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListApplications_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_applications_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.list_discovered_services",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListDiscoveredServices",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListDiscoveredServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListDiscoveredServicesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListDiscoveredServicesAsyncPager",
+        "shortName": "list_discovered_services"
+      },
+      "description": "Sample for ListDiscoveredServices",
+      "file": "apphub_v1_generated_app_hub_list_discovered_services_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListDiscoveredServices_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_discovered_services_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.list_discovered_services",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListDiscoveredServices",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListDiscoveredServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListDiscoveredServicesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListDiscoveredServicesPager",
+        "shortName": "list_discovered_services"
+      },
+      "description": "Sample for ListDiscoveredServices",
+      "file": "apphub_v1_generated_app_hub_list_discovered_services_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListDiscoveredServices_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_discovered_services_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.list_discovered_workloads",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListDiscoveredWorkloads",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListDiscoveredWorkloads"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListDiscoveredWorkloadsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListDiscoveredWorkloadsAsyncPager",
+        "shortName": "list_discovered_workloads"
+      },
+      "description": "Sample for ListDiscoveredWorkloads",
+      "file": "apphub_v1_generated_app_hub_list_discovered_workloads_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListDiscoveredWorkloads_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_discovered_workloads_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.list_discovered_workloads",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListDiscoveredWorkloads",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListDiscoveredWorkloads"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListDiscoveredWorkloadsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListDiscoveredWorkloadsPager",
+        "shortName": "list_discovered_workloads"
+      },
+      "description": "Sample for ListDiscoveredWorkloads",
+      "file": "apphub_v1_generated_app_hub_list_discovered_workloads_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListDiscoveredWorkloads_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_discovered_workloads_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.list_extended_metadata_schemas",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListExtendedMetadataSchemas",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListExtendedMetadataSchemas"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListExtendedMetadataSchemasRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListExtendedMetadataSchemasAsyncPager",
+        "shortName": "list_extended_metadata_schemas"
+      },
+      "description": "Sample for ListExtendedMetadataSchemas",
+      "file": "apphub_v1_generated_app_hub_list_extended_metadata_schemas_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListExtendedMetadataSchemas_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_extended_metadata_schemas_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.list_extended_metadata_schemas",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListExtendedMetadataSchemas",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListExtendedMetadataSchemas"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListExtendedMetadataSchemasRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListExtendedMetadataSchemasPager",
+        "shortName": "list_extended_metadata_schemas"
+      },
+      "description": "Sample for ListExtendedMetadataSchemas",
+      "file": "apphub_v1_generated_app_hub_list_extended_metadata_schemas_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListExtendedMetadataSchemas_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_extended_metadata_schemas_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.list_service_project_attachments",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListServiceProjectAttachments",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListServiceProjectAttachments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListServiceProjectAttachmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListServiceProjectAttachmentsAsyncPager",
+        "shortName": "list_service_project_attachments"
+      },
+      "description": "Sample for ListServiceProjectAttachments",
+      "file": "apphub_v1_generated_app_hub_list_service_project_attachments_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListServiceProjectAttachments_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_service_project_attachments_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.list_service_project_attachments",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListServiceProjectAttachments",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListServiceProjectAttachments"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListServiceProjectAttachmentsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListServiceProjectAttachmentsPager",
+        "shortName": "list_service_project_attachments"
+      },
+      "description": "Sample for ListServiceProjectAttachments",
+      "file": "apphub_v1_generated_app_hub_list_service_project_attachments_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListServiceProjectAttachments_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_service_project_attachments_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.list_services",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListServices",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListServicesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListServicesAsyncPager",
+        "shortName": "list_services"
+      },
+      "description": "Sample for ListServices",
+      "file": "apphub_v1_generated_app_hub_list_services_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListServices_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_services_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.list_services",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListServices",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListServices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListServicesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListServicesPager",
+        "shortName": "list_services"
+      },
+      "description": "Sample for ListServices",
+      "file": "apphub_v1_generated_app_hub_list_services_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListServices_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_services_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.list_workloads",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListWorkloads",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListWorkloads"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListWorkloadsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListWorkloadsAsyncPager",
+        "shortName": "list_workloads"
+      },
+      "description": "Sample for ListWorkloads",
+      "file": "apphub_v1_generated_app_hub_list_workloads_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListWorkloads_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_workloads_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.list_workloads",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.ListWorkloads",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "ListWorkloads"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.ListWorkloadsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.services.app_hub.pagers.ListWorkloadsPager",
+        "shortName": "list_workloads"
+      },
+      "description": "Sample for ListWorkloads",
+      "file": "apphub_v1_generated_app_hub_list_workloads_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_ListWorkloads_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_list_workloads_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.lookup_discovered_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.LookupDiscoveredService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "LookupDiscoveredService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.LookupDiscoveredServiceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "uri",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.LookupDiscoveredServiceResponse",
+        "shortName": "lookup_discovered_service"
+      },
+      "description": "Sample for LookupDiscoveredService",
+      "file": "apphub_v1_generated_app_hub_lookup_discovered_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_LookupDiscoveredService_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_lookup_discovered_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.lookup_discovered_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.LookupDiscoveredService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "LookupDiscoveredService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.LookupDiscoveredServiceRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "uri",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.LookupDiscoveredServiceResponse",
+        "shortName": "lookup_discovered_service"
+      },
+      "description": "Sample for LookupDiscoveredService",
+      "file": "apphub_v1_generated_app_hub_lookup_discovered_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_LookupDiscoveredService_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_lookup_discovered_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.lookup_discovered_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.LookupDiscoveredWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "LookupDiscoveredWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.LookupDiscoveredWorkloadRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "uri",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.LookupDiscoveredWorkloadResponse",
+        "shortName": "lookup_discovered_workload"
+      },
+      "description": "Sample for LookupDiscoveredWorkload",
+      "file": "apphub_v1_generated_app_hub_lookup_discovered_workload_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_LookupDiscoveredWorkload_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_lookup_discovered_workload_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.lookup_discovered_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.LookupDiscoveredWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "LookupDiscoveredWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.LookupDiscoveredWorkloadRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "uri",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.LookupDiscoveredWorkloadResponse",
+        "shortName": "lookup_discovered_workload"
+      },
+      "description": "Sample for LookupDiscoveredWorkload",
+      "file": "apphub_v1_generated_app_hub_lookup_discovered_workload_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_LookupDiscoveredWorkload_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_lookup_discovered_workload_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.lookup_service_project_attachment",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.LookupServiceProjectAttachment",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "LookupServiceProjectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.LookupServiceProjectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.LookupServiceProjectAttachmentResponse",
+        "shortName": "lookup_service_project_attachment"
+      },
+      "description": "Sample for LookupServiceProjectAttachment",
+      "file": "apphub_v1_generated_app_hub_lookup_service_project_attachment_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_LookupServiceProjectAttachment_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_lookup_service_project_attachment_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.lookup_service_project_attachment",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.LookupServiceProjectAttachment",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "LookupServiceProjectAttachment"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.LookupServiceProjectAttachmentRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.apphub_v1.types.LookupServiceProjectAttachmentResponse",
+        "shortName": "lookup_service_project_attachment"
+      },
+      "description": "Sample for LookupServiceProjectAttachment",
+      "file": "apphub_v1_generated_app_hub_lookup_service_project_attachment_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_LookupServiceProjectAttachment_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_lookup_service_project_attachment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.update_application",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.UpdateApplication",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "UpdateApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.UpdateApplicationRequest"
+          },
+          {
+            "name": "application",
+            "type": "google.cloud.apphub_v1.types.Application"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_application"
+      },
+      "description": "Sample for UpdateApplication",
+      "file": "apphub_v1_generated_app_hub_update_application_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_UpdateApplication_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_update_application_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.update_application",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.UpdateApplication",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "UpdateApplication"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.UpdateApplicationRequest"
+          },
+          {
+            "name": "application",
+            "type": "google.cloud.apphub_v1.types.Application"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_application"
+      },
+      "description": "Sample for UpdateApplication",
+      "file": "apphub_v1_generated_app_hub_update_application_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_UpdateApplication_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_update_application_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.update_boundary",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.UpdateBoundary",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "UpdateBoundary"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.UpdateBoundaryRequest"
+          },
+          {
+            "name": "boundary",
+            "type": "google.cloud.apphub_v1.types.Boundary"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_boundary"
+      },
+      "description": "Sample for UpdateBoundary",
+      "file": "apphub_v1_generated_app_hub_update_boundary_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_UpdateBoundary_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_update_boundary_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.update_boundary",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.UpdateBoundary",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "UpdateBoundary"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.UpdateBoundaryRequest"
+          },
+          {
+            "name": "boundary",
+            "type": "google.cloud.apphub_v1.types.Boundary"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_boundary"
+      },
+      "description": "Sample for UpdateBoundary",
+      "file": "apphub_v1_generated_app_hub_update_boundary_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_UpdateBoundary_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_update_boundary_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.update_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.UpdateService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "UpdateService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.UpdateServiceRequest"
+          },
+          {
+            "name": "service",
+            "type": "google.cloud.apphub_v1.types.Service"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_service"
+      },
+      "description": "Sample for UpdateService",
+      "file": "apphub_v1_generated_app_hub_update_service_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_UpdateService_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_update_service_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.update_service",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.UpdateService",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "UpdateService"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.UpdateServiceRequest"
+          },
+          {
+            "name": "service",
+            "type": "google.cloud.apphub_v1.types.Service"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_service"
+      },
+      "description": "Sample for UpdateService",
+      "file": "apphub_v1_generated_app_hub_update_service_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_UpdateService_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_update_service_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubAsyncClient",
+          "shortName": "AppHubAsyncClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubAsyncClient.update_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.UpdateWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "UpdateWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.UpdateWorkloadRequest"
+          },
+          {
+            "name": "workload",
+            "type": "google.cloud.apphub_v1.types.Workload"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_workload"
+      },
+      "description": "Sample for UpdateWorkload",
+      "file": "apphub_v1_generated_app_hub_update_workload_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_UpdateWorkload_async",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_update_workload_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.apphub_v1.AppHubClient",
+          "shortName": "AppHubClient"
+        },
+        "fullName": "google.cloud.apphub_v1.AppHubClient.update_workload",
+        "method": {
+          "fullName": "google.cloud.apphub.v1.AppHub.UpdateWorkload",
+          "service": {
+            "fullName": "google.cloud.apphub.v1.AppHub",
+            "shortName": "AppHub"
+          },
+          "shortName": "UpdateWorkload"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.apphub_v1.types.UpdateWorkloadRequest"
+          },
+          {
+            "name": "workload",
+            "type": "google.cloud.apphub_v1.types.Workload"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_workload"
+      },
+      "description": "Sample for UpdateWorkload",
+      "file": "apphub_v1_generated_app_hub_update_workload_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "apphub_v1_generated_AppHub_UpdateWorkload_sync",
+      "segments": [
+        {
+          "end": 58,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 58,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 55,
+          "start": 49,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "apphub_v1_generated_app_hub_update_workload_sync.py"
+    }
+  ]
+}

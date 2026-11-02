@@ -1,0 +1,298 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.tpu_v2",
+  "protoPackage": "google.cloud.tpu.v2",
+  "schema": "1.0",
+  "services": {
+    "Tpu": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "TpuClient",
+          "rpcs": {
+            "CreateNode": {
+              "methods": [
+                "create_node"
+              ]
+            },
+            "CreateQueuedResource": {
+              "methods": [
+                "create_queued_resource"
+              ]
+            },
+            "DeleteNode": {
+              "methods": [
+                "delete_node"
+              ]
+            },
+            "DeleteQueuedResource": {
+              "methods": [
+                "delete_queued_resource"
+              ]
+            },
+            "GenerateServiceIdentity": {
+              "methods": [
+                "generate_service_identity"
+              ]
+            },
+            "GetAcceleratorType": {
+              "methods": [
+                "get_accelerator_type"
+              ]
+            },
+            "GetGuestAttributes": {
+              "methods": [
+                "get_guest_attributes"
+              ]
+            },
+            "GetNode": {
+              "methods": [
+                "get_node"
+              ]
+            },
+            "GetQueuedResource": {
+              "methods": [
+                "get_queued_resource"
+              ]
+            },
+            "GetRuntimeVersion": {
+              "methods": [
+                "get_runtime_version"
+              ]
+            },
+            "ListAcceleratorTypes": {
+              "methods": [
+                "list_accelerator_types"
+              ]
+            },
+            "ListNodes": {
+              "methods": [
+                "list_nodes"
+              ]
+            },
+            "ListQueuedResources": {
+              "methods": [
+                "list_queued_resources"
+              ]
+            },
+            "ListRuntimeVersions": {
+              "methods": [
+                "list_runtime_versions"
+              ]
+            },
+            "ResetQueuedResource": {
+              "methods": [
+                "reset_queued_resource"
+              ]
+            },
+            "StartNode": {
+              "methods": [
+                "start_node"
+              ]
+            },
+            "StopNode": {
+              "methods": [
+                "stop_node"
+              ]
+            },
+            "UpdateNode": {
+              "methods": [
+                "update_node"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "TpuAsyncClient",
+          "rpcs": {
+            "CreateNode": {
+              "methods": [
+                "create_node"
+              ]
+            },
+            "CreateQueuedResource": {
+              "methods": [
+                "create_queued_resource"
+              ]
+            },
+            "DeleteNode": {
+              "methods": [
+                "delete_node"
+              ]
+            },
+            "DeleteQueuedResource": {
+              "methods": [
+                "delete_queued_resource"
+              ]
+            },
+            "GenerateServiceIdentity": {
+              "methods": [
+                "generate_service_identity"
+              ]
+            },
+            "GetAcceleratorType": {
+              "methods": [
+                "get_accelerator_type"
+              ]
+            },
+            "GetGuestAttributes": {
+              "methods": [
+                "get_guest_attributes"
+              ]
+            },
+            "GetNode": {
+              "methods": [
+                "get_node"
+              ]
+            },
+            "GetQueuedResource": {
+              "methods": [
+                "get_queued_resource"
+              ]
+            },
+            "GetRuntimeVersion": {
+              "methods": [
+                "get_runtime_version"
+              ]
+            },
+            "ListAcceleratorTypes": {
+              "methods": [
+                "list_accelerator_types"
+              ]
+            },
+            "ListNodes": {
+              "methods": [
+                "list_nodes"
+              ]
+            },
+            "ListQueuedResources": {
+              "methods": [
+                "list_queued_resources"
+              ]
+            },
+            "ListRuntimeVersions": {
+              "methods": [
+                "list_runtime_versions"
+              ]
+            },
+            "ResetQueuedResource": {
+              "methods": [
+                "reset_queued_resource"
+              ]
+            },
+            "StartNode": {
+              "methods": [
+                "start_node"
+              ]
+            },
+            "StopNode": {
+              "methods": [
+                "stop_node"
+              ]
+            },
+            "UpdateNode": {
+              "methods": [
+                "update_node"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "TpuClient",
+          "rpcs": {
+            "CreateNode": {
+              "methods": [
+                "create_node"
+              ]
+            },
+            "CreateQueuedResource": {
+              "methods": [
+                "create_queued_resource"
+              ]
+            },
+            "DeleteNode": {
+              "methods": [
+                "delete_node"
+              ]
+            },
+            "DeleteQueuedResource": {
+              "methods": [
+                "delete_queued_resource"
+              ]
+            },
+            "GenerateServiceIdentity": {
+              "methods": [
+                "generate_service_identity"
+              ]
+            },
+            "GetAcceleratorType": {
+              "methods": [
+                "get_accelerator_type"
+              ]
+            },
+            "GetGuestAttributes": {
+              "methods": [
+                "get_guest_attributes"
+              ]
+            },
+            "GetNode": {
+              "methods": [
+                "get_node"
+              ]
+            },
+            "GetQueuedResource": {
+              "methods": [
+                "get_queued_resource"
+              ]
+            },
+            "GetRuntimeVersion": {
+              "methods": [
+                "get_runtime_version"
+              ]
+            },
+            "ListAcceleratorTypes": {
+              "methods": [
+                "list_accelerator_types"
+              ]
+            },
+            "ListNodes": {
+              "methods": [
+                "list_nodes"
+              ]
+            },
+            "ListQueuedResources": {
+              "methods": [
+                "list_queued_resources"
+              ]
+            },
+            "ListRuntimeVersions": {
+              "methods": [
+                "list_runtime_versions"
+              ]
+            },
+            "ResetQueuedResource": {
+              "methods": [
+                "reset_queued_resource"
+              ]
+            },
+            "StartNode": {
+              "methods": [
+                "start_node"
+              ]
+            },
+            "StopNode": {
+              "methods": [
+                "stop_node"
+              ]
+            },
+            "UpdateNode": {
+              "methods": [
+                "update_node"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,298 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.filestore_v1",
+  "protoPackage": "google.cloud.filestore.v1",
+  "schema": "1.0",
+  "services": {
+    "CloudFilestoreManager": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CloudFilestoreManagerClient",
+          "rpcs": {
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "CreateSnapshot": {
+              "methods": [
+                "create_snapshot"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteSnapshot": {
+              "methods": [
+                "delete_snapshot"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetSnapshot": {
+              "methods": [
+                "get_snapshot"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListSnapshots": {
+              "methods": [
+                "list_snapshots"
+              ]
+            },
+            "PromoteReplica": {
+              "methods": [
+                "promote_replica"
+              ]
+            },
+            "RestoreInstance": {
+              "methods": [
+                "restore_instance"
+              ]
+            },
+            "RevertInstance": {
+              "methods": [
+                "revert_instance"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateSnapshot": {
+              "methods": [
+                "update_snapshot"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CloudFilestoreManagerAsyncClient",
+          "rpcs": {
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "CreateSnapshot": {
+              "methods": [
+                "create_snapshot"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteSnapshot": {
+              "methods": [
+                "delete_snapshot"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetSnapshot": {
+              "methods": [
+                "get_snapshot"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListSnapshots": {
+              "methods": [
+                "list_snapshots"
+              ]
+            },
+            "PromoteReplica": {
+              "methods": [
+                "promote_replica"
+              ]
+            },
+            "RestoreInstance": {
+              "methods": [
+                "restore_instance"
+              ]
+            },
+            "RevertInstance": {
+              "methods": [
+                "revert_instance"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateSnapshot": {
+              "methods": [
+                "update_snapshot"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CloudFilestoreManagerClient",
+          "rpcs": {
+            "CreateBackup": {
+              "methods": [
+                "create_backup"
+              ]
+            },
+            "CreateInstance": {
+              "methods": [
+                "create_instance"
+              ]
+            },
+            "CreateSnapshot": {
+              "methods": [
+                "create_snapshot"
+              ]
+            },
+            "DeleteBackup": {
+              "methods": [
+                "delete_backup"
+              ]
+            },
+            "DeleteInstance": {
+              "methods": [
+                "delete_instance"
+              ]
+            },
+            "DeleteSnapshot": {
+              "methods": [
+                "delete_snapshot"
+              ]
+            },
+            "GetBackup": {
+              "methods": [
+                "get_backup"
+              ]
+            },
+            "GetInstance": {
+              "methods": [
+                "get_instance"
+              ]
+            },
+            "GetSnapshot": {
+              "methods": [
+                "get_snapshot"
+              ]
+            },
+            "ListBackups": {
+              "methods": [
+                "list_backups"
+              ]
+            },
+            "ListInstances": {
+              "methods": [
+                "list_instances"
+              ]
+            },
+            "ListSnapshots": {
+              "methods": [
+                "list_snapshots"
+              ]
+            },
+            "PromoteReplica": {
+              "methods": [
+                "promote_replica"
+              ]
+            },
+            "RestoreInstance": {
+              "methods": [
+                "restore_instance"
+              ]
+            },
+            "RevertInstance": {
+              "methods": [
+                "revert_instance"
+              ]
+            },
+            "UpdateBackup": {
+              "methods": [
+                "update_backup"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
+              ]
+            },
+            "UpdateSnapshot": {
+              "methods": [
+                "update_snapshot"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

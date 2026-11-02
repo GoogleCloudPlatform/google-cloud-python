@@ -1,0 +1,24 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children:
+  - google.cloud.pubsub_v1.publisher.futures.Future
+  fullName: google.cloud.pubsub_v1.publisher.futures
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.publisher.futures
+  name: publisher.futures
+  source:
+    id: futures
+    path: tests/testdata/gapic-combo/google/cloud/pubsub_v1/publisher/futures.py
+    startLine: 0
+  summary: API documentation for `pubsub_v1.publisher.futures` module.
+  syntax: {}
+  type: module
+  uid: google.cloud.pubsub_v1.publisher.futures
+references:
+- fullName: google.cloud.pubsub_v1.publisher.futures.Future
+  isExternal: false
+  name: Future
+  parent: google.cloud.pubsub_v1.publisher.futures
+  uid: google.cloud.pubsub_v1.publisher.futures.Future

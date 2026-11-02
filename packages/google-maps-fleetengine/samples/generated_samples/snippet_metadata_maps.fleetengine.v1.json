@@ -1,0 +1,2002 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "maps.fleetengine.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-maps-fleetengine",
+    "version": "0.6.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient",
+          "shortName": "TripServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient.create_trip",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.CreateTrip",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "CreateTrip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.CreateTripRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Trip",
+        "shortName": "create_trip"
+      },
+      "description": "Sample for CreateTrip",
+      "file": "fleetengine_v1_generated_trip_service_create_trip_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_CreateTrip_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_create_trip_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceClient",
+          "shortName": "TripServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceClient.create_trip",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.CreateTrip",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "CreateTrip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.CreateTripRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Trip",
+        "shortName": "create_trip"
+      },
+      "description": "Sample for CreateTrip",
+      "file": "fleetengine_v1_generated_trip_service_create_trip_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_CreateTrip_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_create_trip_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient",
+          "shortName": "TripServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient.delete_trip",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.DeleteTrip",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "DeleteTrip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.DeleteTripRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_trip"
+      },
+      "description": "Sample for DeleteTrip",
+      "file": "fleetengine_v1_generated_trip_service_delete_trip_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_DeleteTrip_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_delete_trip_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceClient",
+          "shortName": "TripServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceClient.delete_trip",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.DeleteTrip",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "DeleteTrip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.DeleteTripRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_trip"
+      },
+      "description": "Sample for DeleteTrip",
+      "file": "fleetengine_v1_generated_trip_service_delete_trip_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_DeleteTrip_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_delete_trip_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient",
+          "shortName": "TripServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient.get_trip",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.GetTrip",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "GetTrip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.GetTripRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Trip",
+        "shortName": "get_trip"
+      },
+      "description": "Sample for GetTrip",
+      "file": "fleetengine_v1_generated_trip_service_get_trip_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_GetTrip_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_get_trip_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceClient",
+          "shortName": "TripServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceClient.get_trip",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.GetTrip",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "GetTrip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.GetTripRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Trip",
+        "shortName": "get_trip"
+      },
+      "description": "Sample for GetTrip",
+      "file": "fleetengine_v1_generated_trip_service_get_trip_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_GetTrip_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_get_trip_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient",
+          "shortName": "TripServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient.report_billable_trip",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.ReportBillableTrip",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "ReportBillableTrip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.ReportBillableTripRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "report_billable_trip"
+      },
+      "description": "Sample for ReportBillableTrip",
+      "file": "fleetengine_v1_generated_trip_service_report_billable_trip_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_ReportBillableTrip_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_report_billable_trip_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceClient",
+          "shortName": "TripServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceClient.report_billable_trip",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.ReportBillableTrip",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "ReportBillableTrip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.ReportBillableTripRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "report_billable_trip"
+      },
+      "description": "Sample for ReportBillableTrip",
+      "file": "fleetengine_v1_generated_trip_service_report_billable_trip_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_ReportBillableTrip_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_report_billable_trip_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient",
+          "shortName": "TripServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient.search_trips",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.SearchTrips",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "SearchTrips"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.SearchTripsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.services.trip_service.pagers.SearchTripsAsyncPager",
+        "shortName": "search_trips"
+      },
+      "description": "Sample for SearchTrips",
+      "file": "fleetengine_v1_generated_trip_service_search_trips_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_SearchTrips_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_search_trips_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceClient",
+          "shortName": "TripServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceClient.search_trips",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.SearchTrips",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "SearchTrips"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.SearchTripsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.services.trip_service.pagers.SearchTripsPager",
+        "shortName": "search_trips"
+      },
+      "description": "Sample for SearchTrips",
+      "file": "fleetengine_v1_generated_trip_service_search_trips_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_SearchTrips_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_search_trips_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient",
+          "shortName": "TripServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceAsyncClient.update_trip",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.UpdateTrip",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "UpdateTrip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.UpdateTripRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Trip",
+        "shortName": "update_trip"
+      },
+      "description": "Sample for UpdateTrip",
+      "file": "fleetengine_v1_generated_trip_service_update_trip_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_UpdateTrip_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_update_trip_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.TripServiceClient",
+          "shortName": "TripServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.TripServiceClient.update_trip",
+        "method": {
+          "fullName": "maps.fleetengine.v1.TripService.UpdateTrip",
+          "service": {
+            "fullName": "maps.fleetengine.v1.TripService",
+            "shortName": "TripService"
+          },
+          "shortName": "UpdateTrip"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.UpdateTripRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Trip",
+        "shortName": "update_trip"
+      },
+      "description": "Sample for UpdateTrip",
+      "file": "fleetengine_v1_generated_trip_service_update_trip_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_TripService_UpdateTrip_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_trip_service_update_trip_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient",
+          "shortName": "VehicleServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient.create_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.CreateVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "CreateVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.CreateVehicleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Vehicle",
+        "shortName": "create_vehicle"
+      },
+      "description": "Sample for CreateVehicle",
+      "file": "fleetengine_v1_generated_vehicle_service_create_vehicle_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_CreateVehicle_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_create_vehicle_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceClient",
+          "shortName": "VehicleServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceClient.create_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.CreateVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "CreateVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.CreateVehicleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Vehicle",
+        "shortName": "create_vehicle"
+      },
+      "description": "Sample for CreateVehicle",
+      "file": "fleetengine_v1_generated_vehicle_service_create_vehicle_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_CreateVehicle_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_create_vehicle_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient",
+          "shortName": "VehicleServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient.delete_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.DeleteVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "DeleteVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.DeleteVehicleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_vehicle"
+      },
+      "description": "Sample for DeleteVehicle",
+      "file": "fleetengine_v1_generated_vehicle_service_delete_vehicle_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_DeleteVehicle_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_delete_vehicle_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceClient",
+          "shortName": "VehicleServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceClient.delete_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.DeleteVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "DeleteVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.DeleteVehicleRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_vehicle"
+      },
+      "description": "Sample for DeleteVehicle",
+      "file": "fleetengine_v1_generated_vehicle_service_delete_vehicle_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_DeleteVehicle_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_delete_vehicle_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient",
+          "shortName": "VehicleServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient.get_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.GetVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "GetVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.GetVehicleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Vehicle",
+        "shortName": "get_vehicle"
+      },
+      "description": "Sample for GetVehicle",
+      "file": "fleetengine_v1_generated_vehicle_service_get_vehicle_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_GetVehicle_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_get_vehicle_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceClient",
+          "shortName": "VehicleServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceClient.get_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.GetVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "GetVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.GetVehicleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Vehicle",
+        "shortName": "get_vehicle"
+      },
+      "description": "Sample for GetVehicle",
+      "file": "fleetengine_v1_generated_vehicle_service_get_vehicle_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_GetVehicle_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_get_vehicle_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient",
+          "shortName": "VehicleServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient.list_vehicles",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.ListVehicles",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "ListVehicles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.ListVehiclesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.services.vehicle_service.pagers.ListVehiclesAsyncPager",
+        "shortName": "list_vehicles"
+      },
+      "description": "Sample for ListVehicles",
+      "file": "fleetengine_v1_generated_vehicle_service_list_vehicles_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_ListVehicles_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_list_vehicles_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceClient",
+          "shortName": "VehicleServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceClient.list_vehicles",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.ListVehicles",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "ListVehicles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.ListVehiclesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.services.vehicle_service.pagers.ListVehiclesPager",
+        "shortName": "list_vehicles"
+      },
+      "description": "Sample for ListVehicles",
+      "file": "fleetengine_v1_generated_vehicle_service_list_vehicles_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_ListVehicles_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_list_vehicles_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient",
+          "shortName": "VehicleServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient.search_vehicles",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.SearchVehicles",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "SearchVehicles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.SearchVehiclesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.SearchVehiclesResponse",
+        "shortName": "search_vehicles"
+      },
+      "description": "Sample for SearchVehicles",
+      "file": "fleetengine_v1_generated_vehicle_service_search_vehicles_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_SearchVehicles_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_search_vehicles_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceClient",
+          "shortName": "VehicleServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceClient.search_vehicles",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.SearchVehicles",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "SearchVehicles"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.SearchVehiclesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.SearchVehiclesResponse",
+        "shortName": "search_vehicles"
+      },
+      "description": "Sample for SearchVehicles",
+      "file": "fleetengine_v1_generated_vehicle_service_search_vehicles_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_SearchVehicles_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_search_vehicles_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient",
+          "shortName": "VehicleServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient.update_vehicle_attributes",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.UpdateVehicleAttributes",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "UpdateVehicleAttributes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.UpdateVehicleAttributesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.UpdateVehicleAttributesResponse",
+        "shortName": "update_vehicle_attributes"
+      },
+      "description": "Sample for UpdateVehicleAttributes",
+      "file": "fleetengine_v1_generated_vehicle_service_update_vehicle_attributes_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_UpdateVehicleAttributes_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_update_vehicle_attributes_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceClient",
+          "shortName": "VehicleServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceClient.update_vehicle_attributes",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.UpdateVehicleAttributes",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "UpdateVehicleAttributes"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.UpdateVehicleAttributesRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.UpdateVehicleAttributesResponse",
+        "shortName": "update_vehicle_attributes"
+      },
+      "description": "Sample for UpdateVehicleAttributes",
+      "file": "fleetengine_v1_generated_vehicle_service_update_vehicle_attributes_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_UpdateVehicleAttributes_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_update_vehicle_attributes_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient",
+          "shortName": "VehicleServiceAsyncClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceAsyncClient.update_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.UpdateVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "UpdateVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.UpdateVehicleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Vehicle",
+        "shortName": "update_vehicle"
+      },
+      "description": "Sample for UpdateVehicle",
+      "file": "fleetengine_v1_generated_vehicle_service_update_vehicle_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_UpdateVehicle_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_update_vehicle_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.fleetengine_v1.VehicleServiceClient",
+          "shortName": "VehicleServiceClient"
+        },
+        "fullName": "google.maps.fleetengine_v1.VehicleServiceClient.update_vehicle",
+        "method": {
+          "fullName": "maps.fleetengine.v1.VehicleService.UpdateVehicle",
+          "service": {
+            "fullName": "maps.fleetengine.v1.VehicleService",
+            "shortName": "VehicleService"
+          },
+          "shortName": "UpdateVehicle"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.fleetengine_v1.types.UpdateVehicleRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.fleetengine_v1.types.Vehicle",
+        "shortName": "update_vehicle"
+      },
+      "description": "Sample for UpdateVehicle",
+      "file": "fleetengine_v1_generated_vehicle_service_update_vehicle_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "fleetengine_v1_generated_VehicleService_UpdateVehicle_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "fleetengine_v1_generated_vehicle_service_update_vehicle_sync.py"
+    }
+  ]
+}

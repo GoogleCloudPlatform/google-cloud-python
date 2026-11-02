@@ -1,0 +1,16 @@
+{
+    "api_description": "GDC is a fully managed software and hardware solution for data centers and edge locations to address regulatory, local data processing, survivability, and low-latency needs.",
+    "api_id": "gdchardwaremanagement.googleapis.com",
+    "api_shortname": "gdchardwaremanagement",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-gdchardwaremanagement/latest",
+    "default_version": "v1alpha",
+    "distribution_name": "google-cloud-gdchardwaremanagement",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1563150",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-gdchardwaremanagement",
+    "name_pretty": "GDC Hardware Management",
+    "product_documentation": "https://cloud.google.com/distributed-cloud/edge/latest/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

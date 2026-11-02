@@ -1,0 +1,58 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.datacatalog_lineage_configmanagement_v1",
+  "protoPackage": "google.cloud.datacatalog.lineage.configmanagement.v1",
+  "schema": "1.0",
+  "services": {
+    "ConfigManagementService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ConfigManagementServiceClient",
+          "rpcs": {
+            "GetConfig": {
+              "methods": [
+                "get_config"
+              ]
+            },
+            "UpdateConfig": {
+              "methods": [
+                "update_config"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ConfigManagementServiceAsyncClient",
+          "rpcs": {
+            "GetConfig": {
+              "methods": [
+                "get_config"
+              ]
+            },
+            "UpdateConfig": {
+              "methods": [
+                "update_config"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ConfigManagementServiceClient",
+          "rpcs": {
+            "GetConfig": {
+              "methods": [
+                "get_config"
+              ]
+            },
+            "UpdateConfig": {
+              "methods": [
+                "update_config"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

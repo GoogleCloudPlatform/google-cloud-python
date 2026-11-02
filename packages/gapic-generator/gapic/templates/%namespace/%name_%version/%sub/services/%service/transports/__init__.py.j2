@@ -1,0 +1,58 @@
+{# TODO(https://github.com/googleapis/gapic-generator-python/issues/2121): Remove the following variable (and the condition later in this file) for async rest transport once support for it is GA. #}
+{% set rest_async_io_enabled = api.all_library_settings[api.naming.proto_package].python_settings.experimental_features.rest_async_io_enabled %}
+{% extends '_base.py.j2' %}
+
+{% block content %}
+
+from collections import OrderedDict
+from typing import Dict, Type{% if rest_async_io_enabled %}, Tuple{% endif +%}
+
+from .base import {{ service.name }}Transport
+{% if 'grpc' in opts.transport %}
+from .grpc import {{ service.name }}GrpcTransport
+from .grpc_asyncio import {{ service.name }}GrpcAsyncIOTransport
+{% endif %}
+{% if 'rest' in opts.transport %}
+from .rest import {{ service.name }}RestTransport
+from .rest import {{ service.name }}RestInterceptor
+{% if rest_async_io_enabled %}
+ASYNC_REST_CLASSES: Tuple[str, ...]
+try:
+    from .rest_asyncio import Async{{ service.name }}RestTransport
+    from .rest_asyncio import Async{{ service.name }}RestInterceptor  # pragma: NO COVER
+    ASYNC_REST_CLASSES = ('Async{{ service.name }}RestTransport', 'Async{{ service.name }}RestInterceptor')  # pragma: NO COVER
+    HAS_REST_ASYNC = True  # pragma: NO COVER
+except ImportError:  # pragma: NO COVER
+    ASYNC_REST_CLASSES = ()
+    HAS_REST_ASYNC = False
+{% endif %}{# if rest_async_io_enabled #}
+{% endif %}
+
+
+
+# Compile a registry of transports.
+_transport_registry = OrderedDict()  # type: Dict[str, Type[{{ service.name }}Transport]]
+{% if 'grpc' in opts.transport %}
+_transport_registry['grpc'] = {{ service.name }}GrpcTransport
+_transport_registry['grpc_asyncio'] = {{ service.name }}GrpcAsyncIOTransport
+{% endif %}
+{% if 'rest' in opts.transport %}
+_transport_registry['rest'] = {{ service.name }}RestTransport
+{% if rest_async_io_enabled %}
+if HAS_REST_ASYNC:  # pragma: NO COVER
+    _transport_registry['rest_asyncio'] = Async{{ service.name }}RestTransport
+{% endif %}{# if rest_async_io_enabled #}
+{% endif %}
+
+__all__ = (
+    '{{ service.name }}Transport',
+    {% if 'grpc' in opts.transport %}
+    '{{ service.name }}GrpcTransport',
+    '{{ service.name }}GrpcAsyncIOTransport',
+    {% endif %}
+    {% if 'rest' in opts.transport %}
+    '{{ service.name }}RestTransport',
+    '{{ service.name }}RestInterceptor',
+    {% endif %}
+){% if 'rest' in opts.transport and rest_async_io_enabled%} + ASYNC_REST_CLASSES{%endif%}
+{% endblock %}

@@ -1,0 +1,12 @@
+{
+    "client_documentation": "https://cloud.google.com/python/docs/reference/source/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-source-context",
+    "language": "python",
+    "library_type": "OTHER",
+    "name": "source",
+    "name_pretty": "Source Context",
+    "product_documentation": "https://cloud.google.com",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-python"
+}

@@ -1,0 +1,433 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.clouddms_v1",
+  "protoPackage": "google.cloud.clouddms.v1",
+  "schema": "1.0",
+  "services": {
+    "DataMigrationService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DataMigrationServiceClient",
+          "rpcs": {
+            "ApplyConversionWorkspace": {
+              "methods": [
+                "apply_conversion_workspace"
+              ]
+            },
+            "CommitConversionWorkspace": {
+              "methods": [
+                "commit_conversion_workspace"
+              ]
+            },
+            "ConvertConversionWorkspace": {
+              "methods": [
+                "convert_conversion_workspace"
+              ]
+            },
+            "CreateConnectionProfile": {
+              "methods": [
+                "create_connection_profile"
+              ]
+            },
+            "CreateConversionWorkspace": {
+              "methods": [
+                "create_conversion_workspace"
+              ]
+            },
+            "CreateMappingRule": {
+              "methods": [
+                "create_mapping_rule"
+              ]
+            },
+            "CreateMigrationJob": {
+              "methods": [
+                "create_migration_job"
+              ]
+            },
+            "CreatePrivateConnection": {
+              "methods": [
+                "create_private_connection"
+              ]
+            },
+            "DeleteConnectionProfile": {
+              "methods": [
+                "delete_connection_profile"
+              ]
+            },
+            "DeleteConversionWorkspace": {
+              "methods": [
+                "delete_conversion_workspace"
+              ]
+            },
+            "DeleteMappingRule": {
+              "methods": [
+                "delete_mapping_rule"
+              ]
+            },
+            "DeleteMigrationJob": {
+              "methods": [
+                "delete_migration_job"
+              ]
+            },
+            "DeletePrivateConnection": {
+              "methods": [
+                "delete_private_connection"
+              ]
+            },
+            "DescribeConversionWorkspaceRevisions": {
+              "methods": [
+                "describe_conversion_workspace_revisions"
+              ]
+            },
+            "DescribeDatabaseEntities": {
+              "methods": [
+                "describe_database_entities"
+              ]
+            },
+            "FetchStaticIps": {
+              "methods": [
+                "fetch_static_ips"
+              ]
+            },
+            "GenerateSshScript": {
+              "methods": [
+                "generate_ssh_script"
+              ]
+            },
+            "GenerateTcpProxyScript": {
+              "methods": [
+                "generate_tcp_proxy_script"
+              ]
+            },
+            "GetConnectionProfile": {
+              "methods": [
+                "get_connection_profile"
+              ]
+            },
+            "GetConversionWorkspace": {
+              "methods": [
+                "get_conversion_workspace"
+              ]
+            },
+            "GetMappingRule": {
+              "methods": [
+                "get_mapping_rule"
+              ]
+            },
+            "GetMigrationJob": {
+              "methods": [
+                "get_migration_job"
+              ]
+            },
+            "GetPrivateConnection": {
+              "methods": [
+                "get_private_connection"
+              ]
+            },
+            "ImportMappingRules": {
+              "methods": [
+                "import_mapping_rules"
+              ]
+            },
+            "ListConnectionProfiles": {
+              "methods": [
+                "list_connection_profiles"
+              ]
+            },
+            "ListConversionWorkspaces": {
+              "methods": [
+                "list_conversion_workspaces"
+              ]
+            },
+            "ListMappingRules": {
+              "methods": [
+                "list_mapping_rules"
+              ]
+            },
+            "ListMigrationJobs": {
+              "methods": [
+                "list_migration_jobs"
+              ]
+            },
+            "ListPrivateConnections": {
+              "methods": [
+                "list_private_connections"
+              ]
+            },
+            "PromoteMigrationJob": {
+              "methods": [
+                "promote_migration_job"
+              ]
+            },
+            "RestartMigrationJob": {
+              "methods": [
+                "restart_migration_job"
+              ]
+            },
+            "ResumeMigrationJob": {
+              "methods": [
+                "resume_migration_job"
+              ]
+            },
+            "RollbackConversionWorkspace": {
+              "methods": [
+                "rollback_conversion_workspace"
+              ]
+            },
+            "SearchBackgroundJobs": {
+              "methods": [
+                "search_background_jobs"
+              ]
+            },
+            "SeedConversionWorkspace": {
+              "methods": [
+                "seed_conversion_workspace"
+              ]
+            },
+            "StartMigrationJob": {
+              "methods": [
+                "start_migration_job"
+              ]
+            },
+            "StopMigrationJob": {
+              "methods": [
+                "stop_migration_job"
+              ]
+            },
+            "UpdateConnectionProfile": {
+              "methods": [
+                "update_connection_profile"
+              ]
+            },
+            "UpdateConversionWorkspace": {
+              "methods": [
+                "update_conversion_workspace"
+              ]
+            },
+            "UpdateMigrationJob": {
+              "methods": [
+                "update_migration_job"
+              ]
+            },
+            "VerifyMigrationJob": {
+              "methods": [
+                "verify_migration_job"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DataMigrationServiceAsyncClient",
+          "rpcs": {
+            "ApplyConversionWorkspace": {
+              "methods": [
+                "apply_conversion_workspace"
+              ]
+            },
+            "CommitConversionWorkspace": {
+              "methods": [
+                "commit_conversion_workspace"
+              ]
+            },
+            "ConvertConversionWorkspace": {
+              "methods": [
+                "convert_conversion_workspace"
+              ]
+            },
+            "CreateConnectionProfile": {
+              "methods": [
+                "create_connection_profile"
+              ]
+            },
+            "CreateConversionWorkspace": {
+              "methods": [
+                "create_conversion_workspace"
+              ]
+            },
+            "CreateMappingRule": {
+              "methods": [
+                "create_mapping_rule"
+              ]
+            },
+            "CreateMigrationJob": {
+              "methods": [
+                "create_migration_job"
+              ]
+            },
+            "CreatePrivateConnection": {
+              "methods": [
+                "create_private_connection"
+              ]
+            },
+            "DeleteConnectionProfile": {
+              "methods": [
+                "delete_connection_profile"
+              ]
+            },
+            "DeleteConversionWorkspace": {
+              "methods": [
+                "delete_conversion_workspace"
+              ]
+            },
+            "DeleteMappingRule": {
+              "methods": [
+                "delete_mapping_rule"
+              ]
+            },
+            "DeleteMigrationJob": {
+              "methods": [
+                "delete_migration_job"
+              ]
+            },
+            "DeletePrivateConnection": {
+              "methods": [
+                "delete_private_connection"
+              ]
+            },
+            "DescribeConversionWorkspaceRevisions": {
+              "methods": [
+                "describe_conversion_workspace_revisions"
+              ]
+            },
+            "DescribeDatabaseEntities": {
+              "methods": [
+                "describe_database_entities"
+              ]
+            },
+            "FetchStaticIps": {
+              "methods": [
+                "fetch_static_ips"
+              ]
+            },
+            "GenerateSshScript": {
+              "methods": [
+                "generate_ssh_script"
+              ]
+            },
+            "GenerateTcpProxyScript": {
+              "methods": [
+                "generate_tcp_proxy_script"
+              ]
+            },
+            "GetConnectionProfile": {
+              "methods": [
+                "get_connection_profile"
+              ]
+            },
+            "GetConversionWorkspace": {
+              "methods": [
+                "get_conversion_workspace"
+              ]
+            },
+            "GetMappingRule": {
+              "methods": [
+                "get_mapping_rule"
+              ]
+            },
+            "GetMigrationJob": {
+              "methods": [
+                "get_migration_job"
+              ]
+            },
+            "GetPrivateConnection": {
+              "methods": [
+                "get_private_connection"
+              ]
+            },
+            "ImportMappingRules": {
+              "methods": [
+                "import_mapping_rules"
+              ]
+            },
+            "ListConnectionProfiles": {
+              "methods": [
+                "list_connection_profiles"
+              ]
+            },
+            "ListConversionWorkspaces": {
+              "methods": [
+                "list_conversion_workspaces"
+              ]
+            },
+            "ListMappingRules": {
+              "methods": [
+                "list_mapping_rules"
+              ]
+            },
+            "ListMigrationJobs": {
+              "methods": [
+                "list_migration_jobs"
+              ]
+            },
+            "ListPrivateConnections": {
+              "methods": [
+                "list_private_connections"
+              ]
+            },
+            "PromoteMigrationJob": {
+              "methods": [
+                "promote_migration_job"
+              ]
+            },
+            "RestartMigrationJob": {
+              "methods": [
+                "restart_migration_job"
+              ]
+            },
+            "ResumeMigrationJob": {
+              "methods": [
+                "resume_migration_job"
+              ]
+            },
+            "RollbackConversionWorkspace": {
+              "methods": [
+                "rollback_conversion_workspace"
+              ]
+            },
+            "SearchBackgroundJobs": {
+              "methods": [
+                "search_background_jobs"
+              ]
+            },
+            "SeedConversionWorkspace": {
+              "methods": [
+                "seed_conversion_workspace"
+              ]
+            },
+            "StartMigrationJob": {
+              "methods": [
+                "start_migration_job"
+              ]
+            },
+            "StopMigrationJob": {
+              "methods": [
+                "stop_migration_job"
+              ]
+            },
+            "UpdateConnectionProfile": {
+              "methods": [
+                "update_connection_profile"
+              ]
+            },
+            "UpdateConversionWorkspace": {
+              "methods": [
+                "update_conversion_workspace"
+              ]
+            },
+            "UpdateMigrationJob": {
+              "methods": [
+                "update_migration_job"
+              ]
+            },
+            "VerifyMigrationJob": {
+              "methods": [
+                "verify_migration_job"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- attributes:
+  - description: "Required. The messages in the request will be published on\n   this\
+      \ topic. Format is <code>projects/{project}/topics/{topic}</code>."
+    id: topic
+    var_type: str
+  - description: Required. The messages to publish.
+    id: messages
+    var_type: Sequence[google.pubsub_v1.types.PubsubMessage]
+  children: []
+  class: google.cloud.pubsub_v1.types.PublishRequest
+  fullName: google.cloud.pubsub_v1.types.PublishRequest
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: PublishRequest
+  source:
+    id: PublishRequest
+    path: null
+    startLine: null
+  summary: 'Request for the Publish method.
+
+    '
+  syntax:
+    content: PublishRequest(mapping=None, *, ignore_unknown_fields=False, **kwargs)
+    parameters: []
+  type: class
+  uid: google.cloud.pubsub_v1.types.PublishRequest
+references: []

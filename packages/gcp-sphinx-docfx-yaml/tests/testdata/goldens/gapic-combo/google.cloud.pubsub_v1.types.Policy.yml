@@ -1,0 +1,19 @@
+### YamlMime:UniversalReference
+api_name: []
+items:
+- children: []
+  class: google.cloud.pubsub_v1.types.Policy
+  fullName: google.cloud.pubsub_v1.types.Policy
+  langs:
+  - python
+  module: google.cloud.pubsub_v1.types
+  name: Policy
+  source:
+    id: Policy
+    path: null
+    startLine: null
+  summary: API documentation for `pubsub_v1.types.Policy` class.
+  syntax: {}
+  type: class
+  uid: google.cloud.pubsub_v1.types.Policy
+references: []

@@ -1,0 +1,15 @@
+{
+    "api_description": "Cloud Life Sciences is a suite of services and tools for managing,\nprocessing, and transforming life sciences data.",
+    "api_id": "lifesciences.googleapis.com",
+    "api_shortname": "lifesciences",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/lifesciences/latest",
+    "default_version": "v2beta",
+    "distribution_name": "google-cloud-life-sciences",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "lifesciences",
+    "name_pretty": "Cloud Life Sciences",
+    "product_documentation": "https://cloud.google.com/life-sciences/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

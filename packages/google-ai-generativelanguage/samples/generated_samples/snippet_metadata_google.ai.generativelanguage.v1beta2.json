@@ -1,0 +1,1093 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.ai.generativelanguage.v1beta2",
+        "version": "v1beta2"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-ai-generativelanguage",
+    "version": "0.12.1"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.DiscussServiceAsyncClient",
+          "shortName": "DiscussServiceAsyncClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.DiscussServiceAsyncClient.count_message_tokens",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.DiscussService.CountMessageTokens",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.DiscussService",
+            "shortName": "DiscussService"
+          },
+          "shortName": "CountMessageTokens"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.CountMessageTokensRequest"
+          },
+          {
+            "name": "model",
+            "type": "str"
+          },
+          {
+            "name": "prompt",
+            "type": "google.ai.generativelanguage_v1beta2.types.MessagePrompt"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.types.CountMessageTokensResponse",
+        "shortName": "count_message_tokens"
+      },
+      "description": "Sample for CountMessageTokens",
+      "file": "generativelanguage_v1beta2_generated_discuss_service_count_message_tokens_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_DiscussService_CountMessageTokens_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_discuss_service_count_message_tokens_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.DiscussServiceClient",
+          "shortName": "DiscussServiceClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.DiscussServiceClient.count_message_tokens",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.DiscussService.CountMessageTokens",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.DiscussService",
+            "shortName": "DiscussService"
+          },
+          "shortName": "CountMessageTokens"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.CountMessageTokensRequest"
+          },
+          {
+            "name": "model",
+            "type": "str"
+          },
+          {
+            "name": "prompt",
+            "type": "google.ai.generativelanguage_v1beta2.types.MessagePrompt"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.types.CountMessageTokensResponse",
+        "shortName": "count_message_tokens"
+      },
+      "description": "Sample for CountMessageTokens",
+      "file": "generativelanguage_v1beta2_generated_discuss_service_count_message_tokens_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_DiscussService_CountMessageTokens_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_discuss_service_count_message_tokens_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.DiscussServiceAsyncClient",
+          "shortName": "DiscussServiceAsyncClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.DiscussServiceAsyncClient.generate_message",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.DiscussService.GenerateMessage",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.DiscussService",
+            "shortName": "DiscussService"
+          },
+          "shortName": "GenerateMessage"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.GenerateMessageRequest"
+          },
+          {
+            "name": "model",
+            "type": "str"
+          },
+          {
+            "name": "prompt",
+            "type": "google.ai.generativelanguage_v1beta2.types.MessagePrompt"
+          },
+          {
+            "name": "temperature",
+            "type": "float"
+          },
+          {
+            "name": "candidate_count",
+            "type": "int"
+          },
+          {
+            "name": "top_p",
+            "type": "float"
+          },
+          {
+            "name": "top_k",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.types.GenerateMessageResponse",
+        "shortName": "generate_message"
+      },
+      "description": "Sample for GenerateMessage",
+      "file": "generativelanguage_v1beta2_generated_discuss_service_generate_message_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_DiscussService_GenerateMessage_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_discuss_service_generate_message_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.DiscussServiceClient",
+          "shortName": "DiscussServiceClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.DiscussServiceClient.generate_message",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.DiscussService.GenerateMessage",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.DiscussService",
+            "shortName": "DiscussService"
+          },
+          "shortName": "GenerateMessage"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.GenerateMessageRequest"
+          },
+          {
+            "name": "model",
+            "type": "str"
+          },
+          {
+            "name": "prompt",
+            "type": "google.ai.generativelanguage_v1beta2.types.MessagePrompt"
+          },
+          {
+            "name": "temperature",
+            "type": "float"
+          },
+          {
+            "name": "candidate_count",
+            "type": "int"
+          },
+          {
+            "name": "top_p",
+            "type": "float"
+          },
+          {
+            "name": "top_k",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.types.GenerateMessageResponse",
+        "shortName": "generate_message"
+      },
+      "description": "Sample for GenerateMessage",
+      "file": "generativelanguage_v1beta2_generated_discuss_service_generate_message_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_DiscussService_GenerateMessage_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_discuss_service_generate_message_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.ModelServiceAsyncClient",
+          "shortName": "ModelServiceAsyncClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.ModelServiceAsyncClient.get_model",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.ModelService.GetModel",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.ModelService",
+            "shortName": "ModelService"
+          },
+          "shortName": "GetModel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.GetModelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.types.Model",
+        "shortName": "get_model"
+      },
+      "description": "Sample for GetModel",
+      "file": "generativelanguage_v1beta2_generated_model_service_get_model_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_ModelService_GetModel_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_model_service_get_model_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.ModelServiceClient",
+          "shortName": "ModelServiceClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.ModelServiceClient.get_model",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.ModelService.GetModel",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.ModelService",
+            "shortName": "ModelService"
+          },
+          "shortName": "GetModel"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.GetModelRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.types.Model",
+        "shortName": "get_model"
+      },
+      "description": "Sample for GetModel",
+      "file": "generativelanguage_v1beta2_generated_model_service_get_model_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_ModelService_GetModel_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_model_service_get_model_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.ModelServiceAsyncClient",
+          "shortName": "ModelServiceAsyncClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.ModelServiceAsyncClient.list_models",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.ModelService.ListModels",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.ModelService",
+            "shortName": "ModelService"
+          },
+          "shortName": "ListModels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.ListModelsRequest"
+          },
+          {
+            "name": "page_size",
+            "type": "int"
+          },
+          {
+            "name": "page_token",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.services.model_service.pagers.ListModelsAsyncPager",
+        "shortName": "list_models"
+      },
+      "description": "Sample for ListModels",
+      "file": "generativelanguage_v1beta2_generated_model_service_list_models_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_ModelService_ListModels_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_model_service_list_models_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.ModelServiceClient",
+          "shortName": "ModelServiceClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.ModelServiceClient.list_models",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.ModelService.ListModels",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.ModelService",
+            "shortName": "ModelService"
+          },
+          "shortName": "ListModels"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.ListModelsRequest"
+          },
+          {
+            "name": "page_size",
+            "type": "int"
+          },
+          {
+            "name": "page_token",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.services.model_service.pagers.ListModelsPager",
+        "shortName": "list_models"
+      },
+      "description": "Sample for ListModels",
+      "file": "generativelanguage_v1beta2_generated_model_service_list_models_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_ModelService_ListModels_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_model_service_list_models_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.TextServiceAsyncClient",
+          "shortName": "TextServiceAsyncClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.TextServiceAsyncClient.embed_text",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.TextService.EmbedText",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.TextService",
+            "shortName": "TextService"
+          },
+          "shortName": "EmbedText"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.EmbedTextRequest"
+          },
+          {
+            "name": "model",
+            "type": "str"
+          },
+          {
+            "name": "text",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.types.EmbedTextResponse",
+        "shortName": "embed_text"
+      },
+      "description": "Sample for EmbedText",
+      "file": "generativelanguage_v1beta2_generated_text_service_embed_text_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_TextService_EmbedText_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_text_service_embed_text_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.TextServiceClient",
+          "shortName": "TextServiceClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.TextServiceClient.embed_text",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.TextService.EmbedText",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.TextService",
+            "shortName": "TextService"
+          },
+          "shortName": "EmbedText"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.EmbedTextRequest"
+          },
+          {
+            "name": "model",
+            "type": "str"
+          },
+          {
+            "name": "text",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.types.EmbedTextResponse",
+        "shortName": "embed_text"
+      },
+      "description": "Sample for EmbedText",
+      "file": "generativelanguage_v1beta2_generated_text_service_embed_text_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_TextService_EmbedText_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_text_service_embed_text_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.TextServiceAsyncClient",
+          "shortName": "TextServiceAsyncClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.TextServiceAsyncClient.generate_text",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.TextService.GenerateText",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.TextService",
+            "shortName": "TextService"
+          },
+          "shortName": "GenerateText"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.GenerateTextRequest"
+          },
+          {
+            "name": "model",
+            "type": "str"
+          },
+          {
+            "name": "prompt",
+            "type": "google.ai.generativelanguage_v1beta2.types.TextPrompt"
+          },
+          {
+            "name": "temperature",
+            "type": "float"
+          },
+          {
+            "name": "candidate_count",
+            "type": "int"
+          },
+          {
+            "name": "max_output_tokens",
+            "type": "int"
+          },
+          {
+            "name": "top_p",
+            "type": "float"
+          },
+          {
+            "name": "top_k",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.types.GenerateTextResponse",
+        "shortName": "generate_text"
+      },
+      "description": "Sample for GenerateText",
+      "file": "generativelanguage_v1beta2_generated_text_service_generate_text_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_TextService_GenerateText_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_text_service_generate_text_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ai.generativelanguage_v1beta2.TextServiceClient",
+          "shortName": "TextServiceClient"
+        },
+        "fullName": "google.ai.generativelanguage_v1beta2.TextServiceClient.generate_text",
+        "method": {
+          "fullName": "google.ai.generativelanguage.v1beta2.TextService.GenerateText",
+          "service": {
+            "fullName": "google.ai.generativelanguage.v1beta2.TextService",
+            "shortName": "TextService"
+          },
+          "shortName": "GenerateText"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ai.generativelanguage_v1beta2.types.GenerateTextRequest"
+          },
+          {
+            "name": "model",
+            "type": "str"
+          },
+          {
+            "name": "prompt",
+            "type": "google.ai.generativelanguage_v1beta2.types.TextPrompt"
+          },
+          {
+            "name": "temperature",
+            "type": "float"
+          },
+          {
+            "name": "candidate_count",
+            "type": "int"
+          },
+          {
+            "name": "max_output_tokens",
+            "type": "int"
+          },
+          {
+            "name": "top_p",
+            "type": "float"
+          },
+          {
+            "name": "top_k",
+            "type": "int"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ai.generativelanguage_v1beta2.types.GenerateTextResponse",
+        "shortName": "generate_text"
+      },
+      "description": "Sample for GenerateText",
+      "file": "generativelanguage_v1beta2_generated_text_service_generate_text_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "generativelanguage_v1beta2_generated_TextService_GenerateText_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "generativelanguage_v1beta2_generated_text_service_generate_text_sync.py"
+    }
+  ]
+}

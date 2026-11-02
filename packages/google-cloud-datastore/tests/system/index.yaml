@@ -1,0 +1,47 @@
+indexes:
+
+- kind: Character
+  ancestor: yes
+  properties:
+  - name: appearances
+
+- kind: Character
+  ancestor: yes
+  properties:
+  - name: alive
+
+- kind: Character
+  ancestor: yes
+  properties:
+  - name: family
+  - name: appearances
+
+- kind: Character
+  ancestor: yes
+  properties:
+  - name: name
+  - name: family
+
+- kind: Character
+  properties:
+  - name: alive
+  - name: appearances
+
+- kind: Character
+  properties:
+  - name: Character
+  - name: appearances
+
+- kind: Character
+  ancestor: yes
+  properties:
+    - name: alive
+    - name: family
+    - name: appearances
+
+- kind: Character
+  ancestor: yes
+  properties:
+    - name: family
+    - name: appearances
+

@@ -1,0 +1,830 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.cloud.billing.budgets.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-cloud-billing-budgets",
+    "version": "1.22.0"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.billing.budgets_v1.BudgetServiceAsyncClient",
+          "shortName": "BudgetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.billing.budgets_v1.BudgetServiceAsyncClient.create_budget",
+        "method": {
+          "fullName": "google.cloud.billing.budgets.v1.BudgetService.CreateBudget",
+          "service": {
+            "fullName": "google.cloud.billing.budgets.v1.BudgetService",
+            "shortName": "BudgetService"
+          },
+          "shortName": "CreateBudget"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.billing.budgets_v1.types.CreateBudgetRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "budget",
+            "type": "google.cloud.billing.budgets_v1.types.Budget"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.billing.budgets_v1.types.Budget",
+        "shortName": "create_budget"
+      },
+      "description": "Sample for CreateBudget",
+      "file": "billingbudgets_v1_generated_budget_service_create_budget_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "billingbudgets_v1_generated_BudgetService_CreateBudget_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "billingbudgets_v1_generated_budget_service_create_budget_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.billing.budgets_v1.BudgetServiceClient",
+          "shortName": "BudgetServiceClient"
+        },
+        "fullName": "google.cloud.billing.budgets_v1.BudgetServiceClient.create_budget",
+        "method": {
+          "fullName": "google.cloud.billing.budgets.v1.BudgetService.CreateBudget",
+          "service": {
+            "fullName": "google.cloud.billing.budgets.v1.BudgetService",
+            "shortName": "BudgetService"
+          },
+          "shortName": "CreateBudget"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.billing.budgets_v1.types.CreateBudgetRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "budget",
+            "type": "google.cloud.billing.budgets_v1.types.Budget"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.billing.budgets_v1.types.Budget",
+        "shortName": "create_budget"
+      },
+      "description": "Sample for CreateBudget",
+      "file": "billingbudgets_v1_generated_budget_service_create_budget_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "billingbudgets_v1_generated_BudgetService_CreateBudget_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "billingbudgets_v1_generated_budget_service_create_budget_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.billing.budgets_v1.BudgetServiceAsyncClient",
+          "shortName": "BudgetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.billing.budgets_v1.BudgetServiceAsyncClient.delete_budget",
+        "method": {
+          "fullName": "google.cloud.billing.budgets.v1.BudgetService.DeleteBudget",
+          "service": {
+            "fullName": "google.cloud.billing.budgets.v1.BudgetService",
+            "shortName": "BudgetService"
+          },
+          "shortName": "DeleteBudget"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.billing.budgets_v1.types.DeleteBudgetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_budget"
+      },
+      "description": "Sample for DeleteBudget",
+      "file": "billingbudgets_v1_generated_budget_service_delete_budget_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "billingbudgets_v1_generated_BudgetService_DeleteBudget_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "billingbudgets_v1_generated_budget_service_delete_budget_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.billing.budgets_v1.BudgetServiceClient",
+          "shortName": "BudgetServiceClient"
+        },
+        "fullName": "google.cloud.billing.budgets_v1.BudgetServiceClient.delete_budget",
+        "method": {
+          "fullName": "google.cloud.billing.budgets.v1.BudgetService.DeleteBudget",
+          "service": {
+            "fullName": "google.cloud.billing.budgets.v1.BudgetService",
+            "shortName": "BudgetService"
+          },
+          "shortName": "DeleteBudget"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.billing.budgets_v1.types.DeleteBudgetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_budget"
+      },
+      "description": "Sample for DeleteBudget",
+      "file": "billingbudgets_v1_generated_budget_service_delete_budget_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "billingbudgets_v1_generated_BudgetService_DeleteBudget_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "billingbudgets_v1_generated_budget_service_delete_budget_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.billing.budgets_v1.BudgetServiceAsyncClient",
+          "shortName": "BudgetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.billing.budgets_v1.BudgetServiceAsyncClient.get_budget",
+        "method": {
+          "fullName": "google.cloud.billing.budgets.v1.BudgetService.GetBudget",
+          "service": {
+            "fullName": "google.cloud.billing.budgets.v1.BudgetService",
+            "shortName": "BudgetService"
+          },
+          "shortName": "GetBudget"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.billing.budgets_v1.types.GetBudgetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.billing.budgets_v1.types.Budget",
+        "shortName": "get_budget"
+      },
+      "description": "Sample for GetBudget",
+      "file": "billingbudgets_v1_generated_budget_service_get_budget_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "billingbudgets_v1_generated_BudgetService_GetBudget_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "billingbudgets_v1_generated_budget_service_get_budget_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.billing.budgets_v1.BudgetServiceClient",
+          "shortName": "BudgetServiceClient"
+        },
+        "fullName": "google.cloud.billing.budgets_v1.BudgetServiceClient.get_budget",
+        "method": {
+          "fullName": "google.cloud.billing.budgets.v1.BudgetService.GetBudget",
+          "service": {
+            "fullName": "google.cloud.billing.budgets.v1.BudgetService",
+            "shortName": "BudgetService"
+          },
+          "shortName": "GetBudget"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.billing.budgets_v1.types.GetBudgetRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.billing.budgets_v1.types.Budget",
+        "shortName": "get_budget"
+      },
+      "description": "Sample for GetBudget",
+      "file": "billingbudgets_v1_generated_budget_service_get_budget_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "billingbudgets_v1_generated_BudgetService_GetBudget_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "billingbudgets_v1_generated_budget_service_get_budget_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.billing.budgets_v1.BudgetServiceAsyncClient",
+          "shortName": "BudgetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.billing.budgets_v1.BudgetServiceAsyncClient.list_budgets",
+        "method": {
+          "fullName": "google.cloud.billing.budgets.v1.BudgetService.ListBudgets",
+          "service": {
+            "fullName": "google.cloud.billing.budgets.v1.BudgetService",
+            "shortName": "BudgetService"
+          },
+          "shortName": "ListBudgets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.billing.budgets_v1.types.ListBudgetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.billing.budgets_v1.services.budget_service.pagers.ListBudgetsAsyncPager",
+        "shortName": "list_budgets"
+      },
+      "description": "Sample for ListBudgets",
+      "file": "billingbudgets_v1_generated_budget_service_list_budgets_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "billingbudgets_v1_generated_BudgetService_ListBudgets_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "billingbudgets_v1_generated_budget_service_list_budgets_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.billing.budgets_v1.BudgetServiceClient",
+          "shortName": "BudgetServiceClient"
+        },
+        "fullName": "google.cloud.billing.budgets_v1.BudgetServiceClient.list_budgets",
+        "method": {
+          "fullName": "google.cloud.billing.budgets.v1.BudgetService.ListBudgets",
+          "service": {
+            "fullName": "google.cloud.billing.budgets.v1.BudgetService",
+            "shortName": "BudgetService"
+          },
+          "shortName": "ListBudgets"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.billing.budgets_v1.types.ListBudgetsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.billing.budgets_v1.services.budget_service.pagers.ListBudgetsPager",
+        "shortName": "list_budgets"
+      },
+      "description": "Sample for ListBudgets",
+      "file": "billingbudgets_v1_generated_budget_service_list_budgets_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "billingbudgets_v1_generated_BudgetService_ListBudgets_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "billingbudgets_v1_generated_budget_service_list_budgets_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.billing.budgets_v1.BudgetServiceAsyncClient",
+          "shortName": "BudgetServiceAsyncClient"
+        },
+        "fullName": "google.cloud.billing.budgets_v1.BudgetServiceAsyncClient.update_budget",
+        "method": {
+          "fullName": "google.cloud.billing.budgets.v1.BudgetService.UpdateBudget",
+          "service": {
+            "fullName": "google.cloud.billing.budgets.v1.BudgetService",
+            "shortName": "BudgetService"
+          },
+          "shortName": "UpdateBudget"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.billing.budgets_v1.types.UpdateBudgetRequest"
+          },
+          {
+            "name": "budget",
+            "type": "google.cloud.billing.budgets_v1.types.Budget"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.billing.budgets_v1.types.Budget",
+        "shortName": "update_budget"
+      },
+      "description": "Sample for UpdateBudget",
+      "file": "billingbudgets_v1_generated_budget_service_update_budget_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "billingbudgets_v1_generated_BudgetService_UpdateBudget_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "billingbudgets_v1_generated_budget_service_update_budget_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.billing.budgets_v1.BudgetServiceClient",
+          "shortName": "BudgetServiceClient"
+        },
+        "fullName": "google.cloud.billing.budgets_v1.BudgetServiceClient.update_budget",
+        "method": {
+          "fullName": "google.cloud.billing.budgets.v1.BudgetService.UpdateBudget",
+          "service": {
+            "fullName": "google.cloud.billing.budgets.v1.BudgetService",
+            "shortName": "BudgetService"
+          },
+          "shortName": "UpdateBudget"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.billing.budgets_v1.types.UpdateBudgetRequest"
+          },
+          {
+            "name": "budget",
+            "type": "google.cloud.billing.budgets_v1.types.Budget"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.billing.budgets_v1.types.Budget",
+        "shortName": "update_budget"
+      },
+      "description": "Sample for UpdateBudget",
+      "file": "billingbudgets_v1_generated_budget_service_update_budget_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "billingbudgets_v1_generated_BudgetService_UpdateBudget_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "billingbudgets_v1_generated_budget_service_update_budget_sync.py"
+    }
+  ]
+}

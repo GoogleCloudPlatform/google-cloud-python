@@ -1,0 +1,748 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.migrationcenter_v1",
+  "protoPackage": "google.cloud.migrationcenter.v1",
+  "schema": "1.0",
+  "services": {
+    "MigrationCenter": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "MigrationCenterClient",
+          "rpcs": {
+            "AddAssetsToGroup": {
+              "methods": [
+                "add_assets_to_group"
+              ]
+            },
+            "AggregateAssetsValues": {
+              "methods": [
+                "aggregate_assets_values"
+              ]
+            },
+            "BatchDeleteAssets": {
+              "methods": [
+                "batch_delete_assets"
+              ]
+            },
+            "BatchUpdateAssets": {
+              "methods": [
+                "batch_update_assets"
+              ]
+            },
+            "CreateGroup": {
+              "methods": [
+                "create_group"
+              ]
+            },
+            "CreateImportDataFile": {
+              "methods": [
+                "create_import_data_file"
+              ]
+            },
+            "CreateImportJob": {
+              "methods": [
+                "create_import_job"
+              ]
+            },
+            "CreatePreferenceSet": {
+              "methods": [
+                "create_preference_set"
+              ]
+            },
+            "CreateReport": {
+              "methods": [
+                "create_report"
+              ]
+            },
+            "CreateReportConfig": {
+              "methods": [
+                "create_report_config"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "DeleteAsset": {
+              "methods": [
+                "delete_asset"
+              ]
+            },
+            "DeleteGroup": {
+              "methods": [
+                "delete_group"
+              ]
+            },
+            "DeleteImportDataFile": {
+              "methods": [
+                "delete_import_data_file"
+              ]
+            },
+            "DeleteImportJob": {
+              "methods": [
+                "delete_import_job"
+              ]
+            },
+            "DeletePreferenceSet": {
+              "methods": [
+                "delete_preference_set"
+              ]
+            },
+            "DeleteReport": {
+              "methods": [
+                "delete_report"
+              ]
+            },
+            "DeleteReportConfig": {
+              "methods": [
+                "delete_report_config"
+              ]
+            },
+            "DeleteSource": {
+              "methods": [
+                "delete_source"
+              ]
+            },
+            "GetAsset": {
+              "methods": [
+                "get_asset"
+              ]
+            },
+            "GetErrorFrame": {
+              "methods": [
+                "get_error_frame"
+              ]
+            },
+            "GetGroup": {
+              "methods": [
+                "get_group"
+              ]
+            },
+            "GetImportDataFile": {
+              "methods": [
+                "get_import_data_file"
+              ]
+            },
+            "GetImportJob": {
+              "methods": [
+                "get_import_job"
+              ]
+            },
+            "GetPreferenceSet": {
+              "methods": [
+                "get_preference_set"
+              ]
+            },
+            "GetReport": {
+              "methods": [
+                "get_report"
+              ]
+            },
+            "GetReportConfig": {
+              "methods": [
+                "get_report_config"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListErrorFrames": {
+              "methods": [
+                "list_error_frames"
+              ]
+            },
+            "ListGroups": {
+              "methods": [
+                "list_groups"
+              ]
+            },
+            "ListImportDataFiles": {
+              "methods": [
+                "list_import_data_files"
+              ]
+            },
+            "ListImportJobs": {
+              "methods": [
+                "list_import_jobs"
+              ]
+            },
+            "ListPreferenceSets": {
+              "methods": [
+                "list_preference_sets"
+              ]
+            },
+            "ListReportConfigs": {
+              "methods": [
+                "list_report_configs"
+              ]
+            },
+            "ListReports": {
+              "methods": [
+                "list_reports"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "RemoveAssetsFromGroup": {
+              "methods": [
+                "remove_assets_from_group"
+              ]
+            },
+            "ReportAssetFrames": {
+              "methods": [
+                "report_asset_frames"
+              ]
+            },
+            "RunImportJob": {
+              "methods": [
+                "run_import_job"
+              ]
+            },
+            "UpdateAsset": {
+              "methods": [
+                "update_asset"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "update_group"
+              ]
+            },
+            "UpdateImportJob": {
+              "methods": [
+                "update_import_job"
+              ]
+            },
+            "UpdatePreferenceSet": {
+              "methods": [
+                "update_preference_set"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            },
+            "ValidateImportJob": {
+              "methods": [
+                "validate_import_job"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "MigrationCenterAsyncClient",
+          "rpcs": {
+            "AddAssetsToGroup": {
+              "methods": [
+                "add_assets_to_group"
+              ]
+            },
+            "AggregateAssetsValues": {
+              "methods": [
+                "aggregate_assets_values"
+              ]
+            },
+            "BatchDeleteAssets": {
+              "methods": [
+                "batch_delete_assets"
+              ]
+            },
+            "BatchUpdateAssets": {
+              "methods": [
+                "batch_update_assets"
+              ]
+            },
+            "CreateGroup": {
+              "methods": [
+                "create_group"
+              ]
+            },
+            "CreateImportDataFile": {
+              "methods": [
+                "create_import_data_file"
+              ]
+            },
+            "CreateImportJob": {
+              "methods": [
+                "create_import_job"
+              ]
+            },
+            "CreatePreferenceSet": {
+              "methods": [
+                "create_preference_set"
+              ]
+            },
+            "CreateReport": {
+              "methods": [
+                "create_report"
+              ]
+            },
+            "CreateReportConfig": {
+              "methods": [
+                "create_report_config"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "DeleteAsset": {
+              "methods": [
+                "delete_asset"
+              ]
+            },
+            "DeleteGroup": {
+              "methods": [
+                "delete_group"
+              ]
+            },
+            "DeleteImportDataFile": {
+              "methods": [
+                "delete_import_data_file"
+              ]
+            },
+            "DeleteImportJob": {
+              "methods": [
+                "delete_import_job"
+              ]
+            },
+            "DeletePreferenceSet": {
+              "methods": [
+                "delete_preference_set"
+              ]
+            },
+            "DeleteReport": {
+              "methods": [
+                "delete_report"
+              ]
+            },
+            "DeleteReportConfig": {
+              "methods": [
+                "delete_report_config"
+              ]
+            },
+            "DeleteSource": {
+              "methods": [
+                "delete_source"
+              ]
+            },
+            "GetAsset": {
+              "methods": [
+                "get_asset"
+              ]
+            },
+            "GetErrorFrame": {
+              "methods": [
+                "get_error_frame"
+              ]
+            },
+            "GetGroup": {
+              "methods": [
+                "get_group"
+              ]
+            },
+            "GetImportDataFile": {
+              "methods": [
+                "get_import_data_file"
+              ]
+            },
+            "GetImportJob": {
+              "methods": [
+                "get_import_job"
+              ]
+            },
+            "GetPreferenceSet": {
+              "methods": [
+                "get_preference_set"
+              ]
+            },
+            "GetReport": {
+              "methods": [
+                "get_report"
+              ]
+            },
+            "GetReportConfig": {
+              "methods": [
+                "get_report_config"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListErrorFrames": {
+              "methods": [
+                "list_error_frames"
+              ]
+            },
+            "ListGroups": {
+              "methods": [
+                "list_groups"
+              ]
+            },
+            "ListImportDataFiles": {
+              "methods": [
+                "list_import_data_files"
+              ]
+            },
+            "ListImportJobs": {
+              "methods": [
+                "list_import_jobs"
+              ]
+            },
+            "ListPreferenceSets": {
+              "methods": [
+                "list_preference_sets"
+              ]
+            },
+            "ListReportConfigs": {
+              "methods": [
+                "list_report_configs"
+              ]
+            },
+            "ListReports": {
+              "methods": [
+                "list_reports"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "RemoveAssetsFromGroup": {
+              "methods": [
+                "remove_assets_from_group"
+              ]
+            },
+            "ReportAssetFrames": {
+              "methods": [
+                "report_asset_frames"
+              ]
+            },
+            "RunImportJob": {
+              "methods": [
+                "run_import_job"
+              ]
+            },
+            "UpdateAsset": {
+              "methods": [
+                "update_asset"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "update_group"
+              ]
+            },
+            "UpdateImportJob": {
+              "methods": [
+                "update_import_job"
+              ]
+            },
+            "UpdatePreferenceSet": {
+              "methods": [
+                "update_preference_set"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            },
+            "ValidateImportJob": {
+              "methods": [
+                "validate_import_job"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "MigrationCenterClient",
+          "rpcs": {
+            "AddAssetsToGroup": {
+              "methods": [
+                "add_assets_to_group"
+              ]
+            },
+            "AggregateAssetsValues": {
+              "methods": [
+                "aggregate_assets_values"
+              ]
+            },
+            "BatchDeleteAssets": {
+              "methods": [
+                "batch_delete_assets"
+              ]
+            },
+            "BatchUpdateAssets": {
+              "methods": [
+                "batch_update_assets"
+              ]
+            },
+            "CreateGroup": {
+              "methods": [
+                "create_group"
+              ]
+            },
+            "CreateImportDataFile": {
+              "methods": [
+                "create_import_data_file"
+              ]
+            },
+            "CreateImportJob": {
+              "methods": [
+                "create_import_job"
+              ]
+            },
+            "CreatePreferenceSet": {
+              "methods": [
+                "create_preference_set"
+              ]
+            },
+            "CreateReport": {
+              "methods": [
+                "create_report"
+              ]
+            },
+            "CreateReportConfig": {
+              "methods": [
+                "create_report_config"
+              ]
+            },
+            "CreateSource": {
+              "methods": [
+                "create_source"
+              ]
+            },
+            "DeleteAsset": {
+              "methods": [
+                "delete_asset"
+              ]
+            },
+            "DeleteGroup": {
+              "methods": [
+                "delete_group"
+              ]
+            },
+            "DeleteImportDataFile": {
+              "methods": [
+                "delete_import_data_file"
+              ]
+            },
+            "DeleteImportJob": {
+              "methods": [
+                "delete_import_job"
+              ]
+            },
+            "DeletePreferenceSet": {
+              "methods": [
+                "delete_preference_set"
+              ]
+            },
+            "DeleteReport": {
+              "methods": [
+                "delete_report"
+              ]
+            },
+            "DeleteReportConfig": {
+              "methods": [
+                "delete_report_config"
+              ]
+            },
+            "DeleteSource": {
+              "methods": [
+                "delete_source"
+              ]
+            },
+            "GetAsset": {
+              "methods": [
+                "get_asset"
+              ]
+            },
+            "GetErrorFrame": {
+              "methods": [
+                "get_error_frame"
+              ]
+            },
+            "GetGroup": {
+              "methods": [
+                "get_group"
+              ]
+            },
+            "GetImportDataFile": {
+              "methods": [
+                "get_import_data_file"
+              ]
+            },
+            "GetImportJob": {
+              "methods": [
+                "get_import_job"
+              ]
+            },
+            "GetPreferenceSet": {
+              "methods": [
+                "get_preference_set"
+              ]
+            },
+            "GetReport": {
+              "methods": [
+                "get_report"
+              ]
+            },
+            "GetReportConfig": {
+              "methods": [
+                "get_report_config"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "GetSource": {
+              "methods": [
+                "get_source"
+              ]
+            },
+            "ListAssets": {
+              "methods": [
+                "list_assets"
+              ]
+            },
+            "ListErrorFrames": {
+              "methods": [
+                "list_error_frames"
+              ]
+            },
+            "ListGroups": {
+              "methods": [
+                "list_groups"
+              ]
+            },
+            "ListImportDataFiles": {
+              "methods": [
+                "list_import_data_files"
+              ]
+            },
+            "ListImportJobs": {
+              "methods": [
+                "list_import_jobs"
+              ]
+            },
+            "ListPreferenceSets": {
+              "methods": [
+                "list_preference_sets"
+              ]
+            },
+            "ListReportConfigs": {
+              "methods": [
+                "list_report_configs"
+              ]
+            },
+            "ListReports": {
+              "methods": [
+                "list_reports"
+              ]
+            },
+            "ListSources": {
+              "methods": [
+                "list_sources"
+              ]
+            },
+            "RemoveAssetsFromGroup": {
+              "methods": [
+                "remove_assets_from_group"
+              ]
+            },
+            "ReportAssetFrames": {
+              "methods": [
+                "report_asset_frames"
+              ]
+            },
+            "RunImportJob": {
+              "methods": [
+                "run_import_job"
+              ]
+            },
+            "UpdateAsset": {
+              "methods": [
+                "update_asset"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "update_group"
+              ]
+            },
+            "UpdateImportJob": {
+              "methods": [
+                "update_import_job"
+              ]
+            },
+            "UpdatePreferenceSet": {
+              "methods": [
+                "update_preference_set"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            },
+            "UpdateSource": {
+              "methods": [
+                "update_source"
+              ]
+            },
+            "ValidateImportJob": {
+              "methods": [
+                "validate_import_job"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
