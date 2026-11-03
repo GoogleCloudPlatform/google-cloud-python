@@ -659,7 +659,7 @@ def showcase_unit(
     install_async_rest_extra=False,
     templates="DEFAULT",
     other_opts: typing.Iterable[str] = (),
-    transport: str = None,
+    transport: str = "grpc+rest",
 ):
     """Run the generated unit tests against the Showcase library."""
     with showcase_library(
