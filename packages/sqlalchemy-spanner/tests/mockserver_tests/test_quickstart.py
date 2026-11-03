@@ -33,14 +33,14 @@ class TestQuickStart(MockServerTestBase):
         add_result(
             """SELECT true
 FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_SCHEMA="" AND TABLE_NAME="user_account"
+WHERE TABLE_SCHEMA=@schema AND TABLE_NAME=@table_name
 LIMIT 1""",
             ResultSet(),
         )
         add_result(
             """SELECT true
 FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_SCHEMA="" AND TABLE_NAME="address"
+WHERE TABLE_SCHEMA=@schema AND TABLE_NAME=@table_name
 LIMIT 1""",
             ResultSet(),
         )

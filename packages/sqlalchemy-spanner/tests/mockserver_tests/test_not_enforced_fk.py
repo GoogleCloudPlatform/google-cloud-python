@@ -35,7 +35,7 @@ class TestNotEnforcedFK(MockServerTestBase):
         add_result(
             """SELECT true
 FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_SCHEMA="" AND TABLE_NAME="singers"
+WHERE TABLE_SCHEMA=@schema AND TABLE_NAME=@table_name
 LIMIT 1
 """,
             ResultSet(),
@@ -43,7 +43,7 @@ LIMIT 1
         add_result(
             """SELECT true
 FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_SCHEMA="" AND TABLE_NAME="albums"
+WHERE TABLE_SCHEMA=@schema AND TABLE_NAME=@table_name
 LIMIT 1
 """,
             ResultSet(),

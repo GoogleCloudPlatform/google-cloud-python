@@ -14,6 +14,7 @@
 
 from unittest.mock import MagicMock
 
+from google.cloud.spanner_v1 import param_types
 from sqlalchemy.testing import eq_
 from sqlalchemy.testing.plugin.plugin_base import fixtures
 
@@ -100,3 +101,98 @@ class TestSpannerDialect(fixtures.TestBase):
         eq_(SpannerDialect.max_size, MAX_SIZE)
         eq_(int_from_size("MAX"), 2621440)
         eq_(int_from_size("100"), 100)
+
+    @staticmethod
+    def _mock_connection(rows=None):
+        connection = MagicMock()
+        mock_snapshot = MagicMock()
+        mock_snapshot.execute_sql.return_value = rows if rows is not None else []
+        connection.connection.database.snapshot.return_value.__enter__.return_value = (
+            mock_snapshot
+        )
+        return connection, mock_snapshot
+
+    def test_get_columns_binds_names_as_query_parameters(self):
+        """Table and schema names are bound as query parameters instead of
+        being interpolated into the INFORMATION_SCHEMA query."""
+        dialect = SpannerDialect()
+        connection, mock_snapshot = self._mock_connection()
+
+        dialect.get_columns(connection, table_name="t' OR '1'='1", schema="s")
+
+        sql = mock_snapshot.execute_sql.call_args[0][0]
+        kwargs = mock_snapshot.execute_sql.call_args[1]
+        assert "col.table_name IN UNNEST(@filter_names)" in sql
+        assert "col.table_schema = @schema AND" in sql
+        assert "'1'='1'" not in sql
+        eq_(kwargs["params"], {"schema": "s", "filter_names": ["t' OR '1'='1"]})
+        eq_(
+            kwargs["param_types"],
+            {
+                "schema": param_types.STRING,
+                "filter_names": param_types.Array(param_types.STRING),
+            },
+        )
+
+    def test_get_multi_columns_without_filter_names(self):
+        """Without filter names no table filter is added and only the schema
+        is bound as a query parameter."""
+        dialect = SpannerDialect()
+        connection, mock_snapshot = self._mock_connection()
+
+        dialect.get_multi_columns(connection)
+
+        sql = mock_snapshot.execute_sql.call_args[0][0]
+        kwargs = mock_snapshot.execute_sql.call_args[1]
+        assert "@filter_names" not in sql
+        assert "col.table_schema = @schema AND" in sql
+        eq_(kwargs["params"], {"schema": ""})
+        eq_(kwargs["param_types"], {"schema": param_types.STRING})
+
+    def test_has_table_binds_names_as_query_parameters(self):
+        dialect = SpannerDialect()
+        connection, mock_snapshot = self._mock_connection()
+
+        eq_(dialect.has_table(connection, table_name='a" OR "1"="1'), False)
+
+        sql = mock_snapshot.execute_sql.call_args[0][0]
+        kwargs = mock_snapshot.execute_sql.call_args[1]
+        assert "WHERE TABLE_SCHEMA=@schema AND TABLE_NAME=@table_name" in sql
+        assert '"1"="1"' not in sql
+        eq_(kwargs["params"], {"schema": "", "table_name": 'a" OR "1"="1'})
+        eq_(
+            kwargs["param_types"],
+            {"schema": param_types.STRING, "table_name": param_types.STRING},
+        )
+
+    def test_get_view_definition_binds_names_as_query_parameters(self):
+        dialect = SpannerDialect()
+        connection, mock_snapshot = self._mock_connection(rows=[["SELECT 1"]])
+
+        definition = dialect.get_view_definition(connection, view_name="v", schema="s")
+
+        eq_(definition, "SELECT 1")
+        sql = mock_snapshot.execute_sql.call_args[0][0]
+        kwargs = mock_snapshot.execute_sql.call_args[1]
+        assert "WHERE TABLE_SCHEMA=@schema AND TABLE_NAME=@view_name" in sql
+        eq_(kwargs["params"], {"schema": "s", "view_name": "v"})
+        eq_(
+            kwargs["param_types"],
+            {"schema": param_types.STRING, "view_name": param_types.STRING},
+        )
+
+    def test_has_sequence_binds_names_as_query_parameters(self):
+        dialect = SpannerDialect()
+        connection, mock_snapshot = self._mock_connection(rows=[[True]])
+
+        eq_(dialect.has_sequence(connection, sequence_name="seq"), True)
+
+        sql = mock_snapshot.execute_sql.call_args[0][0]
+        kwargs = mock_snapshot.execute_sql.call_args[1]
+        assert "WHERE NAME=@sequence_name" in sql
+        assert "AND SCHEMA=@schema" in sql
+        eq_(kwargs["params"], {"schema": "", "sequence_name": "seq"})
+        eq_(
+            kwargs["param_types"],
+            {"schema": param_types.STRING, "sequence_name": param_types.STRING},
+        )

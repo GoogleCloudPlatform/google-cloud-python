@@ -100,7 +100,7 @@ class TestBasics(MockServerTestBase):
         add_result(
             """SELECT true
 FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_SCHEMA="" AND TABLE_NAME="users"
+WHERE TABLE_SCHEMA=@schema AND TABLE_NAME=@table_name
 LIMIT 1
 """,
             ResultSet(),
@@ -134,7 +134,7 @@ LIMIT 1
         add_result(
             """SELECT true
 FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_SCHEMA="schema" AND TABLE_NAME="users"
+WHERE TABLE_SCHEMA=@schema AND TABLE_NAME=@table_name
 LIMIT 1
 """,
             ResultSet(),
@@ -169,15 +169,14 @@ LIMIT 1
         )
 
     def test_create_multiple_tables(self):
-        for i in range(2):
-            add_result(
-                f"""SELECT true
+        add_result(
+            """SELECT true
 FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_SCHEMA="" AND TABLE_NAME="table{i}"
+WHERE TABLE_SCHEMA=@schema AND TABLE_NAME=@table_name
 LIMIT 1
 """,
-                ResultSet(),
-            )
+            ResultSet(),
+        )
         engine = self.create_engine()
         metadata = MetaData()
         for i in range(2):
