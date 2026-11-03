@@ -826,6 +826,34 @@ class TestAsyncAppendableObjectWriter:
         assert writer.persisted_size == 200
 
     @pytest.mark.asyncio
+    async def test_flush_waits_for_persisted_size_and_consumes_intermediate_responses(
+        self, mock_appendable_writer
+    ):
+        writer = self._make_one(mock_appendable_writer["mock_client"])
+        writer._is_stream_open = True
+        writer.write_obj_stream = mock_appendable_writer["mock_stream"]
+        writer.offset = 200
+        writer.bytes_appended_since_last_flush = 200
+
+        intermediate_handle = storage_type.BidiWriteHandle(
+            handle=b"intermediate-handle"
+        )
+        mock_appendable_writer["mock_stream"].recv.side_effect = [
+            storage_type.BidiWriteObjectResponse(write_handle=intermediate_handle),
+            storage_type.BidiWriteObjectResponse(persisted_size=100),
+            storage_type.BidiWriteObjectResponse(persisted_size=200),
+        ]
+
+        result = await writer.flush()
+
+        assert result == 200
+        assert mock_appendable_writer["mock_stream"].recv.call_count == 3
+        assert writer.write_handle == intermediate_handle
+        assert writer.persisted_size == 200
+        assert writer.offset == 200
+        assert writer.bytes_appended_since_last_flush == 0
+
+    @pytest.mark.asyncio
     async def test_simple_flush(self, mock_appendable_writer):
         writer = self._make_one(mock_appendable_writer["mock_client"])
         writer._is_stream_open = True

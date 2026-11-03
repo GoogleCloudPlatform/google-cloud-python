@@ -18,6 +18,7 @@ from dataclasses import dataclass
 from io import BufferedReader
 from typing import Dict, List, Optional, Tuple, Union
 
+import grpc
 from google.api_core import exceptions
 from google.api_core.retry_async import AsyncRetry
 from google.rpc import status_pb2
@@ -689,8 +690,21 @@ class AsyncAppendableObjectWriter:
                 state_lookup=True,
             )
         )
-        response = await self.write_obj_stream.recv()
-        self.persisted_size = response.persisted_size
+        target_offset = self.offset or 0
+        while True:
+            response = await self.write_obj_stream.recv()
+            if response is None or response == grpc.aio.EOF:
+                break
+            if response.write_handle:
+                self.write_handle = response.write_handle
+            if "persisted_size" in response:
+                self.persisted_size = response.persisted_size
+                if self.persisted_size >= target_offset:
+                    break
+            elif "resource" in response and response.resource:
+                self.persisted_size = response.resource.size
+                break
+
         self.offset = self.persisted_size
         self.bytes_appended_since_last_flush = 0
         return self.persisted_size

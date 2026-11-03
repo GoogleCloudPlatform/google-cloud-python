@@ -289,7 +289,7 @@ class _AsyncWriteObjectStream(_AsyncAbstractObjectStream):
         if response:
             if response.write_handle:
                 self.write_handle = response.write_handle
-            if response.persisted_size is not None:
+            if "persisted_size" in response:
                 self.persisted_size = response.persisted_size
             if response.resource and response.resource.size:
                 self.persisted_size = response.resource.size

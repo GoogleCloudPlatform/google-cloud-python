@@ -404,6 +404,7 @@ class TestAsyncWriteObjectStream:
 
         # Test Recv with state update
         mock_response = MagicMock()
+        mock_response.__contains__.side_effect = lambda k: k in ["persisted_size"]
         mock_response.persisted_size = 5000
         mock_response.write_handle = b"new-handle"
         mock_response.resource = None
@@ -413,6 +414,29 @@ class TestAsyncWriteObjectStream:
         assert res.persisted_size == 5000
         assert stream.persisted_size == 5000
         assert stream.write_handle == b"new-handle"
+
+    @mock.patch("google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc")
+    @pytest.mark.asyncio
+    async def test_recv_does_not_overwrite_persisted_size_when_write_handle_only(
+        self, mock_rpc_cls, mock_client
+    ):
+        mock_rpc = mock_rpc_cls.return_value
+        mock_rpc.open = AsyncMock()
+        mock_rpc.send = AsyncMock()
+        mock_rpc.recv = AsyncMock()
+
+        stream = _AsyncWriteObjectStream(mock_client, BUCKET, OBJECT)
+        await stream.open()
+        stream.persisted_size = 100
+
+        new_handle = _storage_v2.BidiWriteHandle(handle=b"new-handle")
+        response = _storage_v2.BidiWriteObjectResponse(write_handle=new_handle)
+        mock_rpc.recv.return_value = response
+
+        res = await stream.recv()
+        assert res == response
+        assert stream.write_handle == new_handle
+        assert stream.persisted_size == 100
 
     @pytest.mark.asyncio
     async def test_close_success(self, mock_client):
