@@ -1,0 +1,116 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+steps:
+  - name: 'us-central1-docker.pkg.dev/client-library-releases/release-images-prod/python-multi@sha256:d529954c373542171f9fc411e0102cebe542b511e320a965edf8820285f4f122'
+    id: 'run-system-tests-shard'
+    env:
+      # Populate standard GCP project environment variables expected by system test suites.
+      - 'GOOGLE_CLOUD_PROJECT=${PROJECT_ID}'
+      - 'GCLOUD_PROJECT=${PROJECT_ID}'
+      - 'PROJECT_ID=${PROJECT_ID}'
+      # Pass sharding and diff parameters consumed by ci/get_package_shards.py.
+      - 'MAX_SHARDS=${_MAX_SHARDS}'
+      - 'SHARD_INDEX=${_SHARD_INDEX}'
+      - 'BUILD_TYPE=${_BUILD_TYPE}'
+      - 'TARGET_BRANCH=${_BASE_BRANCH}'
+      - 'TEST_ALL_PACKAGES=${_TEST_ALL_PACKAGES}'
+      - 'ENABLED_PACKAGES=${_ENABLED_PACKAGES}'
+      - 'PACKAGE_WEIGHTS=${_PACKAGE_WEIGHTS}'
+      # Specify the nox session consumed by ci/run_conditional_tests.sh.
+      - 'NOX_SESSION=${_NOX_SESSION}'
+    script: |
+      #!/usr/bin/env bash
+      set -eo pipefail
+
+      # Fetch target branch history so git diff in ci/get_package_shards.py can detect modified packages.
+      git fetch origin "${TARGET_BRANCH}" --depth=50 || true
+
+      # Import ci/get_package_shards.py without modifying the script on disk.
+      # Filter get_packages() in memory to _ENABLED_PACKAGES so unmigrated packages are ignored.
+      PACKAGE_LIST=$(python3 -c '
+      import io, json, os, sys
+      from contextlib import redirect_stdout
+
+      sys.path.insert(0, "ci")
+      import get_package_shards as gps
+
+      enabled = {
+          p.strip().rstrip("/") + "/"
+          for p in os.environ.get("ENABLED_PACKAGES", "").replace(",", " ").split()
+          if p.strip()
+      }
+      if enabled:
+          orig_get_packages = gps.get_packages
+          gps.get_packages = lambda: [p for p in orig_get_packages() if p in enabled]
+
+      buf = io.StringIO()
+      with redirect_stdout(buf):
+          if hasattr(gps, "main"):
+              gps.main()
+          else:
+              import runpy
+              runpy.run_path("ci/get_package_shards.py", run_name="__main__")
+
+      lines = [l for l in buf.getvalue().splitlines() if l.strip()]
+      data = json.loads(lines[-1]) if lines else []
+      shards = data.get("include", data) if isinstance(data, dict) else data
+
+      idx = int(os.environ.get("SHARD_INDEX", "0"))
+      print(shards[idx].get("packages", "") if idx < len(shards) else "")
+      ')
+
+      # Report immediate green (< 10s) if no enabled packages in this PR map to this shard index.
+      if [[ -z "${PACKAGE_LIST}" ]]; then
+        echo "No enabled packages assigned to shard ${SHARD_INDEX}. Exiting 0."
+        exit 0
+      fi
+
+      # Package noxfile.py files skip the system session if GOOGLE_APPLICATION_CREDENTIALS is unset.
+      # Set a placeholder value for noxfile.py, then unset it at pytest startup so google.auth.default()
+      # uses native Cloud Build VM metadata server credentials (ADC) automatically.
+      if [[ -z "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]]; then
+        mkdir -p /tmp/cb_pytest_shim
+        cat << 'EOF' > /tmp/cb_pytest_shim/cb_adc_shim.py
+      import os
+      if os.environ.get("GOOGLE_APPLICATION_CREDENTIALS") == "CLOUD_BUILD_ADC":
+          os.environ.pop("GOOGLE_APPLICATION_CREDENTIALS", None)
+      EOF
+        export GOOGLE_APPLICATION_CREDENTIALS="CLOUD_BUILD_ADC"
+        export PYTHONPATH="/tmp/cb_pytest_shim:${PYTHONPATH:-}"
+        export PYTEST_ADDOPTS="-p cb_adc_shim ${PYTEST_ADDOPTS:-}"
+      fi
+
+      # Export PACKAGE_LIST and delegate execution to the existing monorepo test runner script.
+      export PACKAGE_LIST
+      echo "=== System Shard ${SHARD_INDEX}/${MAX_SHARDS} running ${NOX_SESSION} for: ${PACKAGE_LIST} ==="
+      ./ci/run_conditional_tests.sh
+
+# Hard 30-minute (1800s) CI timeout ceiling.
+timeout: 1800s
+
+substitutions:
+  _MAX_SHARDS: '1'
+  _SHARD_INDEX: '0'
+  _BUILD_TYPE: 'presubmit'
+  _BASE_BRANCH: 'main'
+  _TEST_ALL_PACKAGES: 'false'
+  _ENABLED_PACKAGES: 'packages/google-cloud-bigquery-storage'
+  _NOX_SESSION: 'system-3.12'
+  _PACKAGE_WEIGHTS: >-
+    google-cloud-bigquery-storage:5
+
+options:
+  machineType: 'E2_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
