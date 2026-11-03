@@ -22,5 +22,5 @@ version = "1.9.0"
 description = "A python wrapper of the C library 'Google CRC32C'"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "Apache-2.0"}
+license = "Apache-2.0"
 dynamic = ["classifiers"]
