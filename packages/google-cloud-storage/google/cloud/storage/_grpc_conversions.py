@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import re
+
 from google.protobuf import timestamp_pb2
 
 from google.cloud import _storage_v2
@@ -30,6 +32,10 @@ _BLOB_ATTR_TO_PROTO_FIELD = {
     "storage_class": "storage_class",
 }
 
+# A Blob fetched from a CMEK object reports the key version it was encrypted
+# with, which GCS rejects when creating an object.
+_KMS_KEY_VERSION_SUFFIX = re.compile(r"/cryptoKeyVersions/[^/]+$")
+
 
 def blob_to_proto(blob):
     """Converts a Blob instance to a GCS V2 Object proto message."""
@@ -44,6 +50,9 @@ def blob_to_proto(blob):
     for attr_name, proto_field in _BLOB_ATTR_TO_PROTO_FIELD.items():
         value = getattr(blob, attr_name, None)
         if value is not None:
+            if proto_field == "kms_key":
+                # Write the new generation under the same key.
+                value = _KMS_KEY_VERSION_SUFFIX.sub("", value)
             resource_params[proto_field] = value
 
     custom_time = getattr(blob, "custom_time", None)
