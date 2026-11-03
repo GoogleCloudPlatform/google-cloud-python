@@ -77,14 +77,7 @@ def test_bucket_create_w_enterprise_storage_class(
     bucket = storage_client.bucket(bucket_name)
     bucket.storage_class = storage_class
 
-    try:
-        _helpers.retry_429_503(bucket.create)(location=location)
-    except exceptions.BadRequest as exc:
-        if "is not allowed for project" in str(
-            exc
-        ) or "may not create storageClass" in str(exc):
-            pytest.skip(f"Project not allowlisted for enterprise storage class: {exc}")
-        raise
+    _helpers.retry_429_503(bucket.create)(location=location)
     buckets_to_delete.append(bucket)
 
     created = storage_client.get_bucket(bucket_name)
