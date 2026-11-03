@@ -17,6 +17,7 @@
 import google_crc32c.__config__  # noqa: F401
 from google_crc32c._checksum import CommonChecksum
 from google_crc32c._crc32c import (  # type: ignore
+    GIL_RELEASE_THRESHOLD,
     extend,
     value,
 )
@@ -26,8 +27,10 @@ class Checksum(CommonChecksum):
     """Hashlib-alike helper for CRC32C operations.
 
     Args:
-        initial_value (Optional[bytes]): the initial chunk of data from
-            which the CRC32C checksum is computed.  Defaults to b''.
+        initial_value (Optional[bytes-like]): the initial chunk of data from
+            which the CRC32C checksum is computed.  Any C-contiguous object
+            supporting the buffer protocol (``bytes``, ``bytearray``,
+            ``memoryview``, ...) is accepted.  Defaults to b''.
     """
 
     __slots__ = ("_crc",)
@@ -39,7 +42,10 @@ class Checksum(CommonChecksum):
         """Update the checksum with a new chunk of data.
 
         Args:
-            chunk (Optional[bytes]): a chunk of data used to extend
+            chunk (Optional[bytes-like]): a chunk of data used to extend
                 the CRC32C checksum.
         """
         self._crc = extend(self._crc, chunk)
+
+
+__all__ = ["extend", "value", "Checksum", "GIL_RELEASE_THRESHOLD"]
