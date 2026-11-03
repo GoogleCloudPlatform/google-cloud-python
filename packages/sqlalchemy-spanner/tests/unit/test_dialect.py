@@ -14,6 +14,8 @@
 
 from unittest.mock import MagicMock
 
+from sqlalchemy import Column, Integer, MetaData, Table
+from sqlalchemy.schema import CreateTable
 from sqlalchemy.testing import eq_
 from sqlalchemy.testing.plugin.plugin_base import fixtures
 
@@ -100,3 +102,81 @@ class TestSpannerDialect(fixtures.TestBase):
         eq_(SpannerDialect.max_size, MAX_SIZE)
         eq_(int_from_size("MAX"), 2621440)
         eq_(int_from_size("100"), 100)
+
+    def _compile_create_table(self, column):
+        """Compile ``CREATE TABLE`` for a one-column primary key table."""
+        table = Table("some_table", MetaData(), column)
+        return str(CreateTable(table).compile(dialect=SpannerDialect()))
+
+    def test_primary_key_reserved_word_is_quoted(self):
+        """A reserved-word primary key column is quoted in the PRIMARY KEY clause."""
+        ddl = self._compile_create_table(Column("from", Integer, primary_key=True))
+        assert "PRIMARY KEY (`from`)" in ddl
+
+    def test_primary_key_backtick_is_escaped(self):
+        """A backtick in a primary key column name cannot terminate the identifier."""
+        name = "id`) STORING (x); DROP TABLE t; --"
+        ddl = self._compile_create_table(Column(name, Integer, primary_key=True))
+        assert "PRIMARY KEY (`id\\`) STORING (x); DROP TABLE t; --`)" in ddl
+
+    def test_primary_key_plain_name_is_unquoted(self):
+        """A regular identifier is left unquoted, so existing DDL is unchanged."""
+        ddl = self._compile_create_table(Column("user_id", Integer, primary_key=True))
+        assert "PRIMARY KEY (user_id)" in ddl
+
+    def test_preparer_escapes_backtick_and_backslash(self):
+        """The identifier preparer backslash-escapes backticks and backslashes."""
+        preparer = SpannerDialect().identifier_preparer
+        eq_(preparer.quote("a`b"), "`a\\`b`")
+        eq_(preparer.quote("a\\b"), "`a\\\\b`")
+
+    def test_interleave_in_parent_string_is_quoted(self):
+        """A string interleave parent is routed through the identifier preparer."""
+        table = Table(
+            "child",
+            MetaData(),
+            Column("id", Integer, primary_key=True),
+            spanner_interleave_in="from",
+        )
+        ddl = str(CreateTable(table).compile(dialect=SpannerDialect()))
+        assert "INTERLEAVE IN PARENT `from`" in ddl
+
+    def test_interleave_in_parent_table_object_is_quoted(self):
+        """A Table interleave parent is quoted by its name rather than repr."""
+        parent = Table("from", MetaData(), Column("id", Integer, primary_key=True))
+        table = Table(
+            "child",
+            MetaData(),
+            Column("id", Integer, primary_key=True),
+            spanner_interleave_in=parent,
+        )
+        ddl = str(CreateTable(table).compile(dialect=SpannerDialect()))
+        assert "INTERLEAVE IN PARENT `from`" in ddl
+
+    def test_interleave_in_parent_table_object_keeps_schema(self):
+        """A Table interleave parent with a schema is emitted as schema.name."""
+        parent = Table(
+            "from",
+            MetaData(),
+            Column("id", Integer, primary_key=True),
+            schema="sch",
+        )
+        table = Table(
+            "child",
+            MetaData(),
+            Column("id", Integer, primary_key=True),
+            spanner_interleave_in=parent,
+        )
+        ddl = str(CreateTable(table).compile(dialect=SpannerDialect()))
+        assert "INTERLEAVE IN PARENT sch.`from`" in ddl
+
+    def test_interleave_in_parent_dotted_string_quotes_each_part(self):
+        """A schema-qualified string parent quotes the schema and name separately."""
+        table = Table(
+            "child",
+            MetaData(),
+            Column("id", Integer, primary_key=True),
+            spanner_interleave_in="sch.from",
+        )
+        ddl = str(CreateTable(table).compile(dialect=SpannerDialect()))
+        assert "INTERLEAVE IN PARENT sch.`from`" in ddl
